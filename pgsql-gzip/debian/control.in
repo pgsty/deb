@@ -1,0 +1,17 @@
+Source: pgsql-gzip
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), zlib1g-dev (>= 1)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pramsey/pgsql-gzip
+
+Package: postgresql-PGVERSION-gzip
+Architecture: any
+Provides: postgresql-gzip
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: GZIP implementation in PostgreSQL PGVERSION
+  Sometimes you just need to compress your bytea object before you return it to the client.
+  Sometimes you receive a compressed bytea from the client, and you have to uncompress it before you can work with it.
+  This extension is for that.
