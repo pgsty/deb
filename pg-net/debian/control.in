@@ -1,0 +1,18 @@
+Source: pg-net
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pramsey/pgsql-gzip
+
+Package: postgresql-PGVERSION-pg-net
+Architecture: any
+Provides: postgresql-pg-net
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Make async HTTP/HTTPS requests in PostgreSQL PGVERSION
+  The `pg_net` extension enables PostgreSQL to make asynchronous HTTP/HTTPS requests in SQL.
+  It eliminates the need for servers to continuously poll for database changes and instead allows the database to proactively notify external resources about significant events.
+  It seamlessly integrates with triggers, cron jobs (e.g., PG_CRON), and procedures, unlocking numerous possibilities.
+  Notably, `pg_net` powers Supabase's Webhook functionality, highlighting its robustness and reliability.
