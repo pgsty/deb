@@ -1,0 +1,17 @@
+Source: pgjwt
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/michelp/pgjwt
+
+Package: postgresql-PGVERSION-pgjwt
+Architecture: any
+Provides: postgresql-pgjwt
+Depends: ${misc:Depends}, ${postgresql:Depends}
+Description: PostgreSQL implementation of JSON Web Tokens for PGVERSION
+  pgjwt allows you to sign & verify json web token via pure SQL interface.
+  It requires the pgcrypto extension, included in most distribution's "postgresql-contrib" package.
+  The tests require the pgtap extension to run.

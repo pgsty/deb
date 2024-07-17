@@ -1,0 +1,5 @@
+.idea/
+.code/
+.DS_Store
+pigsty-deb.iml
+*.tar.gz
