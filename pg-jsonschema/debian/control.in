@@ -1,0 +1,16 @@
+Source: pg-jsonschema
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/pg_jsonschema
+
+Package: postgresql-PGVERSION-pg-jsonschema
+Architecture: any
+Provides: postgresql-pg-jsonschema
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension providing JSON Schema validation
+  pg_jsonschema is a PostgreSQL extension adding support for JSON schema validation on json and jsonb data types.
+

@@ -1,0 +1,5 @@
+pg-jsonschema (0.3.1-1) unstable; urgency=medium
+
+  * Initial release, used by Pigsty <https://pigsty.io>
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 19 Jul 2024 08:00:00 +0000
