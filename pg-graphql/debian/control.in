@@ -1,0 +1,16 @@
+Source: pg-graphql
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/pg_graphql
+
+Package: postgresql-PGVERSION-pg-graphql
+Architecture: any
+Provides: postgresql-pg-graphql
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: reflects a GraphQL schema from the existing PostgresSQL PGVECSION schema
+  The extension keeps schema translation and query resolution neatly contained on your database server.
+  This enables any programming language that can connect to PostgreSQL to query the database via GraphQL with no additional servers, processes, or libraries.
