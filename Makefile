@@ -29,7 +29,8 @@ pg_vectorize:
 	cd pg-vectorize && make
 pg_later:
 	cd pg-later && make
-
+rust:
+	pg_graphql pg_jsonschema wrappers pg_search pg_lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later
 
 pg_net:
 	cd pg-net && make

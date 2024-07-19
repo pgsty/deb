@@ -1,0 +1,16 @@
+Source: pg-tier
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/tembo-io/pg_tier
+
+Package: postgresql-PGVERSION-pg-tier
+Architecture: any
+Provides: postgresql-pg-tier
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres Extension to enable data tiering to AWS S3
+  A Postgres extension to tier data to external storage
+  Postgres Extension written in Rust, to enable data tiering to AWS S3
