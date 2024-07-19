@@ -1,0 +1,15 @@
+Source: pg-idkit
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/VADOSWARE/pg_idkit
+
+Package: postgresql-PGVERSION-pg-idkit
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: PG extension that generating many popular types of identifiers
+  pg_idkit is a Postgres extension for generating many popular types of identifiers:
+  uuidv6, uuidv7, nanoid, ksuid, ulid, timeflake, pushid, xid, cuid, cuid2
