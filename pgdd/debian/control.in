@@ -1,0 +1,16 @@
+Source: pgdd
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rustprooflabs/pgdd
+
+Package: postgresql-PGVERSION-pgdd
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL Data Dictionary, Inspect data dictionary via SQL
+  The PostgreSQL Data Dictionary (PgDD) is an in-database solution to provide introspection via standard SQL query syntax.
+  This extension makes it easy to provide a usable data dictionary to all users of a PostgreSQL database.
+  See the full project documentation: https://rustprooflabs.github.io/pgdd/ for more information.
