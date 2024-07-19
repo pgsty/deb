@@ -1,0 +1,16 @@
+Source: pg-lakehouse
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/paradedb/paradedb/tree/dev/pg_lakehouse
+
+Package: postgresql-PGVERSION-pg-lakehouse
+Architecture: any
+Provides: postgresql-pg-lakehouse
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Query engine over object stores like S3 and table formats like Delta Lake
+  pg_lakehouse is an extension that transforms Postgres into an analytical query engine over object stores like S3 and table formats like Delta Lake.
+  Queries are pushed down to Apache DataFusion, which delivers excellent analytical performance. Combinations of the following object stores, table formats, and file formats are supported.
