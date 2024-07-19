@@ -1,0 +1,14 @@
+Source: pgsmcrypto
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/zhuobie/pgsmcrypto
+
+Package: postgresql-PGVERSION-pgsmcrypto
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL SM Algorithm Extension
+  China National SM algorithm extension for PostgreSQL. SM2 / SM3 / SM4
