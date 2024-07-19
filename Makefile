@@ -1,6 +1,8 @@
 #---------------------------------------------#
 # build
 #---------------------------------------------#
+pgml:
+	cd pgml && make
 pg_graphql:
 	cd pg-graphql && make
 pg_jsonschema:
@@ -29,8 +31,8 @@ pg_vectorize:
 	cd pg-vectorize && make
 pg_later:
 	cd pg-later && make
-rust:
-	pg_graphql pg_jsonschema wrappers pg_search pg_lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later
+rust: pgml pg_graphql pg_jsonschema wrappers pg_search pg_lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later
+
 
 pg_net:
 	cd pg-net && make
@@ -38,6 +40,15 @@ pgjwt:
 	cd pgjwt && make
 gzip:
 	cd pgsql-gzip && make
+
+
+collect:
+	mkdir -p /tmp/deb
+	cp -r ~/*.deb /tmp/deb/
+	cp -r ~/paradedb/*.deb /tmp/deb/
+	cp -r ~/pg_vectorize/*.deb /tmp/deb/
+	cp -r ~/postgresml/*.deb /tmp/deb/
+
 
 #---------------------------------------------#
 # sync to/from building server
@@ -107,4 +118,4 @@ release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
 .PHONY: push pull pulld build build-on-sv push9 pull9 build9 build-sv build-on-el9 clean sync pub release \
-	pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later pg_net pgjwt gzip
+	pgml pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later pg_net pgjwt gzip
