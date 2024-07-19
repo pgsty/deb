@@ -10,7 +10,7 @@ Homepage: https://github.com/tembo-io/pg_vectorize
 Package: postgresql-PGVERSION-pg-vectorize
 Architecture: any
 Provides: postgresql-pg-vectorize
-Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgmq
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgmq, postgresql-PGVERSION-pgvector, postgresql-PGVERSION-cron
 Description: reflects a vectorize schema from the existing PostgresSQL PGVERSION schema
   The extension keeps schema translation and query resolution neatly contained on your database server.
   This enables any programming language that can connect to PostgreSQL to query the database via vectorize with no additional servers, processes, or libraries.
