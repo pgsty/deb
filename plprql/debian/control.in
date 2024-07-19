@@ -1,0 +1,16 @@
+Source: plprql
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/kaspermarstal/plprql
+
+Package: postgresql-PGVERSION-plprql
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: PL/PRQL is a PostgreSQL extension that lets you write functions with PRQL.
+  PRQL (Pipelined Relational Query Language) is an open source query language for data manipulation and analysis that compiles to SQL.
+  PRQL introduces a pipeline concept (similar to Unix pipes) that transforms data line-by-line. The sequential series of transformations
+  reduces the complexity often encountered with nested SQL queries and makes your data manipulation logic easier to read and write.
