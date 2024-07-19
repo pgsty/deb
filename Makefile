@@ -1,4 +1,24 @@
 #---------------------------------------------#
+# build
+#---------------------------------------------#
+pg_graphql:
+	cd pg-graphql && make
+pg_jsonschema:
+	cd pg-jsonschema && make
+wrappers:
+	cd wrappers && make
+pg_search:
+	cd pg-search && make
+pg_lakehouse:
+	cd pg-lakehouse && make
+pg_net:
+	cd pg-net && make
+pgjwt:
+	cd pgjwt && make
+gzip:
+	cd pgsql-gzip && make
+
+#---------------------------------------------#
 # sync to/from building server
 #---------------------------------------------#
 push-sv:
@@ -23,8 +43,10 @@ pushss: push-sv
 #---------------------------------------------#
 push:
 	rsync -avc ./ u22:~/pigsty-deb/
+	rsync -avc ./ d12:~/pigsty-deb/
 pushd:
 	rsync -avc --delete ./ u22:~/pigsty-deb/
+	rsync -avc --delete ./ d12:~/pigsty-deb/
 
 #---------------------------------------------#
 # pull rpm from building machines

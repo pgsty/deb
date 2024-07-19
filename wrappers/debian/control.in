@@ -1,0 +1,17 @@
+Source: wrappers
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/wrappers
+
+Package: postgresql-PGVERSION-wrappers
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres Foreign Data Wrappers by Supabase
+  Wrappers is a development framework for Postgres Foreign Data Wrappers (FDW), written in Rust.
+  Its goal is to make Postgres FDW development easier while keeping Rust language's modern capabilities,
+  such as high performance, strong types, and safety.
+  HelloWorld, BigQuery, Clickhouse, Stripe, Firebase, Airtable, S3, Logflare, Auth0, SQL, Redis, AWS Cognito, Notion, Snowflake, Paddle
