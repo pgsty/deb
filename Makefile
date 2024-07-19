@@ -11,6 +11,26 @@ pg_search:
 	cd pg-search && make
 pg_lakehouse:
 	cd pg-lakehouse && make
+pgvectorscale:
+	cd pgvectorscale && make
+plprql:
+	cd plprql && make
+pg_idkit:
+	cd pg-idkit && make
+pgsmcrypto:
+	cd pgsmcrypto && make
+pgdd:
+	cd pgdd && make
+pgmq:
+	cd pgmq && make
+pg_tier:
+	cd pg-tier && make
+pg_vectorize:
+	cd pg-vectorize && make
+pg_later:
+	cd pg-later && make
+
+
 pg_net:
 	cd pg-net && make
 pgjwt:
@@ -85,4 +105,5 @@ pub: release
 release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
-.PHONY: push pull pulld build build-on-sv push9 pull9 build9 build-sv build-on-el9 clean sync pub release
+.PHONY: push pull pulld build build-on-sv push9 pull9 build9 build-sv build-on-el9 clean sync pub release \
+	pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later pg_net pgjwt gzip

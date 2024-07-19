@@ -1,0 +1,14 @@
+Source: pgvectorscale
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/timescale/pgvectorscale
+
+Package: postgresql-PGVERSION-pgvectorscale
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgvector
+Description: A complement to pgvector for high performance, cost efficient vector search on large workloads.
+  pgvectorscale builds on pgvector with higher performance embedding search and cost-efficient storage for AI applications.
