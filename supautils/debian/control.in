@@ -1,0 +1,17 @@
+Source: supautils
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/supautils
+
+Package: postgresql-PGVERSION-supautils
+Architecture: any
+Provides: postgresql-supautils
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Modern cryptography for PostgreSQL using libsodium.
+  Supautils is an extension that secures a PostgreSQL cluster on a cloud environment.
+  It doesn't require creating database objects. It's a shared library that modifies PostgreSQL behavior through "hooks",
+  not through tables or functions.

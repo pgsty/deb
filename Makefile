@@ -44,6 +44,9 @@ vault:
 	cd vault && make
 pgsodium:
 	cd pgsodium && make
+supautils:
+	cd supautils && make
+
 
 clean-all:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
@@ -129,4 +132,4 @@ release: clean
 
 .PHONY: push pull pulld build build-on-sv push9 pull9 build9 build-sv build-on-el9 clean sync pub release \
 	pgml pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later \
-	pg_net pgjwt gzip vault pgsodium clean-all collect
+	pg_net pgjwt gzip vault pgsodium supautils clean-all collect
