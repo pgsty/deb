@@ -43,13 +43,18 @@ gzip:
 
 clean-all:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
+	rm -rf ~/paradedb/*.deb ~/paradedb/*.ddeb ~/paradedb/*.buildinfo ~/paradedb/*.changes
+	rm -rf ~/pg_vectorize/*.deb ~/pg_vectorize/*.ddeb ~/pg_vectorize/*.buildinfo ~/pg_vectorize/*.changes
+	rm -rf ~/postgresml/*.deb ~/postgresml/*.ddeb ~/postgresml/*.buildinfo ~/postgresml/*.changes
+	rm -rf ~/pgsql-gzip/*.deb ~/pgsql-gzip/*.ddeb ~/pgsql-gzip/*.buildinfo ~/pgsql-gzip/*.changes
+	rm -rf ~/pg-net/*.deb ~/pg-net/*.ddeb ~/pg-net/*.buildinfo ~/pg-net/*.changes
+	rm -rf ~/pgjwt/*.deb ~/pgjwt/*.ddeb ~/pgjwt/*.buildinfo ~/pgjwt/*.changes
+	rm -rf ~/pgvectorscale/*.deb ~/pgvectorscale/*.ddeb ~/pgvectorscale/*.buildinfo ~/pgvectorscale/*.changes
+
 collect:
 	mkdir -p /tmp/deb
 	rm -rf /tmp/deb/*
 	cp -r ~/*.deb /tmp/deb/
-	#cp -r ~/paradedb/*.deb /tmp/deb/
-	#cp -r ~/pg_vectorize/*.deb /tmp/deb/
-	#cp -r ~/postgresml/*.deb /tmp/deb/
 
 #---------------------------------------------#
 # sync to/from building server
