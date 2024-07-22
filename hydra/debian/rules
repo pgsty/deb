@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+# Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
+export CC = gcc
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_configure:
+	./configure
+
+override_dh_auto_build:
+	# Disable the build step since binaries are pre-built
+
+override_dh_auto_clean:
+	# Check if Makefile exists to decide whether to run distclean
+	./configure
+	if [ -f Makefile ]; then \
+		make distclean; \
+	fi
+
+override_dh_auto_test:
+
+override_dh_auto_install:
+	+pg_buildext loop postgresql-%v-hydra
+
+override_dh_installdocs:
+	dh_installdocs --all README.*
+
+%:
+	dh $@

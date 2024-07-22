@@ -1,0 +1,17 @@
+Source: hydra
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/hydradatabase/hydra
+
+Package: postgresql-PGVERSION-hydra
+Architecture: any
+Provides: postgresql-hydra
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Hydra: Column-oriented Postgres. Add scalable analytics to your project in minutes.
+  Hydra is open source, column-oriented Postgres.
+  You can query billions of rows instantly on Postgres without code changes.
+  Parallelized analytics in minutes, not weeks.
