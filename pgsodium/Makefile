@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := vault-0.2.9.tar.gz
+TARBALL := pgsodium-3.1.9.tar.gz
 
 # prepare directory
 setup:
