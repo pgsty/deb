@@ -1,30 +1,23 @@
-all: setup build
+all: setup build move
 
-SRC_NAME := pg_vectorize
+SRC_DIR := ~/pg_vectorize/extension
 PKG_NAME := pg-vectorize
 
 # prepare directory
 setup:
-	rm -rf ~/$(SRC_NAME)/extension/debian
-	cp -r debian ~/$(SRC_NAME)/extension/debian
-	cd ~/$(SRC_NAME)/extension/ && pg_buildext updatecontrol
-
-# update control from control.in
-update:
-	cd ~/$(SRC_NAME)/extension/ && pg_buildext updatecontrol
-	@echo "========================="
-	cat ~/$(SRC_NAME)/extension/debian/control
-	@echo "========================="
+	rm -rf $(SRC_DIR)/debian
+	cp -r debian $(SRC_DIR)/debian
+	cd $(SRC_DIR) && pg_buildext updatecontrol
+	OS_CODENAME=$(shell lsb_release -sc); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(SRC_DIR)/debian/changelog
 
 # building deb
 build:
-	cd ~/$(SRC_NAME)/extension/ && pg_buildext updatecontrol
-	cd ~/$(SRC_NAME)/extension/ && dpkg-buildpackage -b -us -uc
+	cd $(SRC_DIR) && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
-	mkdir -p /tmp/deb/
-	mv *.deb /tmp/deb/
+	cp -rf ~/pg_vectorize/*.deb ~/
 
 # remove building craps
 clean:

@@ -1,25 +1,19 @@
 all: setup build
 
-SRC_NAME := pgmq
+SRC_DIR := ~/pgmq
 PKG_NAME := pgmq
 
 # prepare directory
 setup:
-	rm -rf ~/$(SRC_NAME)/debian
-	cp -r debian ~/$(SRC_NAME)/debian
-	cd ~/$(SRC_NAME) && pg_buildext updatecontrol
-
-# update control from control.in
-update:
-	cd ~/$(SRC_NAME) && pg_buildext updatecontrol
-	@echo "========================="
-	cat ~/$(SRC_NAME)/debian/control
-	@echo "========================="
+	rm -rf $(SRC_DIR)/debian
+	cp -r debian $(SRC_DIR)/debian
+	cd $(SRC_DIR) && pg_buildext updatecontrol
+	OS_CODENAME=$(shell lsb_release -sc); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(SRC_DIR)/debian/changelog
 
 # building deb
 build:
-	cd ~/$(SRC_NAME) && pg_buildext updatecontrol
-	cd ~/$(SRC_NAME)/ && dpkg-buildpackage -b -us -uc
+	cd $(SRC_DIR) && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:

@@ -1,4 +1,4 @@
-pg-vectorize (0.17.0-1) unstable; urgency=medium
+pg-vectorize (0.17.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
 

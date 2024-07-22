@@ -1,4 +1,4 @@
-pg-jsonschema (0.3.1-1) unstable; urgency=medium
+pg-jsonschema (0.3.1-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
 

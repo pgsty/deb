@@ -1,30 +1,23 @@
-all: setup build
+all: setup build move
 
-SRC_NAME := pg_lakehouse
+SRC_DIR := ~/paradedb/pg_lakehouse
 PKG_NAME := pg-lakehouse
 
 # prepare directory
 setup:
-	rm -rf ~/paradedb/$(SRC_NAME)/debian
-	cp -r debian ~/paradedb/$(SRC_NAME)/debian
-	cd ~/paradedb/$(SRC_NAME) && pg_buildext updatecontrol
-
-# update control from control.in
-update:
-	cd ~/paradedb/$(SRC_NAME) && pg_buildext updatecontrol
-	@echo "========================="
-	cat ~/paradedb/$(SRC_NAME)/debian/control
-	@echo "========================="
+	rm -rf $(SRC_DIR)/debian
+	cp -r debian $(SRC_DIR)/debian
+	cd $(SRC_DIR) && pg_buildext updatecontrol
+	OS_CODENAME=$(shell lsb_release -sc); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(SRC_DIR)/debian/changelog
 
 # building deb
 build:
-	cd ~/paradedb/$(SRC_NAME) && pg_buildext updatecontrol
-	cd ~/paradedb/$(SRC_NAME)/ && dpkg-buildpackage -b -us -uc
+	cd $(SRC_DIR) && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
-	mkdir -p /tmp/deb/
-	mv *.deb /tmp/deb/
+	cp -rf ~/paradedb/*lakehouse*.deb ~/
 
 # remove building craps
 clean:

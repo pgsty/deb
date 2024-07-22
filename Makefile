@@ -41,14 +41,15 @@ pgjwt:
 gzip:
 	cd pgsql-gzip && make
 
-
+clean-all:
+	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
 collect:
 	mkdir -p /tmp/deb
+	rm -rf /tmp/deb/*
 	cp -r ~/*.deb /tmp/deb/
-	cp -r ~/paradedb/*.deb /tmp/deb/
-	cp -r ~/pg_vectorize/*.deb /tmp/deb/
-	cp -r ~/postgresml/*.deb /tmp/deb/
-
+	#cp -r ~/paradedb/*.deb /tmp/deb/
+	#cp -r ~/pg_vectorize/*.deb /tmp/deb/
+	#cp -r ~/postgresml/*.deb /tmp/deb/
 
 #---------------------------------------------#
 # sync to/from building server
