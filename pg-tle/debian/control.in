@@ -1,0 +1,18 @@
+Source: pg-tle
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/aws/pg_tle
+
+Package: postgresql-PGVERSION-pg-tle
+Architecture: any
+Provides: postgresql-pg-tle
+Depends: ${misc:Depends}, ${postgresql:Depends}
+Description: Trusted Language Extensions for PostgreSQL
+  Trusted Language Extensions (TLE) for PostgreSQL (pg_tle) is an open source project that lets developers
+  extend and deploy new PostgreSQL functionality with lower administrative and technical overhead.
+  Developers can use Trusted Language Extensions for PostgreSQL to create and install extensions on restricted filesystems
+  and work with PostgreSQL internals through a SQL API.
