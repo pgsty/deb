@@ -3,3 +3,5 @@
 .DS_Store
 pigsty-deb.iml
 *.tar.gz
+
+tarball/

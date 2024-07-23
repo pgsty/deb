@@ -52,6 +52,20 @@ pg_tle:
 	cd pg-tle && make
 plv8:
 	cd plv8 && make
+permuteseq:
+	cd permuteseq && make
+postgres_shacrypt:
+	cd postgres-shacrypt && make
+pg_hashids:
+	cd pg-hashids && make
+pg_proctab:
+	cd pg-proctab && make
+pg_sqlog:
+	cd pg-sqlog && make
+md5hash:
+	cd md5hash && make
+pg_tde:
+	cd pg-tde && make
 
 clean-all:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
@@ -135,6 +149,6 @@ pub: release
 release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
-.PHONY: push pull pulld build build-on-sv push9 pull9 build9 build-sv build-on-el9 clean sync pub release \
+.PHONY: push pull pulld build build-on-sv push9 pull9 build9 build-sv build-on-el9 clean sync pub release clean-all collect \
 	pgml pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later \
-	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 clean-all collect
+	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde
