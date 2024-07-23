@@ -1,0 +1,17 @@
+Source: pg-hashids
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/iCyberon/pg_hashids
+
+Package: postgresql-PGVERSION-pg-hashids
+Architecture: any
+Provides: postgresql-pg-hashids
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Short unique id generator for PostgreSQL PGVERSION
+  Hashids is a small open-source library that generates short, unique, non-sequential ids from numbers.
+  It converts numbers like 347 into strings like “yr8”. You can also decode those ids back.
+  This is useful in bundling several parameters into one or simply using them as short UIDs.

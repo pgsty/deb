@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libsodium-dev (>= 1.0.18), libsodium23 (>= 1.0.18)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/supabase/pgsodium
+Homepage: https://github.com/michelp/pgsodium
 
 Package: postgresql-PGVERSION-pgsodium
 Architecture: any
