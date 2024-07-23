@@ -26,7 +26,6 @@
 | [imgsmlr](https://github.com/postgrespro/imgsmlr)                 | v1.0        | [imgsmlr.spec](SPECS/imgsmlr.spec)                     |                    |
 | [pg_tle](https://github.com/aws/pg_tle)                           | v1.4.0      | [pg_tle.spec](SPECS/pg_tle.spec)                       |                    |
 
-
 - Done: pgjwt pgsql-gzip pg-net 
 - TODO: vault pgsodium supautils
 - TODO: libduckdb duckdb_fdw

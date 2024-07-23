@@ -1,0 +1,15 @@
+Source: plv8
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/plv8/plv8
+
+Package: postgresql-PGVERSION-plv8
+Architecture: any
+Provides: postgresql-plv8
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: V8 Engine Javascript Procedural Language add-on for PostgreSQL PGVERSION
+  PLV8 is a trusted Javascript language extension for PostgreSQL. It can be used for stored procedures, triggers, etc.

@@ -50,6 +50,8 @@ hydra:
 	cd hydra && make
 pg_tle:
 	cd pg-tle && make
+plv8:
+	cd plv8 && make
 
 clean-all:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
@@ -135,4 +137,4 @@ release: clean
 
 .PHONY: push pull pulld build build-on-sv push9 pull9 build9 build-sv build-on-el9 clean sync pub release \
 	pgml pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later \
-	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle clean-all collect
+	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 clean-all collect
