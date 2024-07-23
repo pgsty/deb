@@ -1,0 +1,17 @@
+Source: imgsmlr
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/imgsmlr
+
+Package: postgresql-PGVERSION-imgsmlr
+Architecture: any
+Provides: postgresql-imgsmlr
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Similar images search for PostgreSQL
+  ImgSmlr – is a PostgreSQL extension which implements similar images searching functionality.
+  ImgSmlr method is based on Haar wavelet transform. The goal of ImgSmlr is not to provide most advanced state of art similar images searching methods.
+  ImgSmlr was written as sample extension which illustrate how PostgreSQL extendability could cover such untypical tasks for RDBMS as similar images search.
