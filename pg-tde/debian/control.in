@@ -1,0 +1,15 @@
+Source: pg-tde
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Percona-Lab/pg_tde
+
+Package: postgresql-PGVERSION-pg-tde
+Architecture: any
+Provides: postgresql-pg-tde
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Experimental encrypted access method for PostgreSQL PGVERSION
+  This is an experimental encrypted access method for PostgreSQL 16
