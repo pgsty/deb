@@ -31,8 +31,13 @@ pg_vectorize:
 	cd pg-vectorize && make
 pg_later:
 	cd pg-later && make
-rust: pgml pg_graphql pg_jsonschema wrappers pg_search pg_lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later
 
+rust: pgml pg_graphql pg_jsonschema wrappers pg_search pg_lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later
+norm1: pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle
+norm2: permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell
+norm3: plv8
+norm4: scws libduckdb
+norm5: zhparser duckdb_fdw
 
 pg_net:
 	cd pg-net && make
@@ -76,6 +81,7 @@ libduckdb:
 	cd libduckdb && make
 duckdb_fdw:
 	cd duckdb-fdw && make
+
 
 clean-all:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes

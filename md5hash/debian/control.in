@@ -1,0 +1,16 @@
+Source: md5hash
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/md5hash
+
+Package: postgresql-PGVERSION-md5hash
+Architecture: any
+Provides: postgresql-md5hash
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: A custom data type for storing MD5 hashes (instead of the native TEXT varlena type).
+  This extension provides a simple data type storing 128-bit values (e.g. MD5 hashes) in a bit more efficient way - in a fixed-length columns and inline.
+  The extension defines the 'md5hash' type itself, casts, operators and an operator class for btree indexes. It's fairly straightforward and simple to add more operators or classes.
