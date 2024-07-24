@@ -9,6 +9,9 @@ override_dh_auto_build:
 
 override_dh_auto_test:
 
+override_dh_auto_clean:
+	# Disable the clean step to avoid cleaning up pre-built binaries
+
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
