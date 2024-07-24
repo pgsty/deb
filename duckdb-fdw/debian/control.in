@@ -1,0 +1,16 @@
+Source: duckdb-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libduckdb (>= 1.0.0)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/alitrack/duckdb_fdw
+
+Package: postgresql-PGVERSION-duckdb-fdw
+Architecture: any
+Provides: postgresql-duckdb-fdw
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, libduckdb (>= 1.0.0)
+Description: DuckDB Foreign data wrapper extension for PostgreSQL PGVERSION
+  This is a foreign data wrapper (FDW) to connect PostgreSQL to DuckDB database file.
+  This FDW works with PostgreSQL 9.6 ... 16 and compiled with exact same version of libduckdb.
