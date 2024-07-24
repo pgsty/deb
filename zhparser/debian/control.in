@@ -1,0 +1,16 @@
+Source: zhparser
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), scws (>= 1.2.3)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/zhparser
+
+Package: postgresql-PGVERSION-zhparser
+Architecture: any
+Provides: postgresql-zhparser
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, scws (>= 1.2.3)
+Description: Open-source full-text search of Chinese language
+  zhparser is a PostgreSQL extension for full-text search of Chinese language (Mandarin Chinese).
+  It implements a Chinese language parser base on the Simple Chinese Word Segmentation(SCWS).
