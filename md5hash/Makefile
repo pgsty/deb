@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := md5hash-2.2.1.tar.gz
+TARBALL := md5hash-1.0.1.tar.gz
 
 # prepare directory
 setup:

@@ -33,11 +33,10 @@ pg_later:
 	cd pg-later && make
 
 rust: pgml pg_graphql pg_jsonschema wrappers pg_search pg_lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later
-norm1: pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle
-norm2: permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell
-norm3: plv8
-norm4: scws libduckdb
-norm5: zhparser duckdb_fdw
+norm1: pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell
+norm2: scws libduckdb
+norm3: zhparser duckdb_fdw
+norm4: plv8
 
 pg_net:
 	cd pg-net && make
