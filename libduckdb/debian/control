@@ -1,0 +1,19 @@
+Source: libduckdb
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/duckdb/duckdb/
+
+Package: libduckdb
+Architecture: any
+Provides: libduckdb
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: In-process SQL OLAP Database Management System
+  DuckDB is a high-performance analytical database system.
+  It is designed to be fast, reliable, portable, and easy to use.
+  DuckDB provides a rich SQL dialect, with support far beyond basic SQL.
+  DuckDB supports arbitrary and nested correlated subqueries, window functions,
+  collations, complex types (arrays, structs), and more.
