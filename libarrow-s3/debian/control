@@ -1,0 +1,17 @@
+Source: libarrow-s3
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/apache/arrow
+
+Package: libarrow-s3
+Architecture: any
+Provides: libarrow-s3
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ependency libs for parquet s3 fdw
+  Apache Arrow is a development platform for in-memory analytics.
+  It contains a set of technologies that enable big data systems to process and move data fast.
+  This package contains dependency libs for parquet_s3_fdw, It also has aws cpp core & s3 sdk so lib inside.

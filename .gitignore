@@ -4,4 +4,5 @@
 pigsty-deb.iml
 *.tar.gz
 
+deb/
 tarball/

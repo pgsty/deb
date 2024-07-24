@@ -8,8 +8,8 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	mkdir -p $(CURDIR)/debian/libduckdb/usr/lib/x86_64-linux-gnu; \
-	cp $(CURDIR)/libduckdb.so $(CURDIR)/debian/libduckdb/usr/lib/x86_64-linux-gnu/;
+	mkdir -p $(CURDIR)/debian/libarrow-s3/usr/lib/x86_64-linux-gnu; \
+	cp -d $(CURDIR)/*so* $(CURDIR)/debian/libarrow-s3/usr/lib/x86_64-linux-gnu/;
 
 %:
 	dh $@

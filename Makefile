@@ -80,7 +80,10 @@ libduckdb:
 	cd libduckdb && make
 duckdb_fdw:
 	cd duckdb-fdw && make
-
+libarrow-s3:
+	cd libarrow-s3 && make
+parquet-s3-fdw:
+	cd parquet-s3-fdw && make
 
 clean-all:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
@@ -101,15 +104,13 @@ collect:
 # sync to/from building server
 #---------------------------------------------#
 push-sv:
-	rsync -avc ./ sv:/data/pigsty-deb/
+	rsync -avc --exclude deb ./ sv:/data/pigsty-deb/
 pushd-sv:
-	rsync -avc --delete ./ sv:/data/pigsty-deb/
-repo-sv:
-	ssh sv 'cd /data/pigsty-deb && make create'
+	rsync -avc --exclude deb --delete ./ sv:/data/pigsty-deb/
 pull-sv:
-	rsync -avc sv:/data/pigsty-deb/RPMS/ ./RPMS/
+	rsync -avc sv:/data/pigsty-deb/deb/ ./deb/
 pulld-sv:
-	rsync --delete -avc sv:/data/pigsty-deb/RPMS/ ./RPMS/
+	rsync --delete -avc sv:/data/pigsty-deb/deb/ ./deb/
 update: push-sv repo-sv pull-sv
 updated: pushd-sv repo-sv pulld-sv
 pushsd: pushd-sv
@@ -121,40 +122,24 @@ pushss: push-sv
 # push to building machines
 #---------------------------------------------#
 push:
-	rsync -avc ./ u22:~/pigsty-deb/
-	rsync -avc ./ d12:~/pigsty-deb/
+	rsync -avc --exclude deb ./ u22:~/pigsty-deb/
+	rsync -avc --exclude deb ./ d12:~/pigsty-deb/
 pushd:
-	rsync -avc --delete ./ u22:~/pigsty-deb/
-	rsync -avc --delete ./ d12:~/pigsty-deb/
+	rsync -avc --exclude deb --delete ./ u22:~/pigsty-deb/
+	rsync -avc --exclude deb --delete ./ d12:~/pigsty-deb/
 
 #---------------------------------------------#
 # pull rpm from building machines
 #---------------------------------------------#
-pull: dirs pull8 pull9 adjust create
+pull: dirs pull22 pull12
 purge:
-	rm -rf RPMS/*
+	rm -rf deb/*
 dirs:
-	mkdir -p RPMS/el7.x86_64/debug RPMS/el8.x86_64/debug RPMS/el9.x86_64/debug
-pull7:
-	rsync -avz build-el7:~/rpmbuild/RPMS/x86_64/ RPMS/el7.x86_64/
-pull8:
-	rsync -avz build-el8:~/rpmbuild/RPMS/x86_64/ RPMS/el8.x86_64/
-pull9:
-	rsync -avz build-el9:~/rpmbuild/RPMS/x86_64/ RPMS/el9.x86_64/
-adjust:
-	chown -R root:root RPMS
-	#mv -f RPMS/el7.x86_64/*-debug* RPMS/el7.x86_64/debug/
-	mv -f RPMS/el8.x86_64/*-debug* RPMS/el8.x86_64/debug/
-	mv -f RPMS/el9.x86_64/*-debug* RPMS/el9.x86_64/debug/
-create:
-	cd RPMS/el7.x86_64/ && createrepo_c .;
-	cd RPMS/el8.x86_64/ && createrepo_c . && repo2module -s stable . modules.yaml && modifyrepo_c --mdtype=modules modules.yaml repodata/;
-	cd RPMS/el9.x86_64/ && createrepo_c . && repo2module -s stable . modules.yaml && modifyrepo_c --mdtype=modules modules.yaml repodata/;
-	cd RPMS/el7.x86_64/debug && createrepo_c .;
-	cd RPMS/el8.x86_64/debug && createrepo_c . && repo2module -s stable . modules.yaml && modifyrepo_c --mdtype=modules modules.yaml repodata/;
-	cd RPMS/el9.x86_64/debug && createrepo_c . && repo2module -s stable . modules.yaml && modifyrepo_c --mdtype=modules modules.yaml repodata/;
-rmds:
-	find . -type f -name .DS_Store -delete
+	mkdir -p deb/jammy.amd64 deb/bookworm.amd64
+pull22:
+	rsync -avz u22:/tmp/deb/ deb/jammy.amd64/
+pull12:
+	rsync -avz d12:/tmp/deb/ deb/bookworm.amd64/
 
 #---------------------------------------------#
 # publish
