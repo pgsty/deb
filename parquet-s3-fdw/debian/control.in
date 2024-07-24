@@ -1,0 +1,17 @@
+Source: parquet-s3-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libarrow-s3 (>= 18.0.0)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgspider/parquet_s3_fdw
+
+Package: postgresql-PGVERSION-parquet-s3-fdw
+Architecture: any
+Provides: postgresql-parquet-s3-fdw
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, libarrow-s3 (>= 18.0.0)
+Description: ParquetS3 Foreign Data Wrapper for PostgresSQL PGVERSION
+  This PostgreSQL extension is a Foreign Data Wrapper (FDW) for accessing Parquet file on local file system and Amazon S3.
+  This version of parquet_s3_fdw can work for PostgreSQL 13, 14, 15 and 16.0.
+  Read-only Apache Parquet foreign data wrapper supporting S3 access for PostgreSQL. Extension version 0.3
