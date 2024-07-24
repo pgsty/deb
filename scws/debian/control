@@ -1,0 +1,15 @@
+Source: scws
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/scws
+
+Package: scws
+Architecture: any
+Provides: scws
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Simple Chinese Word Segmentation
+  SCWS (Simple Chinese Word Segmentation) is a high performance Chinese word segmentation utility.

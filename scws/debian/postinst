@@ -1,0 +1,11 @@
+#!/bin/sh
+# Post-installation script for updating the linker cache
+
+set -e  # Exit immediately if a command exits with a non-zero status.
+
+# Update the dynamic linker run-time bindings
+if [ "$1" = "configure" ]; then
+    ldconfig
+fi
+
+exit 0
