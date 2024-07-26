@@ -1,0 +1,20 @@
+Source: pguint
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/petere/pguint
+
+Package: postgresql-PGVERSION-pguint
+Architecture: any
+Provides: postgresql-pguint
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Unsigned integer types extension for PostgreSQL
+  This extension provides additional integer types for PostgreSQL:
+  int1 (signed 8-bit integer)
+  uint1 (unsigned 8-bit integer)
+  uint2 (unsigned 16-bit integer)
+  uint4 (unsigned 32-bit integer)
+  uint8 (unsigned 64-bit integer)
