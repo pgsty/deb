@@ -1,6 +1,22 @@
 #---------------------------------------------#
 # build
 #---------------------------------------------#
+rust: pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later
+deps: scws libduckdb
+batch1: pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell plv8 zhparser duckdb_fdw
+batch2: imgsmr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats pg_fkpart pgmeminfo
+collect:
+	mkdir -p /tmp/deb
+	rm -rf /tmp/deb/*
+	cp -r ~/*.deb /tmp/deb/
+
+#---------------------------------------------#
+# rust & pgrx extensions
+#---------------------------------------------#
+pg_search:
+	cd pg-search && make
+pg_lakehouse:
+	cd pg-lakehouse && make
 pgml:
 	cd pgml && make
 pg_graphql:
@@ -9,10 +25,6 @@ pg_jsonschema:
 	cd pg-jsonschema && make
 wrappers:
 	cd wrappers && make
-pg_search:
-	cd pg-search && make
-pg_lakehouse:
-	cd pg-lakehouse && make
 pgvectorscale:
 	cd pgvectorscale && make
 plprql:
@@ -34,12 +46,19 @@ pgdd:
 pg_tiktoken:
 	cd pg-tiktoken && make
 
-rust: pgml pg_graphql pg_jsonschema wrappers pg_search pg_lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later
-norm1: pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell
-norm2: scws libduckdb
-norm3: zhparser duckdb_fdw
-norm4: plv8
+rust-clean:
+	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
+	rm -rf ~/paradedb/*.deb ~/paradedb/*.ddeb ~/paradedb/*.buildinfo ~/paradedb/*.changes
+	rm -rf ~/pg_vectorize/*.deb ~/pg_vectorize/*.ddeb ~/pg_vectorize/*.buildinfo ~/pg_vectorize/*.changes
+	rm -rf ~/postgresml/*.deb ~/postgresml/*.ddeb ~/postgresml/*.buildinfo ~/postgresml/*.changes
+	rm -rf ~/pgsql-gzip/*.deb ~/pgsql-gzip/*.ddeb ~/pgsql-gzip/*.buildinfo ~/pgsql-gzip/*.changes
+	rm -rf ~/pg-net/*.deb ~/pg-net/*.ddeb ~/pg-net/*.buildinfo ~/pg-net/*.changes
+	rm -rf ~/pgjwt/*.deb ~/pgjwt/*.ddeb ~/pgjwt/*.buildinfo ~/pgjwt/*.changes
+	rm -rf ~/pgvectorscale/*.deb ~/pgvectorscale/*.ddeb ~/pgvectorscale/*.buildinfo ~/pgvectorscale/*.changes
 
+#---------------------------------------------#
+# common c/c++ extensions
+#---------------------------------------------#
 pg_net:
 	cd pg-net && make
 pgjwt:
@@ -84,11 +103,6 @@ duckdb_fdw:
 	cd duckdb-fdw && make
 imgsmlr:
 	cd imgsmlr && make
-#libarrow-s3:
-#	cd libarrow-s3 && make
-#parquet-s3-fdw:
-#	cd parquet-s3-fdw && make
-
 pg_bigm:
 	cd pg-bigm && make
 pg_ivm:
@@ -124,22 +138,6 @@ pg_fkpart:
 pgmeminfo:
 	cd pgmeminfo && make
 
-
-clean-all:
-	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
-	rm -rf ~/paradedb/*.deb ~/paradedb/*.ddeb ~/paradedb/*.buildinfo ~/paradedb/*.changes
-	rm -rf ~/pg_vectorize/*.deb ~/pg_vectorize/*.ddeb ~/pg_vectorize/*.buildinfo ~/pg_vectorize/*.changes
-	rm -rf ~/postgresml/*.deb ~/postgresml/*.ddeb ~/postgresml/*.buildinfo ~/postgresml/*.changes
-	rm -rf ~/pgsql-gzip/*.deb ~/pgsql-gzip/*.ddeb ~/pgsql-gzip/*.buildinfo ~/pgsql-gzip/*.changes
-	rm -rf ~/pg-net/*.deb ~/pg-net/*.ddeb ~/pg-net/*.buildinfo ~/pg-net/*.changes
-	rm -rf ~/pgjwt/*.deb ~/pgjwt/*.ddeb ~/pgjwt/*.buildinfo ~/pgjwt/*.changes
-	rm -rf ~/pgvectorscale/*.deb ~/pgvectorscale/*.ddeb ~/pgvectorscale/*.buildinfo ~/pgvectorscale/*.changes
-
-collect:
-	mkdir -p /tmp/deb
-	rm -rf /tmp/deb/*
-	cp -r ~/*.deb /tmp/deb/
-
 #---------------------------------------------#
 # sync to/from building server
 #---------------------------------------------#
@@ -153,6 +151,9 @@ pulld-sv:
 	rsync --delete -avc sv:/data/pigsty-deb/deb/ ./deb/
 update: push-sv repo-sv pull-sv
 updated: pushd-sv repo-sv pulld-sv
+
+ps: pushss
+pd: pushsd
 pushsd: pushd-sv
 	ssh sv 'cd /data/pigsty-deb && make pushd'
 pushss: push-sv
@@ -189,8 +190,8 @@ pub: release
 release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
-.PHONY: push pull pulld build build-on-sv push9 pull9 build9 build-sv build-on-el9 clean sync pub release clean-all collect \
-	pgml pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later \
-	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde imgsmlr pg_bigm \
-	hunspell scws zhparser libduckdb duckdb_fdw pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor \
-	passwordcheck_cracklib pg_profile pg_store_plan system_stats pg_fkpart pgmeminfo
+.PHONY: rust deps batch1 batch2 deb-collect \
+ 	pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later \
+ 	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell scws zhparser libduckdb duckdb_fdw \
+ 	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats pg_fkpart pgmeminfo \
+ 	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pull purge dirs pull22 pull12 sync pub release
