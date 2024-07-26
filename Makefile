@@ -21,8 +21,6 @@ pg_idkit:
 	cd pg-idkit && make
 pgsmcrypto:
 	cd pgsmcrypto && make
-pgdd:
-	cd pgdd && make
 pgmq:
 	cd pgmq && make
 pg_tier:
@@ -31,8 +29,12 @@ pg_vectorize:
 	cd pg-vectorize && make
 pg_later:
 	cd pg-later && make
+pgdd:
+	cd pgdd && make
+pg_tiktoken:
+	cd pg-tiktoken && make
 
-rust: pgml pg_graphql pg_jsonschema wrappers pg_search pg_lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later
+rust: pgml pg_graphql pg_jsonschema wrappers pg_search pg_lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later
 norm1: pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell
 norm2: scws libduckdb
 norm3: zhparser duckdb_fdw
@@ -80,10 +82,14 @@ libduckdb:
 	cd libduckdb && make
 duckdb_fdw:
 	cd duckdb-fdw && make
+imgsmlr:
+	cd imgsmlr && make
 libarrow-s3:
 	cd libarrow-s3 && make
 parquet-s3-fdw:
 	cd parquet-s3-fdw && make
+pg_bigm:
+	cd pg-bigm && make
 
 clean-all:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
@@ -150,6 +156,6 @@ release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
 .PHONY: push pull pulld build build-on-sv push9 pull9 build9 build-sv build-on-el9 clean sync pub release clean-all collect \
-	pgml pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pgmq pg_tier pg_vectorize pg_later \
-	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde \
+	pgml pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later \
+	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde imgsmlr pg_bigm \
 	hunspell scws zhparser libduckdb duckdb_fdw

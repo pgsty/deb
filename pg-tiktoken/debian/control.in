@@ -1,0 +1,14 @@
+Source: pg-tiktoken
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/kelvich/pg_tiktoken
+
+Package: postgresql-PGVERSION-pg-tiktoken
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: OpenAI tiktoken tokenizer for PostgreSQL PGVERSION
+  Postgres extension that does input tokenization using OpenAI's tiktoken.
