@@ -1,0 +1,16 @@
+Source: pg-fkpart
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/lemoineat/pg_fkpart
+
+Package: postgresql-PGVERSION-pg-fkpart
+Architecture: any
+Provides: postgresql-pg-fkpart
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: PostgreSQL extension to partition tables following a foreign key
+  pg_fkpart is a PostgreSQL extension to partition tables following a foreign key of a table.
+  It is initially based of pg_part from Satoshi Nagayasu snaga@uptime.jp.
