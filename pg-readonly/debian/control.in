@@ -1,0 +1,15 @@
+Source: pg-readonly
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pierreforstmann/pg_readonly
+
+Package: postgresql-PGVERSION-pg-readonly
+Architecture: any
+Provides: postgresql-pg-readonly
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension to set all cluster databases read only.
+  pg_readonly is a PostgreSQL extension which allows to set all cluster databases read only.
