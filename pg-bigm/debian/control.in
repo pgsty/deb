@@ -1,0 +1,16 @@
+Source: pg-bigm
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgbigm/pg_bigm
+
+Package: postgresql-PGVERSION-pg-bigm
+Architecture: any
+Provides: postgresql-pg-bigm
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: The pg_bigm module provides full text search capability in PostgreSQL. This module allows a user to create 2-gram (bigram) index for faster full text search.
+  The pg_bigm module provides full text search capability in PostgreSQL. This module allows a user to create 2-gram (bigram) index for faster full text search.
+  pg_bigm is released under the PostgreSQL License, a liberal Open Source license, similar to the BSD or MIT licenses.
