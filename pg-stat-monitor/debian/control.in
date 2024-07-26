@@ -1,0 +1,16 @@
+Source: pg-stat-monitor
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/percona/pg_stat_monitor
+
+Package: postgresql-PGVERSION-pg-stat-monitor
+Architecture: any
+Provides: postgresql-pg-stat-monitor
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Query Performance Monitoring Tool for PostgreSQL
+  The pg_stat_monitor is a Query Performance Monitoring tool for PostgreSQL.
+  It attempts to provide a more holistic picture by providing much-needed query performance insights in a single view.
