@@ -1,0 +1,15 @@
+Source: sqlite-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libsqlite3-dev (>= 3)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgspider/sqlite_fdw
+
+Package: postgresql-PGVERSION-sqlite-fdw
+Architecture: any
+Provides: postgresql-pg-uuidv7
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: SQLite Foreign Data Wrapper for PostgreSQL
+  This is a foreign data wrapper (FDW) to connect PostgreSQL to SQLite database file. This FDW works with PostgreSQL 12, 13, 14, 15, 16 and confirmed with SQLite 3.42.0.
