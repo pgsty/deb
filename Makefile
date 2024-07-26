@@ -107,6 +107,8 @@ pg_permissions:
 	cd pg-permissions && make
 ddlx:
 	cd ddlx && make
+pg_safeupdate:
+	cd pg-safeupdate && make
 
 
 clean-all:
