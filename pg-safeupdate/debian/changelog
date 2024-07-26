@@ -1,4 +1,4 @@
-pg-safeupdates (1.5-1PIGSTY) unstable; urgency=medium
+pg-safeupdate (1.5-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
 

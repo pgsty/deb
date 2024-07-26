@@ -1,4 +1,4 @@
-Source: pg-safeupdates
+Source: pg-safeupdate
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
@@ -7,9 +7,9 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/eradman/pg-safeupdate
 
-Package: postgresql-PGVERSION-pg-safeupdates
+Package: postgresql-PGVERSION-pg-safeupdate
 Architecture: any
-Provides: postgresql-pg-safeupdates
+Provides: postgresql-pg-safeupdate
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: A simple extension to PostgreSQL that requires criteria for UPDATE and DELETE
   safeupdate is a simple extension to PostgreSQL that raises an error if UPDATE and DELETE are executed without specifying conditions.

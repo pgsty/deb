@@ -109,7 +109,8 @@ ddlx:
 	cd ddlx && make
 pg_safeupdate:
 	cd pg-safeupdate && make
-
+pg_stat_monitor:
+	cd pg-stat-monitor && make
 
 clean-all:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
