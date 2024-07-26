@@ -1,0 +1,16 @@
+Source: pg-store-plan
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ossc-db/pg_store_plans
+
+Package: postgresql-PGVERSION-pg-store-plan
+Architecture: any
+Provides: postgresql-pg-store-plan
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Store execution plans like pg_stat_statements does for queries.
+  The pg_store_plans module provides a means for tracking execution plan statistics of all SQL statements executed by a server.
+  The module must be loaded by adding pg_store_plans to shared_preload_libraries in postgresql.conf, because it requires additional shared memory. This means that a server restart is required to add or remove the module. pg_store_plans requires the GUC variable compute_query_id to be "on" or "auto". If it is set to "no", pg_store_plans is silently disabled.

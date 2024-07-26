@@ -115,6 +115,12 @@ passwordcheck_cracklib:
 	cd passwordcheck-cracklib && make
 pg_profile:
 	cd pg-profile && make
+pg_store_plan:
+	cd pg-store-plan && make
+pg_top:
+	cd pg-top && make
+
+
 
 
 
@@ -186,4 +192,4 @@ release: clean
 	pgml pg-graphql pg-jsonschema wrappers pg-search pg-lakehouse pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later \
 	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde imgsmlr pg_bigm \
 	hunspell scws zhparser libduckdb duckdb_fdw pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor \
-	passwordcheck_cracklib pg_profile
+	passwordcheck_cracklib pg_profile pg_store_plan pg_top
