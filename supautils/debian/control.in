@@ -11,7 +11,7 @@ Package: postgresql-PGVERSION-supautils
 Architecture: any
 Provides: postgresql-supautils
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Modern cryptography for PostgreSQL using libsodium.
+Description: PostgreSQL extension that secures a cluster on a cloud environment
   Supautils is an extension that secures a PostgreSQL cluster on a cloud environment.
   It doesn't require creating database objects. It's a shared library that modifies PostgreSQL behavior through "hooks",
   not through tables or functions.

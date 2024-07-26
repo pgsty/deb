@@ -1,0 +1,15 @@
+Source: wal2mongo
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/HighgoSoftware/wal2mongo
+
+Package: postgresql-PGVERSION-wal2mongo
+Architecture: any
+Provides: postgresql-wal2mongo
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL logical decoding output plugin for MongoDB
+  wal2mongo is a PostgreSQL logical decoding output plugin designed to make the logical replication easier from PostgreSQL to MongoDB by formating the output to a JSON-like format accepted by mongo.
