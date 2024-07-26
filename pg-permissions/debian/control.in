@@ -1,0 +1,16 @@
+Source: pg-permissions
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/fboulnois/pg_permissions
+
+Package: postgresql-PGVERSION-pg-permissions
+Architecture: any
+Provides: postgresql-pg-permissions
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: A simple set of views to see ALL permissions in a PostgreSQL database
+  This extension allows you to review object permissions on a PostgreSQL database.
+  
