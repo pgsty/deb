@@ -1,0 +1,14 @@
+Source: pgmeminfo
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/okbob/pgmeminfo
+
+Package: postgresql-PGVERSION-pgmeminfo
+Architecture: any
+Provides: postgresql-pgmeminfo
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: allow to access to memory usage diagnostics
