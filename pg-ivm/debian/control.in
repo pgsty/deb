@@ -1,0 +1,16 @@
+Source: pg-ivm
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgivm/pg_ivm
+
+Package: postgresql-PGVERSION-pg-ivm
+Architecture: any
+Provides: postgresql-pg-ivm
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: IVM (Incremental View Maintenance) implementation as a PostgreSQL extension
+  The pg_ivm module provides Incremental View Maintenance (IVM) feature for PostgreSQL.
+  The extension is compatible with PostgreSQL 13, 14, 15, and 16.
