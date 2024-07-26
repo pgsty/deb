@@ -1,0 +1,16 @@
+Source: passwordcheck-cracklib
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcrack2-dev (>=2.9)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/fboulnois/pg_permissions
+
+Package: postgresql-PGVERSION-passwordcheck-cracklib
+Architecture: any
+Provides: postgresql-passwordcheck-cracklib
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: passwordcheck_cracklib - strengthen PostgreSQL user password checks with cracklib
+  The passwordcheck_cracklib is like the regular PostgreSQL passwordcheck extension, except it is built with cracklib. Unlike the original module, this one has more strict password checks.
+  The passwordcheck_cracklib module checks users' passwords whenever they are set with CREATE ROLE or ALTER ROLE. If a password is considered too weak, it will be rejected and the command will terminate with an error.
