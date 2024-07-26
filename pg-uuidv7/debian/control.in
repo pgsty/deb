@@ -1,0 +1,16 @@
+Source: pg-uuidv7
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/fboulnois/pg_uuidv7
+
+Package: postgresql-PGVERSION-pg-uuidv7
+Architecture: any
+Provides: postgresql-pg-uuidv7
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: A tiny Postgres extension to create version 7 UUIDs
+  A tiny Postgres extension to create valid version 7 UUIDs in Postgres.
+  These are regular Postgres UUIDs, so they can be used as primary keys, converted to and from strings, included in indexes, etc:
