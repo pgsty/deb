@@ -1,0 +1,16 @@
+Source: ddlx
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/lacanoid/pgddl
+
+Package: postgresql-PGVERSION-ddlx
+Architecture: any
+Provides: postgresql-ddlx
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: DDL eXtractor functions for PostgreSQL (ddlx)
+  This is an SQL-only extension for PostgreSQL that provides uniform functions for generating SQL Data Definition Language (DDL) scripts for objects created in a database.
+  It contains a bunch of SQL functions to convert PostgreSQL system catalogs to nicely formatted snippets of SQL DDL, such as CREATE TABLE.
