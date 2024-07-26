@@ -1,0 +1,16 @@
+Source: pg-profile
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/zubkov-andrei/pg_profile
+
+Package: postgresql-PGVERSION-pg-profile
+Architecture: any
+Provides: postgresql-pg-profile
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Postgres historic workload reports
+  This extension for PostgreSQL helps you to find out most resource intensive activities in your PostgreSQL databases.
+  
