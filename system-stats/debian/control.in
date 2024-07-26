@@ -1,0 +1,16 @@
+Source: system-stats
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/EnterpriseDB/system_stats
+
+Package: postgresql-PGVERSION-system-stats
+Architecture: any
+Provides: postgresql-system-stats
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: A Postgres extension for exposing system metrics such as CPU, memory and disk information
+  system_stats is a Postgres extension that provides functions to access system level statistics that can be used for monitoring. It supports Linux, macOS and Windows.
+  Note that not all values are relevant on all operating systems. In such cases NULL is returned for affected values.
