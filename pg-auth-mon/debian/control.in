@@ -1,0 +1,17 @@
+Source: pg-auth-mon
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/RafiaSabih/pg_auth_mon
+
+Package: postgresql-PGVERSION-pg-auth-mon
+Architecture: any
+Provides: postgresql-pg-auth-mon
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension to store authentication attempts
+  This extension eases monitoring of login attempts to your database. Postgres writes each login attempt to a log file,
+  but it is hard to identify through that information alone if your database is under malicious activity.
+  
