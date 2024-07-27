@@ -1,0 +1,18 @@
+Source: pg-background
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/vibhorkum/pg_background
+
+Package: postgresql-PGVERSION-pg-background
+Architecture: any
+Provides: postgresql-pg-background
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: pg_background is an extension for Postgres PGVERSION
+  Initially this extension was shared by Robert Haas in PostgreSQL community for demo purpose.
+  Some modification has been done, by me, to keep it in sync with latest version of Postgres version >=9.5.
+  Extra error handling and command results has been added.
+
