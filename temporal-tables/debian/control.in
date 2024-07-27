@@ -1,0 +1,17 @@
+Source: temporal-tables
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/arkhipov/temporal_tables
+
+Package: postgresql-PGVERSION-temporal-tables
+Architecture: any
+Provides: postgresql-temporal-tables
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Temporal Tables PostgreSQL Extension
+  A temporal table is a table that records the period of time when a row is valid.
+  There are two types of periods: the application period (also known as valid-time or business-time) and the system period (also known as transaction-time).
+  
