@@ -1,0 +1,18 @@
+Source: pg-jobmon
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/omniti-labs/pg_jobmon
+
+Package: postgresql-PGVERSION-pg-jobmon
+Architecture: any
+Provides: postgresql-pg-jobmon
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: PostgreSQL extension which provides persistent logging within transactions and functions.
+  pg_jobmon is a PostgreSQL extension designed to add autonomous logging capabilities to transactions and functions.
+  The logging is done in a NON-TRANSACTIONAL method, so that if your function/transaction fails for any reason,
+  any information written to that point will be kept in the log tables rather than rolled back.
+  
