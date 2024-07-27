@@ -1,0 +1,16 @@
+Source: pgsql-tweaks
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://gitlab.com/sjstoelting/pgsql-tweaks/
+
+Package: postgresql-PGVERSION-pgsql-tweaks
+Architecture: any
+Provides: postgresql-pgsql-tweaks
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Contains PostgreSQL functions which I regularly needed.
+  The functions and views published in this repository are some of those, which I regularly need in my daily job.
+  As these procedures are sort of essential, at least to me, I install them in the public schema. That way they are available for everyone without having to know a schema name.
