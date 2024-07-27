@@ -1,0 +1,17 @@
+Source: pgcopydb
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), libgc-dev (>= 8), libpam0g-dev (>= 1)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/dimitri/pgcopydb
+
+Package: pgcopydb
+Architecture: any
+Provides: pgcopydb
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Copy a Postgres database to a target Postgres server (pg_dump | pg_restore on steroids)
+  pgcopydb is a tool that automates running pg_dump | pg_restore between two running Postgres servers.
+  To make a copy of a database to another server as quickly as possible,
+  one would like to use the parallel options of pg_dump and still be able to stream the data to as many pg_restore jobs.

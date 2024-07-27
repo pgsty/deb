@@ -2,7 +2,7 @@
 # build
 #---------------------------------------------#
 rust: pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later
-deps: scws libduckdb
+noext: scws libduckdb pgcopydb
 batch1: pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell plv8 zhparser duckdb_fdw
 batch2: imgsmr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats pg_fkpart pgmeminfo
 collect:
@@ -93,12 +93,8 @@ pg_tde:
 	cd pg-tde && make
 hunspell:
 	cd hunspell && make
-scws:
-	cd scws && make
 zhparser:
 	cd zhparser && make
-libduckdb:
-	cd libduckdb && make
 duckdb_fdw:
 	cd duckdb-fdw && make
 imgsmlr:
@@ -170,6 +166,13 @@ pg_jobmon:
 geoip:
 	cd geoip && make
 
+pgcopydb:
+	cd pgcopydb && make
+scws:
+	cd scws && make
+libduckdb:
+	cd libduckdb && make
+
 #---------------------------------------------#
 # sync to/from building server
 #---------------------------------------------#
@@ -224,8 +227,9 @@ release: clean
 
 .PHONY: rust deps batch1 batch2 deb-collect \
  	pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later \
- 	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell scws zhparser libduckdb duckdb_fdw \
+ 	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
  	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback \
  	pg_auth_mon login_hook logerrors pg_jobmon geoip \
+ 	scws pgcopydb libduckdb \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pull purge dirs pull22 pull12 sync pub release
