@@ -1,0 +1,19 @@
+Source: pg-statement-rollback
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/lzlabs/pg_statement_rollback
+
+Package: postgresql-PGVERSION-pg-statement-rollback
+Architecture: any
+Provides: postgresql-pg-statement-rollback
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Server side rollback at statement level for PostgreSQL like Oracle or DB2
+  pg_statement_rollback is a PostgreSQL extension to add server side transaction with rollback at statement level like in Oracle or DB2.
+  If at any time during execution a SQL statement causes an error, all effects of the statement are rolled back.
+  The effect of the rollback is as if that statement had never been run.
+  This operation is called statement-level rollback and has the following characteristics:
+  
