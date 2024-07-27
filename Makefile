@@ -146,6 +146,21 @@ pg_background:
 count_distinct:
 	cd count-distinct && make
 
+pg_extra_time:
+	cd pg-extra-time && make
+pgsql_tweaks:
+	cd pgsql-tweaks && make
+pgtt:
+	cd pgtt && make
+temporal_tables:
+	cd temporal-tables && make
+emaj:
+	cd emaj && make
+table_version:
+	cd table-version && make
+pg_statement_rollback:
+	cd pg-statement-rollback && make
+
 
 #---------------------------------------------#
 # sync to/from building server
@@ -203,5 +218,5 @@ release: clean
  	pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later \
  	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell scws zhparser libduckdb duckdb_fdw \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
- 	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct \
+ 	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj table_version pg_statement_rollback \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pull purge dirs pull22 pull12 sync pub release
