@@ -1,0 +1,16 @@
+Source: login-hook
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/splendiddata/login_hook
+
+Package: postgresql-PGVERSION-login-hook
+Architecture: any
+Provides: postgresql-login-hook
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres database extension to mimic a logon trigger
+  Postgres database extension to execute some code on user login, comparable to Oracle's after logon trigger.
+  
