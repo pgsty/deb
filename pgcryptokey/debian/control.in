@@ -1,0 +1,16 @@
+Source: pgcryptokey
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://momjian.us/download/pgcryptokey/
+
+Package: postgresql-PGVERSION-pgcryptokey
+Architecture: any
+Provides: postgresql-pgcryptokey
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Cryptographic key management extension for PostgreSQL PGVERSION
+  pgcryptokey allows the creation, selection, rotation, and deletion of cryptographic data keys.
+  Each cryptographic data key is encrypted/decrypted with (i.e., wrapped inside) an access password. Accessing a cryptographic data key requires the proper access password, as illustrated below:
