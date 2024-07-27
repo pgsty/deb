@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/petere/geoip
+Homepage: https://github.com/tvondra/geoip
 
 Package: postgresql-PGVERSION-geoip
 Architecture: any
