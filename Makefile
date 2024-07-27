@@ -166,12 +166,16 @@ pg_jobmon:
 geoip:
 	cd geoip && make
 
-pgcopydb:
-	cd pgcopydb && make
 scws:
 	cd scws && make
 libduckdb:
 	cd libduckdb && make
+pgcopydb:
+	cd pgcopydb && make
+pg_bulkload:
+	cd pg-bulkload && make
+
+
 
 #---------------------------------------------#
 # sync to/from building server
@@ -231,5 +235,5 @@ release: clean
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
  	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback \
  	pg_auth_mon login_hook logerrors pg_jobmon geoip \
- 	scws pgcopydb libduckdb \
+ 	scws libduckdb pgcopydb pg_bulkload \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pull purge dirs pull22 pull12 sync pub release

@@ -1,0 +1,17 @@
+Source: pg-bulkload
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ossc-db/pg_bulkload
+
+Package: postgresql-PGVERSION-pg-bulkload
+Architecture: any
+Provides: postgresql-pg-bulkload
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: High speed data loading utility for PostgreSQL
+  pg_bulkload is a high speed data loading tool for PostgreSQL.
+  pg_bulkload is designed to load huge amount of data to a database. You can load data to table bypassing PostgreSQL shared buffers.
+  pg_bulkload also has some ETL features; input data validation and data transformation. to as many pg_restore jobs.
