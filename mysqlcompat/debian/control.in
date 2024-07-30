@@ -1,0 +1,15 @@
+Source: mysqlcompat
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), zlib1g-dev (>= 1)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/2ndQuadrant/mysqlcompat
+
+Package: postgresql-PGVERSION-mysqlcompat
+Architecture: any
+Provides: postgresql-mysqlcompat
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: MySQL compatibility functions for PostgreSQL PGVERSION
+  A reimplemenation of as many MySQL functions as possible in PostgreSQL, as an aid to porting
