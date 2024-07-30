@@ -8,6 +8,7 @@ setup:
 	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
+	sed -ie '/^DOCS/s/^/#/' build/makefile
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 

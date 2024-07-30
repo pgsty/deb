@@ -2,12 +2,15 @@ all: setup build move
 
 TARBALL := temporal_tables-1.2.2.tar.gz
 
+########### This file has conflict doc in the Makefile ###########
+
 # prepare directory
 setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
+	sed -ie '/^DOCS/s/^/#/' build/GNUmakefile
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 

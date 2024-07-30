@@ -174,6 +174,8 @@ pgcopydb:
 	cd pgcopydb && make
 pg_bulkload:
 	cd pg-bulkload && make
+mysqlcompat:
+	cd mysqlcompat && make
 
 
 
@@ -188,8 +190,6 @@ pull-sv:
 	rsync -avc sv:/data/pigsty-deb/deb/ ./deb/
 pulld-sv:
 	rsync --delete -avc sv:/data/pigsty-deb/deb/ ./deb/
-update: push-sv repo-sv pull-sv
-updated: pushd-sv repo-sv pulld-sv
 
 ps: pushss
 pd: pushsd
@@ -234,6 +234,6 @@ release: clean
  	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
  	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback \
- 	pg_auth_mon login_hook logerrors pg_jobmon geoip \
+ 	pg_auth_mon login_hook logerrors pg_jobmon geoip mysqlcompat \
  	scws libduckdb pgcopydb pg_bulkload \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pull purge dirs pull22 pull12 sync pub release

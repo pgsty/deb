@@ -18,7 +18,10 @@ override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-temporal-tables
 
 override_dh_installdocs:
-	dh_installdocs --all README.*
+
+override_dh_install:
+	dh_install --exclude=README.md.gz
+	rm -f debian/postgresql-doc-*/usr/share/doc/postgresql-doc-*/extension/README.md.gz
 
 %:
 	dh $@
