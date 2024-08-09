@@ -1,0 +1,8 @@
+This is an extension for PostgreSQL that provides a uri data type. Advantages over using plain text for storing URIs include:
+
+URI syntax checking
+functions for extracting URI components
+human-friendly sorting
+The actual URI parsing is provided by the uriparser library, which supports URI syntax as per RFC 3986.
+
+Note that this might not be the right data type to use if you want to store user-provided URI data, such as HTTP referrers, since they might contain arbitrary junk.
