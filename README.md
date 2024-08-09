@@ -65,8 +65,7 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 - FEAT index_advisor https://github.com/supabase/index_advisor PostgreSQL (supabase) 0.2.0 SQL
 - FEAT pg_financial https://github.com/intgr/pg_financial  C PostgreSQL 1.0.1
 - FEAT pg_savior https://github.com/viggy28/pg_savior Apache C (13,14,15,16)
-- FEAT zson https://github.com/postgrespro/zson
-- FUNC aggs_for_vecs https://github.com/pjungwir/aggs_for_vecs
+- FUNC aggs_for_vecs https://github.com/pjungwir/aggs_for_vecs (12,13,14,15)
 - FUNC base36 https://github.com/adjust/pg-base36 MIT
 - FUNC base62  https://github.com/adjust/pg-base62 MIT
 - FUNC env https://github.com/theory/pg-envvar C 1.0.0
@@ -98,7 +97,7 @@ Not Planned
 - pg_telemetry, we already have better observability
 - pgx_ulid, https://github.com/pksunkara/pgx_ulid, already covered by pg_idkit (MIT, but RUST)
 - embedding: obsolete
- 
+- FEAT zson https://github.com/postgrespro/zson MIT C (too old)
 
 --------
 

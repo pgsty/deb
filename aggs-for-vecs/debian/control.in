@@ -1,0 +1,17 @@
+Source: aggs-for-vecs
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pjungwir/aggs_for_vecs
+
+Package: postgresql-PGVERSION-aggs-for-vecs
+Architecture: any
+Provides: postgresql-aggs-for-vecs
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres C extension with aggregate functions for array inputs
+  This is a C-based Postgres extension offering various aggregate functions
+  like min, max, avg, and var_samp that operate on arrays instead of scalars.
+  It treats each array as a "vector" and handles each element independently.

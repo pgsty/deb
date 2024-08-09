@@ -202,8 +202,6 @@ pg_financial:
 	cd pg-financial && make
 pg_savior:
 	cd pg-savior && make
-zson:
-	cd zson && make
 aggs_for_vecs:
 	cd aggs-for-vecs && make
 base36:
