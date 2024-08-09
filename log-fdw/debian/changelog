@@ -1,4 +1,4 @@
-pg-failover-slots (1.0.1-1PIGSTY) unstable; urgency=medium
+log-fdw (1.4-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
 

@@ -57,10 +57,10 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 ## Todolist
 
 - ADMIN pg_orphaned https://github.com/bdrouvot/pg_orphaned PostgreSQL C 1.0
-- ADMIN pgcozy https://github.com/vventirozos/pgcozy/tree/master/sql/functions SQL PostgreSQL 1.0
-- ETL decoder_raw: https://github.com/michaelpq/pg_plugins/blob/main/decoder_raw/decoder_raw.c C PostgreSQL 1.0
+- ADMIN pgcozy https://github.com/vventirozos/pgcozy/tree/master/sql/functions SQL PostgreSQL 1.0 (no so)
+- ETL decoder_raw: https://github.com/michaelpq/pg_plugins/blob/main/decoder_raw/decoder_raw.c C PostgreSQL 1.0 (no ddl)
 - ETL pg_failover_slot: https://github.com/EnterpriseDB/pg_failover_slots load C 1.0.1 Postgres?
-- FDW log-fdw https://github.com/aws/postgresql-logfdw
+- FDW log-fdw https://github.com/aws/postgresql-logfdw C Apache 2.0 1.4 (14,15,16)
 - FDW redis-fdw https://github.com/pg-redis-fdw/redis_fdw PostgreSQL
 - FEAT index_advisor https://github.com/supabase/index_advisor PostgreSQL (supabase) 0.2.0
 - FEAT pg_financial C PostgreSQL https://github.com/intgr/pg_financial

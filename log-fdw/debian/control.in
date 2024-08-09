@@ -1,0 +1,19 @@
+Source: log-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/aws/postgresql-logfdw
+
+Package: postgresql-PGVERSION-log-fdw
+Architecture: any
+Provides: postgresql-log-fdw
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Foreign-Data Wrapper facility to enable reading log files via SQL
+  This is a PostgreSQL extension built using Foreign-Data Wrapper facility to
+  enable reading log files via SQL. It basically provides SQL interface to
+  create foreign tables for each PostgreSQL log file through
+  which the file contents can be read and analyzed.
+  Only superusers are allowed to create this extension.
