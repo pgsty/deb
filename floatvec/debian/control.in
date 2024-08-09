@@ -1,0 +1,18 @@
+Source: floatvec
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pjungwir/floatvec
+
+Package: postgresql-PGVERSION-floatvec
+Architecture: any
+Provides: postgresql-floatvec
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres functions for arithmetic on numeric arrays
+  This Postgres extension provides basic arithmetic functions for operating on arrays (treated as vectors).
+  It supports addition, subtraction, multiplication, division, and raising to a power. Everything (so far) is element-by-element,
+  so no dot products or other matrix stuff.
+  Every function lets you pass either two arrays of the same length, or an array and a scalar, or a scalar and an array.
