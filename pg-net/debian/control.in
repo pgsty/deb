@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/pramsey/pgsql-gzip
+Homepage: https://github.com/supabase/pg_net
 
 Package: postgresql-PGVERSION-pg-net
 Architecture: any
