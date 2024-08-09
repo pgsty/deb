@@ -10,5 +10,5 @@ Homepage: https://github.com/dalibo/emaj
 Package: postgresql-PGVERSION-emaj
 Architecture: any
 Provides: postgresql-emaj
-Depends: ${postgresql:Depends}, ${misc:Depends}
+Depends: ${postgresql:Depends}, ${misc:Depends}, ${perl:Depends}
 Description: E-Maj is a PostgreSQL extension that tracks updates on tables sets with rollback capabilities
