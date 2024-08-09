@@ -1,0 +1,16 @@
+Source: smlar
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jirutka/smlar
+
+Package: postgresql-PGVERSION-smlar
+Architecture: any
+Provides: postgresql-smlar
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension for an effective similarity search
+  mirror of git://sigaev.ru/smlar.git, see https://www.pgcon.org/2012/schedule/track/Hacking/443.en.html
+
