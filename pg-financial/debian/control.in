@@ -1,0 +1,16 @@
+Source: pg-financial
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/intgr/pg_financial
+
+Package: postgresql-PGVERSION-pg-financial
+Architecture: any
+Provides: postgresql-pg-financial
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension with functions and aggregates for financial calculations
+  This is a PostgreSQL extension for financial calculations. Functions provided:
+  xirr(amounts, dates [, guess]) - Irregular Internal Rate of Return. Aggregate function, much like XIRR in spreadsheet programs (Excel, LibreOffice, etc).

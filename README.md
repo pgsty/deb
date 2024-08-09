@@ -63,7 +63,7 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 - FDW log-fdw https://github.com/aws/postgresql-logfdw C Apache 2.0 1.4 (14,15,16)
 - FDW redis-fdw https://github.com/pg-redis-fdw/redis_fdw PostgreSQL C
 - FEAT index_advisor https://github.com/supabase/index_advisor PostgreSQL (supabase) 0.2.0 SQL
-- FEAT pg_financial C PostgreSQL https://github.com/intgr/pg_financial
+- FEAT pg_financial https://github.com/intgr/pg_financial  C PostgreSQL 1.0.1
 - FEAT pg_savior https://github.com/viggy28/pg_savior Apache C
 - FEAT zson https://github.com/postgrespro/zson
 - FUNC aggs_for_vecs https://github.com/pjungwir/aggs_for_vecs
