@@ -1,0 +1,18 @@
+Source: lower-quantile
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/tvondra/lower_quantile
+
+Package: postgresql-PGVERSION-lower-quantile
+Architecture: any
+Provides: postgresql-lower-quantile
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: lower quantile aggregate
+  This implements the "lower quantile" aggregate, defined as
+  Given a multiset S of size n over R, the q-quantile item xq (in S) is the item x whose rank R(x) in the sorted multiset S is
+  floor(1 + q(n −1)) for 0 <= q <= 1
+  where the rank R(x) is the number of elements in S smaller than or equal to x.
