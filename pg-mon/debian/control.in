@@ -1,0 +1,17 @@
+Source: pg-mon
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/RafiaSabih/pg_mon
+
+Package: postgresql-PGVERSION-pg-mon
+Architecture: any
+Provides: postgresql-pg-mon
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension to enhance query monitoring
+  In this extension we solve a couple of important monitoring issues, viz,
+  better execution time monitoring by histograms and saving important query plan
+  information in shared hash table which is available via view --pg_mon.
