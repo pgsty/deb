@@ -1,0 +1,15 @@
+Source: base62
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/adjust/pg-base62
+
+Package: postgresql-PGVERSION-base62
+Architecture: any
+Provides: postgresql-base62
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: base62 extension for postgres
+  Base62 extension for PostgreSQL. The extension provides data types to encode and decode values using base62 encoding scheme.

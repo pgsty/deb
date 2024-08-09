@@ -66,8 +66,8 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 - FEAT pg_financial https://github.com/intgr/pg_financial  C PostgreSQL 1.0.1
 - FEAT pg_savior https://github.com/viggy28/pg_savior Apache C (13,14,15,16)
 - FUNC aggs_for_vecs https://github.com/pjungwir/aggs_for_vecs (12,13,14,15)
-- FUNC base36 https://github.com/adjust/pg-base36 MIT
-- FUNC base62  https://github.com/adjust/pg-base62 MIT
+- FUNC base36 https://github.com/adjust/pg-base36 MIT 1.0.0 C
+- FUNC base62  https://github.com/adjust/pg-base62 MIT 0.0.1 C
 - FUNC env https://github.com/theory/pg-envvar C 1.0.0
 - FUNC pg_html5_email_address https://github.com/bigsmoke/pg_html5_email_address
 - FUNC lower_quantile https://github.com/tvondra/lower_quantile
