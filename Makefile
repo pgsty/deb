@@ -174,9 +174,67 @@ pgcopydb:
 	cd pgcopydb && make
 pg_bulkload:
 	cd pg-bulkload && make
-mysqlcompat:
-	cd mysqlcompat && make
+#mysqlcompat:
+#	cd mysqlcompat && make
 
+
+
+pg_orphaned:
+	cd pg-orphaned && make
+pgcozy:
+	cd pgcozy && make
+decoder_raw:
+	cd decoder-raw && make
+pg_failover_slot:
+	cd pg_failover-slot && make
+log_fdw:
+	cd log-fdw && make
+redis_fdw:
+	cd redis_fdw && make
+index_advisor:
+	cd index-advisor && make
+pg_financial:
+	cd pg-financial && make
+pg_savior:
+	cd pg-savior && make
+zson:
+	cd zson && make
+aggs_for_vecs:
+	cd aggs-for-vecs && make
+base36:
+	cd base36 && make
+base62:
+	cd base62 && make
+env:
+	cd env && make
+pg_html5_email_address:
+	cd pg-html5-email-address && make
+lower_quantile:
+	cd lower-quantile && make
+pg_timeit:
+	cd pg-timeit && make
+quantile:
+	cd quantile && make
+random:
+	cd random && make
+session_variable:
+	cd session-variable && make
+pghydro:
+	cd pghydro && make
+smlar:
+	cd smlar && make
+sslutils:
+	cd sslutils && make
+pg_mon:
+	cd pg_mon && make
+chkpass:
+	cd chkpass && make
+currency:
+	cd currency && make
+pgemailaddr:
+	cd pgemailaddr && make
+pguri:
+	cd pguri && make
 
 
 #---------------------------------------------#
@@ -234,6 +292,7 @@ release: clean
  	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
  	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback \
- 	pg_auth_mon login_hook logerrors pg_jobmon geoip mysqlcompat \
+ 	pg_auth_mon login_hook logerrors pg_jobmon geoip \
+ 	pg_orphaned pgcozy decoder_raw pg_failover_slot log redis index_advisor pg_financial pg_savior zson aggs_for_vecs base36 base62 env pg_html5_email_address lower_quantile pg_timeit quantile random \
  	scws libduckdb pgcopydb pg_bulkload \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pull purge dirs pull22 pull12 sync pub release

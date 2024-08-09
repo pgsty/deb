@@ -1,0 +1,19 @@
+Source: pg-orphaned
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pramsey/pgsql-gzip
+
+Package: postgresql-PGVERSION-pg-orphaned
+Architecture: any
+Provides: postgresql-pg-orphaned
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Manipulate orphaned files in PostgreSQL PGVERSION
+  pg_list_orphaned(interval): to list orphaned files. Orphaned files older than the interval parameter (default 1 Day) are listed with the "older" field set to true.
+  pg_move_orphaned(interval): to move orphaned files to a "orphaned_backup" directory. Only orphaned files older than the interval parameter (default 1 Day) are moved.
+  pg_list_orphaned_moved(): to list the orphaned files that have been moved to the "orphaned_backup" directory.
+  pg_move_back_orphaned(): to move back the orphaned files from the "orphaned_backup" directory to their orginal location (if still orphaned).
+  pg_remove_moved_orphaned(): to remove the orphaned files located in the "orphaned_backup" directory.
