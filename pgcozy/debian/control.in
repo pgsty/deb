@@ -1,0 +1,16 @@
+Source: pgcozy
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/vventirozos/pgcozy
+
+Package: postgresql-PGVERSION-pgcozy
+Architecture: any
+Provides: postgresql-pgcozy
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: shared buffer snapshot and prewarm extension
+  pgcozy is an extension who adds the capability to keep snapshots of the buffer cache and later can prewarm according to these snapshots.
+  Snapshots are saved in jsonb format under a schema and a table and they can be reviewed , backed up or transferred Also see my blog for some examples and tips:
