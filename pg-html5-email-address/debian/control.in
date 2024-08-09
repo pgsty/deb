@@ -1,0 +1,17 @@
+Source: pg-html5-email-address
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/bigsmoke/pg_html5_email_address
+
+Package: postgresql-PGVERSION-pg-html5-email-address
+Architecture: any
+Provides: postgresql-pg-html5-email-address
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL email validation that is consistent with the HTML5 spec.
+  pg_html5_email_address is a tiny PostgreSQL extension that offers
+  email address validation that is consistent with the <input type="email"> validation in HTML5.
+
