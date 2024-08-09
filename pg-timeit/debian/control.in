@@ -1,0 +1,16 @@
+Source: pg-timeit
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/joelonsql/pg-timeit
+
+Package: postgresql-PGVERSION-pg-timeit
+Architecture: any
+Provides: postgresql-pg-timeit
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension that provides high-accuracy timing of SQL expressions.
+  timeit is a PostgreSQL extension to measure the execution time of built-in internal C-functions with high resolution.
+  On x86_64, it's also possible to measure clock cycles.
