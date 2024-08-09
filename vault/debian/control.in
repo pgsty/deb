@@ -10,7 +10,7 @@ Homepage: https://github.com/supabase/vault
 Package: postgresql-PGVERSION-vault
 Architecture: any
 Provides: postgresql-vault
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgsodium
 Description: Extension for storing encrypted secrets in the Vault in PostgreSQL PGVERSION
   Supabase provides a table called vault.secrets that can be used to store sensitive information like API keys.
   These secrets will be stored in an encrypted format on disk and in any database dumps.
