@@ -1,0 +1,17 @@
+Source: chkpass
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/lacanoid/chkpass
+
+Package: postgresql-PGVERSION-chkpass
+Architecture: any
+Provides: postgresql-chkpass
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Foreign-Data Wrapper facility to enable reading log files via SQL
+  PostgreSQL versions lower than 11 come bundled with chkpass extension for storing encrypted passwords.
+  This was removed from Postgres 11 and later. This is a stand alone version for use with those.
+  See documentaion for chkpass: https://www.postgresql.org/docs/10/chkpass.html
