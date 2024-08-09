@@ -1,0 +1,16 @@
+Source: pg-emailaddr
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/petere/pgemailaddr
+
+Package: postgresql-PGVERSION-pg-emailaddr
+Architecture: any
+Provides: postgresql-pg-emailaddr
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: email address type for PostgreSQL
+  This is an extension for PostgreSQL that provides a type emailaddr for storing email addresses.
+  https://twitter.com/pvh/status/667106073199775744
