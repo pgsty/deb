@@ -190,7 +190,12 @@ pg_failover_slots:
 log_fdw:
 	cd log-fdw && make
 redis_fdw:
-	cd redis_fdw && make
+	cd redis-fdw && make
+	cd redis-fdw15 && make
+	cd redis-fdw14 && make
+	cd redis-fdw13 && make
+	cd redis-fdw12 && make
+
 index_advisor:
 	cd index-advisor && make
 pg_financial:
@@ -293,6 +298,6 @@ release: clean
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
  	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback \
  	pg_auth_mon login_hook logerrors pg_jobmon geoip \
- 	pg_orphaned pgcozy decoder_raw pg_failover_slot log redis index_advisor pg_financial pg_savior zson aggs_for_vecs base36 base62 env pg_html5_email_address lower_quantile pg_timeit quantile random \
+ 	pg_orphaned pgcozy decoder_raw pg_failover_slot log_fdw redis_fdw index_advisor pg_financial pg_savior zson aggs_for_vecs base36 base62 env pg_html5_email_address lower_quantile pg_timeit quantile random \
  	scws libduckdb pgcopydb pg_bulkload \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pull purge dirs pull22 pull12 sync pub release
