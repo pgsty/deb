@@ -1,0 +1,17 @@
+Source: pg-auditor
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/aws/postgresql-logfdw
+
+Package: postgresql-PGVERSION-pg-auditor
+Architecture: any
+Provides: postgresql-pg-auditor
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: PostgreSQL extension to log each DML statement and flashback transactions
+  PostgreSQL auditing extension that records each data modification statement of specific tables,
+  and allows partial or complete flashback of transactions.
+

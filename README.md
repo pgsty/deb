@@ -88,7 +88,7 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 - FUNC cryptint https://github.com/dverite/cryptint C  1.0.0 PostgreSQL
 - FUNC floatvec https://github.com/pjungwir/floatvec C 1.0.1 MIT
 
-- SEC pg_auditor https://github.com/kouber/pg_auditor C 0.2 BSD-3
+- SEC pg_auditor https://github.com/kouber/pg_auditor PureSQL 0.2 BSD-3
 - SEC noset https://gitlab.com/ongresinc/extensions/noset
 
 
