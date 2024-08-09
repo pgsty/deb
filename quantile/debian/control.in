@@ -1,4 +1,4 @@
-Source: log-fdw
+Source: quantile
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
@@ -7,9 +7,9 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/tvondra/quantile
 
-Package: postgresql-PGVERSION-log-fdw
+Package: postgresql-PGVERSION-quantile
 Architecture: any
-Provides: postgresql-log-fdw
+Provides: postgresql-quantile
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: an aggregation function for PostgreSQL
   This extension provides three simple aggregate functions to compute quantiles (http://en.wikipedia.org/wiki/Quantile).

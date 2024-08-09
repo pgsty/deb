@@ -15,7 +15,7 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-log-fdw
+	+pg_buildext loop postgresql-%v-quantile
 
 override_dh_installdocs:
 	dh_installdocs --all README.*

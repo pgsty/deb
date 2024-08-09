@@ -1,4 +1,4 @@
-log-fdw (1.1.7-1PIGSTY) unstable; urgency=medium
+quantile (1.1.7-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
 
