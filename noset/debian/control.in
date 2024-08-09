@@ -1,0 +1,15 @@
+Source: noset
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://gitlab.com/ongresinc/extensions/noset
+
+Package: postgresql-PGVERSION-noset
+Architecture: any
+Provides: postgresql-noset
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Noset is a PostgreSQL Extension that allows blocking specific users to change a set of user-context variables.
+  noset is a loadable module via shared_preload_libraries,  to avoid SET/RESET command for change a parameter in session. It is possible to filter one or a group a parameters to block.

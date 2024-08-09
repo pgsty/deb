@@ -54,9 +54,7 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 
 --------
 
-## Todolist
-
-
+## Done
 
 - ADMIN pg_orphaned https://github.com/bdrouvot/pg_orphaned PostgreSQL C 1.0
 - ADMIN pgcozy https://github.com/vventirozos/pgcozy/tree/master/sql/functions SQL PostgreSQL 1.0 (no so)
@@ -76,21 +74,23 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 - FUNC lower_quantile https://github.com/tvondra/lower_quantile BSD-2 C (12-15) 1.0.0 
 - FUNC random https://github.com/tvondra/random PostgreSQL 2.0.0-dev
 - FUNC pg_timeit https://github.com/joelonsql/pg-timeit PostgreSQL C  1.0
-
 - RAG smlar https://github.com/jirutka/smlar PostgreSQL? C 1.0 (13-15)
 - SEC sslutils https://github.com/EnterpriseDB/sslutils PostgreSQL C 1.3 (12-15)
 - STAT pg_mon https://github.com/RafiaSabih/pg_mon C  MIT 1.0 (12-15)
 - TYPE chkpass https://github.com/lacanoid/chkpass C PostgreSQL 1.0
 - TYPE currency https://github.com/adjust/pg-currency MIT C 0.0.3
-- TYPE pgemailaddr https://github.com/petere/pgemailaddr C PostgreSQL 0
+- TYPE pgemailaddr https://github.com/petere/pgemailaddr C PostgreSQL 0 (12-15)
 - TYPE pguri https://github.com/petere/pguri PostgreSQL C (12-15) 1.20151224
 - SIM session_variable: https://github.com/splendiddata/session_variable C GPL-3.0 3.3
 - FUNC cryptint https://github.com/dverite/cryptint C  1.0.0 PostgreSQL
 - FUNC floatvec https://github.com/pjungwir/floatvec C 1.0.1 MIT
-
 - SEC pg_auditor https://github.com/kouber/pg_auditor PureSQL 0.2 BSD-3
-- SEC noset https://gitlab.com/ongresinc/extensions/noset
+- SEC noset https://gitlab.com/ongresinc/extensions/noset 0.3.0 C AGPLv3 (LOAD)
 
+
+--------
+
+## TODOLIST
 
 Not Planned
  
