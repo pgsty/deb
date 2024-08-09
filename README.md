@@ -10,27 +10,27 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 
 **Common Extensions**
 
-| Extension Name                                                    |             | SPEC                                                   | License                                                         | Comment             |
-|-------------------------------------------------------------------|-------------|--------------------------------------------------------|-----------------------------------------------------------------|---------------------|
-| [scws](https://github.com/hightman/scws)                          | v1.2.3      | [scws.spec](SPECS/scws.spec)                           | [BSD](https://github.com/hightman/scws/blob/master/COPYING)     | Deps of zhparser    |
-| [libduckdb](https://github.com/duckdb/duckdb)                     | v1.0.0      | [libduckdb.spec](SPECS/libduckdb.spec)                 | [MIT](https://github.com/duckdb/duckdb/blob/main/LICENSE)       | Deps of duckdb_fdw  |
-| [duckdb_fdw](https://github.com/alitrack/duckdb_fdw)              | v1.0.0      | [pg_graphql.spec](SPECS/duckdb_fdw.spec)               | [MIT](https://github.com/alitrack/duckdb_fdw/blob/main/LICENSE) | Depend on libduckdb |
-| [zhparser](https://github.com/amutu/zhparser)                     | v2.2        | [zhparser.spec](SPECS/zhparser.spec)                   |                                                                 | Depend on scws      |
-| [pgjwt](https://github.com/michelp/pgjwt)                         | v0.2.0      | [pgjwt.spec](SPECS/pgjwt.spec)                         |                                                                 |                     |
-| [vault](https://github.com/supabase/vault)                        | v0.2.9      | [vault.spec](SPECS/vault.spec)                         |                                                                 |                     |
-| [hydra](https://github.com/hydradatabase/)                        | v1.1.2      | [hydra.spec](SPECS/hydra.spec)                         |                                                                 |                     |
-| [plv8](https://github.com/plv8/plv8)                              | v3.2.2      | [plv8.spec](SPECS/plv8)                                |                                                                 |                     |
-| [supautils](https://github.com/supabase/supautils)                | v2.2.1      | [supautils.spec](SPECS/supautils.spec)                 |                                                                 |                     |
-| [imgsmlr](https://github.com/postgrespro/imgsmlr)                 | v1.0        | [imgsmlr.spec](SPECS/imgsmlr.spec)                     |                                                                 |                     |
-| [pg_tle](https://github.com/aws/pg_tle)                           | v1.4.0      | [pg_tle.spec](SPECS/pg_tle.spec)                       |                                                                 |                     |
-| [pg_tde](https://github.com/Percona-Lab/pg_tde/tree/1.0.0-beta)   | v1.0.0-beta | [pg_tde.spec](SPECS/pg_tde)                            |                                                                 |                     |
-| [md5hash](https://github.com/tvondra/md5hash)                     | v1.0.1      | [md5hash.spec](SPECS/md5hash)                          |                                                                 |                     |
-| [hunspell](https://github.com/postgrespro/hunspell_dicts)         | v1.0        | [hunspell.spec](SPECS/hunspell.spec)                   |                                                                 |                     |                 
-| [pg_sqlog](https://github.com/kouber/pg_sqlog)                    | v1.6        | [pg_sqlog.spec](SPECS/pg_sqlog.spec)                   |                                                                 |                     |      
-| [pg_proctab](https://gitlab.com/pg_proctab/pg_proctab)            | v0.0.10     | [pg_proctab.spec](SPECS/pg_proctab.spec)               |                                                                 |                     |              
-| [pg_hashids](https://github.com/iCyberon/pg_hashids)              | v1.3        | [pg_hashids.spec](SPECS/pg_hashids.spec)               |                                                                 |                     |            
-| [postgres_shacrypt](https://github.com/dverite/postgres-shacrypt) | v1.1        | [postgres_shacrypt.spec](SPECS/postgres_shacrypt.spec) |                                                                 |                     |                         
-| [permuteseq](https://github.com/dverite/permuteseq)               | v1.2.2      | [permuteseq.spec](SPECS/permuteseq.spec)               |                                                                 |                     |
+| Extension Name                                                    |             | License                                                         | Comment             |
+|-------------------------------------------------------------------|-------------|-----------------------------------------------------------------|---------------------|
+| [scws](https://github.com/hightman/scws)                          | v1.2.3      | [BSD](https://github.com/hightman/scws/blob/master/COPYING)     | Deps of zhparser    |
+| [libduckdb](https://github.com/duckdb/duckdb)                     | v1.0.0      | [MIT](https://github.com/duckdb/duckdb/blob/main/LICENSE)       | Deps of duckdb_fdw  |
+| [duckdb_fdw](https://github.com/alitrack/duckdb_fdw)              | v1.0.0      | [MIT](https://github.com/alitrack/duckdb_fdw/blob/main/LICENSE) | Depend on libduckdb |
+| [zhparser](https://github.com/amutu/zhparser)                     | v2.2        |                                                                 | Depend on scws      |
+| [pgjwt](https://github.com/michelp/pgjwt)                         | v0.2.0      |                                                                 |                     |
+| [vault](https://github.com/supabase/vault)                        | v0.2.9      |                                                                 |                     |
+| [hydra](https://github.com/hydradatabase/)                        | v1.1.2      |                                                                 |                     |
+| [plv8](https://github.com/plv8/plv8)                              | v3.2.2      |                                                                 |                     |
+| [supautils](https://github.com/supabase/supautils)                | v2.2.1      |                                                                 |                     |
+| [imgsmlr](https://github.com/postgrespro/imgsmlr)                 | v1.0        |                                                                 |                     |
+| [pg_tle](https://github.com/aws/pg_tle)                           | v1.4.0      |                                                                 |                     |
+| [pg_tde](https://github.com/Percona-Lab/pg_tde/tree/1.0.0-beta)   | v1.0.0-beta |                                                                 |                     |
+| [md5hash](https://github.com/tvondra/md5hash)                     | v1.0.1      |                                                                 |                     |
+| [hunspell](https://github.com/postgrespro/hunspell_dicts)         | v1.0        |                                                                 |                     |                 
+| [pg_sqlog](https://github.com/kouber/pg_sqlog)                    | v1.6        |                                                                 |                     |      
+| [pg_proctab](https://gitlab.com/pg_proctab/pg_proctab)            | v0.0.10     |                                                                 |                     |              
+| [pg_hashids](https://github.com/iCyberon/pg_hashids)              | v1.3        |                                                                 |                     |            
+| [postgres_shacrypt](https://github.com/dverite/postgres-shacrypt) | v1.1        |                                                                 |                     |                         
+| [permuteseq](https://github.com/dverite/permuteseq)               | v1.2.2      |                                                                 |                     |
 
 **Rust Extensions**
 
@@ -56,18 +56,55 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 
 ## Todolist
 
+- ADMIN pg_orphaned https://github.com/bdrouvot/pg_orphaned PostgreSQL C 1.0
+- ADMIN pgcozy https://github.com/vventirozos/pgcozy/tree/master/sql/functions SQL PostgreSQL 1.0
+- ETL decoder_raw: https://github.com/michaelpq/pg_plugins/blob/main/decoder_raw/decoder_raw.c C PostgreSQL 1.0
+- ETL pg_failover_slot: https://github.com/EnterpriseDB/pg_failover_slots load C 1.0.1 Postgres?
+- FDW log-fdw https://github.com/aws/postgresql-logfdw
+- FDW redis-fdw https://github.com/pg-redis-fdw/redis_fdw PostgreSQL
+- FEAT index_advisor https://github.com/supabase/index_advisor PostgreSQL (supabase) 0.2.0
+- FEAT pg_financial C PostgreSQL https://github.com/intgr/pg_financial
+- FEAT pg_savior https://github.com/viggy28/pg_savior Apache C
+- FEAT zson https://github.com/postgrespro/zson
+- FUNC aggs_for_vecs https://github.com/pjungwir/aggs_for_vecs
+- FUNC base36 https://github.com/adjust/pg-base36 MIT
+- FUNC base62  https://github.com/adjust/pg-base62 MIT
+- FUNC env https://github.com/theory/pg-envvar C 1.0.0
+- FUNC pg_html5_email_address https://github.com/bigsmoke/pg_html5_email_address
+- FUNC lower_quantile https://github.com/tvondra/lower_quantile
+- FUNC pg_timeit https://github.com/joelonsql/pg-timeit
+- FUNC quantile https://pgxn.org/dist/quantile (already have)
+- FUNC random https://github.com/tvondra/random
+- FUNC session_variable: https://github.com/splendiddata/session_variable
+- GIS pghydro https://github.com/pghydro/pghydro
+- RAG smlar https://github.com/jirutka/smlar
+- SEC sslutils https://github.com/EnterpriseDB/sslutils PostgreSQL C
+- STAT pg_mon https://github.com/RafiaSabih/pg_mon C  MIT
+- TYPE chkpass https://github.com/lacanoid/chkpass
+- TYPE currency https://github.com/adjust/pg-currency MIT
+- TYPE pgemailaddr https://github.com/petere/pgemailaddr
+- TYPE pguri https://github.com/petere/pguri
+
+
+Not Planned
+ 
 - [pg_tier](https://github.com/tembo-io/pg_tier): not ready due to incomplete dep parquet_s3_fdw
 - [parquet_s3_fdw](https://github.com/pgspider/parquet_s3_fdw): not ready due to compiler version
 - pg_top: not ready due to cmake error
 - timestamp9: not ready due to compiler error
-
+- pg_tier obsolete
+- pg_timeseries, we already have timescaledb 
+- pg_quack, we already have a pg_lakehouse
+- pg_telemetry, we already have better observability
+- pgx_ulid, https://github.com/pksunkara/pgx_ulid, already covered by pg_idkit (MIT, but RUST)
+- embedding: obsolete
+ 
 
 --------
 
 ## Signature
 
 All Deb Packages are signed with GPG key `9592A7BC7A682E7333376E09E7935D8DB9BD8B20` (`B9BD8B20` [Public key](KEYS))
-
 
 
 --------

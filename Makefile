@@ -185,8 +185,8 @@ pgcozy:
 	cd pgcozy && make
 decoder_raw:
 	cd decoder-raw && make
-pg_failover_slot:
-	cd pg_failover-slot && make
+pg_failover_slots:
+	cd pg-failover-slots && make
 log_fdw:
 	cd log-fdw && make
 redis_fdw:

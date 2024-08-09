@@ -1,0 +1,15 @@
+Source: pg-failover-slots
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/EnterpriseDB/pg_failover_slots
+
+Package: postgresql-PGVERSION-pg-failover-slots
+Architecture: any
+Provides: postgresql-pg-failover-slots
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PG Failover Slots extension
+  PG Failover Slots is for anyone with Logical Replication Slots on Postgres databases that are also part of a Physical Streaming Replication architecture.
