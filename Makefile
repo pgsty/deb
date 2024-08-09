@@ -222,22 +222,28 @@ random:
 	cd random && make
 session_variable:
 	cd session-variable && make
-pghydro:
-	cd pghydro && make
 smlar:
 	cd smlar && make
 sslutils:
 	cd sslutils && make
 pg_mon:
-	cd pg_mon && make
+	cd pg-mon && make
 chkpass:
 	cd chkpass && make
-currency:
-	cd currency && make
-pgemailaddr:
-	cd pgemailaddr && make
-pguri:
-	cd pguri && make
+pg_currency:
+	cd pg-currency && make
+pg_emailaddr:
+	cd pg-emailaddr && make
+pg_uri:
+	cd pg-uri && make
+cryptint:
+	cd cryptint && make
+floatvec:
+	cd floatvec && make
+pg_auditor:
+	cd pg-auditor && make
+noset:
+	cd noset && make
 
 
 #---------------------------------------------#
@@ -296,6 +302,7 @@ release: clean
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
  	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback \
  	pg_auth_mon login_hook logerrors pg_jobmon geoip \
- 	pg_orphaned pgcozy decoder_raw pg_failover_slot log_fdw redis_fdw index_advisor pg_financial pg_savior zson aggs_for_vecs base36 base62 pg_envvar pg_html5_email_address lower_quantile pg_timeit quantile random \
+ 	pg_orphaned pgcozy decoder_raw pg_failover_slot log_fdw redis_fdw index_advisor pg_financial pg_savior aggs_for_vecs base36 base62 pg_envvar pg_html5_email_address lower_quantile pg_timeit quantile random \
+ 	smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec \
  	scws libduckdb pgcopydb pg_bulkload \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pull purge dirs pull22 pull12 sync pub release
