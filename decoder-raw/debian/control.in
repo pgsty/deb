@@ -1,0 +1,17 @@
+Source: decoder-raw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/michaelpq/pg_plugins/tree/main/decoder_raw
+
+Package: postgresql-PGVERSION-decoder-raw
+Architecture: any
+Provides: postgresql-decoder-raw
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Output plugin for logical replication
+  This output plugin for logical replication generates raw queries based
+  on the logical changes it finds. Those queries can be consumed as they
+  are by any remote source.
