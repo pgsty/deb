@@ -62,7 +62,7 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 - ETL pg_failover_slot: https://github.com/EnterpriseDB/pg_failover_slots load C 1.0.1 Postgres?
 - FDW log-fdw https://github.com/aws/postgresql-logfdw C Apache 2.0 1.4 (14,15,16)
 - FDW redis-fdw https://github.com/pg-redis-fdw/redis_fdw PostgreSQL C
-- FEAT index_advisor https://github.com/supabase/index_advisor PostgreSQL (supabase) 0.2.0
+- FEAT index_advisor https://github.com/supabase/index_advisor PostgreSQL (supabase) 0.2.0 SQL
 - FEAT pg_financial C PostgreSQL https://github.com/intgr/pg_financial
 - FEAT pg_savior https://github.com/viggy28/pg_savior Apache C
 - FEAT zson https://github.com/postgrespro/zson
