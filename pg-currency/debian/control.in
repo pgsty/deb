@@ -1,0 +1,15 @@
+Source: pg-currency
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/adjust/pg-currency
+
+Package: postgresql-PGVERSION-pg-currency
+Architecture: any
+Provides: postgresql-pg-currency
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: 1 Byte Currency ISO type for PostgreSQL
+  A 1-byte ISO 4217 Currency Code data-type for PostgreSQL.
