@@ -1,0 +1,15 @@
+Source: session-variable
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/splendiddata/session_variable
+
+Package: postgresql-PGVERSION-session-variable
+Architecture: any
+Provides: postgresql-session-variable
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: The session_variable Postgres database extension provides a way to create and maintain session scoped variables and constants, more or less like Oracle's global variables.
+  The session_variable Postgres database extension provides a way to create and maintain session scoped variables and constants. This extension can be part of a solution to mimic Oracle's global constants and variables.
