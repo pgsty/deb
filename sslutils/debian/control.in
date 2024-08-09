@@ -1,0 +1,16 @@
+Source: sslutils
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/EnterpriseDB/sslutils
+
+Package: postgresql-PGVERSION-sslutils
+Architecture: any
+Provides: postgresql-sslutils
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: A Postgres extension for managing SSL certificates through SQL.
+  SSLUtils is a Postgres extension that provides SSL certicate generation
+  functions to Postgres, for use by the Postgres Enterprise Manager server.
