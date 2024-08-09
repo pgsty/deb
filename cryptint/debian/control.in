@@ -1,0 +1,15 @@
+Source: cryptint
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/dverite/cryptint
+
+Package: postgresql-PGVERSION-cryptint
+Architecture: any
+Provides: postgresql-cryptint
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension implementing Skip32 and XTEA encryption for int and bigint types
+  cryptint is a PostgreSQL extension providing SKIP32 encryption for 32-bit integers, and XTEA encryption for 64-bit integers.
