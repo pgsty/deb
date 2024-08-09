@@ -68,7 +68,7 @@ Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
 - FUNC aggs_for_vecs https://github.com/pjungwir/aggs_for_vecs (12,13,14,15)
 - FUNC base36 https://github.com/adjust/pg-base36 MIT 1.0.0 C
 - FUNC base62  https://github.com/adjust/pg-base62 MIT 0.0.1 C
-- FUNC env https://github.com/theory/pg-envvar C 1.0.0
+- FUNC envvar https://github.com/theory/pg-envvar C 1.0.0 PostgreSQL
 - FUNC pg_html5_email_address https://github.com/bigsmoke/pg_html5_email_address
 - FUNC lower_quantile https://github.com/tvondra/lower_quantile
 - FUNC pg_timeit https://github.com/joelonsql/pg-timeit

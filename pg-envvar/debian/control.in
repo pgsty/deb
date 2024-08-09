@@ -1,0 +1,16 @@
+Source: pg-envvar
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/theory/pg-envvar
+
+Package: postgresql-PGVERSION-pg-envvar
+Architecture: any
+Provides: postgresql-pg-envvar
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgers extension to fetch the value of an environment variable
+  This library contains a single PostgreSQL extension, envvar, which provides a function, get_env(TEXT),
+   that returns the value of an environment variable set on the database server
