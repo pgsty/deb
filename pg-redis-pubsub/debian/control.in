@@ -1,0 +1,15 @@
+Source: pg-redis-pubsub
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libhiredis-dev (>=0.14.0)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/brettlaforge/pg_redis_pubsub
+
+Package: postgresql-PGVERSION-pg-redis-pubsub
+Architecture: any
+Provides: postgresql-pg-redis-pubsub
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Redis Publish from PostgreSQL
+  This PostgreSQL extension allows you to connect to Redis and publish messages on a Redis channel from PostgreSQL.
