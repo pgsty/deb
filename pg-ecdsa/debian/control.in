@@ -1,0 +1,17 @@
+Source: pg-ecdsa
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ameensol/pg-ecdsa
+
+Package: postgresql-PGVERSION-pg-ecdsa
+Architecture: any
+Provides: postgresql-pg-ecdsa
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: ECDSA for PostgreSQL
+  pguecc - Postgres Bindings for the micro-ecc Elliptic Curve Cryptography library
+  pguecc exposes the elliptic curve cryptographic primitives from micro-ecc to Postgres.
+  Note: currently only key generation and signing is supported.
