@@ -1,0 +1,15 @@
+Source: pg-fio
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/csimsek/pgsql-fio
+
+Package: postgresql-PGVERSION-pg-fio
+Architecture: any
+Provides: postgresql-pg-fio
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL File I/O Functions
+  This extension for some basic file system functions.
