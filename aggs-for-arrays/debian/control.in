@@ -1,0 +1,20 @@
+Source: aggs-for-arrays
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pjungwir/aggs_for_arrays
+
+Package: postgresql-PGVERSION-aggs-for-arrays
+Architecture: any
+Provides: postgresql-aggs-for-arrays
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: A Postgres extension in C to compute statistics on arrays of numbers
+  This Postgres extension provides various functions for operating on arrays, for instance taking the histogram of an array of numbers.
+  These functions are useful because if you have a lot values you want to aggregate, queries that fetch each value from a separate row
+  can have poor performance. Storing all the values in a single row as a Postgres array can drastically improve query performance.
+  For instance, computing a 1000-bucket histogram on one million float values stored in separate rows took 12 seconds in a simple benchmark,
+  compared to 27 milliseconds with the array_to_hist function.
+
