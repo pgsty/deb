@@ -1,0 +1,17 @@
+Source: pagevis
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/hollobon/pagevis
+
+Package: postgresql-PGVERSION-pagevis
+Architecture: any
+Provides: postgresql-pagevis
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: PostgreSQL data page visualisation
+  The pagevis PostgreSQL extension currently contains a single function, show_page,
+  which returns an ASCII-graphical representation of the contents of a PostgreSQL database page. It uses the pageinspect extension,
+  which must be installed first. You must be superuser to call show_page, as it uses the pageinspect get_raw_page function.
