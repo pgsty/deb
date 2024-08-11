@@ -1,0 +1,19 @@
+Source: pgqr
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Fenoman/pgqr
+
+Package: postgresql-PGVERSION-pgqr
+Architecture: any
+Provides: postgresql-pgqr
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension to generate QR code
+  Function pgqr has 4 parameters:
+  t text: text to be encoded.
+  correction_level integer: 0 to 3.
+  model_number integer: 0 to 2.
+  scale integer: pixels for each dot.
