@@ -1,0 +1,17 @@
+Source: libfq
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), firebird-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ibarwick/libfq
+
+Package: libfq
+Architecture: any
+Provides: libfq
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A wrapper library for Firebird's C API, loosely based on PostgreSQL's libpq
+  libfq provides a number of functions which act as convenience wrappers around the native Firebird C API, which is cumbersome to use.
+  It is loosely based on PostgreSQL's libpq and provides a subset of that API's functions - names beginning with FQ rather than PQ - with more-or-less identical function signatures. It also provides some Firebird-specific functions.
+  While basically functional, libfq is still work-in-progress and the API definitions may change between releases in an incompatible way. USE AT YOUR OWN RISK.
