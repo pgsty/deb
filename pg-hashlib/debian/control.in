@@ -1,0 +1,16 @@
+Source: pg-hashlib
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/markokr/pghashlib
+
+Package: postgresql-PGVERSION-pg-hashlib
+Architecture: any
+Provides: postgresql-pg-hashlib
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Stable hash functions for Postgres
+  The goal of pghashlib is to provide stable hashes for PostgeSQL, "stable" in the sense that their implementation does not change, they are independent from PostgeSQL version.
+  Some string hashes may be dependent on CPU architecture, so that they return different return on big-endian architecture from little-endian architecture. It you want to be architectures-independent, then use algorithms that don't depend on endianess.
