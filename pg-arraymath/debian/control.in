@@ -1,0 +1,17 @@
+Source: pg-arraymath
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pramsey/pgsql-arraymath
+
+Package: postgresql-PGVERSION-pg-arraymath
+Architecture: any
+Provides: postgresql-pg-arraymath
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Access Control Lists (pg-arraymath) PostgreSQL Extension
+  You need this extension if you want to restrict access to rows in tables based on an authenticated user.
+  Access Control List (pg-arraymath) has become the de-facto standard for implementing a security model in modern applications.
+  Complex scenarios can be handled by using pg-arraymaths without having a complex permission model at the application level.
