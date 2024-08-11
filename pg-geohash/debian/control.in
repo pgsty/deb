@@ -1,0 +1,20 @@
+Source: pg-geohash
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jistok/pg_geohash
+
+Package: postgresql-PGVERSION-pg-geohash
+Architecture: any
+Provides: postgresql-pg-geohash
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Geohashing library for HAWQ, Greenplum DB, PostgreSQL
+  Geohashing functionality for HAWQ, Greenplum DB, PostgreSQL
+  Motivated by the need to compute aggregates based on geographic location
+  Geohash background: http://en.wikipedia.org/wiki/Geohash
+  C based user defined functions
+  Based on this C language geohashing library: https://github.com/lyokato/libgeohash.git
+  Install (everthing shown here was run on the Pivotal HD single node VM, CentOS release 6.5): NOTE: the user running the make install requires write permission into the installation directory of the target database.
