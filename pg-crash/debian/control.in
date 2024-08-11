@@ -1,0 +1,17 @@
+Source: pg-crash
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/cybertec-postgresql/pg_crash
+
+Package: postgresql-PGVERSION-pg-crash
+Architecture: any
+Provides: postgresql-pg-crash
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Periodically or randomly crash your database
+  If your database is too reliable - pg_crash can kill it for you.
+  pg_crash is an extension to PostgreSQL, which allows you to periodically or randomly crash your database
+  infrastructure by sending kill (or other) signals to your DB processes and make them fail. It is ideal for HA and failover testing.
