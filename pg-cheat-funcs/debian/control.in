@@ -1,0 +1,16 @@
+Source: pg-cheat-funcs
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/MasaoFujii/pg_cheat_funcs
+
+Package: postgresql-PGVERSION-pg-cheat-funcs
+Architecture: any
+Provides: postgresql-pg-cheat-funcs
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: This extension provides cheat (but useful) functions on PostgreSQL.
+  This extension provides cheat (but useful) functions on PostgreSQL.
+  pg_cheat_funcs is released under the PostgreSQL License, a liberal Open Source license, similar to the BSD or MIT licenses.
