@@ -1,0 +1,18 @@
+Source: pg-country
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/adjust/pg-country
+
+Package: postgresql-PGVERSION-pg-country
+Architecture: any
+Provides: postgresql-pg-country
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: country data type for postgres
+  A country Extension for PostgreSQL.
+  The pg-country extension create new data types country, which is a enum types.
+  The country enumeration values follow the ISO 3166-1 alpha-2 standard.
+  The extension also creates comparison operators and operator classes for btree and hash indexes.
