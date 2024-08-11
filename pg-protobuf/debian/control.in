@@ -1,0 +1,15 @@
+Source: pg-protobuf
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/afiskon/pg_protobuf
+
+Package: postgresql-PGVERSION-pg-protobuf
+Architecture: any
+Provides: postgresql-pg-protobuf
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Protobuf support for PostgreSQL
+  Protobuf support for PostgreSQL.
