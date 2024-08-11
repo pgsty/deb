@@ -1,0 +1,21 @@
+Source: pg-meta
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/aquameta/meta
+
+Package: postgresql-PGVERSION-pg-meta
+Architecture: any
+Provides: postgresql-pg-meta
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: PostgreSQL Extension: More friendly system catalog for PostgreSQL
+  System catalogs are great, because they provide a data-centric view into the database's structure.
+  PostgreSQL has two system catalogs, pg_catalog and information_schema, but each have some drawbacks.
+  pg_catalog mirrors PostgreSQL's internal structure, and centers around oid, object identifiers that
+  aren't intended for "above the hood" developers to know or care about. information_schema is part of the SQL standard,
+  and is filled with many views and columns that don't match PostgreSQL's terminology or features.
+  The goals with meta is to provide an "above the hood" system catalog for PostgreSQL
+  that is normalized and uses common names for views and columns.
