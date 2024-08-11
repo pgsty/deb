@@ -1,0 +1,16 @@
+Source: sequential-uuids
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/tvondra/sequential-uuids
+
+Package: postgresql-PGVERSION-sequential-uuids
+Architecture: any
+Provides: postgresql-sequential-uuids
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: generator of sequential UUIDs
+  This PostgreSQL extension implements two UUID generators with sequential patterns, which helps to reduce random I/O patterns associated with regular entirely-random UUID.
+  Regular random UUIDs are distributed uniformly over the whole range of possible values. This results in poor locality when inserting data into indexes - all index leaf pages are equally likely to be hit, forcing the whole index into memory. With small indexes that's fine, but once the index size exceeds shared buffers (or RAM), the cache hit ratio quickly deteriorates.
