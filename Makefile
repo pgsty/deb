@@ -3,7 +3,7 @@
 #---------------------------------------------#
 rust: pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later
 noext: scws libduckdb pgcopydb
-batch1: pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell plv8 zhparser duckdb_fdw
+batch1: pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell plv8 zhparser duckdb_fdw
 batch2: imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats pg_fkpart pgmeminfo
 batch3: pg_orphaned pgcozy decoder_raw pg_failover_slots log_fdw redis_fdw index_advisor pg_financial pg_savior aggs_for_vecs base36 base62 pg_envvar pg_html5_email_address lower_quantile pg_timeit quantile random session_variable smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec pg_auditor noset
 collect:
@@ -84,8 +84,6 @@ postgres_shacrypt:
 	cd postgres-shacrypt && make
 pg_hashids:
 	cd pg-hashids && make
-pg_proctab:
-	cd pg-proctab && make
 pg_sqlog:
 	cd pg-sqlog && make
 md5hash:
@@ -302,7 +300,7 @@ release: clean
 
 .PHONY: rust deps batch1 batch2 deb-collect \
  	pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later \
- 	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_proctab pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw \
+ 	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
  	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback \
  	pg_auth_mon login_hook logerrors pg_jobmon geoip \
