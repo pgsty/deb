@@ -1,5 +1,5 @@
-supautils (3.1.9-1PIGSTY) unstable; urgency=medium
+supautils (2.5.0-1PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Bump to v2.5.0
 
- -- Ruohang Feng <rh@vonng.com>  Wed, 17 Jul 2024 18:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Tue, 15 Oct 2024 15:00:00 +0000
