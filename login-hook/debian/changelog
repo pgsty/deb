@@ -1,3 +1,9 @@
+login-hook (1.6-1PIGSTY) unstable; urgency=medium
+
+  * Unofficial release with PG 17 support
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 16 Oct 2024 18:00:00 +0000
+
 login-hook (1.5-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>

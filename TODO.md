@@ -20,7 +20,7 @@
 - pg_profile 4.7
 - system_stats 3.2
 - pg_auth_mon 3.0
-
+- login_hook 1.6
 
 
 **Bad Case**
