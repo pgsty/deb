@@ -32,12 +32,13 @@
 
 **TODO (17)**
 
-- citus age
-- hydra
-- duckdb_fdw
-- pg_store_plan
-- logerrors
-- sqlite_fdw
+- citus age 17
+- hydra 17
+- duckdb_fdw 17
+- pg_store_plan 17
+- logerrors 17
+- sqlite_fdw 17
+- wal2mongo
 
 --------
 
