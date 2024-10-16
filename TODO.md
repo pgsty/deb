@@ -30,7 +30,13 @@
 - pg_store_plan on 17
 - logerrors on debian12
 
+**TODO (17)**
 
+- citus age
+- hydra
+- duckdb_fdw
+- pg_store_plan
+- logerrors
 
 
 --------
