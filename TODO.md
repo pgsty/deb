@@ -22,13 +22,13 @@
 - pg_auth_mon 3.0
 - login_hook 1.6
 - logerrors 2.1.3
-
-
+- pg-orphaned bump to latest
+- pgnodemx 1.7
 
 **Bad Case**
 
 - pg_store_plan on 17
-
+- logerrors on debian12
 
 
 

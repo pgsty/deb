@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgnodemx-1.6.tar.gz
+TARBALL := pgnodemx-1.7.tar.gz
 
 # prepare directory
 setup:
