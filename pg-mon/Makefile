@@ -14,7 +14,7 @@ setup:
 # building deb
 build:
 	cd build && pg_buildext updatecontrol
-	cd build && dpkg-buildpackage -b -us -uc
+	cd build && PG_CPPFLAGS=-Wno-int-conversion dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
