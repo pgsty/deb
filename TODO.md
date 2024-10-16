@@ -10,7 +10,7 @@
 - pgddl 0.28
 - pg_safeupdate bump to latest
 - pg_stat_monitor 2.1
-
+- pg_profile 4.7
 
 --------
 
