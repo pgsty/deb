@@ -5,7 +5,9 @@
 - pg_timeseries 0.1.6
 - pgmq 1.4.4
 - pg_protobuf 16 17
-- 
+- pg_uuidv7 1.6
+- pg_readonly bump to latest
+- pgddl 0.28
 
 
 

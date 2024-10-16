@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgddl-0.27.tar.gz
+TARBALL := pgddl-0.28.tar.gz
 
 # prepare directory
 setup:

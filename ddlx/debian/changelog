@@ -1,3 +1,10 @@
+ddlx (0.28-1PIGSTY) unstable; urgency=medium
+
+  * PostgreSQL 17 support https://github.com/lacanoid/pgddl/releases/tag/0.28
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 16 Oct 2024 18:00:00 +0000
+
+
 ddlx (0.27-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
