@@ -1,3 +1,7 @@
+pg-ivm (1.9-1PIGSTY) unstable; urgency=medium
+
+  * bump to v1.9
+
 pg-ivm (1.8-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>

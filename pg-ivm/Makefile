@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_ivm-1.8.tar.gz
+TARBALL := pg_ivm-1.9.tar.gz
 
 # prepare directory
 setup:
