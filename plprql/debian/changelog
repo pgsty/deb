@@ -1,3 +1,7 @@
+plprql (1.0.0-1PIGSTY) unstable; urgency=medium
+
+  1.0.0 release
+
 plprql (0.1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>

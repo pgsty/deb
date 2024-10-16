@@ -40,8 +40,8 @@ pg_tiktoken:
 	cd pg-tiktoken && make
 pg_tier:
 	cd pg-tier && make
-#pg_vectorize:
-#	cd pg-vectorize && make
+pg_vectorize:
+	cd pg-vectorize && make
 pg_later:
 	cd pg-later && make
 pgdd:
@@ -66,6 +66,8 @@ pgjwt:
 	cd pgjwt && make
 pgmq:
 	cd pgmq && make
+pg_timeseries:
+	cd pg-timeseries && make
 gzip:
 	cd pgsql-gzip && make
 vault:
