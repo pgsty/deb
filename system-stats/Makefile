@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := system_stats-3.1.tar.gz
+TARBALL := system_stats-3.2.tar.gz
 
 # prepare directory
 setup:

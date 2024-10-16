@@ -1,3 +1,10 @@
+system-stats (3.2-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/EnterpriseDB/system_stats/releases/tag/v3.2
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 16 Oct 2024 18:00:00 +0000
+
+
 system-stats (3.1-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>

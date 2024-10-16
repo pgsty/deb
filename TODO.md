@@ -1,6 +1,13 @@
 # TODOLIST
 
 
+
+--------
+
+## 2024-10-16
+
+**Updates**
+
 - pg_ivm 1.9
 - pg_timeseries 0.1.6
 - pgmq 1.4.4
@@ -11,6 +18,15 @@
 - pg_safeupdate bump to latest
 - pg_stat_monitor 2.1
 - pg_profile 4.7
+- system_stats 3.2
+
+**Bad Case**
+
+- pg_store_plan on 17
+
+
+
+
 
 --------
 
