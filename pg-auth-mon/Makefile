@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_auth_mon-2.0.tar.gz
+TARBALL := pg_auth_mon-3.0.tar.gz
 
 # prepare directory
 setup:

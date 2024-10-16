@@ -19,6 +19,9 @@
 - pg_stat_monitor 2.1
 - pg_profile 4.7
 - system_stats 3.2
+- pg_auth_mon 3.0
+
+
 
 **Bad Case**
 
