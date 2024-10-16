@@ -24,6 +24,7 @@
 - logerrors 2.1.3
 - pg-orphaned bump to latest
 - pgnodemx 1.7
+- sslutils 1.4 (+16,17)
 
 **Bad Case**
 
