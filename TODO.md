@@ -38,7 +38,9 @@
 - pg_store_plan 17
 - logerrors 17
 - sqlite_fdw 17
-- wal2mongo
+- wal2mongo 17
+
+
 
 --------
 
