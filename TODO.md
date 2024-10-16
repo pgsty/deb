@@ -8,8 +8,8 @@
 - pg_uuidv7 1.6
 - pg_readonly bump to latest
 - pgddl 0.28
-
-
+- pg_safeupdate bump to latest
+- pg_stat_monitor 2.1
 
 
 --------
