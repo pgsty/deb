@@ -2,6 +2,8 @@ plprql (1.0.0-1PIGSTY) unstable; urgency=medium
 
   1.0.0 release
 
+-- Ruohang Feng <rh@vonng.com>  Wed, 16 Oct 2024 18:00:00 +0000
+
 plprql (0.1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>

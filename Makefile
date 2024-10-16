@@ -1,7 +1,7 @@
 #---------------------------------------------#
 # build
 #---------------------------------------------#
-rust: pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pg_vectorize pg_later
+rust: pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pg_tiktoken pg_vectorize pg_later pgdd
 noext: scws libduckdb pgcopydb
 batch1: pg_net pgjwt pgmq pg_timeseries gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell #plv8 zhparser duckdb_fdw
 batch2: imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile system_stats pg_fkpart pgmeminfo pg_store_plan

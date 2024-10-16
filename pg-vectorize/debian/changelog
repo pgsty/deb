@@ -1,3 +1,9 @@
+pg-vectorize (0.18.3-1PIGSTY) unstable; urgency=medium
+
+  * 0.18.3 with pgrx 0.11.3
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 16 Oct 2024 18:00:00 +0000
+
 pg-vectorize (0.17.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
