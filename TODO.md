@@ -37,7 +37,7 @@
 - duckdb_fdw
 - pg_store_plan
 - logerrors
-
+- sqlite_fdw
 
 --------
 
