@@ -1,24 +1,24 @@
-all: setup build
+all: setup build move
 
-SRC_DIR := ~/pgmq
-PKG_NAME := pgmq
+TARBALL := pgmq-1.4.4.tar.gz
 
 # prepare directory
 setup:
-	rm -rf $(SRC_DIR)/debian
-	cp -r debian $(SRC_DIR)/debian
-	cd $(SRC_DIR) && pg_buildext updatecontrol
+	rm -rf build; mkdir -p build
+	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
+	pg_buildext updatecontrol
+	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(SRC_DIR)/debian/changelog
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
 build:
-	cd $(SRC_DIR) && dpkg-buildpackage -b -us -uc
+	cd build && pg_buildext updatecontrol
+	cd build && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
-	mkdir -p /tmp/deb/
-	mv *.deb /tmp/deb/
+	cp *.deb ~/
 
 # remove building craps
 clean:

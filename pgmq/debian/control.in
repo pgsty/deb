@@ -5,13 +5,13 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/tembo-io/pgmq
+Homepage: https://github.com/michelp/pgmq
 
 Package: postgresql-PGVERSION-pgmq
 Architecture: any
-Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
-Description: A lightweight message queue. Like AWS SQS and RSMQ but on Postgres.
-  Postgres Message Queue (PGMQ) -- A lightweight message queue. Like AWS SQS and RSMQ but on Postgres.
-  Lightweight - No background worker or external dependencies, just Postgres functions packaged in an extension
-  Guaranteed "exactly once" delivery of messages to a consumer within a visibility timeout API parity with AWS SQS and RSMQ
-  Messages stay in the queue until explicitly removed. Messages can be archived, instead of deleted, for long-term retention and replayability
+Provides: postgresql-pgmq
+Depends: ${misc:Depends}, ${postgresql:Depends}
+Description: PostgreSQL implementation of JSON Web Tokens for PGVERSION
+  pgmq allows you to sign & verify json web token via pure SQL interface.
+  It requires the pgcrypto extension, included in most distribution's "postgresql-contrib" package.
+  The tests require the pgtap extension to run.

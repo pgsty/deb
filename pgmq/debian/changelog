@@ -1,3 +1,7 @@
+pgmq (1.4.4-1PIGSTY) unstable; urgency=medium
+
+  * Overhaul as an pure SQL extension
+
 pgmq (1.2.1-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
