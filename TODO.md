@@ -39,7 +39,8 @@
 - logerrors 17
 - sqlite_fdw 17
 - wal2mongo 17
-
+- pg-savior 17 (on debian12)
+- session-variable 17
 
 
 --------
