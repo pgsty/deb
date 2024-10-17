@@ -1,3 +1,9 @@
+session-variable (3.4-1PIGSTY) unstable; urgency=medium
+
+  * Add PostgreSQL 17 support: https://github.com/splendiddata/session_variable/releases/tag/3.4
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 17 Jul 2024 18:00:00 +0000
+
 session-variable (3.3-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
