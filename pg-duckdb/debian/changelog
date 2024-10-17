@@ -1,4 +1,4 @@
-pg-duckdb (0.0.1-ba60ba7) unstable; urgency=medium
+pg-duckdb (0.0.1-d663d8a) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
 
