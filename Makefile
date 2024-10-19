@@ -1,9 +1,9 @@
 #---------------------------------------------#
 # build
 #---------------------------------------------#
-rust: pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pg_tiktoken pg_vectorize pg_later pgdd
+rust: pgml pg_graphql pg_jsonschema wrappers pg_parquet pgvectorscale plprql pg_idkit pgsmcrypto pg_tiktoken pg_vectorize pg_later pgdd
 noext: scws libduckdb pgcopydb
-batch1: pg_net pgjwt pgmq pg_timeseries gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell #plv8 zhparser duckdb_fdw
+batch1: pg_net pgjwt pgmq pg_timeseries pg_plan_filter gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell #plv8 zhparser duckdb_fdw
 batch2: imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile system_stats pg_fkpart pgmeminfo pg_store_plan
 batch3: pg_orphaned pgcozy decoder_raw pg_failover_slots log_fdw redis_fdw index_advisor pg_financial pg_savior aggs_for_vecs base36 base62 pg_envvar pg_html5_email_address lower_quantile pg_timeit quantile random session_variable smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec pg_auditor noset
 batch4: aggs_for_arrays pgqr pg_zstd url_encode pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash pg_math sequential_uuids kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 pg_geohash #firebird_fdw
@@ -28,6 +28,8 @@ pg_jsonschema:
 	cd pg-jsonschema && make
 wrappers:
 	cd wrappers && make
+pg_parquet:
+	cd pg-parquet && make
 pgvectorscale:
 	cd pgvectorscale && make
 plprql:
@@ -68,6 +70,8 @@ pgmq:
 	cd pgmq && make
 pg_timeseries:
 	cd pg-timeseries && make
+pg_plan_filter:
+	cd pg-plan-filter && make
 gzip:
 	cd pgsql-gzip && make
 vault:
@@ -351,8 +355,9 @@ release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
 .PHONY: rust deps batch1 batch2 deb-collect \
- 	pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pgmq pg_tier pg_vectorize pg_later \
+ 	pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pg_parquet pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pg_tier pg_vectorize pg_later \
  	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg-duckdb \
+ 	pg_timeseries pgmq pg_plan_filter \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
  	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback \
  	pg_auth_mon login_hook logerrors pg_jobmon geoip \

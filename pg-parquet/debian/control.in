@@ -1,0 +1,19 @@
+Source: pg-parquet
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/pg_parquet
+
+Package: postgresql-PGVERSION-pg-parquet
+Architecture: any
+Provides: postgresql-pg-parquet
+Depends: postgresql-PGVERSION, ${misc:Depends}
+Description: Copy to/from Parquet in S3 from within PostgreSQL
+  pg_parquet is a PostgreSQL extension that allows you to read and write Parquet files,
+  which are located in S3 or file system, from PostgreSQL via COPY TO/FROM commands.
+  It depends on Apache Arrow project to read and write Parquet files and pgrx project to extend PostgreSQL's COPY command.
+
+

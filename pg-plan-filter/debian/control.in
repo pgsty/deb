@@ -10,7 +10,7 @@ Homepage: https://github.com/pgexperts/pg_plan_filter
 Package: postgresql-PGVERSION-pg-plan-filter
 Architecture: any
 Provides: postgresql-pg-plan-filter
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: filter statements by their execution plans.
   This loadable module will test statements against specific configured criteria before execution, raising an error if the criteria are violated.
   This allows administrators to prevent execution of certain queries on production databases.
