@@ -1,0 +1,15 @@
+Source: pg-uint128
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pg-uint/pg-uint128
+
+Package: postgresql-PGVERSION-pg-uint128
+Architecture: any
+Provides: postgresql-pg-uint128
+Depends: ${misc:Depends}, ${postgresql:Depends}
+Description: adds native support for unsigned integers and 128-bit signed/unsigned integer types.
+  A PostgreSQL extension that adds native support for unsigned integers and 128-bit signed/unsigned integer types.
