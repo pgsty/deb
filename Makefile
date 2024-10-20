@@ -28,8 +28,6 @@ pg_jsonschema:
 	cd pg-jsonschema && make
 wrappers:
 	cd wrappers && make
-pg_parquet:
-	cd pg-parquet && make
 pgvectorscale:
 	cd pgvectorscale && make
 plprql:
@@ -48,6 +46,19 @@ pg_later:
 	cd pg-later && make
 pgdd:
 	cd pgdd && make
+
+pg_parquet:
+	cd pg-parquet && make
+pg_explain_ui:
+	cd pg-explain-ui && make
+pg_polyline:
+	cd pg-polyline && make
+pg_cardano:
+	cd pg-cardano && make
+pg_base58:
+	cd pg-base58 && make
+pg_summarize:
+	cd pg-summarize && make
 
 rust-clean:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes

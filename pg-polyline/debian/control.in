@@ -1,0 +1,15 @@
+Source: pg-polyline
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/yihong0618/pg_polyline
+
+Package: postgresql-PGVERSION-pg-polyline
+Architecture: any
+Provides: postgresql-pg-polyline
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Fast Google Encoded Polyline encoding & decoding for postgres
+  Fast Google Encoded Polyline encoding & decoding for postgres Extension
