@@ -1,0 +1,17 @@
+Source: pg-cardano
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Fell-x27/pg_cardano
+
+Package: postgresql-PGVERSION-pg-cardano
+Architecture: any
+Provides: postgresql-pg-cardano
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: A PostgreSQL extension providing a suite of Cardano-related tools, including cryptographic functions, address encoding/decoding, and blockchain data processing.
+  This extension is an attempt to create a Swiss Army knife for simplifying the work with binary data in Cardano db-sync, as well as automating some processes.
+  It is written in Rust, which ensures high security and excellent performance.
+  The extension is designed to handle unforeseen errors gracefully, without causing any disruptions in the database's operation. All errors are safely propagated as PostgreSQL-level error messages.
