@@ -1,0 +1,20 @@
+Source: pg-summarize
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/HexaCluster/pg_summarize
+
+Package: postgresql-PGVERSION-pg-summarize
+Architecture: any
+Provides: postgresql-pg-summarize
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Text Summarization using LLMs. Built using pgrx
+  PostgreSQL is a powerful and versatile database management system.
+  One of its strengths lies in its extensibility.
+  In this blog, we will explore how to extend PostgreSQL using Rust,
+  specifically focusing on creating a custom extension called pg_summarize
+  that integrates with the OpenAI API. This extension will include a basic "Hello, pg_summarize!"
+  function and another function to summarize text using OpenAI's models.
