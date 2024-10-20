@@ -1,3 +1,9 @@
+pg-duckdb (0.0.1-f34ae06) unstable; urgency=medium
+
+  * https://github.com/duckdb/pg_duckdb/commit/f34ae0633e85c9f070e6bbe562ccf4f7ad8f5902
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 20 Oct 2024 18:00:00 +0000
+
 pg-duckdb (0.0.1-d663d8a) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
