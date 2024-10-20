@@ -1,0 +1,15 @@
+Source: pg-explain-ui
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/davidgomes/pg-explain-ui
+
+Package: postgresql-PGVERSION-pg-explain-ui
+Architecture: any
+Provides: postgresql-pg-explain-ui
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: A Postgres extension that allows you to easily jump into a visual plan UI for any SQL query
+  This is a simple Postgres extension that allows you to easily jump into a visual plan UI for any SQL query.
