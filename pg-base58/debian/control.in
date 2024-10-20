@@ -1,0 +1,16 @@
+Source: pg-base58
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Fell-x27/pg_base58
+
+Package: postgresql-PGVERSION-pg-base58
+Architecture: any
+Provides: postgresql-pg-base58
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Base58 Encoder/Decoder Extension for PostgreSQL
+  SELECT base58_encode('hello'::bytea);
+  SELECT base58_decode('Cn8eVZg');
