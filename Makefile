@@ -338,6 +338,11 @@ pushsd: pushd-sv
 pushss: push-sv
 	ssh sv 'cd /data/pigsty-deb && make push'
 
+pl: pull-ss
+pull-ss:
+	ssh -t sv "cd /data/pigsty-deb && make pull"
+	rsync -avc --exclude deb ./ sv:/data/pigsty-deb/
+
 #---------------------------------------------#
 # push to building machines
 #---------------------------------------------#

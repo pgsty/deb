@@ -10,7 +10,7 @@ Homepage: https://github.com/tvondra/geoip
 Package: postgresql-PGVERSION-geoip
 Architecture: any
 Provides: postgresql-geoip
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-ip4r
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-ip4r
 Description: an extension for GeoIP geolocation for PostgreSQL PGVERSION
   This extension provides IP-based geolocation, i.e. you provide an IPv4 address and the extension looks for info about country, city, GPS etc.
   To operate, the extension needs data mapping IP addresses to the other info, but these data are not part of the extension. A good free dataset is GeoLite from MaxMind (available at www.maxmind.com).
