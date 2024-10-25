@@ -18,7 +18,6 @@ override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-pg-geohash
 
 override_dh_installdocs:
-	dh_installdocs --all README.*
 
 %:
 	dh $@
