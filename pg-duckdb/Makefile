@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_duckdb.tar.gz
+TARBALL := pg_duckdb-0.1.0.tar.gz
 
 # prepare directory
 setup:
