@@ -1,0 +1,51 @@
+Source: timestamp9
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/petere/timestamp9
+
+Package: postgresql-17-timestamp9
+Architecture: any
+Provides: postgresql-timestamp9
+Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 16
+  An efficient nanosecond precision timestamp type for Postgres 16
+
+Package: postgresql-16-timestamp9
+Architecture: any
+Provides: postgresql-timestamp9
+Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 16
+  An efficient nanosecond precision timestamp type for Postgres 16
+
+Package: postgresql-15-timestamp9
+Architecture: any
+Provides: postgresql-timestamp9
+Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 16
+  An efficient nanosecond precision timestamp type for Postgres 16
+
+Package: postgresql-14-timestamp9
+Architecture: any
+Provides: postgresql-timestamp9
+Depends: postgresql-15, ${postgresql:Depends}, ${postgresql:Depends}
+Description: Nanosecond precision timestamp type for Postgres 16
+  An efficient nanosecond precision timestamp type for Postgres 16
+
+Package: postgresql-13-timestamp9
+Architecture: any
+Provides: postgresql-timestamp9
+Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 16
+  An efficient nanosecond precision timestamp type for Postgres 16
+
+Package: postgresql-12-timestamp9
+Architecture: any
+Provides: postgresql-timestamp9
+Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 16
+  An efficient nanosecond precision timestamp type for Postgres 16
+

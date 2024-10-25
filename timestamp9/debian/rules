@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --buildsystem=cmake
+
+PG_VERSIONS = 12 13 14 15 16 17
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+override_dh_auto_configure:
+	for ver in $(PG_VERSIONS); do \
+		PATH="/usr/lib/postgresql/$$ver/bin:$$PATH" \
+		dh_auto_configure --builddirectory=build-pg$$ver -- \
+			-DPostgreSQL_PG_CONFIG=/usr/lib/postgresql/$$ver/bin/pg_config \
+			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DCMAKE_BUILD_TYPE=Release; \
+	done
+
+override_dh_auto_build:
+	for ver in $(PG_VERSIONS); do \
+		PATH="/usr/lib/postgresql/$$ver/bin:$$PATH" \
+		dh_auto_build --builddirectory=build-pg$$ver; \
+	done
+
+override_dh_auto_install:
+	for ver in $(PG_VERSIONS); do \
+		PATH="/usr/lib/postgresql/$$ver/bin:$$PATH" \
+		dh_auto_install --builddirectory=build-pg$$ver --destdir=$(CURDIR)/debian/tmp; \
+	done
