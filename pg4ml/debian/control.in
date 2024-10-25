@@ -1,0 +1,15 @@
+Source: pg4ml
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://gitee.com/guotiecheng/plpgsql_pg4ml
+
+Package: postgresql-PGVERSION-pg4ml
+Architecture: any
+Provides: postgresql-pg4ml
+Depends: ${misc:Depends}, ${postgresql:Depends}
+Description: Machine Learning framework for PostgreSQL PGVERSION
+  pg4ml is a machine learning framework for PostgreSQL PGVERSION
