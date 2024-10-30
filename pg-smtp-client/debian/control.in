@@ -1,0 +1,15 @@
+Source: pg-smtp-client
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Vonng/pg_smtp_client
+
+Package: postgresql-PGVERSION-pg-smtp-client
+Architecture: any
+Provides: postgresql-pg-smtp-client
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension to send email using SMTP
+  Sending mail from PostgreSQL
