@@ -1,4 +1,4 @@
-all: setup build1
+all: setup build move
 
 TARBALL := pg_polyline-0.0.0.tar.gz
 
