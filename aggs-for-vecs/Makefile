@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := aggs_for_vecs-1.3.0.tar.gz
+TARBALL := aggs_for_vecs-1.3.1.tar.gz
 
 # prepare directory
 setup:
