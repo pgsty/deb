@@ -1,12 +1,20 @@
 #---------------------------------------------#
 # build
 #---------------------------------------------#
-rust: pgml pg_graphql pg_jsonschema wrappers pg_parquet pgvectorscale plprql pg_idkit pgsmcrypto pg_tiktoken pg_vectorize pg_later pgdd
-noext: scws libduckdb pgcopydb
-batch1: pg_net pgjwt pgmq pg_timeseries pg_plan_filter gzip vault pgsodium supautils hydra pg_tle permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell #plv8 zhparser duckdb_fdw
-batch2: imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile system_stats pg_fkpart pgmeminfo pg_store_plan
-batch3: pg_orphaned pgcozy decoder_raw pg_failover_slots log_fdw redis_fdw index_advisor pg_financial pg_savior aggs_for_vecs base36 base62 pg_envvar pg_html5_email_address lower_quantile pg_timeit quantile random session_variable smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec pg_auditor noset
-batch4: aggs_for_arrays pgqr pg_zstd url_encode pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash pg_math sequential_uuids kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 pg_geohash #firebird_fdw
+noext: scws libduckdb pgcopydb libfq
+ext: zhparser duckdb_fdw firebird_fdw
+big: pg_duckdb plv8 hydra
+
+batch1: pg_net pgjwt pgmq pg_timeseries pg_plan_filter pg_relusage pg_uint128 gzip vault pgsodium supautils
+batch2: pg_tle permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell zhparser duckdb_fdw
+batch3: imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions postgresql_anonymizer ddlx
+batch4: pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile system_stats pg_fkpart pgmeminfo pg_store_plan
+batch5: pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback
+batch6: pg_orphaned pgcozy decoder_raw pg_failover_slots log_fdw redis_fdw index_advisor pg_financial pg_savior base36 base62
+batch7: pg_envvar pg_html5_email_address lower_quantile pg_timeit quantile random session_variable smlar sslutils chkpass pg_currency #pg_mon
+batch8: aggs_for_vecs aggs_for_arrays pgqr pg_zstd url_encode pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash
+batch9: pg_emailaddr pg_uri cryptint floatvec pg_auditor noset pg_math sequential_uuids kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 pg_geohash pg4ml timestamp9
+batch0: pg_bulkload chkpass geoip logerrors login_hook pg_auth_mon
 
 collect:
 	mkdir -p /tmp/deb
@@ -16,49 +24,55 @@ collect:
 #---------------------------------------------#
 # rust & pgrx extensions
 #---------------------------------------------#
-#pg_search:
-#	cd pg-search && make
-#pg_lakehouse:
-#	cd pg-lakehouse && make
-pgml:
-	cd pgml && make
+rust1: pg_graphql pg_jsonschema wrappers pgvectorscale pg_idkit pgsmcrypto pg_tiktoken pg_parquet pg_explain_ui pg_polyline pg_cardano pg_summarize
+rust2: pgml plprql pg_later pg_vectorize
+rust3: pgdd pg_tier
+
+# pgrx 0.12.7
 pg_graphql:
 	cd pg-graphql && make
 pg_jsonschema:
 	cd pg-jsonschema && make
 wrappers:
 	cd wrappers && make
-pgvectorscale:
-	cd pgvectorscale && make
-plprql:
-	cd plprql && make
 pg_idkit:
 	cd pg-idkit && make
 pgsmcrypto:
 	cd pgsmcrypto && make
 pg_tiktoken:
 	cd pg-tiktoken && make
-pg_tier:
-	cd pg-tier && make
-pg_vectorize:
-	cd pg-vectorize && make
-pg_later:
-	cd pg-later && make
-pgdd:
-	cd pgdd && make
-
-pg_parquet:
-	cd pg-parquet && make
-pg_explain_ui:
-	cd pg-explain-ui && make
+pg_summarize:
+	cd pg-summarize && make
 pg_polyline:
 	cd pg-polyline && make
+pg_explain_ui:
+	cd pg-explain-ui && make
 pg_cardano:
 	cd pg-cardano && make
 pg_base58:
 	cd pg-base58 && make
-pg_summarize:
-	cd pg-summarize && make
+pg_parquet:
+	cd pg-parquet && make
+pg_vectorize:
+	cd pg-vectorize && make
+pgvectorscale:
+	cd pgvectorscale && make
+
+
+# pgrx 0.11.x
+pgml:
+	cd pgml && make
+plprql:
+	cd plprql && make
+pg_tier:
+	cd pg-tier && make
+
+pg_later:
+	cd pg-later && make
+
+# pgrx 0.10.x
+pgdd:
+	cd pgdd && make
 
 rust-clean:
 	rm -rf ~/*.ddeb ~/*.deb ~/*.buildinfo ~/*.changes
@@ -145,6 +159,8 @@ pg_permissions:
 	cd pg-permissions && make
 ddlx:
 	cd ddlx && make
+postgresql_anonymizer:
+	cd postgresql-anonymizer && make
 pg_safeupdate:
 	cd pg-safeupdate && make
 pg_stat_monitor:
@@ -153,16 +169,15 @@ passwordcheck_cracklib:
 	cd passwordcheck-cracklib && make
 pg_profile:
 	cd pg-profile && make
-pg_store_plan:
-	cd pg-store-plan && make
 system_stats:
 	cd system-stats && make
 pg_fkpart:
 	cd pg-fkpart && make
 pgmeminfo:
 	cd pgmeminfo && make
-postgresql_anonymizer:
-	cd postgresql-anonymizer && make
+pg_store_plan:
+	cd pg-store-plan && make
+
 pgcryptokey:
 	cd pgcryptokey && make
 pg_background:
@@ -344,6 +359,8 @@ pl: pull-ss
 pull-ss:
 	ssh -t sv "cd /data/pigsty-deb && make pull"
 	rsync -avc --exclude deb ./ sv:/data/pigsty-deb/
+pull-deb:
+	rsync -avc sv:/data/pigsty-deb/deb/ deb/
 
 #---------------------------------------------#
 # push to building machines
@@ -351,9 +368,11 @@ pull-ss:
 push:
 	rsync -avc --exclude deb ./ u22:~/pigsty-deb/
 	rsync -avc --exclude deb ./ d12:~/pigsty-deb/
+	rsync -avc --exclude deb ./ u24:~/pigsty-deb/
 pushd:
 	rsync -avc --exclude deb --delete ./ u22:~/pigsty-deb/
 	rsync -avc --exclude deb --delete ./ d12:~/pigsty-deb/
+	rsync -avc --exclude deb --delete ./ u24:~/pigsty-deb/
 
 #---------------------------------------------#
 # pull rpm from building machines
@@ -363,6 +382,8 @@ purge:
 	rm -rf deb/*
 dirs:
 	mkdir -p deb/jammy.amd64 deb/bookworm.amd64
+pull24:
+	rsync -avz u24:/tmp/deb/ deb/noble.amd64/
 pull22:
 	rsync -avz u22:/tmp/deb/ deb/jammy.amd64/
 pull12:
@@ -377,7 +398,7 @@ release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
 .PHONY: rust deps batch1 batch2 deb-collect \
- 	pg_search pg_lakehouse pgml pg_graphql pg_jsonschema wrappers pg_parquet pgvectorscale plprql pg_idkit pgsmcrypto pgdd pg_tiktoken pg_tier pg_vectorize pg_later \
+ 	pg_graphql pg_jsonschema wrappers pgvectorscale pg_idkit pgsmcrypto pg_tiktoken pg_parquet pg_explain_ui pg_polyline pg_cardano pg_summarize pgml plprql pg_later pg_vectorize pgdd pg_tier \
  	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg-duckdb \
  	pg_timeseries pgmq pg_plan_filter pg_relusage pg_uint128 \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \

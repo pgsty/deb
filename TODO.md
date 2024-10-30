@@ -91,8 +91,18 @@
 - ecdsa https://github.com/ameensol/pg-ecdsa
 - pg_cheat_funcs https://github.com/MasaoFujii/pg_cheat_funcs
 - pg_crash https://github.com/cybertec-postgresql/pg_crash
-
-
+- firebird_fdw https://github.com/ibarwick/firebird_fdw
+- pg_timeseries, we already have timescaledb
+- libfq https://github.com/ibarwick/libfq/blob/master/INSTALL.md
+- kafka_fdw https://github.com/adjust/kafka_fdw
+- pgnodemx: https://github.com/CrunchyData/pgnodemx
+- AWS S3 https://github.com/chimpler/postgres-aws-s3
+- pg_protobuf https://github.com/afiskon/pg_protobuf
+- pgsql-fio: https://github.com/csimsek/pgsql-fio
+- pg_country https://github.com/adjust/pg-country
+- sequential_uuids https://github.com/tvondra/sequential-uuids
+- fixeddecimal https://github.com/2ndQuadrant/fixeddecimal
+- pghashlib https://github.com/markokr/pghashlib
 
 --------
 
@@ -101,9 +111,6 @@
 - [pg_tier](https://github.com/tembo-io/pg_tier): not ready due to incomplete dep parquet_s3_fdw
 - [parquet_s3_fdw](https://github.com/pgspider/parquet_s3_fdw): not ready due to compiler version
 - pg_top: not ready due to cmake error
-- timestamp9: not ready due to compiler error
-- pg_tier obsolete
-- pg_timeseries, we already have timescaledb
 - pg_quack, we already have a pg_lakehouse
 - pg_telemetry, we already have better observability
 - pgx_ulid, https://github.com/pksunkara/pgx_ulid, already covered by pg_idkit (MIT, but RUST)
@@ -120,27 +127,21 @@
 - hashtypes https://github.com/pandrewhk/hashtypes
 - foreign_table_exposer https://github.com/komamitsu/foreign_table_exposer
 - ldap_fdw https://github.com/guedes/ldap_fdw
-- pg_backtrace https://github.com/postgrespro/pg_backtrace
+- pg_backtrace https://github.com/postgrespro/pg_backtrace (only works on PG12)
 - connection_limits https://github.com/tvondra/connection_limits
 - fixeddecimal https://github.com/2ndQuadrant/fixeddecimal
-
+- fuzzywuzzy https://github.com/hooopo/pg-fuzzywuzzy
+- pg_paxos https://github.com/microsoft/pg_paxos
 
 --------
 
 ## **TODO**
 
-- firebird_fdw https://github.com/ibarwick/firebird_fdw
-  - libfq https://github.com/ibarwick/libfq/blob/master/INSTALL.md 
-- kafka_fdw https://github.com/adjust/kafka_fdw
-- pgnodemx: https://github.com/CrunchyData/pgnodemx
-- AWS S3 https://github.com/chimpler/postgres-aws-s3
-- fuzzywuzzy https://github.com/hooopo/pg-fuzzywuzzy
-- pghashlib https://github.com/markokr/pghashlib
-- pg_protobuf https://github.com/afiskon/pg_protobuf
-- pgsql-fio: https://github.com/csimsek/pgsql-fio
-- fixeddecimal https://github.com/2ndQuadrant/fixeddecimal
-- pg_country https://github.com/adjust/pg-country
-- sequential_uuids https://github.com/tvondra/sequential-uuids
+
+
+
+
+
 
 
 --------
@@ -150,7 +151,7 @@
 - is_jsonb_valid https://github.com/furstenheim/is_jsonb_valid
 - pg_kafka https://github.com/xstevens/pg_kafka
 - pg_jieba https://github.com/jaiminpan/pg_jieba
-- pg_paxos https://github.com/microsoft/pg_paxos
+
 - OneSparse https://github.com/OneSparse/OneSparse
 - PipelineDB https://github.com/pipelinedb/pipelinedb
 - SQL Firewall https://github.com/uptimejp/sql_firewall
