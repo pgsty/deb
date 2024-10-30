@@ -7,6 +7,8 @@ export HTTPS_PROXY=${PROXY}
 export ALL_PROXY=${PROXY}
 export NO_PROXY="localhost,127.0.0.1,10.0.0.0/8,192.168.0.0/16,*.pigsty,*.aliyun.com,mirrors.*,*.myqcloud.com,*.tsinghua.edu.cn"
 alias build="HTTPS_PROXY=${PROXY} cargo pgrx package -v"
+. ~/.cargo/env
+cd ~/pigsty-deb
 
 alias pg17="export PATH=/usr/lib/postgresql/17/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;"
 alias pg16="export PATH=/usr/lib/postgresql/16/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;"

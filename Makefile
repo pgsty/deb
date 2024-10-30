@@ -24,9 +24,9 @@ collect:
 #---------------------------------------------#
 # rust & pgrx extensions
 #---------------------------------------------#
-rust1: pg_graphql pg_jsonschema wrappers pgvectorscale pg_idkit pgsmcrypto pg_tiktoken pg_parquet pg_explain_ui pg_polyline pg_cardano pg_summarize
-rust2: pgml plprql pg_later pg_vectorize
-rust3: pgdd pg_tier
+rust1: pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale
+rust2: pgml plprql pg_later pg_smtp_client
+rust3: pgdd
 
 # pgrx 0.12.7
 pg_graphql:
@@ -66,9 +66,10 @@ plprql:
 	cd plprql && make
 pg_tier:
 	cd pg-tier && make
-
 pg_later:
 	cd pg-later && make
+pg_smtp_client:
+	cd pg-smtp-client && make
 
 # pgrx 0.10.x
 pgdd:
@@ -377,7 +378,7 @@ pushd:
 #---------------------------------------------#
 # pull rpm from building machines
 #---------------------------------------------#
-pull: dirs pull22 pull12
+pull: dirs pull22 pull12 pull24
 purge:
 	rm -rf deb/*
 dirs:
@@ -398,7 +399,7 @@ release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
 .PHONY: rust deps batch1 batch2 deb-collect \
- 	pg_graphql pg_jsonschema wrappers pgvectorscale pg_idkit pgsmcrypto pg_tiktoken pg_parquet pg_explain_ui pg_polyline pg_cardano pg_summarize pgml plprql pg_later pg_vectorize pgdd pg_tier \
+ 	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale pgml plprql pg_later pg_smtp_client pgdd \
  	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg-duckdb \
  	pg_timeseries pgmq pg_plan_filter pg_relusage pg_uint128 \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
