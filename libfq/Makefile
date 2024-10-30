@@ -5,7 +5,7 @@ TARBALL := libfq-0.6.1.tar.gz
 # prepare directory
 setup:
 	rm -rf build; mkdir -p build
-	tar -C build/ -xf ../tarball/$(TARBALL)
+	tar -C build/ --strip-components 1 -xf ../tarball/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
