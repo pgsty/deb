@@ -27,6 +27,6 @@ override_dh_auto_install:
 	    dh_installdirs -p$$FULL_NAME; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-	    cp ~/$(SRC_DIR)/extension/target/release/vectorize-pg$$PG_VERSION/usr/lib/postgresql/$$PG_VERSION/lib/*.so      $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
-	    cp ~/$(SRC_DIR)/extension/target/release/vectorize-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    cp extension/target/release/vectorize-pg$$PG_VERSION/usr/lib/postgresql/$$PG_VERSION/lib/*.so      $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp extension/target/release/vectorize-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	done
