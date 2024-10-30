@@ -15,28 +15,28 @@ build: build16 build15 build14 build13
 
 # building deb
 build16:
-	PATH="/usr/lib/postgresql/16/bin:$$PATH" build/columnar/configure
+	cd build/columnar/ && PATH=/usr/lib/postgresql/16/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
 	echo '16' > build/columnar/debian/pgversions
 	cd build/columnar/ && pg_buildext updatecontrol
-	cd build/columnar/ && dpkg-buildpackage -b -us -uc
+	cd build/columnar/ && PATH=/usr/lib/postgresql/16/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 build15:
-	PATH="/usr/lib/postgresql/15/bin:$$PATH" build/columnar/configure
+	cd build/columnar/ && PATH=/usr/lib/postgresql/15/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
 	echo '15' > build/columnar/debian/pgversions
 	cd build/columnar/ && pg_buildext updatecontrol
-	cd build/columnar/ && dpkg-buildpackage -b -us -uc
+	cd build/columnar/ && PATH=/usr/lib/postgresql/15/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 build14:
-	PATH="/usr/lib/postgresql/14/bin:$$PATH" build/columnar/configure
+	cd build/columnar/ && PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
 	echo '14' > build/columnar/debian/pgversions
 	cd build/columnar/ && pg_buildext updatecontrol
-	cd build/columnar/ && dpkg-buildpackage -b -us -uc
+	cd build/columnar/ && PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 build13:
-	PATH="/usr/lib/postgresql/13/bin:$$PATH" build/columnar/configure
+	cd build/columnar/ && PATH=/usr/lib/postgresql/13/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
 	echo '13' > build/columnar/debian/pgversions
 	cd build/columnar/ && pg_buildext updatecontrol
-	cd build/columnar/ && dpkg-buildpackage -b -us -uc
+	cd build/columnar/ && PATH=/usr/lib/postgresql/13/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
