@@ -24,7 +24,7 @@ collect:
 #---------------------------------------------#
 # rust & pgrx extensions
 #---------------------------------------------#
-rust1: pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale
+rust1: pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale pg_session_jwt
 rust2: pgml plprql pg_later pg_smtp_client
 rust3: pgdd
 
@@ -57,7 +57,8 @@ pg_vectorize:
 	cd pg-vectorize && make
 pgvectorscale:
 	cd pgvectorscale && make
-
+pg_session_jwt:
+	cd pg-session-jwt && make
 
 # pgrx 0.11.x
 pgml:
@@ -116,8 +117,6 @@ hydra:
 	cd hydra && make
 pg_tle:
 	cd pg-tle && make
-plv8:
-	cd plv8 && make
 permuteseq:
 	cd permuteseq && make
 postgres_shacrypt:
@@ -134,11 +133,15 @@ hunspell:
 	cd hunspell && make
 zhparser:
 	cd zhparser && make
-
 duckdb_fdw:
 	cd duckdb-fdw && make
+
+plv8:
+	cd plv8 && make
 pg_duckdb:
 	cd pg-duckdb && make
+pg_mooncake:
+	cd pg-mooncake && make
 
 imgsmlr:
 	cd imgsmlr && make
@@ -399,7 +402,7 @@ release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
 .PHONY: rust deps batch1 batch2 deb-collect \
- 	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale pgml plprql pg_later pg_smtp_client pgdd \
+ 	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale pg_session_jwt pgml plprql pg_later pg_smtp_client pgdd \
  	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg-duckdb \
  	pg_timeseries pgmq pg_plan_filter pg_relusage pg_uint128 \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \

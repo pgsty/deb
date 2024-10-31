@@ -1,0 +1,16 @@
+Source: pg-mooncake
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Mooncake-Labs/pg_mooncake
+
+Package: postgresql-PGVERSION-pg-mooncake
+Architecture: any
+Provides: postgresql-pg-mooncake
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description:Columnstore Table in Postgres
+  pg_mooncake is a PostgreSQL extension that adds native columnstore tables with DuckDB execution.
+  Columnstore tables are stored as Iceberg or Delta Lake tables in object storage.
