@@ -1,4 +1,4 @@
-pg-duckdb (0.1.0) unstable; urgency=medium
+pg-duckdb (0.1.0-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/duckdb/pg_duckdb/tree/v0.1.0
 
