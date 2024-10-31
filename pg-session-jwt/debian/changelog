@@ -1,0 +1,5 @@
+pg-session-jwt (0.1.2-1PIGSTY) unstable; urgency=medium
+
+  * Initial release, special v0.1.2-pg17 used by Pigsty <https://pigsty.io>
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 31 Oct 2024 18:00:00 +0000

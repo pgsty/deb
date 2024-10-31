@@ -1,0 +1,16 @@
+Source: pg-session-jwt
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/neondatabase/pg_session_jwt
+
+Package: postgresql-PGVERSION-pg-session-jwt
+Architecture: any
+Provides: postgresql-pg-session-jwt
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres Extension for JWT Sessions
+  pg_session_jwt is a PostgreSQL extension designed to handle authenticated sessions through a JWT.
+  This JWT is then verified against a JWK (JSON Web Key) to ensure its authenticity.
