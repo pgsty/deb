@@ -14,7 +14,7 @@ setup:
 # building deb
 build:
 	cd build && pg_buildext updatecontrol
-	cd build && SCWS_HOME=/usr dpkg-buildpackage -b -us -uc
+	cd build && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:

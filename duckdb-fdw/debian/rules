@@ -22,5 +22,4 @@ override_dh_installdocs:
 	dh_installdocs --all README.*
 
 %:
-	export SCWS_HOME=/usr
 	dh $@
