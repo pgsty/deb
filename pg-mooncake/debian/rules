@@ -9,7 +9,8 @@ export MAKEFLAGS = -j20
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
 override_dh_auto_build:
-	make release -j20
+	@echo $(PATH)
+	make release
 
 override_dh_auto_test:
 
@@ -20,11 +21,11 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
+	BUILD_TYPE=release
 	+pg_buildext loop postgresql-%v-pg-mooncake
 
 override_dh_installdocs:
 	dh_installdocs --all README.*
 
 %:
-	export SCWS_HOME=/usr
 	dh $@
