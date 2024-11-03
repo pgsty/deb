@@ -1,6 +1,9 @@
 all: setup build move
 
-TARBALL := libduckdb-1.0.0.tar.gz
+TARBALL := libduckdb-1.1.2.tar.gz
+
+# wget https://github.com/duckdb/duckdb/releases/download/v1.1.2/libduckdb-linux-amd64.zip
+# tar -zcvf libduckdb-1.1.2.tar.gz libduckdb.so
 
 # prepare directory
 setup:
