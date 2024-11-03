@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := duckdb_fdw-1.0.0.tar.gz
+TARBALL := duckdb_fdw-1.1.2.tar.gz
 
 # prepare directory
 setup:
