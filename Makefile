@@ -11,7 +11,7 @@ batch3: imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint
 batch4: pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile system_stats pg_fkpart pgmeminfo pg_store_plan
 batch5: pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback
 batch6: pg_orphaned pgcozy decoder_raw pg_failover_slots log_fdw redis_fdw index_advisor pg_financial pg_savior base36 base62
-batch7: pg_envvar pg_html5_email_address lower_quantile pg_timeit quantile random session_variable smlar sslutils chkpass pg_currency #pg_mon # pg_timeit no aarch64
+batch7: pg_envvar pg_html5_email_address lower_quantile quantile random session_variable smlar sslutils chkpass pg_currency pg_timeit #pg_mon # pg_timeit no aarch64
 batch8: aggs_for_vecs aggs_for_arrays pgqr pg_zstd url_encode pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash
 batch9: pg_emailaddr pg_uri cryptint floatvec pg_auditor noset pg_math sequential_uuids kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 pg_geohash pg4ml timestamp9
 batch0: pg_bulkload chkpass geoip logerrors login_hook pg_auth_mon
@@ -24,11 +24,16 @@ collect:
 #---------------------------------------------#
 # rust & pgrx extensions
 #---------------------------------------------#
-rust1: pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale pg_session_jwt
-rust2: pgml plprql pg_later pg_smtp_client
+rust1: pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale vchord pglite_fusion pg_bestmatch pg_later pg_smtp_client
+rust2: pgml plprql
 rust3: pgdd
 
-# pgrx 0.12.7
+rusta: pg_graphql pg_jsonschema wrappers pg_idkit pg_later
+rustb: pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui
+rustc: pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale
+rustd: pg_session_jwt pg_smtp_client vchord pglite_fusion pg_bestmatch
+
+# pgrx 0.12.9
 pg_graphql:
 	cd pg-graphql && make
 pg_jsonschema:
@@ -37,6 +42,9 @@ wrappers:
 	cd wrappers && make
 pg_idkit:
 	cd pg-idkit && make
+pg_later:
+	cd pg-later && make
+
 pgsmcrypto:
 	cd pgsmcrypto && make
 pg_tiktoken:
@@ -47,6 +55,7 @@ pg_polyline:
 	cd pg-polyline && make
 pg_explain_ui:
 	cd pg-explain-ui && make
+
 pg_cardano:
 	cd pg-cardano && make
 pg_base58:
@@ -57,20 +66,24 @@ pg_vectorize:
 	cd pg-vectorize && make
 pgvectorscale:
 	cd pgvectorscale && make
+
+
 pg_session_jwt:
 	cd pg-session-jwt && make
+pg_smtp_client:
+	cd pg-smtp-client && make
+vchord:
+	cd vchord && make
+pglite_fusion:
+	cd pglite-fusion && make
+pg_bestmatch:
+	cd pg-bestmatch && make
 
 # pgrx 0.11.x
 pgml:
 	cd pgml && make
 plprql:
 	cd plprql && make
-pg_tier:
-	cd pg-tier && make
-pg_later:
-	cd pg-later && make
-pg_smtp_client:
-	cd pg-smtp-client && make
 
 # pgrx 0.10.x
 pgdd:
@@ -340,63 +353,73 @@ aws_s3:
 pg4ml:
 	cd pg4ml && USE_PGXS=1 make
 
+
+
+
+###############################################################
+#                        1. Building                          #
+###############################################################
+
 #---------------------------------------------#
 # sync to/from building server
 #---------------------------------------------#
 push-sv:
-	rsync -avc --exclude deb ./ sv:/data/pigsty-deb/
+	rsync -avc --exclude deb ./ sv:/data/deb/
 pushd-sv:
-	rsync -avc --exclude deb --delete ./ sv:/data/pigsty-deb/
+	rsync -avc --exclude deb --delete ./ sv:/data/deb/
 pull-sv:
-	rsync -avc sv:/data/pigsty-deb/deb/ ./deb/
+	rsync -avc sv:/data/deb/ ./deb/
 pulld-sv:
-	rsync --delete -avc sv:/data/pigsty-deb/deb/ ./deb/
+	rsync --delete -avc sv:/data/deb/deb/ ./deb/
 
 ps: pushss
 pd: pushsd
 pushsd: pushd-sv
-	ssh sv 'cd /data/pigsty-deb && make pushd'
+	ssh sv 'cd /data/deb && make pushd'
 pushss: push-sv
-	ssh sv 'cd /data/pigsty-deb && make push'
+	ssh sv 'cd /data/deb && make push'
 
 pl: pull-ss
 pull-ss:
-	ssh -t sv "cd /data/pigsty-deb && make pull"
-	rsync -avc --exclude deb ./ sv:/data/pigsty-deb/
+	ssh -t sv "cd /data/deb && make pull"
+	rsync -avc --exclude deb ./ sv:/data/deb/
 pull-deb:
-	rsync -avc sv:/data/pigsty-deb/deb/ deb/
+	rsync -avc sv:/data/deb/deb/ deb/
 
 #---------------------------------------------#
 # push to building machines
 #---------------------------------------------#
 push:
-	rsync -avc --exclude deb ./ u22:~/pigsty-deb/
-	rsync -avc --exclude deb ./ d12:~/pigsty-deb/
-	rsync -avc --exclude deb ./ u24:~/pigsty-deb/
+	rsync -avc --exclude deb ./ u22:~/deb/
+	rsync -avc --exclude deb ./ d12:~/deb/
+	rsync -avc --exclude deb ./ u24:~/deb/
 pushd:
-	rsync -avc --exclude deb --delete ./ u22:~/pigsty-deb/
-	rsync -avc --exclude deb --delete ./ d12:~/pigsty-deb/
-	rsync -avc --exclude deb --delete ./ u24:~/pigsty-deb/
+	rsync -avc --exclude deb --delete ./ d12:~/deb/
+	rsync -avc --exclude deb --delete ./ u22:~/deb/
+	rsync -avc --exclude deb --delete ./ u24:~/deb/
 push12:
-	rsync -avc --exclude deb ./ d12:~/pigsty-deb/
+	rsync -avc --exclude deb ./ d12:~/deb/
 push22:
-	rsync -avc --exclude deb ./ d22:~/pigsty-deb/
+	rsync -avc --exclude deb ./ u22:~/deb/
 push24:
-	rsync -avc --exclude deb ./ d24:~/pigsty-deb/
+	rsync -avc --exclude deb ./ u24:~/deb/
 pushd12:
-	rsync -avc --exclude deb --delete ./ d12:~/pigsty-deb/
+	rsync -avc --exclude deb --delete ./ d12:~/deb/
 pushd22:
-	rsync -avc --exclude deb --delete ./ d22:~/pigsty-deb/
+	rsync -avc --exclude deb --delete ./ u22:~/deb/
 pushd24:
-	rsync -avc --exclude deb --delete ./ d24:~/pigsty-deb/
+	rsync -avc --exclude deb --delete ./ u24:~/deb/
 
 
 #---------------------------------------------#
 # pull rpm from building machines
 #---------------------------------------------#
-pull: dirs pull22 pull12 pull24
-purge:
-	rm -rf deb/*
+init:
+	mkdir -p deb deb/{bookworm.amd64,jammy.amd64,noble.amd64}
+	mkdir -p deb deb/{bookworm.arm64,jammy.arm64,noble.arm64}
+pull:  init pull22 pull12 pull24
+pulla: init pull22a pull12a pull24a
+
 dirs:
 	mkdir -p deb/jammy.amd64 deb/bookworm.amd64
 pull24:
@@ -422,7 +445,7 @@ release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 
 .PHONY: rust deps batch1 batch2 deb-collect \
- 	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale pg_session_jwt pgml plprql pg_later pg_smtp_client pgdd \
+ 	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale pg_session_jwt pgml plprql pg_later pg_smtp_client vchord pg_bestmatch pglite_fusion pgdd \
  	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg-duckdb \
  	pg_timeseries pgmq pg_plan_filter pg_relusage pg_uint128 \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \

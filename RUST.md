@@ -2,13 +2,15 @@
 
 ```bash
 PROXY=http://192.168.0.106:8118
+
+#PROXY=http://127.0.0.1:1081
 export HTTP_PROXY=${PROXY}
 export HTTPS_PROXY=${PROXY}
 export ALL_PROXY=${PROXY}
 export NO_PROXY="localhost,127.0.0.1,10.0.0.0/8,192.168.0.0/16,*.pigsty,*.aliyun.com,mirrors.*,*.myqcloud.com,*.tsinghua.edu.cn"
 alias build="HTTPS_PROXY=${PROXY} cargo pgrx package -v"
 . ~/.cargo/env
-cd ~/pigsty-deb
+cd ~/deb
 
 alias pg17="export PATH=/usr/lib/postgresql/17/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;"
 alias pg16="export PATH=/usr/lib/postgresql/16/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;"
@@ -16,6 +18,7 @@ alias pg15="export PATH=/usr/lib/postgresql/15/bin:~/.cargo/bin:/usr/local/sbin:
 alias pg14="export PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;"
 alias pg13="export PATH=/usr/lib/postgresql/13/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;"
 alias pg12="export PATH=/usr/lib/postgresql/12/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;"
+
 ```
 
 
@@ -38,8 +41,8 @@ source "$HOME/.cargo/env"
 ```
 
 ```bash
-cargo install --locked cargo-pgrx@${PGRX_VER-'0.12.7'} # <--- 
-cargo install --locked cargo-pgrx@${PGRX_VER-'0.11.3'}
+cargo install --locked cargo-pgrx@${PGRX_VER-'0.12.9'} # <--- 
+cargo install --locked cargo-pgrx@${PGRX_VER-'0.11.4'}
 cargo install --locked cargo-pgrx@${PGRX_VER-'0.10.2'}
 cargo pgrx init
 ```
