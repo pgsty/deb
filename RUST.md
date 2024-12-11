@@ -1,7 +1,7 @@
 # RUST TODO
 
 ```bash
-PROXY=http://192.168.0.105:8118
+PROXY=http://192.168.0.106:8118
 export HTTP_PROXY=${PROXY}
 export HTTPS_PROXY=${PROXY}
 export ALL_PROXY=${PROXY}
@@ -20,10 +20,12 @@ alias pg12="export PATH=/usr/lib/postgresql/12/bin:~/.cargo/bin:/usr/local/sbin:
 
 
 ```bash
-Host github.com
+echo "Host github.com
     Hostname ssh.github.com
     Port 443
-    User git
+    User git" >> ~/.ssh/config
+
+ssh -T git@github.com
 ```
 
 
@@ -78,14 +80,14 @@ cd ~; git clone git@github.com:supabase/wrappers.git                  ; cd ~/wra
 cd ~; git clone git@github.com:zhuobie/pgsmcrypto.git                 ; cd ~/pgsmcrypto
 cd ~; git clone git@github.com:kelvich/pg_tiktoken.git                ; cd ~/pg_tiktoken
 cd ~; git clone git@github.com:VADOSWARE/pg_idkit.git                 ; cd ~/pg_idkit       && git checkout v0.2.4             
-cd ~; git clone git@github.com:timescale/pgvectorscale.git            ; cd ~/pgvectorscale  && git checkout 0.4.0                    
+cd ~; git clone git@github.com:timescale/pgvectorscale.git            ; cd ~/pgvectorscale  && git checkout 0.5.1                    
 
 cd ~; git clone git@github.com:tembo-io/pg_vectorize.git              ; cd ~/pg_vectorize   && git checkout v0.18.3 
 cd ~; git clone git@github.com:tembo-io/pg_later.git                  ; cd ~/pg_later       && git checkout v0.1.3           
 cd ~; git clone git@github.com:kaspermarstal/plprql.git               ; cd ~/plprql         && git checkout v1.0.0
 cd ~; git clone git@github.com:rustprooflabs/pgdd.git                 ; cd ~/pgdd           && git checkout 0.5.2
 
-cd ~; git@github.com:CrunchyData/pg_parquet.git                       ; cd ~/pg_parquet     && git checkout 0.1.0
+cd ~; git@github.com:CrunchyData/pg_parquet.git                       ; cd ~/pg_parquet     && git checkout 0.1.1
 
 #cd ~; git clone git@github.com:tembo-io/pgmq.git                      ; cd ~/pgmq           && git checkout v1.2.1 #v1.3.3
 #cd ~; git clone --recursive https://github.com/paradedb/paradedb.git  ; cd ~/paradedb       && git checkout v0.8.6
