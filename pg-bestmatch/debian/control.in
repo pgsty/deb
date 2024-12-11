@@ -1,0 +1,16 @@
+Source: pg-bestmatch
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/tensorchord/pg_bestmatch.rs
+
+Package: postgresql-PGVERSION-pg-bestmatch
+Architecture: any
+Provides: postgresql-pg-bestmatch
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Generate BM25 sparse vector inside PostgreSQL
+  This PostgreSQL extension provides functionalities for BM25 text queries, generateing BM25 statistic sparse vectors for text. BM25 outperforms dense vector-based retrieval methods in many RAG benchmark tasks.
+  User can use vector search extensions such as pgvecto.rs or pgvector for efficient searches in postgres.
