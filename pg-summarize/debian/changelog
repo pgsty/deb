@@ -1,3 +1,9 @@
+pg-summarize (0.0.1-1PIGSTY) unstable; urgency=medium
+
+  * 0.0.1 with pgrx 0.12.9
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 11 Dec 2024 18:00:00 +0000
+
 pg-summarize (0.0.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
