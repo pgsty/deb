@@ -20,7 +20,7 @@ batch6: pg_orphaned pgcozy decoder_raw pg_failover_slots log_fdw redis_fdw index
 batch7: pg_envvar pg_html5_email_address lower_quantile quantile random session_variable smlar sslutils chkpass pg_currency
 batch8: aggs_for_vecs aggs_for_arrays pgqr pg_zstd url_encode pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash
 batch9: pg_emailaddr pg_uri cryptint floatvec pg_auditor noset pg_math sequential_uuids kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 pg_geohash pg4ml timestamp9
-batch0: pg_bulkload chkpass geoip logerrors login_hook pg_auth_mon pg_timeit #pg_mon
+batch0: pg_bulkload chkpass geoip logerrors login_hook pg_auth_mon pgpdf pg_timeit #pg_mon
 
 collect:
 	mkdir -p /tmp/deb
@@ -356,7 +356,8 @@ aws_s3:
 	cd aws-s3 && make
 pg4ml:
 	cd pg4ml && USE_PGXS=1 make
-
+pgpdf:
+	cd pgpdf && make
 pg_mon:
 	cd pg-mon && make
 pg_timeit:
@@ -460,5 +461,5 @@ release: clean
  	pg_orphaned pgcozy decoder_raw pg_failover_slot log_fdw redis_fdw index_advisor pg_financial pg_savior aggs_for_vecs base36 base62 pg_envvar pg_html5_email_address lower_quantile pg_timeit quantile random \
  	smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec pg_auditor noset \
  	aggs_for_arrays pgqr pg_zstd url_encode pg_geohash pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash pg_math firebird_fdw sequential_uuids kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 \
- 	scws libduckdb pgcopydb pg_bulkload libfq pg4ml \
+ 	scws libduckdb pgcopydb pg_bulkload libfq pg4ml pgpdf \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pushd push12 push22 push24 pushd12 pushd22 pushd24 pull purge dirs pull22 pull12 sync pub release
