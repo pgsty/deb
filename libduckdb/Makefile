@@ -1,6 +1,12 @@
 all: setup build move
 
+ARCH := $(shell uname -m)
+ifeq ($(ARCH),aarch64)
+TARBALL := libduckdb-1.1.2-aarch64.tar.gz
+else
 TARBALL := libduckdb-1.1.2.tar.gz
+endif
+
 
 # wget https://github.com/duckdb/duckdb/releases/download/v1.1.2/libduckdb-linux-amd64.zip
 # tar -zcvf libduckdb-1.1.2.tar.gz libduckdb.so
