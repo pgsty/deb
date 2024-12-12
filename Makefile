@@ -20,11 +20,10 @@ batch6: pg_orphaned pgcozy decoder_raw pg_failover_slots log_fdw redis_fdw index
 batch7: pg_envvar pg_html5_email_address lower_quantile quantile random session_variable smlar sslutils chkpass pg_currency
 batch8: aggs_for_vecs aggs_for_arrays pgqr pg_zstd url_encode pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash
 batch9: pg_emailaddr pg_uri cryptint floatvec pg_auditor noset pg_math sequential_uuids kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 pg_geohash pg4ml timestamp9
-batch0: pg_bulkload chkpass geoip logerrors login_hook pg_auth_mon pgpdf pg_timeit #pg_mon
+batch0: pg_bulkload chkpass geoip pg_jobmon logerrors login_hook pg_auth_mon pgpdf pg_timeit #pg_mon
 
 collect:
 	mkdir -p /tmp/deb
-	rm -rf /tmp/deb/*
 	cp -r ~/*.deb /tmp/deb/
 
 #---------------------------------------------#

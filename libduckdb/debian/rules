@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
 
+ARCH := $(shell uname -m)
+
 override_dh_auto_build:
 
 override_dh_auto_test:
@@ -8,8 +10,9 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	mkdir -p $(CURDIR)/debian/libduckdb/usr/lib/x86_64-linux-gnu; \
-	cp $(CURDIR)/libduckdb.so $(CURDIR)/debian/libduckdb/usr/lib/x86_64-linux-gnu/;
+
+	mkdir -p $(CURDIR)/debian/libduckdb/usr/lib/$(ARCH)-linux-gnu; \
+	cp $(CURDIR)/libduckdb.so $(CURDIR)/debian/libduckdb/usr/lib/$(ARCH)-linux-gnu/;
 
 %:
 	dh $@
