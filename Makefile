@@ -5,16 +5,22 @@ noext: scws libduckdb pgcopydb libfq
 ext: zhparser duckdb_fdw firebird_fdw
 big: pg_duckdb plv8 hydra
 
+# noext install
+deps:
+	sudo dpkg -i ~/libduckdb_*.deb
+	sudo dpkg -i ~/libfq_*.deb
+	sudo dpkg -i ~/scws_*.deb
+
 batch1: pg_net pgjwt pgmq pg_timeseries pg_plan_filter pg_relusage pg_uint128 gzip vault pgsodium supautils
 batch2: pg_tle permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell zhparser duckdb_fdw
 batch3: imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions postgresql_anonymizer ddlx
 batch4: pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile system_stats pg_fkpart pgmeminfo pg_store_plan
 batch5: pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback
 batch6: pg_orphaned pgcozy decoder_raw pg_failover_slots log_fdw redis_fdw index_advisor pg_financial pg_savior base36 base62
-batch7: pg_envvar pg_html5_email_address lower_quantile quantile random session_variable smlar sslutils chkpass pg_currency pg_timeit #pg_mon # pg_timeit no aarch64
+batch7: pg_envvar pg_html5_email_address lower_quantile quantile random session_variable smlar sslutils chkpass pg_currency
 batch8: aggs_for_vecs aggs_for_arrays pgqr pg_zstd url_encode pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash
 batch9: pg_emailaddr pg_uri cryptint floatvec pg_auditor noset pg_math sequential_uuids kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 pg_geohash pg4ml timestamp9
-batch0: pg_bulkload chkpass geoip logerrors login_hook pg_auth_mon
+batch0: pg_bulkload chkpass geoip logerrors login_hook pg_auth_mon pg_timeit #pg_mon
 
 collect:
 	mkdir -p /tmp/deb
@@ -272,8 +278,7 @@ pg_html5_email_address:
 	cd pg-html5-email-address && make
 lower_quantile:
 	cd lower-quantile && make
-pg_timeit:
-	cd pg-timeit && make
+
 quantile:
 	cd quantile && make
 random:
@@ -284,8 +289,7 @@ smlar:
 	cd smlar && make
 sslutils:
 	cd sslutils && make
-pg_mon:
-	cd pg-mon && make
+
 chkpass:
 	cd chkpass && make
 pg_currency:
@@ -353,8 +357,10 @@ aws_s3:
 pg4ml:
 	cd pg4ml && USE_PGXS=1 make
 
-
-
+pg_mon:
+	cd pg-mon && make
+pg_timeit:
+	cd pg-timeit && make
 
 ###############################################################
 #                        1. Building                          #
@@ -382,7 +388,7 @@ pushss: push-sv
 pl: pull-ss
 pull-ss:
 	ssh -t sv "cd /data/deb && make pull"
-	rsync -avc --exclude deb ./ sv:/data/deb/
+	rsync -avc sv:/data/deb/deb/ deb/
 pull-deb:
 	rsync -avc sv:/data/deb/deb/ deb/
 
