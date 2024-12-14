@@ -1,0 +1,19 @@
+Source: pg-anon
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://gitlab.com/dalibo/postgresql_anonymizer
+
+Package: postgresql-PGVERSION-pg-anon
+Architecture: any
+Provides: postgresql-pg-anon
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Anonymization & Data Masking for PostgreSQL
+  PostgreSQL Anonymizer is an extension to mask or replace personally identifiable information (PII)
+  or commercially sensitive data from a Postgres database.
+  The project has a declarative approach of anonymization. This means you can
+  declare the masking rules using the PostgreSQL Data Definition Language (DDL)
+  and specify your anonymization policy inside the table definition itself.
