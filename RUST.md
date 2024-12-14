@@ -1,9 +1,11 @@
 # RUST TODO
 
 ```bash
-PROXY=http://192.168.0.106:8118
+
 
 PROXY=http://127.0.0.1:1081
+
+PROXY=http://192.168.0.107:8118
 export HTTP_PROXY=${PROXY}
 export HTTPS_PROXY=${PROXY}
 export ALL_PROXY=${PROXY}
