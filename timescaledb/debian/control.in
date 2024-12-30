@@ -1,0 +1,15 @@
+Source: timescaledb
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cmake
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/timescale/timescaledb
+
+Package: postgresql-PGVERSION-timescaledb
+Architecture: any
+Provides: postgresql-timescaledb
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension for high-performance real-time analytics on time-series and event data
+  An open-source time-series SQL database optimized for fast ingest and complex queries. Packaged as a PostgreSQL extension.
