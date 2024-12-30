@@ -5,6 +5,19 @@ noext: scws libduckdb pgcopydb libfq
 ext: zhparser duckdb_fdw firebird_fdw
 big: pg_duckdb plv8 hydra
 
+plv8:
+	cd plv8 && make
+pg_duckdb:
+	cd pg-duckdb && make
+hydra:
+	cd hydra && make
+citus:
+	cd citus && make
+timescaledb:
+	cd timescaledb && make
+pgroonga:
+	cd pgroonga && make
+
 # noext install
 deps:
 	sudo dpkg -i ~/libduckdb_*.deb
@@ -131,8 +144,7 @@ pgsodium:
 	cd pgsodium && make
 supautils:
 	cd supautils && make
-hydra:
-	cd hydra && make
+
 pg_tle:
 	cd pg-tle && make
 permuteseq:
@@ -154,12 +166,7 @@ zhparser:
 duckdb_fdw:
 	cd duckdb-fdw && make
 
-plv8:
-	cd plv8 && make
-pg_duckdb:
-	cd pg-duckdb && make
-pg_mooncake:
-	cd pg-mooncake && make
+
 
 imgsmlr:
 	cd imgsmlr && make
@@ -452,7 +459,7 @@ release: clean
 
 .PHONY: rust deps batch1 batch2 deb-collect \
  	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale pg_session_jwt pgml plprql pg_later pg_smtp_client vchord pg_bestmatch pglite_fusion pgdd \
- 	pg_net pgjwt gzip vault pgsodium supautils hydra pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg-duckdb \
+ 	pg_net pgjwt gzip vault pgsodium supautils pg_tle plv8 permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg-duckdb hydra citus timescaledb \
  	pg_timeseries pgmq pg_plan_filter pg_relusage pg_uint128 \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
  	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj tableversion pg_statement_rollback \

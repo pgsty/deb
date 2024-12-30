@@ -11,7 +11,7 @@ setup:
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
-build: build16 build15 build14 build13
+build: build16 build15 build14
 
 # building deb
 build16:
@@ -32,15 +32,10 @@ build14:
 	cd build/ && pg_buildext updatecontrol
 	cd build/ && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
-build13:
-	cd build/ && PATH=/usr/lib/postgresql/13/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
-	echo '13' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/13/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
 # collect deb
 move:
-	cp build/*.deb ~/
+	mkdir -p /tmp/deb
+	cp *.deb /tmp/deb
 
 # remove building craps
 clean:
