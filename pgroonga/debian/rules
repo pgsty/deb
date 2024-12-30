@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+# Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
+export CC = gcc
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_build:
+	if pkg-config --exists "libxxhash >= 0.8.0"; then	\
+		dh_auto_build -- HAVE_MSGPACK=1 HAVE_XXHASH=1;	\
+	else							\
+		dh_auto_build -- HAVE_MSGPACK=1;		\
+	fi
+
+override_dh_auto_install:
+	+pg_buildext loop postgresql-%v-pgroonga
+
+override_dh_installdocs:
+
+
+%:
+	dh $@
