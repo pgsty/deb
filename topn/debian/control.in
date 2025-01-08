@@ -1,0 +1,16 @@
+Source: topn
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libxml2-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/citusdata/postgresql-topn
+
+Package: postgresql-PGVERSION-topn
+Architecture: any
+Provides: postgresql-topn
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: TopN is an open source PostgreSQL extension that returns the top values in a database according to some criteria
+  TopN takes elements in a data set, ranks them according to a given rule, and picks the top elements in
+  that data set. When doing this, TopN applies an approximation algorithm to provide fast results using few compute and memory resources.
