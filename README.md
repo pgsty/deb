@@ -1,6 +1,6 @@
 # PGSTY Deb Package Builder
 
-Extensions Building Scripts for PostgreSQL 12 - 16 on Debian / Ubuntu.
+Extensions Building Scripts for PostgreSQL 13 - 17 on Debian / Ubuntu.
 
 
 

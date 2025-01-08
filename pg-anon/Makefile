@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_anon-2.0.0c3.tar.gz
+TARBALL := postgresql_anonymizer-2.0.0.tar.gz
 
 # prepare directory
 setup:
