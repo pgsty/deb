@@ -1,0 +1,17 @@
+Source: pg-duration
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), systemtap-sdt-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jkosh44/pg_duration/
+
+Package: postgresql-PGVERSION-pg-duration
+Architecture: any
+Provides: postgresql-pg-duration
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: A PostgreSQL extension for a time based duration type.
+  pg_duration is a PostgreSQL extension that adds a duration data type to PostgreSQL.
+  duration allows users to store the total time of some event in their databases.
+  duration is very similar to the builtin interval type, except duration does not have a months or days component, only a microsecond component.
