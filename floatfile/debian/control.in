@@ -1,0 +1,20 @@
+Source: floatfile
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pjungwir/floatfile
+
+Package: postgresql-PGVERSION-floatfile
+Architecture: any
+Provides: postgresql-floatfile
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres extension for fast select & append of float arrays.
+  A Postgres extension to store float arrays in individual files, providing very fast querying
+  (especially when combined with aggs_for_arrays, aggs_for_vecs, or floatvec) without paying a huge cost to keep updating them.
+  The idea is that if you have 1 million FLOATs, it is much faster if you can load them as a single 8 MB chunk rather than
+  pulling from a million different places on disk. Sometimes you can just store your data as an array in a regular Postgres table,
+  but updating those arrays will be slow and cause painful MVCC churn. Since this extension keeps the data in a separate file,
+  appends are very fast and outside the MVCC system.
