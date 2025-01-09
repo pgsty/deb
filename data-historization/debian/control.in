@@ -1,0 +1,16 @@
+Source: data-historization
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), systemtap-sdt-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/bigsmoke/pg_data_historization
+
+Package: postgresql-PGVERSION-data-historization
+Architecture: any
+Provides: postgresql-data-historization
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: PLPGSQL Script to historize data in partitionned table
+  PLPGSQL Script to historize data in partitionned table
+
