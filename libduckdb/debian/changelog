@@ -1,3 +1,9 @@
+libduckdb (1.1.3-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/duckdb/duckdb/releases/tag/v1.1.3
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 09 Jan 2025 18:00:00 +0000
+
 libduckdb (1.1.2-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/duckdb/duckdb/releases/tag/v1.1.2
