@@ -1,0 +1,16 @@
+Source: pg-xxhash
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), systemtap-sdt-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/hatarist/pg_xxhash
+
+Package: postgresql-PGVERSION-pg-xxhash
+Architecture: any
+Provides: postgresql-pg-xxhash
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: xxhash functions for PostgreSQL
+  Think twice before even considering to use it in any serious environment.
+  Issues are discouraged, pull requests are greatly appreciated.
