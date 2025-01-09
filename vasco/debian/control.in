@@ -1,0 +1,16 @@
+Source: vasco
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Florents-Tselai/vasco
+
+Package: postgresql-PGVERSION-vasco
+Architecture: any
+Provides: postgresql-vasco
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Maximal Information Coefficient (MIC) Extension for Postgres
+  vasco is a Postgres extension that helps you discover hidden correlations in your data.
+  It is based on the MIC and the MINE family of statistics.
