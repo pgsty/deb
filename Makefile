@@ -380,7 +380,8 @@ pg_timeit:
 	cd pg-timeit && make
 topn:
 	cd topn && make
-
+pg_upless:
+	cd pg-upless && make
 
 ###############################################################
 #                        1. Building                          #
@@ -480,5 +481,5 @@ release: clean
  	pg_orphaned pgcozy decoder_raw pg_failover_slot log_fdw redis_fdw index_advisor pg_financial pg_savior aggs_for_vecs base36 base62 pg_envvar pg_html5_email_address pg_timeit quantile lower_quantile sequential_uuids ddsketch omnisketch random \
  	smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec floatfile pg_auditor noset \
  	aggs_for_arrays pgqr pg_zstd url_encode pg_geohash pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash pg_math firebird_fdw  kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 \
- 	scws libduckdb pgcopydb pg_bulkload libfq pg4ml pgpdf topn \
+ 	scws libduckdb pgcopydb pg_bulkload libfq pg4ml pgpdf topn pg_upless \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pushd push12 push22 push24 pushd12 pushd22 pushd24 pull purge dirs pull22 pull12 sync pub release

@@ -1,0 +1,20 @@
+Source: pg-upless
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rodo/pg_upless
+
+Package: postgresql-PGVERSION-pg-upless
+Architecture: any
+Provides: postgresql-pg-upless
+Depends: ${misc:Depends}, ${postgresql:Depends}
+Description: PostgreSQL Extension to Detect Useless UPDATE
+  pg_upless is a set of functions and tables, to build statistics on useless update statements.
+  With modern ORM it can occurs that sometimes an UPDATE is done without changing any values.
+  If it occurs too often that will impact the performance of your system.
+  pg_upless will help to detect them by creating triggers on the tables you want to follow.
+  It's not aimed to be used all the time, it's more a diagnostc tool you activate it a small period of time.
+  Even if it is designed to have the lower imapct as possible it will downgrade by a little your queries performance.
