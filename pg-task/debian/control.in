@@ -1,0 +1,15 @@
+Source: pg-task
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), systemtap-sdt-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/RekGRpth/pg_task
+
+Package: postgresql-PGVERSION-pg-task
+Architecture: any
+Provides: postgresql-pg-task
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: PostgreSQL and Greenplum job scheduler pg_task allows to execute any sql command at any specific time at background asynchronously
+  PostgreSQL and Greenplum job scheduler pg_task allows to execute any sql command at any specific time at background asynchronously

@@ -382,6 +382,9 @@ topn:
 	cd topn && make
 pg_upless:
 	cd pg-upless && make
+pg_task:
+	cd pg-task && make
+
 
 ###############################################################
 #                        1. Building                          #
