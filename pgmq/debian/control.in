@@ -11,7 +11,7 @@ Package: postgresql-PGVERSION-pgmq
 Architecture: any
 Provides: postgresql-pgmq
 Depends: ${misc:Depends}, ${postgresql:Depends}
-Description: PostgreSQL implementation of JSON Web Tokens for PGVERSION
+Description: A lightweight message queue. Like AWS SQS and RSMQ but on Postgres.
   pgmq allows you to sign & verify json web token via pure SQL interface.
   It requires the pgcrypto extension, included in most distribution's "postgresql-contrib" package.
   The tests require the pgtap extension to run.
