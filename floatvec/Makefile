@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := floatvec-1.0.1.tar.gz
+TARBALL := floatvec-1.1.1.tar.gz
 
 # prepare directory
 setup:

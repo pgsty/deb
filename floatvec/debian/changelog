@@ -1,3 +1,9 @@
+floatvec (1.1.1-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/pjungwir/floatvec/releases/tag/v1.1.1
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 09 Jan 2025 18:00:00 +0000
+
 floatvec (1.0.1-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
