@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := quantile-1.1.7.tar.gz
+TARBALL := quantile-1.1.8.tar.gz
 
 # prepare directory
 setup:

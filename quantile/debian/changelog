@@ -1,3 +1,9 @@
+quantile (1.1.8-1PIGSTY) unstable; urgency=low
+
+  * bump to 1.1.8
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 09 Jan 2025 18:00:00 +0000
+
 quantile (1.1.7-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
