@@ -1,0 +1,19 @@
+Source: omnisketch
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/tvondra/omnisketch
+
+Package: postgresql-PGVERSION-omnisketch
+Architecture: any
+Provides: postgresql-omnisketch
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: omnisketch implemented as Postgres extension
+  This PostgreSQL extension implements OmniSketch, a data structure for on-line aggregation of data into approximate sketch,
+   and answering queries. The algorithm is also very friendly to parallel programs.
+  The OmniSketch data structure was introduced by this paper:
+  OmniSketch: Efficient Multi-Dimensional High-Velocity Stream Analytics with Arbitrary Predicates;
+   Wieger R. Punter, Odysseas Papapetrou, Minos Garofalakis; Proc. {VLDB} Endow. Volume 17, No. 3, p 319-331, 2023 PDF PVLDB
