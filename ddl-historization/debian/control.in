@@ -1,0 +1,16 @@
+Source: ddl-historization
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), systemtap-sdt-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rodo/pg_ddl_historization
+
+Package: postgresql-PGVERSION-ddl-historization
+Architecture: any
+Provides: postgresql-ddl-historization
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Historize the ddl changes inside PostgreSQL database
+  PostgreSQL Extension to historize in a table all DDL changes made on a database
+
