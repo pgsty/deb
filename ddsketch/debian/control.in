@@ -1,0 +1,15 @@
+Source: ddsketch
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/tvondra/ddsketch
+
+Package: postgresql-PGVERSION-ddsketch
+Architecture: any
+Provides: postgresql-ddsketch
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Implementing a fast and fully-mergeable quantile sketch with relative-error guarantees
+  This PostgreSQL extension implements ddsketch, a data structure for on-line accumulation of quantiles, as described in a paper
