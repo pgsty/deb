@@ -1,0 +1,18 @@
+Source: pg-schedoc
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/bigsmoke/pg_schedoc
+
+Package: postgresql-PGVERSION-pg-schedoc
+Architecture: any
+Provides: postgresql-pg-schedoc
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-ddl-historization
+Description: Cross documentation between Django and DBT projects
+  schedoc means schema documentation, it's a tool to build an automatic documentation
+  based on COMMENT on PostgresSQL objects. schedoc require the extension (ddl_historization to work）
+  COMMENT are set on columns in a json format with predefined values like status.
+
