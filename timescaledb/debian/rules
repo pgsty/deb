@@ -19,7 +19,7 @@ override_dh_strip:
 override_dh_auto_test:
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-timescaledb
+	+pg_buildext loop postgresql-%v-timescaledb-tsl
 
 override_dh_installdocs:
 

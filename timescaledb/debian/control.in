@@ -1,4 +1,4 @@
-Source: timescaledb
+Source: timescaledb-tsl
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
@@ -7,9 +7,9 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/timescale/timescaledb
 
-Package: postgresql-PGVERSION-timescaledb
+Package: postgresql-PGVERSION-timescaledb-tsl
 Architecture: any
-Provides: postgresql-timescaledb
+Provides: postgresql-timescaledb-tsl
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: PostgreSQL extension for high-performance real-time analytics on time-series and event data
+Description: PostgreSQL extension for high-performance real-time analytics on time-series and event data (TSL version)
   An open-source time-series SQL database optimized for fast ingest and complex queries. Packaged as a PostgreSQL extension.
