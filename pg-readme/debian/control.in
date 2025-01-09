@@ -1,0 +1,19 @@
+Source: pg-readme
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), systemtap-sdt-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/bigsmoke/pg_readme
+
+Package: postgresql-PGVERSION-pg-readme
+Architecture: any
+Provides: postgresql-pg-readme
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Functions to generate a `README.md` document for a database extension or schema
+  Functions to generate a `README.md` document for a database extension or schema,
+  based on `COMMENT` objects found in the `pg_description` system catalog
+  The pg_readme PostgreSQL extension provides functions to generate a README.md document
+  for a database extension or schema, based on COMMENT objects found in the pg_description system catalog.
+
