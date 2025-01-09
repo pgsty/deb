@@ -12,6 +12,6 @@ Architecture: any
 Provides: postgresql-pg-timeseries
 Depends: ${postgresql:Depends}, ${misc:Depends}
 Recommends: postgresql-PGVERSION-pg-ivm, postgresql-PGVERSION-pg-partman, postgresql-PGVERSION-pg-cron
-Suggests: postgresql-PGVERSION-hydra postgresql-PGVERSION-citus
+Suggests: postgresql-PGVERSION-hydra, postgresql-PGVERSION-citus
 Description: Simple and focused time-series tables for PostgreSQL
   The purpose of this extension is to provide a cohesive user experience around the creation, maintenance, and use of time-series tables.
