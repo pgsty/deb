@@ -15,4 +15,3 @@ Description: Cross documentation between Django and DBT projects
   schedoc means schema documentation, it's a tool to build an automatic documentation
   based on COMMENT on PostgresSQL objects. schedoc require the extension (ddl_historization to work）
   COMMENT are set on columns in a json format with predefined values like status.
-

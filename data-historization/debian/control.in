@@ -11,6 +11,6 @@ Package: postgresql-PGVERSION-data-historization
 Architecture: any
 Provides: postgresql-data-historization
 Depends: ${postgresql:Depends}, ${misc:Depends}
-Description: PLPGSQL Script to historize data in partitionned table
-  PLPGSQL Script to historize data in partitionned table
+Description: PLPGSQL Script to historize data in partitioned table
+  PLPGSQL Script to historize data in partitioned table
 

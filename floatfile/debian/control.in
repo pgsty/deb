@@ -11,7 +11,7 @@ Package: postgresql-PGVERSION-floatfile
 Architecture: any
 Provides: postgresql-floatfile
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Postgres extension for fast select & append of float arrays.
+Description: A Postgres extension to store float arrays in individual files
   A Postgres extension to store float arrays in individual files, providing very fast querying
   (especially when combined with aggs_for_arrays, aggs_for_vecs, or floatvec) without paying a huge cost to keep updating them.
   The idea is that if you have 1 million FLOATs, it is much faster if you can load them as a single 8 MB chunk rather than

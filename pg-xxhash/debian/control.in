@@ -13,4 +13,3 @@ Provides: postgresql-pg-xxhash
 Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: xxhash functions for PostgreSQL
   Think twice before even considering to use it in any serious environment.
-  Issues are discouraged, pull requests are greatly appreciated.
