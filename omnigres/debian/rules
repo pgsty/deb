@@ -1,0 +1,36 @@
+#!/usr/bin/make -f
+
+SRC_DIR := omnigres
+PKG_NAME := omnigres
+
+# Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
+export CC = gcc
+
+override_dh_auto_build:
+	# Disable the build step since binaries are pre-built
+
+override_dh_auto_clean:
+	# Disable the clean step to avoid cleaning up pre-built binaries
+
+override_dh_auto_configure:
+	# Disable the clean step to avoid cleaning up pre-built binaries
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	for PG_VERSION in 13 14 15 16 17; do \
+	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
+	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+	    dh_installdirs -p$$FULL_NAME; \
+	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
+	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    cp pg$$PG_VERSION/packaged/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp pg$$PG_VERSION/packaged/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.*
+
+%:
+	dh $@

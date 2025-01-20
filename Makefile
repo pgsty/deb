@@ -17,6 +17,8 @@ timescaledb:
 	cd timescaledb && make
 pgroonga:
 	cd pgroonga && make
+omnigres:
+	cd omnigres && make
 
 # noext install
 deps:

@@ -1,0 +1,16 @@
+Source: omnigres
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cmake (>= 3.25)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/omnigres/omnigres
+
+Package: postgresql-PGVERSION-omnigres
+Architecture: any
+Provides: postgresql-omnigres
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres as a Platform, 30+ extensions to run app inside database
+  Omnigres makes Postgres a developer-first application platform.
+  You can deploy a single database instance and it can host your entire application, scaling as needed.
