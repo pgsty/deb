@@ -2,6 +2,11 @@ all: setup build move
 
 TARBALL := pg_mooncake-0.1.0.tar.gz
 
+pre:
+	rm -rf build; mkdir -p build
+	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
+	pg_buildext updatecontrol
+
 # prepare directory
 setup:
 	#rm -rf build; mkdir -p build
@@ -29,6 +34,12 @@ build15:
 	echo '15' > build/debian/pgversions
 	cd build/ && pg_buildext updatecontrol
 	cd build/ && PATH=/usr/lib/postgresql/15/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
+
+build14:
+	echo '14' > build/debian/pgversions
+	cd build/ && pg_buildext updatecontrol
+	cd build/ && PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
+
 
 
 # collect deb
