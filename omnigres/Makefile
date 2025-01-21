@@ -31,7 +31,7 @@ packaging:
 
 # collect deb
 move:
-	cp ~/postgresql-*omnigres*.deb /tmp/deb
+	cp ~/*.deb /tmp/deb
 
 # remove building craps
 clean:
