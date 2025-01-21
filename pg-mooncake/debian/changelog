@@ -1,3 +1,7 @@
+pg-mooncake (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * The first official release
+
 pg-mooncake (0.0.1-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
