@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_extra_time-1.1.3.tar.gz
+TARBALL := pg_extra_time-2.0.0.tar.gz
 
 # prepare directory
 setup:
