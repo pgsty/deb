@@ -1,0 +1,17 @@
+Source: pg-xenophile
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: More than the bare necessities for PostgreSQL i18n and l10n.
+
+Package: postgresql-PGVERSION-pg-xenophile
+Architecture: any
+Provides: postgresql-pg-xenophile
+Depends: ${misc:Depends}, ${postgresql:Depends}
+Description: More than the bare necessities for PostgreSQL i18n and l10n.
+  The pg_xenophile PostgreSQL extension bundles a bunch of data,
+  data structures and routines that you often end up needing
+  when working on an international project
