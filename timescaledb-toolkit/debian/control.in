@@ -1,0 +1,15 @@
+Source: timescaledb-toolkit
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/timescale/timescaledb-toolkit
+
+Package: postgresql-PGVERSION-timescaledb-toolkit
+Architecture: any
+Provides: postgresql-timescaledb-toolkit
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Extension for more hyperfunctions, fully compatible with TimescaleDB and PostgreSQL
+  This repository is the home of the TimescaleDB Toolkit team. Our mission is to ease all things analytics when using TimescaleDB, with a particular focus on developer ergonomics and performance
