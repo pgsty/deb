@@ -1,3 +1,9 @@
+citus (13.0.0-1PIGSTY) unstable; urgency=low
+
+  * Citus 13.0.0 with PostgreSQL 17 support
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 30 Dec 2024 18:00:00 +0000
+
 citus (12.1.6-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>

@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := citus-12.1.6.tar.gz
+TARBALL := citus-13.0.0.tar.gz
 
 # prepare directory
 setup:
@@ -14,6 +14,12 @@ setup:
 build: build16 build15 build14
 
 # building deb
+build17:
+	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
+	echo '17' > build/debian/pgversions
+	cd build/ && pg_buildext updatecontrol
+	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+
 build16:
 	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
 	echo '16' > build/debian/pgversions
