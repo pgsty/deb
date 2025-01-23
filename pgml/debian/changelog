@@ -1,3 +1,7 @@
+pgml (2.10.0-1PIGSTY) unstable; urgency=low
+
+  * PostgreSQL 17 support with pgrx 0.12.9
+
 pgml (2.9.2-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
