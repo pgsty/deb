@@ -11,7 +11,7 @@ setup:
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
-build: build16 build15 build14
+build: build17 build16 build15 build14
 
 # building deb
 build17:
