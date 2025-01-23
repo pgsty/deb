@@ -44,7 +44,7 @@ build14:
 
 # collect deb
 move:
-	cp *.deb ~/
+	cp *.deb /tmp/deb/
 
 # remove building craps
 clean:
