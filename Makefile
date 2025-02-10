@@ -407,7 +407,7 @@ pg_xenophile:
 	cd pg-xenophile && make
 pg_incremental:
 	cd pg-incremental && make
-pg_drop_envents:
+pg_drop_events:
 	cd pg-drop-events && make
 
 ###############################################################
