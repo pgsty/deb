@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_mooncake-0.1.0.tar.gz
+TARBALL := pg_mooncake-0.1.1.tar.gz
 
 pre:
 	rm -rf build; mkdir -p build
