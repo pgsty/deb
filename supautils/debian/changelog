@@ -1,5 +1,11 @@
 supautils (2.5.0-1PIGSTY) unstable; urgency=medium
 
+  * https://github.com/supabase/supautils/releases/tag/v2.6.0
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 10 Feb 2025 12:00:00 +0000
+
+supautils (2.5.0-1PIGSTY) unstable; urgency=medium
+
   * Bump to v2.5.0
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 15 Oct 2024 15:00:00 +0000
