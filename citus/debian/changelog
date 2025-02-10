@@ -1,3 +1,9 @@
+citus (13.0.1-1PIGSTY) unstable; urgency=low
+
+  * Citus 13.0.1
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 10 Feb 2025 12:00:00 +0000
+
 citus (13.0.0-1PIGSTY) unstable; urgency=low
 
   * Citus 13.0.0 with PostgreSQL 17 support
