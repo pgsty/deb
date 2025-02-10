@@ -1,3 +1,9 @@
+pg-store-plan (1.8-2PIGSTY) unstable; urgency=medium
+
+  * PG 17 support
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 10 Feb 2025 12:00:00 +0000
+
 pg-store-plan (1.8-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
