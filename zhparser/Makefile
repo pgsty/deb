@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := zhparser-2.2.tar.gz
+TARBALL := zhparser-2.3.tar.gz
 
 # prepare directory
 setup:
@@ -18,7 +18,8 @@ build:
 
 # collect deb
 move:
-	cp *.deb ~/
+	mkdir -p /tmp/deb
+	cp *.deb /tmp/deb/
 
 # remove building craps
 clean:
