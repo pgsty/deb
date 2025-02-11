@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_bulkload-VERSION3_1_21.tar.gz
+TARBALL := pg_bulkload-VERSION3_1_22.tar.gz
 
 # prepare directory
 setup:
