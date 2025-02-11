@@ -422,8 +422,8 @@ pg_curl:
 	cd pg-curl && make
 pgxicor:
 	cd pgxicor && make
-sparql:
-	cd sparql && make
+pgsparql:
+	cd pgsparql && make
 pgjq:
 	cd pgjq && make
 hashtypes:
@@ -522,7 +522,8 @@ sync: release
 pub: release
 release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
-
+gen:
+	cd deb && ./summary.py
 .PHONY: rust deps batch1 batch2 deb-collect \
  	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale timescaledb_toolkit pg_session_jwt pgml plprql pg_later pg_anon pg_smtp_client vchord pg_bestmatch pglite_fusion pgdd \
  	pg_net pgjwt gzip vault pgsodium supautils pg_tle plv8 omnigres permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg_duckdb pg_mooncake hydra citus timescaledb pgroonga \
@@ -534,5 +535,5 @@ release: clean
  	smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec floatfile pg_auditor noset \
  	aggs_for_arrays pgqr pg_zstd url_encode pg_geohash pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash pg_math firebird_fdw  kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 \
  	scws libduckdb pgcopydb pg_bulkload libfq pg4ml pgpdf topn pg_upless pg_task pg_readme vasco pg_xxhash pg_duration ddl_historization data_historization pg_schedoc pg_xenophile pg_incremental pg_drop_envents \
- 	pg_documentdb_core pg_tracing pg_curl pgxicor sparql pgjq hashtypes db_migrator pg_cooldown \
+ 	pg_documentdb_core pg_tracing pg_curl pgxicor pgsparql pgjq hashtypes db_migrator pg_cooldown \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pushd push12 push22 push24 pushd12 pushd22 pushd24 pull purge dirs pull22 pull12 sync pub release
