@@ -1,0 +1,17 @@
+Source: hashtypes
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/adjust/hashtypes/
+
+Package: postgresql-PGVERSION-hashtypes
+Architecture: any
+Provides: postgresql-hashtypes
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Custom data types to store SHA-1, SHA-2, MD5, CRC32, etc in PostgreSQL
+  This extension provides custom data types to store various hash values (SHA-1,
+  SHA-2, MD5, CRC32, etc) in PostgreSQL without the storage and computation
+  overhead of bytea. It offers efficient storage and operations for hash values.

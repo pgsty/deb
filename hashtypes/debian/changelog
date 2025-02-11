@@ -1,0 +1,7 @@
+hashtypes (0.1.5-1PIGSTY) unstable; urgency=medium
+
+  * Initial release, used by Pigsty <https://pigsty.io>
+  * Custom data types to store SHA-1, SHA-2, MD5, CRC32, etc in PostgreSQL
+  * Without the storage and computation overhead of bytea
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 10 Feb 2025 18:00:00 +0000
