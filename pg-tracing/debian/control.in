@@ -1,0 +1,16 @@
+Source: pg-tracing
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/DataDog/pg_tracing
+
+Package: postgresql-PGVERSION-pg-tracing
+Architecture: any
+Provides: postgresql-pg-tracing
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Distributed Tracing for PostgreSQL
+  pg_tracing is a PostgreSQL extension that generates server-side spans for distributed tracing.
+  When pg_tracing is active, it generates spans on sampled queries
