@@ -99,14 +99,17 @@ pg_smtp_client:
 	cd pg-smtp-client && make
 vchord:
 	cd vchord && make
+vchord_bm25:
+	cd vchord-bm25 && make
 pglite_fusion:
 	cd pglite-fusion && make
 pg_bestmatch:
 	cd pg-bestmatch && make
 
-# pgrx 0.11.x
 pgml:
 	cd pgml && make
+
+# pgrx 0.11.x
 plprql:
 	cd plprql && make
 
@@ -385,6 +388,7 @@ pg_timeit:
 	cd pg-timeit && make
 topn:
 	cd topn && make
+
 pg_upless:
 	cd pg-upless && make
 pg_task:
@@ -409,6 +413,27 @@ pg_incremental:
 	cd pg-incremental && make
 pg_drop_events:
 	cd pg-drop-events && make
+
+pg_documentdb_core:
+	cd pg-documentdb-core && make
+pg_tracing:
+	cd pg-tracing && make
+pg_curl:
+	cd pg-curl && make
+pgxicor:
+	cd pgxicor && make
+sparql:
+	cd sparql && make
+pgjq:
+	cd pgjq && make
+hashtypes:
+	cd hashtypes && make
+db_migrator:
+	cd db-migrator && make
+pg_cooldown:
+	cd pg-cooldown && make
+
+
 
 ###############################################################
 #                        1. Building                          #
@@ -509,4 +534,5 @@ release: clean
  	smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec floatfile pg_auditor noset \
  	aggs_for_arrays pgqr pg_zstd url_encode pg_geohash pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash pg_math firebird_fdw  kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 \
  	scws libduckdb pgcopydb pg_bulkload libfq pg4ml pgpdf topn pg_upless pg_task pg_readme vasco pg_xxhash pg_duration ddl_historization data_historization pg_schedoc pg_xenophile pg_incremental pg_drop_envents \
+ 	pg_documentdb_core pg_tracing pg_curl pgxicor sparql pgjq hashtypes db_migrator pg_cooldown \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pushd push12 push22 push24 pushd12 pushd22 pushd24 pull purge dirs pull22 pull12 sync pub release
