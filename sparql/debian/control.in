@@ -1,0 +1,16 @@
+Source: sparql
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/lacanoid/pgsparql
+
+Package: postgresql-PGVERSION-sparql
+Architecture: any
+Provides: postgresql-sparql
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: SPARQL utilities extension for PostgreSQL
+  It helps one query SPARQL datasources. SPARQL queries are compiled into Postgres views, so you can use them nicely in SQL.
+  It is currently used with Virtuoso, so it is useful with sources like dbpedia. It might or might not work with other RDF backends.
