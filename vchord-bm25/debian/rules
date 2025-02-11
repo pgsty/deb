@@ -3,7 +3,7 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-SRC_DIR := vchord-bm25
+SRC_DIR := vchord_bm25
 PKG_NAME := vchord-bm25
 
 %:
