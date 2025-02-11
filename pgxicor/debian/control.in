@@ -1,0 +1,17 @@
+Source: pgxicor
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Florents-Tselai/pgxicor
+
+Package: postgresql-PGVERSION-pgxicor
+Architecture: any
+Provides: postgresql-pgxicor
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: XI Correlation Coefficient in Postgres
+  pgxicor is a Postgres extension that exposes a SELECT xicor(X, Y) aggregate function.
+  XI can detect functional relationships between X and Y.
+  You can use it as a more powerful alternative to standard corr(X, Y) which works best on linear relationships only.
