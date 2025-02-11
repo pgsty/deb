@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgroonga-3.2.5.tar.gz
+TARBALL := pgroonga-4.0.0.tar.gz
 
 # prepare directory
 setup:
@@ -19,7 +19,6 @@ build:
 # collect deb
 move:
 	mkdir -p /tmp/deb
-	cp *.deb ~/
 	cp *.deb /tmp/deb
 
 # remove building craps
