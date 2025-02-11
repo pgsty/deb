@@ -1,0 +1,17 @@
+Source: pgjq
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libjq-dev (>= 1)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Florents-Tselai/pgJQ
+
+Package: postgresql-PGVERSION-pgjq
+Architecture: any
+Provides: postgresql-pgjq
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: jq extension for Postgres
+  The pgJQ extension embeds the standard jq compiler and brings the much loved jq lang to Postgres.
+  It adds a jqprog data type to express jq programs and a jq(jsonb, jqprog) function to execute them on jsonb objects.
+  It works seamlessly with standard jsonb functions, operators, and jsonpath.
