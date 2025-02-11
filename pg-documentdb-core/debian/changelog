@@ -1,0 +1,5 @@
+documentdb-core (0.100-0PIGSTY) unstable; urgency=medium
+
+  * Initial release, used by Pigsty <https://pigsty.io>
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 10 Feb 2025 18:00:00 +0000
