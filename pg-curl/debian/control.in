@@ -1,0 +1,17 @@
+Source: pg-curl
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/RekGRpth/pg_curl
+
+Package: postgresql-PGVERSION-pg-curl
+Architecture: any
+Provides: postgresql-pg-curl
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL cURL allows most curl actions to transfer data with URL syntax
+  PostgreSQL tool for transferring data with URL syntax, 
+  supporting DICT, FILE, FTP, FTPS, GOPHER, GOPHERS, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, MQTT,
+   POP3, POP3S, RTMP, RTMPS, RTSP, SCP, SFTP, SMB, SMBS, SMTP, SMTPS, TELNET, TFTP, WS and WSS.
