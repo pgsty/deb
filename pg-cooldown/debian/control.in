@@ -1,0 +1,16 @@
+Source: pg-cooldown
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rbergm/pg_cooldown
+
+Package: postgresql-PGVERSION-pg-cooldown
+Architecture: any
+Provides: postgresql-pg-cooldown
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension to remove all pages of specific relations from the shared buffer.
+  The extension was heavily inspired by pg_prewarm and functions as a complementary tool: Whereas pg_prewarm adds pages from a relation to the shared buffer, pg_cooldown removes them again.
+  The main purpose of this tool is to easily simulate cold-start scenarios in research.
