@@ -1,4 +1,4 @@
-Source: sparql
+Source: pgsparql
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
@@ -7,9 +7,9 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/lacanoid/pgsparql
 
-Package: postgresql-PGVERSION-sparql
+Package: postgresql-PGVERSION-pgsparql
 Architecture: any
-Provides: postgresql-sparql
+Provides: postgresql-pgsparql
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: SPARQL utilities extension for PostgreSQL
   It helps one query SPARQL datasources. SPARQL queries are compiled into Postgres views, so you can use them nicely in SQL.

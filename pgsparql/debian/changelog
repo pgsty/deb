@@ -1,4 +1,4 @@
-sparql (1.0-1PIGSTY) unstable; urgency=medium
+pgsparql (1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
 
