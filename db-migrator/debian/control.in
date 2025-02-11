@@ -1,0 +1,18 @@
+Source: db-migrator
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/cybertec-postgresql/db_migrator
+
+Package: postgresql-PGVERSION-db-migrator
+Architecture: any
+Provides: postgresql-db-migrator
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Functions for migrating databases from other data sources to PostgreSQL
+  db_migrator is a PostgreSQL extension that provides functions for migrating databases from other data sources to PostgreSQL.
+  This requires a foreign data wrapper for the data source you want to migrate.
+  You also need a plugin for db_migrator that contains the code specific to the targeted data source. Currently, plugins exist for the following data sources:
+  oracle, mysql, mariadb, microsoft sql server
