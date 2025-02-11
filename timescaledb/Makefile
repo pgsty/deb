@@ -17,7 +17,6 @@ build17:
 	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 	mkdir -p /tmp/deb
 	cp build/*.deb /tmp/deb
-	cp *.deb /tmp/deb
 
 build16:
 	rm -rf build; mkdir -p build
@@ -31,7 +30,6 @@ build16:
 	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 	mkdir -p /tmp/deb
 	cp build/*.deb /tmp/deb
-	cp *.deb /tmp/deb
 
 build15:
 	rm -rf build; mkdir -p build
@@ -45,7 +43,6 @@ build15:
 	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 	mkdir -p /tmp/deb
 	cp build/*.deb /tmp/deb
-	cp *.deb /tmp/deb
 
 build14:
 	rm -rf build; mkdir -p build
@@ -59,7 +56,6 @@ build14:
 	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 	mkdir -p /tmp/deb
 	cp build/*.deb /tmp/deb
-	cp *.deb /tmp/deb
 
 
 # remove building craps
