@@ -1,7 +1,10 @@
 # TODOLIST
 
-- pgdd break on u24
-- 
+
+## 2025-02-12
+
+- pg_profile 4.7 -> 4.8
+- h3 
 
 --------
 
