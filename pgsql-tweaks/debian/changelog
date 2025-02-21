@@ -1,3 +1,9 @@
+pgsql-tweaks (0.11.0-1PIGSTY) unstable; urgency=medium
+
+  * remove pg12 support, https://github.com/sjstoelting/pgsql-tweaks/releases/tag/v0.11.0
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 21 Feb 2024 18:00:00 +0000
+
 pgsql-tweaks (0.10.4-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
