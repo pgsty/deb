@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_duration-1.0.1.tar.gz
+TARBALL := pg_duration-1.0.2.tar.gz
 
 # prepare directory
 setup:
@@ -18,7 +18,7 @@ build:
 
 # collect deb
 move:
-	cp *.deb ~/
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 # remove building craps
 clean:
