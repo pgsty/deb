@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgddl-0.28.tar.gz
+TARBALL := pgddl-0.29.tar.gz
 
 # prepare directory
 setup:
@@ -18,7 +18,7 @@ build:
 
 # collect deb
 move:
-	cp *.deb ~/
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 # remove building craps
 clean:
