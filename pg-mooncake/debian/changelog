@@ -1,3 +1,9 @@
+pg-mooncake (0.1.2-1PIGSTY) unstable; urgency=medium
+
+  * bug fix release: https://github.com/Mooncake-Labs/pg_mooncake/releases/tag/v0.1.2
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 21 Feb 2025 12:00:00 +0000
+
 pg-mooncake (0.1.1-1PIGSTY) unstable; urgency=medium
 
   * bug fix release: https://github.com/Mooncake-Labs/pg_mooncake/releases/tag/v0.1.1
