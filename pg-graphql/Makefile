@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_graphql-1.5.9.tar.gz
+TARBALL := pg_graphql-1.5.11.tar.gz
 
 # prepare directory
 setup:
