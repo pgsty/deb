@@ -1,0 +1,16 @@
+Source: collection
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), zlib1g-dev (>= 1)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/aws/pgcollection
+
+Package: postgresql-PGVERSION-collection
+Architecture: any
+Provides: postgresql-collection
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: A PostgreSQL extension to add a collection data type
+  pgcollection is a memory optimized data type for PostgreSQL. The primary usage is a high performance data structure inside of plpglsql functions.
+  Like other PostgreSQL data types, a collection can be a column of a table, but there are no operators.
