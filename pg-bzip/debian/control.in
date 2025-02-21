@@ -1,0 +1,16 @@
+Source: pg-bzip
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libbz2-dev (>= 1)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/steve-chavez/pg_bzip
+
+Package: postgresql-PGVERSION-bzip
+Architecture: any
+Provides: postgresql-bzip
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Bzip compression and decompression for Postgres
+  If you get data compressed as bzip2, whether through HTTP or from a file,
+  it's convenient to decompress it in SQL. pg_bzip does that, it provides functions to decompress and compress data using bzip2.
