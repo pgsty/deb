@@ -18,7 +18,7 @@ build:
 
 # collect deb
 move:
-	cp *.deb ~/
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 # remove building craps
 clean:

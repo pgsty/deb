@@ -40,7 +40,7 @@ build13:
 
 # collect deb
 move:
-	cp build/*.deb ~/
+	mkdir -p /tmp/deb && cp build/*.deb /tmp/deb/
 
 # remove building craps
 clean:
