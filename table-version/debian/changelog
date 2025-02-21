@@ -1,0 +1,11 @@
+table-version (1.11.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/linz/postgresql-tableversion/releases/tag/1.11.0
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 21 Feb 2025 18:00:00 +0000
+
+table-version (1.10.3-1PIGSTY) unstable; urgency=medium
+
+  * Initial release, used by Pigsty <https://pigsty.io>
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 17 Jul 2024 18:00:00 +0000

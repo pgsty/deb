@@ -1,17 +1,17 @@
-Source: tableversion
+Source: table-version
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), jq
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/linz/postgresql-tableversion
 Vcs-Git: git://github.com/linz/postgresql-tableversion.git
 Vcs-Browser: https://github.com/linz/postgresql-tableversion
 
-Package: postgresql-PGVERSION-tableversion
+Package: postgresql-PGVERSION-table-version
 Architecture: any
-Provides: postgresql-tableversion
+Provides: postgresql-table-version
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: PostgreSQL table versioning extension, recording row modifications
   and its history. The extension provides APIs for accessing snapshots of a table

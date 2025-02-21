@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := postgresql-tableversion-1.10.3.tar.gz
+TARBALL := postgresql-tableversion-1.11.0.tar.gz
 
 # prepare directory
 setup:
@@ -18,7 +18,7 @@ build:
 
 # collect deb
 move:
-	cp *.deb ~/
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 # remove building craps
 clean:
