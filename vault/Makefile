@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := vault-0.2.9.tar.gz
+TARBALL := vault-0.3.1.tar.gz
 
 # prepare directory
 setup:
@@ -18,7 +18,7 @@ build:
 
 # collect deb
 move:
-	cp *.deb ~/
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 # remove building craps
 clean:
