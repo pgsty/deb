@@ -1,6 +1,7 @@
 all: setup build move
 
-TARBALL := pg_net-0.9.2.tar.gz
+#TARBALL := pg_net-0.9.2.tar.gz
+TARBALL := pg_net-0.14.0.tar.gz
 
 # prepare directory
 setup:
@@ -18,7 +19,7 @@ build:
 
 # collect deb
 move:
-	cp *.deb ~/
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 # remove building craps
 clean:
