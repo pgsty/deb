@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := VectorChord-bm25-0.1.0.tar.gz
+TARBALL := VectorChord-bm25-0.1.1.tar.gz
 
 # prepare directory
 setup:
