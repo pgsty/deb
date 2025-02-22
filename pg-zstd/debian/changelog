@@ -1,3 +1,9 @@
+pg-zstd (1.1.2-2PIGSTY) unstable; urgency=medium
+
+  * rename deb package to postgresql-$v-zstd
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 22 Feb 2025 18:00:00 +0000
+
 pg-zstd (1.1.2-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>

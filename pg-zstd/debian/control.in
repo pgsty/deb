@@ -7,9 +7,9 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/grahamedgecombe/pgzstd
 
-Package: postgresql-PGVERSION-pg-zstd
+Package: postgresql-PGVERSION-zstd
 Architecture: any
-Provides: postgresql-pg-zstd
+Provides: postgresql-zstd
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: Postgres module for Zstandard compression/decompression with preset dictionary support
   pgzstd is a PostgreSQL extension that provides functions for compressing and uncompressing Zstandard frames, with support for custom dictionaries.
