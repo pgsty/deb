@@ -8,6 +8,9 @@ export MAKEFLAGS = -j20
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
+override_dh_dwz:
+	echo "Skipping DWZ optimization"
+
 override_dh_auto_build:
 	@echo $(PATH)
 	make release

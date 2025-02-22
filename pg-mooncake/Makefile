@@ -6,13 +6,12 @@ TARBALL := pg_mooncake-0.1.2.tar.gz
 setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
-	cd build && git submodule update --init --recursive
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
-build: build17 build16 build15
+build: build17 build16 build15 build14
 
 # building deb
 build17:
@@ -36,10 +35,9 @@ build14:
 	cd build/ && PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
 
 
-
 # collect deb
 move:
-	cp *.deb /tmp/deb/
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 # remove building craps
 clean:
