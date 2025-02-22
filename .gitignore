@@ -7,3 +7,10 @@ pigsty-deb.iml
 deb/
 tarball/
 tmp/
+
+.terraform/
+tf/.terraform/
+tf/*.hcl
+tf/*.tfstate*
+tf/.terraform*
+#tf/terraform.tf

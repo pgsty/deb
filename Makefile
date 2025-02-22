@@ -490,7 +490,12 @@ pushd22:
 	rsync -avc --exclude deb --delete ./ u22:~/deb/
 pushd24:
 	rsync -avc --exclude deb --delete ./ u24:~/deb/
-
+push12a:
+	rsync -avc --exclude deb ./ d12a:~/deb/
+push22a:
+	rsync -avc --exclude deb ./ u22a:~/deb/
+push24a:
+	rsync -avc --exclude deb ./ u24a:~/deb/
 
 #---------------------------------------------#
 # pull rpm from building machines
@@ -510,11 +515,11 @@ pull22:
 pull12:
 	rsync -avz d12:/tmp/deb/ deb/bookworm.amd64/
 pull24a:
-	rsync -avz u24:/tmp/deb/ deb/noble.arm64/
+	rsync -avz u24a:/tmp/deb/ deb/noble.arm64/
 pull22a:
-	rsync -avz u22:/tmp/deb/ deb/jammy.arm64/
+	rsync -avz u22a:/tmp/deb/ deb/jammy.arm64/
 pull12a:
-	rsync -avz d12:/tmp/deb/ deb/bookworm.arm64/
+	rsync -avz d12a:/tmp/deb/ deb/bookworm.arm64/
 
 
 #---------------------------------------------#
@@ -526,6 +531,30 @@ release: clean
 	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
 gen:
 	cd deb && ./summary.py
+
+###############################################################
+#                         Terraform                           #
+###############################################################
+u:
+	cd tf && terraform apply -auto-approve
+	sleep 5
+	tf/ssh
+	sleep 15
+	tf/ssh
+a:
+	cd tf && terraform apply
+d:
+	cd tf && terraform destroy -auto-approve
+destroy:
+	cd tf && terraform destroy
+out:
+	cd tf && terraform output
+ssh:
+	tf/ssh
+r:
+	git restore tf/terraform.tf
+
+
 .PHONY: rust deps batch1 batch2 deb-collect \
  	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale timescaledb_toolkit pg_session_jwt pgml plprql pg_later pg_anon pg_smtp_client vchord pg_bestmatch pglite_fusion pgdd \
  	pg_net pgjwt pg_gzip pg_bzip vault pgsodium supautils pg_tle plv8 omnigres permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg_duckdb pg_mooncake hydra citus timescaledb pgroonga \
