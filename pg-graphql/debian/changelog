@@ -1,4 +1,4 @@
-pg-graphql (1.5.9-1PIGSTY) unstable; urgency=medium
+pg-graphql (1.5.11-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/supabase/pg_graphql/releases/tag/v1.5.11
 
