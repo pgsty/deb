@@ -2,7 +2,7 @@ Source: pg-duckdb
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Build-Depends: debhelper-compat (= 13), postgresql-server-dev-PGVERSION
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/duckdb/pg_duckdb
@@ -10,8 +10,8 @@ Homepage: https://github.com/duckdb/pg_duckdb
 Package: postgresql-PGVERSION-pg-duckdb
 Architecture: any
 Provides: postgresql-pg-duckdb
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: DuckDB-powered Postgres for high performance apps & analytics.
+Depends: ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION
+Description: DuckDB-powered Postgres for high performance apps & analytics for PostgreSQL PGVERSION
   pg_duckdb is a Postgres extension that embeds DuckDB's columnar-vectorized analytics engine and features into Postgres.
   We recommend using pg_duckdb to build high performance analytics and data-intensive applications.
   pg_duckdb was developed in collaboration with our partners, Hydra and MotherDuck.

@@ -6,21 +6,12 @@ export CC = gcc
 # Set parallel build jobs to 20
 export MAKEFLAGS = -j20
 
-include /usr/share/postgresql-common/pgxs_debian_control.mk
-
-override_dh_auto_build:
-	dh_auto_build || true
-
-override_dh_auto_test:
-
-override_dh_auto_clean:
-	# Disable the clean step to avoid cleaning up pre-built binaries
-
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
-override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-pg-duckdb
+override_dh_auto_build:
+
+override_dh_auto_test:
 
 override_dh_installdocs:
 	dh_installdocs --all README.*

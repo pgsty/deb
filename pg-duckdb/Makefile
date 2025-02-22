@@ -1,39 +1,55 @@
-all: setup build move
+all: build move
 
 TARBALL := pg_duckdb-0.3.1.tar.gz
 
-# prepare directory
-setup:
+
+#==============================================================#
+#                         DEB Builder                          #
+#==============================================================#
+build: build17 build16 build15 build14
+build17:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
-
-# building deb
-build: build17 build16 build15 build14
-
-# building deb
-build17:
-	echo '17' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/17/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
+	sed -i "s/PGVERSION/17/" build/debian/control
+	export PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
+	cd build && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 build16:
-	echo '16' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/16/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
+	rm -rf build; mkdir -p build
+	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
+	rm -rf build/debian; cp -r debian build/debian
+	OS_CODENAME=$(shell lsb_release -sc); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "s/PGVERSION/16/" build/debian/control
+	export PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
+	cd build && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 build15:
-	echo '15' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/15/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
+	rm -rf build; mkdir -p build
+	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
+	rm -rf build/debian; cp -r debian build/debian
+	OS_CODENAME=$(shell lsb_release -sc); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "s/PGVERSION/15/" build/debian/control
+	export PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
+	cd build && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 build14:
-	echo '14' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
-
+	rm -rf build; mkdir -p build
+	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
+	rm -rf build/debian; cp -r debian build/debian
+	OS_CODENAME=$(shell lsb_release -sc); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "s/PGVERSION/14/" build/debian/control
+	export PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
+	cd build && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
 
 # collect deb
 move:
@@ -45,4 +61,4 @@ clean:
 
 .PHONY: all setup update build move clean ls
 
-all: setup build move ls
+all: all build build17 build16 build15 build14 move clean ls
