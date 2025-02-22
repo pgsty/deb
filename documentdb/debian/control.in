@@ -1,16 +1,18 @@
-Source: documentdb-core
+Source: documentdb
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), liblz4-dev (>= 1), libzstd-dev (>= 1)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/microsoft/documentdb
 
-Package: postgresql-PGVERSION-documentdb-core
+Package: postgresql-PGVERSION-documentdb
 Architecture: any
-Provides: postgresql-documentdb-core
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Provides: postgresql-documentdb
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-cron, postgresql-PGVERSION-pgvector, postgresql-PGVERSION-rum
+Recommends: postgresql-PGVERSION-postgis-3
+Suggests: postgresql-PGVERSION-citus
 Description: Native implementation of document-oriented NoSQL database
   DocumentDB offers a native implementation of document-oriented NoSQL database,
   enabling seamless CRUD operations on BSON data types within a PostgreSQL framework.
