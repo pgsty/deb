@@ -15,7 +15,7 @@
 locals {
   bandwidth = 100                       # internet bandwidth in Mbps (100Mbps)
   disk_size = 100                       # system disk size in GB (100GB)
-  spot_policy = "SpotWithPriceLimit"    # NoSpot, SpotWithPriceLimit, SpotAsPriceGo
+  spot_policy = "NoSpot"                # NoSpot, SpotWithPriceLimit, SpotAsPriceGo
   spot_price_limit = 5                  # only valid when spot_policy is SpotWithPriceLimit
   instance_type_map = {
     amd64 = "ecs.c8i.4xlarge"
@@ -132,7 +132,7 @@ resource "alicloud_instance" "pg-d12a" {
   instance_name                 = "pg-d12a"
   host_name                     = "pg-d12a"
   private_ip                    = "10.10.10.112"
-  instance_type                 = local.amd64_instype
+  instance_type                 = local.arm64_instype
   image_id                      = "${data.alicloud_images.d12_arm64_img.images.0.id}"
   vswitch_id                    = "${alicloud_vswitch.vsw.id}"
   security_groups               = ["${alicloud_security_group.default.id}"]
@@ -256,7 +256,7 @@ resource "alicloud_instance" "pg-u24a" {
 }
 
 output "u24a_ip" {
-  value = "${alicloud_instance.pg-u24.public_ip}"
+  value = "${alicloud_instance.pg-u24a.public_ip}"
 }
 
 
