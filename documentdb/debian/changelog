@@ -1,6 +1,12 @@
+documentdb (0.102-0PIGSTY) unstable; urgency=medium
+
+  * Move to ferretdb's fork: https://github.com/FerretDB/documentdb
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 20 Mar 2025 18:00:00 +0000
+
 documentdb (0.101-0PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Bump to 0.101 with the entire documentdb project
 
  -- Ruohang Feng <rh@vonng.com>  Sat, 22 Feb 2025 18:00:00 +0000
 
