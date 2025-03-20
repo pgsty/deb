@@ -157,6 +157,7 @@ pgsodium:
 supautils:
 	cd supautils && make
 
+# depend on flex
 pg_tle:
 	cd pg-tle && make
 permuteseq:
