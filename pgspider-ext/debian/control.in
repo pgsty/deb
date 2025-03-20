@@ -1,0 +1,19 @@
+Source: pgspider-ext
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgspider/pgspider_ext
+
+Package: postgresql-PGVERSION-pgspider-ext
+Architecture: any
+Provides: postgresql-pgspider-ext
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Construct High-Performance SQL Cluster Engine for distributed big data
+  If you get data compressed as bzip2, whether through HTTP or from a file,
+  pgspider_ext enables PostgreSQL to access a number of data sources using
+  Foreign Data Wrapper(FDW) and retrieves the distributed data source vertically.
+  Code of pgspider_ext is one of extension of PostgreSQL. We call PostgreSQL installed pgspider_ext as "PGSpider".
+  Usage of PostgreSQL installed pgspider_ext is the same as PostgreSQL. You can use any client applications such as libpq and psql.
