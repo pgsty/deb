@@ -1,3 +1,9 @@
+pg-profile (4.8-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/zubkov-andrei/pg_profile/releases/tag/4.8
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 20 Mar 2025 18:00:00 +0000
+
 pg-profile (4.7-1PIGSTY) unstable; urgency=medium
 
   * PG17 support: https://github.com/zubkov-andrei/pg_profile/releases/tag/4.7
