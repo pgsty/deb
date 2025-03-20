@@ -1,4 +1,4 @@
-pg-sqlog (3.1.9-1PIGSTY) unstable; urgency=medium
+pg-sqlog (1.6-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
 
