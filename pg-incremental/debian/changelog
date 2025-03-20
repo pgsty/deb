@@ -1,3 +1,9 @@
+pg-incremental (1.2.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/CrunchyData/pg_incremental/releases/tag/v1.2.0
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 20 Mar 2025 18:00:00 +0000
+
 pg-incremental (1.1.1-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>

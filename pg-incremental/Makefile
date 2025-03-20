@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_incremental-1.1.1.tar.gz
+TARBALL := pg_incremental-1.2.0.tar.gz
 
 # prepare directory
 setup:
