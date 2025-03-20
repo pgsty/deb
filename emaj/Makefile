@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := emaj-4.4.0.tar.gz
+TARBALL := emaj-4.6.0.tar.gz
 # WARNING! THIS SOURCE IS PATCHED WITH MAKEFILE & CONTROL FILE
 
 # prepare directory
