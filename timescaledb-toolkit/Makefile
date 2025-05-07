@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := timescaledb-toolkit-1.19.0.tar.gz
+TARBALL := timescaledb-toolkit-1.21.0.tar.gz
 
 # prepare directory
 setup:
