@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_parquet-0.3.1.tar.gz
+TARBALL := pg_parquet-0.4.0.tar.gz
 
 # prepare directory
 setup:

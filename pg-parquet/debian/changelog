@@ -1,3 +1,9 @@
+pg-parquet (0.4.0-1PIGSTY) unstable; urgency=medium
+
+  * 0.3.1 release: https://github.com/CrunchyData/pg_parquet/releases/tag/v0.4.0
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 07 May 2025 18:00:00 +0000
+
 pg-parquet (0.3.1-1PIGSTY) unstable; urgency=medium
 
   * 0.3.1 release: https://github.com/CrunchyData/pg_parquet/releases/tag/v0.3.1
