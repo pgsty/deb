@@ -3,6 +3,9 @@
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
 
+SRC_DIR := supautils
+PKG_NAME := supautils
+
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
 override_dh_auto_build:
@@ -15,7 +18,17 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-supautils
+	for PG_VERSION in 13 14 15 16 17; do \
+		DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
+		FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+        rm -rf build/*.so; \
+        PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$PATH /usr/bin/make clean; \
+        PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$PATH /usr/bin/make; \
+		dh_installdirs -p$$FULL_NAME; \
+		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
+		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+		cp build/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	done
 
 override_dh_installdocs:
 	dh_installdocs --all README.*
