@@ -1,3 +1,9 @@
+vchord (0.3.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/tensorchord/VectorChord/releases/tag/0.3.0
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 20 Mar 2025 18:00:00 +0000
+
 vchord (0.2.2-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/tensorchord/VectorChord/releases/tag/0.2.2
