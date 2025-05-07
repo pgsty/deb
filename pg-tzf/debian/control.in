@@ -1,0 +1,15 @@
+Source: tzf
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ringsaturn/tzf-pg
+
+Package: postgresql-PGVERSION-tzf
+Architecture: any
+Provides: postgresql-tzf
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Fast PG extension to lookup timezone name by GPS coordinates
+  Fast PG extension to lookup timezone name by GPS coordinates
