@@ -1,3 +1,9 @@
+pgmq (1.5.1-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/tembo-io/pgmq/releases/tag/v1.5.0
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 07 May 2025 18:00:00 +0000
+
 pgmq (1.5.0-1PIGSTY) unstable; urgency=low
 
   * https://github.com/tembo-io/pgmq/releases/tag/v1.5.0
