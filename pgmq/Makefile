@@ -4,8 +4,9 @@ TARBALL := pgmq-1.5.1.tar.gz
 
 # prepare directory
 setup:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
+	rm -rf build build2; mkdir -p build build2
+	tar -C build2 --strip-components=1 -xf ../tarball/$(TARBALL)
+	cp -r build2/pgmq-extension/* build/
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
