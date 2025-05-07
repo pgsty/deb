@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgcollection-0.9.1.tar.gz
+TARBALL := pgcollection-1.0.0.tar.gz
 
 # prepare directory
 setup:
