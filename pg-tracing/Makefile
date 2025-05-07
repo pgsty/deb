@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_tracing-0.1.2.tar.gz
+TARBALL := pg_tracing-0.1.3.tar.gz
 
 # prepare directory
 setup:
