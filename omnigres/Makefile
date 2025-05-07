@@ -1,6 +1,6 @@
 all: setup build
 
-TARBALL := omnigres-20250120.tar.gz
+TARBALL := omnigres-20250507.tar.gz
 
 # prepare directory
 setup:
@@ -31,7 +31,7 @@ packaging:
 
 # collect deb
 move:
-	cp ~/*.deb /tmp/deb
+	cp *.deb /tmp/deb
 
 # remove building craps
 clean:
