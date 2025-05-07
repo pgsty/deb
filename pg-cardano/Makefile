@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_cardano-1.0.3.tar.gz
+TARBALL := pg_cardano-1.0.5.tar.gz
 
 # prepare directory
 setup:

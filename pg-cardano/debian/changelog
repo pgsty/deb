@@ -1,3 +1,9 @@
+pg-cardano (1.0.5-1PIGSTY) unstable; urgency=medium
+
+  * 1.0.5-p2 with pgrx 0.14.1
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 07 May 2025 18:00:00 +0000
+
 pg-cardano (1.0.3-1PIGSTY) unstable; urgency=medium
 
   * 1.0.3 with pgrx 0.12.9
