@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgvectorscale-0.7.0.tar.gz
+TARBALL := pgvectorscale-0.7.1.tar.gz
 
 # prepare directory
 setup:
