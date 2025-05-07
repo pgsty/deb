@@ -1,10 +1,114 @@
-# TODOLIST
+# Changelog & TodoList
+
+## 2025-05-07
+
+- omnigres 20250507
+- citus [12.0.3](https://github.com/citusdata/citus/releases/tag/v13.0.3)
+- timescaledb [2.19.3](https://github.com/timescale/timescaledb/releases/tag/2.19.3)
+- supautils [2.9.1](https://github.com/supabase/supautils/releases/tag/v2.9.1)
+- pg_envvar [1.0.1](https://github.com/theory/pg-envvar/releases/tag/v1.0.1)
+- pgcollection [1.0.0](https://github.com/aws/pgcollection/releases/tag/v1.0.0)
+- aggs_for_vecs [1.4.0](https://github.com/pjungwir/aggs_for_vecs/releases/tag/1.4.0)
+- pg_tracing [0.1.3](https://github.com/DataDog/pg_tracing/releases/tag/v0.1.3)
+- pgmq [1.5.1](https://github.com/pgmq/pgmq/releases/tag/v1.5.1)
+- tzf-pg [0.2.0](https://github.com/ringsaturn/tzf-pg/releases/tag/v0.2.0) (pgrx 0.14.1)
+- pg_search [0.15.18](https://github.com/paradedb/paradedb/releases/tag/v0.15.18) (pgrx 0.14.1)
+- anon [2.1.1](https://gitlab.com/dalibo/postgresql_anonymizer/-/tree/latest/debian?ref_type=heads) (pgrx 0.14.1)
+- pg_parquet [0.4.0](https://github.com/CrunchyData/pg_parquet/releases/tag/v0.3.2) (0.14.1)
+- pg_cardano [1.0.5](https://github.com/Fell-x27/pg_cardano/commits/master/) (pgrx 0.12) -> 0.14.1
+- pglite_fusion [0.0.5](https://github.com/frectonz/pglite-fusion/releases/tag/v0.0.5) (pgrx 0.12.8) -> 14.1
+- vchord_bm25 [0.2.1](https://github.com/tensorchord/VectorChord-bm25/releases/tag/0.2.1)  (pgrx 0.13.1)
+- vchord [0.3.0](https://github.com/tensorchord/VectorChord/releases/tag/0.3.0) (pgrx 0.13.1)
+- pg_vectorize [0.22.1](https://github.com/ChuckHend/pg_vectorize/releases/tag/v0.22.1) (pgrx 0.13.1)
+- wrappers [0.4.6](https://github.com/supabase/wrappers/releases/tag/v0.4.6) (pgrx 0.12.9)
+- timescaledb-toolkit [1.21.0](https://github.com/timescale/timescaledb-toolkit/releases/tag/1.21.0) (0.12.9)
+- pgvectorscale [0.7.1](https://github.com/timescale/pgvectorscale/releases/tag/0.7.1) (pgrx 0.12.9)
+- pg_session_jwt [0.3.1](https://github.com/neondatabase/pg_session_jwt/releases/tag/v0.3.1) (pgrx 0.12.6) -> 0.12.9
+
+
+## 2025-03-20
+
+Routine extension updates:
+
+- [x] timescaledb 2.19.0
+- [x] citus 13.0.2
+- [x] documentdb 1.102
+- [x] pg_analytics: 0.3.7
+- [x] pg_search: 0.15.8
+- [x] pg_ivm 1.10
+- [x] emaj 4.6.0
+- [x] pgsql_tweaks 0.11.0
+- [x] pgvectorscale 0.6.0 (pgrx 0.12.5)
+- [x] pg_session_jwt 0.2.0 (pgrx 0.12.6)
+- [x] wrappers 0.4.5 (pgrx 0.12.9)
+- [x] pg_parquet 0.3.1 (pgrx 0.13.1)
+- [x] vchord 0.2.2 (pgrx 0.13.1)
+- [x] pg_tle 1.2.0 -> 1.5.0
+- [x] supautils 2.5.0 -> 2.6.0
+- [x] sslutils 1.3 -> 1.4
+- [x] pg_profile 4.7 -> 4.8
+- [x] pg_jsonschema 0.3.2 -> 0.3.3
+- [x] pg_incremental: 1.1.1 -> 1.2.0
+- [x] fix ddl_historization ver 0.7 -> 0.0.7
+- [x] fix pg_sqlog 3.1.7 -> 1.6
+- [x] fix pg_random remove dev suffix
+- [x] pg_stat_monitor 2.1.0 -> 2.1.1
+
+
+```bash
+apache 1.5 for pg17?
+pg_tle 1.2.0 -> 1.5.0
+supautils 2.5.0 -> 2.6.0
+sslutils 1.3 -> 1.4
+pg_profile 4.7 -> 4.8
+pg_jsonschema 0.3.2 -> 0.3.3
+pg_incremental: 1.1.1 -> 1.2.0
+fix ddl_historization ver 0.7 -> 0.0.7
+fix pg_sqlog 3.1.7 -> 1.6
+fix pg_random remove dev suffix
+pg_stat_monitor 2.1.0 -> 2.1.1
+#table_version 1.11.0 -> 1.11.1
+```
+
+```bash
+apt install -y liblz4-dev libzstd-dev libcurl4-openssl-dev libzstd-dev libkrb5-dev flex
+make citus timescaledb 
+make pg_tle supautils sslutils pg_sqlog pg_random ddl_historization pg_profile pg_incremental pg_stat_monitor pg_ivm emaj pgsql_tweaks
+```
+
+```bash
+make documentdb
+
+```
+
+```bash
+make pgvectorscale pg_session_jwt
+make wrappers pg_jsonschema
+make pg_parquet vchord
+```
+
+```bash
+pig build get std
+```
+
+RPM:
+
+```bash
+apache age 1.5
+pg_tle 1.2 - 1.5
+pg_incremental 1.0.0 -> 1.2.0
+asn1oid 1.5 -> 1.6
+table_log 0.6.1 -> 0.6.4
+pg_snakeoil 1.3 -> 1.4
++pg_spider 1.3.0
+```
+
+
 
 
 ## 2025-02-12
 
 - pg_profile 4.7 -> 4.8
-- h3 
 
 --------
 

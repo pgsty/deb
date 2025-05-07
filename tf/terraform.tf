@@ -2,7 +2,7 @@
 # File      :   terraform.tf
 # Desc      :   5-node oss building env for x86_64/aarch64
 # Ctime     :   2024-12-12
-# Mtime     :   2025-02-21
+# Mtime     :   2025-05-07
 # Path      :   tf/terraform
 # License   :   AGPLv3 @ https://pigsty.io/docs/about/license
 # Copyright :   2018-2025  Ruohang Feng / Vonng (rh@vonng.com)
@@ -27,11 +27,11 @@ locals {
 
 data "alicloud_images" "d12_amd64_img" {
   owners     = "system"
-  name_regex = "^debian_12_7_x64"
+  name_regex = "^debian_12_10_x64"
 }
 data "alicloud_images" "d12_arm64_img" {
   owners     = "system"
-  name_regex = "^debian_12_7_arm64"
+  name_regex = "^debian_12_10_arm64"
 }
 data "alicloud_images" "u22_amd64_img" {
   owners     = "system"
@@ -260,7 +260,9 @@ output "u24a_ip" {
 }
 
 
-# sshpass -p PigstyDemo4 ssh-copy-id el8
-# sshpass -p PigstyDemo4 ssh-copy-id el9
-# sshpass -p PigstyDemo4 ssh-copy-id el8a
-# sshpass -p PigstyDemo4 ssh-copy-id el9a
+# sshpass -p PigstyDemo4 ssh-copy-id d12
+# sshpass -p PigstyDemo4 ssh-copy-id u22
+# sshpass -p PigstyDemo4 ssh-copy-id u24
+# sshpass -p PigstyDemo4 ssh-copy-id d12a
+# sshpass -p PigstyDemo4 ssh-copy-id u22a
+# sshpass -p PigstyDemo4 ssh-copy-id u24a
