@@ -2,7 +2,7 @@ Source: sqlite-fdw
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libsqlite3-dev (>= 3)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libsqlite3-dev (>= 3), libspatialite-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/pgspider/sqlite_fdw
@@ -12,4 +12,7 @@ Architecture: any
 Provides: postgresql-sqlite-fdw
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: SQLite Foreign Data Wrapper for PostgreSQL
-  This is a foreign data wrapper (FDW) to connect PostgreSQL to SQLite database file. This FDW works with PostgreSQL 12, 13, 14, 15, 16 and confirmed with SQLite 3.42.0.
+  This is a foreign data wrapper (FDW) to connect PostgreSQL to SQLite database file.
+  This FDW works with PostgreSQL 13, 14, 15, 16, 17 and confirmed with SQLite 3.49.0.
+  Also this foreign data wrapper (FDW) can connect PostgreSQL with PostGIS to SpatiaLite SQLite database file.
+  This FDW works with PostGIS 2+ and confirmed with SpatiaLite 5.1.

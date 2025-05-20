@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := sqlite_fdw-2.4.0.tar.gz
+TARBALL := sqlite_fdw-2.5.1.tar.gz
 
 # prepare directory
 setup:
@@ -14,7 +14,7 @@ setup:
 # building deb
 build:
 	cd build && pg_buildext updatecontrol
-	cd build && dpkg-buildpackage -b -us -uc
+	cd build && ENABLE_GIS=1 dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
