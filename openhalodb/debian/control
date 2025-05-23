@@ -1,0 +1,50 @@
+Source: openhalodb
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ autoconf,
+ bison,
+ clang,
+ debhelper-compat (= 13),
+ dh-exec (>= 0.13~),
+ docbook-xml,
+ docbook-xsl (>= 1.77),
+ dpkg-dev (>= 1.16~),
+ flex,
+ gettext,
+ libicu-dev,
+ libkrb5-dev,
+ libldap2-dev,
+ liblz4-dev,
+ libperl-dev,
+ libreadline-dev,
+ libselinux1-dev [linux-any],
+ libssl-dev,
+ libsystemd-dev [linux-any],
+ libxml2-dev,
+ libxml2-utils,
+ libxslt1-dev,
+ libzstd-dev,
+ llvm,
+ mawk,
+ perl (>= 5.8),
+ pkgconf,
+ python3-dev,
+ systemtap-sdt-dev,
+ tcl-dev,
+ tzdata,
+ uuid-dev,
+ xsltproc, zlib1g-dev, libpam0g-dev, libz-dev, libpam-dev
+
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/HaloTech-Co-Ltd/openHalo
+
+Package: openhalodb
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: MySQL wire protocol support for PostgreSQL
+ Adding capability for PostgreSQL to work with applications written for MySQL
+ but provides much more better performance than MySQL!
+ Used by Pigsty deployment as postgres kernel alternative

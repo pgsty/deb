@@ -457,9 +457,9 @@ openhalodb:
 # sync to/from building server
 #---------------------------------------------#
 push-sv:
-	rsync -avc --exclude deb --exclude tf ./ sv:/data/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ sv:/data/deb/
 pushd-sv:
-	rsync -avc --exclude deb --exclude tf --delete ./ sv:/data/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ sv:/data/deb/
 pull-sv:
 	rsync -avc sv:/data/deb/ ./deb/
 pulld-sv:
@@ -483,31 +483,31 @@ pull-deb:
 # push to building machines
 #---------------------------------------------#
 push:
-	rsync -avc --exclude deb --exclude tf ./ u22:~/deb/
-	rsync -avc --exclude deb --exclude tf ./ d12:~/deb/
-	rsync -avc --exclude deb --exclude tf ./ u24:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u22:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ d12:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u24:~/deb/
 pushd:
-	rsync -avc --exclude deb --exclude tf --delete ./ d12:~/deb/
-	rsync -avc --exclude deb --exclude tf --delete ./ u22:~/deb/
-	rsync -avc --exclude deb --exclude tf --delete ./ u24:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ d12:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ u22:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ u24:~/deb/
 push12:
-	rsync -avc --exclude deb --exclude tf  ./ d12:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp  ./ d12:~/deb/
 push22:
-	rsync -avc --exclude deb --exclude tf ./ u22:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u22:~/deb/
 push24:
-	rsync -avc --exclude deb --exclude tf ./ u24:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u24:~/deb/
 pushd12:
-	rsync -avc --exclude deb --exclude tf --delete ./ d12:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ d12:~/deb/
 pushd22:
-	rsync -avc --exclude deb --exclude tf --delete ./ u22:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ u22:~/deb/
 pushd24:
-	rsync -avc --exclude deb --exclude tf --delete ./ u24:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ u24:~/deb/
 push12a:
-	rsync -avc --exclude deb --exclude tf ./ d12a:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ d12a:~/deb/
 push22a:
-	rsync -avc --exclude deb --exclude tf ./ u22a:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u22a:~/deb/
 push24a:
-	rsync -avc --exclude deb --exclude tf ./ u24a:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u24a:~/deb/
 
 #---------------------------------------------#
 # pull rpm from building machines
@@ -578,5 +578,5 @@ r:
  	smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec floatfile pg_auditor noset \
  	aggs_for_arrays pgqr pg_zstd url_encode pg_geohash pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash pg_math firebird_fdw  kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 \
  	scws libduckdb pgcopydb pg_bulkload libfq pg4ml pgpdf topn pg_upless pg_task pg_readme vasco pg_xxhash pg_duration ddl_historization data_historization pg_schedoc pg_xenophile pg_incremental pg_drop_envents \
- 	documentdb pg_tracing pg_curl pgxicor pgsparql pgjq hashtypes db_migrator pg_cooldown pgcollection pgspider_ext pgsentinel spat \
+ 	documentdb pg_tracing pg_curl pgxicor pgsparql pgjq hashtypes db_migrator pg_cooldown pgcollection pgspider_ext pgsentinel spat openhalodb \
  	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pushd push12 push22 push24 pushd12 pushd22 pushd24 pull purge dirs pull22 pull12 sync pub release
