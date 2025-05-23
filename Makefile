@@ -446,7 +446,8 @@ pgsentinel:
 spat:
 	cd spat && make
 
-
+openhalodb:
+	cd openhalodb && make
 
 ###############################################################
 #                        1. Building                          #

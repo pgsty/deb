@@ -1,0 +1,6 @@
+openhalodb (14.10-1) unstable; urgency=medium
+
+  * Initial release of openHalodb 14.10 (Debian package).
+  * Packaged using single-binary format for Pigsty private APT repository.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 23 May 2025 18:00:00 +0000
