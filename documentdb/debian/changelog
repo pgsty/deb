@@ -1,3 +1,9 @@
+documentdb (0.103-0PIGSTY) unstable; urgency=medium
+
+  * Build 0.103-0 with aarch64 support against FerretDB 2.2.0
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 23 May 2025 18:00:00 +0000
+
 documentdb (0.102-0PIGSTY) unstable; urgency=medium
 
   * Move to ferretdb's fork: https://github.com/FerretDB/documentdb
