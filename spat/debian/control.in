@@ -1,0 +1,16 @@
+Source: spat
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Florents-Tselai/spat
+
+Package: postgresql-PGVERSION-spat
+Architecture: any
+Provides: postgresql-spat
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Redis-like In-Memory DB Embedded in Postgres
+  spat is a Redis-like in-memory data structure server embedded in Postgres. Data is stored in Postgres shared memory.
+  The data model is key-value. Keys are strings, but values can be strings, lists, sets, or hashes.
