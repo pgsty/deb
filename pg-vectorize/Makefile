@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_vectorize-0.22.1.tar.gz
+TARBALL := pg_vectorize-0.22.2.tar.gz
 
 # prepare directory
 setup:
