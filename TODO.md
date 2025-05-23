@@ -1,5 +1,20 @@
 # Changelog & TodoList
 
+
+## 2025-05-22
+
+- openhalodb 14.10
+- spat [0.1.0a4](https://github.com/Florents-Tselai/spat) new extension
+- pgsentinel [1.1.0](https://github.com/pgsentinel/pgsentinel/releases/tag/v1.1.0) new extension
+- timescaledb [2.20.0](https://github.com/timescale/timescaledb/releases/tag/2.20.0) DROP PG14 support
+- sqlite_fdw [2.5.0](https://github.com/pgspider/sqlite_fdw/releases/tag/v2.5.0)
+- documentdb [0.103.0](https://github.com/FerretDB/documentdb/releases/tag/v0.103.0-ferretdb-2.2.0) + aarch64
+- tzf [0.2.2](https://github.com/ringsaturn/pg-tzf/releases/tag/v0.2.2) 0.14.1
+- pg_vectorize [0.22.2](https://github.com/ChuckHend/pg_vectorize/releases/tag/v0.22.2) pgrx 0.13.1
+- wrappers [0.5.0](https://github.com/supabase/wrappers/releases/tag/v0.5.0) 0.12.9
+
+
+
 ## 2025-05-07
 
 - omnigres 20250507
