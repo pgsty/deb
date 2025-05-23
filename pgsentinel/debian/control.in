@@ -1,0 +1,17 @@
+Source: pgsentinel
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgsentinel/pgsentinel
+
+Package: postgresql-PGVERSION-pgsentinel
+Architecture: any
+Provides: postgresql-pgsentinel
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: postgresql extension providing Active session history
+  PostgreSQL provides session activity. However, in order to gather activity behavior,
+  users have to sample the pg_stat_activity view multiple times. pgsentinel is an extension to
+  record active session history and link the activity with query statistics (pg_stat_statements).
