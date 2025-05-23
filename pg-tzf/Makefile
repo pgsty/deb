@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := tzf-pg-0.2.0.tar.gz
+TARBALL := pg-tzf-0.2.2.tar.gz
 
 # prepare directory
 setup:
