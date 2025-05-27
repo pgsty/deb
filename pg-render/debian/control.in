@@ -1,0 +1,15 @@
+Source: pg-render
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/mkaski/pg_render
+
+Package: postgresql-PGVERSION-pg-render
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Render HTML in SQL
+  Render engine extension for PostgreSQL.
+  See the project homepage: https://github.com/mkaski/pg_render for more information.
