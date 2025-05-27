@@ -1,0 +1,20 @@
+Source: pgx-ulid
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pksunkara/pgx_ulid
+
+Package: postgresql-PGVERSION-pgx-ulid
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres extension for ulid
+ There are several different postgres extensions for ulid, but all of them have feature gaps. pgx-ulid does not.
+  Generator: A generator function to generate ulid identifiers.
+  Binary: Data be stored as binary and not text.
+  Type: A postgres type ulid which is displayed as ulid text.
+  Uuid: Support for casting between UUID and ulid
+  Timestamp: Support to cast an ulid to a timestamp
+  Monotonic: Support monotonicity

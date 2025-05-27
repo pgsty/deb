@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+SRC_DIR := pgx_ulid
+PKG_NAME := pgx-ulid
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	# Disable the build step since binaries are pre-built
+
+override_dh_auto_clean:
+	# Disable the clean step to avoid cleaning up pre-built binaries
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	for PG_VERSION in 12 13 14 15 16; do \
+	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
+	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+	    dh_installdirs -p$$FULL_NAME; \
+	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
+	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    cp target/release/$$DIR_NAME/usr/pgsql-$$PG_VERSION/lib/$(SRC_DIR).so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp target/release/$$DIR_NAME/usr/pgsql-$$PG_VERSION/share/extension/$(SRC_DIR).* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	done
