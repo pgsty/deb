@@ -1,0 +1,15 @@
+Source: convert
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rustprooflabs/convert
+
+Package: postgresql-PGVERSION-convert
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Postgres extension for common conversions when working with spatial data
+ Convert is a Postgres extension providing common conversion functions,
+ such as meters to feet or miles to kilometers.
