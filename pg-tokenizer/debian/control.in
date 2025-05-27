@@ -1,0 +1,16 @@
+Source: pg-tokenizer
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/tensorchord/pg_tokenizer.rs
+
+Package: postgresql-PGVERSION-pg-tokenizer
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL tokenizer extension for full-text search
+  A PostgreSQL extension that provides tokenizers for full-text search.
+  This extension enables customizable text tokenization for enhanced
+  full-text search capabilities in PostgreSQL databases.
