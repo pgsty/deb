@@ -9,6 +9,8 @@ PKG_NAME := pg-render
 %:
 	dh $@
 
+override_dh_auto_test:
+
 override_dh_auto_build:
 	# Disable the build step since binaries are pre-built
 

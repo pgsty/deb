@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg-render-0.1.2.tar.gz
+TARBALL := pg_render-0.1.2.tar.gz
 
 # prepare directory
 setup:

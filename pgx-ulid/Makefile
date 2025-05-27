@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgx-ulid-0.2.0.tar.gz
+TARBALL := pgx_ulid-0.2.0.tar.gz
 
 # prepare directory
 setup:
