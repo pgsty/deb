@@ -1,0 +1,23 @@
+#!/bin/sh
+# Post-installation script for OrioleDB
+
+set -e  # Exit immediately if a command exits with a non-zero status.
+
+# Create postgres user/group if they don't exist
+if [ "$1" = "configure" ]; then
+    # Add postgres group if it doesn't exist
+    if ! getent group postgres >/dev/null; then
+        addgroup --system postgres
+    fi
+
+    # Add postgres user if it doesn't exist
+    if ! getent passwd postgres >/dev/null; then
+        adduser --system --home /var/lib/pgsql --shell /bin/bash \
+        --gecos "PostgreSQL Server" --ingroup postgres postgres
+    fi
+
+    # Update the dynamic linker run-time bindings
+    ldconfig
+fi
+
+exit 0

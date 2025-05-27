@@ -1,0 +1,54 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export PGBASEINSTDIR=/usr/oriole-17
+
+# Filter out -ffast-math which is known to cause precision issues
+export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
+export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+
+%:
+	dh $@ --without autoreconf
+
+override_dh_auto_clean:
+
+override_dh_auto_configure:
+	./configure \
+		--enable-rpath \
+		--prefix=$(PGBASEINSTDIR) \
+		--includedir=$(PGBASEINSTDIR)/include \
+		--mandir=$(PGBASEINSTDIR)/share/man \
+		--datadir=$(PGBASEINSTDIR)/share \
+		--libdir=$(PGBASEINSTDIR)/lib \
+		--docdir=$(PGBASEINSTDIR)/doc \
+		--htmldir=$(PGBASEINSTDIR)/doc/html \
+		--with-system-tzdata=/usr/share/zoneinfo \
+		--with-lz4 --with-zstd \
+		--with-uuid=e2fs --with-libxml --with-libxslt \
+		--with-icu --with-llvm \
+		--with-python --with-tcl \
+		--with-openssl --with-pam --with-ldap \
+		--with-selinux --with-systemd \
+		--with-includes=/usr/include \
+		--with-libraries=/usr/lib \
+		--enable-nls --enable-dtrace
+
+override_dh_auto_build:
+	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
+	cd ../..
+	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
+
+override_dh_auto_install:
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world-bin
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_test:
+	:
+
+override_dh_installinit:
+	:
+
+override_dh_installsystemd:
+	:
