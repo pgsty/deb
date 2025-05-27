@@ -1,5 +1,17 @@
 # Changelog & TodoList
 
+## 2025-05-26
+
+- pgdd [0.6.0](https://github.com/rustprooflabs/pgdd) (pgrx 0.14.1)
+- convert [0.0.4](https://github.com/rustprooflabs/convert) (pgrx 0.14.1)
+- pg_idkit [0.3.0](https://github.com/VADOSWARE/pg_idkit) (pgrx 0.14.1)
+- pg_tokenizer.rs [0.1.0](https://github.com/tensorchord/pg_tokenizer.rs) (pgrx 0.13.1)
+- pg_render [0.1.2](https://github.com/mkaski/pg_render) (pgrx 0.12.8)
+- pgx_ulid [0.2.0](https://github.com/pksunkara/pgx_ulid) (pgrx 0.12.7)
+- pg_ivm [1.11.0](https://github.com/sraoss/pg_ivm)
+- orioledb [1.4.0 beta11](https://github.com/orioledb/orioledb)
+- pgmq, pg_later, pg_vectorize owner change
+
 
 ## 2025-05-22
 
