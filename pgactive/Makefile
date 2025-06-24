@@ -29,7 +29,7 @@ build16:
 	cd build/ && make clean
 	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
-build16:
+build15:
 	sed -i "1s/17/15/g" build/debian/rules
 	echo "15" > build/debian/pgversions
 	cd build && pg_buildext updatecontrol
