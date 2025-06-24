@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := citus-13.0.3.tar.gz
+TARBALL := citus-13.1.0.tar.gz
 
 # prepare directory
 setup:
