@@ -521,7 +521,7 @@ push22a:
 push24a:
 	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u24a:~/deb/
 pushm:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ cc:~/deb/
+	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ meta:~/deb/
 
 #---------------------------------------------#
 # pull rpm from building machines

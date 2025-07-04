@@ -1,5 +1,21 @@
 # Changelog & TodoList
 
+## 2025-07-04
+
+- [x] pg_stat_monitor 2.1.1 -> 2.2.0
+- [x] pgsql-tweaks 0.11.1 -> 0.11.3
+- [x] pg_tle 1.5.0 -> 1.5.1
+- [x] orioledb rebuild
+- [x] pg_curl 2.4 -> 2.4.5
+
+
+## 2025-06-24
+
+- timescaledb 2.20.3
+- citus 13.1.0
+- pgvectorscale rebuild for 17
+- vchord 0.4.3
+
 ## 2025-05-26
 
 - pgdd [0.6.0](https://github.com/rustprooflabs/pgdd) (pgrx 0.14.1)
@@ -80,57 +96,6 @@ Routine extension updates:
 - [x] fix pg_sqlog 3.1.7 -> 1.6
 - [x] fix pg_random remove dev suffix
 - [x] pg_stat_monitor 2.1.0 -> 2.1.1
-
-
-```bash
-apache 1.5 for pg17?
-pg_tle 1.2.0 -> 1.5.0
-supautils 2.5.0 -> 2.6.0
-sslutils 1.3 -> 1.4
-pg_profile 4.7 -> 4.8
-pg_jsonschema 0.3.2 -> 0.3.3
-pg_incremental: 1.1.1 -> 1.2.0
-fix ddl_historization ver 0.7 -> 0.0.7
-fix pg_sqlog 3.1.7 -> 1.6
-fix pg_random remove dev suffix
-pg_stat_monitor 2.1.0 -> 2.1.1
-#table_version 1.11.0 -> 1.11.1
-```
-
-```bash
-apt install -y liblz4-dev libzstd-dev libcurl4-openssl-dev libzstd-dev libkrb5-dev flex
-make citus timescaledb 
-make pg_tle supautils sslutils pg_sqlog pg_random ddl_historization pg_profile pg_incremental pg_stat_monitor pg_ivm emaj pgsql_tweaks
-```
-
-```bash
-make documentdb
-
-```
-
-```bash
-make pgvectorscale pg_session_jwt
-make wrappers pg_jsonschema
-make pg_parquet vchord
-```
-
-```bash
-pig build get std
-```
-
-RPM:
-
-```bash
-apache age 1.5
-pg_tle 1.2 - 1.5
-pg_incremental 1.0.0 -> 1.2.0
-asn1oid 1.5 -> 1.6
-table_log 0.6.1 -> 0.6.4
-pg_snakeoil 1.3 -> 1.4
-+pg_spider 1.3.0
-```
-
-
 
 
 ## 2025-02-12
