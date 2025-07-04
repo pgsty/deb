@@ -1,3 +1,9 @@
+pg-stat-monitor (2.2.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/percona/pg_stat_monitor/releases/tag/2.2.0
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 04 Jul 2025 18:00:00 +0000
+
 pg-stat-monitor (2.1.1-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/percona/pg_stat_monitor/releases/tag/2.1.1
