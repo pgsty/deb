@@ -7,24 +7,24 @@ export CC = gcc
 export PATH     := /usr/oriole-17/bin:$(PATH)
 export PG_CONFIG = /usr/oriole-17/bin/pg_config
 export ORIOLEDB_PATCHSET_VERSION=9
+export USE_PGXS=1
 
 override_dh_shlibdeps:
 	dh_shlibdeps -l/usr/oriole-17/lib
 
 override_dh_auto_configure:
 
-override_dh_auto_build:
+#override_dh_auto_build:
 	# Disable the build step since binaries are pre-built
 
-override_dh_auto_clean:
+#override_dh_auto_clean:
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_test:
 
-override_dh_auto_install:
-	+pg_buildext loop oriolepg-%v-orioledb
+#override_dh_auto_install:
 
 override_dh_installdocs:
 	dh_installdocs --all README.*

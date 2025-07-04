@@ -14,7 +14,6 @@ setup:
 # building deb
 build:
 	cd build && pg_buildext updatecontrol
-	cd build && make -j16
 	cd build && dpkg-buildpackage -b -us -uc
 
 # collect deb
