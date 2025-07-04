@@ -1,3 +1,9 @@
+pg-curl (2.4.5-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/RekGRpth/pg_curl/releases/tag/master
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 04 Jul 2025 18:00:00 +0000
+
 pg-curl (2.4-2PIGSTY) unstable; urgency=medium
 
   * https://github.com/RekGRpth/pg_curl/releases/tag/master

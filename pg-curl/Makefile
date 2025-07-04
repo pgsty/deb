@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_curl-2.4.tar.gz
+TARBALL := pg_curl-2.4.5.tar.gz
 
 # prepare directory
 setup:
