@@ -1,3 +1,9 @@
+pgvectorscale (0.8.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/pgvectorscale/releases/tag/0.8.0
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 24 Jul 2025 18:00:00 +0000
+
 pgvectorscale (0.7.1-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/timescale/pgvectorscale/releases/tag/0.7.0 with pgrx 0.12.9
