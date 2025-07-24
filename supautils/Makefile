@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := supautils-2.9.2.tar.gz
+TARBALL := supautils-2.10.0.tar.gz
 
 # prepare directory
 setup:
