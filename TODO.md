@@ -1,6 +1,6 @@
 # Changelog & TodoList
 
-## 2025-07-24 (TBD)
+## 2025-07-24
 
 - OriolePG beta12
 - documentdb 0.105.0
@@ -11,7 +11,7 @@
 - wrappers 0.5.3 (pgrx 0.14.3)
 - pgvectorscale 0.8.0 (pgrx 0.12.9)
 - pg_search 0.17.0 (download)
-- pg_profile
+- pg_profile 4.10.0
 
 ## 2025-07-04
 
@@ -20,36 +20,6 @@
 - [x] pgsql-tweaks 0.11.1 -> 0.11.3
 - [x] pg_tle 1.5.0 -> 1.5.1
 - [x] pg_curl 2.4 -> 2.4.5
-
-```bash
-curl https://repo.pigsty.cc/pig | bash -s 0.5.0
-pig build repo
-pig build tool
-pig b p 12345678-090b-5678-abcd-12345678abcd@8.210.188.245:31415
-. /etc/profile.d/proxy.sh
-pig build spec
-
-pig build get pgsql-tweaks
-pig build get pg_tle
-pig build get pg_stat_monitor
-pig build get pg_curl
-pig build get oriole
-pig build get documentdb
-
-cd ~/deb
-sudo apt -y install libcurl4-openssl-dev flex
-make pgsql_tweaks
-make pg_stat_monitor 
-make pg_tle
-make pg_curl
-
-
-pig build get oriole
-pig build get documentdb
-
-
-make oriolepg_17
-```
 
 
 ## 2025-06-24
