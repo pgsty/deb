@@ -1,3 +1,9 @@
+oriolepg-17-orioledb (1.5-0.beta12PIGSTY) unstable; urgency=medium
+
+  * Initial release of OrioleDB 1.5.0 beta12 on Patched Postgres 17.11
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 27 May 2025 18:00:00 +0000
+
 oriolepg-17-orioledb (1.4-0.beta11PIGSTY) unstable; urgency=medium
 
   * Initial release of OrioleDB 1.4.0 beta11 on Patched Postgres 17.9

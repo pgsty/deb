@@ -2,15 +2,15 @@ Source: oriolepg-17-orioledb
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), oriolepg-17 (>= 17.9), libcurl4-openssl-dev (>= 7)
+Build-Depends: debhelper-compat (= 13), oriolepg-17 (>= 17.11), libcurl4-openssl-dev (>= 7)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/orioledb/orioledb
 
 Package: oriolepg-17-orioledb
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, oriolepg-17 (>= 17.9)
+Depends: ${shlibs:Depends}, ${misc:Depends}, oriolepg-17 (>= 17.11)
 Description: Modern cloud-native storage engine extension for patched PostgreSQL
  OrioleDB is a new storage engine for PostgreSQL, bringing a modern approach
  to database capacity, capabilities and performance to the world's most-loved database platform.
- This extension works on patched version (17_9) of PostgreSQL 17.
+ This extension works on patched version (17_11) of PostgreSQL 17.

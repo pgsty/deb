@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := orioledb-beta11.tar.gz
+TARBALL := orioledb-beta12.tar.gz
 
 # prepare directory
 setup:
