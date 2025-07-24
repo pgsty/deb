@@ -3,8 +3,7 @@ all: setup build
 SRC_DIR := ~/plv8
 PKG_NAME := plv8
 
-
-TARBALL := plv8-3.2.3.tar.gz
+TARBALL := plv8-3.2.4.tar.gz
 
 pre:
 	mkdir ~/plv8
@@ -31,8 +30,6 @@ setup:
 #build:
 #	cd build && pg_buildext updatecontrol
 #	cd build && dpkg-buildpackage -b -us -uc
-
-
 
 # building deb
 build:
