@@ -21,13 +21,13 @@ override_dh_auto_install:
 	for PG_VERSION in 13 14 15 16 17; do \
 		DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
 		FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
-        rm -rf build/*.so; \
+        rm -rf *.so; \
         PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$PATH /usr/bin/make clean; \
         PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$PATH /usr/bin/make; \
 		dh_installdirs -p$$FULL_NAME; \
 		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
 		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-		cp build/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+		cp *.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
 	done
 
 override_dh_installdocs:
