@@ -1,3 +1,9 @@
+wrappers (0.5.3-1PIGSTY) unstable; urgency=low
+
+  * 0.5.3 release https://github.com/supabase/wrappers/releases/tag/v0.5.3
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 24 Jul 2025 18:00:00 +0000
+
 wrappers (0.5.0-1PIGSTY) unstable; urgency=low
 
   * 0.5.0 release https://github.com/supabase/wrappers/releases/tag/v0.5.0
