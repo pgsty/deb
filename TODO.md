@@ -11,6 +11,7 @@
 - wrappers 0.5.3 (pgrx 0.14.3)
 - pgvectorscale 0.8.0 (pgrx 0.12.9)
 - pg_search 0.17.0 (download)
+- pg_profile
 
 ## 2025-07-04
 

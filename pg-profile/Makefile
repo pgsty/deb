@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_profile-4.8.tar.gz
+TARBALL := pg_profile-4.10.tar.gz
 
 # prepare directory
 setup:
