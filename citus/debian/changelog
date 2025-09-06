@@ -1,3 +1,9 @@
+citus (13.2.0-9PIGSTY) unstable; urgency=low
+
+  * https://github.com/citusdata/citus/releases/tag/v13.2.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 06 Sep 2025 12:00:00 +0000
+
 citus (13.1.0-9PIGSTY) unstable; urgency=low
 
   * https://github.com/citusdata/citus/releases/tag/v13.1.0
