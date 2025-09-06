@@ -1,5 +1,12 @@
 # Changelog & TodoList
 
+## 2025-08-03
+
+- Omnigres
+- pg_search 0.17.2
+- plpgsql_check 2.8.2
+
+
 ## 2025-07-24
 
 - OriolePG beta12

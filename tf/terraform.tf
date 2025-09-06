@@ -126,139 +126,139 @@ output "d12_ip" {
   value = "${alicloud_instance.pg-d12.public_ip}"
 }
 
-#======================================#
-# D12 ARM64
-#======================================#
-resource "alicloud_instance" "pg-d12a" {
-  instance_name                 = "pg-d12a"
-  host_name                     = "pg-d12a"
-  private_ip                    = "10.10.10.112"
-  instance_type                 = local.arm64_instype
-  image_id                      = "${data.alicloud_images.d12_arm64_img.images.0.id}"
-  vswitch_id                    = "${alicloud_vswitch.vsw.id}"
-  security_groups               = ["${alicloud_security_group.default.id}"]
-  password                      = "PigstyDemo4"
-  instance_charge_type          = "PostPaid"
-  internet_charge_type          = "PayByTraffic"
-  spot_strategy                 = local.spot_policy
-  spot_price_limit              = local.spot_price_limit
-  internet_max_bandwidth_out    = local.bandwidth
-  system_disk_category          = "cloud_essd"
-  system_disk_performance_level = "PL1"
-  system_disk_size              = local.disk_size
-}
-
-output "d12a_ip" {
-  value = "${alicloud_instance.pg-d12a.public_ip}"
-}
-
-
-
-#======================================#
-# U22 AMD64
-#======================================#
-resource "alicloud_instance" "pg-u22" {
-  instance_name                 = "pg-u22"
-  host_name                     = "pg-u22"
-  private_ip                    = "10.10.10.22"
-  instance_type                 = local.amd64_instype
-  image_id                      = "${data.alicloud_images.u22_amd64_img.images.0.id}"
-  vswitch_id                    = "${alicloud_vswitch.vsw.id}"
-  security_groups               = ["${alicloud_security_group.default.id}"]
-  password                      = "PigstyDemo4"
-  instance_charge_type          = "PostPaid"
-  internet_charge_type          = "PayByTraffic"
-  spot_strategy                 = local.spot_policy
-  spot_price_limit              = local.spot_price_limit
-  internet_max_bandwidth_out    = local.bandwidth
-  system_disk_category          = "cloud_essd"
-  system_disk_performance_level = "PL1"
-  system_disk_size              = local.disk_size
-}
-
-output "u22_ip" {
-  value = "${alicloud_instance.pg-u22.public_ip}"
-}
-
-#======================================#
-# U22 ARM64
-#======================================#
-resource "alicloud_instance" "pg-u22a" {
-  instance_name                 = "pg-u22a"
-  host_name                     = "pg-u22a"
-  private_ip                    = "10.10.10.122"
-  instance_type                 = local.arm64_instype
-  image_id                      = "${data.alicloud_images.u22_arm64_img.images.0.id}"
-  vswitch_id                    = "${alicloud_vswitch.vsw.id}"
-  security_groups               = ["${alicloud_security_group.default.id}"]
-  password                      = "PigstyDemo4"
-  instance_charge_type          = "PostPaid"
-  internet_charge_type          = "PayByTraffic"
-  spot_strategy                 = local.spot_policy
-  spot_price_limit              = local.spot_price_limit
-  internet_max_bandwidth_out    = local.bandwidth
-  system_disk_category          = "cloud_essd"
-  system_disk_performance_level = "PL1"
-  system_disk_size              = local.disk_size
-}
-
-output "u22a_ip" {
-  value = "${alicloud_instance.pg-u22a.public_ip}"
-}
+# #======================================#
+# # D12 ARM64
+# #======================================#
+# resource "alicloud_instance" "pg-d12a" {
+#   instance_name                 = "pg-d12a"
+#   host_name                     = "pg-d12a"
+#   private_ip                    = "10.10.10.112"
+#   instance_type                 = local.arm64_instype
+#   image_id                      = "${data.alicloud_images.d12_arm64_img.images.0.id}"
+#   vswitch_id                    = "${alicloud_vswitch.vsw.id}"
+#   security_groups               = ["${alicloud_security_group.default.id}"]
+#   password                      = "PigstyDemo4"
+#   instance_charge_type          = "PostPaid"
+#   internet_charge_type          = "PayByTraffic"
+#   spot_strategy                 = local.spot_policy
+#   spot_price_limit              = local.spot_price_limit
+#   internet_max_bandwidth_out    = local.bandwidth
+#   system_disk_category          = "cloud_essd"
+#   system_disk_performance_level = "PL1"
+#   system_disk_size              = local.disk_size
+# }
+#
+# output "d12a_ip" {
+#   value = "${alicloud_instance.pg-d12a.public_ip}"
+# }
 
 
-
-#======================================#
-# U22 AMD64
-#======================================#
-resource "alicloud_instance" "pg-u24" {
-  instance_name                 = "pg-u24"
-  host_name                     = "pg-u24"
-  private_ip                    = "10.10.10.24"
-  instance_type                 = local.amd64_instype
-  image_id                      = "${data.alicloud_images.u24_amd64_img.images.0.id}"
-  vswitch_id                    = "${alicloud_vswitch.vsw.id}"
-  security_groups               = ["${alicloud_security_group.default.id}"]
-  password                      = "PigstyDemo4"
-  instance_charge_type          = "PostPaid"
-  internet_charge_type          = "PayByTraffic"
-  spot_strategy                 = local.spot_policy
-  spot_price_limit              = local.spot_price_limit
-  internet_max_bandwidth_out    = local.bandwidth
-  system_disk_category          = "cloud_essd"
-  system_disk_performance_level = "PL1"
-  system_disk_size              = local.disk_size
-}
-
-output "u24_ip" {
-  value = "${alicloud_instance.pg-u24.public_ip}"
-}
-
-#======================================#
-# U22 ARM64
-#======================================#
-resource "alicloud_instance" "pg-u24a" {
-  instance_name                 = "pg-u24a"
-  host_name                     = "pg-u24a"
-  private_ip                    = "10.10.10.124"
-  instance_type                 = local.arm64_instype
-  image_id                      = "${data.alicloud_images.u24_arm64_img.images.0.id}"
-  vswitch_id                    = "${alicloud_vswitch.vsw.id}"
-  security_groups               = ["${alicloud_security_group.default.id}"]
-  password                      = "PigstyDemo4"
-  instance_charge_type          = "PostPaid"
-  internet_charge_type          = "PayByTraffic"
-  spot_strategy                 = local.spot_policy
-  spot_price_limit              = local.spot_price_limit
-  internet_max_bandwidth_out    = local.bandwidth
-  system_disk_category          = "cloud_essd"
-  system_disk_performance_level = "PL1"
-  system_disk_size              = local.disk_size
-}
-
-output "u24a_ip" {
-  value = "${alicloud_instance.pg-u24a.public_ip}"
-}
+#
+# #======================================#
+# # U22 AMD64
+# #======================================#
+# resource "alicloud_instance" "pg-u22" {
+#   instance_name                 = "pg-u22"
+#   host_name                     = "pg-u22"
+#   private_ip                    = "10.10.10.22"
+#   instance_type                 = local.amd64_instype
+#   image_id                      = "${data.alicloud_images.u22_amd64_img.images.0.id}"
+#   vswitch_id                    = "${alicloud_vswitch.vsw.id}"
+#   security_groups               = ["${alicloud_security_group.default.id}"]
+#   password                      = "PigstyDemo4"
+#   instance_charge_type          = "PostPaid"
+#   internet_charge_type          = "PayByTraffic"
+#   spot_strategy                 = local.spot_policy
+#   spot_price_limit              = local.spot_price_limit
+#   internet_max_bandwidth_out    = local.bandwidth
+#   system_disk_category          = "cloud_essd"
+#   system_disk_performance_level = "PL1"
+#   system_disk_size              = local.disk_size
+# }
+#
+# output "u22_ip" {
+#   value = "${alicloud_instance.pg-u22.public_ip}"
+# }
+#
+# #======================================#
+# # U22 ARM64
+# #======================================#
+# resource "alicloud_instance" "pg-u22a" {
+#   instance_name                 = "pg-u22a"
+#   host_name                     = "pg-u22a"
+#   private_ip                    = "10.10.10.122"
+#   instance_type                 = local.arm64_instype
+#   image_id                      = "${data.alicloud_images.u22_arm64_img.images.0.id}"
+#   vswitch_id                    = "${alicloud_vswitch.vsw.id}"
+#   security_groups               = ["${alicloud_security_group.default.id}"]
+#   password                      = "PigstyDemo4"
+#   instance_charge_type          = "PostPaid"
+#   internet_charge_type          = "PayByTraffic"
+#   spot_strategy                 = local.spot_policy
+#   spot_price_limit              = local.spot_price_limit
+#   internet_max_bandwidth_out    = local.bandwidth
+#   system_disk_category          = "cloud_essd"
+#   system_disk_performance_level = "PL1"
+#   system_disk_size              = local.disk_size
+# }
+#
+# output "u22a_ip" {
+#   value = "${alicloud_instance.pg-u22a.public_ip}"
+# }
+#
+#
+#
+# #======================================#
+# # U22 AMD64
+# #======================================#
+# resource "alicloud_instance" "pg-u24" {
+#   instance_name                 = "pg-u24"
+#   host_name                     = "pg-u24"
+#   private_ip                    = "10.10.10.24"
+#   instance_type                 = local.amd64_instype
+#   image_id                      = "${data.alicloud_images.u24_amd64_img.images.0.id}"
+#   vswitch_id                    = "${alicloud_vswitch.vsw.id}"
+#   security_groups               = ["${alicloud_security_group.default.id}"]
+#   password                      = "PigstyDemo4"
+#   instance_charge_type          = "PostPaid"
+#   internet_charge_type          = "PayByTraffic"
+#   spot_strategy                 = local.spot_policy
+#   spot_price_limit              = local.spot_price_limit
+#   internet_max_bandwidth_out    = local.bandwidth
+#   system_disk_category          = "cloud_essd"
+#   system_disk_performance_level = "PL1"
+#   system_disk_size              = local.disk_size
+# }
+#
+# output "u24_ip" {
+#   value = "${alicloud_instance.pg-u24.public_ip}"
+# }
+#
+# #======================================#
+# # U22 ARM64
+# #======================================#
+# resource "alicloud_instance" "pg-u24a" {
+#   instance_name                 = "pg-u24a"
+#   host_name                     = "pg-u24a"
+#   private_ip                    = "10.10.10.124"
+#   instance_type                 = local.arm64_instype
+#   image_id                      = "${data.alicloud_images.u24_arm64_img.images.0.id}"
+#   vswitch_id                    = "${alicloud_vswitch.vsw.id}"
+#   security_groups               = ["${alicloud_security_group.default.id}"]
+#   password                      = "PigstyDemo4"
+#   instance_charge_type          = "PostPaid"
+#   internet_charge_type          = "PayByTraffic"
+#   spot_strategy                 = local.spot_policy
+#   spot_price_limit              = local.spot_price_limit
+#   internet_max_bandwidth_out    = local.bandwidth
+#   system_disk_category          = "cloud_essd"
+#   system_disk_performance_level = "PL1"
+#   system_disk_size              = local.disk_size
+# }
+#
+# output "u24a_ip" {
+#   value = "${alicloud_instance.pg-u24a.public_ip}"
+# }
 
 
 # sshpass -p PigstyDemo4 ssh-copy-id d12
