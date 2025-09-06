@@ -1,0 +1,16 @@
+Source: pg-rewrite
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/cybertec-postgresql/pg_rewrite
+
+Package: postgresql-PGVERSION-rewrite
+Architecture: any
+Provides: postgresql-rewrite
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL tool to rewrite a table
+  pg_rewrite is a tool to rewrite table (i.e. to copy its data to a new file).
+  It allows both read and write access to the table during the rewriting.

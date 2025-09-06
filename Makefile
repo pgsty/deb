@@ -453,7 +453,8 @@ spat:
 	cd spat && make
 pgactive:
 	cd pgactive && make
-
+pg_rewrite:
+	cd pg-rewrite && make
 openhalodb:
 	cd openhalodb && make
 oriolepg_17:
