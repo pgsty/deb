@@ -1,6 +1,6 @@
 pg-tracing (0.1.3-2PIGSTY) unstable; urgency=medium
 
-  * Rebuild with pg18 support
+  * Rebuild with pg14/18 support
 
  -- Ruohang Feng <rh@vonng.com>  Sat, 06 Sep 2025 18:00:00 +0000
 
