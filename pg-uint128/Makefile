@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg-uint128-1.0.0.tar.gz
+TARBALL := pg-uint128-1.1.0.tar.gz
 
 # prepare directory
 setup:

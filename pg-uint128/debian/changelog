@@ -1,3 +1,9 @@
+pg-uint128 (1.1.0-1PIGSTY) unstable; urgency=medium
+
+  * uint1 and int1 data type support
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 06 Sep 2025 18:00:00 +0000
+
 pg-uint128 (1.0.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
