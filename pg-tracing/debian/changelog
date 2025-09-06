@@ -1,6 +1,12 @@
+pg-tracing (0.1.3-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild with pg18 support
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 06 Sep 2025 18:00:00 +0000
+
 pg-tracing (0.1.3-1PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * bump to the latest version
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 07 May 2025 18:00:00 +0000
 
