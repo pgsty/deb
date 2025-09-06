@@ -1,3 +1,9 @@
+table-version (1.11.1-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/linz/postgresql-tableversion/releases/tag/1.11.1
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 06 Sep 2025 18:00:00 +0000
+
 table-version (1.11.0-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/linz/postgresql-tableversion/releases/tag/1.11.0

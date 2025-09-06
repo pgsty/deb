@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := postgresql-tableversion-1.11.0.tar.gz
+TARBALL := postgresql-tableversion-1.11.1.tar.gz
 
 # prepare directory
 setup:
