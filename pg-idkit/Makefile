@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_idkit-0.3.0.tar.gz
+TARBALL := pg_idkit-0.3.1.tar.gz
 
 # prepare directory
 setup:
