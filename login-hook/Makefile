@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := login_hook-1.6.tar.gz
+TARBALL := login_hook-1.7.tar.gz
 
 # prepare directory
 setup:
