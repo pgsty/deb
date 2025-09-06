@@ -1,3 +1,9 @@
+timescaledb-tsl (2.22.0-9PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.22.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 06 Sep 2025 12:00:00 +0000
+
 timescaledb-tsl (2.21.1-9PIGSTY) unstable; urgency=medium
 
   * https://github.com/timescale/timescaledb/releases/tag/2.21.1
