@@ -1,3 +1,9 @@
+pgsentinel (1.2.0-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/pgsentinel/pgsentinel/releases/tag/v1.2.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 07 Sep 2025 18:00:00 +0000
+
 pgsentinel (1.1.0-1PIGSTY) unstable; urgency=low
 
   * Initial release, used by Pigsty <https://pigsty.io>
