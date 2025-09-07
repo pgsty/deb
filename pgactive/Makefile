@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgactive-2.1.5.tar.gz
+TARBALL := pgactive-2.1.6.tar.gz
 
 # prepare directory
 setup:
