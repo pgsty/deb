@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := documentdb-0.105.0-ferretdb-2.4.0.tar.gz
+TARBALL := documentdb-0.106.0-ferretdb-2.5.0.tar.gz
 
 # prepare directory
 setup:

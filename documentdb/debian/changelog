@@ -1,3 +1,9 @@
+documentdb (0.106-0PIGSTY) unstable; urgency=medium
+
+  * https://github.com/FerretDB/documentdb/releases/tag/v0.106.0-ferretdb-2.5.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 07 Sep 2025 18:00:00 +0000
+
 documentdb (0.105-0PIGSTY) unstable; urgency=medium
 
   * https://github.com/FerretDB/documentdb/releases/tag/v0.105.0-ferretdb-2.4.0
