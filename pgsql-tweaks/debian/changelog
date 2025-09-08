@@ -1,3 +1,9 @@
+pgsql-tweaks (0.11.5-1PIGSTY) unstable; urgency=low
+
+  * now move to https://codeberg.org/pgsql_tweaks/pgsql_tweaks
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 08 Sep 2025 18:00:00 +0000
+
 pgsql-tweaks (0.11.3-1PIGSTY) unstable; urgency=low
 
   * https://github.com/sjstoelting/pgsql-tweaks/releases/tag/v0.11.3
