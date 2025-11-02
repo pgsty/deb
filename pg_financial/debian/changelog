@@ -1,3 +1,9 @@
+pg-financial (1.0.1-2PIGSTY) unstable; urgency=low
+
+  * https://github.com/intgr/pg_financial/releases/tag/v1.0.1
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 02 Nov 2025 00:00:00 +0000
+
 pg-financial (1.0.1-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
