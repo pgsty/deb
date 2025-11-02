@@ -1,3 +1,9 @@
+pg-search (0.19.3-1PIGSTY) unstable; urgency=medium
+
+  * Bump to 0.19.3
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 02 Nov 2025 12:00:00 +0000
+
 pg-search (0.8.6-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
