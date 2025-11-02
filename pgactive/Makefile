@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgactive-2.1.6.tar.gz
+TARBALL := pgactive-2.1.7.tar.gz
 
 # prepare directory
 setup:
@@ -12,7 +12,15 @@ setup:
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
-build: build17 build16 build15 build14 build13
+build: build18 build17 build16 build15 build14 build13
+build18:
+	sed -i "1s/17/18/g" build/debian/rules
+	echo "18" > build/debian/pgversions
+	cd build && pg_buildext updatecontrol
+	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
+	cd build/ && make clean
+	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+
 build17:
 	sed -i "1s/17/17/g" build/debian/rules
 	echo "17" > build/debian/pgversions
