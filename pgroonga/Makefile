@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgroonga-4.0.0.tar.gz
+TARBALL := pgroonga-4.0.4.tar.gz
 
 # prepare directory
 setup:
