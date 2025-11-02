@@ -1,3 +1,9 @@
+tzf (0.2.3-1PIGSTY) unstable; urgency=medium
+
+  * bump to 0.2.3
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 23 May 2025 18:00:00 +0000
+
 tzf (0.2.2-1PIGSTY) unstable; urgency=medium
 
   * now tzf-pg is rename to pg-tzf, build 0.2.2
