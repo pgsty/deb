@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := firebird_fdw-1.4.0.tar.gz
+TARBALL := firebird_fdw-1.4.1.tar.gz
 
 # prepare directory
 setup:
