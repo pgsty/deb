@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_vectorize-0.22.2.tar.gz
+TARBALL := pg_vectorize-0.25.0.tar.gz
 
 # prepare directory
 setup:
@@ -13,7 +13,7 @@ setup:
 build: building packaging
 building:
 	cd build/extension && cargo update && \
-	for PG_VERSION in 14 15 16 17; do \
+	for PG_VERSION in 14 15 16 17 18; do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
 	    cargo pgrx package -v; \
