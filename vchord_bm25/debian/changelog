@@ -1,3 +1,9 @@
+vchord-bm25 (0.2.2-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/tensorchord/VectorChord-bm25/releases/tag/0.2.2
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 01 Jan 2025 12:00:00 +0000
+
 vchord-bm25 (0.2.1-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/tensorchord/VectorChord-bm25/releases/tag/0.2.1
