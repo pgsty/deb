@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgjwt.tar.gz
+TARBALL := pgjwt-0.2.0.tar.gz
 
 # prepare directory
 setup:
