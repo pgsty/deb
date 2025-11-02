@@ -1,10 +1,23 @@
 all: build
 
-TARBALL := timescaledb-2.22.0.tar.gz
+TARBALL := timescaledb-2.23.0.tar.gz
 
-build: build17 build16 build15
+build: build18 build17 build16 build15
 
 # building deb
+build18:
+	rm -rf build; mkdir -p build
+	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
+	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
+	rm -rf build/build/debian; cp -r debian build/build/debian
+	OS_CODENAME=$(shell lsb_release -sc); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/build/debian/changelog
+	echo '18' > build/build/debian/pgversions
+	cd build/build/ && pg_buildext updatecontrol
+	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	mkdir -p /tmp/deb
+	cp build/*.deb /tmp/deb
+
 build17:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
