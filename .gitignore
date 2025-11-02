@@ -5,7 +5,7 @@ pigsty-deb.iml
 *.tar.gz
 
 deb/
-tarball/
+src/
 tmp/
 
 .terraform/

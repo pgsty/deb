@@ -1,0 +1,65 @@
+timescaledb-tsl (2.23.0-9PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.23.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 02 Nov 2025 12:00:00 +0000
+
+timescaledb-tsl (2.22.0-9PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.22.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 06 Sep 2025 12:00:00 +0000
+
+timescaledb-tsl (2.21.1-9PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.21.1
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 24 Jul 2025 12:00:00 +0000
+
+timescaledb-tsl (2.20.3-9PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.20.3
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Jun 2025 12:00:00 +0000
+
+timescaledb-tsl (2.20.0-9PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.20.0
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 23 May 2025 12:00:00 +0000
+
+timescaledb-tsl (2.19.3-9PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.19.3
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 07 May 2025 12:00:00 +0000
+
+timescaledb-tsl (2.19.0-9PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.19.0
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 20 Mar 2025 12:00:00 +0000
+
+timescaledb-tsl (2.18.2-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.18.2
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 21 Feb 2025 12:00:00 +0000
+
+timescaledb-tsl (2.18.1-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.18.1
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 11 Feb 2025 12:00:00 +0000
+
+timescaledb-tsl (2.18.0-1PIGSTY) unstable; urgency=medium
+
+  * breaking release: https://github.com/timescale/timescaledb/releases/tag/2.18.0
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 10 Feb 2025 12:00:00 +0000
+
+timescaledb-tsl (2.17.2-1PIGSTY) unstable; urgency=medium
+
+  * Initial release, used by Pigsty <https://pigsty.io>
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 30 Dec 2024 18:00:00 +0000

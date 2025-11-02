@@ -1,0 +1,17 @@
+timescaledb-toolkit (1.22.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb-toolkit/releases/tag/1.22.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 02 Nov 2025 12:00:00 +0000
+
+timescaledb-toolkit (1.21.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb-toolkit/releases/tag/1.21.0
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 07 May 2025 18:00:00 +0000
+
+timescaledb-toolkit (1.19.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial release, used by Pigsty <https://pigsty.io>
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 23 Jan 2025 18:00:00 +0000
