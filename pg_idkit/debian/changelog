@@ -1,3 +1,9 @@
+pg-idkit (0.4.0-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/VADOSWARE/pg_idkit/releases/tag/v0.4.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 02 Nov 2025 00:00:00 +0000
+
 pg-idkit (0.3.1-1PIGSTY) unstable; urgency=medium
 
   * pgrx 0.15.0 with pg18 support
