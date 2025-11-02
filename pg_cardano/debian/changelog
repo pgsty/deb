@@ -1,3 +1,9 @@
+pg-cardano (1.1.1-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/Florents-Tselai/pg_cardano/releases/tag/v1.1.1
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 02 Nov 2025 00:00:00 +0000
+
 pg-cardano (1.0.5-1PIGSTY) unstable; urgency=medium
 
   * 1.0.5-p2 with pgrx 0.14.1
