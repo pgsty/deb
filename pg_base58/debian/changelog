@@ -1,3 +1,9 @@
+pg-base58 (0.0.1-3PIGSTY) unstable; urgency=low
+
+  * add pg18 support
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 02 Nov 2025 00:00:00 +0000
+
 pg-base58 (0.0.1-2PIGSTY) unstable; urgency=low
 
   * https://github.com/Florents-Tselai/pg_base58/releases/tag/v0.0.1
