@@ -1,3 +1,9 @@
+passwordcheck-cracklib (3.1.0-2PIGSTY) unstable; urgency=low
+
+  * https://github.com/dverite/postgres-password-check/releases/tag/3.1.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 02 Nov 2025 00:00:00 +0000
+
 passwordcheck-cracklib (3.1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by Pigsty <https://pigsty.io>
