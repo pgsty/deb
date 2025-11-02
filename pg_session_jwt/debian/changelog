@@ -1,3 +1,9 @@
+pg-session-jwt (0.3.3-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/neondatabase/pg_session_jwt/releases/tag/v0.3.3
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 02 Nov 2025 12:00:00 +0000
+
 pg-session-jwt (0.3.1-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/neondatabase/pg_session_jwt/releases/tag/v0.3.1
