@@ -1,12 +1,24 @@
 all: build move
 
-TARBALL := pg_duckdb-0.3.1.tar.gz
+TARBALL := pg_duckdb-1.0.0.tar.gz
 
 
 #==============================================================#
 #                         DEB Builder                          #
 #==============================================================#
-build: build17 build16 build15 build14
+build: build18 build17 build16 build15 build14
+
+build18:
+	rm -rf build; mkdir -p build
+	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
+	rm -rf build/debian; cp -r debian build/debian
+	OS_CODENAME=$(shell lsb_release -sc); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "s/PGVERSION/18/" build/debian/control
+	export PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
+	cd build && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin make && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	mkdir -p /tmp/deb && cp *.deb /tmp/deb/
+
 build17:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../tarball/$(TARBALL)
