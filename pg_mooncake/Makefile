@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_mooncake-0.1.2.tar.gz
+TARBALL := pg_mooncake-0.2.0.tar.gz
 
 # prepare directory
 setup:
@@ -11,9 +11,14 @@ setup:
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
-build: build17 build16 build15 build14
+build: build18 build17 build16 build15 build14
 
 # building deb
+build18:
+	echo '18' > build/debian/pgversions
+	cd build/ && pg_buildext updatecontrol
+	cd build/ && PATH=/usr/lib/postgresql/18/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
+
 build17:
 	echo '17' > build/debian/pgversions
 	cd build/ && pg_buildext updatecontrol
