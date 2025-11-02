@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := logerrors-2.1.3.tar.gz
+TARBALL := logerrors-2.1.5.tar.gz
 
 # prepare directory
 setup:
