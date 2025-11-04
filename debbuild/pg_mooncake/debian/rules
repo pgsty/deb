@@ -1,21 +1,18 @@
 #!/usr/bin/make -f
 
-# Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
-export CC = gcc
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
 
-# Set parallel build jobs to 20
-export MAKEFLAGS = -j20
+SRC_DIR := pg_mooncake
+PKG_NAME := pg-mooncake
 
-include /usr/share/postgresql-common/pgxs_debian_control.mk
-
-override_dh_dwz:
-	echo "Skipping DWZ optimization"
-
-override_dh_auto_build:
-	@echo $(PATH)
-	make release
+%:
+	dh $@
 
 override_dh_auto_test:
+
+override_dh_auto_build:
+	# Disable the build step since binaries are pre-built
 
 override_dh_auto_clean:
 	# Disable the clean step to avoid cleaning up pre-built binaries
@@ -24,11 +21,12 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	BUILD_TYPE=release
-	+pg_buildext loop postgresql-%v-pg-mooncake
-
-override_dh_installdocs:
-	dh_installdocs --all README.*
-
-%:
-	dh $@
+	for PG_VERSION in 14 15 16 17 18; do \
+	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
+	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+	    dh_installdirs -p$$FULL_NAME; \
+	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
+	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	done

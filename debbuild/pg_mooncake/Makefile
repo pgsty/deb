@@ -10,35 +10,18 @@ setup:
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
-# building deb
-build: build18 build17 build16 build15 build14
+build: building packaging
+building:
+	cd build && cargo update && \
+	for PG_VERSION in 14 15 16 17 18; do \
+	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+	    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
+	    cargo pgrx package -v; \
+	done
 
-# building deb
-build18:
-	echo '18' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/18/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
-
-build17:
-	echo '17' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/17/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
-
-build16:
-	echo '16' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/16/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
-
-build15:
-	echo '15' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/15/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
-
-build14:
-	echo '14' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin BUILD_TYPE=release dpkg-buildpackage -b -us -uc
-
+packaging:
+	cd build && pg_buildext updatecontrol
+	cd build && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
@@ -48,6 +31,4 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
-
-all: setup build move ls
+.PHONY: all setup update build building packaging move clean ls

@@ -12,6 +12,6 @@ pg-bestmatch (0.0.2-1PIGSTY) unstable; urgency=low
 
 pg-bestmatch (0.0.1-1PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Thu, 12 Dec 2024 18:00:00 +0000

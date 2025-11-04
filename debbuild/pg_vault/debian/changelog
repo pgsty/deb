@@ -6,6 +6,6 @@ vault (0.3.1-1PIGSTY) unstable; urgency=medium
 
 vault (0.2.9-1PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 17 Jul 2024 18:00:00 +0000

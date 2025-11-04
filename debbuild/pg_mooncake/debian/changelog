@@ -1,7 +1,7 @@
 pg-mooncake (0.2.0-1PIGSTY) unstable; urgency=medium
 
   * new release: https://github.com/Mooncake-Labs/pg_mooncake/releases/tag/v0.2.0
-
+  * rewrite in Rust / pgrx 0.16.1 with pg 18 support
  -- Ruohang Feng <rh@vonng.com>  Sun, 02 Nov 2025 12:00:00 +0000
 
 pg-mooncake (0.1.2-1PIGSTY) unstable; urgency=medium
@@ -24,6 +24,6 @@ pg-mooncake (0.1.0-1PIGSTY) unstable; urgency=medium
 
 pg-mooncake (0.0.1-1PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Thu, 31 Oct 2024 18:00:00 +0000

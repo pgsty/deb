@@ -12,6 +12,6 @@ table-version (1.11.0-1PIGSTY) unstable; urgency=medium
 
 table-version (1.10.3-1PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 17 Jul 2024 18:00:00 +0000

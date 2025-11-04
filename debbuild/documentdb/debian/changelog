@@ -36,6 +36,6 @@ documentdb (0.101-0PIGSTY) unstable; urgency=medium
 
 documentdb (0.100-0PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 10 Feb 2025 18:00:00 +0000

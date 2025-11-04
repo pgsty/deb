@@ -60,6 +60,6 @@ timescaledb-tsl (2.18.0-1PIGSTY) unstable; urgency=medium
 
 timescaledb-tsl (2.17.2-1PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 30 Dec 2024 18:00:00 +0000

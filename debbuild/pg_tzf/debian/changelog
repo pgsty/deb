@@ -1,6 +1,6 @@
 tzf (0.2.3-1PIGSTY) unstable; urgency=medium
 
-  * bump to 0.2.3
+  * bump to 0.2.3, with pg18 support and pgrx 0.16.1
 
  -- Ruohang Feng <rh@vonng.com>  Fri, 23 May 2025 18:00:00 +0000
 
@@ -12,6 +12,6 @@ tzf (0.2.2-1PIGSTY) unstable; urgency=medium
 
 tzf (0.2.0-1PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 07 May 2025 18:00:00 +0000

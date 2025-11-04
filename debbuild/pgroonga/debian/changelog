@@ -12,6 +12,6 @@ pgroonga (4.0.0-1PIGSTY) unstable; urgency=low
 
 pgroonga (3.2.5-1PIGSTY) unstable; urgency=low
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 30 Dec 2024 18:00:00 +0000

@@ -1,5 +1,5 @@
 db-migrator (1.0.0-1PIGSTY) unstable; urgency=medium
 
-  * Initial release, used by Pigsty <https://pigsty.io>
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 10 Feb 2025 18:00:00 +0000

@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_bigm-1.2-20240606.tar.gz
+TARBALL := pg_bigm-1.2-20250903.tar.gz
 
 # prepare directory
 setup:

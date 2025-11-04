@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := log-fdw-1.4.tar.gz
+TARBALL := log_fdw-1.4.tar.gz
 
 # prepare directory
 setup:
