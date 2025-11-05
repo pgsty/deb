@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_statement_rollback-1.4.tar.gz
+TARBALL := pg_statement_rollback-1.5.tar.gz
 
 # prepare directory
 setup:
