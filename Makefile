@@ -119,7 +119,7 @@ gen:
 ###############################################################
 #                      Push SPEC to Remote                    #
 ###############################################################
-spec: spec8 spec9 spec10 spec8a spec9a spec10a
+spec: spec12 spec22 spec24 spec12a spec22a spec24a
 specm:
 	rsync -az debbuild/ meta:~/debbuild/
 

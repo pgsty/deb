@@ -142,7 +142,7 @@ build-ru-ru-aot:
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
 
 # remove building craps
 clean:
