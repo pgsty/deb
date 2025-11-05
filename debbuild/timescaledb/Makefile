@@ -15,8 +15,7 @@ build18:
 	echo '18' > build/build/debian/pgversions
 	cd build/build/ && pg_buildext updatecontrol
 	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p /tmp/deb
-	cp build/*.deb /tmp/deb
+	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
 
 build17:
 	rm -rf build; mkdir -p build
@@ -28,8 +27,7 @@ build17:
 	echo '17' > build/build/debian/pgversions
 	cd build/build/ && pg_buildext updatecontrol
 	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p /tmp/deb
-	cp build/*.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
 
 build16:
 	rm -rf build; mkdir -p build
@@ -41,8 +39,7 @@ build16:
 	echo '16' > build/build/debian/pgversions
 	cd build/build/ && pg_buildext updatecontrol
 	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p /tmp/deb
-	cp build/*.deb /tmp/deb
+	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
 
 build15:
 	rm -rf build; mkdir -p build
@@ -54,8 +51,7 @@ build15:
 	echo '15' > build/build/debian/pgversions
 	cd build/build/ && pg_buildext updatecontrol
 	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p /tmp/deb
-	cp build/*.deb /tmp/deb
+	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
 
 # remove building craps
 clean:

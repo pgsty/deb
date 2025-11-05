@@ -10,6 +10,9 @@ setup:
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	chown -R $(whoami):$(whoami) ~/debbuild/redis_fdw
+	git config --global --add safe.directory ~/debbuild/redis_fdw/build
+
 
 # building deb
 build:
