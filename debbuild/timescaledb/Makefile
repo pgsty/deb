@@ -29,7 +29,7 @@ build17:
 	cd build/build/ && pg_buildext updatecontrol
 	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 	mkdir -p /tmp/deb
-	cp build/*.deb /tmp/deb
+	cp build/*.deb ~/ext/pkg/
 
 build16:
 	rm -rf build; mkdir -p build

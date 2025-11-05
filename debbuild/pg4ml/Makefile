@@ -15,7 +15,7 @@ setup:
 build:
 	export USE_PGXS=1
 	cd build && pg_buildext updatecontrol
-	cd build && dpkg-buildpackage -b -us -uc
+	cd build && USE_PGXS=1 dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
