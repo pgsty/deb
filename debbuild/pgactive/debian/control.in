@@ -2,7 +2,7 @@ Source: pgactive
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libselinux1-dev, libxslt1-dev, libpam0g-dev, libxml2-dev, libssl-dev, libkrb5-dev, zlib1g-dev, libreadline-dev, liblz4-dev, libzstd-dev, libnuma-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/aws/pgactive
@@ -11,6 +11,5 @@ Package: postgresql-PGVERSION-pgactive
 Architecture: any
 Provides: postgresql-pgactive
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Build-Depends: libselinux1-dev libxslt1-dev libpam0g-dev libxml2-dev libssl-dev libkrb5-dev zlib1g-dev libreadline-dev liblz4-dev libzstd-dev
 Description: Active-active Replication Extension for PostgreSQL
   pgactive is a PostgreSQL replication extension for creating an active-active database.
