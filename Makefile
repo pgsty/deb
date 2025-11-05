@@ -35,31 +35,6 @@ collect:
 	cp -r ~/*.deb /tmp/deb/
 
 
-#---------------------------------------------#
-# sync to/from building server
-#---------------------------------------------#
-push-sv:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ sv:/data/deb/
-pushd-sv:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ sv:/data/deb/
-pull-sv:
-	rsync -avc sv:/data/deb/ ./deb/
-pulld-sv:
-	rsync --delete -avc sv:/data/deb/deb/ ./deb/
-
-ps: pushss
-pd: pushsd
-pushsd: pushd-sv
-	ssh sv 'cd /data/deb && make pushd'
-pushss: push-sv
-	ssh sv 'cd /data/deb && make push'
-
-pl: pull-ss
-pull-ss:
-	ssh -t sv "cd /data/deb && make pull"
-	rsync -avc sv:/data/deb/deb/ deb/
-pull-deb:
-	rsync -avc sv:/data/deb/deb/ deb/
 
 #---------------------------------------------#
 # push to building machines
@@ -96,26 +71,35 @@ pushm:
 #---------------------------------------------#
 # pull rpm from building machines
 #---------------------------------------------#
-init:
-	mkdir -p deb deb/{bookworm.amd64,jammy.amd64,noble.amd64}
-	mkdir -p deb deb/{bookworm.arm64,jammy.arm64,noble.arm64}
-pull:  init pull22 pull12 pull24
-pulla: init pull22a pull12a pull24a
+pull-new: pull-clean pull-init
+pull-init:
+	mkdir -p apt/bookworm apt/trixie apt/jammy apt/noble
+pull-clean:
+	rm -rf   apt/bookworm apt/trixie apt/jammy apt/noble
 
-dirs:
-	mkdir -p deb/jammy.amd64 deb/bookworm.amd64
-pull24:
-	rsync -avz u24:/tmp/deb/ deb/noble.amd64/
-pull22:
-	rsync -avz u22:/tmp/deb/ deb/jammy.amd64/
+pull: pull12 pull13 pull22 pull24 pull12a pull13a pull22a pull24a
+pullm:
+	rsync -avc meta:~/ext/pkg/  apt/meta/
+
 pull12:
-	rsync -avz d12:/tmp/deb/ deb/bookworm.amd64/
-pull24a:
-	rsync -avz u24a:/tmp/deb/ deb/noble.arm64/
-pull22a:
-	rsync -avz u22a:/tmp/deb/ deb/jammy.arm64/
+	rsync -avc d12:~/ext/pkg/  apt/bookworm/
+pull13:
+	rsync -avc d13:~/ext/pkg/  apt/trixie/
+pull22:
+	rsync -avc u22:~/ext/pkg/  apt/jammy/
+pull24:
+	rsync -avc u24:~/ext/pkg/  apt/noble/
 pull12a:
-	rsync -avz d12a:/tmp/deb/ deb/bookworm.arm64/
+	rsync -avc d12a:~/ext/pkg/  apt/bookworm/
+pull13a:
+	rsync -avc d13a:~/ext/pkg/  apt/trixie/
+pull22a:
+	rsync -avc u22:~/ext/pkg/  apt/jammy/
+pull24a:
+	rsync -avc u24a:~/ext/pkg/  apt/noble/
+
+pullj:
+	rsync -avc j2:~/ext/pkg/ apt/trixie/
 
 upload:
 	bin/upload.sh
@@ -180,6 +164,7 @@ srcj:
 	rsync -avz src/ j2:~/ext/src/
 specj:
 	rsync -az debbuild/ j2:~/debbuild/
+
 
 ###############################################################
 #                         Terraform                           #

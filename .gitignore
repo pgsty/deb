@@ -16,3 +16,4 @@ tf/.terraform*
 #tf/terraform.tf
 
 docs/
+apt/

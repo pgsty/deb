@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgsql-tweaks-0.11.5.tar.gz
+TARBALL := pgsql_tweaks-v1.0.2.tar.gz
 
 # prepare directory
 setup:

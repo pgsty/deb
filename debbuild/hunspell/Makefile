@@ -7,7 +7,7 @@ setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 
-build: build-cs-cz build-de-de build-en-us build-fr build-ne-np build-nl-nl build-nn-no build-pt-pt build-ru-ru build-ru-ru-aot
+build: build-cs-cz build-de-de build-en-us build-fr build-ne-np build-nl-nl build-nn-no build-ru-ru build-ru-ru-aot #build-pt-pt
 
 build-cs-cz:
 	$(eval LANGUAGE=cs-cz)
@@ -100,6 +100,7 @@ build-nn-no:
 	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
 	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
 
+# conflict with pg system dict
 build-pt-pt:
 	$(eval LANGUAGE=pt-pt)
 	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
@@ -148,5 +149,3 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
-all: setup build move ls
