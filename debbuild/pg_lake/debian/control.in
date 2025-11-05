@@ -1,0 +1,60 @@
+Source: pg-lake
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13),
+               postgresql-all (>= 217~),
+               build-essential,
+               cmake,
+               ninja-build,
+               libreadline-dev,
+               zlib1g-dev,
+               flex,
+               bison,
+               libxml2-dev,
+               libxslt1-dev,
+               libicu-dev,
+               libssl-dev,
+               libgeos-dev,
+               libproj-dev,
+               libgdal-dev,
+               libjson-c-dev,
+               libprotobuf-c-dev,
+               protobuf-c-compiler,
+               uuid-dev,
+               liblz4-dev,
+               liblzma-dev,
+               libsnappy-dev,
+               perl,
+               libtool,
+               libjansson-dev,
+               libcurl4-openssl-dev,
+               git,
+               pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Snowflake-Labs/pg_lake
+Vcs-Browser: https://github.com/Snowflake-Labs/pg_lake
+Vcs-Git: https://github.com/Snowflake-Labs/pg_lake.git
+
+Package: postgresql-PGVERSION-pg-lake
+Architecture: any
+Provides: postgresql-pg-lake
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Recommends: awscli | aws-cli
+Description: PostgreSQL extension to query and import Iceberg tables and data lake files
+ pg_lake integrates Iceberg and data lake files into Postgres as a lakehouse
+ system that supports transactions and fast queries on Iceberg tables.
+ .
+ Key features:
+  * Create and modify Iceberg tables within Postgres
+  * Query Parquet, CSV, JSON, and Iceberg files in object storage
+  * Import data directly from object storage
+  * Export query results to object storage
+  * Read various geospatial formats
+  * Combine different table types in SQL queries
+  * Automatically infer table columns
+  * High-performance query execution using DuckDB
+ .
+ This extension includes pg_lake_iceberg, pg_lake_table, and pg_lake_copy
+ components, providing comprehensive data lake functionality for PostgreSQL.

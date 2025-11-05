@@ -94,7 +94,7 @@ pull12a:
 pull13a:
 	rsync -avc d13a:~/ext/pkg/  apt/trixie/
 pull22a:
-	rsync -avc u22:~/ext/pkg/  apt/jammy/
+	rsync -avc u22a:~/ext/pkg/  apt/jammy/
 pull24a:
 	rsync -avc u24a:~/ext/pkg/  apt/noble/
 
@@ -142,22 +142,22 @@ spec24a:
 #                      Push SRC to Remote                     #
 ###############################################################
 # Update remote source tarball
+src: src12 src22 src24 src12a src22a src24a
 srcm:
 	rsync -avz src/ meta:~/ext/src/
 src12:
-	rsync -avz src/ el12:~/ext/src/
+	rsync -avz src/pg_statement_rollback-1.5.tar.gz d12:~/ext/src/
 src22:
-	rsync -avz src/ el22:~/ext/src/
+	rsync -avz src/pg_statement_rollback-1.5.tar.gz u22:~/ext/src/
 src24:
-	rsync -avz src/ el24:~/ext/src/
+	rsync -avz src/pg_statement_rollback-1.5.tar.gz u24:~/ext/src/
 
 src12a:
-	rsync -avz src/ el12a:~/ext/src/
+	rsync -avz src/pg_statement_rollback-1.5.tar.gz d12a:~/ext/src/
 src22a:
-	rsync -avz src/ el22a:~/ext/src/
+	rsync -avz src/pg_statement_rollback-1.5.tar.gz u22a:~/ext/src/
 src24a:
-	rsync -avz src/ el24a:~/ext/src/
-
+	rsync -avz src/pg_statement_rollback-1.5.tar.gz u24a:~/ext/src/
 
 j: specj srcj
 srcj:

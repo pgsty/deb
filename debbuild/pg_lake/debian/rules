@@ -1,0 +1,64 @@
+#!/usr/bin/make -f
+
+# Enable verbose mode for debugging
+#export DH_VERBOSE=1
+
+# Compiler settings
+export CC = gcc
+export CXX = g++
+
+# vcpkg settings
+export VCPKG_VERSION=2025.01.13
+export VCPKG_ROOT=$(CURDIR)/vcpkg
+export VCPKG_INSTALLATION_ROOT=$(VCPKG_ROOT)/installed
+
+# PostgreSQL build extension
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+# Main build rule
+%:
+	dh $@
+
+# Setup vcpkg and dependencies before building
+override_dh_auto_configure:
+	# Clone and setup vcpkg if not exists
+	if [ ! -d "$(VCPKG_ROOT)" ]; then \
+		git clone https://github.com/Microsoft/vcpkg.git $(VCPKG_ROOT); \
+		cd $(VCPKG_ROOT) && git checkout $(VCPKG_VERSION); \
+		$(VCPKG_ROOT)/bootstrap-vcpkg.sh; \
+	fi
+	# Install required dependencies via vcpkg
+	$(VCPKG_ROOT)/vcpkg install \
+		azure-identity-cpp \
+		azure-storage-blobs-cpp \
+		azure-storage-files-datalake-cpp \
+		openssl
+	# Configure with cmake
+	cmake -B build -S . \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_TOOLCHAIN_FILE=$(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
+
+override_dh_auto_build:
+	# Build pg_lake extensions for all supported PostgreSQL versions
+	+pg_buildext loop postgresql-%v-pg-lake
+
+override_dh_auto_test:
+	# Skip tests during package build
+	# Tests require specific environment setup including AWS credentials
+
+override_dh_strip:
+	# Strip debugging symbols
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	# Install for each PostgreSQL version
+	+pg_buildext loop postgresql-%v-pg-lake
+
+override_dh_installdocs:
+	dh_installdocs --all README.md docs/
+
+override_dh_auto_clean:
+	# Clean build artifacts
+	rm -rf build
+	rm -rf $(VCPKG_ROOT)
+	dh_auto_clean

@@ -1,0 +1,4 @@
+usr/lib/postgresql/16/lib/pg_lake*.so
+usr/lib/postgresql/16/lib/pgduck_server
+usr/share/postgresql/16/extension/pg_lake*.sql
+usr/share/postgresql/16/extension/pg_lake*.control
