@@ -1,0 +1,18 @@
+Source: pg-csv
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/PostgREST/pg_csv
+
+Package: postgresql-PGVERSION-pg-csv
+Architecture: any
+Provides: postgresql-pg-csv
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL extension for flexible CSV processing
+  pg_csv is a PostgreSQL extension that provides flexible CSV processing
+  capabilities. It includes a csv_agg() aggregate function that respects
+  RFC 4180 and is 2x faster than SQL-based CSV generation. Supports custom
+  delimiters, BOM, headers, and null string representation.
