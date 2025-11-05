@@ -13,5 +13,5 @@ Provides: postgresql-redis-fdw
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: A PostgreSQL foreign data wrapper for Redis
   This PostgreSQL extension implements a Foreign Data Wrapper (FDW) for the Redis key/value database: http://redis.io/
-  This code was originally experimental, and largely intended as a pet project for Dave to experiment with and learn about FDWs in PostgreSQL. It has now been extended for production use by Andrew.
-  By all means use it, but do so entirely at your own risk! You have been warned!
+  This code was originally experimental, and largely intended as a pet project for Dave to experiment with and learn about FDWs in PostgreSQL.
+  It has now been extended for production use by Andrew. By all means use it, but do so entirely at your own risk! You have been warned!

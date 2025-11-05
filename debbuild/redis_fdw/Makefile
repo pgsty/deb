@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := redis_fdw-1.0-15.tar.gz
+TARBALL := redis_fdw-1.0.tar.gz
 
 # prepare directory
 setup:

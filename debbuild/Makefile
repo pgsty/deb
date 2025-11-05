@@ -577,6 +577,9 @@ pgspider_ext:
 sqlite_fdw:
 	cd sqlite_fdw && make
 
+redis_fdw:
+	cd redis_fdw && make
+
 pg_redis_pubsub:
 	cd pg_redis_pubsub && make
 
