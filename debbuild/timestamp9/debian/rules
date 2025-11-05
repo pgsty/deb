@@ -3,7 +3,7 @@
 %:
 	dh $@ --buildsystem=cmake
 
-PG_VERSIONS = 12 13 14 15 16 17
+PG_VERSIONS = 13 14 15 16 17 18
 
 override_dh_auto_test:
 

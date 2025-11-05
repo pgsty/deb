@@ -1,2 +1,2 @@
-usr/lib/postgresql/17/lib/timestamp9.so
-usr/share/postgresql/17/extension/*
+usr/lib/postgresql/18/lib/timestamp9.so
+usr/share/postgresql/18/extension/*
