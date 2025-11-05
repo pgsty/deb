@@ -1,0 +1,18 @@
+Source: plxslt
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libxslt1-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/petere/plxslt
+
+Package: postgresql-PGVERSION-plxslt
+Architecture: any
+Provides: postgresql-plxslt
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, libxslt1.1
+Description: Procedural language handler for XSLT in PostgreSQL
+  PL/XSLT is a PostgreSQL procedural language that allows writing stored
+  procedures directly in XSLT. The first parameter is treated as an XML
+  input document, and subsequent parameters become XSL parameters. The
+  return type must match the stylesheet output method (xml, text, or html).
