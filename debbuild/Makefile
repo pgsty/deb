@@ -662,16 +662,22 @@ collect:
 	cp -r ~/*.deb /tmp/deb/
 
 
-.PHONY: rust deps batch1 batch2 deb-collect \
- 	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_summarize pg_polyline pg_tzf pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale timescaledb_toolkit pg_session_jwt pgml plprql pg_later pg_anon pg_smtp_client vchord pg_bestmatch pglite_fusion \
- 	pgdd convert pg_tokenizer pg_render pgx_ulid \
- 	pg_net pgjwt pg_gzip pg_bzip vault pgsodium supautils pg_tle plv8 omnigres permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell zhparser duckdb_fdw pg_duckdb pg_mooncake hydra citus timescaledb pgroonga \
- 	pg_timeseries pgmq pg_plan_filter pg_relusage pg_uint128 \
- 	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plans system_stats \
- 	pg_fkpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj table_version pg_statement_rollback \
- 	pg_auth_mon login_hook logerrors pg_jobmon geoip timestamp9 \
- 	pg_orphaned pgcozy decoder_raw pg_failover_slot log_fdw redis_fdw index_advisor pg_financial pg_savior aggs_for_vecs base36 base62 pg_envvar pg_html5_email_address pg_timeit quantile lower_quantile sequential_uuids ddsketch omnisketch pg_random \
- 	smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec floatfile pg_auditor noset \
- 	aggs_for_arrays pgqr pg_zstd url_encode pg_geohash pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash pg_math firebird_fdw  kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 \
- 	scws libduckdb pgcopydb pg_bulkload libfq pg4ml pgpdf topn pg_upless pg_task pg_readme vasco pg_xxhash pg_duration ddl_historization data_historization pg_schedoc pg_xenophile pg_incremental pg_drop_envents \
- 	documentdb pg_tracing pg_curl pgxicor pgsparql pgjq hashtypes db_migrator pg_cooldown pgcollection pgspider_ext pgsentinel spat pgactive openhalodb oriolepg_17 orioledb
+.PHONY: deps collect \
+	timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pg_vectorize pg_summarize pg_tiktoken pgml pg_search pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_cardano plprql pglite_fusion pg_smtp_client pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_anon pgsmcrypto wrappers \
+	timescaledb pg_timeseries temporal_tables emaj table_version pg_task pg_background \
+	geoip pg_geohash \
+	smlar pg4ml \
+	hunspell pgroonga pg_bigm scws zhparser \
+	citus hydra pg_duckdb duckdb_fdw pg_fkpart \
+	index_advisor pg_plan_filter imgsmlr pg_ivm pg_incremental pgmq omnigres \
+	pg_tle plv8 \
+	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
+	pg_gzip pg_bzip pg_zstd pg_net pg_curl pgjq pgjwt pg_html5_email_address url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \
+	pg_uuidv7 permuteseq pg_hashids sequential_uuids topn quantile lower_quantile count_distinct omnisketch ddsketch vasco pgxicor floatvec aggs_for_vecs aggs_for_arrays pg_arraymath pg_math pg_random pg_base36 pg_base62 pg_financial \
+	pg_rewrite pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_savior safeupdate pg_drop_events \
+	pg_profile pg_tracing pg_stat_monitor pg_store_plans pgsentinel system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pagevis \
+	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset \
+	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw firebird_fdw aws_s3 log_fdw \
+	documentdb pgtt session_variable pg_statement_rollback spat \
+	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
+	openhalodb oriolepg_17 orioledb
