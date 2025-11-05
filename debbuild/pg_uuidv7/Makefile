@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_uuidv7-1.6.0.tar.gz
+TARBALL := pg_uuidv7-1.7.0.tar.gz
 
 # prepare directory
 setup:
