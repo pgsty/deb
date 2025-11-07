@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_readonly-1.0.0.tar.gz
+TARBALL := pg_readonly-1.0.3.tar.gz
 
 # prepare directory
 setup:
