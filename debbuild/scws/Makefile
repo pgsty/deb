@@ -24,4 +24,4 @@ clean:
 
 .PHONY: all setup update build move clean ls
 
-all: setup build move ls
+

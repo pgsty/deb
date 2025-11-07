@@ -5,17 +5,12 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://pgroonga.github.io/
-Build-Depends:
-  debhelper-compat (= 13),
-  postgresql-all (>= 217~),
-  libgroonga-dev,
-  libmsgpack-dev,
-  pkg-config,
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libgroonga-dev, libmsgpack-dev, pkg-config
 
 Package: postgresql-PGVERSION-pgroonga
 Architecture: any
 Provides: postgresql-pgroonga
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, libgroonga0 (>= 15.0.0)
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, libgroonga0 (>= 15.1.7)
 Description: Fast full-text search plugin for PostgreSQL based on Groonga
  PGroonga is a PostgreSQL plugin. It provides fast full-text search feature.
  It is based on Groonga full-text search engine.

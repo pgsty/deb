@@ -623,6 +623,9 @@ spat:
 #            Category: ETL  - ETL                            #
 ###############################################################
 
+pglogical_ticker:
+	cd pglogical_ticker && make
+
 pg_failover_slots:
 	cd pg_failover_slots && make
 
