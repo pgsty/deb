@@ -1,0 +1,18 @@
+Source: pglogical-ticker
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/enov/pglogical_ticker
+
+Package: postgresql-PGVERSION-pglogical-ticker
+Architecture: any
+Provides: postgresql-pglogical-ticker
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Accurate view on pglogical replication delay
+ Periodically churn an in-replication table using a Postgres background worker
+ to get replication time from standpoint of pglogical provider.
+ This extension helps monitor and measure replication lag in pglogical setups
+ by maintaining a ticker table that is continuously updated.
