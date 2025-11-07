@@ -25,7 +25,7 @@ build:
 
 # collect deb
 move:
-	cp ~/*plv8*.deb /tmp/deb
+	mkdir -p ~/ext/pkg; cp ~/*plv8*.deb ~/ext/pkg/
 
 # remove building craps
 clean:
