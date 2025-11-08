@@ -1,8 +1,8 @@
-pg-task (2.1.27-1PIGSTY) unstable; urgency=medium
+pg-task (2.1.12-1PIGSTY) unstable; urgency=medium
 
-  * Updated release
+  * Updated release with pg18 support
 
- -- Ruohang Feng <rh@vonng.com>  Tue, 04 Nov 2025 12:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Sat, 08 Nov 2025 12:00:00 +0000
 
 pg-task (1.0.0-2PIGSTY) unstable; urgency=medium
 

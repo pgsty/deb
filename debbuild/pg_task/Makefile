@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_task-2.1.27.tar.gz
+TARBALL := pg_task-2.1.12.tar.gz
 
 # prepare directory
 setup:
