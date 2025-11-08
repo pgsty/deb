@@ -1,6 +1,6 @@
 all: setup build
 
-TARBALL := omnigres-20251025.tar.gz
+TARBALL := omnigres-20251108.tar.gz
 
 # prepare directory
 setup:
