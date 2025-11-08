@@ -9,7 +9,7 @@ TARBALL := plv8-3.2.4.tar.gz
 pre:
 	mkdir ~/plv8
 	tar -C ~/plv8 --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	cd ~/plv8 && make -j16
+	cd ~/plv8 && make
 
 # prepare directory
 setup:
@@ -25,7 +25,7 @@ build:
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg; cp ~/*plv8*.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg; cp -f ~/*plv8*.deb ~/ext/pkg/
 
 # remove building craps
 clean:
