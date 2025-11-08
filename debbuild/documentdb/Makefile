@@ -2,6 +2,9 @@ all: setup build move
 
 TARBALL := documentdb-0.106.0-ferretdb-2.5.0.tar.gz
 
+pre:
+	bash prepare.sh $(TARBALL)
+
 # prepare directory
 setup:
 	rm -rf build; mkdir -p build
@@ -13,9 +16,26 @@ setup:
 	chown -R $(shell whoami):$(shell whoami) build/
 
 # building deb
-build:
-	cd build && pg_buildext updatecontrol
-	cd build && dpkg-buildpackage -b -us -uc
+build: build17 build16 build15
+
+# building deb
+build17: setup
+	echo '17' > build/debian/pgversions
+	cd build/ && pg_buildext updatecontrol
+	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+
+build16: setup
+	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
+	echo '16' > build/debian/pgversions
+	cd build/ && pg_buildext updatecontrol
+	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+
+build15: setup
+	cd build/ && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
+	echo '15' > build/debian/pgversions
+	cd build/ && pg_buildext updatecontrol
+	cd build/ && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+
 
 # collect deb
 move:
