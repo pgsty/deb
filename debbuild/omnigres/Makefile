@@ -2,6 +2,9 @@ all: setup build
 
 TARBALL := omnigres-20251108.tar.gz
 
+pre:
+	apt install -y wget build-essential git clang lld flex libreadline-dev zlib1g-dev libssl-dev tmux lldb gdb make perl python3-dev python3-venv python3-pip netcat-traditional bison
+
 # prepare directory
 setup:
 	rm -rf build; mkdir -p build

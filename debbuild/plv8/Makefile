@@ -3,10 +3,10 @@ all: pre setup build
 SRC_DIR := ~/plv8
 PKG_NAME := plv8
 
-
 TARBALL := plv8-3.2.4.tar.gz
 
 pre:
+	apt install -y build-essential pkg-config libstdc++-12-dev cmake git #libtinfo5
 	mkdir ~/plv8
 	tar -C ~/plv8 --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	cd ~/plv8 && make
@@ -31,6 +31,6 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
+.PHONY: all pre setup update build move clean
 
 
