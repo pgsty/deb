@@ -1,6 +1,6 @@
 all: setup build
 
-TARBALL := omnigres-20250507.tar.gz
+TARBALL := omnigres-20251025.tar.gz
 
 # prepare directory
 setup:
@@ -14,7 +14,7 @@ setup:
 build: building packaging
 building:
 	cd build && \
-	for PG_VERSION in 13 14 15 16 17; do \
+	for PG_VERSION in 13 14 15 16 17 18; do \
 	    cmake -S . -B pg$$PG_VERSION -DCMAKE_BUILD_TYPE=Release -DOPENSSL_CONFIGURED=1 -DPG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config ; \
 	    cmake --build pg$$PG_VERSION --parallel; \
 	    cmake --build pg$$PG_VERSION --parallel --target package_extensions; \
@@ -31,7 +31,7 @@ packaging:
 
 # collect deb
 move:
-	cp *.deb /tmp/deb
+	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
 
 # remove building craps
 clean:
