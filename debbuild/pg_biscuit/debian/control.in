@@ -1,0 +1,16 @@
+Source: pg-biscuit
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/CrystallineCore/pg_biscuit
+
+Package: postgresql-PGVERSION-pg-biscuit
+Architecture: any
+Provides: postgresql-pg-biscuit
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: A PostgreSQL index for wildcard pattern matching using roaring bitmaps
+  A PostgreSQL Index Access Method (IAM) for high-performance pattern matching on text columns.
+  Biscuit indexes are specifically designed to accelerate LIKE queries with arbitrary wildcards.
