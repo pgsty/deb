@@ -1,6 +1,6 @@
 all: pre setup build move
 
-TARBALL := documentdb-0.106.0-ferretdb-2.5.0.tar.gz
+TARBALL := documentdb-0.107.0-ferretdb-2.7.0.tar.gz
 
 pre:
 	bash prepare.sh $(TARBALL)
@@ -19,7 +19,12 @@ setup:
 # building deb
 build: build17 build16 build15
 
-# building deb
+# not working on ferretdb fork yet (works on microsoft documentdb fork)
+build18: setup
+	echo '18' > build/debian/pgversions
+	cd build/ && pg_buildext updatecontrol
+	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+
 build17: setup
 	echo '17' > build/debian/pgversions
 	cd build/ && pg_buildext updatecontrol
