@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pglite-fusion-0.0.5.tar.gz
+TARBALL := pglite-fusion-0.0.6.tar.gz
 
 # prepare directory
 setup:
