@@ -1,0 +1,17 @@
+Source: pg-typeid
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/blitss/typeid-postgres
+
+Package: postgresql-PGVERSION-typeid
+Architecture: any
+Provides: postgresql-typeid
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Native TypeID support for PostgreSQL PGVERSION
+  Enables native TypeID support in PostgreSQL. TypeID is a modern extension of
+  UUIDv7 that is sortable and convertible to UUID. Written in Rust using pgrx
+  framework.
