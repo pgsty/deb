@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := VectorChord-0.5.3.tar.gz
+TARBALL := VectorChord-1.0.0.tar.gz
 
 # prepare directory
 setup:
