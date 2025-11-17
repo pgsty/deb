@@ -1,0 +1,16 @@
+Source: pg-enigma
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/SoftwareLibreMx/pg_enigma
+
+Package: postgresql-PGVERSION-pg-enigma
+Architecture: any
+Provides: postgresql-pg-enigma
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Encrypted PostgreSQL data type extension for PGVERSION
+  PostgreSQL extension that enables encryption and decryption of database fields
+  using PGP and RSA keys for data protection. Written in Rust using pgrx framework.
