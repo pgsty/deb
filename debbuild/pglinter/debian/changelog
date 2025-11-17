@@ -1,0 +1,5 @@
+pglinter (1.0.0-1PIGSTY) unstable; urgency=low
+
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 17 Nov 2025 12:00:00 +0000

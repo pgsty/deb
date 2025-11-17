@@ -1,0 +1,17 @@
+Source: pglinter
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pmpetit/pglinter
+
+Package: postgresql-PGVERSION-pglinter
+Architecture: any
+Provides: postgresql-pglinter
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL linter extension written in Rust for PGVERSION
+  A PostgreSQL linter extension written in Rust using pgrx that analyzes databases
+  for potential issues, performance problems, and best practice violations.
+  Outputs results in SARIF format.
