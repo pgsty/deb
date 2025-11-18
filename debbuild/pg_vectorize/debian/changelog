@@ -1,6 +1,12 @@
+pg-vectorize (0.26.0-1PIGSTY) unstable; urgency=medium
+
+  * bump to 0.26.0, the official pgrx 0.16.1 release
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 23 May 2025 18:00:00 +0000
+
 pg-vectorize (0.25.0-1PIGSTY) unstable; urgency=medium
 
-  * bump to 0.25.0
+  * bump to 0.25.0 with pg18 support by Vonng
 
  -- Ruohang Feng <rh@vonng.com>  Fri, 23 May 2025 18:00:00 +0000
 
