@@ -1,0 +1,16 @@
+Source: pg-weighted-statistics
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/schmidni/pg_weighted_statistics
+
+Package: postgresql-PGVERSION-weighted-statistics
+Architecture: any
+Provides: postgresql-weighted-statistics
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: High-performance weighted statistical functions optimized for sparse data
+  High-performance PostgreSQL extension providing weighted statistical functions optimized for sparse data
+  automatic handling when sum(weights) < 1.0
