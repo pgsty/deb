@@ -1,8 +1,8 @@
-pg-search (0.19.3-1PIGSTY) unstable; urgency=medium
+pg-search (0.19.7-1PIGSTY) unstable; urgency=medium
 
-  * Bump to 0.19.3
+  * Restart building by PGSTY
 
- -- Ruohang Feng <rh@vonng.com>  Sun, 02 Nov 2025 12:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Tue, 18 Nov 2025 12:00:00 +0000
 
 pg-search (0.8.6-1PIGSTY) unstable; urgency=medium
 
