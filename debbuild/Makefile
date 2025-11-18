@@ -111,15 +111,13 @@ pgsmcrypto:
 
 wrappers:
 	cd wrappers && make
-
 pglinter:
 	cd pglinter && make
 pg_enigma:
 	cd pg_enigma && make
 pg_typeid:
 	cd pg_typeid && make
-plrust:
-	cd plrust && make
+
 
 
 ###############################################################
@@ -699,5 +697,5 @@ collect:
 	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq firebird_fdw aws_s3 log_fdw \
 	documentdb pgtt session_variable pg_statement_rollback spat \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
-	pglinter pgjwt_rs pg_enigma plrust typeid \
+	pglinter pg_enigma pg_typeid \
 	openhalodb oriolepg_17 orioledb

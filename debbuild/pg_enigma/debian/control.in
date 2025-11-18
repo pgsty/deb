@@ -7,9 +7,9 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/SoftwareLibreMx/pg_enigma
 
-Package: postgresql-PGVERSION-pg-enigma
+Package: postgresql-PGVERSION-enigma
 Architecture: any
-Provides: postgresql-pg-enigma
+Provides: postgresql-enigma
 Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Description: Encrypted PostgreSQL data type extension for PGVERSION
   PostgreSQL extension that enables encryption and decryption of database fields
