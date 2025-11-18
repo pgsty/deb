@@ -7,7 +7,7 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/CrystallineCore/pg_biscuit
 
-Package: postgresql-PGVERSION-pg-biscuit
+Package: postgresql-PGVERSION-biscuit
 Architecture: any
 Provides: postgresql-pg-biscuit
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}

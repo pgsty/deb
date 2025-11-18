@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_biscuit-0.9.0.tar.gz
+TARBALL := pg_biscuit-1.0.tar.gz
 
 # prepare directory
 setup:

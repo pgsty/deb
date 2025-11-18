@@ -1,4 +1,4 @@
-pg-biscuit (0.9.0-1PIGSTY) unstable; urgency=medium
+pg-biscuit (1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 

@@ -16,7 +16,7 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-pg-biscuit
+	+pg_buildext loop postgresql-%v-biscuit
 
 override_dh_installdocs:
 	dh_installdocs --all README.*
