@@ -2,6 +2,9 @@ Source: openhalodb
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/HaloTech-Co-Ltd/openHalo
 Build-Depends:
  autoconf,
  bison,
@@ -38,9 +41,6 @@ Build-Depends:
  uuid-dev,
  xsltproc, zlib1g-dev, libpam0g-dev, libz-dev, libpam-dev
 
-Standards-Version: 4.6.2
-Rules-Requires-Root: no
-Homepage: https://github.com/HaloTech-Co-Ltd/openHalo
 
 Package: openhalodb
 Architecture: any
