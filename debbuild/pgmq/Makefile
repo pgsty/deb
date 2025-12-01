@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgmq-1.7.0.tar.gz
+TARBALL := pgmq-1.8.0.tar.gz
 
 # prepare directory
 setup:
