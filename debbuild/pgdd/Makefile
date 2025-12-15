@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgdd-0.6.0.tar.gz
+TARBALL := pgdd-0.6.1.tar.gz
 
 # prepare directory
 setup:

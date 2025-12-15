@@ -1,3 +1,9 @@
+pgdd (0.6.1-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/rustprooflabs/pgdd/releases/tag/0.6.1
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Dec 2025 12:00:00 +0000
+
 pgdd (0.6.0-1PIGSTY) unstable; urgency=medium
 
   * PG 17 support with pgrx 0.14.1 <https://pigsty.io>
