@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_session_jwt-0.3.3.tar.gz
+TARBALL := pg_session_jwt-0.4.0.tar.gz
 
 # prepare directory
 setup:
