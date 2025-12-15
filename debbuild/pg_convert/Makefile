@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := convert-0.0.4.tar.gz
+TARBALL := convert-0.0.5.tar.gz
 
 # prepare directory
 setup:
