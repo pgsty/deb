@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_enigma-0.4.0.tar.gz
+TARBALL := pg_enigma-0.5.0.tar.gz
 
 # prepare directory
 setup:
