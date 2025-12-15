@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := wrappers-0.5.6.tar.gz
+TARBALL := wrappers-0.5.7.tar.gz
 
 # prepare directory
 setup:
