@@ -1,3 +1,9 @@
+pg-search (0.20.3-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/paradedb/paradedb/releases/tag/v0.20.3
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Dec 2025 12:00:00 +0000
+
 pg-search (0.20.0-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/paradedb/paradedb/releases/tag/v0.20.0
