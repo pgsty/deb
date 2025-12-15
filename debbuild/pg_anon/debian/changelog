@@ -1,3 +1,9 @@
+pg-anon (2.5.1-1PIGSTY) unstable; urgency=low
+
+  * https://gitlab.com/dalibo/postgresql_anonymizer/-/releases/2.5.1
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Dec 2025 12:00:00 +0000
+
 pg-anon (2.4.1-1PIGSTY) unstable; urgency=low
 
   * https://gitlab.com/dalibo/postgresql_anonymizer/-/releases/2.4.1
