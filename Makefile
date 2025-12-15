@@ -78,6 +78,10 @@ pull-clean:
 	rm -rf   apt/bookworm apt/trixie apt/jammy apt/noble
 
 pull: pull12 pull13 pull22 pull24 pull12a pull13a pull22a pull24a
+
+pullx: pull12 pull13 pull22 pull24
+pulla: pull12a pull13a pull22a pull24a
+
 pullm:
 	rsync -avc meta:~/ext/pkg/  apt/meta/
 
