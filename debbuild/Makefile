@@ -185,6 +185,9 @@ pg_bigm:
 pg_biscuit:
 	cd pg_biscuit && make
 
+pg_textsearch:
+	cd pg_textsearch && make
+
 scws:
 	cd scws && make
 zhparser:
@@ -209,6 +212,9 @@ duckdb_fdw:
 
 pg_fkpart:
 	cd pg_fkpart && make
+
+pg_clickhouse:
+	cd pg_clickhouse && make
 
 
 ###############################################################
@@ -235,6 +241,9 @@ pgmq:
 
 omnigres:
 	cd omnigres && make
+
+pg_ai_query:
+	cd pg_ai_query && make
 
 
 ###############################################################
@@ -381,6 +390,8 @@ pg_ecdsa:
 
 pgsparql:
 	cd pgsparql && make
+
+
 
 
 ###############################################################
@@ -695,9 +706,9 @@ collect:
 	timescaledb pg_timeseries temporal_tables emaj table_version pg_task pg_background \
 	geoip pg_geohash \
 	smlar pg4ml \
-	hunspell pgroonga pg_bigm pg_biscuit scws zhparser \
-	citus hydra pg_duckdb duckdb_fdw pg_fkpart \
-	index_advisor pg_plan_filter imgsmlr pg_ivm pg_incremental pgmq omnigres \
+	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_textsearch \
+	citus hydra pg_duckdb duckdb_fdw pg_fkpart pg_clickhouse \
+	index_advisor pg_plan_filter imgsmlr pg_ivm pg_incremental pgmq omnigres pg_ai_query \
 	plxslt pg_tle plv8 \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
 	pg_gzip pg_bzip pg_zstd pg_net pg_curl pgjq pg_retry pgjwt pg_html5_email_address url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \
