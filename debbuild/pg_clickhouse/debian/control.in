@@ -1,0 +1,17 @@
+Source: pg-clickhouse
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cmake, g++, libcurl4-openssl-dev, libssl-dev, uuid-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ClickHouse/pg_clickhouse
+
+Package: postgresql-PGVERSION-pg-clickhouse
+Architecture: any
+Provides: postgresql-pg-clickhouse
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: ClickHouse foreign data wrapper for PostgreSQL PGVERSION
+  pg_clickhouse is a PostgreSQL extension that provides a foreign data wrapper
+  for ClickHouse databases. It enables querying ClickHouse data directly from
+  PostgreSQL with optimized query pushdown for aggregations and functions.
