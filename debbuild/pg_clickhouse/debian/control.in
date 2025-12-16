@@ -7,9 +7,9 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/ClickHouse/pg_clickhouse
 
-Package: postgresql-PGVERSION-pg-clickhouse
+Package: postgresql-PGVERSION-clickhouse
 Architecture: any
-Provides: postgresql-pg-clickhouse
+Provides: postgresql-clickhouse
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: ClickHouse foreign data wrapper for PostgreSQL PGVERSION
   pg_clickhouse is a PostgreSQL extension that provides a foreign data wrapper

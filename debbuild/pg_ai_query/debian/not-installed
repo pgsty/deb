@@ -1,0 +1,24 @@
+# Third-party headers (built from FetchContent, not needed in package)
+usr/include/nlohmann/*
+usr/include/ai/*
+usr/include/zconf.h
+usr/include/zlib.h
+
+# Third-party static libraries (linked into pg_ai_query.so already)
+usr/lib/${DEB_HOST_MULTIARCH}/libai-sdk-cpp-*.a
+usr/lib/${DEB_HOST_MULTIARCH}/libz.*
+
+# CMake config files for dependencies (not needed)
+usr/lib/${DEB_HOST_MULTIARCH}/cmake/*
+usr/share/cmake/*
+
+# pkg-config files for dependencies (not needed)
+usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/*
+usr/share/pkgconfig/*
+
+# Duplicate .so in wrong location (correct one is in postgresql/XX/lib/)
+usr/lib/${DEB_HOST_MULTIARCH}/pg_ai_query.so
+
+# zlib documentation and man pages (not needed)
+usr/share/doc/zlib/*
+usr/share/man/man3/*
