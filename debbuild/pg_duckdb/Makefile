@@ -1,6 +1,6 @@
 all: build move
 
-TARBALL := pg_duckdb-1.1.0.tar.gz
+TARBALL := pg_duckdb-1.1.1.tar.gz
 
 
 #==============================================================#
