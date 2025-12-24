@@ -123,12 +123,14 @@ gen:
 ###############################################################
 #                      Push SPEC to Remote                    #
 ###############################################################
-spec: spec12 spec22 spec24 spec12a spec22a spec24a
+spec: spec12 spec13 spec22 spec24 spec12a spec13a spec22a spec24a
 specm:
 	rsync -az debbuild/ meta:~/debbuild/
 
 spec12:
 	rsync -az debbuild/ d12:~/debbuild/
+spec13:
+	rsync -az debbuild/ d13:~/debbuild/
 spec22:
 	rsync -az debbuild/ u22:~/debbuild/
 spec24:
@@ -136,6 +138,8 @@ spec24:
 
 spec12a:
 	rsync -az debbuild/ d12a:~/debbuild/
+spec13a:
+	rsync -az debbuild/ d13a:~/debbuild/
 spec22a:
 	rsync -az debbuild/ u22a:~/debbuild/
 spec24a:
@@ -150,18 +154,20 @@ src: src12 src22 src24 src12a src22a src24a
 srcm:
 	rsync -avz src/ meta:~/ext/src/
 src12:
-	rsync -avz src/pg_statement_rollback-1.5.tar.gz d12:~/ext/src/
+	rsync -avz src/ d12:~/ext/src/
+src13:
+	rsync -avz src/ d13:~/ext/src/
 src22:
-	rsync -avz src/pg_statement_rollback-1.5.tar.gz u22:~/ext/src/
+	rsync -avz src/ u22:~/ext/src/
 src24:
-	rsync -avz src/pg_statement_rollback-1.5.tar.gz u24:~/ext/src/
+	rsync -avz src/ u24:~/ext/src/
 
 src12a:
-	rsync -avz src/pg_statement_rollback-1.5.tar.gz d12a:~/ext/src/
+	rsync -avz src/ d12a:~/ext/src/
 src22a:
-	rsync -avz src/pg_statement_rollback-1.5.tar.gz u22a:~/ext/src/
+	rsync -avz src/ u22a:~/ext/src/
 src24a:
-	rsync -avz src/pg_statement_rollback-1.5.tar.gz u24a:~/ext/src/
+	rsync -avz src/ u24a:~/ext/src/
 
 j: specj srcj
 srcj:
