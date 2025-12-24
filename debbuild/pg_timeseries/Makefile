@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_timeseries-0.1.7.tar.gz
+TARBALL := pg_timeseries-0.1.8.tar.gz
 
 # prepare directory
 setup:
