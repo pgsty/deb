@@ -17,7 +17,7 @@ setup:
 	chown -R $(shell whoami):$(shell whoami) build/
 
 # building deb
-build: build17 build16 build15
+build: build18 build17 build16 build15
 
 # not working on ferretdb fork yet (works on microsoft documentdb fork)
 build18: setup
