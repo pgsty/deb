@@ -1,0 +1,17 @@
+Source: pgfincore
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/klando/pgfincore
+
+Package: postgresql-PGVERSION-pgfincore
+Architecture: any
+Provides: postgresql-pgfincore
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Examine and manage the OS buffer cache from PostgreSQL
+  PgFincore is a set of functions to manage pages in memory from PostgreSQL.
+  It provides functions to know which and how many disk block from a relation
+  are in the page cache of the operating system.
