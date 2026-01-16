@@ -2,7 +2,7 @@
 # File      :   terraform.tf
 # Desc      :   5-node oss building env for x86_64/aarch64
 # Ctime     :   2024-12-12
-# Mtime     :   2025-11-02
+# Mtime     :   2026-01-16
 # Path      :   tf/terraform
 # License   :   AGPLv3 @ https://pigsty.io/docs/about/license
 # Copyright :   2018-2025  Ruohang Feng / Vonng (rh@vonng.com)
@@ -43,19 +43,19 @@ data "alicloud_images" "d13_arm64_img" {
 }
 data "alicloud_images" "u22_amd64_img" {
   owners     = "system"
-  name_regex = "^ubuntu_22_04_x64"
+  name_regex = "^ubuntu_22_04_x64_20G"
 }
 data "alicloud_images" "u22_arm64_img" {
   owners     = "system"
-  name_regex = "^ubuntu_22_04_arm64"
+  name_regex = "^ubuntu_22_04_arm64_20G"
 }
 data "alicloud_images" "u24_amd64_img" {
   owners     = "system"
-  name_regex = "^ubuntu_24_04_x64"
+  name_regex = "^ubuntu_24_04_x64_20G"
 }
 data "alicloud_images" "u24_arm64_img" {
   owners     = "system"
-  name_regex = "^ubuntu_24_04_arm64"
+  name_regex = "^ubuntu_24_04_arm64_20G"
 }
 
 
