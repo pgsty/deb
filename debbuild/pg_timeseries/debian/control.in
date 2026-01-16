@@ -5,13 +5,12 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/tembo-io/pg_timeseries
+Homepage: https://github.com/ChuckHend/pg_timeseries
 
 Package: postgresql-PGVERSION-pg-timeseries
 Architecture: any
 Provides: postgresql-pg-timeseries
 Depends: ${postgresql:Depends}, ${misc:Depends}
-Recommends: postgresql-PGVERSION-pg-ivm, postgresql-PGVERSION-pg-partman, postgresql-PGVERSION-pg-cron
-Suggests: postgresql-PGVERSION-hydra, postgresql-PGVERSION-citus
+Recommends: postgresql-PGVERSION-pg-partman, postgresql-PGVERSION-pg-cron
 Description: Simple and focused time-series tables for PostgreSQL
   The purpose of this extension is to provide a cohesive user experience around the creation, maintenance, and use of time-series tables.

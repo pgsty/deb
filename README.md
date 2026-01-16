@@ -11,7 +11,7 @@ Extensions Building Scripts for PostgreSQL 13 - 18 on Debian 12/13 Ubuntu 22/24.
 You can build extension DEBs with [pig](https://pgext.cloud/pig).
 
 ```bash
-curl https://repo.pigsty.cc/pig | bash -s 0.7.5
+curl https://repo.pigsty.cc/pig | bash -s 0.9.1
 pig build repo
 pig build tool
 pig build spec # <--- get this repo, setup building environment

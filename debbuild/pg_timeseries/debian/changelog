@@ -1,3 +1,9 @@
+pg-timeseries (0.2.0-1PIGSTY) unstable; urgency=medium
+
+  * Bump to 0.2.0, remove pg_ivm and columnar dependencies
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 16 Jan 2026 18:00:00 +0000
+
 pg-timeseries (0.1.8-1PIGSTY) unstable; urgency=medium
 
   * Bump to 0.1.8 with pg18 support
