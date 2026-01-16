@@ -1,0 +1,17 @@
+Source: pljs
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/plv8/pljs
+
+Package: postgresql-PGVERSION-pljs
+Architecture: any
+Provides: postgresql-pljs
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Trusted JavaScript Language Extension for PostgreSQL
+  PLJS is a trusted JavaScript language extension for PostgreSQL.
+  It is compact, lightweight, and fast, using the QuickJS JavaScript engine.
+  PLJS can be used for stored procedures, triggers, and more.
