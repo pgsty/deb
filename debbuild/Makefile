@@ -147,6 +147,9 @@ pg_task:
 pg_background:
 	cd pg_background && make
 
+pg_partman: # PGDG Included
+	cd pg_partman && make
+
 
 ###############################################################
 #            Category: GIS  - Geospatial                     #
@@ -220,6 +223,8 @@ pg_clickhouse:
 ###############################################################
 #            Category: FEAT - Functionality                  #
 ###############################################################
+age: # PGDG Included
+	cd age && make
 
 index_advisor:
 	cd index_advisor && make
@@ -258,6 +263,8 @@ pg_tle:
 plv8:
 	cd plv8 && make
 
+pljs: # PGDG Included
+	cd pljs && make
 
 ###############################################################
 #            Category: TYPE - Data Types                     #
@@ -529,8 +536,11 @@ pg_stat_monitor:
 pg_store_plans:
 	cd pg_store_plans && make
 
-pgsentinel:
+pgsentinel: # PGDG Included
 	cd pgsentinel && make
+
+pgfincore: # PGDG Included
+	cd pgfincore && make
 
 system_stats:
 	cd system_stats && make
@@ -703,18 +713,18 @@ collect:
 
 .PHONY: deps collect \
 	timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pg_vectorize pg_summarize pg_tiktoken pgml pg_search pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_cardano plprql pglite_fusion pg_smtp_client pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_anon pgsmcrypto wrappers \
-	timescaledb pg_timeseries temporal_tables emaj table_version pg_task pg_background \
+	timescaledb pg_timeseries temporal_tables emaj table_version pg_task pg_background pg_partman \
 	geoip pg_geohash \
 	smlar pg4ml \
 	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_textsearch \
 	citus hydra pg_duckdb duckdb_fdw pg_fkpart pg_clickhouse \
-	index_advisor pg_plan_filter imgsmlr pg_ivm pg_incremental pgmq omnigres pg_ai_query \
-	plxslt pg_tle plv8 \
+	age index_advisor pg_plan_filter imgsmlr pg_ivm pg_incremental pgmq omnigres pg_ai_query \
+	plxslt pg_tle plv8 pljs \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
 	pg_gzip pg_bzip pg_zstd pg_net pg_curl pgjq pg_retry pgjwt pg_html5_email_address url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \
 	pg_uuidv7 permuteseq pg_hashids sequential_uuids topn quantile lower_quantile count_distinct omnisketch ddsketch vasco pgxicor pg_weighted_statistics floatvec aggs_for_vecs aggs_for_arrays pg_csv pg_arraymath pg_math pg_random pg_base36 pg_base62 pg_financial \
 	pg_rewrite pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_savior safeupdate pg_drop_events \
-	pg_profile pg_tracing pg_stat_monitor pg_store_plans pgsentinel system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pagevis \
+	pg_profile pg_tracing pg_stat_monitor pg_store_plans pgsentinel pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pagevis \
 	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset \
 	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq firebird_fdw aws_s3 log_fdw \
 	documentdb pgtt session_variable pg_statement_rollback spat \
