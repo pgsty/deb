@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgsentinel-1.2.0.tar.gz
+TARBALL := pgsentinel-1.3.1.tar.gz
 
 # prepare directory
 setup:
