@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := Biscuit-2.0.1.tar.gz
+TARBALL := Biscuit-2.2.2.tar.gz
 
 # prepare directory
 setup:

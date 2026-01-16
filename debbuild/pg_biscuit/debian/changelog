@@ -1,3 +1,9 @@
+pg-biscuit (2.2.2-1PIGSTY) unstable; urgency=medium
+
+  * Bump to 2.2.2
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 16 Jan 2026 18:00:00 +0000
+
 pg-biscuit (2.0.1-1PIGSTY) unstable; urgency=medium
 
   * The repo goes to https://github.com/CrystallineCore/Biscuit
