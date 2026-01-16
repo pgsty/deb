@@ -1,0 +1,17 @@
+Source: age
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), flex, bison
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/apache/age
+
+Package: postgresql-PGVERSION-age
+Architecture: any
+Provides: postgresql-age
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Graph Processing & Analytics for Relational Databases
+  Apache AGE is an extension for PostgreSQL that enables users to leverage
+  a graph database on top of the existing relational databases.
+  AGE is an acronym for A Graph Extension and is inspired by Bitnine's AgensGraph.
