@@ -1,6 +1,6 @@
 all: pre setup build move
 
-TARBALL := documentdb-0.107.0-ferretdb-2.7.0.tar.gz
+TARBALL := documentdb-0.109-0.tar.gz
 
 pre:
 	bash prepare.sh $(TARBALL)

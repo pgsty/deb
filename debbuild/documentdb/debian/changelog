@@ -1,3 +1,9 @@
+documentdb (0.109-0PIGSTY) unstable; urgency=medium
+
+  * Switch to microsoft documentdb v0.109.0
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 16 Jan 2026 18:00:00 +0000
+
 documentdb (0.107-0PIGSTY) unstable; urgency=medium
 
   * https://github.com/FerretDB/documentdb/releases/tag/v0.107.0-ferretdb-2.7.0
