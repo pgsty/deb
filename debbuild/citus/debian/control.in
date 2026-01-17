@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), liblz4-dev (>= 1), libzstd-dev (>= 1), libcurl4-openssl-dev, libzstd-dev, libkrb5-dev, libicu-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/citusdatabase/citus
+Homepage: https://github.com/citusdata/citus
 
 Package: postgresql-PGVERSION-citus
 Architecture: any
@@ -16,11 +16,3 @@ Description: PostgreSQL extension that transforms Postgres into a distributed da
  using sharding and replication. Its query engine parallelizes
  incoming SQL queries across these servers to enable real-time
  responses on large datasets.
- .
- Citus extends the underlying database rather than forking it,
- which gives developers and enterprises the power and familiarity
- of a traditional relational database. As an extension, Citus
- supports new PostgreSQL releases, allowing users to benefit from
- new features while maintaining compatibility with existing
- PostgreSQL tools. Note that Citus supports many (but not all) SQL
- commands.
