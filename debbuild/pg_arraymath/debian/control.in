@@ -11,7 +11,6 @@ Package: postgresql-PGVERSION-pg-arraymath
 Architecture: any
 Provides: postgresql-pg-arraymath
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Access Control Lists (pg-arraymath) PostgreSQL Extension
-  You need this extension if you want to restrict access to rows in tables based on an authenticated user.
-  Access Control List (pg-arraymath) has become the de-facto standard for implementing a security model in modern applications.
-  Complex scenarios can be handled by using pg-arraymaths without having a complex permission model at the application level.
+Description: PostgreSQL extension for element-wise array math operations
+  pg_arraymath provides functions for performing element-by-element math operations on PostgreSQL arrays.
+  It supports arithmetic operations like addition, subtraction, multiplication, and division on numeric arrays.

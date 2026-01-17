@@ -11,6 +11,6 @@ Package: postgresql-PGVERSION-pg-sqlog
 Architecture: any
 Provides: postgresql-pg-sqlog
 Depends: ${postgresql:Depends}, ${misc:Depends}
-Description: Modern cryptography for PostgreSQL using libsodium.
+Description: Query PostgreSQL logs via SQL using file_fdw
   pg_sqlog allows to query a foreign table, pointing to a log, recorded in a CSV format.
   It has special functions to extract the query duration of each query, as well as to group similar queries together.

@@ -11,7 +11,6 @@ Package: postgresql-PGVERSION-pg-math
 Architecture: any
 Provides: postgresql-pg-math
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Access Control Lists (pg-math) PostgreSQL Extension
-  You need this extension if you want to restrict access to rows in tables based on an authenticated user.
-  Access Control List (pg-math) has become the de-facto standard for implementing a security model in modern applications.
-  Complex scenarios can be handled by using pg-maths without having a complex permission model at the application level.
+Description: PostgreSQL extension providing additional math functions using GSL
+  pg_math provides additional mathematical functions for PostgreSQL using the GNU Scientific Library (GSL).
+  It includes special functions, statistical distributions, and other advanced mathematical operations.

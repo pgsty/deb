@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcrack2-dev (>=2.9)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/fboulnois/pg_permissions
+Homepage: https://github.com/devrimgunduz/passwordcheck_cracklib
 
 Package: postgresql-PGVERSION-passwordcheck-cracklib
 Architecture: any

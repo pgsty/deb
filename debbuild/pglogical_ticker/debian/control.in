@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/enov/pglogical_ticker
+Homepage: https://github.com/enova/pglogical_ticker
 
 Package: postgresql-PGVERSION-pglogical-ticker
 Architecture: any

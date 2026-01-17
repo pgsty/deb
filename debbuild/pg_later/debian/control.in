@@ -11,6 +11,6 @@ Package: postgresql-PGVERSION-pg-later
 Architecture: any
 Provides: postgresql-pg-later
 Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgmq
-Description: reflects a later schema from the existing PostgresSQL PGVERSION schema
-  The extension keeps schema translation and query resolution neatly contained on your database server.
-  This enables any programming language that can connect to PostgreSQL to query the database via later with no additional servers, processes, or libraries.
+Description: Execute SQL now and retrieve results later - async query execution
+  pg_later allows you to execute SQL queries asynchronously and retrieve results at a later time.
+  It is built on top of pgmq and provides a simple interface to offload long-running queries to background workers.
