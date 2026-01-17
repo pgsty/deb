@@ -2,7 +2,7 @@
 # File      :   Makefile
 # Desc      :   pgsty/deb repo shortcuts
 # Ctime     :   2024-07-28
-# Mtime     :   2025-11-18
+# Mtime     :   2026-01-17
 # Path      :   Makefile
 # Author    :   Ruohang Feng (rh@vonng.com)
 # License   :   Apache-2.0
@@ -151,6 +151,7 @@ pg_partman: # PGDG Included
 	cd pg_partman && make
 
 
+
 ###############################################################
 #            Category: GIS  - Geospatial                     #
 ###############################################################
@@ -225,6 +226,9 @@ pg_clickhouse:
 ###############################################################
 age: # PGDG Included
 	cd age && make
+
+pg_ttl_index:
+	cd pg_ttl_index && make
 
 index_advisor:
 	cd index_advisor && make
@@ -638,6 +642,9 @@ aws_s3:
 log_fdw:
 	cd log_fdw && make
 
+etcd_fdw:
+	cd etcd_fdw && make
+
 
 ###############################################################
 #            Category: SIM  - Similarity                     #
@@ -718,7 +725,7 @@ collect:
 	smlar pg4ml \
 	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_textsearch \
 	citus hydra pg_duckdb duckdb_fdw pg_fkpart pg_clickhouse \
-	age index_advisor pg_plan_filter imgsmlr pg_ivm pg_incremental pgmq omnigres pg_ai_query \
+	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm pg_incremental pgmq omnigres pg_ai_query \
 	plxslt pg_tle plv8 pljs \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
 	pg_gzip pg_bzip pg_zstd pg_net pg_curl pgjq pg_retry pgjwt pg_html5_email_address url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \
@@ -726,7 +733,7 @@ collect:
 	pg_rewrite pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_savior safeupdate pg_drop_events \
 	pg_profile pg_tracing pg_stat_monitor pg_store_plans pgsentinel pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pagevis \
 	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset \
-	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq firebird_fdw aws_s3 log_fdw \
+	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq firebird_fdw aws_s3 log_fdw etcd_fdw \
 	documentdb pgtt session_variable pg_statement_rollback spat \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
 	pglinter pg_enigma pg_typeid \
