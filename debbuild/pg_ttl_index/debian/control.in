@@ -1,0 +1,17 @@
+Source: ttl-index
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ibrahimkarimeddin/postgres-extensions-pg_ttl
+
+Package: postgresql-PGVERSION-ttl-index
+Architecture: any
+Provides: postgresql-ttl-index
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Automatic data expiration with TTL indexes for PostgreSQL PGVERSION
+  pg_ttl_index is a PostgreSQL extension that provides automatic data expiration
+  using TTL (Time-To-Live) indexes. It allows you to define expiration policies
+  on tables and automatically removes expired data based on timestamp columns.
