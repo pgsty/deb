@@ -1,3 +1,9 @@
+pg-textsearch (0.5.0-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/timescale/pg_textsearch/releases/tag/v0.5.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 07 Feb 2026 12:00:00 +0000
+
 pg-textsearch (0.4.0-1PIGSTY) unstable; urgency=low
 
   * https://github.com/fboulnois/pg_textsearch/releases/tag/v0.4.0

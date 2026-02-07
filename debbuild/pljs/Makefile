@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pljs-1.0.4.tar.gz
+TARBALL := pljs-1.0.5.tar.gz
 
 # prepare directory
 setup:

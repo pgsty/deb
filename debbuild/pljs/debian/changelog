@@ -1,3 +1,9 @@
+pljs (1.0.5-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/plv8/pljs/releases/tag/v1.0.5
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 07 Feb 2026 18:00:00 +0000
+
 pljs (1.0.4-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
