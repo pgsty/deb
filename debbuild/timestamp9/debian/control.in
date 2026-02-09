@@ -10,6 +10,6 @@ Homepage: https://github.com/petere/timestamp9
 Package: postgresql-PGVERSION-timestamp9
 Architecture: any
 Provides: postgresql-timestamp9
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Description: Nanosecond precision timestamp type for Postgres PGVERSION
   An efficient nanosecond precision timestamp type for PGVERSION

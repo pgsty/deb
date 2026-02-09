@@ -7,45 +7,45 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/petere/timestamp9
 
+Package: postgresql-18-timestamp9
+Architecture: any
+Provides: postgresql-timestamp9
+Depends: postgresql-18, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 18
+  An efficient nanosecond precision timestamp type for Postgres 18
+
 Package: postgresql-17-timestamp9
 Architecture: any
 Provides: postgresql-timestamp9
-Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Nanosecond precision timestamp type for Postgres 16
-  An efficient nanosecond precision timestamp type for Postgres 16
+Depends: postgresql-17, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 17
+  An efficient nanosecond precision timestamp type for Postgres 17
 
 Package: postgresql-16-timestamp9
 Architecture: any
 Provides: postgresql-timestamp9
-Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: postgresql-16, ${shlibs:Depends}, ${misc:Depends}
 Description: Nanosecond precision timestamp type for Postgres 16
   An efficient nanosecond precision timestamp type for Postgres 16
 
 Package: postgresql-15-timestamp9
 Architecture: any
 Provides: postgresql-timestamp9
-Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Nanosecond precision timestamp type for Postgres 16
-  An efficient nanosecond precision timestamp type for Postgres 16
+Depends: postgresql-15, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 15
+  An efficient nanosecond precision timestamp type for Postgres 15
 
 Package: postgresql-14-timestamp9
 Architecture: any
 Provides: postgresql-timestamp9
-Depends: postgresql-15, ${postgresql:Depends}, ${postgresql:Depends}
-Description: Nanosecond precision timestamp type for Postgres 16
-  An efficient nanosecond precision timestamp type for Postgres 16
+Depends: postgresql-14, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 14
+  An efficient nanosecond precision timestamp type for Postgres 14
 
 Package: postgresql-13-timestamp9
 Architecture: any
 Provides: postgresql-timestamp9
-Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Nanosecond precision timestamp type for Postgres 16
-  An efficient nanosecond precision timestamp type for Postgres 16
-
-Package: postgresql-12-timestamp9
-Architecture: any
-Provides: postgresql-timestamp9
-Depends: postgresql-15, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Nanosecond precision timestamp type for Postgres 16
-  An efficient nanosecond precision timestamp type for Postgres 16
+Depends: postgresql-13, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond precision timestamp type for Postgres 13
+  An efficient nanosecond precision timestamp type for Postgres 13
 
