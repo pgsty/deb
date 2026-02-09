@@ -1,3 +1,9 @@
+pg-math (1.1.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/chanukyasds/pg_math/releases/tag/v1.1.0
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 09 Feb 2026 12:00:00 +0000
+
 pg-math (1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>

@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libgsl-dev (>= 2.0)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/arkhipov/pg-math
+Homepage: https://github.com/chanukyasds/pg_math
 
 Package: postgresql-PGVERSION-pg-math
 Architecture: any
