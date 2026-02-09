@@ -1,0 +1,17 @@
+Source: nominatim-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7), libxml2-dev (>= 2.5.0)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jimjonesbr/nominatim_fdw
+
+Package: postgresql-PGVERSION-nominatim-fdw
+Architecture: any
+Provides: postgresql-nominatim-fdw
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Nominatim Foreign Data Wrapper for PostgreSQL
+  nominatim_fdw is a PostgreSQL Foreign Data Wrapper (FDW) to access data from
+  Nominatim servers using simple function calls.
+
