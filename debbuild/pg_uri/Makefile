@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pguri-1.20151224.tar.gz
+TARBALL := pguri-1.20251029.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 
