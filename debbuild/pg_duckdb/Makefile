@@ -71,6 +71,4 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
-
-all: all build build17 build16 build15 build14 move clean ls
+.PHONY: all build build18 build17 build16 build15 build14 move clean

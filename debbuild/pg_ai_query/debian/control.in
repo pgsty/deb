@@ -10,7 +10,7 @@ Homepage: https://github.com/benodiwal/pg_ai_query
 Package: postgresql-PGVERSION-ai-query
 Architecture: any
 Provides: postgresql-ai-query
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Description: LLM-powered AI query extension for PostgreSQL PGVERSION
   pg_ai_query is a PostgreSQL extension that enables LLM-powered AI queries
   directly from your database. Supports OpenAI, Anthropic, and Google Gemini APIs.

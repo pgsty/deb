@@ -1,0 +1,39 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: plxslt
+Source: https://github.com/petere/plxslt
+
+Files: *
+Copyright: 2013 Peter Eisentraut <peter_e@gmx.net>
+License: PostgreSQL
+
+Files: debian/*
+Copyright: 2025 Ruohang Feng <rh@vonng.com>
+License: Apache-2.0
+
+License: PostgreSQL
+ XSLT Procedural Language Handler for PostgreSQL
+ .
+ Copyright (c) 2013 by Peter Eisentraut <peter_e@gmx.net>
+ .
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose, without fee, and without a written
+ agreement is hereby granted, provided that the above copyright notice
+ and this paragraph and the following two paragraphs appear in all
+ copies.
+ .
+ IN NO EVENT SHALL THE AUTHOR(S) OR ANY CONTRIBUTOR(S) BE LIABLE TO ANY
+ PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
+ DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS
+ SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE AUTHOR(S) OR
+ CONTRIBUTOR(S) HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ .
+ THE AUTHOR(S) AND CONTRIBUTOR(S) SPECIFICALLY DISCLAIM ANY WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE SOFTWARE
+ PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE AUTHOR(S) AND
+ CONTRIBUTOR(S) HAVE NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT,
+ UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+
+License: Apache-2.0
+ On Debian systems, the complete text of the Apache License version 2.0
+ can be found in "/usr/share/common-licenses/Apache-2.0".
