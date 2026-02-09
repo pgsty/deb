@@ -1,3 +1,9 @@
+pglinter (1.1.0-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/pmpetit/pglinter/releases/tag/1.1.0
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 09 Feb 2026 12:00:00 +0000
+
 pglinter (1.0.1-1PIGSTY) unstable; urgency=low
 
   * https://github.com/pmpetit/pglinter/releases/tag/1.0.1
