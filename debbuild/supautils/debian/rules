@@ -5,6 +5,7 @@ export CC = gcc
 
 SRC_DIR := supautils
 PKG_NAME := supautils
+PG_VERSIONS := $(shell cat debian/pgversions)
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
@@ -18,7 +19,7 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	for PG_VERSION in 13 14 15 16 17 18; do \
+	for PG_VERSION in $(PG_VERSIONS); do \
 		DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
 		FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
         rm -rf *.so; \
