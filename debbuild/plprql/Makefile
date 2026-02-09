@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := plprql-18.0.0.tar.gz
+TARBALL := plprql-18.0.1.tar.gz
 
 # prepare directory
 setup:
