@@ -76,7 +76,7 @@ data "alicloud_images" "pigsty_img" {
 provider "alicloud" {
   # access_key = "????????????????????"
   # secret_key = "????????????????????"
-  region = "cn-hongkong"  # change to your region
+  region = "cn-shanghai"  # change to your region
 }
 
 
@@ -93,7 +93,7 @@ resource "alicloud_vpc" "vpc" {
 resource "alicloud_vswitch" "vsw" {
   vpc_id     = "${alicloud_vpc.vpc.id}"
   cidr_block = "10.10.10.0/24"
-  zone_id    = "cn-hongkong-c"
+  zone_id    = "cn-shanghai-l"
 }
 
 # add default security group and allow all tcp traffic
