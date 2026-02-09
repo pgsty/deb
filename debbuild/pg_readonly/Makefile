@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_readonly-1.0.3.tar.gz
+TARBALL := pg_readonly-1.0.4.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 

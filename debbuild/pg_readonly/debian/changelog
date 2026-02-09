@@ -1,3 +1,9 @@
+pg-readonly (1.0.4-1PIGSTY) unstable; urgency=medium
+
+  * Bump to 1.0.4 (fix DML-in-CTE bug)
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 07 Feb 2026 18:00:00 +0000
+
 pg-readonly (1.0.3-1PIGSTY) unstable; urgency=medium
 
   * Bump to 1.0.3, with pg 18 support
