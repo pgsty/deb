@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_incremental-1.2.0.tar.gz
+TARBALL := pg_incremental-1.4.1.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 
