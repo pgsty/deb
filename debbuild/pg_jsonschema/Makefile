@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_jsonschema-0.3.3.tar.gz
+TARBALL := pg_jsonschema-0.3.4.tar.gz
 
 # prepare directory
 setup:
