@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_utl_smtp-v1.0.tar.gz
+TARBALL := pg_utl_smtp-1.0.tar.gz
 
 # prepare directory
 setup:
