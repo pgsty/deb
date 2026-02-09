@@ -1,0 +1,6 @@
+postgresql-unit (7.10-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/df7cb/postgresql-unit/releases/tag/7.10
+  * Bump from 7.7 to 7.10
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 09 Feb 2026 12:00:00 +0000
