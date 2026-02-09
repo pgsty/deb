@@ -1,0 +1,16 @@
+Source: roaringbitmap
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ChenHuajun/pg_roaringbitmap
+
+Package: postgresql-PGVERSION-roaringbitmap
+Architecture: any
+Provides: postgresql-roaringbitmap
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: A Roaring Bitmap data type for PostgreSQL
+  A PostgreSQL extension providing a Roaring Bitmap data type called roaringbitmap,
+  plus convenience operators and functions for construction and manipulation.
