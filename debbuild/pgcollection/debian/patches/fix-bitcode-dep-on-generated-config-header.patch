@@ -1,0 +1,21 @@
+Subject: Ensure LLVM bitcode build depends on generated collection_config.h
+
+PostgreSQL Debian builds compile LLVM bitcode objects (src/*.bc). The upstream
+Makefile only declares the generated header dependency for src/collection.o,
+so parallel builds may try to compile src/collection.bc before generating
+include/collection_config.h, causing:
+
+  fatal error: 'collection_config.h' file not found
+
+Add an explicit dependency for src/collection.bc.
+
+--- a/Makefile
++++ b/Makefile
+@@ -36,6 +36,7 @@ $(EXTENSION).control: $(EXTENSION).control.in
+ 	sed 's,EXTVERSION,$(EXTVERSION),g; s,EXTNAME,$(EXTENSION),g' $< > $@;
+ 
+ src/collection.o: include/$(EXTENSION)_config.h
++src/collection.bc: include/$(EXTENSION)_config.h
+ 
+ dist:
+ 	git archive --format zip --prefix=pgcollection-$(EXTVERSION)/ -o pgcollection-$(EXTVERSION).zip HEAD
