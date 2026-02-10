@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := postgresql_anonymizer-2.5.1.tar.gz
+TARBALL := pg_anon-3.0.0.tar.gz
 
 # prepare directory
 setup:
@@ -13,7 +13,7 @@ setup:
 build: building packaging
 building:
 	cd build && cargo update && \
-	for PG_VERSION in 13 14 15 16 17 18; do \
+	for PG_VERSION in 14 15 16 17 18; do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
 	    cargo pgrx package -v; \
