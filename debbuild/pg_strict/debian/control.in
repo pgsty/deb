@@ -1,0 +1,16 @@
+Source: pg-strict
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/spa5k/pg_strict
+
+Package: postgresql-PGVERSION-pg-strict
+Architecture: any
+Provides: postgresql-pg-strict
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Prevent dangerous UPDATE and DELETE without WHERE clause
+  pg_strict is a PostgreSQL extension that prevents dangerous UPDATE and DELETE
+  statements by requiring a WHERE clause.
