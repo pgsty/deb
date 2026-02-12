@@ -16,6 +16,7 @@ override_dh_strip:
 
 override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-pg-statement-rollback
+	rm -rf debian/postgresql-*-pg-statement-rollback/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:
 	dh_installdocs --all README.*
