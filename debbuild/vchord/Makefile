@@ -13,9 +13,14 @@ setup:
 build: building packaging
 building:
 	cd build && cargo update && \
+	CC_BIN=$$(command -v clang-18 || command -v clang-17 || command -v clang-16 || command -v clang || true) && \
+	CXX_BIN=$$(command -v clang++-18 || command -v clang++-17 || command -v clang++-16 || command -v clang++ || true) && \
+	if [ -z "$$CC_BIN" ]; then echo "No clang compiler found (need clang >= 16)." >&2; exit 1; fi && \
+	if [ -z "$$CXX_BIN" ]; then CXX_BIN=$$CC_BIN; fi && \
 	for PG_VERSION in 14 15 16 17 18; do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
+	    CC=$$CC_BIN CXX=$$CXX_BIN \
 	    cargo pgrx package -v; \
 	done
 
