@@ -1,0 +1,17 @@
+Source: pgmb
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/fraruiz/pgmb
+
+Package: postgresql-PGVERSION-pgmb
+Architecture: any
+Provides: postgresql-pgmb
+Depends: ${misc:Depends}, ${postgresql:Depends}, postgresql-PGVERSION-cron, postgresql-PGVERSION-http
+Description: A simple PostgreSQL Message Broker system
+  A lightweight message broker system built inside PostgreSQL. pgmb enables
+  asynchronous message processing with HTTP-based worker dispatch, automatic
+  retries, and dead letter queue support.
