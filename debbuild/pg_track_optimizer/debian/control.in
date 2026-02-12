@@ -1,0 +1,18 @@
+Source: pg-track-optimizer
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/danolivo/pg_track_optimizer
+
+Package: postgresql-PGVERSION-pg-track-optimizer
+Architecture: any
+Provides: postgresql-pg-track-optimizer
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Track planning decisions in comparison with execution reality
+  A lightweight PostgreSQL extension for detecting suboptimal query plans by
+  analysing the gap between planner estimates and actual execution statistics.
+  It tracks error metrics to identify queries suffering from poor cardinality
+  estimates.
