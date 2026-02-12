@@ -27,19 +27,19 @@ locals {
 
 data "alicloud_images" "d12_amd64_img" {
   owners     = "system"
-  name_regex = "^debian_12_10_x64"
+  name_regex = "^debian_12_13_x64"
 }
 data "alicloud_images" "d12_arm64_img" {
   owners     = "system"
-  name_regex = "^debian_12_10_arm64"
+  name_regex = "^debian_12_13_arm64"
 }
 data "alicloud_images" "d13_amd64_img" {
   owners     = "system"
-  name_regex = "^debian_13_1_x64"
+  name_regex = "^debian_13_3_x64"
 }
 data "alicloud_images" "d13_arm64_img" {
   owners     = "system"
-  name_regex = "^debian_13_1_arm64"
+  name_regex = "^debian_13_3_arm64"
 }
 data "alicloud_images" "u22_amd64_img" {
   owners     = "system"

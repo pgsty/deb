@@ -42,7 +42,7 @@ locals {
       el9   = "^rockylinux_9_7_x64"
       el10  = "^rockylinux_10_1_x64"
       d11   = "^debian_11_11_x64"
-      d12   = "^debian_12_11_x64"
+      d12   = "^debian_12_13_x64"
       u20   = "^ubuntu_20_04_x64"
       u22   = "^ubuntu_22_04_x64_20G"
       u24   = "^ubuntu_24_04_x64_20G"
@@ -52,7 +52,7 @@ locals {
       el8   = "^rockylinux_8_10_arm64"
       el9   = "^rockylinux_9_7_arm64"
       el10   = "^rockylinux_10_1_arm64"
-      d12   = "^debian_12_11_arm64"
+      d12   = "^debian_12_13_arm64"
       u22   = "^ubuntu_22_04_arm64_20G"
       u24   = "^ubuntu_24_04_arm64_20G"
     }
