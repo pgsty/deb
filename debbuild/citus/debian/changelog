@@ -1,3 +1,10 @@
+citus (14.0.0-3PIGSTY) unstable; urgency=low
+
+  * Switch to official upstream source tarball from v14.0.0 tag:
+    https://github.com/citusdata/citus/tree/v14.0.0
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 12 Feb 2026 12:00:00 +0000
+
 citus (14.0.0-2PIGSTY) unstable; urgency=low
 
   * https://github.com/citusdata/citus/releases/tag/v14.0.0
