@@ -248,6 +248,9 @@ pg_incremental:
 pgmq:
 	cd pgmq && make
 
+pgmb:
+	cd pgmb && make
+
 omnigres:
 	cd omnigres && make
 
@@ -573,6 +576,9 @@ pgmeminfo:
 pg_relusage:
 	cd pg_relusage && make
 
+pg_track_optimizer:
+	cd pg_track_optimizer && make
+
 pagevis:
 	cd pagevis && make
 
@@ -619,6 +625,9 @@ sslutils:
 
 pg_noset:
 	cd pg_noset && make
+
+pg_strict:
+	cd pg_strict && make
 
 
 ###############################################################
@@ -737,14 +746,14 @@ collect:
 	smlar pg4ml \
 	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_textsearch \
 	citus hydra pg_duckdb duckdb_fdw pg_fkpart pg_clickhouse \
-	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm pg_incremental pgmq omnigres pg_ai_query \
+	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm pg_incremental pgmq pgmb omnigres pg_ai_query \
 	plxslt pg_tle plv8 pljs \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
 	pg_gzip pg_bzip pg_zstd pg_net pg_curl pgjq pg_retry pgjwt pg_html5_email_address pg_utl_smtp url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \
 	pg_uuidv7 permuteseq pg_hashids sequential_uuids topn quantile lower_quantile count_distinct omnisketch ddsketch vasco pgxicor pg_weighted_statistics floatvec aggs_for_vecs aggs_for_arrays pg_csv pg_arraymath pg_math pg_random pg_base36 pg_base62 pg_financial \
 	pg_rewrite pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_savior safeupdate pg_drop_events \
-	pg_profile pg_tracing pg_stat_monitor pg_store_plans pgsentinel pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pagevis \
-	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset \
+	pg_profile pg_tracing pg_stat_monitor pg_store_plans pgsentinel pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pg_track_optimizer pagevis \
+	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
 	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
 	documentdb pgtt session_variable pg_statement_rollback spat \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
