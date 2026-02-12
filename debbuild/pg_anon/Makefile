@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_anon-3.0.0.tar.gz
+TARBALL := pg_anon-3.0.1.tar.gz
 
 # prepare directory
 setup:
