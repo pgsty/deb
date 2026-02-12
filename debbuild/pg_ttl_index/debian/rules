@@ -15,6 +15,7 @@ override_dh_strip:
 
 override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-ttl-index
+	rm -rf debian/postgresql-*-ttl-index/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:
 	dh_installdocs --all README.*
