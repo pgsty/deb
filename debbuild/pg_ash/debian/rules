@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+
+PKG_NAME := pg-ash
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+
+%:
+	dh $@
+
+override_dh_auto_build:
+
+override_dh_auto_clean:
+
+override_dh_auto_test:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	for PG_VERSION in $(PG_VERSIONS); do \
+	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+	    EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    dh_installdirs -p$$FULL_NAME; \
+	    mkdir -p $$EXT_DIR; \
+	    cp sql/ash-install.sql $$EXT_DIR/ash--1.2.sql; \
+	    cp sql/ash-1.0.sql $$EXT_DIR/ash--1.0.sql; \
+	    cp sql/ash-1.1.sql $$EXT_DIR/ash--1.1.sql; \
+	    cp sql/ash-1.1.sql $$EXT_DIR/ash--1.0--1.1.sql; \
+	    cp sql/ash-1.1-to-1.2.sql $$EXT_DIR/ash--1.1--1.2.sql; \
+	    printf "comment = 'Active Session History for PostgreSQL'\\ndefault_version = '1.2'\\nrelocatable = false\\nschema = ash\\nrequires = 'pg_cron'\\n" > $$EXT_DIR/ash.control; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.* RELEASE_NOTES.md

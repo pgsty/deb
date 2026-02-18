@@ -1,0 +1,17 @@
+Source: pg-ash
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/NikolayS/pg_ash
+
+Package: postgresql-PGVERSION-pg-ash
+Architecture: any
+Provides: postgresql-pg-ash
+Depends: ${misc:Depends}, postgresql-PGVERSION, postgresql-PGVERSION-cron
+Description: Active Session History for PostgreSQL implemented in SQL
+  pg_ash provides Active Session History (ASH) for PostgreSQL as a pure SQL/PLpgSQL extension.
+  It samples pg_stat_activity over time and stores historical wait-event data
+  without requiring shared_preload_libraries.
