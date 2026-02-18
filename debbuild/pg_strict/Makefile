@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_strict-1.0.2.tar.gz
+TARBALL := pg_strict-1.0.3.tar.gz
 
 # prepare directory
 setup:

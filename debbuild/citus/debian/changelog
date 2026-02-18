@@ -1,3 +1,9 @@
+citus (14.0.0-4PIGSTY) unstable; urgency=low
+
+  * Rebuild release for latest packaging updates.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 18 Feb 2026 12:00:00 +0000
+
 citus (14.0.0-3PIGSTY) unstable; urgency=low
 
   * Switch to official upstream source tarball from v14.0.0 tag:

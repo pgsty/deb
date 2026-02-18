@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_background-1.5.tar.gz
+TARBALL := pg_background-1.8.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 

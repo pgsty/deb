@@ -1,6 +1,6 @@
 all: build
 
-TARBALL := timescaledb-2.25.0.tar.gz
+TARBALL := timescaledb-2.25.1.tar.gz
 
 build: build18 build17 build16 build15
 
@@ -58,4 +58,3 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-

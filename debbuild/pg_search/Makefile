@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_search-0.21.6.tar.gz
+TARBALL := pg_search-0.21.8.tar.gz
 
 # prepare directory
 setup:
