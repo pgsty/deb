@@ -2,10 +2,12 @@
 
 export DH_VERBOSE=1
 export PGBASEINSTDIR=/usr/oriole-17
+export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 # Filter out -ffast-math which is known to cause precision issues
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
 export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+export ORIOLEDB_PATCHSET_VERSION=16
 
 %:
 	dh $@ --without autoreconf
@@ -30,7 +32,7 @@ override_dh_auto_configure:
 		--with-openssl --with-pam --with-ldap \
 		--with-selinux --with-systemd \
 		--with-includes=/usr/include \
-		--with-libraries=/usr/lib \
+		--with-libraries=/usr/lib/$(DEB_HOST_MULTIARCH) \
 		--enable-nls --enable-dtrace
 
 override_dh_auto_build:

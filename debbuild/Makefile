@@ -722,10 +722,16 @@ pg_bulkload:
 ###############################################################
 openhalodb:
 	cd openhalodb && make
-oriolepg_17:
-	cd orioledb-17 && make
+oriolepg:
+	cd oriolepg && make
 orioledb:
 	cd orioledb && make
+antlr4_runtime413:
+	cd antlr4_runtime413 && make
+babelfishpg_17:
+	cd babelfishpg_17 && make
+babelfish:
+	cd babelfish && make
 
 
 ###############################################################
@@ -761,4 +767,4 @@ collect:
 	documentdb pgtt session_variable pg_statement_rollback spat \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
 	pglinter pg_enigma pg_typeid \
-	openhalodb oriolepg_17 orioledb
+	openhalodb oriolepg_17 oriolepg orioledb antlr4_runtime413 babelfishpg_17 babelfish
