@@ -1,0 +1,29 @@
+From 7f21d0f1d4f3d05e2832c7a5f97d5648a4dc9f0a Mon Sep 17 00:00:00 2001
+From: Ruohang Feng <rh@vonng.com>
+Date: Fri, 20 Feb 2026 15:45:00 +0800
+Subject: [PATCH] Initialize function_id to avoid maybe-uninitialized warning
+
+GCC 12 on Debian 12 reports function_id as maybe-uninitialized in
+sp_babelfish_volatility(), and Babelfish builds with -Werror.
+Initialize it explicitly to keep behavior unchanged while allowing
+Bookworm builds to pass.
+---
+ contrib/babelfishpg_tsql/src/procedures.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/babelfishpg_tsql/src/procedures.c b/contrib/babelfishpg_tsql/src/procedures.c
+index 72f0f7e..5d50ef8 100644
+--- a/contrib/babelfishpg_tsql/src/procedures.c
++++ b/contrib/babelfishpg_tsql/src/procedures.c
+@@ -3358,7 +3358,7 @@ sp_babelfish_volatility(PG_FUNCTION_ARGS)
+ 	char	   *query = NULL;
+ 	char	   *function_name = PG_ARGISNULL(0) ? NULL : text_to_cstring(PG_GETARG_TEXT_PP(0));
+ 	char	   *volatility = PG_ARGISNULL(1) ? NULL : text_to_cstring(PG_GETARG_TEXT_PP(1));
+-	Oid			function_id;
++	Oid			function_id = InvalidOid;
+ 	Oid			user_id = GetUserId();
+ 
+ 	if (function_name != NULL)
+-- 
+2.43.0
+

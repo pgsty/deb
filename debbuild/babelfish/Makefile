@@ -21,15 +21,14 @@ install-prereq:
 		exit 1; \
 	fi
 	@SUDO=$$( [ "$$(id -u)" -eq 0 ] && echo "" || echo "sudo" ); \
+	APT="$$SUDO apt-get -o DPkg::Lock::Timeout=600"; \
 	SYS_ANTLR_PKGS="$$(dpkg-query -W -f='$${Package}\n' 'antlr4' 'libantlr4-runtime*' 2>/dev/null | tr '\n' ' ')"; \
 	if [ -n "$$SYS_ANTLR_PKGS" ]; then \
-		$$SUDO apt-get -y purge $$SYS_ANTLR_PKGS || true; \
-		$$SUDO apt-get -y autoremove || true; \
+		$$APT -y purge $$SYS_ANTLR_PKGS || true; \
+		$$APT -y autoremove || true; \
 	fi; \
-	$$SUDO dpkg -i "$(ANTLR_DEB)" "$(ANTLR_DEV_DEB)"; \
-	$$SUDO apt-get -y -f install; \
-	$$SUDO dpkg -i "$(CORE_DEB)"; \
-	$$SUDO apt-get -y -f install
+	$$APT -y install "$(ANTLR_DEB)" "$(ANTLR_DEV_DEB)"; \
+	$$APT -y install "$(CORE_DEB)"
 
 # prepare directory
 setup:

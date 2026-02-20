@@ -14,7 +14,7 @@ Build-Depends:
  perl,
  pkgconf,
  zlib1g-dev,
- openjdk-21-jre
+ openjdk-21-jre | default-jre-headless
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/babelfish-for-postgresql/babelfish_extensions
