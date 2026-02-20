@@ -1,0 +1,27 @@
+Source: babelfishpg-17-babelfish
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ babelfishpg-17 (>= 17.8),
+ bison,
+ cmake,
+ debhelper-compat (= 13),
+ flex,
+ libantlr4-runtime413-dev (>= 4.13.2),
+ libicu-dev,
+ libssl-dev,
+ perl,
+ pkgconf,
+ zlib1g-dev,
+ openjdk-21-jre
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/babelfish-for-postgresql/babelfish_extensions
+
+Package: babelfishpg-17-babelfish
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, babelfishpg-17 (>= 17.8), libantlr4-runtime413 (>= 4.13.2)
+Description: Babelfish extensions for babelfishpg-17
+ This package provides four core Babelfish extensions:
+ babelfishpg_money, babelfishpg_common, babelfishpg_tds, babelfishpg_tsql.

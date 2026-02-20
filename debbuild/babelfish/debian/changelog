@@ -1,0 +1,7 @@
+babelfishpg-17-babelfish (5.5.0-2PIGSTY) unstable; urgency=medium
+
+  * Build Babelfish extensions against external libantlr4-runtime413-dev.
+  * Stop bundling ANTLR runtime inside extension package.
+  * Use explicit ANTLR include/lib overrides for babelfishpg_tsql.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 19 Feb 2026 18:00:00 +0000

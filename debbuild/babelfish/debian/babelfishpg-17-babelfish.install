@@ -1,0 +1,5 @@
+usr/babelfish-17/lib/postgresql/babelfishpg_*.so
+usr/babelfish-17/share/postgresql/extension/babelfishpg_*.control
+usr/babelfish-17/share/postgresql/extension/babelfishpg_*.sql
+usr/babelfish-17/share/postgresql/extension/fixeddecimal--*.sql
+

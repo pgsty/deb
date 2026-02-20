@@ -1,0 +1,55 @@
+Source: babelfishpg-17
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ autoconf,
+ bison,
+ flex,
+ clang,
+ debhelper-compat (= 13),
+ dh-exec (>= 0.13~),
+ docbook-xml,
+ docbook-xsl (>= 1.77),
+ dpkg-dev (>= 1.16~),
+ gettext,
+ libicu-dev,
+ libkrb5-dev,
+ libldap2-dev,
+ liblz4-dev,
+ libperl-dev,
+ libreadline-dev,
+ libselinux1-dev [linux-any],
+ libssl-dev,
+ libsystemd-dev [linux-any],
+ libxml2-dev,
+ libxml2-utils,
+ libxslt1-dev,
+ libzstd-dev,
+ llvm,
+ llvm-dev,
+ mawk,
+ perl (>= 5.8),
+ pkgconf,
+ python3-dev,
+ systemtap-sdt-dev,
+ tcl-dev,
+ tzdata,
+ uuid-dev,
+ xsltproc,
+ zlib1g-dev,
+ libpam0g-dev,
+ libpam-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/babelfish-for-postgresql/postgresql_modified_for_babelfish
+
+Package: babelfishpg-17
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, tzdata, ssl-cert
+Description: Patched PostgreSQL 17 core for Babelfish
+ Babelfish for PostgreSQL requires a patched PostgreSQL core to support
+ T-SQL protocol/language hooks.
+ .
+ This package ships Babelfish patched PostgreSQL 17.8 under /usr/babelfish-17.
+

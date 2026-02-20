@@ -1,0 +1,60 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+export PATH := /usr/babelfish-17/bin:$(PATH)
+export PG_CONFIG := /usr/babelfish-17/bin/pg_config
+export PG_SRC := $(CURDIR)/postgresql_modified_for_babelfish
+export cmake := /usr/bin/cmake
+export ANTLR4_JAVA_BIN := /usr/bin/java
+export PG_CXXFLAGS := -Wno-error=overloaded-virtual
+export PG_CFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow
+export CFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow
+
+ANTLR4_RUNTIME_INCLUDE_DIR := /usr/include/antlr4-runtime
+ANTLR4_RUNTIME_LIB_DIR := /usr/lib/$(DEB_HOST_MULTIARCH)
+ANTLR4_RUNTIME_LIB := -lantlr4-runtime
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	for ext in babelfishpg_money babelfishpg_common babelfishpg_tds babelfishpg_tsql; do \
+		$(MAKE) -C contrib/$$ext clean || true; \
+	done
+
+override_dh_auto_build:
+	sed -i 's#SET (MYDIR /usr/local/include/antlr4-runtime/)#SET (MYDIR $(ANTLR4_RUNTIME_INCLUDE_DIR)/)#' \
+		contrib/babelfishpg_tsql/antlr/CMakeLists.txt
+	set -e; \
+	$(MAKE) -C contrib/babelfishpg_money; \
+	$(MAKE) -C contrib/babelfishpg_common; \
+	$(MAKE) -C contrib/babelfishpg_tds; \
+	$(MAKE) -C contrib/babelfishpg_tsql \
+		cmake=$(cmake) \
+		ANTLR4_JAVA_BIN=$(ANTLR4_JAVA_BIN) \
+		ANTLR4_RUNTIME_INCLUDE_DIR=$(ANTLR4_RUNTIME_INCLUDE_DIR) \
+		ANTLR4_RUNTIME_LIB_DIR=$(ANTLR4_RUNTIME_LIB_DIR) \
+		ANTLR4_RUNTIME_LIB=$(ANTLR4_RUNTIME_LIB)
+
+override_dh_auto_install:
+	set -e; \
+	$(MAKE) -C contrib/babelfishpg_money DESTDIR=$(CURDIR)/debian/tmp install; \
+	$(MAKE) -C contrib/babelfishpg_common DESTDIR=$(CURDIR)/debian/tmp install; \
+	$(MAKE) -C contrib/babelfishpg_tds DESTDIR=$(CURDIR)/debian/tmp install; \
+	$(MAKE) -C contrib/babelfishpg_tsql \
+		cmake=$(cmake) \
+		ANTLR4_JAVA_BIN=$(ANTLR4_JAVA_BIN) \
+		ANTLR4_RUNTIME_INCLUDE_DIR=$(ANTLR4_RUNTIME_INCLUDE_DIR) \
+		ANTLR4_RUNTIME_LIB_DIR=$(ANTLR4_RUNTIME_LIB_DIR) \
+		ANTLR4_RUNTIME_LIB=$(ANTLR4_RUNTIME_LIB) \
+		DESTDIR=$(CURDIR)/debian/tmp install
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l/usr/babelfish-17/lib
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_test:
+	:

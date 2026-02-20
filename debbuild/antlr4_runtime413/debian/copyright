@@ -1,0 +1,7 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: antlr4-cpp-runtime
+Source: https://www.antlr.org/
+
+Files: *
+Copyright: 2012-2024, The ANTLR Project
+License: BSD-3-clause

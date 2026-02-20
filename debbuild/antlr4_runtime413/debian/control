@@ -1,0 +1,26 @@
+Source: antlr4-runtime413
+Section: libs
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ cmake,
+ debhelper-compat (= 13),
+ pkgconf,
+ uuid-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://www.antlr.org/
+
+Package: libantlr4-runtime413
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ANTLR4 C++ runtime library 4.13.2
+ Runtime shared library for C++ applications using ANTLR4 parser runtime.
+
+Package: libantlr4-runtime413-dev
+Architecture: any
+Depends: ${misc:Depends}, libantlr4-runtime413 (= ${binary:Version})
+Conflicts: libantlr4-runtime-dev
+Replaces: libantlr4-runtime-dev
+Description: ANTLR4 C++ runtime development files 4.13.2
+ Headers, pkg-config metadata and linker symlink for ANTLR4 C++ runtime.

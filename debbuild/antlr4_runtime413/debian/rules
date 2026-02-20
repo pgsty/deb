@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	cmake -S $(CURDIR) -B $(CURDIR)/build \
+		-DANTLR_BUILD_CPP_TESTS=OFF \
+		-DANTLR_BUILD_STATIC=OFF \
+		-DANTLR_BUILD_SHARED=ON \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib/$(DEB_HOST_MULTIARCH)
+
+override_dh_auto_build:
+	cmake --build $(CURDIR)/build -j$(shell nproc)
+
+override_dh_auto_install:
+	DESTDIR=$(CURDIR)/debian/tmp cmake --install $(CURDIR)/build
+	rm -f $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/libantlr4-runtime.a
+
+override_dh_auto_test:
+	:
+

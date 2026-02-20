@@ -1,0 +1,39 @@
+diff --git a/configure b/configure
+index 1d55571c76..72540db648 100755
+--- a/configure
++++ b/configure
+@@ -19268,7 +19268,7 @@ fi
+ 
+ 
+ cat >>confdefs.h <<_ACEOF
+-#define PG_VERSION_STR "PostgreSQL $PG_VERSION on $host, compiled by $cc_string, `expr $ac_cv_sizeof_void_p \* 8`-bit"
++#define PG_VERSION_STR "Babelfish $PG_VERSION on $host, compiled by $cc_string, `expr $ac_cv_sizeof_void_p \* 8`-bit"
+ _ACEOF
+ 
+ 
+diff --git a/configure.ac b/configure.ac
+index 5e97a25945..1668576971 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2446,7 +2446,7 @@ else
+ fi
+ 
+ AC_DEFINE_UNQUOTED(PG_VERSION_STR,
+-                   ["PostgreSQL $PG_VERSION on $host, compiled by $cc_string, `expr $ac_cv_sizeof_void_p \* 8`-bit"],
++                   ["Babelfish $PG_VERSION on $host, compiled by $cc_string, `expr $ac_cv_sizeof_void_p \* 8`-bit"],
+                    [A string containing the version number, platform, and C compiler])
+ 
+ # Supply a numeric version string for use by 3rd party add-ons
+diff --git a/meson.build b/meson.build
+index 8f83efce2f..b0033fef48 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2812,7 +2812,7 @@ cdata.set_quoted('DLSUFFIX', dlsuffix)
+ # built later than the rest of the version metadata, we need SIZEOF_VOID_P
+ cdata.set_quoted('PG_VERSION_STR',
+-  'PostgreSQL @0@ on @1@-@2@, compiled by @3@-@4@, @5@-bit'.format(
++  'Babelfish @0@ on @1@-@2@, compiled by @3@-@4@, @5@-bit'.format(
+     pg_version, host_machine.cpu_family(), host_system,
+     cc.get_id(), cc.version(), cdata.get('SIZEOF_VOID_P') * 8,
+   )
+
