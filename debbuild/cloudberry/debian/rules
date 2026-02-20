@@ -48,7 +48,7 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	if ! grep -q -- "-Wno-error=suggest-attribute=format" contrib/pax_storage/CMakeLists.txt; then \
-		sed -i 's/-Werror /-Werror -Wno-error=maybe-uninitialized -Wno-error=array-bounds -Wno-error=pessimizing-move -Wno-error=suggest-attribute=format /' contrib/pax_storage/CMakeLists.txt; \
+		sed -i 's/-Werror /-Werror -Wno-error=maybe-uninitialized -Wno-error=array-bounds -Wno-error=alloc-size -Wno-error=pessimizing-move -Wno-error=suggest-attribute=format /' contrib/pax_storage/CMakeLists.txt; \
 	fi
 	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
 	cd ../..
