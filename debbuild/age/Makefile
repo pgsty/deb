@@ -10,7 +10,8 @@ build: build18 build17
 # Single upstream source tarball with branch checkout per PG major.
 build18:
 	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	# Avoid preserving archive owner/perms to prevent git safe.directory issues in root builds.
+	tar -C build --strip-components=1 --no-same-owner --no-same-permissions -xf ../SOURCES/$(TARBALL)
 	cd build && git checkout PG18
 	rm -rf build/debian; cp -r debian build/debian
 	sed -i "1s/^age ([^)]*/age (1.7.0-1PIGSTY/" build/debian/changelog
@@ -23,7 +24,8 @@ build18:
 
 build17:
 	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	# Avoid preserving archive owner/perms to prevent git safe.directory issues in root builds.
+	tar -C build --strip-components=1 --no-same-owner --no-same-permissions -xf ../SOURCES/$(TARBALL)
 	cd build && git checkout PG17
 	rm -rf build/debian; cp -r debian build/debian
 	sed -i "1s/^age ([^)]*/age (1.7.0-1PIGSTY/" build/debian/changelog
