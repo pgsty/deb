@@ -15,7 +15,7 @@
 locals {
   bandwidth = 100                       # internet bandwidth in Mbps (100Mbps)
   disk_size = 100                       # system disk size in GB (100GB)
-  spot_policy = "NoSpot"                # NoSpot, SpotWithPriceLimit, SpotAsPriceGo
+  spot_policy = "SpotAsPriceGo"                # NoSpot, SpotWithPriceLimit, SpotAsPriceGo
   spot_price_limit = 5                  # only valid when spot_policy is SpotWithPriceLimit
   instance_type_map = {
     amd64 = "ecs.c9i.4xlarge"
@@ -69,7 +69,7 @@ data "alicloud_images" "u24_arm64_img" {
 provider "alicloud" {
   # access_key = "????????????????????"
   # secret_key = "????????????????????"
-  region = "cn-hongkong"  # change to your region
+  region = "cn-shanghai"  # change to your region
 }
 
 
@@ -86,7 +86,7 @@ resource "alicloud_vpc" "vpc" {
 resource "alicloud_vswitch" "vsw" {
   vpc_id     = "${alicloud_vpc.vpc.id}"
   cidr_block = "10.10.10.0/24"
-  zone_id    = "cn-hongkong-d"
+  zone_id    = "cn-shanghai-l"
 }
 
 # add default security group and allow all tcp traffic
