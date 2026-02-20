@@ -1,0 +1,63 @@
+Source: cloudberry
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ bison,
+ bzip2,
+ ca-certificates,
+ ca-certificates-java,
+ cgroup-tools,
+ cmake,
+ curl,
+ flex,
+ g++,
+ gcc,
+ git,
+ golang-go,
+ libapr1-dev,
+ libaprutil1-dev,
+ libbz2-dev,
+ libcurl4-gnutls-dev,
+ libevent-dev,
+ libipc-run-perl,
+ libkrb5-dev,
+ libldap2-dev,
+ liblz4-dev,
+ libpam0g-dev,
+ libperl-dev,
+ libprotobuf-dev,
+ libreadline-dev,
+ libssl-dev,
+ liburing-dev,
+ libuv1-dev,
+ libxerces-c-dev,
+ libxml2-dev,
+ libyaml-dev,
+ libzstd-dev,
+ locales,
+ make,
+ ninja-build,
+ pkg-config,
+ protobuf-compiler,
+ python3-dev,
+ python3-pip,
+ python3-setuptools,
+ quilt,
+ rsync,
+ unzip,
+ wget,
+ zlib1g-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://cloudberry.apache.org
+
+Package: cloudberry
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata, ssl-cert
+Description: Apache Cloudberry MPP data warehouse
+ Apache Cloudberry is an open-source massively parallel processing (MPP)
+ data warehouse developed from PostgreSQL and Greenplum.
+ .
+ This package installs Cloudberry into /usr/cloudberry.

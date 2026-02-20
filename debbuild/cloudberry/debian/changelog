@@ -1,0 +1,5 @@
+cloudberry (2.0.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial cloudberry package build from local source tarball.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 19 Feb 2026 18:30:00 +0000

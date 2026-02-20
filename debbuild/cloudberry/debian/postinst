@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ]; then
+    if ! getent group gpadmin >/dev/null 2>&1; then
+        if command -v addgroup >/dev/null 2>&1; then
+            addgroup --quiet gpadmin
+        else
+            groupadd gpadmin
+        fi
+    fi
+
+    if ! getent passwd gpadmin >/dev/null 2>&1; then
+        if command -v adduser >/dev/null 2>&1; then
+            adduser --quiet --disabled-password --gecos "Cloudberry administrator" \
+                --home /home/gpadmin --shell /bin/bash --ingroup gpadmin gpadmin
+        else
+            useradd --create-home --home-dir /home/gpadmin --shell /bin/bash --gid gpadmin gpadmin
+        fi
+    fi
+
+    ldconfig
+fi
+
+exit 0

@@ -732,6 +732,8 @@ babelfishpg_17:
 	cd babelfishpg_17 && make
 babelfish:
 	cd babelfish && make
+cloudberry:
+	cd cloudberry && make
 
 ###############################################################
 #                        1. Building                          #
@@ -766,4 +768,4 @@ collect:
 	documentdb pgtt session_variable pg_statement_rollback spat \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
 	pglinter pg_enigma pg_typeid \
-	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish
+	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry

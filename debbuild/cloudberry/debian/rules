@@ -1,0 +1,66 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export CB_PREFIX=/usr/cloudberry
+export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+# Filter out -ffast-math to avoid precision issues.
+export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
+export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+export CFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow -Wno-error=maybe-uninitialized -Wno-error=array-bounds
+export CXXFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow -Wno-error=maybe-uninitialized -Wno-error=array-bounds -Wno-error=pessimizing-move -Wno-error=suggest-attribute=format
+export CXXFLAGS += -Wno-error=overloaded-virtual
+export PG_CXXFLAGS += -Wno-error=overloaded-virtual
+
+%:
+	dh $@ --without autoreconf
+
+override_dh_auto_clean:
+
+override_dh_auto_configure:
+	./configure \
+		--enable-rpath \
+		--prefix=$(CB_PREFIX) \
+		--disable-external-fts \
+		--enable-debug \
+		--enable-debug-extensions \
+		--enable-gpcloud \
+		--enable-ic-proxy \
+		--enable-mapreduce \
+		--enable-orafce \
+		--enable-orca \
+		--enable-pax \
+		--disable-pxf \
+		--enable-tap-tests \
+		--with-gssapi \
+		--with-ldap \
+		--with-libxml \
+		--with-lz4 \
+		--with-pam \
+		--with-perl \
+		--with-pgport=5432 \
+		--with-python \
+		--with-pythonsrc-ext \
+		--with-ssl=openssl \
+		--with-uuid=e2fs \
+		--with-includes=/usr/include/xercesc \
+		--with-libraries=/usr/lib/$(DEB_HOST_MULTIARCH)
+
+override_dh_auto_build:
+	if ! grep -q -- "-Wno-error=suggest-attribute=format" contrib/pax_storage/CMakeLists.txt; then \
+		sed -i 's/-Werror /-Werror -Wno-error=maybe-uninitialized -Wno-error=array-bounds -Wno-error=pessimizing-move -Wno-error=suggest-attribute=format /' contrib/pax_storage/CMakeLists.txt; \
+	fi
+	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
+	cd ../..
+	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
+	$(MAKE) -j$(shell nproc) -C contrib
+
+override_dh_auto_install:
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world-bin
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp -C contrib install
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_test:
+	:
