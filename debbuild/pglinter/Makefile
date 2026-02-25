@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pglinter-1.1.0.tar.gz
+TARBALL := pglinter-1.1.1.tar.gz
 
 # prepare directory
 setup:
