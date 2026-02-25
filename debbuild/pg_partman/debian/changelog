@@ -1,3 +1,9 @@
+pg-partman (5.4.2-1PIGSTY) unstable; urgency=medium
+
+  * routine update
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Feb 2026 18:00:00 +0000
+
 pg-partman (5.4.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
