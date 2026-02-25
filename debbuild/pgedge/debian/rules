@@ -14,12 +14,12 @@ override_dh_auto_clean:
 
 override_dh_auto_configure:
 	./configure \
-		--prefix=/usr/lib/postgresql/17 \
-		--bindir=/usr/lib/postgresql/17/bin \
-		--libdir=/usr/lib/postgresql/17/lib \
-		--includedir=/usr/include/postgresql/17 \
-		--mandir=/usr/share/postgresql/17/man \
-		--datadir=/usr/share/postgresql/17 \
+		--prefix=/usr/pgedge-17 \
+		--bindir=/usr/pgedge-17/bin \
+		--libdir=/usr/pgedge-17/lib \
+		--includedir=/usr/pgedge-17/include \
+		--mandir=/usr/pgedge-17/share/man \
+		--datadir=/usr/pgedge-17/share \
 		--docdir=/usr/share/doc/pgedge-17 \
 		--htmldir=/usr/share/doc/pgedge-17/html \
 		--with-system-tzdata=/usr/share/zoneinfo \
@@ -44,7 +44,7 @@ override_dh_auto_install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l/usr/lib/postgresql/17/lib
+	dh_shlibdeps -l/usr/pgedge-17/lib
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym

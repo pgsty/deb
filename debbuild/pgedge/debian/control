@@ -47,12 +47,9 @@ Homepage: https://github.com/pgEdge/spock
 Package: pgedge-17
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, tzdata, ssl-cert
-Conflicts: postgresql-17, postgresql-client-17, postgresql-server-dev-17
-Provides: postgresql-17, postgresql-client-17, postgresql-server-dev-17
-Replaces: postgresql-17, postgresql-client-17, postgresql-server-dev-17
 Description: pgEdge patched PostgreSQL 17 core
  PostgreSQL 17 core package built from upstream PostgreSQL source plus
  pgEdge Spock PG17 patchset.
  .
- This package installs binaries into /usr/lib/postgresql/17 and is intended
+ This package installs binaries into /usr/pgedge-17 and is intended
  to be the base runtime for pgEdge Spock, Snowflake and LOLOR extensions.

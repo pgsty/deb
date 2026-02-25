@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
-export PATH := /usr/lib/postgresql/17/bin:$(PATH)
-export PG_CONFIG := /usr/lib/postgresql/17/bin/pg_config
+export PATH := /usr/pgedge-17/bin:$(PATH)
+export PG_CONFIG := /usr/pgedge-17/bin/pg_config
 export USE_PGXS=1
 
 %:
@@ -11,7 +11,7 @@ override_dh_auto_test:
 	:
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l/usr/lib/postgresql/17/lib
+	dh_shlibdeps -l/usr/pgedge-17/lib
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
