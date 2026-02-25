@@ -1,0 +1,14 @@
+Source: lolor
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), pgedge-17 (>= 17)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgEdge/lolor
+
+Package: pgedge-17-lolor
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, pgedge-17 (>= 17)
+Description: LOLOR large object logical replication extension for pgedge-17
+ Requires shared_preload_libraries to include lolor before CREATE EXTENSION lolor.
