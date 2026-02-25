@@ -1,0 +1,5 @@
+usr/include/postgresql/*
+usr/lib/postgresql/17/*
+usr/share/postgresql/17/man/*
+usr/share/postgresql/17/*
+usr/share/doc/pgedge-17/*

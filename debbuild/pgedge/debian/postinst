@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ]; then
+    if ! getent group postgres >/dev/null; then
+        addgroup --system postgres
+    fi
+
+    if ! getent passwd postgres >/dev/null; then
+        adduser --system --home /var/lib/postgresql --shell /bin/bash \
+            --gecos "PostgreSQL Server" --ingroup postgres postgres
+    fi
+
+    install -d -m 0755 -o postgres -g postgres /var/lib/postgresql
+    install -d -m 0700 -o postgres -g postgres /var/lib/postgresql/17
+    install -d -m 0700 -o postgres -g postgres /var/lib/postgresql/17/main
+
+    ldconfig
+fi
+
+exit 0

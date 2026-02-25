@@ -1,0 +1,58 @@
+Source: pgedge-17
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ autoconf,
+ bison,
+ clang,
+ debhelper-compat (= 13),
+ dh-exec (>= 0.13~),
+ docbook-xml,
+ docbook-xsl (>= 1.77),
+ dpkg-dev (>= 1.16~),
+ flex,
+ gettext,
+ libicu-dev,
+ libkrb5-dev,
+ libldap2-dev,
+ liblz4-dev,
+ libpam0g-dev,
+ libperl-dev,
+ libreadline-dev,
+ libselinux1-dev [linux-any],
+ libssl-dev,
+ libsystemd-dev [linux-any],
+ libxml2-dev,
+ libxml2-utils,
+ libxslt1-dev,
+ libzstd-dev,
+ llvm,
+ llvm-dev,
+ mawk,
+ patch,
+ perl (>= 5.8),
+ pkgconf,
+ python3-dev,
+ systemtap-sdt-dev,
+ tcl-dev,
+ tzdata,
+ uuid-dev,
+ xsltproc,
+ zlib1g-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgEdge/spock
+
+Package: pgedge-17
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, tzdata, ssl-cert
+Conflicts: postgresql-17, postgresql-client-17, postgresql-server-dev-17
+Provides: postgresql-17, postgresql-client-17, postgresql-server-dev-17
+Replaces: postgresql-17, postgresql-client-17, postgresql-server-dev-17
+Description: pgEdge patched PostgreSQL 17 core
+ PostgreSQL 17 core package built from upstream PostgreSQL source plus
+ pgEdge Spock PG17 patchset.
+ .
+ This package installs binaries into /usr/lib/postgresql/17 and is intended
+ to be the base runtime for pgEdge Spock, Snowflake and LOLOR extensions.
