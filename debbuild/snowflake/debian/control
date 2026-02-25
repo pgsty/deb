@@ -1,0 +1,14 @@
+Source: snowflake
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), pgedge-17 (>= 17)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgEdge/snowflake
+
+Package: pgedge-17-snowflake
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, pgedge-17 (>= 17)
+Description: Snowflake distributed unique ID extension for pgedge-17
+ Provides bigint snowflake ID generation functions such as snowflake.nextval(regclass).
