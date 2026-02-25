@@ -17,3 +17,9 @@ tf/.terraform*
 
 docs/
 apt/
+
+AGENTS.md
+CLAUDE.md
+.claude/
+.codex/
+.agent/

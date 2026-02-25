@@ -734,6 +734,21 @@ babelfish:
 	cd babelfish && make
 cloudberry:
 	cd cloudberry && make
+agensgraph:
+	cd agensgraph && make
+pgedge:
+	cd pgedge && make
+spock:
+	cd spock && make
+snowflake:
+	cd snowflake && make
+lolor:
+	cd lolor && make
+pgedge-all:
+	cd pgedge && make
+	cd spock && make
+	cd snowflake && make
+	cd lolor && make
 
 ###############################################################
 #                        1. Building                          #
@@ -768,4 +783,5 @@ collect:
 	documentdb pgtt session_variable pg_statement_rollback spat \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
 	pglinter pg_enigma pg_typeid \
-	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry
+	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry agensgraph \
+	pgedge pgedge-all spock snowflake lolor
