@@ -1,0 +1,47 @@
+Source: agensgraph-16
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ autoconf,
+ bison,
+ flex,
+ debhelper-compat (= 13),
+ dh-exec (>= 0.13~),
+ docbook-xml,
+ docbook-xsl (>= 1.77),
+ dpkg-dev (>= 1.16~),
+ gettext,
+ libicu-dev,
+ libkrb5-dev,
+ libldap2-dev,
+ liblz4-dev,
+ libpam0g-dev,
+ libperl-dev,
+ libreadline-dev,
+ libssl-dev,
+ libxml2-dev,
+ libxml2-utils,
+ libxslt1-dev,
+ libzstd-dev,
+ mawk,
+ perl (>= 5.8),
+ pkgconf,
+ python3-dev,
+ tcl-dev,
+ tzdata,
+ uuid-dev,
+ xsltproc,
+ zlib1g-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/skaiworldwide-oss/agensgraph
+
+Package: agensgraph-16
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata, ssl-cert
+Description: AgensGraph graph database kernel based on PostgreSQL 16
+ AgensGraph is a multi-model database that integrates relational SQL and
+ graph data processing in one kernel.
+ .
+ This package installs AgensGraph under /usr/agens-16.

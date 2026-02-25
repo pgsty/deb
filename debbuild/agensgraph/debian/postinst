@@ -1,0 +1,26 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ]; then
+    if ! getent group postgres >/dev/null 2>&1; then
+        if command -v addgroup >/dev/null 2>&1; then
+            addgroup --system postgres
+        else
+            groupadd --system postgres
+        fi
+    fi
+
+    if ! getent passwd postgres >/dev/null 2>&1; then
+        if command -v adduser >/dev/null 2>&1; then
+            adduser --system --home /var/lib/pgsql --shell /bin/bash \
+                --gecos "PostgreSQL Server" --ingroup postgres postgres
+        else
+            useradd --system --home-dir /var/lib/pgsql --shell /bin/bash \
+                --gid postgres postgres
+        fi
+    fi
+
+    ldconfig
+fi
+
+exit 0

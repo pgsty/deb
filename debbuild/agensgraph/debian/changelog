@@ -1,0 +1,7 @@
+agensgraph-16 (2.16.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial Debian package for AgensGraph 2.16.0 (PostgreSQL 16 fork).
+  * Build as a single package under /usr/agens-16.
+  * Handle tarball build mode when .git metadata is absent.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Feb 2026 18:00:00 +0000
