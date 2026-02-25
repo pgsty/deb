@@ -1,0 +1,14 @@
+Source: spock
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), pgedge-17 (>= 17), libjansson-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgEdge/spock
+
+Package: pgedge-17-spock
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, pgedge-17 (>= 17)
+Description: Spock multi-master logical replication extension for pgedge-17
+ Provides pgEdge Spock logical replication features, including node/subscription management and conflict handling APIs.
