@@ -42,7 +42,7 @@ Build-Depends:
  xsltproc, zlib1g-dev, libpam0g-dev, libz-dev, libpam-dev
 
 
-Package: openhalodb
+Package: openhalodb-14
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: MySQL wire protocol support for PostgreSQL

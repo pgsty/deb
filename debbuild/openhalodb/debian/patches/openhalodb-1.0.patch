@@ -436,3 +436,45 @@ index 0ba5cbe..985d0f0 100644
  
  PREPARE q3(text, int, float, boolean, smallint) AS
  	SELECT * FROM tenk1 WHERE string4 = $1 AND (four = $2 OR
+diff --git a/configure b/configure
+index 0228a5c..0dc8464 100755
+--- a/configure
++++ b/configure
+@@ -2840,7 +2840,7 @@ cat >>confdefs.h <<_ACEOF
+ _ACEOF
+ 
+ 
+-PG_VERSION_PREFIX="1.0."
++PG_VERSION_PREFIX=""
+ 
+ cat >>confdefs.h <<_ACEOF
+ #define PG_VERSION_PREFIX "$PG_VERSION_PREFIX"
+@@ -2867,7 +2867,7 @@ if test "${with_extra_version+set}" = set; then :
+   esac
+ 
+ else
+-  PG_VERSION="$PACKAGE_VERSION ("`date +%y%m%d`")"
++  PG_VERSION="$PACKAGE_VERSION"
+ fi
+ 
+ 
+diff --git a/configure.ac b/configure.ac
+index 5fab53f..368aa2d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -37,13 +37,13 @@ AC_DEFINE_UNQUOTED(PG_MAJORVERSION, "$PG_MAJORVERSION", [Halo major version as a
+ AC_DEFINE_UNQUOTED(PG_MAJORVERSION_NUM, $PG_MAJORVERSION, [Halo major version number])
+ AC_DEFINE_UNQUOTED(PG_MINORVERSION_NUM, $PG_MINORVERSION, [Halo minor version number])
+ 
+-[PG_VERSION_PREFIX="1.0."]
++[PG_VERSION_PREFIX=""]
+ AC_DEFINE_UNQUOTED(PG_VERSION_PREFIX, "$PG_VERSION_PREFIX", [Halo version prefix])
+ 
+ 
+ PGAC_ARG_REQ(with, extra-version, [STRING], [append STRING to version],
+              [PG_VERSION="$PACKAGE_VERSION$withval"],
+-             [PG_VERSION="$PACKAGE_VERSION ("`date +%y%m%d`")"])
++             [PG_VERSION="$PACKAGE_VERSION"])
+ AC_DEFINE_UNQUOTED(PG_VERSION, "$PG_VERSION", [Halo version as a string])
+ 
+ AC_CANONICAL_HOST
