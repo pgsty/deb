@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgtt-4.0.tar.gz
+TARBALL := pgtt-4.4.tar.gz
 
 # prepare directory
 setup:
