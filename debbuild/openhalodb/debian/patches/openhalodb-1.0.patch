@@ -1,0 +1,438 @@
+Description: align OpenHalo defaults with Pigsty packaging defaults
+Origin: vendor
+Forwarded: not-needed
+Last-Update: 2026-02-26
+
+diff --git a/contrib/oid2name/oid2name.c b/contrib/oid2name/oid2name.c
+index 5c1b2c3..65cce49 100644
+--- a/contrib/oid2name/oid2name.c
++++ b/contrib/oid2name/oid2name.c
+@@ -601,7 +601,7 @@ main(int argc, char **argv)
+ 
+ 	if (my_opts->dbname == NULL)
+ 	{
+-		my_opts->dbname = "halo0root";
++		my_opts->dbname = "postgres";
+ 		my_opts->nodb = true;
+ 	}
+ 	pgconn = sql_conn(my_opts);
+diff --git a/contrib/pg_stat_statements/expected/pg_stat_statements.out b/contrib/pg_stat_statements/expected/pg_stat_statements.out
+index 75c3644..7e0ad3c 100644
+--- a/contrib/pg_stat_statements/expected/pg_stat_statements.out
++++ b/contrib/pg_stat_statements/expected/pg_stat_statements.out
+@@ -1077,7 +1077,7 @@ SELECT COUNT(*) FROM pg_stat_statements WHERE query LIKE '%SELECT GROUPING%';
+      2
+ (1 row)
+ 
+-\c halo0root
++\c postgres
+ CREATE EXTENSION pg_stat_statements;
+ CREATE TABLE pgss_test (id INT, name VARCHAR(30));
+ SELECT * FROM pgss_test;
+@@ -1085,7 +1085,7 @@ SELECT * FROM pgss_test;
+ ----+------
+ (0 rows)
+ 
+-SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'halo0root');
++SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'postgres');
+  query | calls 
+ -------+-------
+ (0 rows)
+@@ -1096,7 +1096,7 @@ SELECT * FROM pgss_test;
+ ----+------
+ (0 rows)
+ 
+-SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'halo0root');
++SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'postgres');
+                     query                    | calls 
+ ---------------------------------------------+-------
+  SELECT * FROM pgss_test                     |     1
+@@ -1108,7 +1108,7 @@ SELECT * FROM pgss_test;
+ ----+------
+ (0 rows)
+ 
+-SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'halo0root');
++SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'postgres');
+                                                    query                                                   | calls 
+ -----------------------------------------------------------------------------------------------------------+-------
+  SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = $1) |     1
+@@ -1116,13 +1116,13 @@ SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_dat
+  SET pg_stat_statements.untrack_dbnames = ''                                                               |     1
+ (3 rows)
+ 
+-SET pg_stat_statements.untrack_dbnames = 'halo0root';
++SET pg_stat_statements.untrack_dbnames = 'postgres';
+ SELECT * FROM pgss_test;
+  id | name 
+ ----+------
+ (0 rows)
+ 
+-SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'halo0root');
++SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'postgres');
+                                                    query                                                   | calls 
+ -----------------------------------------------------------------------------------------------------------+-------
+  SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = $1) |     2
+diff --git a/contrib/pg_stat_statements/pg_stat_statements.conf b/contrib/pg_stat_statements/pg_stat_statements.conf
+index 1110fb4..6261d4a 100644
+--- a/contrib/pg_stat_statements/pg_stat_statements.conf
++++ b/contrib/pg_stat_statements/pg_stat_statements.conf
+@@ -1,2 +1,2 @@
+ shared_preload_libraries = 'pg_stat_statements'
+-pg_stat_statements.untrack_dbnames = 'halo0root'
+\ No newline at end of file
++pg_stat_statements.untrack_dbnames = 'postgres'
+\ No newline at end of file
+diff --git a/contrib/pg_stat_statements/sql/pg_stat_statements.sql b/contrib/pg_stat_statements/sql/pg_stat_statements.sql
+index 96baeda..33c5be4 100644
+--- a/contrib/pg_stat_statements/sql/pg_stat_statements.sql
++++ b/contrib/pg_stat_statements/sql/pg_stat_statements.sql
+@@ -442,19 +442,19 @@ SELECT (
+ 
+ SELECT COUNT(*) FROM pg_stat_statements WHERE query LIKE '%SELECT GROUPING%';
+ 
+-\c halo0root
++\c postgres
+ CREATE EXTENSION pg_stat_statements;
+ CREATE TABLE pgss_test (id INT, name VARCHAR(30));
+ SELECT * FROM pgss_test;
+-SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'halo0root');
++SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'postgres');
+ SET pg_stat_statements.untrack_dbnames = '';
+ SELECT * FROM pgss_test;
+-SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'halo0root');
++SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'postgres');
+ SELECT * FROM pgss_test;
+-SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'halo0root');
+-SET pg_stat_statements.untrack_dbnames = 'halo0root';
++SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'postgres');
++SET pg_stat_statements.untrack_dbnames = 'postgres';
+ SELECT * FROM pgss_test;
+-SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'halo0root');
++SELECT query, calls FROM pg_stat_statements WHERE dbid = (SELECT oid FROM pg_database WHERE datname = 'postgres');
+ DROP EXTENSION pg_stat_statements;
+ 
+ \c contrib_regression
+diff --git a/src/backend/commands/dbcommands.c b/src/backend/commands/dbcommands.c
+index 9474b89..02c3a87 100644
+--- a/src/backend/commands/dbcommands.c
++++ b/src/backend/commands/dbcommands.c
+@@ -1487,11 +1487,11 @@ DropDatabase(ParseState *pstate, DropdbStmt *stmt)
+ 	bool		force = false;
+ 	ListCell   *lc;
+ 
+-	if (strcasecmp(stmt->dbname, "halo0root") == 0)
++	if (strcasecmp(stmt->dbname, "postgres") == 0)
+ 	{
+ 		ereport(ERROR,
+ 				(errcode(ERRCODE_DATABASE_DROPPED),
+-				errmsg("drop the root database (halo0root) is not allowed")));
++				errmsg("drop the root database (postgres) is not allowed")));
+ 	}
+ 
+ 	foreach(lc, stmt->options)
+diff --git a/src/backend/tcop/postgres.c b/src/backend/tcop/postgres.c
+index 6f31370..c5a6980 100644
+--- a/src/backend/tcop/postgres.c
++++ b/src/backend/tcop/postgres.c
+@@ -4172,10 +4172,10 @@ PostgresMain(int argc, char *argv[],
+ 	 */
+ 	process_postgres_switches(argc, argv, PGC_POSTMASTER, &dbname);
+ 
+-	/* Must have gotten a database name, or have a default (the halo0root) */
++	/* Must have gotten a database name, or have a default (the postgres) */
+ 	if (dbname == NULL)
+ 	{
+-		dbname = "halo0root";
++		dbname = "postgres";
+ 		if (dbname == NULL)
+ 			ereport(FATAL,
+ 					(errcode(ERRCODE_INVALID_PARAMETER_VALUE),
+@@ -4310,7 +4310,7 @@ PostgresMain(int argc, char *argv[],
+             }
+             else 
+             {
+-                dbname = "halo0root";
++                dbname = "postgres";
+             }
+         } 
+         else 
+diff --git a/src/backend/utils/init/postinit.c b/src/backend/utils/init/postinit.c
+index 684f719..0cd6761 100644
+--- a/src/backend/utils/init/postinit.c
++++ b/src/backend/utils/init/postinit.c
+@@ -806,7 +806,7 @@ InitPostgres(const char *in_dbname, Oid dboid, const char *username,
+             }
+             else 
+             {
+-                in_dbname = "halo0root";
++                in_dbname = "postgres";
+             }
+         }
+         username = MyProcPort->user_name;
+diff --git a/src/backend/utils/misc/postgresql.conf.sample b/src/backend/utils/misc/postgresql.conf.sample
+index 47a6143..fa26dee 100644
+--- a/src/backend/utils/misc/postgresql.conf.sample
++++ b/src/backend/utils/misc/postgresql.conf.sample
+@@ -63,7 +63,7 @@
+ #port = 5432				# (change requires restart)
+ #max_connections = 100			# (change requires restart)
+ #superuser_reserved_connections = 3	    # (change requires restart)
+-unix_socket_directories = '/var/run/openhalo'	# comma-separated list of directories
++unix_socket_directories = '/tmp'	# comma-separated list of directories
+                                             # (change requires restart)
+ #unix_socket_group = ''			# (change requires restart)
+ #unix_socket_permissions = 0777		# begin with 0 to use octal notation
+@@ -73,9 +73,9 @@ unix_socket_directories = '/var/run/openhalo'	# comma-separated list of director
+ #bonjour_name = ''			# defaults to the computer name
+                             # (change requires restart)
+ 
+-#mysql.listener_on = true	                    # (enable MySQL listener; change requires restart)
+-#mysql.port = 3306                              # (second_port is for MySQL mode; change requires restart)
+-#mysql.halo_mysql_version = '5.7.32-log'        # (change requires restart)
++mysql.listener_on = true	                    # (enable MySQL listener; change requires restart)
++mysql.port = 3306                              # (second_port is for MySQL mode; change requires restart)
++mysql.halo_mysql_version = '5.7.32-log'        # (change requires restart)
+ #mysql.ci_collation = true                      # (change requires restart)
+ #mysql.explicit_defaults_for_timestamp = false  # (change requires restart)
+ #mysql.auto_rollback_tx_on_error = false        # (change requires restart)
+@@ -761,7 +761,7 @@ log_filename = 'haloserver-%Y-%m-%d_%H%M%S.log'	# log file name pattern,
+ #------------------------------------------------------------------------------
+ # VERSION AND PLATFORM COMPATIBILITY
+ #------------------------------------------------------------------------------
+-#database_compat_mode = 'mysql'	        # database compat mode, values can be:
++database_compat_mode = 'mysql'	        # database compat mode, values can be:
+ 					# postgresql (default)
+                                         # mysql (MySQL mode)
+ 					# oracle (support in Enterprise Edition)
+diff --git a/src/bin/initdb/initdb.c b/src/bin/initdb/initdb.c
+index 5f57bef..ad7fb2b 100644
+--- a/src/bin/initdb/initdb.c
++++ b/src/bin/initdb/initdb.c
+@@ -10,7 +10,7 @@
+  * all its data, create the files that hold the global tables, create
+  * a few other control files for it, and create three databases: the
+  * template databases "template0" and "template1", and a default user
+- * database "halo0root".
++ * database "postgres".
+  *
+  * The template databases are ordinary Halo databases.  template0
+  * is never supposed to change after initdb, whereas template1 can be
+@@ -19,7 +19,7 @@
+  *
+  * For largely-historical reasons, the template1 database is the one built
+  * by the basic bootstrap process.  After it is complete, template0 and
+- * the default database, halo0root, are made just by copying template1.
++ * the default database, postgres, are made just by copying template1.
+  *
+  * To create template1, we run the postgres (backend) program in bootstrap
+  * mode and feed it data from the postgres.bki library file.  After this
+@@ -1950,8 +1950,8 @@ make_postgres(FILE *cmdfd)
+ {
+ 	const char *const *line;
+ 	static const char *const postgres_setup[] = {
+-		"CREATE DATABASE halo0root;\n\n",
+-		"COMMENT ON DATABASE halo0root IS 'default administrative connection database';\n\n",
++		"CREATE DATABASE postgres;\n\n",
++		"COMMENT ON DATABASE postgres IS 'default administrative connection database';\n\n",
+ 		NULL
+ 	};
+ 
+diff --git a/src/bin/pg_dump/pg_dumpall.c b/src/bin/pg_dump/pg_dumpall.c
+index ec8c556..e0a0251 100644
+--- a/src/bin/pg_dump/pg_dumpall.c
++++ b/src/bin/pg_dump/pg_dumpall.c
+@@ -462,7 +462,7 @@ main(int argc, char *argv[])
+ 	}
+ 	else
+ 	{
+-		conn = connectDatabase("halo0root", connstr, pghost, pgport, pguser,
++		conn = connectDatabase("postgres", connstr, pghost, pgport, pguser,
+ 							   prompt_password, false);
+ 		if (!conn)
+ 			conn = connectDatabase("template1", connstr, pghost, pgport, pguser,
+@@ -470,7 +470,7 @@ main(int argc, char *argv[])
+ 
+ 		if (!conn)
+ 		{
+-			pg_log_error("could not connect to databases \"halo0root\" or \"template1\"\n"
++			pg_log_error("could not connect to databases \"postgres\" or \"template1\"\n"
+ 						 "Please specify an alternative database.");
+ 			fprintf(stderr, _("Try \"%s --help\" for more information.\n"),
+ 					progname);
+@@ -1362,7 +1362,7 @@ dropDBs(PGconn *conn)
+ 					   "ORDER BY datname");
+ 
+ 	if (PQntuples(res) > 0)
+-		fprintf(OPF, "--\n-- Drop databases (except halo0root and template1)\n--\n\n");
++		fprintf(OPF, "--\n-- Drop databases (except postgres and template1)\n--\n\n");
+ 
+ 	for (i = 0; i < PQntuples(res); i++)
+ 	{
+@@ -1375,7 +1375,7 @@ dropDBs(PGconn *conn)
+ 		 */
+ 		if (strcmp(dbname, "template1") != 0 &&
+ 			strcmp(dbname, "template0") != 0 &&
+-			strcmp(dbname, "halo0root") != 0)
++			strcmp(dbname, "postgres") != 0)
+ 		{
+ 			fprintf(OPF, "DROP DATABASE %s%s;\n",
+ 					if_exists ? "IF EXISTS " : "",
+@@ -1557,7 +1557,7 @@ dumpDatabases(PGconn *conn)
+ 		 * otherwise we'll merely restore their contents.  Other databases
+ 		 * should simply be created.
+ 		 */
+-		if (strcmp(dbname, "template1") == 0 || strcmp(dbname, "halo0root") == 0)
++		if (strcmp(dbname, "template1") == 0 || strcmp(dbname, "postgres") == 0)
+ 		{
+ 			if (output_clean)
+ 				create_opts = "--clean --create";
+diff --git a/src/bin/pg_upgrade/pg_upgrade.c b/src/bin/pg_upgrade/pg_upgrade.c
+index 999c0f2..3628bd7 100644
+--- a/src/bin/pg_upgrade/pg_upgrade.c
++++ b/src/bin/pg_upgrade/pg_upgrade.c
+@@ -348,7 +348,7 @@ create_new_objects(void)
+ 				  true,
+ 				  true,
+ 				  "\"%s/pg_restore\" %s %s --exit-on-error --verbose "
+-				  "--dbname halo0root \"%s\"",
++				  "--dbname postgres \"%s\"",
+ 				  new_cluster.bindir,
+ 				  cluster_conn_opts(&new_cluster),
+ 				  create_opts,
+@@ -377,7 +377,7 @@ create_new_objects(void)
+ 		 * tell pg_restore to drop and recreate it; otherwise we would fail to
+ 		 * propagate its database-level properties.
+ 		 */
+-		if (strcmp(old_db->db_name, "halo0root") == 0)
++		if (strcmp(old_db->db_name, "postgres") == 0)
+ 			create_opts = "--clean --create";
+ 		else
+ 			create_opts = "--create";
+diff --git a/src/bin/psql/startup.c b/src/bin/psql/startup.c
+index b2ff403..22d3289 100644
+--- a/src/bin/psql/startup.c
++++ b/src/bin/psql/startup.c
+@@ -255,9 +255,9 @@ main(int argc, char *argv[])
+ 		values[3] = password;
+ 		keywords[4] = "dbname"; /* see do_connect() */
+ 		values[4] = (options.list_dbs && options.dbname == NULL) ?
+-			"halo0root" : options.dbname;
++			"postgres" : options.dbname;
+ 		if (values[4] == NULL)
+-			values[4] = "halo0root";
++			values[4] = "postgres";
+ 		keywords[5] = "fallback_application_name";
+ 		values[5] = pset.progname;
+ 		keywords[6] = "client_encoding";
+diff --git a/src/bin/scripts/createdb.c b/src/bin/scripts/createdb.c
+index 0cf189d..8642410 100644
+--- a/src/bin/scripts/createdb.c
++++ b/src/bin/scripts/createdb.c
+@@ -179,7 +179,7 @@ main(int argc, char *argv[])
+ 	}
+ 
+ 	/* No point in trying to use postgres db when creating postgres db. */
+-	if (maintenance_db == NULL && strcmp(dbname, "halo0root") == 0)
++	if (maintenance_db == NULL && strcmp(dbname, "postgres") == 0)
+ 		maintenance_db = "template1";
+ 
+ 	cparams.dbname = maintenance_db;
+diff --git a/src/bin/scripts/dropdb.c b/src/bin/scripts/dropdb.c
+index b333a09..be0670c 100644
+--- a/src/bin/scripts/dropdb.c
++++ b/src/bin/scripts/dropdb.c
+@@ -129,7 +129,7 @@ main(int argc, char *argv[])
+ 	}
+ 
+ 	/* Avoid trying to drop postgres db while we are connected to it. */
+-	if (maintenance_db == NULL && strcmp(dbname, "halo0root") == 0)
++	if (maintenance_db == NULL && strcmp(dbname, "postgres") == 0)
+ 		maintenance_db = "template1";
+ 
+ 	cparams.dbname = maintenance_db;
+diff --git a/src/test/regress/expected/prepare.out b/src/test/regress/expected/prepare.out
+index 4a72b50..5730f8b 100644
+--- a/src/test/regress/expected/prepare.out
++++ b/src/test/regress/expected/prepare.out
+@@ -58,10 +58,10 @@ SELECT name, statement, parameter_types FROM pg_prepared_statements;
+ PREPARE q2(text) AS
+ 	SELECT datname, datistemplate, datallowconn
+ 	FROM pg_database WHERE datname = $1;
+-EXECUTE q2('halo0root');
++EXECUTE q2('postgres');
+   datname  | datistemplate | datallowconn 
+ -----------+---------------+--------------
+- halo0root | f             | t
++ postgres | f             | t
+ (1 row)
+ 
+ PREPARE q3(text, int, float, boolean, smallint) AS
+diff --git a/src/test/regress/pg_regress.c b/src/test/regress/pg_regress.c
+index c2b6679..b7348f1 100644
+--- a/src/test/regress/pg_regress.c
++++ b/src/test/regress/pg_regress.c
+@@ -2025,7 +2025,7 @@ static void
+ drop_database_if_exists(const char *dbname)
+ {
+ 	header(_("dropping database \"%s\""), dbname);
+-	psql_command("halo0root", "DROP DATABASE IF EXISTS \"%s\"", dbname);
++	psql_command("postgres", "DROP DATABASE IF EXISTS \"%s\"", dbname);
+ }
+ 
+ static void
+@@ -2039,10 +2039,10 @@ create_database(const char *dbname)
+ 	 */
+ 	header(_("creating database \"%s\""), dbname);
+ 	if (encoding)
+-		psql_command("halo0root", "CREATE DATABASE \"%s\" TEMPLATE=template0 ENCODING='%s'%s", dbname, encoding,
++		psql_command("postgres", "CREATE DATABASE \"%s\" TEMPLATE=template0 ENCODING='%s'%s", dbname, encoding,
+ 					 (nolocale) ? " LC_COLLATE='C' LC_CTYPE='C'" : "");
+ 	else
+-		psql_command("halo0root", "CREATE DATABASE \"%s\" TEMPLATE=template0%s", dbname,
++		psql_command("postgres", "CREATE DATABASE \"%s\" TEMPLATE=template0%s", dbname,
+ 					 (nolocale) ? " LC_COLLATE='C' LC_CTYPE='C'" : "");
+ 	psql_command(dbname,
+ 				 "ALTER DATABASE \"%s\" SET lc_messages TO 'C';"
+@@ -2068,17 +2068,17 @@ static void
+ drop_role_if_exists(const char *rolename)
+ {
+ 	header(_("dropping role \"%s\""), rolename);
+-	psql_command("halo0root", "DROP ROLE IF EXISTS \"%s\"", rolename);
++	psql_command("postgres", "DROP ROLE IF EXISTS \"%s\"", rolename);
+ }
+ 
+ static void
+ create_role(const char *rolename, const _stringlist *granted_dbs)
+ {
+ 	header(_("creating role \"%s\""), rolename);
+-	psql_command("halo0root", "CREATE ROLE \"%s\" WITH LOGIN", rolename);
++	psql_command("postgres", "CREATE ROLE \"%s\" WITH LOGIN", rolename);
+ 	for (; granted_dbs != NULL; granted_dbs = granted_dbs->next)
+ 	{
+-		psql_command("halo0root", "GRANT ALL ON DATABASE \"%s\" TO \"%s\"",
++		psql_command("postgres", "GRANT ALL ON DATABASE \"%s\" TO \"%s\"",
+ 					 granted_dbs->str, rolename);
+ 	}
+ }
+@@ -2470,7 +2470,7 @@ regression_main(int argc, char *argv[],
+ 		 * Check if there is a postmaster running already.
+ 		 */
+ 		snprintf(buf2, sizeof(buf2),
+-				 "\"%s%spsql\" -X halo0root <%s 2>%s",
++				 "\"%s%spsql\" -X postgres <%s 2>%s",
+ 				 bindir ? bindir : "",
+ 				 bindir ? "/" : "",
+ 				 DEVNULL, DEVNULL);
+diff --git a/src/test/regress/sql/prepare.sql b/src/test/regress/sql/prepare.sql
+index 0ba5cbe..985d0f0 100644
+--- a/src/test/regress/sql/prepare.sql
++++ b/src/test/regress/sql/prepare.sql
+@@ -34,7 +34,7 @@ PREPARE q2(text) AS
+ 	SELECT datname, datistemplate, datallowconn
+ 	FROM pg_database WHERE datname = $1;
+ 
+-EXECUTE q2('halo0root');
++EXECUTE q2('postgres');
+ 
+ PREPARE q3(text, int, float, boolean, smallint) AS
+ 	SELECT * FROM tenk1 WHERE string4 = $1 AND (four = $2 OR

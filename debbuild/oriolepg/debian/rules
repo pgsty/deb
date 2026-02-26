@@ -25,6 +25,7 @@ override_dh_auto_configure:
 		--docdir=$(PGBASEINSTDIR)/doc \
 		--htmldir=$(PGBASEINSTDIR)/doc/html \
 		--with-system-tzdata=/usr/share/zoneinfo \
+		--with-extra-version=" (OrioleDB 1.6-beta14)" \
 		--with-lz4 --with-zstd \
 		--with-uuid=e2fs --with-libxml --with-libxslt \
 		--with-icu --with-llvm \
@@ -36,6 +37,8 @@ override_dh_auto_configure:
 		--enable-nls --enable-dtrace
 
 override_dh_auto_build:
+	# Source tarball lacks .git metadata; pin patchset version for PGXS consumers.
+	sed -E -i 's|^ORIOLEDB_PATCHSET_VERSION =.*|ORIOLEDB_PATCHSET_VERSION = $(ORIOLEDB_PATCHSET_VERSION)|' src/Makefile.global
 	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
 	cd ../..
 	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin

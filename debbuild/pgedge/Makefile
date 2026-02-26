@@ -31,7 +31,7 @@ setup: check-src
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build:
-	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
+	cd $(BUILD_DIR) && SPOCK_VERSION=$(SPOCK_VERSION) dpkg-buildpackage -b -us -uc
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/

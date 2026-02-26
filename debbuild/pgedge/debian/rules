@@ -2,6 +2,7 @@
 
 export DH_VERBOSE=1
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+SPOCK_VERSION ?= 5.0.5
 
 # Filter out -ffast-math to avoid precision regressions.
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
@@ -33,7 +34,7 @@ override_dh_auto_configure:
 		--enable-nls \
 		--enable-thread-safety \
 		--enable-dtrace \
-		--with-extra-version="-pgedge"
+		--with-extra-version=" (pgEdge $(SPOCK_VERSION))"
 
 override_dh_auto_build:
 	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
