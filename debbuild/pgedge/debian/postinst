@@ -3,11 +3,11 @@ set -e
 
 if [ "$1" = "configure" ]; then
     if ! getent group postgres >/dev/null; then
-        addgroup --system postgres
+        addgroup --system --gid 543 postgres
     fi
 
     if ! getent passwd postgres >/dev/null; then
-        adduser --system --home /var/lib/postgresql --shell /bin/bash \
+        adduser --system --uid 543 --home /var/lib/postgresql --shell /bin/bash \
             --gecos "PostgreSQL Server" --ingroup postgres postgres
     fi
 

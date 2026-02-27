@@ -48,8 +48,7 @@ Package: pgedge-17
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, tzdata, ssl-cert
 Description: pgEdge patched PostgreSQL 17 core
- PostgreSQL 17 core package built from upstream PostgreSQL source plus
- pgEdge Spock PG17 patchset.
+ PostgreSQL 17 core package built from upstream PostgreSQL source plus pgEdge Spock PG17 patchset.
  .
  This package installs binaries into /usr/pgedge-17 and is intended
  to be the base runtime for pgEdge Spock, Snowflake and LOLOR extensions.
