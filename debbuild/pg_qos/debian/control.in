@@ -1,0 +1,17 @@
+Source: qos
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/appstonia/pg_qos
+
+Package: postgresql-PGVERSION-qos
+Architecture: any
+Provides: postgresql-qos
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: QoS resource governor extension for PostgreSQL
+  QoS is a PostgreSQL extension that provides resource governance for sessions and queries.
+  It can cap CPU usage, work_mem, and concurrent transaction/statement limits per role and database.
+  This package contains the qos extension build for PostgreSQL PGVERSION.
