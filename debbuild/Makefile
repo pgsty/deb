@@ -120,6 +120,9 @@ pg_enigma:
 pg_typeid:
 	cd pg_typeid && make
 
+pg_pinyin:
+	cd pg_pinyin && make
+
 
 
 ###############################################################
@@ -782,6 +785,6 @@ collect:
 	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
 	documentdb pgtt session_variable pg_statement_rollback spat \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
-	pglinter pg_enigma pg_typeid \
+	pglinter pg_enigma pg_typeid pg_pinyin \
 	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry agensgraph \
 	pgedge pgedge-all spock snowflake lolor

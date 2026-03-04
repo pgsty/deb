@@ -1,0 +1,16 @@
+Source: pg-pinyin
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/aiyou178/pg_pinyin
+
+Package: postgresql-PGVERSION-pinyin
+Architecture: any
+Provides: postgresql-pinyin
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Pinyin romanization and search helpers for PostgreSQL
+  Rust/pgrx extension for pinyin conversion and related query helpers in
+  PostgreSQL.
