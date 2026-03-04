@@ -1,12 +1,14 @@
 all: setup build move
 
-TARBALL := VectorChord-1.1.0.tar.gz
+TARBALL := VectorChord-1.1.1.tar.gz
+SEMVER := $(shell echo $(TARBALL) | sed -E 's/^VectorChord-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
 
 # prepare directory
 setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
+	sed -i -E "/^\[workspace.package\]/,/^\[/{s/^version = \".*\"/version = \"$(SEMVER)\"/}" build/Cargo.toml
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
@@ -21,7 +23,13 @@ building:
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
 	    CC=$$CC_BIN CXX=$$CXX_BIN \
-	    cargo pgrx package -v; \
+	    cargo pgrx package -v && \
+	    EXT_DIR=target/release/vchord-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension && \
+	    cp -f sql/upgrade/vchord--*.sql $$EXT_DIR/ && \
+	    cp -f sql/install/vchord--$(SEMVER).sql $$EXT_DIR/vchord--$(SEMVER).sql && \
+	    grep -q "default_version = '$(SEMVER)'" $$EXT_DIR/vchord.control && \
+	    test $$(ls -1 $$EXT_DIR/vchord--*.sql | wc -l) -gt 1 && \
+	    test -f $$EXT_DIR/vchord--$(SEMVER).sql; \
 	done
 
 packaging:
