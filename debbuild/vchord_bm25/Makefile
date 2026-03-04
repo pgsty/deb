@@ -1,12 +1,14 @@
 all: setup build move
 
 TARBALL := VectorChord-bm25-0.3.0.tar.gz
+SEMVER := $(shell echo $(TARBALL) | sed -E 's/^VectorChord-bm25-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
 
 # prepare directory
 setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
+	sed -i -E "/^\[package\]/,/^\[/{s/^version = \".*\"/version = \"$(SEMVER)\"/}" build/Cargo.toml
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
@@ -16,7 +18,10 @@ building:
 	for PG_VERSION in 13 14 15 16 17 18; do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
-	    cargo pgrx package -v; \
+	    cargo pgrx package -v && \
+	    EXT_DIR=target/release/vchord_bm25-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension && \
+	    grep -q "default_version = '$(SEMVER)'" $$EXT_DIR/vchord_bm25.control && \
+	    test -f $$EXT_DIR/vchord_bm25--$(SEMVER).sql; \
 	done
 
 packaging:
