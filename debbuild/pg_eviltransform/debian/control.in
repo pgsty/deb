@@ -1,0 +1,16 @@
+Source: pg-eviltransform
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/aiyou178/pg_eviltransform
+
+Package: postgresql-PGVERSION-eviltransform
+Architecture: any
+Provides: postgresql-eviltransform
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Coordinate transform extension based on eviltransform
+  Rust/pgrx extension providing bd09 and gcj02 coordinate transform helpers
+  for PostgreSQL/PostGIS workflows.
