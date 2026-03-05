@@ -11,7 +11,7 @@ setup:
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/columnar/debian/changelog
 
-build: build16 build15 build14 build13
+build: build16 build15 build14
 
 # building deb
 build16:
@@ -32,12 +32,6 @@ build14:
 	cd build/columnar/ && pg_buildext updatecontrol
 	cd build/columnar/ && PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
-build13:
-	cd build/columnar/ && PATH=/usr/lib/postgresql/13/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
-	echo '13' > build/columnar/debian/pgversions
-	cd build/columnar/ && pg_buildext updatecontrol
-	cd build/columnar/ && PATH=/usr/lib/postgresql/13/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
 # collect deb
 move:
 	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
@@ -47,5 +41,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 

@@ -12,7 +12,7 @@ setup:
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
-build: build18 build17 build16 build15 build14 build13
+build: build18 build17 build16 build15 build14
 build18:
 	sed -i "1s/17/18/g" build/debian/rules
 	echo "18" > build/debian/pgversions
@@ -53,15 +53,6 @@ build14:
 	cd build/ && make clean
 	cd build/ && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
-build13:
-	sed -i "1s/17/13/g" build/debian/rules
-	echo "13" > build/debian/pgversions
-	cd build && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/13/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
-	cd build/ && make clean
-	cd build/ && PATH=/usr/lib/postgresql/13/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-
 # collect deb
 move:
 	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
@@ -71,5 +62,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 

@@ -41,11 +41,3 @@ Provides: postgresql-timestamp9
 Depends: postgresql-14, ${shlibs:Depends}, ${misc:Depends}
 Description: Nanosecond precision timestamp type for Postgres 14
   An efficient nanosecond precision timestamp type for Postgres 14
-
-Package: postgresql-13-timestamp9
-Architecture: any
-Provides: postgresql-timestamp9
-Depends: postgresql-13, ${shlibs:Depends}, ${misc:Depends}
-Description: Nanosecond precision timestamp type for Postgres 13
-  An efficient nanosecond precision timestamp type for Postgres 13
-
