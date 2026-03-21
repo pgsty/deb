@@ -1,0 +1,46 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+VERSIONS := $(shell sed -e 's/#.*//' -e '/^[[:space:]]*$$/d' debian/pgversions)
+PDU_CFLAGS := $(shell dpkg-buildflags --get CFLAGS) $(shell dpkg-buildflags --get CPPFLAGS) -std=c99 -g -Wall -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-missing-field-initializers -Wno-unused-variable -Wno-unused-function -Wno-unused-but-set-variable -Wno-format-truncation
+PDU_LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed -lm -lz -ldl -llz4 -lpthread
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	rm -rf build-pg*
+
+override_dh_auto_build:
+	set -e; \
+	for v in $(VERSIONS); do \
+		rm -rf build-pg$$v; \
+		mkdir -p build-pg$$v; \
+		tar --exclude='./debian' --exclude='./build-pg*' -cf - . | tar -C build-pg$$v -xf -; \
+		sed -ri 's/^#define PG_VERSION_NUM .*/#define PG_VERSION_NUM '"$$v"'/' build-pg$$v/basic.h; \
+		$(MAKE) -C build-pg$$v CC="$(CC)" CFLAGS='$(PDU_CFLAGS)' LDFLAGS='$(PDU_LDFLAGS)'; \
+	done
+
+override_dh_auto_test:
+	:
+
+override_dh_auto_install:
+	set -e; \
+	for v in $(VERSIONS); do \
+		pkg=postgresql-$$v-pdu; \
+		install -d debian/$$pkg/usr/lib/postgresql/$$v/bin; \
+		install -d debian/$$pkg/usr/share/postgresql/$$v/pdu; \
+		install -m 0755 build-pg$$v/pdu debian/$$pkg/usr/lib/postgresql/$$v/bin/pdu; \
+		install -m 0644 pdu.ini debian/$$pkg/usr/share/postgresql/$$v/pdu/pdu.ini.example; \
+	done
+
+override_dh_installdocs:
+	set -e; \
+	for v in $(VERSIONS); do \
+		dh_installdocs -ppostgresql-$$v-pdu README.md NOTICE LICENSE; \
+	done
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym

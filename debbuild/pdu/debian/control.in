@@ -1,0 +1,19 @@
+Source: pdu
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), liblz4-dev, postgresql-common, zlib1g-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/wublabdubdub/PDU-PostgreSQLDataUnloader
+
+Package: postgresql-PGVERSION-pdu
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL data recovery utility for PostgreSQL PGVERSION
+ PDU (PostgreSQL Data Unloader) is a standalone disaster recovery and data
+ extraction utility for PostgreSQL data directories.
+ .
+ This package builds the version-bound PDU binary for PostgreSQL PGVERSION and
+ installs it into /usr/lib/postgresql/PGVERSION/bin/pdu together with an
+ example configuration file under /usr/share/postgresql/PGVERSION/pdu/.
