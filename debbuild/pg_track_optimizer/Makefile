@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_track_optimizer-0.9.1.tar.gz
+TARBALL := pg_track_optimizer-0.9.2.tar.gz
 
 # prepare directory
 setup:
