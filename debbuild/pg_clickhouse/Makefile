@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_clickhouse-0.1.4.tar.gz
+TARBALL := pg_clickhouse-0.1.5.tar.gz
 
 # prepare directory
 setup:

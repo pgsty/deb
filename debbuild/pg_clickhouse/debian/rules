@@ -8,6 +8,10 @@ include /usr/share/postgresql-common/pgxs_debian_control.mk
 override_dh_auto_build:
 	# Skip git submodule command since vendor/clickhouse-cpp is already included in tarball
 	sed -i 's/git submodule update --init/@echo "Skipping submodule (included in tarball)"/' Makefile
+	# libcurl before 7.87.0 does not define CURL_WRITEFUNC_ERROR.
+	# Returning 0 still signals a write callback failure on older releases.
+	grep -q '^#ifndef CURL_WRITEFUNC_ERROR$$' src/http.c || \
+	perl -0pi -e 's{#include <internal.h>}{#include <internal.h>\n#ifndef CURL_WRITEFUNC_ERROR\n#define CURL_WRITEFUNC_ERROR 0\n#endif}' src/http.c
 
 override_dh_auto_test:
 
