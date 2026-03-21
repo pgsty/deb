@@ -1,0 +1,3 @@
+target/release/pgdog usr/bin/
+debian/pgdog.toml etc/pgdog/
+debian/users.toml etc/pgdog/

@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ]; then
+    if ! getent group pgdog >/dev/null 2>&1; then
+        addgroup --system pgdog
+    fi
+
+    if ! getent passwd pgdog >/dev/null 2>&1; then
+        adduser --system --ingroup pgdog --home /var/lib/pgdog \
+            --shell /usr/sbin/nologin --disabled-login --no-create-home \
+            --gecos "PgDog service user" pgdog
+    fi
+
+    install -d -o pgdog -g pgdog -m 0750 /var/lib/pgdog
+    chown root:pgdog /etc/pgdog /etc/pgdog/*.toml 2>/dev/null || true
+    chmod 0750 /etc/pgdog 2>/dev/null || true
+    chmod 0640 /etc/pgdog/*.toml 2>/dev/null || true
+fi
+
+#DEBHELPER#
+
+exit 0

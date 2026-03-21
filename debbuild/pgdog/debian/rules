@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	@if [ "$$(dpkg --print-architecture)" = "arm64" ]; then \
+		export RUSTFLAGS="$${RUSTFLAGS:+$$RUSTFLAGS }-Ctarget-feature=+lse"; \
+	fi; \
+	PATH=$$HOME/.cargo/bin:$$PATH cargo build --release --locked -p pgdog
+
+override_dh_auto_clean:
+	rm -rf target
+
+override_dh_auto_test:
+	:
+
+override_dh_auto_install:
+	:
+
+override_dh_installsystemd:
+	dh_installsystemd --no-start
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym

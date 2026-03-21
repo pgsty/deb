@@ -1,0 +1,7 @@
+# Default PgDog user configuration installed by the PGSTY DEB.
+# Edit this file before starting the service in production.
+
+[[users]]
+name = "pgdog"
+database = "pgdog"
+password = "change-me"

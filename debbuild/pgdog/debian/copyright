@@ -1,0 +1,16 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pgdog
+Source: https://github.com/pgdogdev/pgdog
+
+Files: *
+Copyright: 2024-2026 PgDog contributors
+License: AGPL-3
+
+License: AGPL-3
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+ .
+ On Debian systems, the complete text of the GNU Affero General Public License
+ version 3 can be found in /usr/share/common-licenses/AGPL-3.

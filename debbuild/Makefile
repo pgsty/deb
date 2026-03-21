@@ -663,6 +663,10 @@ kafka_fdw:
 
 libfq:
 	cd libfq && make
+pdu:
+	cd pdu && make
+pgdog:
+	cd pgdog && make
 firebird_fdw:
 	cd firebird_fdw && make
 
@@ -788,7 +792,7 @@ collect:
 	pg_rewrite pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_qos pg_savior safeupdate pg_drop_events \
 	pg_profile pg_tracing pg_stat_monitor pg_store_plans pgsentinel pg_ash pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pg_track_optimizer pagevis \
 	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
-	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
+	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
 	documentdb pgtt session_variable pg_statement_rollback spat \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \

@@ -1,0 +1,21 @@
+[Unit]
+Description=PgDog PostgreSQL proxy and pooler
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pgdog
+Group=pgdog
+WorkingDirectory=/var/lib/pgdog
+ExecStartPre=/usr/bin/pgdog -c /etc/pgdog/pgdog.toml -u /etc/pgdog/users.toml configcheck
+ExecStart=/usr/bin/pgdog -c /etc/pgdog/pgdog.toml -u /etc/pgdog/users.toml run
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGINT
+Restart=on-failure
+RestartSec=3s
+LimitNOFILE=1048576
+TimeoutStopSec=75s
+
+[Install]
+WantedBy=multi-user.target

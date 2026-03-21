@@ -1,0 +1,30 @@
+Source: pgdog
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ cargo,
+ clang,
+ cmake,
+ debhelper-compat (= 13),
+ g++,
+ gcc,
+ git,
+ libclang-dev,
+ libssl-dev,
+ pkgconf,
+ protobuf-compiler,
+ rustc
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgdogdev/pgdog
+
+Package: pgdog
+Architecture: any
+Depends: adduser, ca-certificates, postgresql-client-18, ${shlibs:Depends}, ${misc:Depends}
+Description: Modern PostgreSQL proxy, pooler, load balancer and query router
+ PgDog is a modern PostgreSQL proxy, pooler, load balancer and query router
+ written in Rust.
+ .
+ This package ships the PgDog daemon, a systemd service unit, and default
+ configuration templates.

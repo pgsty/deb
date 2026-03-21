@@ -1,0 +1,27 @@
+# Default PgDog configuration installed by the PGSTY DEB.
+# Edit this file before starting the service in production.
+
+[general]
+host = "0.0.0.0"
+port = 6432
+workers = 2
+default_pool_size = 10
+min_pool_size = 1
+pooler_mode = "transaction"
+shutdown_timeout = 60_000
+log_format = "text"
+log_level = "info"
+
+[admin]
+name = "admin"
+user = "admin"
+password = "change-me"
+
+[replication]
+pg_dump_path = "/usr/lib/postgresql/18/bin/pg_dump"
+
+[[databases]]
+name = "pgdog"
+host = "127.0.0.1"
+port = 5432
+role = "primary"
