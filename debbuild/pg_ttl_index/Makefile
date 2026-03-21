@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := postgres-extensions-pg_ttl-2.0.0.tar.gz
+TARBALL := postgres-extensions-pg_ttl-3.0.0.tar.gz
 
 # prepare directory
 setup:
