@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgsentinel-1.4.0.tar.gz
+TARBALL := pgsentinel-1.4.1.tar.gz
 
 # prepare directory
 setup:
@@ -26,4 +26,3 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-

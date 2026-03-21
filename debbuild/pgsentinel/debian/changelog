@@ -1,3 +1,9 @@
+pgsentinel (1.4.1-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/pgsentinel/pgsentinel/releases/tag/v1.4.1
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Mar 2026 12:00:00 +0000
+
 pgsentinel (1.4.0-1PIGSTY) unstable; urgency=low
 
   * https://github.com/pgsentinel/pgsentinel/releases/tag/v1.4.0
