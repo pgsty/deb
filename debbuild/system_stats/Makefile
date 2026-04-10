@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := system_stats-3.2.tar.gz
+TARBALL := system_stats-4.0.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 

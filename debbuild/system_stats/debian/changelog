@@ -1,3 +1,9 @@
+system-stats (4.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/EnterpriseDB/system_stats/releases/tag/v4.0
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 10 Apr 2026 10:20:00 +0000
+
 system-stats (3.2-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/EnterpriseDB/system_stats/releases/tag/v3.2
