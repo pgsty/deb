@@ -2,13 +2,15 @@
 
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
+export DEB_BUILD_OPTIONS = parallel=1
+export CMAKE_BUILD_PARALLEL_LEVEL = 1
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
 override_dh_auto_configure:
 
-#override_dh_auto_build:
-	# Disable the build step since binaries are pre-built
+override_dh_auto_build:
+	:
 
 override_dh_auto_clean:
 	# do nothing

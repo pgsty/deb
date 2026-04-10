@@ -1,60 +1,37 @@
 all: build
 
-TARBALL := timescaledb-2.25.2.tar.gz
+TARBALL := timescaledb-2.26.0.tar.gz
 
 build: build18 build17 build16 build15
 
-# building deb
+define build_one
+	rm -rf build-$(1); mkdir -p build-$(1)
+	tar -C build-$(1) --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	cd build-$(1) && PATH=/usr/lib/postgresql/$(1)/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
+	cd build-$(1)/build && $(MAKE) -j1
+	rm -rf build-$(1)/build/debian; cp -r debian build-$(1)/build/debian
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build-$(1)/build/debian/changelog
+	echo '$(1)' > build-$(1)/build/debian/pgversions
+	cd build-$(1)/build && pg_buildext updatecontrol
+	cd build-$(1)/build && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/$(1)/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	mkdir -p ~/ext/pkg && cp build-$(1)/*.deb ~/ext/pkg/
+endef
+
 build18:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
-	rm -rf build/build/debian; cp -r debian build/build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/build/debian/changelog
-	echo '18' > build/build/debian/pgversions
-	cd build/build/ && pg_buildext updatecontrol
-	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
+	$(call build_one,18)
 
 build17:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
-	rm -rf build/build/debian; cp -r debian build/build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/build/debian/changelog
-	echo '17' > build/build/debian/pgversions
-	cd build/build/ && pg_buildext updatecontrol
-	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
+	$(call build_one,17)
 
 build16:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
-	rm -rf build/build/debian; cp -r debian build/build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/build/debian/changelog
-	echo '16' > build/build/debian/pgversions
-	cd build/build/ && pg_buildext updatecontrol
-	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
+	$(call build_one,16)
 
 build15:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	cd build/ && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
-	rm -rf build/build/debian; cp -r debian build/build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/build/debian/changelog
-	echo '15' > build/build/debian/pgversions
-	cd build/build/ && pg_buildext updatecontrol
-	cd build/build/ && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
+	$(call build_one,15)
 
 # remove building craps
 clean:
-	rm -rf *.buildinfo *.changes *.ddeb *.deb
+	rm -rf build-* *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
