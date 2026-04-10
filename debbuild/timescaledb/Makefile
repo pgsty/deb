@@ -1,6 +1,6 @@
 all: build
 
-TARBALL := timescaledb-2.26.0.tar.gz
+TARBALL := timescaledb-2.26.2.tar.gz
 
 build: build18 build17 build16 build15
 
