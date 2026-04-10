@@ -1,0 +1,16 @@
+Source: postgresbson
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), pkgconf, libbson-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/buzzm/postgresbson
+
+Package: postgresql-PGVERSION-pgbson
+Architecture: any
+Provides: postgresql-pgbson
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: BSON data type and accessor functions for PostgreSQL
+  postgresbson provides the pgbson PostgreSQL extension, which adds a BSON data
+  type together with accessor, comparison, and conversion functions.

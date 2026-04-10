@@ -1,0 +1,66 @@
+diff --git a/pgbson.c b/pgbson.c
+index 90a2f9c..0231294 100644
+--- a/pgbson.c
++++ b/pgbson.c
+@@ -18,9 +18,8 @@
+ 
+ //#define  PGBSON_DEBUG
+ 
+-#ifdef PGBSON_DEBUG
+-#include <stdio.h>    // only for fprintf() debugging....
+-#endif
++#include <stdio.h>    // snprintf/fprintf
++#include <time.h>
+ 
+ 
+ // The Postgres family of #includes
+@@ -481,6 +480,26 @@ static Timestamp _cvt_datetime_to_ts(int64_t millis_since_epoch)
+     return ts;
+ }
+ 
++static void _format_datetime_to_iso8601(int64_t millis_since_epoch, char *buf, size_t bufsize)
++{
++    time_t t_unix;
++    int millis;
++    struct tm unix_tm;
++
++    t_unix = millis_since_epoch / 1000;
++    millis = millis_since_epoch % 1000;
++    if (millis < 0) {
++        millis += 1000;
++        t_unix -= 1;
++    }
++
++    unix_tm = *gmtime(&t_unix);
++
++    snprintf(buf, bufsize, "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
++             unix_tm.tm_year + 1900, unix_tm.tm_mon + 1, unix_tm.tm_mday,
++             unix_tm.tm_hour, unix_tm.tm_min, unix_tm.tm_sec, millis);
++}
++
+ 
+ PG_FUNCTION_INFO_V1(bson_get_datetime);
+ Datum bson_get_datetime(PG_FUNCTION_ARGS)
+@@ -792,9 +811,6 @@ Datum bson_get_binary(PG_FUNCTION_ARGS)
+ 
+ 
+ 
+-extern void
+-_bson_iso8601_date_format (int64_t msec_since_epoch, bson_string_t *str);
+-
+ PG_FUNCTION_INFO_V1(bson_as_text);  // text bson_get(bson, dotpath)
+ Datum bson_as_text(PG_FUNCTION_ARGS)
+ {
+@@ -856,11 +872,7 @@ Datum bson_as_text(PG_FUNCTION_ARGS)
+ 	    }
+ 	    case BSON_TYPE_DATE_TIME: {
+ 		int64_t millis_since_epoch = bson_iter_date_time (&target);
+-		bson_string_t* str = bson_string_new (NULL);
+-		_bson_iso8601_date_format(millis_since_epoch, str);
+-		bson_strncpy (valbuf, str->str, str->len);
+-		valbuf[str->len] = '\0';
+-		bson_string_free(str, true); // true means "free segment" ?
++		_format_datetime_to_iso8601(millis_since_epoch, valbuf, sizeof(valbuf));
+ 		txt = valbuf;
+ 		break;		
+ 	    }								
