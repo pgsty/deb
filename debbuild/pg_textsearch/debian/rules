@@ -2,6 +2,8 @@
 
 export CC = gcc
 
+VERSIONS := $(shell cat debian/pgversions)
+
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
 override_dh_auto_build:
@@ -14,7 +16,15 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-textsearch
+	set -e; \
+	for v in $(VERSIONS); do \
+		pkg=postgresql-$$v-textsearch; \
+		$(MAKE) clean; \
+		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config; \
+		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config DESTDIR=$(CURDIR)/debian/$$pkg install; \
+		printf 'postgresql:Depends=postgresql-%s\n' "$$v" >> debian/$$pkg.substvars; \
+		printf 'postgresql:Breaks=\n' >> debian/$$pkg.substvars; \
+	done
 
 override_dh_installdocs:
 	dh_installdocs --all README.*
