@@ -1,0 +1,16 @@
+Source: pg-slug-gen
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/fernandoolle/pg_slug_gen
+
+Package: postgresql-PGVERSION-pg-slug-gen
+Architecture: any
+Provides: postgresql-pg-slug-gen
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Generate cryptographically secure timestamp-based slugs
+  pg_slug_gen generates unique random slugs based on timestamps with
+  cryptographically secure character selection for PostgreSQL 15 through 18.
