@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+
+# Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
+export CC = gcc
+export DEB_BUILD_MAINT_OPTIONS = optimize=-lto
+export PG_CFLAGS += -fno-lto
+export PG_CXXFLAGS += -fno-lto
+export PG_LDFLAGS += -fno-lto
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_configure:
+	patch -p1 --forward -f < debian/patches/pgproto-0.2.1-force-naive-utf8-range.patch
+
+override_dh_auto_build:
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	+pg_buildext loop postgresql-%v-pgproto
+
+override_dh_installdocs:
+	dh_installdocs --all README.* DESIGN.md
+
+%:
+	dh $@

@@ -1,0 +1,16 @@
+Source: pgproto
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Apaezmx/pgproto
+
+Package: postgresql-PGVERSION-pgproto
+Architecture: any
+Provides: postgresql-pgproto
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Native Protobuf support for PostgreSQL
+  pgproto adds native Protobuf parsing, mutation, indexing, and JSON
+  conversion support to PostgreSQL as a C extension.
