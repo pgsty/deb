@@ -1,0 +1,17 @@
+Source: pg-command-fw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rustwizard/pg_command_fw
+
+Package: postgresql-PGVERSION-pg-command-fw
+Architecture: any
+Provides: postgresql-pg-command-fw
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: DDL and utility command firewall for PostgreSQL
+  pg_command_fw intercepts and selectively blocks DDL, utility commands,
+  and dangerous built-in functions through configurable PostgreSQL hooks.
+  This package builds the pgrx extension for PostgreSQL 15 through 18.
