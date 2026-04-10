@@ -1,5 +1,11 @@
 #!/usr/bin/make -f
 
+export DEB_BUILD_OPTIONS = parallel=1
+export DEB_BUILD_MAINT_OPTIONS = optimize=-lto
+export PG_CFLAGS += -fno-lto
+export PG_CXXFLAGS += -fno-lto
+export PG_LDFLAGS += -fno-lto
+
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
 
