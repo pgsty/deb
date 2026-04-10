@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_store_plans-1.9.tar.gz
+TARBALL := pg_store_plans-1.10.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 
