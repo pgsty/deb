@@ -1,0 +1,27 @@
+Subject: Add the correctly named extension control file
+
+The upstream archive names the control file `pgmb.control` even though the
+extension itself is `pglock`. Add the expected `pglock.control` so PGXS and
+Debian packaging install the extension under the right name without ad-hoc
+copy steps in the recipe, and drop the explicit schema creation from the SQL
+script because the extension control file already owns the target schema.
+
+--- /dev/null
++++ b/pglock.control
+@@ -0,0 +1,5 @@
++comment = 'A simple PostgreSQL lock service for distributive systems'
++default_version = '1.0.0'
++relocatable = false
++schema = 'pglock'
++requires = 'pg_cron'
+--- a/pglock--1.0.0.sql
++++ b/pglock--1.0.0.sql
+@@ -5,8 +5,6 @@
+ -- because it is automatically created by postgres due to being declared in
+ -- the extension control fi
+ 
+-CREATE SCHEMA IF NOT EXISTS pglock;
+-
+ -- Serializable isolation prevents race conditions in lock/unlock operations
+ -- Function to set default_transaction_isolation for the current database
+ CREATE OR REPLACE FUNCTION pglock.set_serializable()

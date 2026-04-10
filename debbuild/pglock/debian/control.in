@@ -1,0 +1,16 @@
+Source: pglock
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/fraruiz/pglock
+
+Package: postgresql-PGVERSION-pglock
+Architecture: any
+Provides: postgresql-pglock
+Depends: ${misc:Depends}, ${postgresql:Depends}, postgresql-PGVERSION-cron
+Description: Lightweight distributed lock service inside PostgreSQL
+  pglock implements a lightweight distributed lock service using SQL functions,
+  a lock table, and TTL cleanup scheduled through pg_cron.

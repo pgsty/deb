@@ -1,0 +1,6 @@
+PostgreSQL License
+
+License is declared as `postgresql` in the upstream `META.json`.
+The source archive does not ship a standalone LICENSE file.
+
+Repository: https://github.com/fraruiz/pglock
