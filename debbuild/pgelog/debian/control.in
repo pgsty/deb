@@ -1,0 +1,16 @@
+Source: pgelog
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/anfiau/pgelog
+
+Package: postgresql-PGVERSION-pgelog
+Architecture: any
+Provides: postgresql-pgelog
+Depends: ${misc:Depends}, ${postgresql:Depends}, postgresql-PGVERSION-pg-variables
+Description: Extended PostgreSQL logging via pseudo-autonomous transactions
+  pgelog writes extended log records through pseudo-autonomous transactions.
+  It also requires the dblink extension at runtime.
