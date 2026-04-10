@@ -1,0 +1,18 @@
+Source: parray-gin
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/theirix/parray_gin
+
+Package: postgresql-PGVERSION-parray-gin
+Architecture: any
+Provides: postgresql-parray-gin
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL GIN support for arrays with partial match
+  parray_gin adds GIN operator support for array values with partial-match
+  semantics in PostgreSQL.
+  It is useful for indexing and accelerating searches over array members where
+  exact equality is not enough.
