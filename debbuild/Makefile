@@ -725,6 +725,9 @@ pg_trickle:
 pg_stat_ch:
 	cd pg_stat_ch && make
 
+fsm_core:
+	cd fsm_core && make
+
 
 ###############################################################
 #            Category: ETL  - ETL                            #
@@ -816,7 +819,7 @@ collect:
 	pg_profile pg_tracing pg_stat_monitor pg_store_plans pgsentinel pg_ash pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pg_track_optimizer pagevis \
 	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
 	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
-	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback spat pg_trickle pg_stat_ch \
+	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback spat pg_trickle pg_stat_ch fsm_core \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
 	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry agensgraph \

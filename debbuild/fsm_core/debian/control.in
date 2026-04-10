@@ -1,0 +1,17 @@
+Source: fsm-core
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Nirajkashyap/fsm/tree/main/packages/database-src-extension/fsm_core
+
+Package: postgresql-PGVERSION-fsm-core
+Architecture: any
+Provides: postgresql-fsm-core
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgmq
+Description: Finite state machine toolkit for PostgreSQL
+  fsm_core is a PostgreSQL extension that provides finite state machine
+  primitives inside the database using Rust and pgrx.
+  It requires the pgmq extension and uses ltree from PostgreSQL contrib.
