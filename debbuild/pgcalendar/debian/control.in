@@ -1,0 +1,16 @@
+Source: pgcalendar
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/h4kbas/pgcalendar
+
+Package: postgresql-PGVERSION-pgcalendar
+Architecture: any
+Provides: postgresql-pgcalendar
+Depends: ${misc:Depends}, postgresql-PGVERSION
+Description: Infinite calendar and recurring schedule extension for PostgreSQL
+  pgcalendar provides recurring schedules, projections, and exception handling
+  as a pure SQL extension for PostgreSQL.

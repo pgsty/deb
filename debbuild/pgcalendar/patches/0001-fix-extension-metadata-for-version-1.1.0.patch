@@ -1,0 +1,30 @@
+Subject: Fix control metadata and schema bootstrap for extension installs
+
+The upstream 1.1.0 zip still ships a stale default_version, an unnecessary
+module_pathname entry for this SQL-only extension, and an explicit schema
+creation statement inside the extension script. Adjust them so the Debian
+package installs cleanly as a proper versioned SQL extension.
+
+--- a/pgcalendar.control
++++ b/pgcalendar.control
+@@ -1,7 +1,6 @@
+ # pgcalendar extension
+ comment = 'Infinite Calendar Extension for PostgreSQL with recurring events, schedules, and exception handling'
+-default_version = '1.0.1'
+-module_pathname = '$libdir/pgcalendar'
++default_version = '1.1.0'
+ relocatable = false
+ schema = pgcalendar
+ superuser = false
+--- a/pgcalendar--1.1.0.sql
++++ b/pgcalendar--1.1.0.sql
+@@ -1,9 +1,7 @@
+ -- pgcalendar extension installation script
+--- Version: 1.0.0
++-- Version: 1.1.0
+ 
+ -- Create the extension schema
+-CREATE SCHEMA IF NOT EXISTS pgcalendar;
+-
+ -- Set search path
+ SET search_path TO pgcalendar, public;
