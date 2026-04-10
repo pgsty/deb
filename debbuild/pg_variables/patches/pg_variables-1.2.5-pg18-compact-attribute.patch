@@ -1,0 +1,31 @@
+From 33a38b172e8e5ec0590cc690300299fbc65f0d48 Mon Sep 17 00:00:00 2001
+From: Ivan Kush <ivan.v.kush@yandex.ru>
+Date: Mon, 23 Feb 2026 08:57:02 +0300
+Subject: [PATCH] PG18: Refresh CompactAttribute after TupleDesc attribute
+ mutation
+
+PostgreSQL 18 introduced CompactAttribute caching for TupleDesc.
+Fix stale compact_attrs entries by refreshing CompactAttribute after in-place TupleDesc attribute modification.
+
+PG18 commit:
+[Introduce CompactAttribute array in TupleDesc, take 2](https://github.com/postgres/postgres/commit/5983a4cffc31640fda6643f10146a5b72b203eaa)
+---
+ pg_variables_record.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/pg_variables_record.c b/pg_variables_record.c
+index dadb14f..e3567d1 100644
+--- a/pg_variables_record.c
++++ b/pg_variables_record.c
+@@ -211,6 +211,9 @@ coerce_unknown_rewrite_tupdesc(TupleDesc old_tupdesc, TupleDesc *return_tupdesc)
+ 			new_attr.attlen = -1;
+ 			new_attr.atttypmod = -1;
+ 			memcpy(TupleDescAttr((*return_tupdesc), i), &new_attr, sizeof(FormData_pg_attribute));
++#if PG_VERSION_NUM >= 180000
++			populate_compact_attribute(*return_tupdesc, i);
++#endif			
+ 		}
+ 	}
+ }
+-- 
+2.50.1 (Apple Git-155)

@@ -1,0 +1,332 @@
+From afdef5405e9de88eb4548ea0f6a9150add44c749 Mon Sep 17 00:00:00 2001
+From: Koval Dmitry <d.koval@postgrespro.ru>
+Date: Wed, 11 Jan 2023 23:19:15 +0300
+Subject: [PATCH] [PGPRO-7614] Fix crash by using cursor after rollback of
+ cursor creation
+
+Tags: pg_variables
+
+--- a/pg_variables.c
++++ b/pg_variables.c
+@@ -166,12 +166,14 @@
+ 	Variable   *variable;
+ 	Package    *package;
+ 	Levels		levels;
++	void	   **user_fctx; /* pointer to funcctx->user_fctx */
+ }			VariableStatEntry;
+ 
+ typedef struct tagPackageStatEntry
+ {
+ 	HASH_SEQ_STATUS *status;
+ 	Levels		levels;
++	void	   **user_fctx; /* pointer to funcctx->user_fctx */
+ }			PackageStatEntry;
+ 
+ #ifdef PGPRO_EE
+@@ -266,6 +268,25 @@
+ PackageStatEntry_status_ptr(void *entry)
+ {
+ 	return ((PackageStatEntry *) entry)->status;
++}
++
++/*
++ * VariableStatEntry and PackageStatEntry functions for clear function context.
++ */
++static void
++VariableStatEntry_clear_fctx(void *entry)
++{
++	VariableStatEntry *e = (VariableStatEntry *) entry;
++	if (e->user_fctx)
++		*e->user_fctx = NULL;
++}
++
++static void
++PackageStatEntry_clear_fctx(void *entry)
++{
++	PackageStatEntry *e = (PackageStatEntry *) entry;
++	if (e->user_fctx)
++		*e->user_fctx = NULL;
+ }
+ 
+ /*
+@@ -289,6 +310,7 @@
+ 	HASH_SEQ_STATUS *(*getter) (void *);	/* status getter */
+ 	bool		match_first;	/* return on first match */
+ 	bool		term;			/* hash_seq_term on match */
++	void		(*clear_fctx) (void *); /* clear function context */
+ }			RemoveIfContext;
+ 
+ static void
+@@ -312,6 +334,8 @@
+ 			if (ctx.term)
+ 				hash_seq_term(ctx.getter(entry));
+ 
++			ctx.clear_fctx(entry);
++
+ 			pfree(ctx.getter(entry));
+ 			pfree(entry);
+ 
+@@ -344,6 +368,8 @@
+ 			if (ctx.term)
+ 				hash_seq_term(ctx.getter(entry));
+ 
++			ctx.clear_fctx(entry);
++
+ 			pfree(ctx.getter(entry));
+ 			pfree(entry);
+ 
+@@ -367,7 +393,8 @@
+ 		.eq = VariableStatEntry_status_eq,
+ 		.getter = VariableStatEntry_status_ptr,
+ 		.match_first = true,
+-		.term = false
++		.term = false,
++		.clear_fctx = VariableStatEntry_clear_fctx
+ 	};
+ 
+ 	list_remove_if(ctx);
+@@ -390,7 +417,8 @@
+ 		.eq = VariableStatEntry_variable_eq,
+ 		.getter = VariableStatEntry_status_ptr,
+ 		.match_first = false,
+-		.term = true
++		.term = true,
++		.clear_fctx = VariableStatEntry_clear_fctx
+ 	};
+ 
+ 	list_remove_if(ctx);
+@@ -409,7 +437,8 @@
+ 		.eq = VariableStatEntry_package_eq,
+ 		.getter = VariableStatEntry_status_ptr,
+ 		.match_first = false,
+-		.term = true
++		.term = true,
++		.clear_fctx = VariableStatEntry_clear_fctx
+ 	};
+ 
+ 	list_remove_if(ctx);
+@@ -428,7 +457,8 @@
+ 		.eq = VariableStatEntry_level_eq,
+ 		.getter = VariableStatEntry_status_ptr,
+ 		.match_first = false,
+-		.term = false
++		.term = false,
++		.clear_fctx = VariableStatEntry_clear_fctx
+ 	};
+ 
+ 	list_remove_if(ctx);
+@@ -447,7 +477,8 @@
+ 		.eq = VariableStatEntry_eq_all,
+ 		.getter = VariableStatEntry_status_ptr,
+ 		.match_first = false,
+-		.term = true
++		.term = true,
++		.clear_fctx = VariableStatEntry_clear_fctx
+ 	};
+ 
+ 	list_remove_if(ctx);
+@@ -466,7 +497,8 @@
+ 		.eq = PackageStatEntry_status_eq,
+ 		.getter = PackageStatEntry_status_ptr,
+ 		.match_first = true,
+-		.term = false
++		.term = false,
++		.clear_fctx = PackageStatEntry_clear_fctx
+ 	};
+ 
+ 	list_remove_if(ctx);
+@@ -485,7 +517,8 @@
+ 		.eq = PackageStatEntry_level_eq,
+ 		.getter = PackageStatEntry_status_ptr,
+ 		.match_first = false,
+-		.term = true
++		.term = true,
++		.clear_fctx = PackageStatEntry_clear_fctx
+ 	};
+ 
+ 	list_remove_if(ctx);
+@@ -505,7 +538,8 @@
+ 		.eq = VariableStatEntry_is_transactional,
+ 		.getter = VariableStatEntry_status_ptr,
+ 		.match_first = false,
+-		.term = true
++		.term = true,
++		.clear_fctx = VariableStatEntry_clear_fctx
+ 	};
+ 
+ 	list_remove_if(ctx);
+@@ -1019,6 +1053,7 @@
+ #ifdef PGPRO_EE
+ 		entry->levels.atxlevel = getNestLevelATX();
+ #endif
++		entry->user_fctx = &funcctx->user_fctx;
+ 		variables_stats = lcons((void *) entry, variables_stats);
+ 
+ 		MemoryContextSwitchTo(oldcontext);
+@@ -1027,6 +1062,15 @@
+ 	}
+ 
+ 	funcctx = SRF_PERCALL_SETUP();
++
++	if (funcctx->user_fctx == NULL)
++	{
++		/*
++		 * VariableStatEntry was removed. For example, after call
++		 * 'ROLLBACK TO SAVEPOINT ...'
++		 */
++		SRF_RETURN_DONE(funcctx);
++	}
+ 
+ 	/* Get next hash record */
+ 	rstat = (HASH_SEQ_STATUS *) funcctx->user_fctx;
+@@ -1653,6 +1697,7 @@
+ #ifdef PGPRO_EE
+ 			entry->levels.atxlevel = getNestLevelATX();
+ #endif
++			entry->user_fctx = &funcctx->user_fctx;
+ 			packages_stats = lcons((void *) entry, packages_stats);
+ 			MemoryContextSwitchTo(ctx);
+ 		}
+--- a/sql/pg_variables_trans.sql
++++ b/sql/pg_variables_trans.sql
+@@ -1169,3 +1169,25 @@
+ -- Test case for issue #38 [PGPRO-4676]
+ --
+ SELECT pgv_insert('test', 'x5', ROW ((2::int, 1::int)), TRUE);
++
++--
++-- Test case for PGPRO-7614: crash by using cursor after rollback of cursor
++-- creation.
++--
++BEGIN;
++	SELECT pgv_insert('test', 'x', ROW (1::int, 2::int), true);
++	DECLARE r1_cur CURSOR FOR SELECT pgv_select('test', 'x');
++	SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++	ROLLBACK TO SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++ROLLBACK;
++
++BEGIN;
++	SELECT pgv_insert('test', 'x', ROW (1::int, 2::int), TRUE);
++	DECLARE r1_cur CURSOR FOR SELECT pgv_stats();
++	SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++	ROLLBACK TO SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++ROLLBACK;
+--- a/expected/pg_variables_trans.out
++++ b/expected/pg_variables_trans.out
+@@ -3834,3 +3834,51 @@
+ --
+ SELECT pgv_insert('test', 'x5', ROW ((2::int, 1::int)), TRUE);
+ ERROR:  could not identify a hash function for type record
++--
++-- Test case for PGPRO-7614: crash by using cursor after rollback of cursor
++-- creation.
++--
++BEGIN;
++	SELECT pgv_insert('test', 'x', ROW (1::int, 2::int), true);
++ pgv_insert 
++------------
++ 
++(1 row)
++
++	DECLARE r1_cur CURSOR FOR SELECT pgv_select('test', 'x');
++	SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++ pgv_select 
++------------
++ (1,2)
++(1 row)
++
++	ROLLBACK TO SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++ pgv_select 
++------------
++(0 rows)
++
++ROLLBACK;
++BEGIN;
++	SELECT pgv_insert('test', 'x', ROW (1::int, 2::int), TRUE);
++ pgv_insert 
++------------
++ 
++(1 row)
++
++	DECLARE r1_cur CURSOR FOR SELECT pgv_stats();
++	SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++  pgv_stats   
++--------------
++ (test,32768)
++(1 row)
++
++	ROLLBACK TO SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++ pgv_stats 
++-----------
++(0 rows)
++
++ROLLBACK;
+--- a/expected/pg_variables_trans_0.out
++++ b/expected/pg_variables_trans_0.out
+@@ -3833,8 +3833,56 @@
+ -- Test case for issue #38 [PGPRO-4676]
+ --
+ SELECT pgv_insert('test', 'x5', ROW ((2::int, 1::int)), TRUE);
+  pgv_insert 
+ ------------
+  
+ (1 row)
+ 
++--
++-- Test case for PGPRO-7614: crash by using cursor after rollback of cursor
++-- creation.
++--
++BEGIN;
++	SELECT pgv_insert('test', 'x', ROW (1::int, 2::int), true);
++ pgv_insert 
++------------
++ 
++(1 row)
++
++	DECLARE r1_cur CURSOR FOR SELECT pgv_select('test', 'x');
++	SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++ pgv_select 
++------------
++ (1,2)
++(1 row)
++
++	ROLLBACK TO SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++ pgv_select 
++------------
++(0 rows)
++
++ROLLBACK;
++BEGIN;
++	SELECT pgv_insert('test', 'x', ROW (1::int, 2::int), TRUE);
++ pgv_insert 
++------------
++ 
++(1 row)
++
++	DECLARE r1_cur CURSOR FOR SELECT pgv_stats();
++	SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++  pgv_stats   
++--------------
++ (test,32768)
++(1 row)
++
++	ROLLBACK TO SAVEPOINT sp1;
++	FETCH 1 in r1_cur;
++ pgv_stats 
++-----------
++(0 rows)
++
++ROLLBACK;
+-- 
+2.50.1 (Apple Git-155)

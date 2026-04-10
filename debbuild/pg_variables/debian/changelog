@@ -1,0 +1,5 @@
+pg-variables (1.2.5-1PIGSTY) unstable; urgency=medium
+
+  * Package pg_variables 1.2.5 for PostgreSQL 14 through 18
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 06 Apr 2026 12:45:00 +0800
