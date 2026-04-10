@@ -1,0 +1,16 @@
+Source: rdf-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7), libxml2-dev (>= 2.5.0), pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jimjonesbr/rdf_fdw
+
+Package: postgresql-PGVERSION-rdf-fdw
+Architecture: any
+Provides: postgresql-rdf-fdw
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: RDF triplestore foreign data wrapper for PostgreSQL
+  rdf_fdw is a PostgreSQL foreign data wrapper for RDF triplestores exposed
+  through SPARQL endpoints.
