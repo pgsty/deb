@@ -1,0 +1,16 @@
+Source: pgclone
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/valehdba/pgclone
+
+Package: postgresql-PGVERSION-pgclone
+Architecture: any
+Provides: postgresql-pgclone
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Clone PostgreSQL databases, schemas, and tables across environments
+  pgclone clones databases, schemas, tables, and functions directly from SQL,
+  including asynchronous and selective copy workflows.
