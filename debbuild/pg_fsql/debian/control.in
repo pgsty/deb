@@ -1,0 +1,16 @@
+Source: pg-fsql
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/yurc/pg_fsql
+
+Package: postgresql-PGVERSION-pg-fsql
+Architecture: any
+Provides: postgresql-pg-fsql
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Recursive SQL template engine for PostgreSQL
+  pg_fsql provides a recursive SQL template engine implemented with C and
+  PL/pgSQL, packaged here for PostgreSQL 14 through 18.

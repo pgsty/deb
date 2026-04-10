@@ -1,0 +1,20 @@
+Subject: Use TupleDescAttr accessors for PostgreSQL 18 compatibility
+
+PostgreSQL 18 no longer exposes TupleDesc attributes through the direct
+`attrs[]` array access used by pg_fsql 1.1.0. Switch to the supported
+`TupleDescAttr()` helper so the extension keeps building on PG18 while
+remaining compatible with older supported branches.
+
+--- a/src/execute.c
++++ b/src/execute.c
+@@ -158,8 +158,8 @@
+         }
+ 
+         /* Copy datum out of SPI memory context before SPI_finish */
+-        attbyval = SPI_tuptable->tupdesc->attrs[0].attbyval;
+-        attlen   = SPI_tuptable->tupdesc->attrs[0].attlen;
++        attbyval = TupleDescAttr(SPI_tuptable->tupdesc, 0)->attbyval;
++        attlen   = TupleDescAttr(SPI_tuptable->tupdesc, 0)->attlen;
+         result   = SPI_datumTransfer(result, attbyval, attlen);
+     }
+     else
