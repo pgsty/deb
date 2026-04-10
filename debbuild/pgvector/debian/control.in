@@ -1,0 +1,17 @@
+Source: pgvector
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgvector/pgvector
+
+Package: postgresql-PGVERSION-pgvector
+Architecture: any
+Provides: postgresql-pgvector
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Open-source vector similarity search for PostgreSQL PGVERSION
+  pgvector adds vector data types, similarity operators, and ANN/IVF/HNSW
+  index support to PostgreSQL for embedding storage and semantic search
+  workloads.

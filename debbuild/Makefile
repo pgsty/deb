@@ -33,6 +33,9 @@ vchord:
 pgvectorscale:
 	cd pgvectorscale && make
 
+pgvector:
+	cd pgvector && make
+
 pg_vectorize:
 	cd pg_vectorize && make
 
@@ -778,7 +781,7 @@ collect:
 
 
 .PHONY: deps collect \
-	timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pg_vectorize pg_summarize pg_tiktoken pgml pg_search pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_cardano plprql pglite_fusion pg_smtp_client pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_anon pgsmcrypto wrappers \
+	timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pgvector pg_vectorize pg_summarize pg_tiktoken pgml pg_search pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_cardano plprql pglite_fusion pg_smtp_client pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_anon pgsmcrypto wrappers \
 	timescaledb pg_timeseries temporal_tables emaj table_version pg_task pg_background pg_partman \
 	geoip pg_geohash \
 	smlar pg4ml \
