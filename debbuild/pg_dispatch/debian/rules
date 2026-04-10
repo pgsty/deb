@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+VERSIONS := $(shell sed -e 's/#.*//' -e '/^[[:space:]]*$$/d' debian/pgversions)
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	:
+
+override_dh_auto_test:
+	:
+
+override_dh_auto_clean:
+	:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	set -e; \
+	for v in $(VERSIONS); do \
+		pkg=postgresql-$$v-pg-dispatch; \
+		install -d debian/$$pkg/usr/share/postgresql/$$v/extension; \
+		install -m 0644 pg_dispatch.control debian/$$pkg/usr/share/postgresql/$$v/extension/pg_dispatch.control; \
+		install -m 0644 pg_dispatch--0.1.5.sql debian/$$pkg/usr/share/postgresql/$$v/extension/pg_dispatch--0.1.5.sql; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.*

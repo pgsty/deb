@@ -1,0 +1,16 @@
+Source: pg-dispatch
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Snehil-Shah/pg_dispatch
+
+Package: postgresql-PGVERSION-pg-dispatch
+Architecture: any
+Provides: postgresql-pg-dispatch
+Depends: ${misc:Depends}, postgresql-PGVERSION, postgresql-PGVERSION-cron
+Description: Asynchronous SQL dispatcher for PostgreSQL
+  pg_dispatch offloads SQL work as deferred jobs built on top of pg_cron.
+  It also requires the pgcrypto extension from the PostgreSQL contrib package.
