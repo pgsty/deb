@@ -1,0 +1,17 @@
+Source: pg-trickle
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, libssl-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/grove/pg-trickle
+
+Package: postgresql-PGVERSION-pg-trickle
+Architecture: any
+Provides: postgresql-pg-trickle
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Streaming stream tables for PostgreSQL 18
+  pg_trickle turns PostgreSQL 18 into a real-time data platform with
+  streaming tables and differential view maintenance, implemented as a
+  Rust and pgrx extension.
