@@ -1,0 +1,16 @@
+Source: pg-liquid
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/michael-golfi/pg_liquid
+
+Package: postgresql-PGVERSION-pg-liquid
+Architecture: any
+Provides: postgresql-pg-liquid
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Liquid-inspired Datalog graph query extension for PostgreSQL
+  pg_liquid brings Liquid-style graph querying, assertions, recursive closure,
+  and row normalization to PostgreSQL as a native C extension.
