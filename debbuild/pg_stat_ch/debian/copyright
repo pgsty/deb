@@ -1,0 +1,13 @@
+Apache License 2.0
+
+Copyright (c) ClickHouse, Inc.
+
+Primary upstream license:
+https://github.com/ClickHouse/pg_stat_ch/blob/main/LICENSE.md
+
+Vendored source code in the tarball includes additional third-party components:
+- `third_party/clickhouse-cpp`: Apache-2.0
+- `third_party/opentelemetry-cpp`: Apache-2.0
+- `third_party/clickhouse-cpp/contrib/lz4/lz4`: BSD-2-Clause
+- `third_party/clickhouse-cpp/contrib/zstd/zstd`: BSD-3-Clause
+- `third_party/clickhouse-cpp/contrib/cityhash/cityhash`: MIT

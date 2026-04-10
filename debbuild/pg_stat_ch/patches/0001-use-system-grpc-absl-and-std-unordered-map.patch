@@ -1,0 +1,92 @@
+Subject: Adapt vendored build for Debian system gRPC and Abseil
+
+The upstream vendored build forces gRPC to stay internal and relies on
+Abseil-specific containers and hashing helpers in the exporter and hook
+implementation. On Debian/Ubuntu builders we use the system gRPC/Abseil
+packages instead, and replace the flat_hash_map / HashOf usage with
+standard-library equivalents to avoid depending on the vendored Abseil
+headers.
+
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -43,10 +43,12 @@
+ set(OPENTELEMETRY_INSTALL OFF CACHE BOOL "" FORCE)
+ set(WITH_ABSEIL ON CACHE BOOL "Use Abseil for OTel" FORCE)
+ # Always use vendored gRPC + abseil (never pick up system packages).
+-# This prevents find_package(gRPC) from short-circuiting FetchContent
+-# and leaving absl:: targets undefined.
+-set(CMAKE_DISABLE_FIND_PACKAGE_gRPC TRUE)
+ add_subdirectory(third_party/opentelemetry-cpp EXCLUDE_FROM_ALL)
++# Debian builds prefer the packaged Abseil configuration when opentelemetry-cpp
++# did not already provide absl:: targets through a vendored gRPC build.
++if(NOT TARGET absl::strings)
++  find_package(absl CONFIG REQUIRED)
++endif()
+ 
+ # ---------------------------------------------------------------------------
+ # Add clickhouse-cpp AFTER opentelemetry-cpp.
+--- a/src/export/otel_exporter.cc
++++ b/src/export/otel_exporter.cc
+@@ -15,7 +15,7 @@
+ #include "config/guc.h"
+ #include "export/exporter_interface.h"
+ 
+-#include <absl/container/flat_hash_map.h>
++#include <unordered_map>
+ 
+ #include <cassert>
+ #include <chrono>
+@@ -212,7 +212,7 @@
+   // View over current_row_tags that appends one extra K/V pair without copying the map.
+   class MapPlusExtraPairView : public otel_common::KeyValueIterable {
+    public:
+-    MapPlusExtraPairView(const absl::flat_hash_map<string, string>& base,
++    MapPlusExtraPairView(const std::unordered_map<string, string>& base,
+                          nostd::string_view extra_key, nostd::string_view extra_val)
+         : base_(base), extra_key_(extra_key), extra_val_(extra_val) {}
+ 
+@@ -228,7 +228,7 @@
+     size_t size() const noexcept override { return base_.size() + 1; }
+ 
+    private:
+-    const absl::flat_hash_map<string, string>& base_;
++    const std::unordered_map<string, string>& base_;
+     nostd::string_view extra_key_;
+     nostd::string_view extra_val_;
+   };
+@@ -367,7 +367,7 @@
+ 
+   // Row state
+   bool row_active = false;
+-  absl::flat_hash_map<string, string> current_row_tags;
++  std::unordered_map<string, string> current_row_tags;
+   otel_unique_ptr<logs::LogRecord> current_log_record;
+ 
+   std::vector<shared_ptr<BasicColumn>> columns;
+--- a/src/hooks/query_normalize_state.cc
++++ b/src/hooks/query_normalize_state.cc
+@@ -2,9 +2,8 @@
+ 
+ #include <cstddef>
+ #include <cstring>
++#include <functional>
+ #include <string_view>
+-
+-#include "absl/hash/hash.h"
+ 
+ extern "C" {
+ #include "postgres.h"
+@@ -14,9 +13,11 @@
+ 
+ struct PschStatementKeyHash {
+   size_t operator()(const PschStatementKey& key) const {
+-    return absl::HashOf(
+-        std::string_view(key.source_text != nullptr ? key.source_text : "", key.source_text_len),
+-        key.stmt_location, key.stmt_len);
++    size_t seed = std::hash<std::string_view>{}(
++        std::string_view(key.source_text != nullptr ? key.source_text : "", key.source_text_len));
++    seed ^= std::hash<int>{}(key.stmt_location) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
++    seed ^= std::hash<int>{}(key.stmt_len) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
++    return seed;
+   }
+ };

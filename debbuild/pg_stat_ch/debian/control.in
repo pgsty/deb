@@ -1,0 +1,17 @@
+Source: pg-stat-ch
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cmake, g++, ninja-build, libssl-dev, pkg-config, protobuf-compiler, protobuf-compiler-grpc, libprotobuf-dev, libgrpc++-dev, libabsl-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ClickHouse/pg_stat_ch
+
+Package: postgresql-PGVERSION-pg-stat-ch
+Architecture: any
+Provides: postgresql-pg-stat-ch
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Query telemetry exporter to ClickHouse for PostgreSQL
+  pg_stat_ch captures detailed per-query execution telemetry from PostgreSQL
+  and exports it to ClickHouse in real time.
+  This recipe builds the extension from source for PostgreSQL 16 through 18.

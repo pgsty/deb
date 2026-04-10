@@ -1,0 +1,52 @@
+#!/usr/bin/make -f
+
+export CC = gcc
+export CXX = g++
+export DEB_BUILD_OPTIONS = parallel=1
+export CMAKE_BUILD_PARALLEL_LEVEL = 1
+
+PG_VERSIONS := 16 17 18
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+%:
+	dh $@
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+	rm -rf build-pg*
+
+override_dh_auto_configure:
+
+override_dh_auto_build:
+	set -e; \
+	for v in $(PG_VERSIONS); do \
+		rm -rf build-pg$$v; \
+		PATH="/usr/lib/postgresql/$$v/bin:$$PATH" \
+		cmake -B build-pg$$v -S . -G "Unix Makefiles" \
+			-DPG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config \
+			-DOTELCPP_PROTO_PATH=$(CURDIR)/third_party/opentelemetry-cpp/third_party/opentelemetry-proto \
+			-DCMAKE_BUILD_TYPE=Release; \
+		$(MAKE) -C build-pg$$v -j1; \
+	done
+
+override_dh_auto_install:
+	set -e; \
+	for v in $(PG_VERSIONS); do \
+		pkg=postgresql-$$v-pg-stat-ch; \
+		install -d debian/$$pkg/usr/lib/postgresql/$$v/lib; \
+		install -d debian/$$pkg/usr/share/postgresql/$$v/extension; \
+		install -m 0644 build-pg$$v/pg_stat_ch.so debian/$$pkg/usr/lib/postgresql/$$v/lib/pg_stat_ch.so; \
+		install -m 0644 pg_stat_ch.control debian/$$pkg/usr/share/postgresql/$$v/extension/pg_stat_ch.control; \
+		install -m 0644 sql/pg_stat_ch--0.1.sql debian/$$pkg/usr/share/postgresql/$$v/extension/pg_stat_ch--0.1.sql; \
+	done
+
+override_dh_installdocs:
+	set -e; \
+	for v in $(PG_VERSIONS); do \
+		dh_installdocs -ppostgresql-$$v-pg-stat-ch README.md INSTALL.md; \
+	done
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
