@@ -1,0 +1,19 @@
+Source: pg-datasentinel
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/datasentinel/pg_datasentinel
+
+Package: postgresql-PGVERSION-pg-datasentinel
+Architecture: any
+Provides: postgresql-pg-datasentinel
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Observability and activity monitoring extension for PostgreSQL
+  pg_datasentinel adds observability views for backend memory usage, temporary
+  file usage, checkpoint activity, vacuum and analyze events, and XID/MXID
+  wraparound risk estimation.
+  The module must be loaded via shared_preload_libraries because it allocates
+  shared memory and hooks into PostgreSQL activity logging.
