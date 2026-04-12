@@ -1,3 +1,9 @@
+ddl-historization (0.2-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.2.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 18:45:00 +0800
+
 ddl-historization (0.0.7-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
