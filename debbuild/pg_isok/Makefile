@@ -1,10 +1,9 @@
 all: setup build move
 
-TARBALL := pglock-1.0.0.tar.gz
+TARBALL := pg_isok-1.4.1.tar.gz
 SOURCE_DIR ?= $(or $(wildcard $(HOME)/pgsty/repo/ext/src),../SOURCES)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PATCHES := $(sort $(wildcard patches/*.patch))
 
 check-src:
 	@test -f "$(SOURCE_DIR)/$(TARBALL)" || (echo "missing $(SOURCE_DIR)/$(TARBALL), place the source tarball under $(SOURCE_DIR)"; exit 1)
@@ -12,18 +11,10 @@ check-src:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_DIR)/$(TARBALL)"
-	find $(BUILD_DIR) -name '._*' -delete
+	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
-	@$(MAKE) apply-patches
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-
-apply-patches:
-	@set -e; \
-	for p in $(PATCHES); do \
-		echo "apply $$p"; \
-		(cd $(BUILD_DIR) && patch -p1 < "../$$p"); \
-	done
 
 build:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
@@ -35,4 +26,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup apply-patches build move clean
+.PHONY: all check-src setup build move clean

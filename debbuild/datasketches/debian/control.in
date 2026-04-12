@@ -1,0 +1,18 @@
+Source: datasketches
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), unzip, g++, libboost-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/apache/datasketches-postgresql
+
+Package: postgresql-PGVERSION-datasketches
+Architecture: any
+Provides: postgresql-datasketches
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Apache DataSketches extension for approximate analytics in PostgreSQL
+ Apache DataSketches brings approximate analytics data types and aggregates to
+ PostgreSQL. The extension includes CPC, HLL, Theta, Array-of-Doubles, KLL,
+ REQ, quantiles, and frequent-strings sketches for fast approximate distinct
+ counting, quantiles, histograms, and heavy-hitter analysis.

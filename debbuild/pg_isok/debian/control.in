@@ -1,0 +1,17 @@
+Source: pg-isok
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://codeberg.org/kop/pg_isok
+
+Package: postgresql-PGVERSION-pg-isok
+Architecture: any
+Provides: postgresql-pg-isok
+Depends: ${misc:Depends}, postgresql-PGVERSION
+Description: Query-based data integrity management and soft-alerting for PostgreSQL
+ pg_isok stores SQL checks as data, executes them in batches, tracks changes in
+ questionable rows over time, and lets operators defer or accept individual
+ findings so later runs surface only newly interesting data quality issues.
