@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+
+export CC = gcc
+export DEB_BUILD_MAINT_OPTIONS = optimize=-lto
+export PG_CFLAGS += -fno-lto
+export PG_CXXFLAGS += -fno-lto
+export PG_LDFLAGS += -fno-lto
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_build:
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	+pg_buildext loop postgresql-%v-provsql
+	rm -rf debian/postgresql-*-provsql/usr/share/doc/postgresql-doc-*/
+
+override_dh_installdocs:
+	dh_installdocs --all README.md doc/provsql.md
+
+%:
+	dh $@
