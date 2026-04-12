@@ -1,6 +1,13 @@
+pg-cardano (1.2.0-1PIGSTY) unstable; urgency=low
+
+  * Align metadata and build targets with the cardano-community/pg_cardano
+    1.2.0 source tree.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 15:00:00 +0800
+
 pg-cardano (1.1.1-1PIGSTY) unstable; urgency=low
 
-  * https://github.com/Florents-Tselai/pg_cardano/releases/tag/v1.1.1
+  * https://github.com/cardano-community/pg_cardano/releases/tag/v1.1.1
 
  -- Ruohang Feng <rh@vonng.com>  Sat, 02 Nov 2025 00:00:00 +0000
 
