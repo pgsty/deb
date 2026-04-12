@@ -1,19 +1,20 @@
 all: setup build move
 
-TARBALL := pg_trickle-0.16.0-complete.tar.gz
-SOURCE_DIR ?= $(or $(wildcard $(HOME)/pgsty/repo/ext/src),../SOURCES)
+TARBALL := pg_trickle-0.17.0.tar.gz
+SOURCE_TARBALL ?= $(firstword $(wildcard $(HOME)/ext/src/$(TARBALL) $(HOME)/pgsty/repo/ext/src/$(TARBALL) ../SOURCES/$(TARBALL) ../../src/$(TARBALL)))
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 18
 PGRX_VERSION := 0.17.0
-PATCHES := $(sort $(wildcard patches/*.patch))
+SOURCE_PATCHES := $(sort $(wildcard patches/0*.patch))
+PGRX_PATCH := patches/pgrx-0.17.0-pbox-nonnull.patch
 
 check-src:
-	@test -f "$(SOURCE_DIR)/$(TARBALL)" || (echo "missing $(SOURCE_DIR)/$(TARBALL), run: pig build get pg_trickle or place the tarball manually"; exit 1)
+	@test -n "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL), run: pig build get pg_trickle; if unavailable, place the source archive under $(HOME)/pgsty/repo/ext/src or ../SOURCES"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
-	tar -C $(BUILD_DIR) --strip-components=1 -xf $(SOURCE_DIR)/$(TARBALL)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) -name '._*' -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	@$(MAKE) apply-patches
@@ -22,7 +23,7 @@ setup: check-src
 
 apply-patches:
 	@set -e; \
-	for p in $(PATCHES); do \
+	for p in $(SOURCE_PATCHES); do \
 		echo "apply $$p"; \
 		(cd $(BUILD_DIR) && patch -p1 < "../$$p"); \
 	done
@@ -31,9 +32,19 @@ build: building packaging
 
 building: ensure-pgrx
 	cd $(BUILD_DIR) && \
+	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
+	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
+	    --no-run
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch
+	@PBOX="$$(find "$$HOME/.cargo/registry/src" -path '*/pgrx-$(PGRX_VERSION)/src/palloc/pbox.rs' | head -n 1)"; \
+	test -n "$$PBOX"; \
+	if ! grep -q 'NonNull::from(\&mut datum)' "$$PBOX"; then \
+	    (cd "$$(dirname "$$PBOX")" && patch -p0 < "$(CURDIR)/$(PGRX_PATCH)"); \
+	fi
+	cd $(BUILD_DIR) && \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    cargo pgrx package -v --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
 
 ensure-pgrx:
