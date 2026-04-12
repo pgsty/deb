@@ -1,3 +1,10 @@
+pgproto (0.2.4-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.2.4.
+  * Keep forcing vendored utf8_range to the naive implementation on arm64.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 11:32:40 +0800
+
 pgproto (0.2.1-2PIGSTY) unstable; urgency=medium
 
   * Force vendored utf8_range to use the bundled naive implementation to

@@ -1,3 +1,5 @@
+Subject: Force vendored utf8_range to use the naive implementation
+
 --- a/third_party/utf8_range/utf8_range.h
 +++ b/third_party/utf8_range/utf8_range.h
 @@ -5,14 +5,10 @@
