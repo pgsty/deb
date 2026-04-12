@@ -1,3 +1,9 @@
+pgclone (3.6.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 3.6.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 11:32:40 +0800
+
 pgclone (2.2.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
