@@ -1,0 +1,11 @@
+--- pbox.rs
++++ pbox.rs
+@@ -63,7 +63,7 @@ where
+                     let size = size_of_val(&*self.ptr.as_ptr());
+                     debug_assert!(size <= size_of::<pg_sys::Datum>());
+                     // using `BorrowDatum::point_from` handles endianness
+-                    let datum_ptr = T::point_from(NonNull::from_mut(&mut datum).cast::<u8>());
++                    let datum_ptr = T::point_from(NonNull::from(&mut datum).cast::<u8>());
+                     datum_ptr.cast::<u8>().copy_from_nonoverlapping(self.ptr.cast(), size);
+                 }
+                 datum
