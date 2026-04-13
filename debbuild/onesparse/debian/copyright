@@ -1,0 +1,7 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: OneSparse
+Source: https://github.com/OneSparse/OneSparse
+
+Files: *
+Copyright: 2024-2025, OneSparse contributors
+License: Apache-2.0

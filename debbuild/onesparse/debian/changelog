@@ -1,0 +1,8 @@
+onesparse (1.0.0-1PIGSTY) unstable; urgency=medium
+
+  * Package the official upstream v1.0.0 release for PostgreSQL 18.
+  * Keep the system GraphBLAS/LAGraph patch applied during setup.
+  * Note that the upstream release tag is v1.0.0 while the extension control
+    version shipped inside the release is 0.1.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 16:35:00 +0800

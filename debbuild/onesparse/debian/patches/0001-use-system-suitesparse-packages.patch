@@ -1,0 +1,18 @@
+Subject: Use packaged GraphBLAS and LAGraph paths
+
+--- a/Makefile
++++ b/Makefile
+@@ -6,8 +6,11 @@
+ PGXS := $(shell $(PG_CONFIG) --pgxs)
+ MODULE_big = onesparse
+ OBJS = $(patsubst %.c,%.o,$(shell find src -name '*.c'))
+-SHLIB_LINK = -lc -lgraphblas -llagraph -llagraphx -lpq
+-PG_CPPFLAGS = -Wfatal-errors -std=c11 -I/usr/local/include/suitesparse/
++PKG_CONFIG ?= pkg-config
++SUITESPARSE_CFLAGS ?= $(shell $(PKG_CONFIG) --cflags GraphBLAS LAGraph 2>/dev/null)
++SUITESPARSE_LIBS ?= -llagraphx $(shell $(PKG_CONFIG) --libs GraphBLAS LAGraph 2>/dev/null)
++SHLIB_LINK += $(SUITESPARSE_LIBS)
++PG_CPPFLAGS += -Wfatal-errors -std=c11 $(SUITESPARSE_CFLAGS)
+ 
+ TESTS        = $(wildcard sql/*.sql)
+ REGRESS      = $(patsubst sql/%.sql,%,$(TESTS))
