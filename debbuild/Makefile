@@ -81,6 +81,9 @@ pg_jsonschema:
 pg_kazsearch:
 	cd pg_kazsearch && make
 
+pg_typescript:
+	cd pg_typescript && make
+
 pg_cardano:
 	cd pg_cardano && make
 
@@ -855,7 +858,7 @@ collect:
 
 
 .PHONY: deps collect \
-	block_copy_command timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pgvector pg_vectorize pg_summarize pg_tiktoken pgml pg_search pg_when pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_kazsearch pg_cardano plprql pglite_fusion pg_smtp_client pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_anon pgsmcrypto wrappers \
+	block_copy_command timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pgvector pg_vectorize pg_summarize pg_tiktoken pgml pg_search pg_when pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_kazsearch pg_typescript pg_cardano plprql pglite_fusion pg_smtp_client pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_anon pgsmcrypto wrappers \
 	timescaledb pg_timeseries temporal_tables emaj table_version pg_task pg_background pg_partman \
 	geoip pg_geohash \
 	smlar pg4ml \

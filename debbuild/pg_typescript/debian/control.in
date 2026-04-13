@@ -1,0 +1,18 @@
+Source: pg-typescript
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/isaacd9/pg_typescript
+
+Package: postgresql-PGVERSION-pg-typescript
+Architecture: any
+Provides: postgresql-pg-typescript
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: TypeScript procedural language extension for PostgreSQL
+ pg_typescript adds a trusted TypeScript procedural language to PostgreSQL,
+ powered by Deno and V8. It supports TypeScript functions, controlled runtime
+ permissions, remote import maps, and callbacks into PostgreSQL for
+ PostgreSQL 16 through 18.

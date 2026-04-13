@@ -1,0 +1,7 @@
+pg-typescript (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial release for PostgreSQL 16-18.
+  * Package the upstream pgrx 0.17.0 tagged snapshot whose Cargo/control
+    version is 0.1.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 22:40:00 +0800
