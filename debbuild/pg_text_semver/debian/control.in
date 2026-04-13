@@ -1,0 +1,17 @@
+Source: pg-text-semver
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/bigsmoke/pg_text_semver
+
+Package: postgresql-PGVERSION-pg-text-semver
+Architecture: any
+Provides: postgresql-pg-text-semver
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Semantic version domain and comparison operators for PostgreSQL
+ pg_text_semver provides a semver domain based on PostgreSQL text plus parsing,
+ comparison functions, casts, and operators for working with Semantic
+ Versioning 2.0.0 values inside SQL.

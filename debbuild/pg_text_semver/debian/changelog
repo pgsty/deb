@@ -1,0 +1,6 @@
+pg-text-semver (1.2.1-1PIGSTY) unstable; urgency=medium
+
+  * Package pg_text_semver from upstream tag v1.2.1
+    https://github.com/bigsmoke/pg_text_semver/tree/v1.2.1
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 12:00:00 +0000

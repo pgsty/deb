@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pg_text_semver
+Source: https://github.com/bigsmoke/pg_text_semver
+
+Files: *
+Copyright: 2023 Rowan Rodrik van der Molen
+License: PostgreSQL
+
+License: PostgreSQL
+ On Debian systems, the full text of the PostgreSQL license can be found in
+ /usr/share/common-licenses/PostgreSQL.
