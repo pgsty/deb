@@ -1,0 +1,13 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: external_file
+Source: https://github.com/darold/external_file
+
+Files: *
+Copyright:
+ 2012-2018 BRGM
+ 2022 MigOps Inc
+License: PostgreSQL
+
+License: PostgreSQL
+ On Debian systems, the full text of the PostgreSQL license can be found in
+ /usr/share/common-licenses/PostgreSQL.

@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+
+PKG_NAME := external-file
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+SQL_FILES := $(sort $(wildcard external_file--*.sql updates/external_file--*.sql))
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	:
+
+override_dh_auto_clean:
+	:
+
+override_dh_auto_test:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	set -e; \
+	for PG_VERSION in $(PG_VERSIONS); do \
+	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+	    EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    dh_installdirs -p$$FULL_NAME; \
+	    mkdir -p $$EXT_DIR; \
+	    install -m 0644 external_file.control $$EXT_DIR/external_file.control; \
+	    for file in $(SQL_FILES); do \
+	        install -m 0644 $$file $$EXT_DIR/$$(basename $$file); \
+	    done; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md README.external_file CHANGELOG LICENSE

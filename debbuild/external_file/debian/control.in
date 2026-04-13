@@ -1,0 +1,18 @@
+Source: external-file
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/darold/external_file
+
+Package: postgresql-PGVERSION-external-file
+Architecture: any
+Provides: postgresql-external-file
+Depends: ${misc:Depends}, postgresql-PGVERSION
+Description: Access external server-side files through PostgreSQL functions
+ external_file adds an Oracle BFILE-like data type and helper functions that
+ read or write files on the PostgreSQL server filesystem through controlled
+ server-side large-object APIs. The extension installs into the fixed
+ external_file schema and requires superuser privileges to create.
