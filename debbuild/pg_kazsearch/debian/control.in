@@ -1,0 +1,18 @@
+Source: pg-kazsearch
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/darkhanakh/pg-kazsearch
+
+Package: postgresql-PGVERSION-pg-kazsearch
+Architecture: any
+Provides: postgresql-pg-kazsearch
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Kazakh full-text search extension for PostgreSQL
+ pg_kazsearch adds a Kazakh full-text search configuration, dictionary,
+ and lexicon-backed stemmer for PostgreSQL 16 through 18.
+ The package also installs the bundled tsearch_data lexicon and stopword
+ files required by the extension.
