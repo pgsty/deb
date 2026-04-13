@@ -1,0 +1,18 @@
+Source: pghydro
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pghydro/pghydro
+
+Package: postgresql-PGVERSION-pghydro
+Architecture: any
+Provides: postgresql-pghydro
+Depends: ${misc:Depends}, postgresql-PGVERSION, postgresql-PGVERSION-postgis-3
+Description: Drainage network analysis extensions for PostgreSQL and PostGIS
+ PgHydro is a SQL-only bundle of PostgreSQL and PostGIS extensions for
+ drainage network analysis and water-resources decision support. This package
+ installs pghydro, pgh_raster, pgh_hgm, pgh_output, pgh_output_en_au,
+ pgh_output_pt_br, and pgh_consistency.
