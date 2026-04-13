@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pg_query_rewrite
+Source: https://github.com/pierreforstmann/pg_query_rewrite
+
+Files: *
+Copyright: 2020-2021 Pierre Forstmann
+License: PostgreSQL
+
+License: PostgreSQL
+ On Debian systems, the full text of the PostgreSQL license can be found in
+ /usr/share/common-licenses/PostgreSQL.

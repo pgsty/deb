@@ -1,0 +1,18 @@
+Source: pg-query-rewrite
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pierreforstmann/pg_query_rewrite
+
+Package: postgresql-PGVERSION-pg-query-rewrite
+Architecture: any
+Provides: postgresql-pg-query-rewrite
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Rewrite SQL statements with a PostgreSQL ProcessUtility hook
+ pg_query_rewrite translates matching SQL statements to predefined target SQL
+ through a ProcessUtility hook. It must be loaded via
+ shared_preload_libraries before CREATE EXTENSION is run in each database that
+ should use the rewrite rules.
