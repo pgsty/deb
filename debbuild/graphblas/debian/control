@@ -1,0 +1,22 @@
+Source: graphblas
+Section: libs
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: cmake, debhelper-compat (= 13), pkgconf
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/DrTimothyAldenDavis/GraphBLAS
+
+Package: libgraphblas10
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: SuiteSparse GraphBLAS runtime library
+ SuiteSparse:GraphBLAS implements the GraphBLAS standard for sparse matrix
+ and graph algorithms.
+
+Package: libgraphblas-dev
+Architecture: any
+Depends: ${misc:Depends}, libgraphblas10 (= ${binary:Version})
+Description: SuiteSparse GraphBLAS development files
+ Headers, pkg-config metadata, CMake config, and linker symlink for
+ SuiteSparse:GraphBLAS 10.2.0.

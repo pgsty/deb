@@ -1,0 +1,4 @@
+usr/include/suitesparse/GraphBLAS.h
+usr/lib/*/cmake/GraphBLAS/*
+usr/lib/*/libgraphblas.so
+usr/lib/*/pkgconfig/GraphBLAS.pc

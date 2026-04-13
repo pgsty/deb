@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	cmake -S $(CURDIR) -B $(CURDIR)/build \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DSUITESPARSE_USE_FORTRAN=OFF \
+		-DBUILD_SHARED_LIBS=ON \
+		-DBUILD_STATIC_LIBS=OFF \
+		-DSUITESPARSE_INCLUDEDIR=include/suitesparse \
+		-DSUITESPARSE_LIBDIR=lib/$(DEB_HOST_MULTIARCH) \
+		-DSUITESPARSE_PKGFILEDIR=lib/$(DEB_HOST_MULTIARCH)
+
+override_dh_auto_build:
+	cmake --build $(CURDIR)/build -j$(shell nproc)
+
+override_dh_auto_install:
+	DESTDIR=$(CURDIR)/debian/tmp cmake --install $(CURDIR)/build
+	rm -f $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/libgraphblas.a
+
+override_dh_auto_test:
+	:
+
+override_dh_auto_clean:
+	rm -rf $(CURDIR)/build

@@ -1,0 +1,7 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: GraphBLAS
+Source: https://github.com/DrTimothyAldenDavis/GraphBLAS
+
+Files: *
+Copyright: 2017-2025, Timothy A. Davis
+License: Apache-2.0
