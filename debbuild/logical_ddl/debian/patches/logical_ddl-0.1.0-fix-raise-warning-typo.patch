@@ -1,0 +1,11 @@
+--- a/sql/logical_ddl--0.1.0.sql
++++ b/sql/logical_ddl--0.1.0.sql
+@@ -188,7 +188,7 @@ BEGIN
+         v_command->>'table_name' IS NULL OR
+         v_command->>'command_tag' IS NULL OR
+         v_command->>'sub_command_type' IS NULL
+     THEN
+-        RAUSE WARNING 'Invalid command received, skipping: %', NEW;
++        RAISE WARNING 'Invalid command received, skipping: %', NEW;
+         RETURN NULL;
+     END IF;

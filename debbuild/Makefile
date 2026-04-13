@@ -841,6 +841,9 @@ decoder_raw:
 pg_bulkload:
 	cd pg_bulkload && make
 
+logical_ddl:
+	cd logical_ddl && make
+
 
 
 ###############################################################
@@ -909,7 +912,7 @@ collect:
 	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
 	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq graphblas lagraph onesparse pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
 	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto rdf_fdw \
-	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload \
+	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
 	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry agensgraph \
 	pgedge pgedge-all spock snowflake lolor

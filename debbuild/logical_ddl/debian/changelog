@@ -1,0 +1,6 @@
+logical-ddl (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Package logical_ddl from upstream tag v0.1.0
+    https://github.com/samedyildirim/logical_ddl/tree/v0.1.0
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 12:00:00 +0000

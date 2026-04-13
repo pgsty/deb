@@ -1,0 +1,18 @@
+Source: logical-ddl
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/samedyildirim/logical_ddl
+
+Package: postgresql-PGVERSION-logical-ddl
+Architecture: any
+Provides: postgresql-logical-ddl
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Breaks: ${postgresql:Breaks}
+Description: Replicate supported DDL changes over PostgreSQL logical replication
+ logical_ddl captures selected ALTER TABLE operations with an event trigger,
+ stores them in replicated metadata tables, and replays compatible DDL changes
+ on logical replication subscribers to reduce schema drift between nodes.
