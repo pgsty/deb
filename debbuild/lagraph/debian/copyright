@@ -1,0 +1,7 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: LAGraph
+Source: https://github.com/GraphBLAS/LAGraph
+
+Files: *
+Copyright: 2019-2025, The LAGraph Contributors
+License: BSD-2-clause

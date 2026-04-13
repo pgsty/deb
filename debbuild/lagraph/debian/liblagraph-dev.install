@@ -1,0 +1,6 @@
+usr/include/suitesparse/LAGraph.h
+usr/include/suitesparse/LAGraphX.h
+usr/lib/*/cmake/LAGraph/*
+usr/lib/*/liblagraph.so
+usr/lib/*/liblagraphx.so
+usr/lib/*/pkgconfig/LAGraph.pc

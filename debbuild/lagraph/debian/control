@@ -1,0 +1,27 @@
+Source: lagraph
+Section: libs
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: cmake, debhelper-compat (= 13), libgraphblas-dev, pkgconf
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/GraphBLAS/LAGraph
+
+Package: liblagraph1
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: LAGraph runtime library
+ LAGraph provides graph algorithms implemented on top of the GraphBLAS API.
+
+Package: liblagraphx1
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: LAGraph experimental runtime library
+ Experimental graph algorithms and helpers for LAGraph.
+
+Package: liblagraph-dev
+Architecture: any
+Depends: ${misc:Depends}, libgraphblas-dev, liblagraph1 (= ${binary:Version}), liblagraphx1 (= ${binary:Version})
+Description: LAGraph development files
+ Headers, pkg-config metadata, CMake config, and linker symlinks for
+ LAGraph 1.2.1 and LAGraphX 1.2.1.

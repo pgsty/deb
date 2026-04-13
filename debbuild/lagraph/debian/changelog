@@ -1,0 +1,5 @@
+lagraph (1.2.1-1PIGSTY) unstable; urgency=medium
+
+  * Package LAGraph 1.2.1 and LAGraphX 1.2.1 as runtime and development libraries.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 16:35:00 +0800
