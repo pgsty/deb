@@ -1,0 +1,18 @@
+Source: block-copy-command
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rustwizard/block_copy_command
+
+Package: postgresql-PGVERSION-block-copy-command
+Architecture: any
+Provides: postgresql-block-copy-command
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: COPY command firewall for PostgreSQL
+ block_copy_command blocks COPY TO, COPY FROM, and COPY PROGRAM through a
+ ProcessUtility hook that is loaded from shared_preload_libraries.
+ It provides runtime GUCs for selective blocking and audit logging across
+ PostgreSQL 14 through 18.
