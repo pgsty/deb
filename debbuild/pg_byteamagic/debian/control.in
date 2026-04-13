@@ -1,0 +1,18 @@
+Source: pg-byteamagic
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libmagic-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/nmandery/pg_byteamagic
+
+Package: postgresql-PGVERSION-pg-byteamagic
+Architecture: any
+Provides: postgresql-pg-byteamagic
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Breaks: ${postgresql:Breaks}
+Description: Detect MIME types and file formats from PostgreSQL bytea values
+  pg_byteamagic exposes the libmagic database to PostgreSQL through the
+  byteamagic extension, allowing SQL queries to inspect a bytea value and
+  return either its MIME type or a human-readable file type description.

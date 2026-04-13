@@ -1,0 +1,6 @@
+pg-byteamagic (0.2.4-1PIGSTY) unstable; urgency=medium
+
+  * Package pg_byteamagic from upstream tag v0.2.4
+    https://github.com/nmandery/pg_byteamagic/tree/v0.2.4
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 12:00:00 +0000
