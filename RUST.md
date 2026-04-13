@@ -109,7 +109,7 @@ cd ~/pg_idkit;                    pg17 build; pg16 build; pg15 build; pg14 build
 cd ~/pg_parquet;                  pg17 build; pg16 build; pg15 build; pg14 build;
 cd ~/pg_polyline;                 pg17 build; pg16 build; pg15 build; pg14 build; pg13 build; pg12 build; 
 cd ~/pg_explain_ui;               pg17 build; pg16 build; pg15 build; pg14 build; pg13 build; pg12 build; 
-cd ~/pg_cardano;                  pg17 build; pg16 build; pg15 build; pg14 build; pg13 build; pg12 build; 
+cd ~/pg_cardano;                  pg18 build; pg17 build; pg16 build; pg15 build;
 cd ~/pg_base58;                   pg17 build; pg16 build; pg15 build; pg14 build; pg13 build; pg12 build; 
 cd ~/pg_summarize;                pg17 build; pg16 build; pg15 build; pg14 build; pg13 build; pg12 build; 
 export RUSTFLAGS="-C target-feature=+avx2,+fma"

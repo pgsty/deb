@@ -1,0 +1,49 @@
+Source: rdkit
+Section: science
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: architecture-is-64-bit,
+               architecture-is-little-endian,
+               bison,
+               catch2,
+               cmake,
+               debhelper-compat (= 13),
+               flex,
+               libboost-dev,
+               libboost-iostreams-dev,
+               libboost-program-options-dev,
+               libboost-regex-dev,
+               libboost-thread-dev,
+               libcairo2-dev,
+               libeigen3-dev,
+               libfreetype-dev,
+               libinchi-dev (>= 1.07.1+dfsg-2),
+               libsqlite3-dev,
+               postgresql-@PG_MAJOR@,
+               postgresql-server-dev-@PG_MAJOR@,
+               rapidjson-dev,
+               zlib1g-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rdkit/rdkit
+
+Package: librdkit1t64
+Section: libs
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: RDKit runtime libraries and data files
+ RDKit is a cheminformatics and machine-learning toolkit.
+ .
+ This package ships the runtime shared libraries and data files required by
+ the PostgreSQL cartridge build used by Pigsty.
+
+Package: postgresql-@PG_MAJOR@-rdkit
+Section: database
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, postgresql-@PG_MAJOR@, librdkit1t64 (= ${binary:Version})
+Description: RDKit cartridge for PostgreSQL @PG_MAJOR@
+ RDKit adds cheminformatics data types, operators, and functions to
+ PostgreSQL.
+ .
+ This package contains the PostgreSQL @PG_MAJOR@ cartridge with InChI support
+ enabled on Debian 13.

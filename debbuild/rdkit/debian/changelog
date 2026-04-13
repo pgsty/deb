@@ -1,0 +1,6 @@
+rdkit (202503.6-4PIGSTY) unstable; urgency=medium
+
+  * Package RDKit 202503.6 for PostgreSQL @PG_MAJOR@ on Debian 13.
+  * Reuse Debian source package patches and ship InChI-enabled cartridge.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 13 Apr 2026 15:30:00 +0800

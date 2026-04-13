@@ -203,6 +203,9 @@ smlar:
 pg4ml:
 	cd pg4ml && make
 
+rdkit:
+	cd rdkit && make
+
 
 ###############################################################
 #            Category: FTS  - Full-Text Search               #
