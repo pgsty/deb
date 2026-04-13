@@ -1,0 +1,31 @@
+Description: reuse libduckdb.so shipped by pg_duckdb
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-needed
+Last-Update: 2026-04-13
+
+--- a/Makefile
++++ b/Makefile
+@@ -66,7 +66,7 @@
+ include $(top_srcdir)/contrib/contrib-global.mk
+ endif
+ 
+-SHLIB_LINK += -Wl,-rpath,$(DESTDIR)$(PG_LIB)
++SHLIB_LINK += -Wl,-rpath,'$$ORIGIN'
+ 
+ ifdef REGRESS_PREFIX
+ REGRESS_PREFIX_SUB = $(REGRESS_PREFIX)
+@@ -79,11 +79,11 @@
+ 
+ 
+ install-duckdb:  $(shlib)
+-	$(install_bin) -m 755 libduckdb$(DLSUFFIX) $(DESTDIR)$(PG_LIB)
++	@:
+ 
+ install: install-duckdb
+ 
+ uninstall-duckdb:
+-	rm -f $(DESTDIR)$(PG_LIB)/libduckdb$(DLSUFFIX)
++	@:
+ 
+ uninstall: uninstall-duckdb
+\ No newline at end of file

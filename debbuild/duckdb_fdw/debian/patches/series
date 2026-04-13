@@ -1,0 +1,3 @@
+duckdb-1.4.3-compat.patch
+pg-duckdb-linkage.patch
+cxx11-abi.patch

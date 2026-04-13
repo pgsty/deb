@@ -1,8 +1,13 @@
-duckdb-fdw (1.1.2-1PIGSTY) unstable; urgency=medium
+duckdb-fdw (1.4.3-1PIGSTY) unstable; urgency=medium
 
-  * Bump to libduckdb 1.1.2 with PostgreSQL 17 support
+  * Rebase to duckdb_fdw main at 870bc43
+  * Pin build headers to DuckDB 1.4.3 from pg_duckdb 1.1.1
+  * Reuse libduckdb.so shipped by postgresql-PGVERSION-pg-duckdb
+  * Patch sqlite3_api_wrapper.cpp for DuckDB 1.4.3 compatibility
+  * Stop installing a second copy of libduckdb.so from duckdb_fdw
+  * Drop the legacy x86_64 _GLIBCXX_USE_CXX11_ABI=0 override
 
- -- Ruohang Feng <rh@vonng.com>  Wed, 17 Jul 2024 18:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Sun, 13 Apr 2026 18:00:00 +0800
 
 duckdb-fdw (1.0.0-1PIGSTY) unstable; urgency=medium
 

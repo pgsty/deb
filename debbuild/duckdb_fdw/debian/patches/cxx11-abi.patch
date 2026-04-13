@@ -1,0 +1,18 @@
+Description: match the ABI exposed by pg_duckdb's bundled libduckdb.so
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-needed
+Last-Update: 2026-04-13
+
+--- a/Makefile
++++ b/Makefile
+@@ -37,10 +37,6 @@
+ ifeq ($(detected_OS),Linux)
+     # DLSUFFIX = .so
+     PG_CXXFLAGS = -std=c++11
+-    detected_arch := $(shell uname -m)
+-    ifeq ($(detected_arch),x86_64)
+-        PG_CXXFLAGS = -std=c++11 -D_GLIBCXX_USE_CXX11_ABI=0
+-    endif
+ endif
+ 
+ SHLIB_LINK := -L. -lduckdb -lstdc++

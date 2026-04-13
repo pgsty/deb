@@ -1,0 +1,87 @@
+Description: build latest duckdb_fdw against DuckDB 1.4.3 from pg_duckdb
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-needed
+Last-Update: 2026-04-13
+
+--- a/sqlite3_api_wrapper.cpp
++++ b/sqlite3_api_wrapper.cpp
+@@ -30,6 +30,17 @@
+ using namespace duckdb;
+ using namespace std;
+ 
++/*
++ * pg_duckdb 1.1.1 vendors DuckDB 1.4.3. That header set exposes the modern
++ * PreparedStatement API used below, but duckdb.hpp does not export the
++ * version macros that newer duckdb_fdw code expects.
++ */
++#ifndef DUCKDB_MAJOR_VERSION
++#define DUCKDB_MAJOR_VERSION 1
++#define DUCKDB_MINOR_VERSION 4
++#define DUCKDB_PATCH_VERSION "3"
++#endif
++
+ #ifndef PreservedError
+ typedef duckdb::ErrorData PreservedError;
+ #endif
+@@ -131,6 +142,10 @@
+ 	duckdb::unique_ptr<sqlite3_string_buffer[]> current_text;
+ };
+ 
++static idx_t sqlite3_parameter_count(const PreparedStatement &prepared) {
++	return prepared.named_param_map.size();
++}
++
+ void sqlite3_randomness(int N, void *pBuf) {
+ 	static bool init = false;
+ 	if (!init) {
+@@ -287,11 +302,7 @@
+ 		stmt->query_string = query;
+ 		stmt->prepared = std::move(prepared);
+ 		stmt->current_row = -1;
+-		#if (DUCKDB_MAJOR_VERSION >= 1) && (DUCKDB_MINOR_VERSION >= 1)
+-		for (idx_t i = 0; i < stmt->prepared->named_param_map.size(); i++) {
+-		#else
+-		for (idx_t i = 0; i < stmt->prepared->n_param; i++) {
+-		#endif
++		for (idx_t i = 0; i < sqlite3_parameter_count(*stmt->prepared); i++) {
+ 			stmt->bound_names.push_back("$" + to_string(i + 1));
+ 			stmt->bound_values.push_back(duckdb::Value());
+ 		}
+@@ -824,22 +835,14 @@
+ 	if (!stmt) {
+ 		return 0;
+ 	}
+-	#if (DUCKDB_MAJOR_VERSION >= 1) && (DUCKDB_MINOR_VERSION >= 1)
+-	return stmt->prepared->named_param_map.size();
+-	#else
+-	return stmt->prepared->n_param;
+-	#endif
++	return sqlite3_parameter_count(*stmt->prepared);
+ }
+ 
+ const char *sqlite3_bind_parameter_name(sqlite3_stmt *stmt, int idx) {
+ 	if (!stmt) {
+ 		return nullptr;
+ 	}
+-	#if (DUCKDB_MAJOR_VERSION >= 1) && (DUCKDB_MINOR_VERSION >= 1)
+-	if (idx < 1 || idx > (int)stmt->prepared->named_param_map.size()) {
+-	#else
+-	if (idx < 1 || idx > (int)stmt->prepared->n_param) {
+-	#endif
++	if (idx < 1 || idx > (int)sqlite3_parameter_count(*stmt->prepared)) {
+ 		return nullptr;
+ 	}
+ 	return stmt->bound_names[idx - 1].c_str();
+@@ -861,11 +864,7 @@
+ 	if (!stmt || !stmt->prepared || stmt->result) {
+ 		return SQLITE_MISUSE;
+ 	}
+-	#if (DUCKDB_MAJOR_VERSION >= 1) && (DUCKDB_MINOR_VERSION >= 1)
+-	if (idx < 1 || idx > (int)stmt->prepared->named_param_map.size()) {
+-	#else
+-	if (idx < 1 || idx > (int)stmt->prepared->n_param) {
+-	#endif
++	if (idx < 1 || idx > (int)sqlite3_parameter_count(*stmt->prepared)) {
+ 		return SQLITE_RANGE;
+ 	}
+ 	stmt->bound_values[idx - 1] = value;
