@@ -1,0 +1,7 @@
+pgmqtt (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Package upstream release 0.1.0 for PostgreSQL 14-18.
+  * Build the extension from the repository extension/ subdirectory.
+  * Bump pgrx from 0.16.1 to 0.17.0 with local Cargo patching.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 17:40:00 +0800

@@ -1,0 +1,17 @@
+Source: pgmqtt
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/RayElg/pgmqtt
+
+Package: postgresql-PGVERSION-pgmqtt
+Architecture: any
+Provides: postgresql-pgmqtt
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Embedded MQTT broker powered by PostgreSQL CDC
+ pgmqtt embeds an MQTT broker inside PostgreSQL and publishes change data
+ capture events through a pgrx extension. This package builds the extension
+ for PostgreSQL 14 through 18 with cargo-pgrx 0.17.0.
