@@ -1,0 +1,17 @@
+Source: pg-when
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/frectonz/pg-when
+
+Package: postgresql-PGVERSION-pg-when
+Architecture: any
+Provides: postgresql-pg-when
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Natural-language time parsing for PostgreSQL
+ pg_when turns human-readable date and time expressions into PostgreSQL
+ timestamptz and epoch-based values. This package builds the pgrx-based
+ extension for PostgreSQL 14 through 18 using cargo-pgrx 0.17.0.
