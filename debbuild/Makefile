@@ -238,6 +238,9 @@ citus:
 hydra:
 	cd hydra && make
 
+datasketches:
+	cd datasketches && make
+
 pg_duckdb:
 	cd pg_duckdb && make
 
@@ -872,7 +875,7 @@ collect:
 	geoip pg_geohash pghydro \
 	smlar pg4ml \
 	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_textsearch \
-	citus hydra pg_duckdb duckdb_fdw pg_fkpart pg_clickhouse \
+	citus hydra datasketches pg_duckdb duckdb_fdw pg_fkpart pg_clickhouse \
 	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql pg_incremental pgmq pgmb omnigres pg_ai_query \
 	plxslt pg_tle plv8 pljs \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
