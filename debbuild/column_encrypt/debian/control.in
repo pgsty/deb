@@ -1,0 +1,19 @@
+Source: column-encrypt
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/vibhorkum/column_encrypt
+
+Package: postgresql-PGVERSION-column-encrypt
+Architecture: any
+Provides: postgresql-column-encrypt
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Transparent column-level encryption for PostgreSQL PGVERSION
+  column_encrypt adds encrypted_text and encrypted_bytea data types for
+  transparent column-level encryption in PostgreSQL.
+  It uses the pgcrypto extension for AES encryption, requires
+  shared_preload_libraries to load its backend hook, and installs objects into
+  the fixed encrypt schema.
