@@ -1,7 +1,7 @@
 all: setup build move
 
 TARBALL := pg_typescript-0.1.0.tar.gz
-SOURCE_TARBALL ?= $(firstword $(wildcard $(HOME)/ext/src/$(TARBALL) $(HOME)/pgsty/repo/ext/src/$(TARBALL) ../SOURCES/$(TARBALL) ../../src/$(TARBALL)))
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 16 17 18
@@ -11,7 +11,7 @@ CARGO_HTTP_TIMEOUT ?= 600
 CARGO_NET_RETRY ?= 10
 
 check-src:
-	@test -n "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL), run: pig build get pg_typescript; if unavailable, place the source archive under $(HOME)/pgsty/repo/ext/src or ../SOURCES"; exit 1)
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)

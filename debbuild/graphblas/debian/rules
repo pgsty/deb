@@ -2,6 +2,13 @@
 
 export DH_VERBOSE=1
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+export DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+
+# GCC 12 on arm64 can ICE in vect_transform_reduction when compiling
+# GraphBLAS-generated kernels. Disable tree vectorization on arm64 builders.
+ifneq ($(filter arm64,$(DEB_HOST_ARCH)),)
+export DEB_CFLAGS_MAINT_APPEND += -fno-tree-vectorize
+endif
 
 %:
 	dh $@

@@ -1,7 +1,7 @@
 all: setup build move
 
 TARBALL := pg_when-0.1.9.tar.gz
-SOURCE_TARBALL ?= $(firstword $(wildcard $(HOME)/ext/src/$(TARBALL) $(HOME)/pgsty/repo/ext/src/$(TARBALL) ../SOURCES/$(TARBALL) ../../src/$(TARBALL)))
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
@@ -10,7 +10,7 @@ SOURCE_PATCHES := $(sort $(wildcard patches/*-pgrx-0.17.0.patch))
 PGRX_PATCH := patches/pgrx-0.17.0-pbox-nonnull.patch
 
 check-src:
-	@test -n "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL), run: pig build get pg_when; if unavailable, place the source archive under $(HOME)/pgsty/repo/ext/src or ../SOURCES"; exit 1)
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)

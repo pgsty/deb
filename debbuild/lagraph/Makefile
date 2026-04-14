@@ -1,21 +1,28 @@
 all: setup build move
 
-TARBALL := LAGraph-1.2.1.tar.gz
+TARBALL := lagraph-1.2.1.tar.gz
+SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
+BUILD_DIR := build
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
-setup:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+check-src:
+	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL) under $(HOME)/ext/src or ../SOURCES, run pig build get first; if needed, copy it there"; exit 1)
+
+setup: check-src
+	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	sed -i.bak "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog && rm -f $(BUILD_DIR)/debian/changelog.bak
 
 build:
-	cd build && dpkg-buildpackage -b -us -uc
+	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
 
 clean:
-	rm -rf *.buildinfo *.changes *.ddeb *.deb build
+	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup build move clean
+.PHONY: all check-src setup build move clean

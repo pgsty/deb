@@ -1,18 +1,17 @@
 all: setup build move
 
 TARBALL := postgresbson-2.0.2.tar.gz
-SOURCE_CANDIDATES := $(HOME)/pgsty/repo/ext/src $(HOME)/pgsty/rpm/src $(HOME)/pgsty/rpm/rpmbuild/SOURCES ../../src ../SOURCES
-SOURCE_DIR ?= $(firstword $(foreach d,$(SOURCE_CANDIDATES),$(if $(wildcard $(d)/$(TARBALL)),$(d))))
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PATCHES := $(sort $(wildcard patches/*.patch))
 
 check-src:
-	@test -n "$(SOURCE_DIR)" || (echo "missing $(TARBALL), looked in: $(SOURCE_CANDIDATES)"; exit 1)
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
-	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_DIR)/$(TARBALL)"
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) -name '._*' -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	@$(MAKE) apply-patches

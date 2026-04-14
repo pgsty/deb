@@ -25,8 +25,6 @@ WORK_DIR="${WORK_DIR:-${REPO_ROOT}/tmp/pgedge-src}"
 if [ -z "${OUT_DIR:-}" ]; then
   if [ -d "${HOME}/ext/src" ]; then
     OUT_DIR="${HOME}/ext/src"
-  elif [ -d "${HOME}/pgsty/repo/ext/src" ]; then
-    OUT_DIR="${HOME}/pgsty/repo/ext/src"
   else
     OUT_DIR="${REPO_ROOT}/src"
   fi

@@ -1,7 +1,7 @@
 all: setup build move
 
 TARBALL := block_copy_command-0.1.5.tar.gz
-SOURCE_TARBALL ?= $(firstword $(wildcard $(HOME)/ext/src/$(TARBALL) $(HOME)/pgsty/repo/ext/src/$(TARBALL) ../SOURCES/$(TARBALL) ../../src/$(TARBALL)))
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
@@ -9,7 +9,7 @@ PGRX_VERSION := 0.17.0
 PGRX_PATCH := patches/pgrx-0.17.0-pbox-nonnull.patch
 
 check-src:
-	@test -n "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL), run: pig build get block_copy_command; if unavailable, place the GitHub source archive under $(HOME)/pgsty/repo/ext/src or ../SOURCES"; exit 1)
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)

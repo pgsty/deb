@@ -1,17 +1,17 @@
 all: setup build move
 
 TARBALL := pg_variables-1.2.5.tar.gz
-SOURCE_DIR ?= $(or $(wildcard $(HOME)/pgsty/repo/ext/src),../SOURCES)
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PATCHES := patches/pg_variables-1.2.5-pgpro-7614.patch patches/pg_variables-1.2.5-pg18-compact-attribute.patch
 
 check-src:
-	@test -f "$(SOURCE_DIR)/$(TARBALL)" || (echo "missing $(SOURCE_DIR)/$(TARBALL), download the official v1.2.5 source tarball from https://github.com/postgrespro/pg_variables/archive/refs/tags/v1.2.5.tar.gz"; exit 1)
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
-	tar -C $(BUILD_DIR) --strip-components=1 -xf $(SOURCE_DIR)/$(TARBALL)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	@$(MAKE) apply-patches
 	pg_buildext updatecontrol
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian

@@ -174,6 +174,9 @@ pg_task:
 pg_background:
 	cd pg_background && make
 
+inchi:
+	cd inchi && make
+
 pg_partman: # PGDG Included
 	cd pg_partman && make
 
@@ -674,6 +677,9 @@ pg_auth_mon:
 pgcryptokey:
 	cd pgcryptokey && make
 
+column_encrypt:
+	cd column_encrypt && make
+
 pg_jobmon:
 	cd pg_jobmon && make
 
@@ -912,10 +918,10 @@ collect:
 	pg_uuidv7 permuteseq pg_hashids sequential_uuids topn quantile lower_quantile count_distinct omnisketch ddsketch vasco pgxicor pg_weighted_statistics floatvec aggs_for_vecs aggs_for_arrays parray_gin pg_csv pg_arraymath pg_math pg_random pg_base36 pg_base62 pg_financial \
 	pg_rewrite pg_query_rewrite pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_qos pg_savior safeupdate pg_drop_events \
 	pg_profile pg_tracing pg_stat_monitor pg_store_plans pg_datasentinel pgsentinel pg_ash pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pg_track_optimizer pagevis pg_isok \
-	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
+	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey column_encrypt pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
 	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq graphblas lagraph onesparse pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
 	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto rdf_fdw \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
-	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry agensgraph \
+	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry agensgraph inchi \
 	pgedge pgedge-all spock snowflake lolor
