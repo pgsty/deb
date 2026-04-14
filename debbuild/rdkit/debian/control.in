@@ -19,15 +19,17 @@ Build-Depends: architecture-is-64-bit,
                libfreetype-dev,
                libinchi-dev (>= 1.07.1+dfsg-2),
                libsqlite3-dev,
-               postgresql-@PG_MAJOR@,
-               postgresql-server-dev-@PG_MAJOR@,
+               postgresql-server-dev-all,
                rapidjson-dev,
                zlib1g-dev
-Standards-Version: 4.6.2
+Standards-Version: 4.7.2
 Rules-Requires-Root: no
 Homepage: https://github.com/rdkit/rdkit
 
 Package: librdkit1t64
+Provides: ${t64:Provides}
+Replaces: librdkit1
+Breaks: librdkit1 (<< ${source:Version}), coot (<< 1.1.15+dfsg-1)
 Section: libs
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -37,13 +39,12 @@ Description: RDKit runtime libraries and data files
  This package ships the runtime shared libraries and data files required by
  the PostgreSQL cartridge build used by Pigsty.
 
-Package: postgresql-@PG_MAJOR@-rdkit
+Package: postgresql-PGVERSION-rdkit
 Section: database
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, postgresql-@PG_MAJOR@, librdkit1t64 (= ${binary:Version})
-Description: RDKit cartridge for PostgreSQL @PG_MAJOR@
+Depends: ${misc:Depends}, ${shlibs:Depends}, postgresql-PGVERSION, librdkit1t64 (= ${binary:Version})
+Description: RDKit cartridge for PostgreSQL PGVERSION
  RDKit adds cheminformatics data types, operators, and functions to
  PostgreSQL.
  .
- This package contains the PostgreSQL @PG_MAJOR@ cartridge with InChI support
- enabled on Debian 13.
+ This package contains the PostgreSQL PGVERSION cartridge built for Pigsty.

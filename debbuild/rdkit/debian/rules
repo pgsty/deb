@@ -2,12 +2,21 @@
 
 export DH_VERBOSE = 1
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export PG_SUPPORTED_VERSIONS = installed
+export CPPFLAGS := $(shell dpkg-buildflags --get CPPFLAGS)
+export CFLAGS := $(shell dpkg-buildflags --get CFLAGS) $(CPPFLAGS)
+export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(CPPFLAGS)
+export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 BUILD_DIR := $(CURDIR)/obj-build
-PG_MAJOR ?= 18
+OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
+ENABLE_INCHI ?= 0
+DEFAULT_PG_MAJOR := $(shell pg_buildext supported-versions | tail -n 1)
+NUMJOBS := $(shell nproc)
+INCHI_CMAKE_FLAGS := $(if $(filter 1,$(ENABLE_INCHI)),-DRDK_BUILD_INCHI_SUPPORT=ON,$(if $(filter noble,$(OS_CODENAME)),-DRDK_BUILD_INCHI_SUPPORT=OFF,-DRDK_BUILD_INCHI_SUPPORT=ON))
 CMAKE_FLAGS := \
-	-DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_BUILD_TYPE=None \
 	-DCMAKE_INSTALL_PREFIX=/usr \
 	-DCMAKE_SKIP_RPATH=ON \
 	-DRDK_INSTALL_INTREE=OFF \
@@ -16,7 +25,7 @@ CMAKE_FLAGS := \
 	-DRDK_BUILD_PYTHON_WRAPPERS=OFF \
 	-DRDK_BUILD_CPP_TESTS=OFF \
 	-DRDK_BUILD_TEST_GZIP=OFF \
-	-DRDK_BUILD_INCHI_SUPPORT=ON \
+	$(INCHI_CMAKE_FLAGS) \
 	-DRDK_BUILD_PGSQL=ON \
 	-DRDK_PGSQL_STATIC=OFF \
 	-DRDK_OPTIMIZE_POPCNT=OFF \
@@ -28,17 +37,43 @@ CMAKE_FLAGS := \
 	-DRDK_BUILD_PUBCHEMSHAPE_SUPPORT=OFF \
 	-DRDK_INSTALL_COMIC_FONTS=OFF \
 	-DBoost_NO_BOOST_CMAKE=TRUE \
-	-DPostgreSQL_CONFIG=/usr/lib/postgresql/$(PG_MAJOR)/bin/pg_config \
-	-DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgresql/$(PG_MAJOR)/server
+	-DPostgreSQL_CONFIG=/usr/lib/postgresql/$(DEFAULT_PG_MAJOR)/bin/pg_config \
+	-DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgresql/$(DEFAULT_PG_MAJOR)/server
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
 
 %:
 	dh $@ --buildsystem=cmake
 
 override_dh_auto_configure:
 	dh_auto_configure --builddirectory=$(BUILD_DIR) -- $(CMAKE_FLAGS)
+	ln -sfn ../../../External Code/PgSQL/rdkit/External
+	set -e; for v in $$(pg_buildext supported-versions); do \
+		mkdir -p Code/PgSQL/rdkit/build-$$v; \
+		(cd Code/PgSQL/rdkit/build-$$v && \
+			cmake \
+				-DCMAKE_BUILD_TYPE=None \
+				-DPostgreSQL_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config \
+				-DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgresql/$$v/server \
+				$(INCHI_CMAKE_FLAGS) \
+				-DRDK_BUILD_MOLINTERCHANGE_SUPPORT=ON \
+				-DRDK_BUILD_THREADSAFE_SSS=ON \
+				-DRDK_OPTIMIZE_POPCNT=OFF \
+				-DRDK_USE_URF=OFF \
+				-DBoost_NO_BOOST_CMAKE=TRUE \
+				-DRDK_PGSQL_STATIC=OFF \
+				-DRDKit_CodeDir=../../../Code \
+				../); \
+	done
 
 override_dh_auto_build:
-	cmake --build $(BUILD_DIR) -j$(shell nproc) --target rdkit
+	dh_auto_build --builddirectory=$(BUILD_DIR)
+	set -e; for v in $$(pg_buildext supported-versions); do \
+		(cd Code/PgSQL/rdkit/build-$$v && \
+			$(MAKE) -j$(NUMJOBS) || \
+			$$(sed -e 's#\.\./\.\./#../../../../obj-build/Code/#g' \
+				../../../../obj-build/Code/PgSQL/rdkit/CMakeFiles/rdkit.dir/link.txt)); \
+	done
 
 override_dh_auto_test:
 	:
@@ -48,16 +83,18 @@ override_dh_strip:
 
 override_dh_auto_install:
 	mkdir -p $(CURDIR)/debian/librdkit1t64/usr/lib/$(DEB_HOST_MULTIARCH)
-	cp -a $(BUILD_DIR)/lib/libRDKit*.so* $(CURDIR)/debian/librdkit1t64/usr/lib/$(DEB_HOST_MULTIARCH)/
+	cp -a $(BUILD_DIR)/lib/libRDKit*.so.* $(CURDIR)/debian/librdkit1t64/usr/lib/$(DEB_HOST_MULTIARCH)/
 	mkdir -p $(CURDIR)/debian/librdkit1t64/usr/share/RDKit
 	cp -a $(CURDIR)/Data $(CURDIR)/debian/librdkit1t64/usr/share/RDKit/
 
-	mkdir -p $(CURDIR)/debian/postgresql-$(PG_MAJOR)-rdkit/usr/lib/postgresql/$(PG_MAJOR)/lib
-	mkdir -p $(CURDIR)/debian/postgresql-$(PG_MAJOR)-rdkit/usr/share/postgresql/$(PG_MAJOR)/extension
-	cp $(BUILD_DIR)/Code/PgSQL/rdkit/librdkit.so $(CURDIR)/debian/postgresql-$(PG_MAJOR)-rdkit/usr/lib/postgresql/$(PG_MAJOR)/lib/rdkit.so
-	cp $(CURDIR)/Code/PgSQL/rdkit/rdkit.control $(CURDIR)/debian/postgresql-$(PG_MAJOR)-rdkit/usr/share/postgresql/$(PG_MAJOR)/extension/
-	cp $(BUILD_DIR)/Code/PgSQL/rdkit/rdkit--*.sql $(CURDIR)/debian/postgresql-$(PG_MAJOR)-rdkit/usr/share/postgresql/$(PG_MAJOR)/extension/
-	cp $(BUILD_DIR)/Code/PgSQL/rdkit/update_sql/*.sql $(CURDIR)/debian/postgresql-$(PG_MAJOR)-rdkit/usr/share/postgresql/$(PG_MAJOR)/extension/
+	set -e; for v in $$(pg_buildext supported-versions); do \
+		mkdir -p $(CURDIR)/debian/postgresql-$$v-rdkit/usr/lib/postgresql/$$v/lib; \
+		mkdir -p $(CURDIR)/debian/postgresql-$$v-rdkit/usr/share/postgresql/$$v/extension; \
+		cp Code/PgSQL/rdkit/build-$$v/librdkit.so $(CURDIR)/debian/postgresql-$$v-rdkit/usr/lib/postgresql/$$v/lib/rdkit.so; \
+		cp Code/PgSQL/rdkit/rdkit.control $(CURDIR)/debian/postgresql-$$v-rdkit/usr/share/postgresql/$$v/extension/; \
+		cp Code/PgSQL/rdkit/build-$$v/rdkit--*.sql $(CURDIR)/debian/postgresql-$$v-rdkit/usr/share/postgresql/$$v/extension/; \
+		cp Code/PgSQL/rdkit/build-$$v/update_sql/*.sql $(CURDIR)/debian/postgresql-$$v-rdkit/usr/share/postgresql/$$v/extension/; \
+	done
 
 override_dh_auto_clean:
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_DIR) Code/PgSQL/rdkit/build-* Code/PgSQL/rdkit/External
