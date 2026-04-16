@@ -6,7 +6,7 @@ include /usr/share/postgresql-common/pgxs_debian_control.mk
 export CC = gcc
 export PATH     := /usr/oriole-17/bin:$(PATH)
 export PG_CONFIG = /usr/oriole-17/bin/pg_config
-export ORIOLEDB_PATCHSET_VERSION=16
+export ORIOLEDB_PATCHSET_VERSION=18
 export USE_PGXS=1
 
 override_dh_shlibdeps:
@@ -15,7 +15,7 @@ override_dh_shlibdeps:
 override_dh_auto_configure:
 
 override_dh_auto_build:
-	dh_auto_build -- ORIOLEDB_PATCHSET_VERSION=16
+	dh_auto_build -- ORIOLEDB_PATCHSET_VERSION=$(ORIOLEDB_PATCHSET_VERSION)
 
 #override_dh_auto_clean:
 

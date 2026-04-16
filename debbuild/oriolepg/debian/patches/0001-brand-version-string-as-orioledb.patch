@@ -1,0 +1,39 @@
+diff --git a/configure b/configure
+index 07383852a5..5eca136f3a 100755
+--- a/configure
++++ b/configure
+@@ -19362,7 +19362,7 @@ fi
+ 
+ 
+ cat >>confdefs.h <<_ACEOF
+-#define PG_VERSION_STR "PostgreSQL $PG_VERSION on $host, compiled by $cc_string, `expr $ac_cv_sizeof_void_p \* 8`-bit"
++#define PG_VERSION_STR "OrioleDB $PG_VERSION on $host, compiled by $cc_string, `expr $ac_cv_sizeof_void_p \* 8`-bit"
+ _ACEOF
+ 
+ 
+diff --git a/configure.ac b/configure.ac
+index 0bf699724c..ca80f99550 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -2450,7 +2450,7 @@ else
+ fi
+ 
+ AC_DEFINE_UNQUOTED(PG_VERSION_STR,
+-                   ["PostgreSQL $PG_VERSION on $host, compiled by $cc_string, `expr $ac_cv_sizeof_void_p \* 8`-bit"],
++                   ["OrioleDB $PG_VERSION on $host, compiled by $cc_string, `expr $ac_cv_sizeof_void_p \* 8`-bit"],
+                    [A string containing the version number, platform, and C compiler])
+ 
+ # Supply a numeric version string for use by 3rd party add-ons
+diff --git a/meson.build b/meson.build
+index b77752d2b9..e462df8011 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2812,7 +2812,7 @@ cdata.set_quoted('DLSUFFIX', dlsuffix)
+ # built later than the rest of the version metadata, we need SIZEOF_VOID_P
+ cdata.set_quoted('PG_VERSION_STR',
+-  'PostgreSQL @0@ on @1@-@2@, compiled by @3@-@4@, @5@-bit'.format(
++  'OrioleDB @0@ on @1@-@2@, compiled by @3@-@4@, @5@-bit'.format(
+     pg_version, host_machine.cpu_family(), host_system,
+     cc.get_id(), cc.version(), cdata.get('SIZEOF_VOID_P') * 8,
+   )
+

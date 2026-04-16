@@ -7,7 +7,7 @@ export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 # Filter out -ffast-math which is known to cause precision issues
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
 export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
-export ORIOLEDB_PATCHSET_VERSION=16
+export ORIOLEDB_PATCHSET_VERSION=18
 
 %:
 	dh $@ --without autoreconf
@@ -25,7 +25,7 @@ override_dh_auto_configure:
 		--docdir=$(PGBASEINSTDIR)/doc \
 		--htmldir=$(PGBASEINSTDIR)/doc/html \
 		--with-system-tzdata=/usr/share/zoneinfo \
-		--with-extra-version=" (OrioleDB 1.6-beta14)" \
+		--with-extra-version=" (OrioleDB 1.7-beta15)" \
 		--with-lz4 --with-zstd \
 		--with-uuid=e2fs --with-libxml --with-libxslt \
 		--with-icu --with-llvm \

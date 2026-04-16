@@ -47,4 +47,4 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, tzdata, ssl-cert
 Description: Patched PostgreSQL for OrioleDB
  OrioleDB is a new storage engine for PostgreSQL, bringing a modern approach
  to database capacity, capabilities and performance to the world's most-loved
- database platform. This is a patched version (17_16) of PostgreSQL 17.
+ database platform. This is a patched version (17_18) of PostgreSQL 17.7.
