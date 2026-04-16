@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgclone-3.6.0.tar.gz
+TARBALL := pgclone-4.0.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
