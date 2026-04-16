@@ -1,0 +1,31 @@
+Subject: Prefer packaged gRPC and Abseil on EL builders
+
+The upstream PGXN bundle vendors opentelemetry-cpp and its gRPC/abseil
+dependencies, but EL builders already provide a compatible gRPC stack. Let
+find_package(gRPC) short-circuit the vendored FetchContent path and ensure
+Abseil targets are available before configuring clickhouse-cpp.
+
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -42,11 +42,10 @@
+ set(WITH_FUNC_TESTS OFF CACHE BOOL "Disable OTel functional tests" FORCE)
+ set(OPENTELEMETRY_INSTALL OFF CACHE BOOL "" FORCE)
+ set(WITH_ABSEIL ON CACHE BOOL "Use Abseil for OTel" FORCE)
+-# Always use vendored gRPC + abseil (never pick up system packages).
+-# This prevents find_package(gRPC) from short-circuiting FetchContent
+-# and leaving absl:: targets undefined.
+-set(CMAKE_DISABLE_FIND_PACKAGE_gRPC TRUE)
+ add_subdirectory(third_party/opentelemetry-cpp EXCLUDE_FROM_ALL)
++if(NOT TARGET absl::strings)
++  find_package(absl CONFIG REQUIRED)
++endif()
+ 
+ # ---------------------------------------------------------------------------
+ # Add clickhouse-cpp AFTER opentelemetry-cpp.
+@@ -73,7 +72,6 @@
+ target_include_directories(pg_stat_ch SYSTEM PRIVATE
+   ${CMAKE_SOURCE_DIR}/third_party/clickhouse-cpp
+-  ${CMAKE_SOURCE_DIR}/third_party/clickhouse-cpp/contrib/absl
+   ${CMAKE_SOURCE_DIR}/third_party/clickhouse-cpp/contrib/zstd
+   ${CMAKE_SOURCE_DIR}/third_party/opentelemetry-cpp/api/include
+   ${CMAKE_SOURCE_DIR}/third_party/opentelemetry-cpp/sdk/include

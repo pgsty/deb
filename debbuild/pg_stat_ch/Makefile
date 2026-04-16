@@ -1,8 +1,8 @@
 all: setup build move
 
-# Keep the filename normalized even though the local archive is repacked with
-# bundled submodules, because upstream source releases do not ship them.
-TARBALL := pg_stat_ch-0.3.4.tar.gz
+# Keep the filename normalized because the local archive is repacked from the
+# upstream PGXN zip release into a tarball for builder compatibility.
+TARBALL := pg_stat_ch-0.3.6.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
