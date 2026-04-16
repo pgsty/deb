@@ -1,0 +1,7 @@
+ulak (0.0.2-1PIGSTY) unstable; urgency=medium
+
+  * Initial release.
+  * Carry the shared 0.0.2 hiredis compatibility patch used by RPM.
+  * Package the default HTTP-enabled build and remove shared PGXS docs.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 16 Apr 2026 18:20:00 +0800
