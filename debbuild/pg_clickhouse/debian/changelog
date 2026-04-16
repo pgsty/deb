@@ -1,3 +1,12 @@
+pg-clickhouse (0.2.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.2.0.
+  * Use the shared normalized 0.2.0 source tarball without the obsolete
+    CURL_WRITEFUNC_ERROR backfill.
+  * Remove PGXS-installed docs from the shared postgresql-doc path.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 16 Apr 2026 18:20:00 +0800
+
 pg-clickhouse (0.1.10-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/ClickHouse/pg_clickhouse/releases/tag/v0.1.10
