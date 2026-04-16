@@ -1,0 +1,7 @@
+storage-engine (1.0.5-1PIGSTY) unstable; urgency=medium
+
+  * Package storage_engine v1.0.5 for PostgreSQL 16, 17, and 18.
+  * Carry the shared 1.0.5 build compatibility patch for configure metadata
+    and PostgreSQL 16-18 build fixes.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 16 Apr 2026 18:40:00 +0800
