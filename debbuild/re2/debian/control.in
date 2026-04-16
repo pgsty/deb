@@ -1,0 +1,17 @@
+Source: re2
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), g++, libre2-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ClickHouse/pg_re2
+
+Package: postgresql-PGVERSION-re2
+Architecture: any
+Provides: postgresql-re2
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: ClickHouse-compatible RE2 regular expression functions for PostgreSQL
+  re2 adds ClickHouse-style regular expression matching and extraction
+  functions backed by Google's RE2 engine, providing linear-time regex
+  behavior for PostgreSQL 16 through 18.
