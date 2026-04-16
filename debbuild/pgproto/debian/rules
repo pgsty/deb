@@ -10,7 +10,7 @@ export PG_LDFLAGS += -fno-lto
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
 override_dh_auto_configure:
-	patch -p1 --forward -f < debian/patches/pgproto-0.2.18-force-naive-utf8-range.patch
+	patch -p1 --forward -f < debian/patches/pgproto-0.2.18.patch
 
 override_dh_auto_build:
 
