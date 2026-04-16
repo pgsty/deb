@@ -1,4 +1,9 @@
-Subject: Force vendored utf8_range to use the naive implementation
+Subject: Force pgproto to use the bundled naive utf8_range path
+
+The upstream PGXS build only links third_party/utf8_range/naive.o. On
+architectures where utf8_range.h advertises utf8_range2() as an external
+symbol, the build can otherwise end up referencing SIMD objects that are not
+linked into the extension. Keep the header on the naive fallback path.
 
 --- a/third_party/utf8_range/utf8_range.h
 +++ b/third_party/utf8_range/utf8_range.h

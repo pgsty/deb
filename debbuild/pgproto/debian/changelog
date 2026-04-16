@@ -1,3 +1,11 @@
+pgproto (0.2.18-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.2.18.
+  * Keep forcing vendored utf8_range to the naive implementation with the
+    shared 0.2.18 patch used by RPM.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 16 Apr 2026 18:20:00 +0800
+
 pgproto (0.2.4-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.2.4.

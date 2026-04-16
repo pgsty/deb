@@ -1,8 +1,8 @@
 all: setup build move
 
-# Keep the filename normalized even though the local archive is repacked with
-# vendored third_party sources, because upstream PGXN releases omit submodules.
-TARBALL := pgproto-0.2.4.tar.gz
+# Keep the filename normalized because the local archive is repacked from the
+# upstream PGXN zip release into a tarball for builder compatibility.
+TARBALL := pgproto-0.2.18.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
