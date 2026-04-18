@@ -1,0 +1,126 @@
+Description: Cloudberry 2.1.0 Debian packaging compatibility fixes
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-yet
+Last-Update: 2026-04-18
+
+--- a/src/backend/access/external/url_curl.c
++++ b/src/backend/access/external/url_curl.c
+@@ -1473,7 +1473,7 @@
+ 	{
+ 		/* use empty message */
+ 		CURL_EASY_SETOPT(file->curl->handle, CURLOPT_POSTFIELDS, "");
+-		CURL_EASY_SETOPT(file->curl->handle, CURLOPT_POSTFIELDSIZE, 0);
++		CURL_EASY_SETOPT(file->curl->handle, CURLOPT_POSTFIELDSIZE, 0L);
+ 
+ 		/* post away and check response, retry if failed (timeout or * connect error) */
+ 		gp_perform_backoff_and_check_response(file, easy_perform_work);
+@@ -1932,7 +1932,7 @@
+ 
+ 	/* use empty message */
+ 	CURL_EASY_SETOPT(file->curl->handle, CURLOPT_POSTFIELDS, "");
+-	CURL_EASY_SETOPT(file->curl->handle, CURLOPT_POSTFIELDSIZE, 0);
++	CURL_EASY_SETOPT(file->curl->handle, CURLOPT_POSTFIELDSIZE, 0L);
+ 
+ 	/* post away! */
+ 	gp_perform_backoff_and_check_response(file, easy_perform_work);
+--- a/contrib/pax_storage/CMakeLists.txt
++++ b/contrib/pax_storage/CMakeLists.txt
+@@ -24,7 +24,7 @@
+ # Base CXX flags
+ # Note: -Wpessimizing-move is enabled by default in GCC 9+ and will be caught by -Werror
+ # No need to explicitly add -Werror=pessimizing-move (which breaks GCC 8.x compatibility)
+-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -Wno-unused-function -Wno-error=ignored-qualifiers -Wno-error=array-bounds -Wuninitialized -Winit-self -Wstrict-aliasing -Wno-missing-field-initializers -Wno-unused-parameter -Wno-clobbered -Wno-sized-deallocation -g")
++set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-error -Wno-unused-function -Wno-error=ignored-qualifiers -Wno-error=array-bounds -Wuninitialized -Winit-self -Wstrict-aliasing -Wno-missing-field-initializers -Wno-unused-parameter -Wno-clobbered -Wno-sized-deallocation -g")
+ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wno-unused-parameter -Wno-parameter-name")
+ 
+ option(USE_MANIFEST_API "Use manifest API" OFF)
+--- a/contrib/pax_storage/src/cpp/contrib/googlebench/CMakeLists.txt
++++ b/contrib/pax_storage/src/cpp/contrib/googlebench/CMakeLists.txt
+@@ -7,7 +7,7 @@
+ option(BENCHMARK_ENABLE_EXCEPTIONS "Enable the use of exceptions in the benchmark library." ON)
+ option(BENCHMARK_ENABLE_LTO "Enable link time optimisation of the benchmark library." OFF)
+ option(BENCHMARK_USE_LIBCXX "Build and test using libc++ as the standard library." OFF)
+-option(BENCHMARK_ENABLE_WERROR "Build Release candidates with -Werror." ON)
++option(BENCHMARK_ENABLE_WERROR "Build Release candidates with -Werror." OFF)
+ option(BENCHMARK_FORCE_WERROR "Build Release candidates with -Werror regardless of compiler issues." OFF)
+ 
+ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "PGI")
+@@ -197,7 +197,7 @@
+   add_cxx_compiler_flag(-Wold-style-cast)
+   add_cxx_compiler_flag(-Wconversion)
+   if(BENCHMARK_ENABLE_WERROR)
+-      add_cxx_compiler_flag(-Werror)
++      add_cxx_compiler_flag(-Wno-error)
+   endif()
+   if (NOT BENCHMARK_ENABLE_TESTING)
+     # Disable warning when compiling tests as gtest does not use 'override'.
+--- a/src/Makefile.custom
++++ b/src/Makefile.custom
+@@ -1 +1 @@
+-CUSTOM_COPT += -Werror
+\ No newline at end of file
++CUSTOM_COPT += -Wno-error
+\ No newline at end of file
+--- a/src/backend/gporca/CMakeLists.txt
++++ b/src/backend/gporca/CMakeLists.txt
+@@ -31,7 +31,7 @@
+ 
+ check_cxx_compiler_flag("-Werror" COMPILER_HAS_WERROR)
+ if (COMPILER_HAS_WERROR)
+-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror")
++  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error")
+ endif()
+ 
+ check_cxx_compiler_flag("-Wextra" COMPILER_HAS_WEXTRA)
+--- a/src/backend/gporca/gporca.mk
++++ b/src/backend/gporca/gporca.mk
+@@ -4,7 +4,7 @@
+ override CPPFLAGS := -I$(top_srcdir)/src/backend/gporca/libgpdbcost/include $(CPPFLAGS)
+ # Do not omit frame pointer. Even with RELEASE builds, it is used for
+ # backtracing.
+-override CXXFLAGS := -Werror -Wextra -Wpedantic -fno-omit-frame-pointer $(CXXFLAGS)
++override CXXFLAGS := -Wno-error -Wextra -Wpedantic -fno-omit-frame-pointer $(CXXFLAGS)
+ 
+ # orca is not accessed in JIT (executor stage), avoid the generation of .bc here
+ # NOTE: accordingly we MUST avoid them in install step (install-postgres-bitcode
+--- a/src/backend/gporca/libnaucrates/src/md/CMDIdGPDB.cpp
++++ b/src/backend/gporca/libnaucrates/src/md/CMDIdGPDB.cpp
+@@ -128,7 +128,7 @@
+ 	  m_minor_version(0),
+ 	  m_str(m_mdid_array, GPOS_ARRAY_SIZE(m_mdid_array))
+ {
+-	if (CMDIdGPDB::m_mdid_invalid_key.Oid() == oid)
++	if (0 == oid)
+ 	{
+ 		// construct an invalid mdid 0.0.0
+ 		m_major_version = 0;
+@@ -146,7 +146,7 @@
+ 	GPOS_RTL_ASSERT(
+ 		mdIdType == IMDId::EmdidGeneral ||
+ 		(mdIdType >= IMDId::EmdidRel && mdIdType < IMDId::EmdidSentinel));
+-	if (CMDIdGPDB::m_mdid_invalid_key.Oid() == oid)
++	if (0 == oid)
+ 	{
+ 		// construct an invalid mdid 0.0.0
+ 		m_major_version = 0;
+--- a/src/interfaces/libpq/fe-secure-openssl.c
++++ b/src/interfaces/libpq/fe-secure-openssl.c
+@@ -541,7 +541,7 @@
+ 
+ 			if (name->type == GEN_DNS)
+ 			{
+-				char	   *alt_name;
++				char       *alt_name = NULL;
+ 
+ 				(*names_examined)++;
+ 				rc = openssl_verify_peer_name_matches_certificate_name(conn,
+@@ -797,7 +797,9 @@
+ 	bool		have_homedir;
+ 	bool		have_cert;
+ 	bool		have_rootcert;
++#ifdef USE_SSL_ENGINE
+ 	EVP_PKEY   *pkey = NULL;
++#endif
+ 
+ 	/*
+ 	 * We'll need the home directory if any of the relevant parameters are

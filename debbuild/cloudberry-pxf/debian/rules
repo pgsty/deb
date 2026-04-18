@@ -1,0 +1,59 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export GPHOME=/usr/cloudberry
+export PXF_HOME=/usr/cloudberry-pxf
+export GOPATH := $(CURDIR)/.gopath
+export GOBIN := $(GOPATH)/bin
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	rm -rf $(GOPATH)
+
+override_dh_auto_build:
+	set -eu; \
+	if [ ! -x "$(GPHOME)/bin/postgres" ]; then \
+		echo "cloudberry must be installed under $(GPHOME) before building cloudberry-pxf" >&2; \
+		exit 1; \
+	fi; \
+	JAVA_HOME=""; \
+	for d in /usr/lib/jvm/java-17-openjdk* /usr/lib/jvm/temurin-17-jdk*; do \
+		if [ -d "$$d" ]; then JAVA_HOME=$$(readlink -f "$$d"); break; fi; \
+	done; \
+	if [ -z "$$JAVA_HOME" ]; then \
+		JAVA_HOME=$$(dirname $$(dirname $$(readlink -f $$(command -v javac)))); \
+	fi; \
+	export JAVA_HOME GPHOME=$(GPHOME) PXF_HOME=$(PXF_HOME) PG_CONFIG=$(GPHOME)/bin/pg_config GOPATH=$(GOPATH) GOBIN=$(GOBIN) PATH=$(GPHOME)/bin:$$JAVA_HOME/bin:$(GOBIN):/usr/local/go/bin:$$PATH; \
+	mkdir -p $(GOPATH); \
+	$(MAKE) -C external-table stage; \
+	$(MAKE) -C fdw stage; \
+	$(MAKE) -C cli build; \
+	mkdir -p cli/build/stage/bin; \
+	cp -fp cli/build/pxf-cli cli/build/stage/bin/pxf-cli; \
+	$(MAKE) -C server stage-notest
+
+override_dh_auto_install:
+	install -d -m 0755 $(CURDIR)/debian/tmp$(PXF_HOME)
+	cp -a external-table/build/stage/. $(CURDIR)/debian/tmp$(PXF_HOME)/
+	cp -a fdw/build/stage/. $(CURDIR)/debian/tmp$(PXF_HOME)/
+	cp -a cli/build/stage/. $(CURDIR)/debian/tmp$(PXF_HOME)/
+	cp -a server/build/stage/. $(CURDIR)/debian/tmp$(PXF_HOME)/
+	install -d -m 0700 $(CURDIR)/debian/tmp$(PXF_HOME)/run
+	printf 'apache-cloudberry-pxf-2.1.0-source-release\n' > $(CURDIR)/debian/tmp$(PXF_HOME)/commit.sha
+	sed -i "s|directory =.*|directory = '$(PXF_HOME)/gpextable/'|g" $(CURDIR)/debian/tmp$(PXF_HOME)/gpextable/pxf.control
+	sed -i "s|module_pathname =.*|module_pathname = '$(PXF_HOME)/gpextable/pxf'|g" $(CURDIR)/debian/tmp$(PXF_HOME)/gpextable/pxf.control
+	if [ -f $(CURDIR)/debian/tmp$(PXF_HOME)/fdw/pxf_fdw.control ]; then \
+		sed -i "s|directory =.*|directory = '$(PXF_HOME)/fdw/'|g" $(CURDIR)/debian/tmp$(PXF_HOME)/fdw/pxf_fdw.control; \
+		sed -i "s|module_pathname =.*|module_pathname = '$(PXF_HOME)/fdw/pxf_fdw'|g" $(CURDIR)/debian/tmp$(PXF_HOME)/fdw/pxf_fdw.control; \
+	fi
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_dwz:
+	:
+
+override_dh_auto_test:
+	:

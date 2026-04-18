@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := apache-cloudberry-2.1.0-incubating-src.tar.gz
+TARBALL := apache-cloudberry-backup-2.1.0-incubating-src.tar.gz
 BUILD_DIR := build
 
 setup:

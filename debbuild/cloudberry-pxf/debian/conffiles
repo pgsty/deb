@@ -1,0 +1,4 @@
+/usr/cloudberry-pxf/conf/pxf-application.properties
+/usr/cloudberry-pxf/conf/pxf-env.sh
+/usr/cloudberry-pxf/conf/pxf-log4j2.xml
+/usr/cloudberry-pxf/conf/pxf-profiles.xml

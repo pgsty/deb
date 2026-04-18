@@ -1,0 +1,58 @@
+Description: Cloudberry PXF 2.1.0 Java toolchain compatibility fixes
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-yet
+Last-Update: 2026-04-18
+
+diff -urN a/server/build.gradle b/server/build.gradle
+--- a/server/build.gradle
++++ b/server/build.gradle
+@@ -61,11 +61,19 @@
+     apply plugin: 'io.spring.dependency-management'
+     apply plugin: "io.franzbecker.gradle-lombok"
+ 
++    lombok {
++        version = "1.18.30"
++        sha256 = "14151b47582d570b4de16a147ece3bdbd19ace4aee5bde3a5578c87db9ecb998"
++    }
++
+     group = 'org.apache.cloudberry.pxf'
+     version = "${version}"
+ 
+     sourceCompatibility = JavaVersion.VERSION_1_8
+     targetCompatibility = JavaVersion.VERSION_1_8
++    tasks.withType(JavaCompile) {
++        options.encoding = 'UTF-8'
++    }
+ 
+     dependencyManagement {
+         imports {
+@@ -256,7 +264,7 @@
+         options.compilerArgs += [
+                 "-g", "-Xlint:varargs", "-Xlint:cast", "-Xlint:classfile", "-Xlint:dep-ann", "-Xlint:divzero",
+                 "-Xlint:empty", "-Xlint:finally", "-Xlint:overrides", "-Xlint:path", "-Xlint:-processing", "-Xlint:static",
+-                "-Xlint:try", "-Xlint:fallthrough", "-Xlint:unchecked", "-Xlint:-options", "-Werror"
++                "-Xlint:try", "-Xlint:fallthrough", "-Xlint:unchecked", "-Xlint:-options", "-Xlint:-removal"
+         ]
+     }
+ 
+@@ -264,7 +272,7 @@
+         options.compilerArgs += [
+                 "-g", "-Xlint:varargs", "-Xlint:cast", "-Xlint:classfile", "-Xlint:dep-ann", "-Xlint:divzero",
+                 "-Xlint:empty", "-Xlint:finally", "-Xlint:overrides", "-Xlint:path", "-Xlint:-processing", "-Xlint:static",
+-                "-Xlint:try", "-Xlint:fallthrough", "-Xlint:unchecked", "-Xlint:-options", "-Werror"
++                "-Xlint:try", "-Xlint:fallthrough", "-Xlint:unchecked", "-Xlint:-options", "-Xlint:-removal"
+         ]
+     }
+ 
+diff -urN a/server/gradle/wrapper/gradle-wrapper.properties b/server/gradle/wrapper/gradle-wrapper.properties
+--- a/server/gradle/wrapper/gradle-wrapper.properties
++++ b/server/gradle/wrapper/gradle-wrapper.properties
+@@ -1,6 +1,6 @@
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-6.8.2-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-8.5-bin.zip
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionSha256Sum=8de6efc274ab52332a9c820366dd5cf5fc9d35ec7078fd70c8ec6913431ee610
++distributionSha256Sum=9d926787066a081739e8200858338b4a69e837c3a821a33aca9db09dd4a41026

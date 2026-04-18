@@ -1,5 +1,7 @@
-cloudberry (2.0.0-1PIGSTY) unstable; urgency=medium
+cloudberry (2.1.0-1PIGSTY) unstable; urgency=medium
 
-  * Initial cloudberry package build from local source tarball.
+  * Upgrade Apache Cloudberry to 2.1.0.
+  * Consolidate the Debian source patch into cloudberry-2.1.0.patch.
+  * Carry compiler and library compatibility fixes as a versioned quilt patch.
 
- -- Ruohang Feng <rh@vonng.com>  Thu, 19 Feb 2026 18:30:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Apr 2026 08:30:00 +0000

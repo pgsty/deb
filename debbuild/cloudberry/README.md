@@ -1,11 +1,6 @@
 # cloudberry debbuild
 
-This package follows the repository-standard flow:
-
-1. Read local source tarball from `../SOURCES/`.
-2. Extract to `build/`.
-3. Copy `debian/` into `build/debian`.
-4. Run `dpkg-buildpackage`.
+This recipe builds the Apache Cloudberry 2.1.0 main package.
 
 ## Usage
 
@@ -14,6 +9,6 @@ cd ~/debbuild/cloudberry
 make
 ```
 
-Required local tarball (default):
+Required local tarball:
 
-`~/ext/src/apache-cloudberry-2.0.0-incubating-src.tar.gz`
+`~/ext/src/apache-cloudberry-2.1.0-incubating-src.tar.gz`

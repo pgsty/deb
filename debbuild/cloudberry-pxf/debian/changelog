@@ -1,0 +1,6 @@
+cloudberry-pxf (2.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial Apache Cloudberry PXF 2.1.0 package.
+  * Consolidate the Debian source patch into cloudberry-pxf-2.1.0.patch.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Apr 2026 08:30:00 +0000

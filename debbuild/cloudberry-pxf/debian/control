@@ -1,0 +1,30 @@
+Source: cloudberry-pxf
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ ca-certificates,
+ curl,
+ g++,
+ gcc,
+ cloudberry (>= 2.1.0),
+ golang-go,
+ libcurl4-gnutls-dev | libcurl4-openssl-dev,
+ make,
+ openjdk-17-jdk | default-jdk,
+ quilt,
+ unzip,
+ zip
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://cloudberry.apache.org
+
+Package: cloudberry-pxf
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, bash, cloudberry (= ${binary:Version}), default-jre-headless | openjdk-17-jre-headless | openjdk-21-jre-headless
+Description: Apache Cloudberry PXF for advanced external data access
+ Apache Cloudberry PXF provides connectors for external data systems
+ together with the PXF service and CLI.
+ .
+ This package installs PXF into /usr/cloudberry-pxf.

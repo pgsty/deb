@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export GOPATH := $(CURDIR)/.gopath
+export GOBIN := $(GOPATH)/bin
+export PATH := $(GOBIN):/usr/local/go/bin:$(PATH)
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	rm -rf $(GOPATH)
+
+override_dh_auto_build:
+	mkdir -p $(GOPATH)
+	$(MAKE) depend
+	$(MAKE) build
+
+override_dh_auto_install:
+	install -Dpm 0755 $(GOBIN)/gpbackup $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackup
+	install -Dpm 0755 $(GOBIN)/gprestore $(CURDIR)/debian/tmp/usr/cloudberry/bin/gprestore
+	install -Dpm 0755 $(GOBIN)/gpbackup_helper $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackup_helper
+	install -Dpm 0755 $(GOBIN)/gpbackup_s3_plugin $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackup_s3_plugin
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_dwz:
+	:
+
+override_dh_auto_test:
+	:
