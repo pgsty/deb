@@ -1,3 +1,9 @@
+pgxicor (0.1.1-1PIGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.1.1
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 18 Apr 2026 08:36:00 +0800
+
 pgxicor (0.1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>

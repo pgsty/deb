@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgxicor-0.1.0.tar.gz
+TARBALL := pgxicor-0.1.1.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 
