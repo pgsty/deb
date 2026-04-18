@@ -1,6 +1,7 @@
 pgxicor (0.1.1-1PIGSTY) unstable; urgency=medium
 
-  * Update to upstream 0.1.1
+  * Update to upstream 0.1.1.
+  * Keep the libcurl build dependency aligned with RPM.
 
  -- Ruohang Feng <rh@vonng.com>  Sat, 18 Apr 2026 08:36:00 +0800
 
