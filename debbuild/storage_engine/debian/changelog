@@ -1,3 +1,18 @@
+storage-engine (1.0.6-2PIGSTY) unstable; urgency=medium
+
+  * Remove the private citus_version.h header from runtime packages.
+  * Avoid file conflicts with Citus while keeping runtime behavior unchanged.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 16 Apr 2026 22:35:00 +0800
+
+storage-engine (1.0.6-1PIGSTY) unstable; urgency=medium
+
+  * Update storage_engine to upstream v1.0.6.
+  * Rename the shared compatibility patch to storage_engine-1.0.6.patch.
+  * Keep the shared configure metadata and PostgreSQL compatibility fixes aligned with RPM.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 16 Apr 2026 21:55:00 +0800
+
 storage-engine (1.0.5-1PIGSTY) unstable; urgency=medium
 
   * Package storage_engine v1.0.5 for PostgreSQL 16, 17, and 18.

@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := storage_engine-1.0.5.tar.gz
+TARBALL := storage_engine-1.0.6.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 
 check-src:
@@ -12,7 +12,7 @@ setup: check-src
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
-	patch -d build -p1 --forward -f < debian/patches/storage_engine-1.0.5.patch
+	patch -d build -p1 --forward -f < debian/patches/storage_engine-1.0.6.patch
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
