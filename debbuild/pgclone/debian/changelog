@@ -1,6 +1,7 @@
 pgclone (4.0.0-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 4.0.0.
+  * Track the upstream schema-namespace change in the packaged release.
 
  -- Ruohang Feng <rh@vonng.com>  Thu, 16 Apr 2026 18:20:00 +0800
 
