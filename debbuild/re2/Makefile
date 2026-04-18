@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := re2-0.1.0.tar.gz
+TARBALL := re2-0.1.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

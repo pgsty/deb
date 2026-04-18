@@ -1,3 +1,9 @@
+re2 (0.1.1-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.1.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Apr 2026 20:47:13 +0800
+
 re2 (0.1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release.
