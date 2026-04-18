@@ -1,3 +1,9 @@
+pg-search (0.23.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.23.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Apr 2026 20:47:13 +0800
+
 pg-search (0.22.6-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/paradedb/paradedb/releases/tag/v0.22.6

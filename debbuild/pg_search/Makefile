@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_search-0.22.6.tar.gz
+TARBALL := pg_search-0.23.0.tar.gz
 
 # prepare directory
 setup:
@@ -12,11 +12,11 @@ setup:
 
 build: building packaging
 building:
-	cd build/pg_search && cargo update && \
+	cd build/pg_search && \
 	for PG_VERSION in 15 16 17 18; do \
-	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
-	    cargo pgrx package -v; \
+	    CARGO_NET_GIT_FETCH_WITH_CLI=true cargo pgrx package -v; \
 	done
 
 packaging:
