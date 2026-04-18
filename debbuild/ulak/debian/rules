@@ -1,6 +1,10 @@
 #!/usr/bin/make -f
 
 export CC = gcc
+export ENABLE_KAFKA = 1
+export ENABLE_MQTT = 1
+export ENABLE_REDIS = 1
+export ENABLE_AMQP = 1
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
