@@ -1,3 +1,12 @@
+pgproto (0.3.3-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.3.3.
+  * Switch to the new vendored protobuf source bundle shared with RPM.
+  * Drop the obsolete utf8_range header patch because upstream now links the
+    bundled utf8_range implementation directly.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 18 Apr 2026 14:05:00 +0800
+
 pgproto (0.2.18-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.2.18.
