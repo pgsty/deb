@@ -1,18 +1,22 @@
 all: setup build move
 
-TARBALL := pg_trickle-0.17.0.tar.gz
+TARBALL := pg_trickle-0.20.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 18
 PGRX_VERSION := 0.17.0
-SOURCE_PATCHES := $(sort $(wildcard patches/0*.patch))
+SOURCE_PATCH := patches/$(TARBALL:.tar.gz=.patch)
 PGRX_PATCH := patches/pgrx-0.17.0-pbox-nonnull.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-setup: check-src
+check-patches:
+	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
+	@test -f "$(PGRX_PATCH)" || (echo "missing $(PGRX_PATCH)"; exit 1)
+
+setup: check-src check-patches
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) -name '._*' -delete
@@ -22,11 +26,8 @@ setup: check-src
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 apply-patches:
-	@set -e; \
-	for p in $(SOURCE_PATCHES); do \
-		echo "apply $$p"; \
-		(cd $(BUILD_DIR) && patch -p1 < "../$$p"); \
-	done
+	@echo "apply $(SOURCE_PATCH)"
+	@(cd $(BUILD_DIR) && patch -p1 < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
@@ -64,4 +65,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup apply-patches build building ensure-pgrx packaging move clean
+.PHONY: all check-src check-patches setup apply-patches build building ensure-pgrx packaging move clean

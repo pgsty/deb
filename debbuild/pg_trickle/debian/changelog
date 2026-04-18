@@ -1,3 +1,13 @@
+pg-trickle (0.20.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.20.0 with the normalized PGXN source tarball.
+  * Rename the packaging-only source patch to pg_trickle-0.20.0.patch so the
+    Debian and RPM recipes use the same tarball-derived patch name.
+  * Refresh the packaging-only Cargo patch for the new bench target set.
+  * Keep patching cached pgrx 0.17.0 for the current builder Rust toolchain.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Apr 2026 20:47:13 +0800
+
 pg-trickle (0.17.0-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.17.0.
