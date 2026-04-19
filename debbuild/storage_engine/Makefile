@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := storage_engine-1.0.6.tar.gz
+TARBALL := storage_engine-1.0.7.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 
 check-src:
@@ -12,11 +12,11 @@ setup: check-src
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
-	patch -d build -p1 --forward -f < debian/patches/storage_engine-1.0.6.patch
+	patch -d build -p1 --forward -f < debian/patches/storage_engine-1.0.7.patch
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
-build: build18 build17 build16
+build: build18 build17 build16 build15 build14
 
 build18:
 	cd build && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
@@ -35,6 +35,18 @@ build16:
 	echo '16' > build/debian/pgversions
 	cd build && pg_buildext updatecontrol
 	cd build && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+
+build15:
+	cd build && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
+	echo '15' > build/debian/pgversions
+	cd build && pg_buildext updatecontrol
+	cd build && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+
+build14:
+	cd build && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
+	echo '14' > build/debian/pgversions
+	cd build && pg_buildext updatecontrol
+	cd build && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
