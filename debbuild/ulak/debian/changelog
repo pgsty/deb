@@ -1,3 +1,12 @@
+ulak (0.0.2-2PIGSTY) unstable; urgency=medium
+
+  * Align the DEB compatibility patch with RPM.
+  * Fall back to curl_multi_wait() on builders with older libcurl headers.
+  * Enable the Redis dispatcher only when the distro libhiredis-dev package
+    ships hiredis_ssl.h, so Debian 12 and Ubuntu 22 keep building.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 19 Apr 2026 09:30:00 +0800
+
 ulak (0.0.2-1PIGSTY) unstable; urgency=medium
 
   * Initial release.

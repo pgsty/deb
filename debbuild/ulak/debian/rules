@@ -1,10 +1,18 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpkg/architecture.mk
+
 export CC = gcc
 export ENABLE_KAFKA = 1
 export ENABLE_MQTT = 1
-export ENABLE_REDIS = 1
 export ENABLE_AMQP = 1
+
+# Debian 12 and Ubuntu 22 ship libhiredis-dev without hiredis_ssl.h, so only
+# enable the Redis dispatcher where the distro actually provides the TLS header.
+HIREDIS_SSL_HEADER := $(firstword $(wildcard /usr/include/hiredis/hiredis_ssl.h /usr/include/$(DEB_HOST_MULTIARCH)/hiredis/hiredis_ssl.h))
+ifneq ($(HIREDIS_SSL_HEADER),)
+export ENABLE_REDIS = 1
+endif
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 

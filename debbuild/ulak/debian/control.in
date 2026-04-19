@@ -15,6 +15,7 @@ Description: Transactional outbox and asynchronous delivery extension for Postgr
   ulak implements the transactional outbox pattern inside PostgreSQL, storing
   outbound events atomically with business data and dispatching them
   asynchronously from background workers.
-  This package builds the HTTP, Kafka, MQTT, Redis Streams, and AMQP
-  dispatchers, matching the current RPM feature set while leaving upstream
-  NATS support disabled.
+  This package always builds the HTTP, Kafka, MQTT, and AMQP dispatchers.
+  Redis Streams support stays enabled on distributions whose libhiredis-dev
+  package ships hiredis_ssl.h; older distributions fall back to the other
+  dispatchers. Upstream NATS support remains disabled.

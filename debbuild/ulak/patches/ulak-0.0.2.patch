@@ -1,9 +1,13 @@
-Subject: Fall back to legacy hiredis keepalive helper on EL9
+Subject: Compatibility fixes for older hiredis and libcurl builders
 
 EL9 ships hiredis 1.0.x, which exposes redisEnableKeepAlive() but not the
 newer redisEnableKeepAliveWithInterval() helper used upstream. Keep the same
 best-effort TCP keepalive behavior by using the interval-aware API when it is
 available and falling back to the older helper otherwise.
+
+Some builders also ship libcurl releases that predate curl_multi_poll(). Fall
+back to curl_multi_wait() there so the HTTP dispatcher still builds cleanly
+against the older curl headers.
 
 --- a/src/dispatchers/redis/redis_connection.c
 +++ b/src/dispatchers/redis/redis_connection.c
@@ -20,4 +24,28 @@ available and falling back to the older helper otherwise.
 +#endif
      }
  
-     /* Authenticate if password provided (Redis 6+ ACL: AUTH username password) */
+    /* Authenticate if password provided (Redis 6+ ACL: AUTH username password) */
+--- a/src/dispatchers/http/http_batch.c
++++ b/src/dispatchers/http/http_batch.c
+@@ -186,12 +186,21 @@
+ 
+             if (still_running > 0) {
+                 int numfds;
++#if LIBCURL_VERSION_NUM >= 0x074200
+                 mc = curl_multi_poll(http_dispatcher->multi_handle, NULL, 0, poll_interval_ms,
+                                      &numfds);
+                 if (mc != CURLM_OK) {
+                     ulak_log("warning", "curl_multi_poll failed: %s", curl_multi_strerror(mc));
+                     break;
+                 }
++#else
++                mc = curl_multi_wait(http_dispatcher->multi_handle, NULL, 0, poll_interval_ms,
++                                     &numfds);
++                if (mc != CURLM_OK) {
++                    ulak_log("warning", "curl_multi_wait failed: %s", curl_multi_strerror(mc));
++                    break;
++                }
++#endif
+             }
+ 
+             clock_gettime(CLOCK_MONOTONIC, &now_time);
