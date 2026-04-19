@@ -1,0 +1,25 @@
+Description: Reset errno before reading cdb_init.d
+Author: OpenAI Codex
+Forwarded: not-yet
+Last-Update: 2026-04-19
+
+`readdir()` leaves errno unchanged when it reaches end-of-directory.
+On newer glibc releases, earlier `clone3()` fallback paths can leave
+errno set to `ENOSYS`, which makes initdb misreport a successful
+directory scan as:
+
+  error while reading cdb_init.d directory: Function not implemented
+
+Clear errno before the scan so the post-loop check only sees real
+directory I/O errors.
+
+--- a/src/bin/initdb/initdb.c
++++ b/src/bin/initdb/initdb.c
+@@ -2022,6 +2022,7 @@ static void
+ 
+ 	/* Collect all files with .sql suffix in array. */
+ 	nscripts = 0;
++	errno = 0;
+ 	while ((file = readdir(dir)) != NULL)
+ 	{
+ 		int			namelen = strlen(file->d_name);

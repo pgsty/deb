@@ -1,1 +1,2 @@
 cloudberry-2.1.0.patch
+fix-initdb-cdb-initd-errno.patch
