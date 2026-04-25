@@ -1,0 +1,17 @@
+Source: pg-accumulator
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Treedo/pg_accumulator
+
+Package: postgresql-PGVERSION-pg-accumulator
+Architecture: any
+Provides: postgresql-pg-accumulator
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Accumulation registers for PostgreSQL
+  pg_accumulator is a data accounting engine for PostgreSQL. It provides
+  declarative accumulation registers for balance and turnover tracking across
+  arbitrary dimensions, with transactional consistency and optimized reads.
