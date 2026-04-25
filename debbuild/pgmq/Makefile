@@ -1,15 +1,18 @@
 all: setup build move
 
-TARBALL := pgmq-1.11.0.tar.gz
+TARBALL := pgmq-1.11.1.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 # prepare directory
-setup:
-	rm -rf build build2; mkdir -p build build2
-	tar -C build2 --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	cp -r build2/pgmq-extension/* build/
+setup: check-src
+	rm -rf build; mkdir -p build
+	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
@@ -25,4 +28,4 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
+.PHONY: all check-src setup update build move clean ls

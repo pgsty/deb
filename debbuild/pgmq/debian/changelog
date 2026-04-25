@@ -1,3 +1,10 @@
+pgmq (1.11.1-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/pgmq/pgmq/releases/tag/v1.11.1
+  * Use the normalized PGXN source layout directly.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 25 Apr 2026 13:45:00 +0800
+
 pgmq (1.11.0-1PIGSTY) unstable; urgency=low
 
   * https://github.com/pgmq/pgmq/releases/tag/v1.11.0
