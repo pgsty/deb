@@ -1,20 +1,18 @@
 all: setup build move
 
-TARBALL := pg_trickle-0.20.0.tar.gz
+TARBALL := pg_trickle-0.31.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 18
-PGRX_VERSION := 0.17.0
+PGRX_VERSION := 0.18.0
 SOURCE_PATCH := patches/$(TARBALL:.tar.gz=.patch)
-PGRX_PATCH := patches/pgrx-0.17.0-pbox-nonnull.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 check-patches:
 	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
-	@test -f "$(PGRX_PATCH)" || (echo "missing $(PGRX_PATCH)"; exit 1)
 
 setup: check-src check-patches
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
@@ -37,12 +35,8 @@ building: ensure-pgrx
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
 	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch
-	@PBOX="$$(find "$$HOME/.cargo/registry/src" -path '*/pgrx-$(PGRX_VERSION)/src/palloc/pbox.rs' | head -n 1)"; \
-	test -n "$$PBOX"; \
-	if ! grep -q 'NonNull::from(\&mut datum)' "$$PBOX"; then \
-	    (cd "$$(dirname "$$PBOX")" && patch -p0 < "$(CURDIR)/$(PGRX_PATCH)"); \
-	fi
 	cd $(BUILD_DIR) && \
+	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \

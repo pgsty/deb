@@ -1,10 +1,10 @@
 Subject: Trim non-extension Cargo targets for packaging
 
-The upstream tree includes an auxiliary workspace member, dev-only test
+The upstream tree includes auxiliary workspace members, dev-only test
 dependencies, benchmark targets, and a release profile tuned for upstream
-distribution builds. For packaging we only need the PostgreSQL 18
-extension itself, so drop the extra workspace/test targets and relax the
-release profile to keep resource usage reasonable in builder containers.
+distribution builds. For packaging we only need the PostgreSQL 18 extension
+itself, so drop the extra workspace/test targets and relax the release profile
+to keep resource usage reasonable in builder containers.
 
 --- a/Cargo.toml
 +++ b/Cargo.toml
@@ -13,12 +13,12 @@ release profile to keep resource usage reasonable in builder containers.
  categories = ["database"]
  
 -[workspace]
--members = [".", "pgtrickle-tui"]
+-members = [".", "pgtrickle-tui", "pgtrickle-relay"]
 -
  # Allow pgrx internal cfg values used by pg_shmem_init! macro
  [lints.rust]
  unexpected_cfgs = { level = "warn", check-cfg = ['cfg(feature, values("pg13", "pg14", "pg15", "pg16", "pg17"))'] }
-@@ -30,7 +27,7 @@
+@@ -26,7 +23,7 @@
  
  [features]
  default = ["pg18"]
@@ -27,12 +27,12 @@ release profile to keep resource usage reasonable in builder containers.
  pg_test = []
  light-e2e = []
  
-@@ -45,36 +42,11 @@
+@@ -43,36 +40,11 @@
  chrono = "0.4"
  postgres = "0.19"
  
 -[dev-dependencies]
--pgrx-tests = "=0.17.0"
+-pgrx-tests = "=0.18.0"
 -testcontainers = "0.27"
 -testcontainers-modules = { version = "0.15", features = ["postgres"] }
 -tokio = { version = "1", features = ["rt-multi-thread", "macros", "process"] }
@@ -40,7 +40,7 @@ release profile to keep resource usage reasonable in builder containers.
 -tokio-postgres = "0.7"
 -serde_json = "1"
 -regex-lite = "0.1"
--xxhash-rust = { version = "0.8", features = ["xxh64"] }
+-xxhash-rust = { version = "0.8", features = ["xxh64", "xxh3"] }
 -proptest = "1"
 -criterion = { version = "0.5", features = ["html_reports"] }
 -
