@@ -1,3 +1,10 @@
+parray-gin (1.5.0-1PIGSTY) unstable; urgency=medium
+
+  * Update parray_gin to upstream v1.5.0.
+  * Remove PGXS-installed docs from the shared postgresql-doc-* path.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 25 Apr 2026 13:45:00 +0800
+
 parray-gin (1.4.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release.

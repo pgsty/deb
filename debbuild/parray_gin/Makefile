@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := parray_gin-1.4.0.tar.gz
+TARBALL := parray_gin-1.5.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

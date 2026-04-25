@@ -15,6 +15,7 @@ override_dh_strip:
 
 override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-parray-gin
+	rm -rf debian/postgresql-*-parray-gin/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:
 	dh_installdocs --all README.* Changes doc/parray_gin.md
