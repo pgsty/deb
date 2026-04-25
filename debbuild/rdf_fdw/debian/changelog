@@ -1,3 +1,11 @@
+rdf-fdw (2.5.0-1PIGSTY) unstable; urgency=medium
+
+  * Update rdf_fdw to upstream v2.5.0.
+  * Keep removing PGXS-installed README files from the shared
+    postgresql-doc-* path to avoid package file conflicts.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 25 Apr 2026 13:45:00 +0800
+
 rdf-fdw (2.4.0-2PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
