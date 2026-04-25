@@ -1,27 +1,31 @@
 all: pre setup build move
 
-TARBALL := documentdb-0.109-0.tar.gz
+TARBALL := documentdb-0.110-0.tar.gz
+SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
+
+check-src:
+	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL) under $(HOME)/ext/src, $(HOME)/pgsty/repo/ext/src, or ../SOURCES; run pig build get first if needed"; exit 1)
 
 pre:
 	bash prepare.sh $(TARBALL)
 	apt install -y systemtap-sdt-dev
 
 # prepare directory
-setup:
+setup: check-src
 	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 	chown -R $(shell whoami):$(shell whoami) build/
 
 # building deb
 build: build18 build17 build16 build15
 
-# not working on ferretdb fork yet (works on microsoft documentdb fork)
 build18: setup
 	echo '18' > build/debian/pgversions
+	sed -i 's/, postgresql-PGVERSION-rum//g' build/debian/control.in
 	cd build/ && pg_buildext updatecontrol
 	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
@@ -49,4 +53,4 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all pre setup update build move clean
+.PHONY: all check-src pre setup update build move clean

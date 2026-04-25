@@ -1,9 +1,30 @@
 # get documentdb source tarball
 # pig build get documentdb
 
+TARBALL=${1-'documentdb-0.110-0.tar.gz'}
+SOURCE=${SOURCE:-}
+
+if [ -z "${SOURCE}" ]; then
+  for candidate in \
+    "${HOME}/debbuild/SOURCES/${TARBALL}" \
+    "${HOME}/ext/src/${TARBALL}" \
+    "${HOME}/pgext/repo/ext/src/${TARBALL}" \
+    "${HOME}/pgsty/repo/ext/src/${TARBALL}"; do
+    if [ -f "${candidate}" ]; then
+      SOURCE="${candidate}"
+      break
+    fi
+  done
+fi
+
+if [ ! -f "${SOURCE}" ]; then
+  echo "source tarball not found: ${TARBALL}" >&2
+  exit 1
+fi
+
 echo "extract documentdb scripts to /tmp/install_setup"
 rm -rf /tmp/documentdb /tmp/install_setup; mkdir -p /tmp/documentdb;
-tar -xf ~/ext/src/$1 -C /tmp/documentdb --strip-component=1
+tar -xf "${SOURCE}" -C /tmp/documentdb --strip-component=1
 cp -r /tmp/documentdb/scripts /tmp/install_setup
 cd /tmp/install_setup
 
