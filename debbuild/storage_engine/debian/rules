@@ -5,17 +5,14 @@ export CC = gcc
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
 override_dh_auto_configure:
-	./configure
+	:
 
 override_dh_auto_build:
 
 override_dh_auto_test:
 
 override_dh_auto_clean:
-	if [ -f Makefile.global ]; then \
-		$(MAKE) clean; \
-		rm -f Makefile.global src/include/citus_config.h src/include/citus_version.h; \
-	fi
+	$(MAKE) clean || true
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym

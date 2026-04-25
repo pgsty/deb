@@ -1,0 +1,36 @@
+Subject: Fix PostgreSQL 17 parallel table scan compatibility
+
+PostgreSQL renamed relation storage identifiers in PG16, but the parallel
+table scan descriptor did not gain phs_locator until PG18. Use the existing
+RelationPhysicalIdentifier_compat() helper for metadata lookups and guard the
+parallel scan header field with the correct PG18 boundary.
+
+--- a/src/backend/engine/engine_tableam.c
++++ b/src/backend/engine/engine_tableam.c
+@@ -564,7 +564,7 @@ engine_parallelscan_estimate(Relation rel)
+ 	 * DSM space.  PG18's table_parallelscan_estimate() adds snapshot space
+ 	 * on top of our estimate and serialises the snapshot at phs_snapshot_off.
+ 	 */
+-	List *stripeList = StripesForRelfilenode(rel->rd_locator, ForwardScanDirection);
++	List *stripeList = StripesForRelfilenode(RelationPhysicalIdentifier_compat(rel), ForwardScanDirection);
+ 	int   stripeCount = list_length(stripeList);
+ 	/* stripeList items live in the current palloc context; freed automatically */
+ 
+@@ -587,7 +587,7 @@ engine_parallelscan_initialize(Relation rel, ParallelTableScanDesc pscan)
+ 	 * hot path.  This call runs in the leader (single-threaded) before any
+ 	 * workers are launched, so catalog access is perfectly safe here.
+ 	 */
+-	List	   *stripeList = StripesForRelfilenode(rel->rd_locator, ForwardScanDirection);
++	List	   *stripeList = StripesForRelfilenode(RelationPhysicalIdentifier_compat(rel), ForwardScanDirection);
+ 	int			stripeCount = list_length(stripeList);
+ 	int			i = 0;
+ 	ListCell   *lc;
+@@ -605,7 +605,7 @@ engine_parallelscan_initialize(Relation rel, ParallelTableScanDesc pscan)
+ 	 * The snapshot is serialised by table_parallelscan_initialize() right
+ 	 * after our AM-specific data, at the offset we report below.
+ 	 */
+-#if PG_VERSION_NUM >= PG_VERSION_16
++#if PG_VERSION_NUM >= PG_VERSION_18
+ 	pcscan->base.phs_locator = rel->rd_locator;
+ #else
+ 	pcscan->base.phs_relid = RelationGetRelid(rel);

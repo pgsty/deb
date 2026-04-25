@@ -1,3 +1,12 @@
+storage-engine (1.2.3-1PIGSTY) unstable; urgency=medium
+
+  * Update storage_engine to upstream v1.2.3.
+  * Use upstream's portable Makefile.global and drop the obsolete configure
+    compatibility patch.
+  * Build Debian packages for PostgreSQL 14 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 25 Apr 2026 13:45:00 +0800
+
 storage-engine (1.0.7-1PIGSTY) unstable; urgency=medium
 
   * Update storage_engine to upstream v1.0.7.
