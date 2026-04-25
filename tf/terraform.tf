@@ -18,8 +18,8 @@ locals {
   spot_policy = "SpotAsPriceGo"                # NoSpot, SpotWithPriceLimit, SpotAsPriceGo
   spot_price_limit = 5                  # only valid when spot_policy is SpotWithPriceLimit
   instance_type_map = {
-    amd64 = "ecs.c9i.4xlarge"
-    arm64 = "ecs.c8y.4xlarge"
+    amd64 = "ecs.c9i.2xlarge"
+    arm64 = "ecs.c8y.2xlarge"
   }
   amd64_instype = local.instance_type_map["amd64"]
   arm64_instype = local.instance_type_map["arm64"]
