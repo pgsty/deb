@@ -1,3 +1,12 @@
+pg-trickle (0.40.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 0.40.0 with the normalized source tarball.
+  * Refresh the packaging-only Cargo patch for pgrx 0.18.0 and the current
+    workspace layout.
+  * Keep packaging PostgreSQL 18 only, matching upstream support.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Apr 2026 21:30:00 +0800
+
 pg-trickle (0.31.0-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.31.0 with the normalized PGXN source tarball.

@@ -15,3 +15,5 @@ Description: Streaming stream tables for PostgreSQL 18
   pg_trickle turns PostgreSQL 18 into a real-time data platform with
   streaming tables and differential view maintenance, implemented as a
   Rust and pgrx extension.
+  Full background scheduler and shared-memory functionality require loading
+  pg_trickle through shared_preload_libraries.
