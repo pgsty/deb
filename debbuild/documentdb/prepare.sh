@@ -28,6 +28,11 @@ tar -xf "${SOURCE}" -C /tmp/documentdb --strip-component=1
 cp -r /tmp/documentdb/scripts /tmp/install_setup
 cd /tmp/install_setup
 
+# CMake 4 rejects old cmake_minimum_required() policy versions in bundled deps.
+sed -i 's/cmake \.\./cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ../' install_citus_indent.sh
+sed -i 's/$MAKE_PROGRAM /$MAKE_PROGRAM -DCMAKE_POLICY_VERSION_MINIMUM=3.5 /' install_setup_libbson.sh
+sed -i "/^mkdir build$/i\\sed -i 's/f\\\\.i/f.m_i/g' src/enum_flags.h" install_citus_indent.sh
+
 echo "install documentdb dependencies"
 export CLEANUP_SETUP=1
 export INSTALL_DEPENDENCIES_ROOT=/tmp/install_setup

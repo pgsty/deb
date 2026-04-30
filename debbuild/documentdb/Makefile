@@ -8,12 +8,23 @@ check-src:
 
 pre:
 	bash prepare.sh $(TARBALL)
+	apt-get update -qq
 	apt install -y systemtap-sdt-dev
 
 # prepare directory
 setup: check-src
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	sed -i 's/char \*substring = memchr(/const char *substring = memchr(/' build/pg_documentdb_core/src/types/string_view.c
+	sed -i "s/char \\*dotPosition = strchr(currentNameSpace, '\\.');/const char *dotPosition = strchr(currentNameSpace, '.');/" build/pg_documentdb/src/aggregation/bson_aggregation_output_pipeline.c
+	sed -i "s/char \\*leftSubstring = memchr(path, '\\.', pathLength);/const char *leftSubstring = memchr(path, '.', pathLength);/" build/pg_documentdb/src/aggregation/bson_project.c
+	sed -i "s/char \\*arrayIndexSubstring = memchr(path, '\\.', pathLength);/const char *arrayIndexSubstring = memchr(path, '.', pathLength);/" build/pg_documentdb/src/aggregation/bson_project.c
+	sed -i 's/DateFormatMap \*result = bsearch(/const DateFormatMap *result = bsearch(/' build/pg_documentdb/src/operators/bson_expression_date_operators.c
+	sed -i 's/TimezoneMap \*result = bsearch(/const TimezoneMap *result = bsearch(/' build/pg_documentdb/src/operators/bson_expression_date_operators.c
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	if [ "$${OS_CODENAME}" = "resolute" ]; then \
+		sed -i 's/char \*dot = NULL;/const char *dot = NULL;/' build/pg_documentdb/src/sharding/sharding.c; \
+	fi
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
