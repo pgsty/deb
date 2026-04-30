@@ -1,3 +1,9 @@
+timescaledb-tsl (2.26.4-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.26.4
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Apr 2026 21:30:00 +0800
+
 timescaledb-tsl (2.26.3-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/timescale/timescaledb/releases/tag/2.26.3
