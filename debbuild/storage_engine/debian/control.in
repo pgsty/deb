@@ -16,4 +16,6 @@ Description: Columnar and row-compressed table access methods for PostgreSQL
   two high-performance table access methods:
   colcompress for column-oriented analytics and rowcompress for
   row-oriented compressed storage.
+  It includes vectorized execution, parallel scans, stripe-level pruning,
+  and PostgreSQL 13-19 compatibility.
   This package targets PostgreSQL PGVERSION.

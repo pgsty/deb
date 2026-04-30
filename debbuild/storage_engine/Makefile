@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := storage_engine-1.2.3.tar.gz
+TARBALL := storage_engine-1.3.4.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 
 check-src:

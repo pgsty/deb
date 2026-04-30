@@ -5,6 +5,14 @@ table scan descriptor did not gain phs_locator until PG18. Use the existing
 RelationPhysicalIdentifier_compat() helper for metadata lookups and guard the
 parallel scan header field with the correct PG18 boundary.
 
+PG_VERSION_19 is not a PostgreSQL server macro in current PGXS headers. Using
+it in a #if expression evaluates it as 0, which makes PG14/15 try to include
+the PG16+ varatt.h header. Compare PG_VERSION_NUM with the numeric 190000
+boundary instead.
+
+rowcompress_tableam.c uses SysScanDesc and systable_* APIs directly, so include
+access/genam.h instead of relying on indirect declarations.
+
 --- a/src/backend/engine/engine_tableam.c
 +++ b/src/backend/engine/engine_tableam.c
 @@ -564,7 +564,7 @@ engine_parallelscan_estimate(Relation rel)
@@ -34,3 +42,24 @@ parallel scan header field with the correct PG18 boundary.
  	pcscan->base.phs_locator = rel->rd_locator;
  #else
  	pcscan->base.phs_relid = RelationGetRelid(rel);
+--- a/src/backend/engine/vectorization/types/numeric.c
++++ b/src/backend/engine/vectorization/types/numeric.c
+@@ -9,7 +9,7 @@
+  */
+ 
+ #include "postgres.h"
+-#if PG_VERSION_NUM >= PG_VERSION_19
++#if PG_VERSION_NUM >= 190000
+ #include "varatt.h"
+ #endif
+
+--- a/src/backend/engine/rowcompress_tableam.c
++++ b/src/backend/engine/rowcompress_tableam.c
+@@ -23,6 +23,7 @@
+ #include "postgres.h"
+ #include "pg_version_constants.h"
+ 
++#include "access/genam.h"
+ #include "access/heapam.h"
+ #include "access/htup_details.h"
+ #include "access/multixact.h"
