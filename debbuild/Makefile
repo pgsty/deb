@@ -709,6 +709,14 @@ pg_strict:
 
 
 ###############################################################
+#            Category: SVC  - Service Packages               #
+###############################################################
+
+redis:
+	cd redis && make
+
+
+###############################################################
 #            Category: FDW  - FDW                            #
 ###############################################################
 
@@ -935,6 +943,7 @@ collect:
 	pg_rewrite pg_query_rewrite pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_qos pg_savior safeupdate pg_drop_events \
 	pg_profile pg_tracing pg_stat_monitor pg_store_plans pg_datasentinel pgsentinel pg_ash pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo pg_relusage pg_track_optimizer pagevis pg_isok \
 	passwordcheck_cracklib supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey column_encrypt pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
+	redis \
 	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq graphblas lagraph onesparse pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
 	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto re2 rdf_fdw ulak \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl \
