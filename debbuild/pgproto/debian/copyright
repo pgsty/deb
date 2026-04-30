@@ -4,7 +4,3 @@ Copyright (c) 2026 Apaezmx
 
 Primary upstream license:
 https://github.com/Apaezmx/pgproto/blob/main/LICENSE
-
-Vendored source code in the tarball includes additional third-party components:
-- `third_party/upb/archive`: BSD-3-Clause
-- `third_party/utf8_range`: MIT

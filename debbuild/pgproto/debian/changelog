@@ -1,3 +1,10 @@
+pgproto (0.5.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 0.5.0 with the normalized source tarball.
+  * Keep the pure-C PGXS build introduced by the current upstream release.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Apr 2026 21:30:00 +0800
+
 pgproto (0.3.3-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.3.3.
