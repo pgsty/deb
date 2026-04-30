@@ -11,6 +11,13 @@ Package: postgresql-PGVERSION-pg-savior
 Architecture: any
 Provides: postgresql-pg-savior
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: A postgres extension to avoid accidental mistakes
-  pg_savior is a PostgreSQL extension designed to prevent accidental data loss
-  due to non-parameterized DELETE queries without a WHERE clause. It hooks into the query execution path.
+Description: Prevent accidental data loss and risky schema changes
+  pg_savior installs PostgreSQL hooks that block risky DML and DDL before
+  they run, including DELETE or UPDATE without a WHERE clause, large
+  estimated row changes, CREATE INDEX without CONCURRENTLY, unsafe ALTER
+  TABLE operations, TRUNCATE or DROP TABLE on large tables, and DROP
+  DATABASE. The hook must be loaded through shared_preload_libraries,
+  session_preload_libraries, or LOAD before CREATE EXTENSION registers the
+  SQL objects in each database. For maintenance DDL such as installing other
+  extensions, use pg_savior.bypass in that session or load pg_savior after
+  those objects are installed.

@@ -1,3 +1,10 @@
+pg-savior (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Update pg_savior to upstream PGXN 0.1.0.
+  * Package the new safety hooks and document the preload requirement.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Apr 2026 21:30:00 +0800
+
 pg-savior (0.0.1-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
