@@ -15,6 +15,7 @@ override_dh_strip:
 override_dh_auto_install:
 	echo 'src/collection.bc: include/collection_config.h' >> Makefile
 	+pg_buildext loop postgresql-%v-collection
+	rm -rf debian/postgresql-*-collection/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:
 	dh_installdocs --all README.*
