@@ -1,3 +1,9 @@
+spock (5.0.6-1PIGSTY) unstable; urgency=medium
+
+  * Build spock from upstream source for pgedge-18.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 01 May 2026 12:00:00 +0000
+
 spock (0.0.0-1PIGSTY) unstable; urgency=medium
 
   * Build spock from upstream source for pgedge-17.

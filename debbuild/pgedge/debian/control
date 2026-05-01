@@ -1,4 +1,4 @@
-Source: pgedge-17
+Source: pgedge-18
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
@@ -44,11 +44,11 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/pgEdge/spock
 
-Package: pgedge-17
+Package: pgedge-18
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, tzdata, ssl-cert
-Description: pgEdge patched PostgreSQL 17 core
- PostgreSQL 17 core package built from upstream PostgreSQL source plus pgEdge Spock PG17 patchset.
+Description: pgEdge patched PostgreSQL 18 core
+ PostgreSQL 18 core package built from upstream PostgreSQL source plus pgEdge Spock PG18 patchset.
  .
- This package installs binaries into /usr/pgedge-17 and is intended
+ This package installs binaries into /usr/pgedge-18 and is intended
  to be the base runtime for pgEdge Spock, Snowflake and LOLOR extensions.

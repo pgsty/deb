@@ -2,7 +2,7 @@
 
 export DH_VERBOSE=1
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-SPOCK_VERSION ?= 5.0.5
+SPOCK_VERSION ?= 5.0.6
 
 # Filter out -ffast-math to avoid precision regressions.
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
@@ -15,14 +15,14 @@ override_dh_auto_clean:
 
 override_dh_auto_configure:
 	./configure \
-		--prefix=/usr/pgedge-17 \
-		--bindir=/usr/pgedge-17/bin \
-		--libdir=/usr/pgedge-17/lib \
-		--includedir=/usr/pgedge-17/include \
-		--mandir=/usr/pgedge-17/share/man \
-		--datadir=/usr/pgedge-17/share \
-		--docdir=/usr/share/doc/pgedge-17 \
-		--htmldir=/usr/share/doc/pgedge-17/html \
+		--prefix=/usr/pgedge-18 \
+		--bindir=/usr/pgedge-18/bin \
+		--libdir=/usr/pgedge-18/lib \
+		--includedir=/usr/pgedge-18/include \
+		--mandir=/usr/pgedge-18/share/man \
+		--datadir=/usr/pgedge-18/share \
+		--docdir=/usr/share/doc/pgedge-18 \
+		--htmldir=/usr/share/doc/pgedge-18/html \
 		--with-system-tzdata=/usr/share/zoneinfo \
 		--with-lz4 --with-zstd \
 		--with-uuid=e2fs --with-libxml --with-libxslt \
@@ -32,7 +32,6 @@ override_dh_auto_configure:
 		--with-perl --with-python --with-tcl \
 		--with-selinux --with-systemd \
 		--enable-nls \
-		--enable-thread-safety \
 		--enable-dtrace \
 		--with-extra-version=" (pgEdge $(SPOCK_VERSION))"
 
@@ -45,7 +44,7 @@ override_dh_auto_install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l/usr/pgedge-17/lib
+	dh_shlibdeps -l/usr/pgedge-18/lib
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym

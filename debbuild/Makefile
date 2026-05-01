@@ -900,6 +900,9 @@ agensgraph:
 	cd agensgraph && make
 pgedge:
 	cd pgedge && make
+pgedge-install:
+	apt-get remove -y pgedge-18 || /bin/true
+	apt-get install -y ./pgedge/pgedge-18_*.deb
 spock:
 	cd spock && make
 snowflake:
@@ -908,6 +911,7 @@ lolor:
 	cd lolor && make
 pgedge-all:
 	cd pgedge && make
+	$(MAKE) pgedge-install
 	cd spock && make
 	cd snowflake && make
 	cd lolor && make
@@ -949,4 +953,4 @@ collect:
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
 	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry cloudberry-backup cloudberry-pxf agensgraph inchi \
-	pgedge pgedge-all spock snowflake lolor
+	pgedge pgedge-install pgedge-all spock snowflake lolor

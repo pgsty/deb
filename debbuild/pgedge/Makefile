@@ -17,9 +17,9 @@ setup: check-src
 	tar -C $(BUILD_DIR)/.spock-src --strip-components=1 -xf $(SOURCE_DIR)/$(SPOCK_TARBALL)
 	cd $(BUILD_DIR) && \
 		PATCH_DIR=""; \
-		if [ -d .spock-src/patches/pg17 ]; then PATCH_DIR=.spock-src/patches/pg17; \
-		elif [ -d .spock-src/patches/17 ]; then PATCH_DIR=.spock-src/patches/17; \
-		else echo "unable to find pg17 patch directory in spock source"; exit 1; fi; \
+		if [ -d .spock-src/patches/pg$(PG_MAJOR) ]; then PATCH_DIR=.spock-src/patches/pg$(PG_MAJOR); \
+		elif [ -d .spock-src/patches/$(PG_MAJOR) ]; then PATCH_DIR=.spock-src/patches/$(PG_MAJOR); \
+		else echo "unable to find pg$(PG_MAJOR) patch directory in spock source"; exit 1; fi; \
 		for p in $$(find "$$PATCH_DIR" -maxdepth 1 -type f -name '*.diff' | sort); do \
 			echo "apply $$p"; \
 			patch -p1 < "$$p"; \

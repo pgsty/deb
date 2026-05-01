@@ -1,3 +1,9 @@
+lolor (1.2.2-1PIGSTY) unstable; urgency=medium
+
+  * Build lolor from upstream source for pgedge-18.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 01 May 2026 12:00:00 +0000
+
 lolor (0.0.0-1PIGSTY) unstable; urgency=medium
 
   * Build lolor from upstream source for pgedge-17.
