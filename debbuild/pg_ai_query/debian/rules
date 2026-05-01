@@ -7,6 +7,7 @@ export CC = gcc
 	dh $@
 
 PG_VERSIONS = 14 15 16 17 18
+PG_AI_QUERY_BUILD_JOBS ?= 2
 
 override_dh_auto_test:
 
@@ -25,7 +26,7 @@ override_dh_auto_build:
 		cmake -B $(CURDIR)/build-pg$$ver -S $(CURDIR) \
 			-DCMAKE_INSTALL_PREFIX=/usr \
 			-DCMAKE_BUILD_TYPE=Release; \
-		cmake --build $(CURDIR)/build-pg$$ver -- -j$$(nproc); \
+		cmake --build $(CURDIR)/build-pg$$ver -- -j$(PG_AI_QUERY_BUILD_JOBS); \
 	done
 
 override_dh_auto_install:

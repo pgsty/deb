@@ -6,6 +6,7 @@ TARBALL := timestamp9-timestamp9-1.4.0.tar.gz
 setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	sed -i 's/cmake_minimum_required(VERSION 3.4)/cmake_minimum_required(VERSION 3.10)/' build/CMakeLists.txt
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
@@ -25,5 +26,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 

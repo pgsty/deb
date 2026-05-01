@@ -5,6 +5,8 @@ TARBALL := antlr4-cpp-runtime-4.13.2-source.zip
 setup:
 	rm -rf build; mkdir -p build
 	unzip -q ../SOURCES/$(TARBALL) -d build
+	mv build/antlr4-cpp-runtime-4.13.2-source/* build/
+	rmdir build/antlr4-cpp-runtime-4.13.2-source
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog

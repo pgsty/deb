@@ -1,0 +1,28 @@
+--- include/libfq.h
++++ include/libfq.h
+@@ -11,14 +11,19 @@
+ #ifndef BOOL
+ #define BOOL
+-typedef char bool;
+
++#if defined(__cplusplus)
++#elif defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
++#include <stdbool.h>
++#else
++typedef char bool;
+
+-#ifndef true
+-#define true    ((bool) 1)
+-#endif
++# ifndef true
++# define true    ((bool) 1)
++# endif
+
+-#ifndef false
+-#define false   ((bool) 0)
++# ifndef false
++# define false   ((bool) 0)
++# endif
+ #endif
+
+ typedef bool *BoolPtr;
