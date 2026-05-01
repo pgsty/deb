@@ -1,0 +1,6 @@
+pg-bikram-sambat (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for pg_bikram_sambat 0.1.0.
+  * Provide the Bikram Sambat date type and AD/BS conversion functions.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Apr 2026 22:30:00 +0800

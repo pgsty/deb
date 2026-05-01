@@ -1,0 +1,16 @@
+Source: pg-bikram-sambat
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/LeohangRai/pg_bikram_sambat
+
+Package: postgresql-PGVERSION-pg-bikram-sambat
+Architecture: any
+Provides: postgresql-pg-bikram-sambat
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Bikram Sambat date type and conversion functions for PostgreSQL PGVERSION
+ pg_bikram_sambat provides a custom Bikram Sambat date type for PostgreSQL,
+ including conversion functions between Gregorian AD dates and Nepali BS dates.

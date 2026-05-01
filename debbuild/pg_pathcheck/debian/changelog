@@ -1,0 +1,6 @@
+pg-pathcheck (0.9.1-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for pg_pathcheck 0.9.1.
+  * Build the planner Path diagnostics preload module for PostgreSQL 17 and 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Apr 2026 22:30:00 +0800

@@ -1,0 +1,17 @@
+Source: pg-pathcheck
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), perl
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/danolivo/pg_pathcheck
+
+Package: postgresql-PGVERSION-pg-pathcheck
+Architecture: any
+Provides: postgresql-pg-pathcheck
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Planner Path diagnostics preload module for PostgreSQL PGVERSION
+ pg_pathcheck is a PostgreSQL debug aid that validates planner Path trees
+ for freed or garbage memory. It installs a shared library module that must
+ be loaded through shared_preload_libraries.
