@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_textsearch-1.1.0.tar.gz
+TARBALL := pg_textsearch-1.2.0.tar.gz
 
 # prepare directory
 setup:
