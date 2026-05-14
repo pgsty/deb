@@ -1,12 +1,13 @@
 all: build
 
-TARBALL := timescaledb-2.26.4.tar.gz
+TARBALL := timescaledb-2.27.0.tar.gz
 
 build: build18 build17 build16 build15
 
 define build_one
 	rm -rf build-$(1); mkdir -p build-$(1)
 	tar -C build-$(1) --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	sed -i 's/^version = 2.27.0-dev$$/version = 2.27.0/' build-$(1)/version.config
 	cd build-$(1) && PATH=/usr/lib/postgresql/$(1)/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
 	cd build-$(1)/build && $(MAKE) -j1
 	rm -rf build-$(1)/build/debian; cp -r debian build-$(1)/build/debian

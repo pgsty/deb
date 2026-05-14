@@ -1,3 +1,10 @@
+timescaledb-tsl (2.27.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.27.0
+  * Normalize upstream version.config from 2.27.0-dev to 2.27.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 14 May 2026 12:00:00 +0000
+
 timescaledb-tsl (2.26.4-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/timescale/timescaledb/releases/tag/2.26.4
