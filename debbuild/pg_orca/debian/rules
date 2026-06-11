@@ -1,0 +1,46 @@
+#!/usr/bin/make -f
+
+export CC = gcc
+export CXX = g++
+export DEB_BUILD_OPTIONS = parallel=1
+export CMAKE_BUILD_PARALLEL_LEVEL = 1
+
+PG_VERSIONS := $(shell cat debian/pgversions)
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+	rm -rf build-pg*
+
+override_dh_auto_configure:
+
+override_dh_auto_build:
+	set -e; \
+	for v in $(PG_VERSIONS); do \
+		rm -rf build-pg$$v; \
+		PATH="/usr/lib/postgresql/$$v/bin:$$PATH" \
+		cmake -B build-pg$$v -S . -G Ninja \
+			-DPG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config \
+			-DCMAKE_BUILD_TYPE=Release; \
+		cmake --build build-pg$$v; \
+	done
+
+override_dh_auto_install:
+	set -e; \
+	for v in $(PG_VERSIONS); do \
+		pkg=postgresql-$$v-pg-orca; \
+		DESTDIR="$(CURDIR)/debian/$$pkg" cmake --install build-pg$$v; \
+		printf 'postgresql:Depends=postgresql-%s\n' "$$v" >> debian/$$pkg.substvars; \
+		printf 'postgresql:Breaks=\n' >> debian/$$pkg.substvars; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md NOTICE
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+%:
+	dh $@

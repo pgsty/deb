@@ -1,0 +1,17 @@
+Source: pg-orca
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cmake, g++, ninja-build, pkg-config, libxerces-c-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/quantumiodb/pgorca
+
+Package: postgresql-PGVERSION-pg-orca
+Architecture: any
+Provides: postgresql-pg-orca
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: ORCA query optimizer for PostgreSQL PGVERSION
+  pg_orca plugs the ORCA cost-based optimizer into PostgreSQL through the
+  planner hook and falls back to the standard planner for unsupported queries.
+  This package builds the PostgreSQL 18 extension.
