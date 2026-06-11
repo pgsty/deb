@@ -1,3 +1,10 @@
+pg-pinyin (0.0.4-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.0.4.
+  * Patch pgrx dependencies to 0.18.1 during build.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 11 Jun 2026 21:36:13 +0800
+
 pg-pinyin (0.0.2-1PIGSTY) unstable; urgency=low
 
   * Initial release with pgrx 0.17.0
