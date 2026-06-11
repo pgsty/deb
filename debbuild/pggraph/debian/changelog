@@ -1,3 +1,10 @@
+pggraph (0.1.7-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 0.1.7.
+  * Build with cargo-pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 11 Jun 2026 21:36:13 +0800
+
 pggraph (0.1.5-1PIGSTY) unstable; urgency=medium
 
   * Initial release for PostgreSQL 14-18.

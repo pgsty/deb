@@ -1,11 +1,11 @@
 all: setup build move
 
-TARBALL := pggraph-0.1.5.tar.gz
+TARBALL := pggraph-0.1.7.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.18.0
+PGRX_VERSION := 0.18.1
 CRATE_DIR := graph
 
 check-src:
