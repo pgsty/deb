@@ -1,7 +1,7 @@
 all: setup build move
 
 #TARBALL := pg_net-0.9.2.tar.gz
-TARBALL := pg_net-0.20.2.tar.gz
+TARBALL := pg_net-0.20.3.tar.gz
 
 # prepare directory
 setup:
@@ -26,4 +26,3 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
