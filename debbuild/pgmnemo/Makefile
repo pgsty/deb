@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgmnemo-0.7.2.tar.gz
+TARBALL := pgmnemo-0.8.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
