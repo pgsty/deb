@@ -2,6 +2,7 @@
 
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
+export with_llvm = no
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
@@ -13,7 +14,7 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-pg-task
+	+pg_buildext -m "with_llvm=no" loop postgresql-%v-pg-task
 
 override_dh_installdocs:
 
