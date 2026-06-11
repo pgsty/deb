@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+
+export CC = gcc
+export DEB_BUILD_OPTIONS = parallel=1
+export with_llvm = no
+
+PG_VERSIONS := $(shell cat debian/pgversions)
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_test:
+
+override_dh_auto_build:
+
+override_dh_auto_clean:
+
+override_dh_auto_install:
+	set -e; \
+	for v in $(PG_VERSIONS); do \
+		pkg=postgresql-$$v-pg-sorted-heap; \
+		$(MAKE) clean PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config || true; \
+		$(MAKE) PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config; \
+		$(MAKE) PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config DESTDIR=$(CURDIR)/debian/$$pkg install; \
+		printf 'postgresql:Depends=postgresql-%s\n' "$$v" >> debian/$$pkg.substvars; \
+		printf 'postgresql:Breaks=\n' >> debian/$$pkg.substvars; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md CHANGELOG.md OPERATIONS.md docs/*.md
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+%:
+	dh $@

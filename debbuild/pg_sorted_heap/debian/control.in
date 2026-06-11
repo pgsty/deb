@@ -1,0 +1,17 @@
+Source: pg-sorted-heap
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), gcc
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/skuznetsov/pg_sorted_heap
+
+Package: postgresql-PGVERSION-pg-sorted-heap
+Architecture: any
+Provides: postgresql-pg-sorted-heap
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: sorted heap table access method for PostgreSQL PGVERSION
+  pg_sorted_heap physically sorts PostgreSQL table storage by primary key,
+  prunes heap blocks with per-page zone maps, and includes built-in vector
+  types plus planner-integrated HNSW search.
