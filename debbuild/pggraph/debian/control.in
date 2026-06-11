@@ -1,0 +1,18 @@
+Source: pggraph
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/evokoa/pggraph
+
+Package: postgresql-PGVERSION-pggraph
+Architecture: any
+Provides: postgresql-pggraph, postgresql-graph
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Graph database extension for PostgreSQL
+ pggraph adds graph traversal and query capabilities to PostgreSQL using pgrx.
+ The Debian package follows the Pigsty distribution name pggraph, while the
+ installed SQL extension, shared library, control file, and SQL payload are
+ named graph.
