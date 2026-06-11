@@ -1,0 +1,18 @@
+Source: pgrdf
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, git
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/styk-tv/pgRDF
+
+Package: postgresql-PGVERSION-pgrdf
+Architecture: any
+Provides: postgresql-pgrdf
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: RDF, SPARQL, SHACL, and OWL reasoning for PostgreSQL
+ pgRDF is a Rust-native PostgreSQL extension for RDF storage, SPARQL 1.1 query
+ and update, SHACL validation, and OWL 2 RL or RDFS materialization inside
+ PostgreSQL. This recipe packages the upstream pgrx 0.16 line for PostgreSQL
+ 14 through 17.

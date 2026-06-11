@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pgrdf
+Source: https://github.com/styk-tv/pgRDF
+
+Files: *
+Copyright: 2026 Peter Styk <peter@styk.tv>
+License: MIT
+
+License: MIT
+ On Debian systems, the complete text of the MIT License can be found in
+ /usr/share/common-licenses/MIT.
