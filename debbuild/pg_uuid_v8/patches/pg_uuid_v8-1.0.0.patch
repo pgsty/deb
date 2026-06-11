@@ -1,0 +1,55 @@
+Subject: Qualify UUID v8 operators for packaged public-schema installs
+
+The upstream SQL creates additional <, <=, >, and >= operators for uuid. On
+PostgreSQL 17 and 18, the unqualified COMMUTATOR/NEGATOR references resolve to
+the built-in pg_catalog uuid operators before the extension's operators have
+been paired, which makes CREATE EXTENSION fail with a commutator conflict.
+PGSTY packages this extension as non-relocatable in public, so qualify the
+operator references to public and keep the four packaged operators paired with
+each other.
+
+diff --git a/pg_uuid_v8--1.0.sql b/pg_uuid_v8--1.0.sql
+index 2e2e165..ec2dd22 100644
+--- a/pg_uuid_v8--1.0.sql
++++ b/pg_uuid_v8--1.0.sql
+@@ -64,31 +64,31 @@ CREATE OPERATOR < (
+   PROCEDURE = uuid_stego_lt,
+   LEFTARG = uuid,
+   RIGHTARG = uuid,
+-  COMMUTATOR = >,
+-  NEGATOR = >=
++  COMMUTATOR = OPERATOR(public.>),
++  NEGATOR = OPERATOR(public.>=)
+ );
+ 
+ CREATE OPERATOR <= (
+   PROCEDURE = uuid_stego_le,
+   LEFTARG = uuid,
+   RIGHTARG = uuid,
+-  COMMUTATOR = >=,
+-  NEGATOR = >
++  COMMUTATOR = OPERATOR(public.>=),
++  NEGATOR = OPERATOR(public.>)
+ );
+ 
+ CREATE OPERATOR > (
+   PROCEDURE = uuid_stego_gt,
+   LEFTARG = uuid,
+   RIGHTARG = uuid,
+-  COMMUTATOR = <,
+-  NEGATOR = <=
++  COMMUTATOR = OPERATOR(public.<),
++  NEGATOR = OPERATOR(public.<=)
+ );
+ 
+ CREATE OPERATOR >= (
+   PROCEDURE = uuid_stego_ge,
+   LEFTARG = uuid,
+   RIGHTARG = uuid,
+-  COMMUTATOR = <=,
+-  NEGATOR = <
++  COMMUTATOR = OPERATOR(public.<=),
++  NEGATOR = OPERATOR(public.<)
+ );
+ 
+ -- Helper functions for timestamp conversion

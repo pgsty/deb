@@ -1,0 +1,16 @@
+Source: pg-uuid-v8
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), pkg-config, libssl-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ineron/pg_uuid_v8
+
+Package: postgresql-PGVERSION-pg-uuid-v8
+Architecture: any
+Provides: postgresql-pg-uuid-v8
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: UUID v8 generator with embedded timestamps for PostgreSQL
+  pg_uuid_v8 provides UUID version 8 generation functions with steganographic
+  embedded timestamps for PostgreSQL.
