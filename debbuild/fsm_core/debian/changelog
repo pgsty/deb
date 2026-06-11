@@ -1,3 +1,10 @@
+fsm-core (1.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 1.1.0.
+  * Package the SQL-only extension payload.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 11 Jun 2026 21:36:13 +0800
+
 fsm-core (1.0.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release.

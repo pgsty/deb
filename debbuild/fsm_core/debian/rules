@@ -2,6 +2,7 @@
 
 SRC_DIR := fsm_core
 PKG_NAME := fsm-core
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
 
 %:
 	dh $@
@@ -9,21 +10,20 @@ PKG_NAME := fsm-core
 override_dh_auto_test:
 
 override_dh_auto_build:
-	# Disable the build step since binaries are pre-built
+	# SQL-only extension.
 
 override_dh_auto_clean:
-	# Disable the clean step to avoid cleaning up pre-built binaries
-
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
+	# Nothing to clean.
 
 override_dh_auto_install:
-	for PG_VERSION in 15 16 17 18; do \
-	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
+	for PG_VERSION in $(PG_VERSIONS); do \
 	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+	    EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
 	    dh_installdirs -p$$FULL_NAME; \
-	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
-	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
-	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    mkdir -p $$EXT_DIR; \
+	    cp $(SRC_DIR).control $$EXT_DIR/; \
+	    cp $(SRC_DIR)--*.sql $$EXT_DIR/; \
 	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md
