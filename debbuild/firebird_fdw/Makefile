@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := firebird_fdw-1.4.1.tar.gz
+TARBALL := firebird_fdw-1.4.2.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 
