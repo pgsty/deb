@@ -1,6 +1,8 @@
 #!/usr/bin/make -f
 
 export CC = gcc
+export with_llvm = no
+PG_VERSIONS := $(shell cat debian/pgversions)
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
@@ -18,7 +20,15 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-storage-engine
+	set -e; \
+	for v in $(PG_VERSIONS); do \
+		pkg=postgresql-$$v-storage-engine; \
+		$(MAKE) clean PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config with_llvm=no || true; \
+		$(MAKE) PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config with_llvm=no; \
+		$(MAKE) install PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config with_llvm=no DESTDIR=$(CURDIR)/debian/$$pkg; \
+		printf 'postgresql:Depends=postgresql-%s\n' "$$v" >> debian/$$pkg.substvars; \
+		printf 'postgresql:Breaks=\n' >> debian/$$pkg.substvars; \
+	done
 	find debian -path '*/usr/include/postgresql/*/server/citus_version.h' -delete
 	find debian -type d -path '*/usr/include/postgresql/*/server' -empty -delete
 	find debian -type d -path '*/usr/include/postgresql/*' -empty -delete

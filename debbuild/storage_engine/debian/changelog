@@ -1,3 +1,11 @@
+storage-engine (2.4.0-1PIGSTY) unstable; urgency=medium
+
+  * Update storage_engine to upstream PGXN 2.4.0.
+  * Keep following upstream PostgreSQL support and build packages for PG 15
+    through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 24 May 2026 16:38:22 +0000
+
 storage-engine (2.3.0-1PIGSTY) unstable; urgency=medium
 
   * Update storage_engine to upstream PGXN 2.3.0.
