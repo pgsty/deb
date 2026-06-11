@@ -1,3 +1,9 @@
+pg-extra-time (2.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 2.1.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 11 Jun 2026 21:36:13 +0800
+
 pg-extra-time (2.0.0-1PIGSTY) unstable; urgency=medium
 
   * Bump to 2.0.0
