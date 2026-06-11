@@ -1,0 +1,87 @@
+Subject: Trim non-extension Cargo targets for packaging
+
+The upstream tree includes a CLI binary, dev-only test dependencies, benchmark
+targets, and a release profile tuned for upstream distribution builds. For
+packaging we only need the PostgreSQL 18 extension itself, so drop the extra
+targets and relax the release profile to keep resource usage reasonable in
+builder containers. The PGXN bundle also omits the test schema generator script
+that build.rs tries to run for test fixtures, so skip that generation when the
+script is not present.
+
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -20,13 +20,10 @@
+ [lib]
+ crate-type = ["cdylib", "lib"]
+ 
+-[[bin]]
+-name = "pg_trickle_dump"
+-path = "./src/bin/pg_trickle_dump.rs"
+ 
+ [features]
+ default = ["pg18"]
+-pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
++pg18 = ["pgrx/pg18"]
+ pg_test = []
+ light-e2e = []
+ 
+--- a/build.rs
++++ b/build.rs
+@@ -23,6 +23,11 @@ fn main() {
+     let out_path = generated_dir.join("schema.rs");
+     let script = manifest_path.join("scripts").join("gen_test_schema.py");
+ 
++    if !script.exists() {
++        println!("cargo:warning=skipping test schema generation; {} is missing", script.display());
++        return;
++    }
++
+     let status = Command::new("python3")
+         .arg(&script)
+         .current_dir(manifest_path)
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -56,41 +53,11 @@
+ # Byte buffer for Parquet output.
+ bytes = "1"
+ 
+-[dev-dependencies]
+-pgrx-tests = "=0.18.0"
+-testcontainers = "0.27"
+-testcontainers-modules = { version = "0.15", features = ["postgres"] }
+-tokio = { version = "1", features = ["rt-multi-thread", "macros", "process"] }
+-sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "json"] }
+-tokio-postgres = "0.7"
+-serde_json = "1"
+-regex-lite = "0.1"
+-xxhash-rust = { version = "0.8", features = ["xxh64", "xxh3"] }
+-proptest = "1"
+-criterion = { version = "0.5", features = ["html_reports"] }
+-tempfile = "3"
+-
+-[[bench]]
+-name = "refresh_bench"
+-harness = false
+-
+-[[bench]]
+-name = "diff_operators"
+-harness = false
+-
+-[[bench]]
+-name = "scheduler_bench"
+-harness = false
+-
+-[[bench]]
+-name = "pgvector_bench"
+-harness = false
+-
+ [profile.dev]
+ panic = "unwind"
+ 
+ [profile.release]
+ panic = "unwind"
+ opt-level = 3
+-lto = "fat"
+-codegen-units = 1
++lto = "off"
++codegen-units = 16

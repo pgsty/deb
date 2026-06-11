@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_trickle-0.40.0.tar.gz
+TARBALL := pg_trickle-0.81.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -25,11 +25,11 @@ setup: check-src check-patches
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
-	@(cd $(BUILD_DIR) && patch -p1 < "../$(SOURCE_PATCH)")
+	@(cd $(BUILD_DIR) && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
-building: ensure-pgrx
+building: check-pgrx
 	cd $(BUILD_DIR) && \
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
@@ -39,13 +39,14 @@ building: ensure-pgrx
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+	    cargo pgrx package --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
 
-ensure-pgrx:
+check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
-	    cargo install --locked cargo-pgrx --version $(PGRX_VERSION); \
+	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
+	    exit 1; \
 	fi
 
 packaging:
@@ -59,4 +60,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-patches setup apply-patches build building ensure-pgrx packaging move clean
+.PHONY: all check-src check-patches setup apply-patches build building check-pgrx packaging move clean
