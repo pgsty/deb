@@ -1,9 +1,12 @@
-Subject: Prefer packaged gRPC and Abseil on EL builders
+Subject: Prefer packaged gRPC and Abseil on distro builders
 
 The upstream PGXN bundle vendors opentelemetry-cpp and its gRPC/abseil
 dependencies, but EL builders already provide a compatible gRPC stack. Let
 find_package(gRPC) short-circuit the vendored FetchContent path and ensure
 Abseil targets are available before configuring clickhouse-cpp.
+When a distro gRPC package is too old to expose CMake targets, fall back to
+pkg-config grpc++ before using vendored FetchContent, and keep that fallback
+clone shallow so jammy builders do not spend minutes fetching gRPC history.
 
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
@@ -19,13 +22,64 @@ Abseil targets are available before configuring clickhouse-cpp.
 +if(NOT TARGET absl::strings)
 +  find_package(absl CONFIG REQUIRED)
 +endif()
- 
+
  # ---------------------------------------------------------------------------
  # Add clickhouse-cpp AFTER opentelemetry-cpp.
-@@ -73,7 +72,6 @@
+@@ -75,8 +74,7 @@
  target_include_directories(pg_stat_ch SYSTEM PRIVATE
    ${CMAKE_SOURCE_DIR}/third_party/clickhouse-cpp
 -  ${CMAKE_SOURCE_DIR}/third_party/clickhouse-cpp/contrib/absl
    ${CMAKE_SOURCE_DIR}/third_party/clickhouse-cpp/contrib/zstd
    ${CMAKE_SOURCE_DIR}/third_party/opentelemetry-cpp/api/include
    ${CMAKE_SOURCE_DIR}/third_party/opentelemetry-cpp/sdk/include
+  ${CMAKE_SOURCE_DIR}/third_party/opentelemetry-cpp/exporters/otlp/include
+ )
+--- a/third_party/opentelemetry-cpp/exporters/otlp/include/opentelemetry/exporters/otlp/otlp_grpc_client_options.h
++++ b/third_party/opentelemetry-cpp/exporters/otlp/include/opentelemetry/exporters/otlp/otlp_grpc_client_options.h
+@@ -5,16 +5,12 @@
+
+ #include "opentelemetry/exporters/otlp/otlp_environment.h"
+ #include "opentelemetry/version.h"
+
++#include <grpcpp/security/credentials.h>
+ #include <chrono>
+ #include <memory>
+ #include <string>
+
+-namespace grpc
+-{
+-class ChannelCredentials;
+-}
+-
+ OPENTELEMETRY_BEGIN_NAMESPACE
+ namespace exporter
+ {
+--- a/third_party/opentelemetry-cpp/cmake/grpc.cmake
++++ b/third_party/opentelemetry-cpp/cmake/grpc.cmake
+@@ -14,9 +14,26 @@ find_package(gRPC CONFIG QUIET)
+ set(gRPC_PROVIDER "find_package")
+
+ if(NOT gRPC_FOUND)
++  find_package(PkgConfig QUIET)
++  if(PkgConfig_FOUND)
++    pkg_check_modules(GRPCPP QUIET IMPORTED_TARGET grpc++)
++    find_program(GRPC_CPP_PLUGIN_PROGRAM grpc_cpp_plugin)
++    if(GRPCPP_FOUND AND TARGET PkgConfig::GRPCPP AND GRPC_CPP_PLUGIN_PROGRAM)
++      add_library(gRPC::grpc++ ALIAS PkgConfig::GRPCPP)
++      add_executable(gRPC::grpc_cpp_plugin IMPORTED)
++      set_target_properties(gRPC::grpc_cpp_plugin PROPERTIES
++          IMPORTED_LOCATION "${GRPC_CPP_PLUGIN_PROGRAM}")
++      set(gRPC_FOUND TRUE)
++      set(gRPC_PROVIDER "pkg-config")
++    endif()
++  endif()
++endif()
++
++if(NOT gRPC_FOUND)
+   FetchContent_Declare(
+       "grpc"
+       GIT_REPOSITORY  "https://github.com/grpc/grpc.git"
+       GIT_TAG "${grpc_GIT_TAG}"
++      GIT_SHALLOW TRUE
+       GIT_SUBMODULES
+           "third_party/re2"
