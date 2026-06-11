@@ -1,0 +1,16 @@
+Source: pg-projection
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/suissa/pg_projection
+
+Package: postgresql-PGVERSION-pg-projection
+Architecture: all
+Provides: postgresql-pg-projection
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: MongoDB-like JSONB projection helpers for PostgreSQL
+  pg_projection adds MongoDB-style projection helpers for JSONB documents,
+  including single-document and query-result projection functions.
