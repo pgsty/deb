@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_build:
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+override_dh_auto_install:
+	sed -i '/^DOCS[[:space:]]*=/d' Makefile
+	+pg_buildext loop postgresql-%v-pgmnemo
+	rm -rf debian/postgresql-*-pgmnemo/usr/share/doc/postgresql-doc-*/
+
+override_dh_installdocs:
+	dh_installdocs --all README.md CHANGELOG.md
+
+%:
+	dh $@

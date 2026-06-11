@@ -1,0 +1,16 @@
+Source: pgmnemo
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgmnemo/pgmnemo
+
+Package: postgresql-PGVERSION-pgmnemo
+Architecture: all
+Provides: postgresql-pgmnemo
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgvector
+Description: Provenance-gated vector memory for LLM agents in PostgreSQL
+  pgmnemo provides a provenance-gated, vector-hybrid memory substrate for LLM
+  agents in PostgreSQL. It installs SQL schema objects and depends on pgvector.
