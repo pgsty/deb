@@ -1,0 +1,5 @@
+jsonschema (0.1.9-1PIGSTY) unstable; urgency=medium
+
+  * Initial release for PostgreSQL 14-18.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 04 Jun 2026 00:00:00 +0800

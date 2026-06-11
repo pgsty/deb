@@ -1,0 +1,17 @@
+Source: jsonschema
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/theory/pg-jsonschema-boon
+
+Package: postgresql-PGVERSION-jsonschema
+Architecture: any
+Provides: postgresql-jsonschema
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: JSON Schema validation functions for PostgreSQL
+ jsonschema provides JSON Schema validation functions for PostgreSQL using the
+ Boon validator. This is the theory/pg-jsonschema-boon extension, not the
+ Supabase pg_jsonschema extension.

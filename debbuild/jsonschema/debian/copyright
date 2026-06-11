@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: jsonschema
+Source: https://github.com/theory/pg-jsonschema-boon
+
+Files: *
+Copyright: 2025 David E. Wheeler, 2024-2025 Tembo
+License: MIT
+
+License: MIT
+ On Debian systems, the complete text of the MIT License can be found in
+ /usr/share/common-licenses/MIT.
