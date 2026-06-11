@@ -6,6 +6,7 @@ export DEB_BUILD_OPTIONS = parallel=1
 export CMAKE_BUILD_PARALLEL_LEVEL = 1
 
 VERSIONS := $(shell cat debian/pgversions)
+LLVM_BINPATH ?= $(shell p="$$(command -v llvm-config-21 || command -v llvm-config-20 || command -v llvm-config-19 || command -v llvm-config-18 || command -v llvm-config-17 || command -v llvm-config-16 || command -v llvm-config-15 || command -v llvm-config-14 || command -v llvm-config 2>/dev/null)"; test -n "$$p" && "$$p" --bindir)
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
@@ -25,8 +26,8 @@ override_dh_auto_install:
 	for v in $(VERSIONS); do \
 		pkg=postgresql-$$v-clickhouse; \
 		$(MAKE) clean; \
-		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config; \
-		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config DESTDIR=$(CURDIR)/debian/$$pkg install; \
+		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config LLVM_BINPATH=$(LLVM_BINPATH); \
+		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config LLVM_BINPATH=$(LLVM_BINPATH) DESTDIR=$(CURDIR)/debian/$$pkg install; \
 		printf 'postgresql:Depends=postgresql-%s\n' "$$v" >> debian/$$pkg.substvars; \
 		printf 'postgresql:Breaks=\n' >> debian/$$pkg.substvars; \
 	done
