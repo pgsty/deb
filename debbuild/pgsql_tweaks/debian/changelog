@@ -1,3 +1,9 @@
+pgsql-tweaks (1.0.3-1PIGSTY) unstable; urgency=low
+
+  * Upgrade to upstream PGXN 1.0.3.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 11 Jun 2026 21:36:13 +0800
+
 pgsql-tweaks (1.0.2-1PIGSTY) unstable; urgency=low
 
   * https://codeberg.org/pgsql_tweaks/pgsql_tweaks/releases/tag/v1.0.2
