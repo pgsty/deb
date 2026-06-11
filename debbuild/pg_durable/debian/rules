@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+
+EXT_NAME := pg_durable
+PKG_NAME := pg-durable
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+
+%:
+	dh $@
+
+override_dh_auto_test:
+
+override_dh_auto_build:
+	# Built by the outer Makefile via cargo pgrx package.
+
+override_dh_auto_clean:
+	# Keep pre-built artifacts for packaging.
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	for PG_VERSION in $(PG_VERSIONS); do \
+	    DIR_NAME=$(EXT_NAME)-pg$$PG_VERSION; \
+	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+	    dh_installdirs -p$$FULL_NAME; \
+	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
+	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/$(EXT_NAME).so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME).control $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)*.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
+	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
+	done

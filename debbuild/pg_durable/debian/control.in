@@ -1,0 +1,18 @@
+Source: pg-durable
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, libssl-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/microsoft/pg_durable
+
+Package: postgresql-PGVERSION-pg-durable
+Architecture: any
+Provides: postgresql-pg-durable
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Durable SQL functions for PostgreSQL
+ pg_durable brings durable execution to PostgreSQL, allowing long-running
+ fault-tolerant functions to be defined in SQL and checkpointed inside the
+ database. It is implemented as a Rust/pgrx extension with a background
+ worker and requires loading pg_durable through shared_preload_libraries.
