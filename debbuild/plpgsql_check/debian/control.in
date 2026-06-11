@@ -1,0 +1,16 @@
+Source: plpgsql-check
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/okbob/plpgsql_check
+
+Package: postgresql-PGVERSION-plpgsql-check
+Architecture: any
+Provides: postgresql-plpgsql-check
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PL/pgSQL function validation and profiling tools for PostgreSQL
+  plpgsql_check provides direct and indirect validation, profiling, tracing,
+  and dependency inspection tools for PL/pgSQL functions.
