@@ -1,3 +1,9 @@
+age (1.7.0-2PIGSTY) unstable; urgency=medium
+
+  * Build PG17/18 from the unified age-1.7.0 source archive with PG branch checkout.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 12 Jun 2026 10:45:00 +0000
+
 age (1.7.0-1PIGSTY) unstable; urgency=medium
 
   * Use a single 1.7.0 source tarball with branch checkout per PG major.

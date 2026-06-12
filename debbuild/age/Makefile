@@ -1,20 +1,24 @@
 all: build move
 
 TARBALL := age-1.7.0.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 
 #==============================================================#
 #                         DEB Builder                          #
 #==============================================================#
-build: build18 build17
+build: check-src build18 build17
+
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 # Single upstream source tarball with branch checkout per PG major.
 build18:
 	rm -rf build; mkdir -p build
 	# Avoid preserving archive owner/perms to prevent git safe.directory issues in root builds.
-	tar -C build --strip-components=1 --no-same-owner --no-same-permissions -xf ../SOURCES/$(TARBALL)
+	tar -C build --strip-components=1 --no-same-owner --no-same-permissions -xf "$(SOURCE_TARBALL)"
 	cd build && git checkout PG18
 	rm -rf build/debian; cp -r debian build/debian
-	sed -i "1s/^age ([^)]*/age (1.7.0-1PIGSTY/" build/debian/changelog
+	sed -i "1s/^age ([^)]*/age (1.7.0-2PIGSTY/" build/debian/changelog
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 	echo '18' > build/debian/pgversions
@@ -25,10 +29,10 @@ build18:
 build17:
 	rm -rf build; mkdir -p build
 	# Avoid preserving archive owner/perms to prevent git safe.directory issues in root builds.
-	tar -C build --strip-components=1 --no-same-owner --no-same-permissions -xf ../SOURCES/$(TARBALL)
+	tar -C build --strip-components=1 --no-same-owner --no-same-permissions -xf "$(SOURCE_TARBALL)"
 	cd build && git checkout PG17
 	rm -rf build/debian; cp -r debian build/debian
-	sed -i "1s/^age ([^)]*/age (1.7.0-1PIGSTY/" build/debian/changelog
+	sed -i "1s/^age ([^)]*/age (1.7.0-2PIGSTY/" build/debian/changelog
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 	echo '17' > build/debian/pgversions
@@ -84,4 +88,4 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb build
 
-.PHONY: all build build18 build17 move clean
+.PHONY: all build check-src build18 build17 move clean
