@@ -1,0 +1,22 @@
+--- a/pgvectorscale/Cargo.toml
++++ b/pgvectorscale/Cargo.toml
+@@ -28,7 +28,7 @@ unexpected_cfgs = { level = "allow", check-cfg = [
+ 
+ [dependencies]
+ memoffset = "0.9.0"
+-pgrx = "=0.16.1"
++pgrx = "=0.18.1"
+ rkyv = { version = "0.7.43", features = ["validation"] }
+ simdeez = { version = "1.0.8" }
+ rand = { version = "0.8", features = ["small_rng"] }
+@@ -39,8 +39,8 @@ once_cell = "1.20.1"
+ lru = "0.14.0"
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.16.1"
+-pgrx-pg-config = "=0.16.1"
++pgrx-tests = "=0.18.1"
++pgrx-pg-config = "=0.18.1"
+ criterion = "0.5.1"
+ tempfile = "3.15.0"
+ 
