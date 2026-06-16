@@ -1,3 +1,10 @@
+pg-graphql (1.6.1-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/supabase/pg_graphql/releases/tag/v1.6.1
+  * Patch Cargo metadata to build with cargo-pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 00:04:00 +0800
+
 pg-graphql (1.5.12-2PIGSTY) unstable; urgency=low
 
   * switch to official 1.5.12 release
