@@ -1,3 +1,9 @@
+pggraph (0.1.7-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cargo-pgrx/pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 09:45:00 +0800
+
 pggraph (0.1.7-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 0.1.7.
