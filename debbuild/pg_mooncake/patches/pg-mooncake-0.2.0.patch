@@ -1,0 +1,17 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -24,7 +24,7 @@ bincode = "2"
+ moonlink_rpc.path = "moonlink/src/moonlink_rpc"
+ moonlink_service = { path = "moonlink/src/moonlink_service", optional = true }
+ native-tls = "0.2"
+-pgrx = "0.16.1"
++pgrx = "=0.18.1"
+ postgres.git = "https://github.com/Mooncake-Labs/rust-postgres.git"
+ postgres-native-tls.git = "https://github.com/Mooncake-Labs/rust-postgres.git"
+ regex = "1"
+--- a/rust-toolchain.toml
++++ /dev/null
+@@ -1,3 +0,0 @@
+-[toolchain]
+-channel = "1.88.0"
+-components = ["clippy", "rustfmt"]
