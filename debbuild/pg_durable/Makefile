@@ -6,7 +6,7 @@ BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.18.1
-SOURCE_PATCH := patches/pg_durable-0.2.2-pgrx-0.18.1.patch
+SOURCE_PATCH := patches/pg-durable-0.2.2.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 
 check-src:
@@ -39,6 +39,9 @@ building: check-pgrx
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo update -p pgrx --precise $(PGRX_VERSION)
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo update -p pgrx-macros --precise $(PGRX_VERSION)
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo update -p pgrx-pg-config --precise $(PGRX_VERSION)
 	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch
 	cd $(BUILD_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \

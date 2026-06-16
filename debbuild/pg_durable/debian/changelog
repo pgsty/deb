@@ -1,3 +1,10 @@
+pg-durable (0.2.2-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cargo-pgrx/pgrx 0.18.1.
+  * Rename the source patch to match the source package and version.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 09:45:00 +0800
+
 pg-durable (0.2.2-1PIGSTY) unstable; urgency=medium
 
   * Initial release from microsoft/pg_durable v0.2.2.
