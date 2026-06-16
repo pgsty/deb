@@ -1,0 +1,150 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -11,13 +11,12 @@
+ path = "./src/bin/pgrx_embed.rs"
+ 
+ [features]
+-default = ["pg13"]
+-pg13 = ["pgrx/pg13", "pgrx-tests/pg13" ]
+-pg14 = ["pgrx/pg14", "pgrx-tests/pg14" ]
+-pg15 = ["pgrx/pg15", "pgrx-tests/pg15" ]
+-pg16 = ["pgrx/pg16", "pgrx-tests/pg16" ]
+-pg17 = ["pgrx/pg17", "pgrx-tests/pg17" ]
+-pg18 = ["pgrx/pg18", "pgrx-tests/pg18" ]
++default = ["pg18"]
++pg14 = ["pgrx/pg14"]
++pg15 = ["pgrx/pg15"]
++pg16 = ["pgrx/pg16"]
++pg17 = ["pgrx/pg17"]
++pg18 = ["pgrx/pg18"]
+ pg_test = []
+ 
+ [dependencies]
+@@ -25,12 +24,10 @@
+ once_cell = "*"
+ openssl = "~0.10.64"
+ pgp = "~0.17.0"
+-pgrx = "~0.16.1"
++pgrx = "=0.18.1"
+ rand_chacha = "~0.3.1" #TODO: 0.9.0
+ 
+ [dev-dependencies]
+-pgrx-tests = "~0.16.1"
+-
+ [profile.dev]
+ panic = "unwind"
+ 
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -6,6 +6,9 @@
+ mod pub_key;
+ mod types;
+ 
++use crate::types::enigma::Enigma;
++use crate::types::enigma_pgp::Epgp;
++use crate::types::enigma_rsa::Ersa;
+ use crate::key_map::{PrivKeysMap,PubKeysMap};
+ use crate::pub_key::insert_public_key;
+ use once_cell::sync::Lazy;
+--- a/src/types/enigma.rs
++++ b/src/types/enigma.rs
+@@ -11,7 +11,7 @@
+     rust_regtypein, StringInfo
+ };
+ use pgrx::pgrx_sql_entity_graph::metadata::{
+-    ArgumentError, Returns, ReturnsError, SqlMapping, SqlTranslatable
++    ArgumentError, ReturnsError, ReturnsRef, SqlMappingRef, SqlTranslatable, TypeOrigin
+ };
+ use std::fmt::{Display, Formatter};
+ use super::enigma_pgp::{E_PGP_INT,E_PGP_TAG,Epgp};
+@@ -426,15 +426,13 @@
+ // Boilerplate traits for converting type to postgres internals
+ // Needed for the FunctionMetadata trait
+ unsafe impl SqlTranslatable for Enigma {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        // this is what the SQL type is called when used in a function argument position
+-        Ok(SqlMapping::As("Enigma".into()))
+-    }
+-
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        // this is what the SQL type is called when used in a function return type position
+-        Ok(Returns::One(SqlMapping::As("Enigma".into())))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Enigma);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::ThisExtension;
++    // this is what the SQL type is called when used in a function argument position
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> = Ok(SqlMappingRef::As("Enigma"));
++    // this is what the SQL type is called when used in a function return type position
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::As("Enigma")));
+ }
+ 
+ 
+--- a/src/types/enigma_pgp.rs
++++ b/src/types/enigma_pgp.rs
+@@ -12,7 +12,7 @@
+     rust_regtypein, StringInfo
+ };
+ use pgrx::pgrx_sql_entity_graph::metadata::{
+-    ArgumentError, Returns, ReturnsError, SqlMapping, SqlTranslatable
++    ArgumentError, ReturnsError, ReturnsRef, SqlMappingRef, SqlTranslatable, TypeOrigin
+ };
+ use std::fmt::{Display, Formatter};
+ use super::enigma::Enigma;
+@@ -388,15 +388,13 @@
+ // Boilerplate traits for converting type to postgres internals
+ // Needed for the FunctionMetadata trait
+ unsafe impl SqlTranslatable for Epgp {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        // this is what the SQL type is called when used in a function argument position
+-        Ok(SqlMapping::As("Epgp".into()))
+-    }
+-
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        // this is what the SQL type is called when used in a function return type position
+-        Ok(Returns::One(SqlMapping::As("Epgp".into())))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Epgp);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::ThisExtension;
++    // this is what the SQL type is called when used in a function argument position
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> = Ok(SqlMappingRef::As("Epgp"));
++    // this is what the SQL type is called when used in a function return type position
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::As("Epgp")));
+ }
+ 
+ 
+--- a/src/types/enigma_rsa.rs
++++ b/src/types/enigma_rsa.rs
+@@ -12,7 +12,7 @@
+     rust_regtypein, StringInfo
+ };
+ use pgrx::pgrx_sql_entity_graph::metadata::{
+-    ArgumentError, Returns, ReturnsError, SqlMapping, SqlTranslatable
++    ArgumentError, ReturnsError, ReturnsRef, SqlMappingRef, SqlTranslatable, TypeOrigin
+ };
+ use std::fmt::{Display, Formatter};
+ use super::enigma::Enigma;
+@@ -387,15 +387,13 @@
+ // Boilerplate traits for converting type to postgres internals
+ // Needed for the FunctionMetadata trait
+ unsafe impl SqlTranslatable for Ersa {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        // this is what the SQL type is called when used in a function argument position
+-        Ok(SqlMapping::As("Ersa".into()))
+-    }
+-
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        // this is what the SQL type is called when used in a function return type position
+-        Ok(Returns::One(SqlMapping::As("Ersa".into())))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Ersa);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::ThisExtension;
++    // this is what the SQL type is called when used in a function argument position
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> = Ok(SqlMappingRef::As("Ersa"));
++    // this is what the SQL type is called when used in a function return type position
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::As("Ersa")));
+ }
+ 
+ 
