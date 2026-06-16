@@ -1,3 +1,9 @@
+pg-base58 (0.0.1-4PIGSTY) unstable; urgency=low
+
+  * Rebuild with cargo-pgrx/pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 00:00:00 +0000
+
 pg-base58 (0.0.1-3PIGSTY) unstable; urgency=low
 
   * add pg18 support
