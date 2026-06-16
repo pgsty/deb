@@ -1,0 +1,30 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -18,5 +18,5 @@
+ strip = "debuginfo"
+ 
+ [workspace.dependencies]
+-pgrx = "0.16.1"
+-pgrx-tests = "0.16.1"
++pgrx = "=0.18.1"
++pgrx-tests = "=0.18.1"
+--- a/plprql-tests/Cargo.toml
++++ b/plprql-tests/Cargo.toml
+@@ -12,7 +12,6 @@
+ 
+ [features]
+ default = ["pg18"]
+-pg13 = ["pgrx/pg13", "pgrx-tests/pg13"]
+ pg14 = ["pgrx/pg14", "pgrx-tests/pg14"]
+ pg15 = ["pgrx/pg15", "pgrx-tests/pg15"]
+ pg16 = ["pgrx/pg16", "pgrx-tests/pg16"]
+--- a/plprql/Cargo.toml
++++ b/plprql/Cargo.toml
+@@ -20,7 +20,6 @@
+ 
+ [features]
+ default = ["pg18"]
+-pg13 = ["pgrx/pg13", "pgrx-tests/pg13"]
+ pg14 = ["pgrx/pg14", "pgrx-tests/pg14"]
+ pg15 = ["pgrx/pg15", "pgrx-tests/pg15"]
+ pg16 = ["pgrx/pg16", "pgrx-tests/pg16"]

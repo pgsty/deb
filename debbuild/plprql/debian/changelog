@@ -1,3 +1,9 @@
+plprql (18.0.1-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cargo-pgrx/pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 00:00:00 +0000
+
 plprql (18.0.1-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/kaspermarstal/plprql/releases/tag/v18.0.1
