@@ -1,0 +1,16 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -24,11 +24,11 @@ pg_test = []
+ jiff = "0.2.15"
+ nom = "8.0.0"
+ nom-language = "0.1.0"
+-pgrx = "=0.15.0"
++pgrx = "=0.18.1"
+ 
+ [dev-dependencies]
+ insta = "1.43.1"
+-pgrx-tests = "=0.15.0"
++pgrx-tests = "=0.18.1"
+ 
+ [profile.dev]
+ panic = "unwind"
