@@ -1,0 +1,54 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -1,6 +1,3 @@
+-[workspace]
+-members = ["pgrx-tests"]
+-
+ [package]
+ name = "pg_session_jwt"
+ version = "0.5.0"
+@@ -15,11 +12,11 @@
+ 
+ [features]
+ default = ["pg17"]
+-pg14 = ["pgrx/pg14", "pgrx-tests/pg14" ]
+-pg15 = ["pgrx/pg15", "pgrx-tests/pg15" ]
+-pg16 = ["pgrx/pg16", "pgrx-tests/pg16" ]
+-pg17 = ["pgrx/pg17", "pgrx-tests/pg17" ]
+-pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
++pg14 = ["pgrx/pg14" ]
++pg15 = ["pgrx/pg15" ]
++pg16 = ["pgrx/pg16" ]
++pg17 = ["pgrx/pg17" ]
++pg18 = ["pgrx/pg18" ]
+ pg_test = []
+ 
+ [dependencies]
+@@ -27,7 +24,7 @@
+ heapless = { version = "0.8.0", features = ["serde"] }
+ jose-jwk = { version = "0.1.2", default-features = false }
+ ed25519-dalek = { version = "2", default-features = false }
+-pgrx = "0.16.1"
++pgrx = "=0.18.1"
+ serde = { version = "1.0.203", features = ["derive"], default-features = false }
+ serde_json = { version = "1.0.117", default-features = false }
+ uuid = "1.18.1"
+@@ -35,7 +32,6 @@
+ [dev-dependencies]
+ eyre = "0.6.12"
+ libtest-mimic = "0.8.1"
+-pgrx-tests = { path = "./pgrx-tests" }
+ postgres = "0.19.9"
+ rand = "0.8"
+ ed25519-dalek = { version = "2", default-features = false, features = ["rand_core"] }
+@@ -46,8 +42,8 @@
+ [profile.release]
+ panic = "unwind"
+ opt-level = 3
+-lto = "fat"
+-codegen-units = 1
++lto = "off"
++codegen-units = 16
+ 
+ [[test]]
+ name = "tests"
