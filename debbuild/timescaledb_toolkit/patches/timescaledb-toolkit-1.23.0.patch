@@ -1,0 +1,37 @@
+--- a/extension/Cargo.toml
++++ b/extension/Cargo.toml
+@@ -18,9 +18,9 @@ pg_test = ["approx"]
+ [dependencies]
+ # Keep synchronized with `cargo install --version N.N.N cargo-pgrx` in Readme.md and docker/ci/Dockerfile
+ # Also `pgrx-tests` down below in `dev-dependencies`.
+-pgrx = "=0.18.0"
+-pgrx-macros = "=0.18.0"
+-pgrx-sql-entity-graph = "=0.18.0"
++pgrx = "=0.18.1"
++pgrx-macros = "=0.18.1"
++pgrx-sql-entity-graph = "=0.18.1"
+ encodings = {path="../crates/encodings"}
+ flat_serialize = {path="../crates/flat_serialize/flat_serialize"}
+ flat_serialize_macro = {path="../crates/flat_serialize/flat_serialize_macro"}
+@@ -55,6 +55,6 @@
+ spfunc = "0.1.0"
+ statrs = "0.15.0"
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.18.0"
++pgrx-tests = "=0.18.1"
+ approx = "0.4.0"
+--- a/tools/sql-doctester/Cargo.toml
++++ b/tools/sql-doctester/Cargo.toml
+@@ -7,9 +7,9 @@
+ bytecount = "0.6.2"
+ clap = { version = "3.2.15", features = ["wrap_help"] }
+ colored = "2.0.0"
+-postgres = "=0.19.10" # pinned because we pin tokio-postgres
++postgres = "=0.19.13" # pinned because we pin tokio-postgres
+ pulldown-cmark = "0.8.0"
+ rayon = "1.5"
+-tokio-postgres = "=0.7.13" # pinned because 0.7.11 added `SimpleQueryMessage::RowDescription`
++tokio-postgres = "=0.7.17" # pinned because 0.7.11 added `SimpleQueryMessage::RowDescription`
+ uuid = { version = "0.8", features = ["v4"] }
+ walkdir = "2"

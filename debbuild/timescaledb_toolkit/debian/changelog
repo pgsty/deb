@@ -1,3 +1,10 @@
+timescaledb-toolkit (1.23.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb-toolkit/releases/tag/1.23.0
+  * Patch Cargo metadata to build with cargo-pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 00:03:00 +0800
+
 timescaledb-toolkit (1.22.0-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/timescale/timescaledb-toolkit/releases/tag/1.22.0
