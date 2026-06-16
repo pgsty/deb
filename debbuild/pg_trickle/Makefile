@@ -5,8 +5,8 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 18
-PGRX_VERSION := 0.18.0
-SOURCE_PATCH := patches/$(TARBALL:.tar.gz=.patch)
+PGRX_VERSION := 0.18.1
+SOURCE_PATCH := patches/pg-trickle-0.81.0.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -34,12 +34,15 @@ building: check-pgrx
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo update -p pgrx --precise $(PGRX_VERSION)
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo update -p pgrx-macros --precise $(PGRX_VERSION)
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo update -p pgrx-pg-config --precise $(PGRX_VERSION)
 	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch
 	cd $(BUILD_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    cargo pgrx package --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
 
 check-pgrx:

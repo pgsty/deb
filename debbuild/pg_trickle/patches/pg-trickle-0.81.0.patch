@@ -8,8 +8,8 @@ builder containers. The PGXN bundle also omits the test schema generator script
 that build.rs tries to run for test fixtures, so skip that generation when the
 script is not present.
 
---- a/build.rs	2026-06-04 08:00:00.000000000 +0800
-+++ b/build.rs	2026-06-04 00:30:56.802512307 +0800
+--- a/build.rs
++++ b/build.rs
 @@ -23,6 +23,11 @@
      let out_path = generated_dir.join("schema.rs");
      let script = manifest_path.join("scripts").join("gen_test_schema.py");
@@ -22,9 +22,9 @@ script is not present.
      let status = Command::new("python3")
          .arg(&script)
          .current_dir(manifest_path)
---- a/Cargo.toml	2026-06-04 08:00:00.000000000 +0800
-+++ b/Cargo.toml	2026-06-04 00:30:56.802417350 +0800
-@@ -20,13 +20,9 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -20,18 +20,14 @@
  [lib]
  crate-type = ["cdylib", "lib"]
  
@@ -39,7 +39,13 @@ script is not present.
  pg_test = []
  light-e2e = []
  
-@@ -47,36 +43,6 @@
+ [dependencies]
+-pgrx = "=0.18.0"
++pgrx = "=0.18.1"
+ serde = { version = "1", features = ["derive"] }
+ serde_json = "1"
+ xxhash-rust = { version = "0.8", features = ["xxh64", "xxh3"] }
+@@ -47,42 +43,11 @@
  lru = "0.18"
  
  
@@ -73,10 +79,10 @@ script is not present.
 -[[bench]]
 -name = "pgvector_bench"
 -harness = false
- 
+-
  [profile.dev]
  panic = "unwind"
-@@ -84,5 +50,5 @@
+ 
  [profile.release]
  panic = "unwind"
  opt-level = 3
