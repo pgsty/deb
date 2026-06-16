@@ -1,0 +1,32 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -12,23 +12,20 @@
+ 
+ [features]
+ default = ["pg18"]
+-pg13 = ["pgrx/pg13", "pgrx-tests/pg13" ]
+-pg14 = ["pgrx/pg14", "pgrx-tests/pg14" ]
+-pg15 = ["pgrx/pg15", "pgrx-tests/pg15" ]
+-pg16 = ["pgrx/pg16", "pgrx-tests/pg16" ]
+-pg17 = ["pgrx/pg17", "pgrx-tests/pg17" ]
+-pg18 = ["pgrx/pg18", "pgrx-tests/pg18" ]
++pg14 = ["pgrx/pg14"]
++pg15 = ["pgrx/pg15"]
++pg16 = ["pgrx/pg16"]
++pg17 = ["pgrx/pg17"]
++pg18 = ["pgrx/pg18"]
+ pg_test = []
+ 
+ [dependencies]
+-pgrx = "=0.16.1"
++pgrx = "=0.18.1"
+ geo-types = "0.7.8"
+ # This is a fork of the original polyline crate that fix the encoding/decoding error
+ polyline = { git = "https://github.com/mattiZed/polyline.git", branch = "refactor/encode-decode-via-LUT" }
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.16.1"
+-
+ [profile.dev]
+ panic = "unwind"
+ 
