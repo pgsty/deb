@@ -22,7 +22,7 @@ setup: check-src
 
 build: building packaging
 
-building: ensure-pgrx
+building: check-pgrx
 	cd $(BUILD_DIR) && \
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
@@ -38,10 +38,10 @@ building: ensure-pgrx
 	    CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
 
-ensure-pgrx:
+check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
-	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx before building pg_search"; \
+	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
 	    exit 1; \
 	fi
 
@@ -58,4 +58,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup update build building ensure-pgrx packaging move clean ls
+.PHONY: all check-src setup update build building check-pgrx packaging move clean ls
