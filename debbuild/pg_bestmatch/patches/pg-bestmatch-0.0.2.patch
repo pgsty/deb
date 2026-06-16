@@ -1,0 +1,43 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -12,24 +12,21 @@
+ 
+ [features]
+ default = ["pg17"]
+-pg13 = ["pgrx/pg13", "pgrx-tests/pg13"]
+-pg14 = ["pgrx/pg14", "pgrx-tests/pg14"]
+-pg15 = ["pgrx/pg15", "pgrx-tests/pg15"]
+-pg16 = ["pgrx/pg16", "pgrx-tests/pg16"]
+-pg17 = ["pgrx/pg17", "pgrx-tests/pg17"]
+-pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
++pg14 = ["pgrx/pg14"]
++pg15 = ["pgrx/pg15"]
++pg16 = ["pgrx/pg16"]
++pg17 = ["pgrx/pg17"]
++pg18 = ["pgrx/pg18"]
+ 
+ [dependencies]
+ jieba-rs = "0.7.0"
+ lazy_static = "1.4.0"
+-pgrx = { version = "=0.16.1" }
++pgrx = { version = "=0.18.1" }
+ rand = "0.8.5"
+ "tiktoken-rs" = "0.5.9"
+ tiniestsegmenter = "0.3.0"
+ tokenizers = { version = "0.19.1", default-features = false, features = [
+     "http",
+-    "onig",
+-] }
++    "onig"] }
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.16.1"
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -7,7 +7,6 @@ compile_error!("Target is not supported.");
+ 
+ #[cfg(not(any(
+-    feature = "pg13",
+     feature = "pg14",
+     feature = "pg15",
+     feature = "pg16",
