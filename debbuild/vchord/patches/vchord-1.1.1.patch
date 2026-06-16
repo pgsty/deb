@@ -1,0 +1,314 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -14,11 +14,11 @@
+ 
+ [features]
+ default = ["simd/init"]
+-pg14 = ["pgrx/pg14", "pgrx-catalog/pg14"]
+-pg15 = ["pgrx/pg15", "pgrx-catalog/pg15"]
+-pg16 = ["pgrx/pg16", "pgrx-catalog/pg16"]
+-pg17 = ["pgrx/pg17", "pgrx-catalog/pg17"]
+-pg18 = ["pgrx/pg18", "pgrx-catalog/pg18"]
++pg14 = ["pgrx/pg14"]
++pg15 = ["pgrx/pg15"]
++pg16 = ["pgrx/pg16"]
++pg17 = ["pgrx/pg17"]
++pg18 = ["pgrx/pg18"]
+ 
+ [dependencies]
+ always_equal = { path = "./crates/always_equal" }
+@@ -39,8 +39,7 @@
+ dary_heap.workspace = true
+ humansize = "2.1.3"
+ paste.workspace = true
+-pgrx = { version = "=0.17.0", default-features = false, features = ["cshim"] }
+-pgrx-catalog = "0.3.2"
++pgrx = { version = "=0.18.1", default-features = false, features = ["cshim"] }
+ rand.workspace = true
+ rayon.workspace = true
+ rusqlite = { version = "0.38.0", features = ["bundled"] }
+--- a/src/index/functions.rs
++++ b/src/index/functions.rs
+@@ -14,26 +14,83 @@
+ 
+ use crate::index::storage::PostgresRelation;
+ use crate::recorder::dump;
++use pgrx::datum::IntoDatum;
+ use pgrx::iter::SetOfIterator;
+ use pgrx::pg_sys::Oid;
+-use pgrx_catalog::{PgAm, PgClass, PgClassRelkind};
++use std::ffi::{CStr, c_char};
+ 
+-#[pgrx::pg_extern(sql = "")]
+-fn _vchordg_prewarm(indexrelid: Oid) -> String {
+-    let pg_am = PgAm::search_amname(c"vchordg").unwrap();
+-    let Some(pg_am) = pg_am.get() else {
++struct ClassInfo {
++    relname: String,
++    relam: Oid,
++    relkind: c_char,
++}
++
++unsafe fn heap_tuple_struct<T>(tuple: pgrx::pg_sys::HeapTuple) -> *const T {
++    let tuple = unsafe { &*tuple };
++    let data = tuple.t_data;
++    unsafe { data.cast::<u8>().add((*data).t_hoff as usize).cast::<T>() }
++}
++
++fn am_oid_by_name(amname: &CStr) -> Option<Oid> {
++    let tuple = unsafe {
++        pgrx::pg_sys::SearchSysCache1(
++            pgrx::pg_sys::SysCacheIdentifier::AMNAME as i32,
++            amname.into_datum()?,
++        )
++    };
++    if tuple.is_null() {
++        return None;
++    }
++    let oid = unsafe {
++        let am = heap_tuple_struct::<pgrx::pg_sys::FormData_pg_am>(tuple);
++        (*am).oid
++    };
++    unsafe { pgrx::pg_sys::ReleaseSysCache(tuple) };
++    Some(oid)
++}
++
++fn class_info(reloid: Oid) -> Option<ClassInfo> {
++    let tuple = unsafe {
++        pgrx::pg_sys::SearchSysCache1(
++            pgrx::pg_sys::SysCacheIdentifier::RELOID as i32,
++            reloid.into_datum()?,
++        )
++    };
++    if tuple.is_null() {
++        return None;
++    }
++    let info = unsafe {
++        let class = heap_tuple_struct::<pgrx::pg_sys::FormData_pg_class>(tuple);
++        ClassInfo {
++            relname: CStr::from_ptr((*class).relname.data.as_ptr())
++                .to_string_lossy()
++                .into_owned(),
++            relam: (*class).relam,
++            relkind: (*class).relkind,
++        }
++    };
++    unsafe { pgrx::pg_sys::ReleaseSysCache(tuple) };
++    Some(info)
++}
++
++fn validate_index(indexrelid: Oid, amname: &CStr, am_label: &str) {
++    let Some(pg_am_oid) = am_oid_by_name(amname) else {
+         pgrx::error!("vchord is not installed");
+     };
+-    let pg_class = PgClass::search_reloid(indexrelid).unwrap();
+-    let Some(pg_class) = pg_class.get() else {
++    let Some(pg_class) = class_info(indexrelid) else {
+         pgrx::error!("the relation does not exist");
+     };
+-    if pg_class.relkind() != PgClassRelkind::Index {
+-        pgrx::error!("the relation {:?} is not an index", pg_class.relname());
++    if pg_class.relkind != pgrx::pg_sys::RELKIND_INDEX as c_char {
++        pgrx::error!("the relation {:?} is not an index", pg_class.relname);
+     }
+-    if pg_class.relam() != pg_am.oid() {
+-        pgrx::error!("the index {:?} is not a vchordg index", pg_class.relname());
++    if pg_class.relam != pg_am_oid {
++        pgrx::error!("the index {:?} is not a {} index", pg_class.relname, am_label);
+     }
++}
++
++#[pgrx::pg_extern(sql = "")]
++fn _vchordg_prewarm(indexrelid: Oid) -> String {
++    validate_index(indexrelid, c"vchordg", "vchordg");
+     let relation = Index::open(indexrelid, pgrx::pg_sys::AccessShareLock as _);
+     let opfamily = unsafe { crate::index::vchordg::opclass::opfamily(relation.raw()) };
+     let index = unsafe { PostgresRelation::new(relation.raw()) };
+@@ -42,20 +99,7 @@
+ 
+ #[pgrx::pg_extern(sql = "")]
+ fn _vchordrq_prewarm(indexrelid: Oid, height: i32) -> String {
+-    let pg_am = PgAm::search_amname(c"vchordrq").unwrap();
+-    let Some(pg_am) = pg_am.get() else {
+-        pgrx::error!("vchord is not installed");
+-    };
+-    let pg_class = PgClass::search_reloid(indexrelid).unwrap();
+-    let Some(pg_class) = pg_class.get() else {
+-        pgrx::error!("the relation does not exist");
+-    };
+-    if pg_class.relkind() != PgClassRelkind::Index {
+-        pgrx::error!("the relation {:?} is not an index", pg_class.relname());
+-    }
+-    if pg_class.relam() != pg_am.oid() {
+-        pgrx::error!("the index {:?} is not a vchordrq index", pg_class.relname());
+-    }
++    validate_index(indexrelid, c"vchordrq", "vchordrq");
+     let relation = Index::open(indexrelid, pgrx::pg_sys::AccessShareLock as _);
+     let opfamily = unsafe { crate::index::vchordrq::opclass::opfamily(relation.raw()) };
+     let index = unsafe { PostgresRelation::new(relation.raw()) };
+@@ -89,20 +133,7 @@
+ 
+ #[pgrx::pg_extern(sql = "")]
+ fn _vchordrq_sampled_values(indexrelid: Oid) -> SetOfIterator<'static, String> {
+-    let pg_am = PgAm::search_amname(c"vchordrq").unwrap();
+-    let Some(pg_am) = pg_am.get() else {
+-        pgrx::error!("vchord is not installed");
+-    };
+-    let pg_class = PgClass::search_reloid(indexrelid).unwrap();
+-    let Some(pg_class) = pg_class.get() else {
+-        pgrx::error!("the relation does not exist");
+-    };
+-    if pg_class.relkind() != PgClassRelkind::Index {
+-        pgrx::error!("the relation {:?} is not an index", pg_class.relname());
+-    }
+-    if pg_class.relam() != pg_am.oid() {
+-        pgrx::error!("the index {:?} is not a vchordrq index", pg_class.relname());
+-    }
++    validate_index(indexrelid, c"vchordrq", "vchordrq");
+     // The user must have access to the index, if not, raise an error from Postgres.
+     let _relation = Index::open(indexrelid, pgrx::pg_sys::AccessShareLock as _);
+     let queries = dump(indexrelid.to_u32());
+--- a/src/datatype/memory_vector.rs
++++ b/src/datatype/memory_vector.rs
+@@ -214,21 +214,21 @@
+ // SqlTranslatable
+ 
+ unsafe impl SqlTranslatable for VectorInput<'_> {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("vector")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("vector"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(VectorInput<'_>);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("vector"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("vector")));
+ }
+ 
+ unsafe impl SqlTranslatable for VectorOutput {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("vector")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("vector"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(VectorOutput);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("vector"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("vector")));
+ }
+ 
+ // ArgAbi
+--- a/src/datatype/memory_halfvec.rs
++++ b/src/datatype/memory_halfvec.rs
+@@ -215,21 +215,21 @@
+ // SqlTranslatable
+ 
+ unsafe impl SqlTranslatable for HalfvecInput<'_> {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("halfvec")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("halfvec"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(HalfvecInput<'_>);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("halfvec"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("halfvec")));
+ }
+ 
+ unsafe impl SqlTranslatable for HalfvecOutput {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("halfvec")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("halfvec"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(HalfvecOutput);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("halfvec"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("halfvec")));
+ }
+ 
+ // ArgAbi
+--- a/src/datatype/memory_rabitq4.rs
++++ b/src/datatype/memory_rabitq4.rs
+@@ -232,21 +232,21 @@
+ // SqlTranslatable
+ 
+ unsafe impl SqlTranslatable for Rabitq4Input<'_> {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("rabitq4")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("rabitq4"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq4Input<'_>);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("rabitq4"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq4")));
+ }
+ 
+ unsafe impl SqlTranslatable for Rabitq4Output {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("rabitq4")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("rabitq4"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq4Output);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("rabitq4"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq4")));
+ }
+ 
+ // ArgAbi
+--- a/src/datatype/memory_rabitq8.rs
++++ b/src/datatype/memory_rabitq8.rs
+@@ -232,21 +232,21 @@
+ // SqlTranslatable
+ 
+ unsafe impl SqlTranslatable for Rabitq8Input<'_> {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("rabitq8")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("rabitq8"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq8Input<'_>);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("rabitq8"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq8")));
+ }
+ 
+ unsafe impl SqlTranslatable for Rabitq8Output {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("rabitq8")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("rabitq8"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq8Output);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("rabitq8"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq8")));
+ }
+ 
+ // ArgAbi
