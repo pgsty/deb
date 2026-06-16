@@ -1,0 +1,18 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -26,14 +26,14 @@ image = "0.25.5"
+ md-5 = "0.10.6"
+ paste = "1.0"
+-pgrx = "0.18.0"
++pgrx = "=0.18.1"
+ rand = "0.8.5"
+ regex = "1.10.2"
+ serde = { version = "1.0.228", features = ["derive"] }
+ serde_json = "1.0.148"
+ 
+ [dev-dependencies]
+-pgrx-tests = "0.18.0"
++pgrx-tests = "=0.18.1"
+ 
+ [profile.dev]
+ panic = "unwind"

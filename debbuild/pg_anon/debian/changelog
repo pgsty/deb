@@ -1,3 +1,10 @@
+pg-anon (3.1.1-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 3.1.1.
+  * Patch Cargo dependencies to build with cargo-pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 14 Jun 2026 23:56:00 +0800
+
 pg-anon (3.0.13-1PIGSTY) unstable; urgency=low
 
   * https://gitlab.com/dalibo/postgresql_anonymizer/-/releases/3.0.13

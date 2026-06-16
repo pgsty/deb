@@ -1,27 +1,35 @@
 all: setup build move
 
-TARBALL := postgresql_anonymizer-3.0.13.tar.gz
+TARBALL := postgresql_anonymizer-3.1.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.17.0
-PGRX_PATCH := patches/pgrx-0.17.0-pbox-nonnull.patch
+PGRX_VERSION := 0.18.1
+SOURCE_PATCH := patches/pg-anon-3.1.1.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-setup: check-src
+check-patches:
+	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
+
+setup: check-src check-patches
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) -name '._*' -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
-	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	@$(MAKE) apply-patches
+	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
+	perl -0pi -e "s/PIGSTY\\)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+
+apply-patches:
+	@echo "apply $(SOURCE_PATCH)"
+	@(cd $(BUILD_DIR) && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
-building: ensure-pgrx
+building: check-pgrx
 	cd $(BUILD_DIR) && \
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
@@ -30,22 +38,20 @@ building: ensure-pgrx
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo update -p pgrx --precise $(PGRX_VERSION)
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo update -p pgrx-tests --precise $(PGRX_VERSION)
 	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch
-	@PBOX="$$(find "$$HOME/.cargo/registry/src" -path '*/pgrx-$(PGRX_VERSION)/src/palloc/pbox.rs' | head -n 1)"; \
-	test -n "$$PBOX"; \
-	if ! grep -q 'NonNull::from(\&mut datum)' "$$PBOX"; then \
-	    (cd "$$(dirname "$$PBOX")" && patch -p0 < "$(CURDIR)/$(PGRX_PATCH)"); \
-	fi
 	cd $(BUILD_DIR) && \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
 
-ensure-pgrx:
+check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
-	    cargo install --locked cargo-pgrx --version $(PGRX_VERSION); \
+	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
+	    exit 1; \
 	fi
 
 packaging:
@@ -59,4 +65,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup build building ensure-pgrx packaging move clean
+.PHONY: all check-src check-patches setup apply-patches build building check-pgrx packaging move clean
