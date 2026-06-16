@@ -6,19 +6,26 @@ BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.18.1
+SOURCE_PATCH := patches/pg-pinyin-0.0.4.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-# prepare directory
-setup: check-src
+check-patches:
+	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
+
+setup: check-src check-patches
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
-	perl -0pi -e 's/pgrx = \{ version = "=0\.17\.0", optional = true \}/pgrx = { version = "=0.18.1", optional = true }/; s/pgrx-tests = \{ version = "=0\.17\.0", optional = true \}/pgrx-tests = { version = "=0.18.1", optional = true }/; s/lto = "fat"/lto = "off"/; s/codegen-units = 1/codegen-units = 16/' $(BUILD_DIR)/Cargo.toml
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	@$(MAKE) apply-patches
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+
+apply-patches:
+	@echo "apply $(SOURCE_PATCH)"
+	@(cd $(BUILD_DIR) && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
@@ -61,4 +68,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup update build building check-pgrx packaging move clean ls
+.PHONY: all check-src check-patches setup apply-patches update build building check-pgrx packaging move clean ls
