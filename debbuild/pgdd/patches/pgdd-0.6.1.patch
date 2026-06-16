@@ -1,0 +1,16 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -17,12 +17,9 @@
+ pg_test = []
+ 
+ [dependencies]
+-pgrx = "0.16.1"
++pgrx = "=0.18.1"
+ 
+ [dev-dependencies]
+-pgrx-tests = "0.16.1"
+-
+-
+ [profile.dev]
+ panic = "unwind"
+ lto = "thin"
