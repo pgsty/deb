@@ -1,0 +1,17 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -26,12 +26,12 @@ serde = { version = "1.0", features = ["derive"] }
+ serde_json = {version = "1.0", features = ["preserve_order"] }
+ blake2 = "0.10"
+ ed25519-dalek = "2.2"
+-pgrx = { version = "0.17.0"}
++pgrx = { version = "=0.18.1"}
+ hex = "0.4.3"
+ ciborium = "0.2.2"
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.17.0"
++pgrx-tests = "=0.18.1"
+ 
+ [profile.dev]
+ panic = "unwind"
