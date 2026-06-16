@@ -1,3 +1,9 @@
+pg-explain-ui (0.0.2-2PIGSTY) unstable; urgency=low
+
+  * Rebuild with cargo-pgrx/pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 00:00:00 +0000
+
 pg-explain-ui (0.0.2-1PIGSTY) unstable; urgency=low
 
   * https://github.com/Florents-Tselai/pg_explain_ui/releases/tag/v0.0.2
