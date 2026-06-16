@@ -14,4 +14,4 @@ Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Description: Embedded MQTT broker powered by PostgreSQL CDC
  pgmqtt embeds an MQTT broker inside PostgreSQL and publishes change data
  capture events through a pgrx extension. This package builds the extension
- for PostgreSQL 14 through 18 with cargo-pgrx 0.17.0.
+ for PostgreSQL 14 through 18.

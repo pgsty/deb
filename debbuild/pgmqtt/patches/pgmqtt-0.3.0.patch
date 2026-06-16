@@ -1,0 +1,19 @@
+--- a/extension/Cargo.toml
++++ b/extension/Cargo.toml
+@@ -21,7 +21,7 @@ pg18 = ["pgrx/pg18", "pgrx-tests/pg18" ]
+ pg_test = []
+ 
+ [dependencies]
+-pgrx = "=0.16.1"
++pgrx = "=0.18.1"
+ minijinja = { version = "2", features = ["builtins", "json"] }
+ base64 = "0.22.1"
+ sha1 = "0.10.6"
+@@ -35,7 +35,7 @@ ring = "0.17"
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.16.1"
++pgrx-tests = "=0.18.1"
+ 
+ [profile.dev]
+ panic = "unwind"
