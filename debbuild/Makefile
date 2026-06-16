@@ -681,6 +681,9 @@ pg_sqlog:
 pgmeminfo:
 	cd pgmeminfo && make
 
+pg_stat_backtrace:
+	cd pg_stat_backtrace && make
+
 plpgsql_check:
 	cd plpgsql_check && make
 

@@ -1,0 +1,17 @@
+Source: pg-stat-backtrace
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libunwind-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Nickyoung0/pg_stat_backtrace
+
+Package: postgresql-PGVERSION-pg-stat-backtrace
+Architecture: any
+Provides: postgresql-pg-stat-backtrace
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Capture C-level backtraces of PostgreSQL processes
+  pg_stat_backtrace exposes SQL functions to capture or log the C-level stack
+  backtrace of PostgreSQL processes on Linux using ptrace and libunwind.
+  Runtime use depends on host ptrace policy such as kernel.yama.ptrace_scope.
