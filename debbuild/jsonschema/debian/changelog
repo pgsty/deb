@@ -1,3 +1,9 @@
+jsonschema (0.1.9-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cargo-pgrx/pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 09:45:00 +0800
+
 jsonschema (0.1.9-1PIGSTY) unstable; urgency=medium
 
   * Initial release for PostgreSQL 14-18.
