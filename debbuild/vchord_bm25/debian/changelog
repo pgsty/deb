@@ -1,3 +1,9 @@
+vchord-bm25 (0.3.0-3PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cargo-pgrx/pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 12:00:00 +0000
+
 vchord-bm25 (0.3.0-2PIGSTY) unstable; urgency=medium
 
   * Adjust packaging to enforce default_version/sql consistency

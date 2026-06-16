@@ -1,0 +1,86 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -29,6 +29,6 @@ bytemuck = "1.24"
+ generator = "0.8.7"
+ lending-iterator = "0.1.7"
+-pgrx = "=0.16.1"
++pgrx = "=0.18.1"
+ serde = { version = "1.0.217", features = ["derive"] }
+ thiserror = "2"
+ 
+@@ -36,7 +36,7 @@ thiserror = "2"
+ rand = { version = "0.9", optional = true }
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.16.1"
++pgrx-tests = "=0.18.1"
+ 
+ [profile.release]
+ lto = "fat"
+--- a/src/datatype/bytea.rs
++++ b/src/datatype/bytea.rs
+@@ -26,13 +26,12 @@
+ }
+ 
+ unsafe impl SqlTranslatable for Bytea {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("bytea")))
+-    }
+-
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("bytea"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Bytea);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("bytea"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("bytea")));
+ }
+ 
+ unsafe impl pgrx::callconv::BoxRet for Bytea {
+--- a/src/datatype/memory_bm25vector.rs
++++ b/src/datatype/memory_bm25vector.rs
+@@ -4,7 +4,7 @@
+ use pgrx::{
+     pg_sys::{Datum, Oid},
+     pgrx_sql_entity_graph::metadata::{
+-        ArgumentError, Returns, ReturnsError, SqlMapping, SqlTranslatable,
++        ArgumentError, ReturnsError, ReturnsRef, SqlMappingRef, SqlTranslatable, TypeOrigin,
+     },
+     FromDatum, IntoDatum,
+ };
+@@ -207,21 +207,21 @@
+ }
+ 
+ unsafe impl SqlTranslatable for Bm25VectorInput<'_> {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("bm25vector")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("bm25vector"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Bm25VectorInput<'_>);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("bm25vector"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("bm25vector")));
+ }
+ 
+ unsafe impl SqlTranslatable for Bm25VectorOutput {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("bm25vector")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("bm25vector"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Bm25VectorOutput);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("bm25vector"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("bm25vector")));
+ }
+ 
+ unsafe impl<'fcx> pgrx::callconv::ArgAbi<'fcx> for Bm25VectorInput<'fcx> {
