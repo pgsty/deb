@@ -1,0 +1,27 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -20,7 +20,7 @@ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
+ pg_test = []
+ 
+ [dependencies]
+-pgrx = "=0.17.0"
++pgrx = "=0.18.1"
+ deno_core = "0.386.0"
+ deno_runtime = { version = "0.242.0", features = ["transpile"] }
+ deno_graph = { version = "=0.107.1", default-features = false, features = ["swc"] }
+@@ -35,7 +35,14 @@ node_resolver = "0.72.0"
+ deno_semver = "=0.9.1"
++# Keep temporal_rs 0.1.2 compatible with Deno/v8 ICU dependencies.
++icu_calendar = "=2.1.0"
++icu_locale = "=2.1.0"
++icu_properties = "=2.1.0"
++icu_collections = "=2.1.0"
++icu_provider = "=2.1.0"
++icu_normalizer = "=2.1.0"
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.17.0"
++pgrx-tests = "=0.18.1"
+ 
+ [build-dependencies]
+ deno_runtime = { version = "0.242.0", features = ["snapshot"] }
