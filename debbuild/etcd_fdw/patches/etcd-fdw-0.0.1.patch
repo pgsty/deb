@@ -1,0 +1,75 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -23,14 +23,14 @@
+ [dependencies]
+ etcd-client = { version = "0.16", features = ["tls"] }
+ futures = "0.3.31"
+-pgrx = {version="=0.16.1"}
++pgrx = { version = "=0.18.1" }
+-supabase-wrappers = { git="https://github.com/cybertec-postgresql/wrappers.git", branch="develop", default-features = false }
++supabase-wrappers = { path = "vendor/wrappers/supabase-wrappers", default-features = false }
+ thiserror = "2.0.16"
+ tokio = { version = "1.47.1", features = ["full"] }
+ testcontainers = { version = "0.25.0", features = ["blocking"] }
+ serde = { version = "1.0.226", features = ["derive"] }
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.16.1"
++pgrx-tests = "=0.18.1"
+ testcontainers = { version = "0.25.0", features = ["blocking"] }
+ serde = { version = "1.0.226", features = ["derive"] }
+--- a/vendor/wrappers/supabase-wrappers/Cargo.toml
++++ b/vendor/wrappers/supabase-wrappers/Cargo.toml
+@@ -25,14 +25,14 @@
+ pg_test = []
+ 
+ [dependencies]
+-pgrx = { version = "=0.16.1", default-features = false }
++pgrx = { version = "=0.18.1", default-features = false }
+ thiserror = "1.0.63"
+ tokio = { version = "1.43", features = ["rt", "net"] }
+ uuid = { version = "1.10.0" }
+ supabase-wrappers-macros = { version = "0.1", path = "../supabase-wrappers-macros" }
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.16.1"
++pgrx-tests = "=0.18.1"
+ 
+ [package.metadata.docs.rs]
+ features = ["pg15"]
+--- a/vendor/wrappers/supabase-wrappers/src/utils.rs
++++ b/vendor/wrappers/supabase-wrappers/src/utils.rs
+@@ -242,7 +242,7 @@
+     ereport!(
+         PgLogLevel::INFO,
+         PgSqlErrorCode::ERRCODE_SUCCESSFUL_COMPLETION,
+-        msg,
++        msg.to_string(),
+         "Wrappers"
+     );
+ }
+@@ -262,7 +262,7 @@
+     ereport!(
+         PgLogLevel::NOTICE,
+         PgSqlErrorCode::ERRCODE_SUCCESSFUL_COMPLETION,
+-        msg,
++        msg.to_string(),
+         "Wrappers"
+     );
+ }
+@@ -282,7 +282,7 @@
+     ereport!(
+         PgLogLevel::WARNING,
+         PgSqlErrorCode::ERRCODE_WARNING,
+-        msg,
++        msg.to_string(),
+         "Wrappers"
+     );
+ }
+@@ -307,5 +307,5 @@
+ #[inline]
+ pub fn report_error(code: PgSqlErrorCode, msg: &str) {
+-    ereport!(PgLogLevel::ERROR, code, msg, "Wrappers");
++    ereport!(PgLogLevel::ERROR, code, msg.to_string(), "Wrappers");
+ }
+ 
