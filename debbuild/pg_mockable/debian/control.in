@@ -1,0 +1,16 @@
+Source: pg-mockable
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/bigsmoke/pg_mockable
+
+Package: postgresql-PGVERSION-pg-mockable
+Architecture: all
+Provides: postgresql-pg-mockable
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Mock PostgreSQL functions for testing PGVERSION
+  pg_mockable creates mockable wrapper functions in the mockable schema, so
+  tests can replace calls to functions such as now() with deterministic values.

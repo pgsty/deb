@@ -669,6 +669,9 @@ system_stats:
 pg_meta:
 	cd pg_meta && make
 
+pg_mockable:
+	cd pg_mockable && make
+
 pgnodemx:
 	cd pgnodemx && make
 
