@@ -1,3 +1,9 @@
+pg-render (0.1.3-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cargo-pgrx/pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 00:00:00 +0000
+
 pg-render (0.1.3-1PIGSTY) unstable; urgency=medium
 
   * Bump to 0.1.3
