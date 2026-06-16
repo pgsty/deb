@@ -1,3 +1,9 @@
+tzf (0.3.0-1PIGSTY) unstable; urgency=medium
+
+  * bump to 0.3.0 and patch Cargo metadata to pgrx 0.18.1
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 00:01:00 +0800
+
 tzf (0.2.4-1PIGSTY) unstable; urgency=medium
 
   * bump to 0.2.4, upstream already on pgrx 0.17.0
