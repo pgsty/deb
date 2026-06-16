@@ -1,3 +1,10 @@
+pg-kazsearch (2.2.0-1PIGSTY) unstable; urgency=medium
+
+  * Package upstream release 2.2.0 for PostgreSQL 16-18.
+  * Patch Cargo metadata to build with cargo-pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 00:05:00 +0800
+
 pg-kazsearch (2.0.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release.
