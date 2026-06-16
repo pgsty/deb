@@ -14,5 +14,4 @@ Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: RDF, SPARQL, SHACL, and OWL reasoning for PostgreSQL
  pgRDF is a Rust-native PostgreSQL extension for RDF storage, SPARQL 1.1 query
  and update, SHACL validation, and OWL 2 RL or RDFS materialization inside
- PostgreSQL. This recipe packages the upstream pgrx 0.16 line for PostgreSQL
- 14 through 17.
+ PostgreSQL. This package builds the extension for PostgreSQL 14 through 17.

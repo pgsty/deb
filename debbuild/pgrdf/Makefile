@@ -1,11 +1,12 @@
 all: setup build move
 
-TARBALL := pgrdf-0.5.0.tar.gz
+TARBALL := pgrdf-0.6.4.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17
-PGRX_VERSION := 0.16.1
+PGRX_VERSION := 0.18.1
+SOURCE_PATCH := patches/pgrdf-0.6.4.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_HTTP_TIMEOUT ?= 600
 CARGO_NET_RETRY ?= 10
@@ -13,13 +14,21 @@ CARGO_NET_RETRY ?= 10
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-setup: check-src
+check-patches:
+	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
+
+setup: check-src check-patches
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	find $(BUILD_DIR) -name '._*' -delete
+	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
-	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	@$(MAKE) apply-patches
+	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PIGSTY\\)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+
+apply-patches:
+	@echo "apply $(SOURCE_PATCH)"
+	@(cd $(BUILD_DIR) && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
@@ -31,6 +40,8 @@ building: check-pgrx
 	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --no-run
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) CARGO_HTTP_TIMEOUT=$(CARGO_HTTP_TIMEOUT) CARGO_NET_RETRY=$(CARGO_NET_RETRY) cargo update -p pgrx --precise $(PGRX_VERSION)
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) CARGO_HTTP_TIMEOUT=$(CARGO_HTTP_TIMEOUT) CARGO_NET_RETRY=$(CARGO_NET_RETRY) cargo update -p pgrx-tests --precise $(PGRX_VERSION)
 	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) CARGO_HTTP_TIMEOUT=$(CARGO_HTTP_TIMEOUT) CARGO_NET_RETRY=$(CARGO_NET_RETRY) cargo fetch
 	cd $(BUILD_DIR) && \
 	for PG_VERSION in $(PG_VERSIONS); do \
@@ -57,4 +68,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup build building check-pgrx packaging move clean
+.PHONY: all check-src check-patches setup apply-patches build building check-pgrx packaging move clean

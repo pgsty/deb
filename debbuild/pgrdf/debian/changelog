@@ -1,3 +1,10 @@
+pgrdf (0.6.4-1PIGSTY) unstable; urgency=medium
+
+  * Package upstream release 0.6.4 for PostgreSQL 14-17.
+  * Patch Cargo metadata to build with cargo-pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 00:00:00 +0800
+
 pgrdf (0.5.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release for PostgreSQL 14-17.
