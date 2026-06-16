@@ -1,3 +1,9 @@
+pg-parquet (0.5.1-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cargo-pgrx/pgrx 0.18.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 15 Jun 2026 12:00:00 +0000
+
 pg-parquet (0.5.1-1PIGSTY) unstable; urgency=medium
 
   * 0.5.1 release: https://github.com/CrunchyData/pg_parquet/releases/tag/v0.5.1
