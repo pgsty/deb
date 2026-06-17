@@ -5,11 +5,17 @@ export CC = gcc
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
+OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
+PGROONGA_BUILD_FLAGS := HAVE_MSGPACK=1
+ifeq ($(OS_CODENAME),resolute)
+PGROONGA_BUILD_FLAGS += MSGPACK_PACKAGE_NAME=msgpack-c
+endif
+
 override_dh_auto_build:
 	if pkg-config --exists "libxxhash >= 0.8.0"; then	\
-		dh_auto_build -- HAVE_MSGPACK=1 HAVE_XXHASH=1;	\
+		dh_auto_build -- $(PGROONGA_BUILD_FLAGS) HAVE_XXHASH=1;	\
 	else							\
-		dh_auto_build -- HAVE_MSGPACK=1;		\
+		dh_auto_build -- $(PGROONGA_BUILD_FLAGS);	\
 	fi
 
 override_dh_auto_install:
