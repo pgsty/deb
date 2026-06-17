@@ -6,6 +6,11 @@ export PXF_HOME=/usr/cloudberry-pxf
 export GOPATH := $(CURDIR)/.gopath
 export GOBIN := $(GOPATH)/bin
 
+OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
+ifeq ($(OS_CODENAME),resolute)
+export GOPROXY ?= https://goproxy.cn,direct
+endif
+
 %:
 	dh $@
 
@@ -14,6 +19,17 @@ override_dh_auto_clean:
 
 override_dh_auto_build:
 	set -eu; \
+	if [ "$(OS_CODENAME)" = "resolute" ]; then \
+		GRADLE_WRAPPER="$(CURDIR)/server/gradle/wrapper/gradle-wrapper.properties"; \
+		sed -i 's|^distributionUrl=.*|distributionUrl=https\\://mirrors.aliyun.com/macports/distfiles/gradle/gradle-8.5-bin.zip|' "$$GRADLE_WRAPPER"; \
+		sed -i 's|^distributionSha256Sum=.*|distributionSha256Sum=9d926787066a081739e8200858338b4a69e837c3a821a33aca9db09dd4a41026|' "$$GRADLE_WRAPPER"; \
+		if grep -q '^networkTimeout=' "$$GRADLE_WRAPPER"; then \
+			sed -i 's/^networkTimeout=.*/networkTimeout=300000/' "$$GRADLE_WRAPPER"; \
+		else \
+			printf '\nnetworkTimeout=300000\n' >> "$$GRADLE_WRAPPER"; \
+		fi; \
+		sed -i 's|https://raw.githubusercontent.com/gradle/gradle/v$${GRADLE_VERSION}/gradle/wrapper/gradle-wrapper.jar|https://gh-proxy.com/https://raw.githubusercontent.com/gradle/gradle/v$${GRADLE_VERSION}/gradle/wrapper/gradle-wrapper.jar|' "$(CURDIR)/server/gradlew-install.sh"; \
+	fi; \
 	if [ ! -x "$(GPHOME)/bin/postgres" ]; then \
 		echo "cloudberry must be installed under $(GPHOME) before building cloudberry-pxf" >&2; \
 		exit 1; \
