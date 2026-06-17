@@ -1,6 +1,7 @@
 all: setup build move
 
 TARBALL := pgdog-0.1.32.tar.gz
+VENDOR_TARBALL := pgdog-0.1.32-vendor.tar.gz
 BUILD_DIR := build
 
 check-src:
@@ -14,7 +15,14 @@ setup: check-src
 	rm -f $(BUILD_DIR)/.cargo/config.toml
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
+	if [ "$$OS_CODENAME" = "resolute" ]; then \
+		test -f "../SOURCES/$(VENDOR_TARBALL)" || (echo "missing ../SOURCES/$(VENDOR_TARBALL), copy it into ../SOURCES for Ubuntu 26 builds"; exit 1); \
+		mkdir -p $(BUILD_DIR)/vendor; \
+		tar -C $(BUILD_DIR)/vendor --strip-components=1 -xf ../SOURCES/$(VENDOR_TARBALL); \
+		printf '\n[patch."https://github.com/pgdogdev/pg_query.rs.git"]\npg_query = { path = "vendor/pg_query.rs" }\n\n[patch."https://github.com/pgdogdev/scram.git"]\nscram = { path = "vendor/scram" }\n' >> $(BUILD_DIR)/Cargo.toml; \
+		sed -i '/source = "git+https:\/\/github.com\/pgdogdev\/pg_query\.rs\.git?rev=/d; /source = "git+https:\/\/github.com\/pgdogdev\/scram\.git?rev=/d' $(BUILD_DIR)/Cargo.lock; \
+	fi
 
 # building deb
 build:
