@@ -1,3 +1,9 @@
+pg-task (2.1.29-2PIGSTY) unstable; urgency=medium
+
+  * Build postgres.c with pcre2grep on builders without pcregrep.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 17 Jun 2026 10:41:00 +0800
+
 pg-task (2.1.29-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 2.1.29.

@@ -1,0 +1,44 @@
+--- a/postgres.sh
++++ b/postgres.sh
+@@ -1,11 +1,14 @@
+ #!/bin/sh -ex
+ 
++PG_CONFIG_BIN="${PG_CONFIG:-pg_config}"
++POSTGRES_BIN="$("$PG_CONFIG_BIN" --bindir)/postgres"
++
+ if [ -z $PG_BUILD_FROM_SOURCE ]; then
+-	GREEN="$(postgres --version | grep -Ei "Green(plum|gage)" >/dev/null && echo yes || echo no)"
+-	PG_MAJOR="$(pg_config --version | cut -f 2 -d ' ' | grep -E -o "[[:digit:]]+" | head -1)"
++	GREEN="$("$POSTGRES_BIN" --version | grep -Ei "Green(plum|gage)" >/dev/null && echo yes || echo no)"
++	PG_MAJOR="$("$PG_CONFIG_BIN" --version | cut -f 2 -d ' ' | grep -E -o "[[:digit:]]+" | head -1)"
+ 	if [ "$GREEN" = "yes" ]; then
+-		ARENADATA="$(pg_config --gp_version | grep -i arenadata >/dev/null && echo yes || echo no)"
+-		GREENGAGE="$(pg_config --gp_version | grep -i greengage >/dev/null && echo yes || echo no)"
++		ARENADATA="$("$PG_CONFIG_BIN" --gp_version | grep -i arenadata >/dev/null && echo yes || echo no)"
++		GREENGAGE="$("$PG_CONFIG_BIN" --gp_version | grep -i greengage >/dev/null && echo yes || echo no)"
+ 		MAIN=main
+ 		if [ "$ARENADATA" = "yes" ]; then
+ 			REPO=arenadata/gpdb
+@@ -16,11 +19,11 @@
+ 		else
+ 			REPO=greenplum-db/gpdb-archive
+ 		fi
+-		REL="$(test "$PG_MAJOR" -lt 10 && pg_config --gp_version | cut -f 2 -d ' ' | cut -f 1 -d '+' || echo "main")"
++		REL="$(test "$PG_MAJOR" -lt 10 && "$PG_CONFIG_BIN" --gp_version | cut -f 2 -d ' ' | cut -f 1 -d '+' || echo "main")"
+ 	else
+ 		MAIN=master
+ 		REPO=postgres/postgres
+-		PG_VERSION="$(pg_config --version | cut -f 2 -d ' ' | tr '.' '_' | sed 's/rc/_RC/' | sed 's/beta/_BETA/')"
++		PG_VERSION="$("$PG_CONFIG_BIN" --version | cut -f 2 -d ' ' | tr '.' '_' | sed 's/rc/_RC/' | sed 's/beta/_BETA/')"
+ 		REL="$(test "$PG_MAJOR" -lt 10 && echo "REL$PG_VERSION" || echo "REL_$PG_VERSION")"
+ 		STABLE="$(test "$PG_MAJOR" -lt 10 && echo "REL9_${PG_MAJOR}_STABLE" || echo "REL_${PG_MAJOR}_STABLE")"
+ 	fi
+@@ -67,7 +70,7 @@
+ EOF
+ (curl --no-progress-meter -fL "https://raw.githubusercontent.com/$REPO/$REL/src/backend/tcop/postgres.c" || \
+ curl --no-progress-meter -fL "https://raw.githubusercontent.com/$REPO/$STABLE/src/backend/tcop/postgres.c" || \
+-curl --no-progress-meter -fL "https://raw.githubusercontent.com/$REPO/$MAIN/src/backend/tcop/postgres.c") | pcregrep -M \
++curl --no-progress-meter -fL "https://raw.githubusercontent.com/$REPO/$MAIN/src/backend/tcop/postgres.c") | pcre2grep -M \
+ -e '(?s)^static bool CheckDebugDtmActionSqlCommandTag\(.*?\);' \
+ -e '(?s)^static void enable_statement_timeout\(.*?\);' \
+ -e '(?s)^static void start_xact_command\(.*?\);' \
