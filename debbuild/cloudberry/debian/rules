@@ -6,6 +6,10 @@ export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 # Filter out -ffast-math to avoid precision issues.
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
+OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
+ifeq ($(OS_CODENAME),resolute)
+export CFLAGS += -std=gnu17
+endif
 export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
 export CFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow -Wno-error=maybe-uninitialized -Wno-error=array-bounds
 export CXXFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow -Wno-error=maybe-uninitialized -Wno-error=array-bounds -Wno-error=pessimizing-move -Wno-error=suggest-attribute=format
