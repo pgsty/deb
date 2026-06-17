@@ -3,8 +3,8 @@
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
 
-# Set parallel build jobs to 20
-export MAKEFLAGS = -j20
+# Allow constrained builders to override parallelism.
+export MAKEFLAGS ?= -j20
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
