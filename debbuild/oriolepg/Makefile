@@ -16,7 +16,10 @@ setup: check-src
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
+	if [ "$$OS_CODENAME" = "resolute" ]; then \
+		sed -i 's/\[\] { return std::make_unique<llvm::backport::SectionMemoryManager>(nullptr, true); }/[](const llvm::MemoryBuffer\&) { return std::make_unique<llvm::backport::SectionMemoryManager>(nullptr, true); }/g' $(BUILD_DIR)/src/backend/jit/llvm/llvmjit_wrap.cpp; \
+	fi
 
 apply-patches:
 	@set -e; \
