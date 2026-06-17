@@ -11,6 +11,12 @@ export PG_CXXFLAGS := -Wno-error=overloaded-virtual
 export PG_CFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow
 export CFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow
 
+OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
+ifeq ($(OS_CODENAME),resolute)
+export PG_CFLAGS += -Wno-error=discarded-qualifiers
+export CFLAGS += -Wno-error=discarded-qualifiers
+endif
+
 ANTLR4_RUNTIME_INCLUDE_DIR := /usr/include/antlr4-runtime
 ANTLR4_RUNTIME_LIB_DIR := /usr/lib/$(DEB_HOST_MULTIARCH)
 ANTLR4_RUNTIME_LIB := -lantlr4-runtime

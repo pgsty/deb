@@ -28,7 +28,15 @@ install-prereq:
 		$$APT -y autoremove || true; \
 	fi; \
 	$$APT -y install "$(ANTLR_DEB)" "$(ANTLR_DEV_DEB)"; \
-	$$APT -y install "$(CORE_DEB)"
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	if [ "$$OS_CODENAME" = "resolute" ]; then \
+		$$APT -y install --reinstall "$(CORE_DEB)"; \
+	else \
+		$$APT -y install "$(CORE_DEB)"; \
+	fi; \
+	if [ "$$OS_CODENAME" = "resolute" ] && ! command -v java >/dev/null 2>&1; then \
+		$$APT -y install openjdk-21-jre-headless || $$APT -y install default-jre-headless; \
+	fi
 
 # prepare directory
 setup:
@@ -36,8 +44,11 @@ setup:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	cp -a build/babelfish_extensions/. build/
 	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog; \
+	if [ "$$OS_CODENAME" = "resolute" ]; then \
+		sed -i 's/char[[:space:]]*\*pos;/const char *pos;/' build/contrib/babelfishpg_tds/src/backend/tds/tdsrpc.c; \
+	fi
 
 # building deb
 build:
