@@ -11,14 +11,34 @@ setup:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog; \
+	if [ "$$OS_CODENAME" = "resolute" ]; then \
+		find build/deps -name CMakeLists.txt -exec sed -i -E 's/cmake_minimum_required\(VERSION (2\.[0-9]+(\.[0-9]+)?|3\.[0-4](\.[0-9]+)?)\)/cmake_minimum_required(VERSION 3.5)/' {} +; \
+	fi
 
-build: building packaging
+build: pre-resolute building packaging
+pre-resolute:
+	@OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	if [ "$$OS_CODENAME" = "resolute" ]; then \
+		if ! command -v nc >/dev/null 2>&1; then \
+			apt-get update; \
+			apt-get install -y netcat-traditional; \
+		fi; \
+		if ! command -v nc >/dev/null 2>&1 && command -v nc.traditional >/dev/null 2>&1; then \
+			ln -sf "$$(command -v nc.traditional)" /usr/bin/nc; \
+		fi; \
+	fi
+
 building:
 	cd build && \
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	CMAKE_U26_ARGS=""; \
+	if [ "$$OS_CODENAME" = "resolute" ]; then \
+	    CMAKE_U26_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5"; \
+	fi; \
 	for PG_VERSION in 14 15 16 17 18; do \
-	    cmake -S . -B pg$$PG_VERSION -DCMAKE_BUILD_TYPE=Release -DOPENSSL_CONFIGURED=1 -DPG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config ; \
+	    cmake -S . -B pg$$PG_VERSION -DCMAKE_BUILD_TYPE=Release -DOPENSSL_CONFIGURED=1 -DPG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config $$CMAKE_U26_ARGS ; \
 	    cmake --build pg$$PG_VERSION --parallel; \
 	    cmake --build pg$$PG_VERSION --parallel --target package_extensions; \
 	done
@@ -40,6 +60,4 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
-
-
+.PHONY: all setup update build pre-resolute move clean ls
