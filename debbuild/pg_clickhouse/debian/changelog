@@ -1,3 +1,10 @@
+pg-clickhouse (0.3.2-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 0.3.2.
+  * Add lz4 and zstd build dependencies for binary driver compression.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 18 Jun 2026 08:30:00 +0800
+
 pg-clickhouse (0.3.1-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 0.3.1.
