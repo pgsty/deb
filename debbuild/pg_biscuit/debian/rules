@@ -17,6 +17,7 @@ override_dh_strip:
 
 override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-biscuit
+	rm -rf debian/postgresql-*-biscuit/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:
 	dh_installdocs --all README.*

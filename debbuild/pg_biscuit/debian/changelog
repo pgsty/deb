@@ -1,3 +1,10 @@
+pg-biscuit (2.3.0-1PIGSTY) unstable; urgency=medium
+
+  * Use upstream PGXN 2.3.0 to match extension metadata and SQL version.
+  * Backport PG16 and PG17 API compatibility fixes from RPM packaging.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 18 Jun 2026 09:30:00 +0800
+
 pg-biscuit (2.2.2-1PIGSTY) unstable; urgency=medium
 
   * Bump to 2.2.2
