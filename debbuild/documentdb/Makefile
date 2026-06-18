@@ -1,6 +1,6 @@
 all: pre setup build move
 
-TARBALL := documentdb-0.110-0.tar.gz
+TARBALL := documentdb-0.112-0.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 
 check-src:
@@ -9,7 +9,7 @@ check-src:
 pre:
 	bash prepare.sh $(TARBALL)
 	apt-get update -qq
-	apt install -y systemtap-sdt-dev
+	apt install -y systemtap-sdt-dev libicu-dev pkg-config
 
 # prepare directory
 setup: check-src
@@ -21,9 +21,13 @@ setup: check-src
 	sed -i "s/char \\*arrayIndexSubstring = memchr(path, '\\.', pathLength);/const char *arrayIndexSubstring = memchr(path, '.', pathLength);/" build/pg_documentdb/src/aggregation/bson_project.c
 	sed -i 's/DateFormatMap \*result = bsearch(/const DateFormatMap *result = bsearch(/' build/pg_documentdb/src/operators/bson_expression_date_operators.c
 	sed -i 's/TimezoneMap \*result = bsearch(/const TimezoneMap *result = bsearch(/' build/pg_documentdb/src/operators/bson_expression_date_operators.c
+	grep -q "^requires = 'documentdb'" build/pg_documentdb_extended_rum/documentdb_extended_rum.control || sed -i "/^relocatable = true/a requires = 'documentdb'" build/pg_documentdb_extended_rum/documentdb_extended_rum.control
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	if [ "$${OS_CODENAME}" = "resolute" ]; then \
 		sed -i 's/char \*dot = NULL;/const char *dot = NULL;/' build/pg_documentdb/src/sharding/sharding.c; \
+		sed -i 's/char \*usingPos = strstr(createIndexCmd, " USING ");/const char *usingPos = strstr(createIndexCmd, " USING ");/' build/pg_documentdb/src/sharding/sharding.c; \
+		sed -i 's/char \*amNameStart = usingPos + 7;/const char *amNameStart = usingPos + 7;/' build/pg_documentdb/src/sharding/sharding.c; \
+		sed -i 's/char \*amNameEnd = amNameStart;/const char *amNameEnd = amNameStart;/' build/pg_documentdb/src/sharding/sharding.c; \
 	fi
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
