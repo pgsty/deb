@@ -1,3 +1,9 @@
+pg-timeseries (0.2.1-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 0.2.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 18 Jun 2026 08:30:00 +0800
+
 pg-timeseries (0.2.0-1PIGSTY) unstable; urgency=medium
 
   * Bump to 0.2.0, remove pg_ivm and columnar dependencies
