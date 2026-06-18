@@ -1,13 +1,17 @@
 all: build
 
-TARBALL := timescaledb-2.27.2.tar.gz
+TARBALL := timescaledb-2.28.0.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 
-build: build18 build17 build16 build15
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL); if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
+
+build: check-src build18 build17 build16 build15
 
 define build_one
 	rm -rf build-$(1); mkdir -p build-$(1)
-	tar -C build-$(1) --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	sed -i 's/^version = 2.27.2-dev$$/version = 2.27.2/' build-$(1)/version.config
+	tar -C build-$(1) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	sed -i 's/^version = 2.28.0-dev$$/version = 2.28.0/' build-$(1)/version.config
 	cd build-$(1) && PATH=/usr/lib/postgresql/$(1)/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
 	cd build-$(1)/build && $(MAKE) -j1
 	rm -rf build-$(1)/build/debian; cp -r debian build-$(1)/build/debian
