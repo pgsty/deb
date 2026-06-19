@@ -839,6 +839,9 @@ pg_variables:
 pg_statement_rollback:
 	cd pg_statement_rollback && make
 
+plpgsql_wrap:
+	cd plpgsql_wrap && make
+
 spat:
 	cd spat && make
 
@@ -1040,7 +1043,7 @@ collect:
 	passwordcheck_cracklib passwordpolicy supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey column_encrypt pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
 	redis \
 	pgspider_ext sqlite_fdw pg_redis_pubsub kafka_fdw libfq graphblas lagraph onesparse pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
-	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto re2 rdf_fdw ulak \
+	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback plpgsql_wrap spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto re2 rdf_fdw ulak \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
 	openhalodb oriole oriole_16 oriole_17 oriole_18 oriole_all oriolepg orioledb oriolepg_16 oriolepg_17 oriolepg_18 oriolepg_install_16 oriolepg_install_17 oriolepg_install_18 orioledb_16 orioledb_17 orioledb_18 antlr4 babelfishpg_17 babelfish cloudberry cloudberry-backup cloudberry-pxf agensgraph inchi \

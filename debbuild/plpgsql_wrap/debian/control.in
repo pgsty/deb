@@ -1,0 +1,17 @@
+Source: plpgsql-wrap
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), pkg-config, libssl-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/hexacluster/plpgsql_wrap/
+
+Package: postgresql-PGVERSION-plpgsql-wrap
+Architecture: any
+Provides: postgresql-plpgsql-wrap
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Oracle WRAP-equivalent PL/pgSQL language handler
+ plpgsql_wrap stores PL/pgSQL procedure source as AES-256-GCM encrypted text in
+ pg_proc.prosrc while keeping dump and restore workflows usable. The extension
+ requires plpgsql and must be installed by a superuser.
