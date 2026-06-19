@@ -1,0 +1,18 @@
+Source: passwordpolicy
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcrack2-dev (>= 2.9)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/fmbiete/passwordpolicy
+
+Package: postgresql-PGVERSION-passwordpolicy
+Architecture: any
+Provides: postgresql-passwordpolicy
+Depends: cracklib-runtime, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL password complexity policy extension
+ passwordpolicy checks PostgreSQL role passwords when they are set through
+ CREATE ROLE or ALTER ROLE. It must be loaded through shared_preload_libraries
+ and supports dynamically configurable complexity, history, and account
+ soft-lock policies.

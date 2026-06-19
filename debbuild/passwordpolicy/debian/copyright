@@ -1,0 +1,21 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: passwordpolicy
+Source: https://github.com/fmbiete/passwordpolicy
+
+Files: *
+Copyright: 2023-2026 Francisco Miguel Biete Banon
+           1996-2018 The PostgreSQL Global Development Group
+           1994 The Regents of the University of California
+License: PostgreSQL
+
+Files: passwordpolicy_check.*
+Copyright: 2018-2020 Indrajit
+License: MIT
+
+License: PostgreSQL
+ On Debian systems, the full text of the PostgreSQL license can be found in
+ /usr/share/common-licenses/PostgreSQL.
+
+License: MIT
+ On Debian systems, the full text of the MIT license can be found in
+ /usr/share/common-licenses/MIT.
