@@ -1,0 +1,17 @@
+Source: pgdisablelogerror
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), zlib1g-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/fmbiete/pgdisablelogerror
+
+Package: postgresql-PGVERSION-pgdisablelogerror
+Architecture: any
+Provides: postgresql-pgdisablelogerror
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Disable selected SQLSTATE errors from PostgreSQL server logging
+ pgdisablelogerror installs an emit_log hook that suppresses server log output
+ for configured SQLSTATE error codes. It must be loaded through
+ shared_preload_libraries before use.
