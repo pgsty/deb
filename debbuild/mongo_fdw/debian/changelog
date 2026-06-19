@@ -1,0 +1,5 @@
+mongo-fdw (5.5.3-1PIGSTY) unstable; urgency=medium
+
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 19 Jun 2026 18:00:00 +0800

@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with pgxs
+
+override_dh_installdocs:
+	dh_installdocs --all README.*
+
+override_dh_pgxs_test:
+	# Skip package tests here; no MongoDB server is available during build.
+	true

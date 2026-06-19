@@ -1,0 +1,23 @@
+Source: mongo-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), postgresql-server-dev-all (>= 217~), libmongoc-dev, libbson-dev, libjson-c-dev, pkgconf | pkg-config
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/EnterpriseDB/mongo_fdw
+
+Package: postgresql-PGVERSION-mongo-fdw
+Architecture: any
+Provides: postgresql-mongo-fdw
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Breaks: ${postgresql:Breaks}
+Description: MongoDB Foreign Data Wrapper for PostgreSQL
+ This PostgreSQL extension implements a Foreign Data Wrapper (FDW) for MongoDB.
+ .
+  * Write-able FDW
+  * Connection Pooling
+  * JOIN push-down
+  * AGGREGATE push-down
+  * ORDER BY push-down
+  * LIMIT OFFSET push-down
