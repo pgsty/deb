@@ -414,6 +414,9 @@ chkpass:
 pg_gzip:
 	cd pg_gzip && make
 
+pg_http:
+	cd pg_http && make
+
 pg_bzip:
 	cd pg_bzip && make
 
@@ -987,7 +990,7 @@ collect:
 	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql pg_durable pgmnemo pg_projection pg_stl pg_sorted_heap pg_incremental pgmq pgmb omnigres pg_ai_query \
 	plxslt pg_tle plv8 pljs \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 pg_text_semver hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
-	pg_gzip pg_bzip pg_zstd pg_net pg_curl pgjq pg_retry pgjwt pg_html5_email_address pg_utl_smtp url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile external_file pg_byteamagic pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \
+	pg_gzip pg_http pg_bzip pg_zstd pg_net pg_curl pgjq pg_retry pgjwt pg_html5_email_address pg_utl_smtp url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile external_file pg_byteamagic pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \
 	pg_uuidv7 pg_uuid_v8 permuteseq pg_hashids sequential_uuids topn quantile lower_quantile count_distinct omnisketch ddsketch vasco pgxicor pg_weighted_statistics floatvec aggs_for_vecs aggs_for_arrays parray_gin pg_accumulator pg_csv pg_arraymath pg_math pg_random pg_base36 pg_base62 pg_financial \
 	pg_rewrite pg_query_rewrite pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_qos pg_savior safeupdate pg_drop_events \
 	pg_profile pg_tracing pg_stat_monitor pg_store_plans pg_datasentinel pgsentinel pg_ash pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo plpgsql_check pg_relusage pg_track_optimizer pg_pathcheck pagevis pg_isok \

@@ -1,0 +1,17 @@
+Source: pgsql-http
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev (>= 7)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pramsey/pgsql-http
+
+Package: postgresql-PGVERSION-http
+Architecture: any
+Provides: postgresql-http
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: HTTP client for PostgreSQL PGVERSION
+  HTTP client for PostgreSQL, retrieve a web page from inside the database.
+  It can call a web service from SQL, either to get back a result or to poke
+  that service into refreshing itself against the new database state.

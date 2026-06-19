@@ -1,0 +1,5 @@
+pgsql-http (1.7.1-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/pramsey/pgsql-http/releases/tag/v1.7.1
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 19 Jun 2026 12:00:00 +0000
