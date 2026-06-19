@@ -1,0 +1,17 @@
+Source: pg-ducklake
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-server-dev-PGVERSION, cmake, ninja-build, pkg-config, bison, flex, zlib1g-dev, libreadline-dev, libxml2-dev, libxslt1-dev, libssl-dev, libcurl4-openssl-dev, liblz4-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/relytcloud/pg_ducklake
+
+Package: postgresql-PGVERSION-pg-ducklake
+Architecture: any
+Provides: postgresql-pg-ducklake
+Depends: ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION
+Description: DuckLake lakehouse extension for PostgreSQL PGVERSION
+ pg_ducklake manages DuckLake tables inside PostgreSQL, backed by DuckDB
+ execution and Parquet files. It requires shared_preload_libraries =
+ 'pg_ducklake' before CREATE EXTENSION.

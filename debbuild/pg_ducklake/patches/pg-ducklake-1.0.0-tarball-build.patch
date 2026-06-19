@@ -1,0 +1,62 @@
+--- a/Makefile
++++ b/Makefile
+@@ -57 +57 @@
+-DUCKDB_BUILD_TAG := $(if $(EXTENSION_CONFIGS),$(basename $(notdir $(EXTENSION_CONFIGS)))-$(shell shasum -a 256 '$(EXTENSION_CONFIGS)' 2>/dev/null | cut -c1-8),default)
++DUCKDB_BUILD_TAG := $(if $(EXTENSION_CONFIGS),$(basename $(notdir $(EXTENSION_CONFIGS)))-$(shell sha256sum '$(EXTENSION_CONFIGS)' 2>/dev/null | cut -c1-8),default)
+@@ -65,2 +65,2 @@
+-$(PGDDB_DIR)/.git/modules/duckdb/HEAD:
+-	git -C $(PGDDB_DIR) submodule update --init --recursive
++$(PGDDB_DIR)/duckdb/CMakeLists.txt:
++	test -f $(PGDDB_DIR)/duckdb/CMakeLists.txt
+@@ -72 +72 @@
+-$(FULL_DUCKDB_LIB): $(PGDDB_DIR)/.git/modules/duckdb/HEAD $(EXTENSION_CONFIGS)
++$(FULL_DUCKDB_LIB): $(PGDDB_DIR)/duckdb/CMakeLists.txt $(EXTENSION_CONFIGS)
+@@ -83 +83 @@
+-	cmake --build $(DUCKDB_BUILD_DIR) --config $(DUCKDB_CMAKE_BUILD_TYPE)
++	CMAKE_BUILD_PARALLEL_LEVEL=$${CMAKE_BUILD_PARALLEL_LEVEL:-1} cmake --build $(DUCKDB_BUILD_DIR) --config $(DUCKDB_CMAKE_BUILD_TYPE)
+--- a/pg_ducklake/Makefile
++++ b/pg_ducklake/Makefile
+@@ -23 +23 @@
+-DUCKLAKE_SUBMODULE_HEAD := $(ROOT_DIR)/.git/modules/pg_ducklake/third_party/ducklake/HEAD
++DUCKLAKE_SUBMODULE_HEAD := $(DUCKLAKE_DIR)/CMakeLists.txt
+@@ -73 +73 @@
+-	git -C $(ROOT_DIR) submodule update --init pg_ducklake/third_party/ducklake
++	test -f $(DUCKLAKE_DIR)/CMakeLists.txt
+@@ -75,2 +75,2 @@
+-# Apply patches onto the pristine submodule; reset first so editing a patch
+-# re-applies from a clean base. The working tree is intentionally left dirty.
++# Package source tarballs already contain third_party/ducklake and no .git metadata.
++# Apply patches once on the fresh package build tree and guard with a stamp.
+@@ -78,2 +78,0 @@
+-	git -C $(DUCKLAKE_DIR) checkout -q .
+-	git -C $(DUCKLAKE_DIR) clean -fdq src
+@@ -82 +80 @@
+-		git -C $(DUCKLAKE_DIR) apply -p1 --whitespace=nowarn $$p || exit 1; \
++		patch -d $(DUCKLAKE_DIR) -p1 --forward --batch < $$p || exit 1; \
+@@ -87 +85 @@
+-$(OBJS): $(PGDDB_DIR)/.git/modules/duckdb/HEAD $(DUCKLAKE_STAMP)
++$(OBJS): $(PGDDB_DIR)/duckdb/CMakeLists.txt $(DUCKLAKE_STAMP)
+--- a/pg_ducklake/pg_ducklake_extensions.cmake
++++ b/pg_ducklake/pg_ducklake_extensions.cmake
+@@ -5,3 +5 @@
+-    GIT_URL https://github.com/duckdb/duckdb-postgres
+-    GIT_TAG c89234f0b1985f4ee0f52f16e742a1ab2d4ae4f0
+-    SUBMODULES database-connector
++    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/third_party/duckdb-postgres
+--- a/pg_ducklake/third_party/duckdb-postgres/CMakeLists.txt
++++ b/pg_ducklake/third_party/duckdb-postgres/CMakeLists.txt
+@@ -7 +7 @@
+-set(OPENSSL_USE_STATIC_LIBS TRUE)
++set(OPENSSL_USE_STATIC_LIBS FALSE)
+@@ -123 +123,2 @@
+-if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/postgres)
++if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/postgres/src/include/pg_config_ext.h)
++  if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/postgres)
+@@ -154,0 +156,2 @@
++  endif()
++
+@@ -173,0 +177,4 @@
++    set(ENV{CFLAGS} "")
++    set(ENV{CPPFLAGS} "")
++    set(ENV{CXXFLAGS} "")
++    set(ENV{LDFLAGS} "")

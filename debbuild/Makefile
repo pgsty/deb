@@ -265,6 +265,9 @@ datasketches:
 pg_duckdb:
 	cd pg_duckdb && make
 
+pg_ducklake:
+	cd pg_ducklake && make
+
 duckdb_fdw:
 	cd duckdb_fdw && make
 

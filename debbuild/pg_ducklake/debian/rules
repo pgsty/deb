@@ -1,0 +1,54 @@
+#!/usr/bin/make -f
+
+PG_VERSION := $(shell sed -n 's/^Package: postgresql-\([0-9][0-9]*\)-pg-ducklake/\1/p' debian/control | head -1)
+PG_CONFIG := /usr/lib/postgresql/$(PG_VERSION)/bin/pg_config
+
+export PATH := /usr/lib/postgresql/$(PG_VERSION)/bin:$(PATH)
+export PG_CONFIG
+export CMAKE_PREFIX_PATH := $(CURDIR)/.croaring
+export CMAKE_BUILD_PARALLEL_LEVEL ?= 1
+
+%:
+	dh $@
+
+override_dh_update_autotools_config:
+
+override_dh_autoreconf:
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_dwz:
+
+override_dh_auto_build:
+	mkdir -p "$(CURDIR)/.croaring/include/roaring" "$(CURDIR)/.croaring/lib/cmake/roaring" "$(CURDIR)/CRoaring-4.7.1/build"
+	cp -a "$(CURDIR)/CRoaring-4.7.1/include/roaring/." "$(CURDIR)/.croaring/include/roaring/"
+	cp -a "$(CURDIR)/CRoaring-4.7.1/cpp/roaring/." "$(CURDIR)/.croaring/include/roaring/"
+	for src in $$(find "$(CURDIR)/CRoaring-4.7.1/src" -name '*.c' | sort); do \
+		obj=$$(echo "$${src#$(CURDIR)/CRoaring-4.7.1/}" | tr '/.' '__').o; \
+		$(CC) $(CPPFLAGS) $(CFLAGS) -fPIC -I"$(CURDIR)/CRoaring-4.7.1/include" -c "$$src" -o "$(CURDIR)/CRoaring-4.7.1/build/$$obj"; \
+	done
+	ar cr "$(CURDIR)/.croaring/lib/libroaring.a" "$(CURDIR)"/CRoaring-4.7.1/build/*.o
+	printf '%s\n' \
+		'get_filename_component(_roaring_prefix "$${CMAKE_CURRENT_LIST_DIR}/../../.." ABSOLUTE)' \
+		'add_library(roaring::roaring STATIC IMPORTED)' \
+		'set_target_properties(roaring::roaring PROPERTIES' \
+		'  IMPORTED_LOCATION "$${_roaring_prefix}/lib/libroaring.a"' \
+		'  INTERFACE_INCLUDE_DIRECTORIES "$${_roaring_prefix}/include")' \
+		'add_library(roaring::roaring-headers INTERFACE IMPORTED)' \
+		'set_target_properties(roaring::roaring-headers PROPERTIES' \
+		'  INTERFACE_INCLUDE_DIRECTORIES "$${_roaring_prefix}/include")' \
+		'add_library(roaring::roaring-headers-cpp INTERFACE IMPORTED)' \
+		'set_target_properties(roaring::roaring-headers-cpp PROPERTIES' \
+		'  INTERFACE_INCLUDE_DIRECTORIES "$${_roaring_prefix}/include")' \
+		> "$(CURDIR)/.croaring/lib/cmake/roaring/roaringConfig.cmake"
+	cp "$(CURDIR)/.croaring/lib/cmake/roaring/roaringConfig.cmake" "$(CURDIR)/.croaring/lib/cmake/roaring/roaring-config.cmake"
+	$(MAKE) ROARING_LIB_DIR="$(CURDIR)/.croaring/lib" with_llvm=no -j2
+
+override_dh_auto_install:
+	$(MAKE) ROARING_LIB_DIR="$(CURDIR)/.croaring/lib" with_llvm=no install DESTDIR="$(CURDIR)/debian/postgresql-$(PG_VERSION)-pg-ducklake"
+	rm -rf "$(CURDIR)"/debian/postgresql-$(PG_VERSION)-pg-ducklake/usr/share/doc/postgresql-doc-*
