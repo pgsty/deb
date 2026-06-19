@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := provsql-1.9.0.tar.gz
+TARBALL := provsql-1.10.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
