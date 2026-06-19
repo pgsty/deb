@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+# Update the dynamic linker run-time bindings
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    ldconfig
+fi
+exit 0

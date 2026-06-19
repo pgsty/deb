@@ -928,10 +928,47 @@ logical_ddl:
 ###############################################################
 openhalodb:
 	cd openhalodb && make
-oriolepg:
-	cd oriolepg && make
+oriolepg: oriolepg_18
 orioledb:
 	cd orioledb && make
+oriole: oriole_18
+oriolepg_16:
+	cd oriolepg_16 && make
+oriolepg_install_16:
+	sudo apt-get remove -y oriolepg-16 || /bin/true
+	sudo dpkg -i $$(ls -1t $(HOME)/ext/pkg/oriolepg-16_*_$$(dpkg --print-architecture).deb | head -n 1)
+orioledb_16:
+	cd orioledb && make build16
+oriole_16:
+	$(MAKE) oriolepg_16
+	$(MAKE) oriolepg_install_16
+	$(MAKE) orioledb_16
+oriolepg_17:
+	cd oriolepg_17 && make
+oriolepg_install_17:
+	sudo apt-get remove -y oriolepg-17 || /bin/true
+	sudo dpkg -i $$(ls -1t $(HOME)/ext/pkg/oriolepg-17_*_$$(dpkg --print-architecture).deb | head -n 1)
+orioledb_17:
+	cd orioledb && make build17
+oriole_17:
+	$(MAKE) oriolepg_17
+	$(MAKE) oriolepg_install_17
+	$(MAKE) orioledb_17
+oriolepg_18:
+	cd oriolepg_18 && make
+oriolepg_install_18:
+	sudo apt-get remove -y oriolepg-18 || /bin/true
+	sudo dpkg -i $$(ls -1t $(HOME)/ext/pkg/oriolepg-18_*_$$(dpkg --print-architecture).deb | head -n 1)
+orioledb_18:
+	cd orioledb && make build18
+oriole_18:
+	$(MAKE) oriolepg_18
+	$(MAKE) oriolepg_install_18
+	$(MAKE) orioledb_18
+oriole_all:
+	$(MAKE) oriole_16
+	$(MAKE) oriole_17
+	$(MAKE) oriole_18
 antlr4:
 	cd antlr4_runtime413 && make
 babelfishpg_17:
@@ -1000,5 +1037,5 @@ collect:
 	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto re2 rdf_fdw ulak \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
-	openhalodb oriolepg orioledb antlr4 babelfishpg_17 babelfish cloudberry cloudberry-backup cloudberry-pxf agensgraph inchi \
+	openhalodb oriole oriole_16 oriole_17 oriole_18 oriole_all oriolepg orioledb oriolepg_16 oriolepg_17 oriolepg_18 oriolepg_install_16 oriolepg_install_17 oriolepg_install_18 orioledb_16 orioledb_17 orioledb_18 antlr4 babelfishpg_17 babelfish cloudberry cloudberry-backup cloudberry-pxf agensgraph inchi \
 	pgedge pgedge-install pgedge-all spock snowflake lolor

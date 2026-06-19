@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := postgres-patches17_18.tar.gz
+TARBALL := postgres-patches17_20.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

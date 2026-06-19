@@ -1,3 +1,9 @@
+oriolepg-18-orioledb (1.8-0.beta16PIGSTY) unstable; urgency=medium
+
+  * OrioleDB 1.8 beta16 on patched PostgreSQL 18.1
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 18 Jun 2026 18:00:00 +0000
+
 oriolepg-17-orioledb (1.7-0.beta15PIGSTY) unstable; urgency=medium
 
   * OrioleDB 1.7 beta15 on patched PostgreSQL 17.18

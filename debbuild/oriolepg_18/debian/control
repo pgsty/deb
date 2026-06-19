@@ -1,4 +1,4 @@
-Source: oriolepg-17
+Source: oriolepg-18
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
@@ -41,10 +41,10 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/orioledb/postgres
 
-Package: oriolepg-17
+Package: oriolepg-18
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, tzdata, ssl-cert
-Description: Patched PostgreSQL for OrioleDB
+Description: Patched PostgreSQL 18 for OrioleDB
  OrioleDB is a new storage engine for PostgreSQL, bringing a modern approach
  to database capacity, capabilities and performance to the world's most-loved
- database platform. This is a patched version (17_18) of PostgreSQL 17.7.
+ database platform. This is a patched version (18_1) of PostgreSQL 18.4.

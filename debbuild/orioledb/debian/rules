@@ -2,15 +2,19 @@
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
+PG_MAJOR ?= 17
+ORIOLEPG_PREFIX ?= /usr/oriole-$(PG_MAJOR)
+ORIOLEDB_PATCHSET_VERSION ?= 20
+
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
-export PATH     := /usr/oriole-17/bin:$(PATH)
-export PG_CONFIG = /usr/oriole-17/bin/pg_config
-export ORIOLEDB_PATCHSET_VERSION=18
+export PATH := $(ORIOLEPG_PREFIX)/bin:$(PATH)
+export PG_CONFIG = $(ORIOLEPG_PREFIX)/bin/pg_config
+export ORIOLEDB_PATCHSET_VERSION
 export USE_PGXS=1
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l/usr/oriole-17/lib
+	dh_shlibdeps -l$(ORIOLEPG_PREFIX)/lib
 
 override_dh_auto_configure:
 
