@@ -1,3 +1,9 @@
+pg-background (2.0.2-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/vibhorkum/pg_background/releases/tag/v2.0.2
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 19 Jun 2026 10:40:00 +0800
+
 pg-background (2.0-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/vibhorkum/pg_background/releases/tag/v2.0

@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_background-2.0.tar.gz
+TARBALL := pg_background-2.0.2.tar.gz
 
 # prepare directory
 setup:
