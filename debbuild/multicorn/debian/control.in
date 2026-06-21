@@ -1,0 +1,31 @@
+Source: multicorn
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), dh-python, postgresql-all (>= 217~), postgresql-server-dev-all (>= 217~), python3-dev, python3-setuptools
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgsql-io/multicorn2
+
+Package: postgresql-PGVERSION-multicorn
+Architecture: any
+Provides: postgresql-multicorn
+Depends: ${postgresql:Depends}, python3-multicorn (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Breaks: ${postgresql:Breaks}
+Description: Python Foreign Data Wrapper framework for PostgreSQL
+ Multicorn is a PostgreSQL extension that lets developers implement Foreign
+ Data Wrappers in Python.
+ .
+ This package contains the PostgreSQL PGVERSION extension library and SQL files.
+
+Package: python3-multicorn
+Section: python
+Architecture: any
+Depends: ${python3:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Suggests: python3-docutils, python3-imapclient, python3-ldap3, python3-lxml, python3-psutil, python3-sqlalchemy
+Description: Python modules for the Multicorn PostgreSQL extension
+ Multicorn is a PostgreSQL extension that lets developers implement Foreign
+ Data Wrappers in Python.
+ .
+ This package contains the shared Python 3 modules used by all PostgreSQL
+ versions of the Multicorn extension.

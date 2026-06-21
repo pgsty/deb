@@ -1,0 +1,53 @@
+--- a/Makefile
++++ b/Makefile
+@@ -19,7 +19,7 @@ directories.stamp:
+ 
+ $(OBJS): directories.stamp
+ 
+-install: python_code
++install:
+ 
+ sql/$(EXTENSION)--$(EXTVERSION).sql: sql/$(EXTENSION).sql directories.stamp
+ 	cp $< $@
+@@ -109,10 +109,10 @@ endif
+ PYTHON_TEST_VERSION ?= $(python_version)
+ PG_TEST_VERSION ?= $(MAJORVERSION)
+-UNSUPPORTS_SQLALCHEMY=$(shell python -c "import sqlalchemy;import psycopg2"  1> /dev/null 2>&1; echo $$?)
++UNSUPPORTS_SQLALCHEMY=$(shell $(PYTHON) -c "import sqlalchemy;import psycopg2"  1> /dev/null 2>&1; echo $$?)
+ 
+ # Check if Python version is 3.12 or greater
+-PYTHON_VERSION_MAJOR_MINOR=$(shell python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+-PYTHON_GE_312=$(shell python -c "import sys; print(1 if (sys.version_info.major, sys.version_info.minor) >= (3, 12) else 0)")
++PYTHON_VERSION_MAJOR_MINOR=$(shell $(PYTHON) -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
++PYTHON_GE_312=$(shell $(PYTHON) -c "import sys; print(1 if (sys.version_info.major, sys.version_info.minor) >= (3, 12) else 0)")
+ 
+ TESTS        = test-$(PYTHON_TEST_VERSION)/sql/multicorn_cache_invalidation.sql \
+   test-$(PYTHON_TEST_VERSION)/sql/multicorn_column_options_test.sql \
+--- a/setup.py
++++ b/setup.py
+@@ -23,6 +23,9 @@ def get_version():
+ 
+ 
+ setup(
++    name='multicorn',
+     version=get_version(),
++    package_dir={'': 'python'},
++    packages=find_packages('python'),
+     ext_modules=[multicorn_utils_module]
+ )
+--- a/src/utils.c
++++ b/src/utils.c
+@@ -96,13 +96,9 @@ log_to_postgres(PyObject *self, PyObject *args, PyObject *kwargs)
+ 			errdetail("%s", detailstr);
+ 		}
+-		Py_DECREF(args);
+-		Py_DECREF(kwargs);
+ 		errfinish(__FILE__, __LINE__, PG_FUNCNAME_MACRO);
+ 	}
+ 	else
+ 	{
+-		Py_DECREF(args);
+-		Py_DECREF(kwargs);
+ 	}
+ 	Py_INCREF(Py_None);
+ 	return Py_None;

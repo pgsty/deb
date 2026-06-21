@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+export CC = gcc
+export PYTHON = python3
+export PYTHON_CONFIG = python3-config
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+%:
+	dh $@ --with python3
+
+override_dh_auto_build:
+	python3 setup.py build
+
+override_dh_auto_test:
+	# Tests need a live PostgreSQL instance and optional example-FDW modules.
+	true
+
+override_dh_auto_clean:
+	$(MAKE) clean || true
+	rm -rf build python/multicorn.egg-info .pybuild directories.stamp
+
+override_dh_auto_install:
+	+PYTHON=python3 PYTHON_OVERRIDE=python3 pg_buildext loop postgresql-%v-multicorn
+	rm -rf debian/postgresql-*-multicorn/usr/share/doc/postgresql-doc-*/
+	python3 setup.py install --root=$(CURDIR)/debian/python3-multicorn --install-layout=deb --no-compile
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_installdocs:
+	dh_installdocs --all README.md CHANGELOG

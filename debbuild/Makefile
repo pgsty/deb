@@ -280,6 +280,12 @@ pg_clickhouse:
 pg_orca:
 	cd pg_orca && make
 
+###############################################################
+#            Category: FDW  - Foreign Data Wrappers          #
+###############################################################
+multicorn:
+	cd multicorn && make
+
 
 ###############################################################
 #            Category: FEAT - Functionality                  #
