@@ -1,7 +1,7 @@
 # get documentdb source tarball
 # pig build get documentdb
 
-TARBALL=${1-'documentdb-0.112-0.tar.gz'}
+TARBALL=${1-'documentdb-0.113-0.tar.gz'}
 SOURCE=${SOURCE:-}
 
 if [ -z "${SOURCE}" ]; then

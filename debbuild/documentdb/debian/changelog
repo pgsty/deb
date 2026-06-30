@@ -1,3 +1,9 @@
+documentdb (0.113-0PIGSTY) unstable; urgency=medium
+
+  * Switch to upstream documentdb v0.113-0
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 30 Jun 2026 17:00:00 +0800
+
 documentdb (0.112-0PIGSTY) unstable; urgency=medium
 
   * Switch to upstream documentdb v0.112-0
