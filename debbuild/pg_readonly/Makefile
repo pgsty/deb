@@ -1,11 +1,15 @@
 all: setup build move
 
-TARBALL := pg_readonly-1.0.4.tar.gz
+TARBALL := pg_readonly-1.0.5.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 # prepare directory
-setup:
+setup: check-src
 	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
@@ -24,5 +28,4 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
-
+.PHONY: all check-src setup update build move clean ls
