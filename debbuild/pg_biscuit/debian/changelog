@@ -1,3 +1,10 @@
+pg-biscuit (2.4.1-1PIGSTY) unstable; urgency=medium
+
+  * Use upstream PGXN distribution 2.4.1.
+  * Keep upstream extension SQL/default version at 2.4.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 01 Jul 2026 18:06:59 +0800
+
 pg-biscuit (2.4.0-1PIGSTY) unstable; urgency=medium
 
   * Switch to upstream Biscuit 2.4.0.
