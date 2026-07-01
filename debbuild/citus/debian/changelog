@@ -1,3 +1,10 @@
+citus (14.1.0-1PIGSTY) unstable; urgency=low
+
+  * Update to upstream 14.1.0 with PostgreSQL 18 support.
+  * Use the system llvm-lto path for builder LLVM compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 01 Jul 2026 18:06:59 +0800
+
 citus (14.0.0-4PIGSTY) unstable; urgency=low
 
   * Rebuild release for latest packaging updates.
