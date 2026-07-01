@@ -1,3 +1,9 @@
+pgvector (0.8.4-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/pgvector/pgvector/releases/tag/v0.8.4
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 01 Jul 2026 18:06:59 +0800
+
 pgvector (0.8.3-1PIGSTY) unstable; urgency=medium
 
   * https://pgxn.org/dist/vector/0.8.3/
