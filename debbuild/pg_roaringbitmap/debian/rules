@@ -2,6 +2,7 @@
 
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
+export LLVM_BINPATH ?= $(shell p="$$(command -v llvm-config-20 || command -v llvm-config-19 || command -v llvm-config 2>/dev/null)"; test -n "$$p" && "$$p" --bindir)
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
