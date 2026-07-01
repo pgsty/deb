@@ -10,6 +10,7 @@ check-src:
 setup: check-src
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	sed -i "s/^default_version = '.*'/default_version = '1.0.5'/" build/pg_readonly.control
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \

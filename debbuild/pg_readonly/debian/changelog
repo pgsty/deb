@@ -1,6 +1,7 @@
 pg-readonly (1.0.5-1PIGSTY) unstable; urgency=medium
 
   * Bump to 1.0.5.
+  * Set extension default_version to 1.0.5 during build.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 30 Jun 2026 17:00:00 +0800
 
