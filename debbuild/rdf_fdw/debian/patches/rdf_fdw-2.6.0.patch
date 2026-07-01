@@ -1,0 +1,9 @@
+--- a/rdf_fdw.c
++++ b/rdf_fdw.c
+@@ -829,0 +830 @@
++#if LIBCURL_VERSION_NUM >= 0x074200
+@@ -831,0 +833,4 @@
++#elif defined(CURL_VERSION_HTTP2)
++	if (ver->features & CURL_VERSION_HTTP2)
++		appendStringInfoString(&buffer, "HTTP2,");
++#endif

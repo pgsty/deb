@@ -2,6 +2,7 @@
 
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
+export LLVM_BINPATH ?= $(shell p="$$(command -v llvm-config-20 || command -v llvm-config-19 || command -v llvm-config 2>/dev/null)"; test -n "$$p" && "$$p" --bindir)
 export DEB_BUILD_MAINT_OPTIONS = optimize=-lto
 export PG_CFLAGS += -fno-lto
 export PG_CXXFLAGS += -fno-lto

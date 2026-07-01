@@ -1,3 +1,13 @@
+rdf-fdw (2.6.0-1PIGSTY) unstable; urgency=medium
+
+  * Update rdf_fdw to upstream v2.6.0.
+  * Apply the 2.6.0 libcurl nghttp2 compatibility patch from RPM packaging.
+  * Use the system llvm-lto path for builder LLVM compatibility.
+  * Keep removing PGXS-installed README files from the shared
+    postgresql-doc-* path to avoid package file conflicts.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 01 Jul 2026 18:06:59 +0800
+
 rdf-fdw (2.5.0-1PIGSTY) unstable; urgency=medium
 
   * Update rdf_fdw to upstream v2.5.0.
