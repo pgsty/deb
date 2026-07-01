@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := plpgsql_check-2.9.1.tar.gz
+TARBALL := plpgsql_check-2.9.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

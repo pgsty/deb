@@ -1,3 +1,9 @@
+plpgsql-check (2.9.2-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 2.9.2.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 01 Jul 2026 18:06:59 +0800
+
 plpgsql-check (2.9.1-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 2.9.1.
