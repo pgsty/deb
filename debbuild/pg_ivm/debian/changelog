@@ -1,3 +1,9 @@
+pg-ivm (1.15-1PIGSTY) unstable; urgency=low
+
+  * https://github.com/sraoss/pg_ivm/releases/tag/v1.15
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 02 Jul 2026 00:00:00 +0000
+
 pg-ivm (1.14-1PIGSTY) unstable; urgency=low
 
   * https://github.com/sraoss/pg_ivm/releases/tag/v1.14
