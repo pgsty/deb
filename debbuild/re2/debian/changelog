@@ -1,3 +1,10 @@
+re2 (0.4.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 0.4.0.
+  * Add ICU build dependency for PostgreSQL 18 headers.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 05 Jul 2026 22:59:59 +0800
+
 re2 (0.3.0-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 0.3.0.
