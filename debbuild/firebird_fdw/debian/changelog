@@ -1,3 +1,10 @@
+firebird-fdw (1.4.2-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild firebird_fdw 1.4.2 against libfq 0.6.2
+  * Align the Firebird build dependency with RPM packaging
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 05 Jul 2026 22:30:00 +0800
+
 firebird-fdw (1.4.2-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/ibarwick/firebird_fdw/releases/tag/1.4.2

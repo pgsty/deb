@@ -1,3 +1,11 @@
+libfq (0.6.2-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/ibarwick/libfq/releases/tag/0.6.2
+  * Align the Firebird build dependency with RPM packaging
+  * Drop the libtool archive from the binary package
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 05 Jul 2026 20:57:00 +0800
+
 libfq (0.6.1-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
