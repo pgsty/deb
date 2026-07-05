@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgsql_tweaks-v1.0.3.tar.gz
+TARBALL := pgsql_tweaks-1.0.5.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
