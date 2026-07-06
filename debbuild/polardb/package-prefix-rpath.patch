@@ -1,0 +1,14 @@
+--- a/build.sh
++++ b/build.sh
+@@ -82 +82,2 @@
+-  configure_flag+=" --prefix=$base_dir --with-pgport=$port ${extra_configure_flag-}"
++  package_prefix="${POLAR_PACKAGE_PREFIX:-$base_dir}"
++  configure_flag+=" --prefix=$package_prefix --with-pgport=$port ${extra_configure_flag-}"
+@@ -251 +252 @@
+-export LDFLAGS="-Wl,-rpath,'\$\$ORIGIN/../lib:$base_dir/lib',--build-id=sha1 ${LDFLAGS-}"
++export LDFLAGS="-Wl,-rpath,'\$\$ORIGIN/../lib',--build-id=sha1 ${LDFLAGS-}"
+--- a/package/debian/build-deb.sh
++++ b/package/debian/build-deb.sh
+@@ -52 +52 @@
+-./build.sh --ec="--prefix=${buildroot}/${pkgname}${prefix} --with-pfsd" --debug=off --ni
++DESTDIR=${buildroot}/${pkgname} POLAR_PACKAGE_PREFIX=${prefix} ./build.sh --ec="--with-pfsd" --debug=off --ni

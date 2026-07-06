@@ -49,6 +49,7 @@ setup: check-src
 	sed -i.bak -e 's|^Package: .*|Package: $(DEB_PACKAGE)|' $(BUILD_DIR)/package/debian/control
 	sed -i.bak -e 's,libicu76,libicu76 | libicu78,' $(BUILD_DIR)/package/debian/control
 	rm -f $(BUILD_DIR)/package/debian/control.bak
+	patch -d $(BUILD_DIR) -p1 < package-prefix-rpath.patch
 	awk '1; /  \.\/configure \$$configure_flag$$/ { print "  (cd src/backend && MAKELEVEL=0 make submake-generated-headers)" }' $(BUILD_DIR)/build.sh > $(BUILD_DIR)/build.sh.new
 	mv $(BUILD_DIR)/build.sh.new $(BUILD_DIR)/build.sh
 	chmod +x $(BUILD_DIR)/build.sh
