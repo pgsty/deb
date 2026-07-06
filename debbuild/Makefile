@@ -949,53 +949,33 @@ logical_ddl:
 ###############################################################
 openhalodb:
 	cd openhalodb && make
-oriolepg: oriolepg_18
-orioledb:
-	cd orioledb && make
-oriole: oriole_18
-oriolepg_16:
-	cd oriolepg_16 && make
-oriolepg_install_16:
-	sudo apt-get remove -y oriolepg-16 || /bin/true
-	sudo dpkg -i $$(ls -1t $(HOME)/ext/pkg/oriolepg-16_*_$$(dpkg --print-architecture).deb | head -n 1)
-orioledb_16:
-	cd orioledb && make build16
-oriole_16:
-	$(MAKE) oriolepg_16
-	$(MAKE) oriolepg_install_16
-	$(MAKE) orioledb_16
-oriolepg_17:
-	cd oriolepg_17 && make
-oriolepg_install_17:
-	sudo apt-get remove -y oriolepg-17 || /bin/true
-	sudo dpkg -i $$(ls -1t $(HOME)/ext/pkg/oriolepg-17_*_$$(dpkg --print-architecture).deb | head -n 1)
-orioledb_17:
-	cd orioledb && make build17
-oriole_17:
-	$(MAKE) oriolepg_17
-	$(MAKE) oriolepg_install_17
-	$(MAKE) orioledb_17
-oriolepg_18:
-	cd oriolepg_18 && make
-oriolepg_install_18:
-	sudo apt-get remove -y oriolepg-18 || /bin/true
-	sudo dpkg -i $$(ls -1t $(HOME)/ext/pkg/oriolepg-18_*_$$(dpkg --print-architecture).deb | head -n 1)
-orioledb_18:
-	cd orioledb && make build18
-oriole_18:
-	$(MAKE) oriolepg_18
-	$(MAKE) oriolepg_install_18
-	$(MAKE) orioledb_18
-oriole_all:
-	$(MAKE) oriole_16
-	$(MAKE) oriole_17
-	$(MAKE) oriole_18
+
+ivorysql: ivorysql-18
+ivorysql-18:
+	cd ivorysql && make PG_MAJOR=18
+
+orioledb: orioledb-18
+oriole: orioledb
+orioledb-16:
+	cd orioledb && make orioledb-16
+oriole_16: orioledb-16
+orioledb-17:
+	cd orioledb && make orioledb-17
+oriole_17: orioledb-17
+orioledb-18:
+	cd orioledb && make orioledb-18
+oriole_18: orioledb-18
+orioledb-all:
+	cd orioledb && make orioledb-all
+oriole_all: orioledb-all
 antlr4:
 	cd antlr4_runtime413 && make
-babelfishpg_17:
-	cd babelfishpg_17 && make
-babelfish:
-	cd babelfish && make
+
+babelfish: babelfish-17
+babelfish-18:
+	cd babelfish && make PG_MAJOR=18 PG_VERSION=18.3 BBF_VERSION=6.0.0
+babelfish-17:
+	cd babelfish && make PG_MAJOR=17 PG_VERSION=17.7 BBF_VERSION=5.4.0
 cloudberry:
 	cd cloudberry && make
 cloudberry-backup:
@@ -1006,23 +986,16 @@ polardb:
 	cd polardb && make
 agensgraph:
 	cd agensgraph && make
-pgedge:
-	cd pgedge && make
-pgedge-install:
-	apt-get remove -y pgedge-18 || /bin/true
-	apt-get install -y ./pgedge/pgedge-18_*.deb
-spock:
-	cd spock && make
-snowflake:
-	cd snowflake && make
-lolor:
-	cd lolor && make
-pgedge-all:
-	cd pgedge && make
-	$(MAKE) pgedge-install
-	cd spock && make
-	cd snowflake && make
-	cd lolor && make
+
+pgedge: pgedge-18
+pgedge-15:
+	cd pgedge && make PG_MAJOR=15
+pgedge-16:
+	cd pgedge && make PG_MAJOR=16
+pgedge-17:
+	cd pgedge && make PG_MAJOR=17
+pgedge-18:
+	cd pgedge && make PG_MAJOR=18
 
 ###############################################################
 #                        1. Building                          #
@@ -1060,5 +1033,5 @@ collect:
 	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback plpgsql_wrap spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto re2 rdf_fdw ulak \
 	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
-	openhalodb oriole oriole_16 oriole_17 oriole_18 oriole_all oriolepg orioledb oriolepg_16 oriolepg_17 oriolepg_18 oriolepg_install_16 oriolepg_install_17 oriolepg_install_18 orioledb_16 orioledb_17 orioledb_18 antlr4 babelfishpg_17 babelfish cloudberry cloudberry-backup cloudberry-pxf polardb agensgraph inchi \
-	pgedge pgedge-install pgedge-all spock snowflake lolor
+	openhalodb ivorysql ivorysql-18 oriole oriole_16 oriole_17 oriole_18 oriole_all orioledb orioledb-16 orioledb-17 orioledb-18 orioledb-all antlr4 babelfish babelfish-17 babelfish-18 cloudberry cloudberry-backup cloudberry-pxf polardb agensgraph inchi \
+	pgedge-15 pgedge-16 pgedge-17 pgedge-18
