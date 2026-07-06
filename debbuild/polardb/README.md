@@ -53,15 +53,20 @@ The source tarball is prepared like an upstream checkout after
 `src/backend submake-generated-headers` step used by the other kernel recipes
 before `install-world-bin`.
 
-Upstream builds with `--with-pfsd`. The PFSD SDK is not in this repository; it
-is provided by the official build images under:
+Upstream builds with `--with-pfsd`. The PFSD SDK is provided by the Pigsty
+`polarstore` dependency package under the upstream SDK path:
 
 ```text
 /usr/local/polarstore/pfsd
 ```
 
-For Pigsty U26 builders, copy that directory from the matching architecture of
-`polardb/polardb_pg_devel:ubuntu24.04` before running `make`.
+Build and install `polarstore` before building `polardb` when the package
+is not already available from the active APT repository:
+
+```bash
+pig build pkg polarstore
+dpkg -i ~/ext/pkg/polarstore_*.deb
+```
 
 The official full-feature build also needs the normal PostgreSQL kernel build
 dependencies. On a plain Debian/Ubuntu builder, make sure these packages are

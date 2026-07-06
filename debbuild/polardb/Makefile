@@ -18,7 +18,7 @@ check-src:
 
 check-pfsd-sdk:
 	@test -f /usr/local/polarstore/pfsd/include/pfsd_sdk.h -a -f /usr/local/polarstore/pfsd/lib/libpfsd.a || \
-		(echo "missing PFSD SDK at /usr/local/polarstore/pfsd; copy it from polardb/polardb_pg_devel:<base_image> before building"; exit 1)
+		(echo "missing PFSD SDK at /usr/local/polarstore/pfsd; install polarstore before building"; exit 1)
 
 check-build-deps:
 	@test -n "$(CLANG)" || (echo "missing clang; install clang/llvm for this distro"; exit 1)
