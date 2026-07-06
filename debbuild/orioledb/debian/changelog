@@ -1,3 +1,10 @@
+orioledb-18 (1.8-0.beta16PIGSTY) unstable; urgency=medium
+
+  * Merge the OriolePG kernel and OrioleDB extension into bundled packages.
+  * Rename package output to orioledb-PGMAJOR.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 06 Jul 2026 00:00:00 +0000
+
 oriolepg-18-orioledb (1.8-0.beta16PIGSTY) unstable; urgency=medium
 
   * OrioleDB 1.8 beta16 on patched PostgreSQL 18.1

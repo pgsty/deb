@@ -1,37 +1,72 @@
 #!/usr/bin/make -f
 
-include /usr/share/postgresql-common/pgxs_debian_control.mk
+export DH_VERBOSE=1
+PG_MAJOR ?= 18
+PGBASEINSTDIR := /usr/oriole-$(PG_MAJOR)
+DEB_PACKAGE := orioledb-$(PG_MAJOR)
+ORIOLEDB_PATCHSET_VERSION ?= 1
+ORIOLEDB_VERSION ?= 1.8
+ORIOLEDB_BETA ?= beta16
 
-PG_MAJOR ?= 17
-ORIOLEPG_PREFIX ?= /usr/oriole-$(PG_MAJOR)
-ORIOLEDB_PATCHSET_VERSION ?= 20
+# Filter out -ffast-math which is known to cause precision issues
+export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
+export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
 
-# Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
-export CC = gcc
-export PATH := $(ORIOLEPG_PREFIX)/bin:$(PATH)
-export PG_CONFIG = $(ORIOLEPG_PREFIX)/bin/pg_config
-export ORIOLEDB_PATCHSET_VERSION
-export USE_PGXS=1
+%:
+	dh $@ --without autoreconf
 
-override_dh_shlibdeps:
-	dh_shlibdeps -l$(ORIOLEPG_PREFIX)/lib
+override_dh_auto_clean:
 
 override_dh_auto_configure:
+	./configure \
+		--enable-rpath \
+		--prefix=$(PGBASEINSTDIR) \
+		--includedir=$(PGBASEINSTDIR)/include \
+		--mandir=$(PGBASEINSTDIR)/share/man \
+		--datadir=$(PGBASEINSTDIR)/share \
+		--libdir=$(PGBASEINSTDIR)/lib \
+		--docdir=$(PGBASEINSTDIR)/doc \
+		--htmldir=$(PGBASEINSTDIR)/doc/html \
+		--with-system-tzdata=/usr/share/zoneinfo \
+		--with-extra-version=" (OrioleDB $(ORIOLEDB_VERSION)-$(ORIOLEDB_BETA))" \
+			--with-lz4 --with-zstd \
+			--with-uuid=e2fs --with-libxml --with-libxslt \
+			--with-icu --without-llvm \
+			--with-python --with-tcl \
+			--with-openssl --with-pam --with-ldap \
+			--with-selinux --with-systemd \
+			--with-includes=/usr/include \
+			--enable-nls --enable-dtrace
 
 override_dh_auto_build:
-	dh_auto_build -- ORIOLEDB_PATCHSET_VERSION=$(ORIOLEDB_PATCHSET_VERSION)
+	# Source tarball lacks .git metadata; pin patchset version for contrib/orioledb.
+	sed -E -i 's|^ORIOLEDB_PATCHSET_VERSION =.*|ORIOLEDB_PATCHSET_VERSION = $(ORIOLEDB_PATCHSET_VERSION)|' src/Makefile.global
+	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
+	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
 
-#override_dh_auto_clean:
+override_dh_auto_install:
+	$(MAKE) DESTDIR=$(CURDIR)/debian/$(DEB_PACKAGE) install-world-bin
+	for library in $(CURDIR)/debian/$(DEB_PACKAGE)$(PGBASEINSTDIR)/lib/postgresql/*plpython3*.so; do \
+		[ -e "$$library" ] && chrpath -d "$$library" || :; \
+	done
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l$(CURDIR)/debian/$(DEB_PACKAGE)$(PGBASEINSTDIR)/lib
+
+override_dh_auto_test:
+	:
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
-override_dh_auto_test:
+override_dh_dwz:
+	:
 
-#override_dh_auto_install:
+override_dh_makeshlibs:
+	:
 
-override_dh_installdocs:
-	dh_installdocs --all README.*
+override_dh_installinit:
+	:
 
-%:
-	dh $@
+override_dh_installsystemd:
+	:

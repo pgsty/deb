@@ -2,15 +2,52 @@ Source: @SOURCE_PACKAGE@
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), @ORIOLEPG_PACKAGE@ (>= @ORIOLEPG_VERSION@), @ORIOLEPG_PACKAGE@ (<< @ORIOLEPG_NEXT_VERSION@), libcurl4-openssl-dev (>= 7), libzstd-dev, libssl-dev
+Build-Depends:
+ autoconf,
+ bison,
+ chrpath,
+ debhelper-compat (= 13),
+ docbook-xml,
+ docbook-xsl (>= 1.77),
+ dpkg-dev (>= 1.16~),
+ flex,
+ gettext,
+ libcurl4-openssl-dev (>= 7),
+ libicu-dev,
+ libldap2-dev,
+ liblz4-dev,
+ libpam0g-dev,
+ libreadline-dev,
+ libselinux1-dev [linux-any],
+ libssl-dev,
+ libsystemd-dev [linux-any],
+ libxml2-dev,
+ libxml2-utils,
+ libxslt1-dev,
+ libzstd-dev,
+ mawk,
+ patch,
+ perl (>= 5.8),
+ pkgconf,
+ python3-dev,
+ systemtap-sdt-dev,
+ tcl-dev,
+ tzdata,
+ uuid-dev,
+ xsltproc,
+ zlib1g-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/orioledb/orioledb
 
-Package: @SOURCE_PACKAGE@
+Package: @PACKAGE@
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, @ORIOLEPG_PACKAGE@ (>= @ORIOLEPG_VERSION@), @ORIOLEPG_PACKAGE@ (<< @ORIOLEPG_NEXT_VERSION@)
-Description: Modern cloud-native storage engine extension for patched PostgreSQL
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata
+Description: OrioleDB PostgreSQL @PG_MAJOR@ kernel with bundled storage engine extension
  OrioleDB is a new storage engine for PostgreSQL, bringing a modern approach
- to database capacity, capabilities and performance to the world's most-loved database platform.
- This extension works on patched version (@PATCHSET_LABEL@) of PostgreSQL @PG_UPSTREAM_VERSION@.
+ to database capacity, capabilities and performance to the world's most-loved
+ database platform.
+ .
+ This package bundles the patched PostgreSQL @PG_MAJOR@ kernel and OrioleDB
+ extension under /usr/oriole-@PG_MAJOR@. It is based on patched version
+ (@PATCHSET_LABEL@) of PostgreSQL @PG_UPSTREAM_VERSION@.
