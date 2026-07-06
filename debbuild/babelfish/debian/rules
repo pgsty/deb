@@ -2,14 +2,34 @@
 
 export DH_VERBOSE=1
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-export PATH := /usr/babelfish-17/bin:$(PATH)
-export PG_CONFIG := /usr/babelfish-17/bin/pg_config
-export PG_SRC := $(CURDIR)/postgresql_modified_for_babelfish
+
+PG_MAJOR := @PG_MAJOR@
+PREFIX := /usr/babelfish-$(PG_MAJOR)
+BUILDSTAGE := $(CURDIR)/debian/stage
+PREFIX_MAP := -ffile-prefix-map=$(BUILDSTAGE)=$(PREFIX) -ffile-prefix-map=$(CURDIR)=.
+
 export cmake := /usr/bin/cmake
 export ANTLR4_JAVA_BIN := /usr/bin/java
-export PG_CXXFLAGS := -Wno-error=overloaded-virtual
-export PG_CFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow
-export CFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow
+export ANTLR4_RUNTIME_INCLUDE_DIR := /usr/include/antlr4-runtime
+export ANTLR4_RUNTIME_LIB_DIR := /usr/lib/$(DEB_HOST_MULTIARCH)
+export ANTLR4_RUNTIME_LIB := -lantlr4-runtime
+
+export CFLAGS := $(shell dpkg-buildflags --get CFLAGS | tr ' ' '\n' | grep -v '^-ffast-math$$' | xargs) $(PREFIX_MAP) -Wno-error=date-time -Wno-error=stringop-overflow
+export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS | tr ' ' '\n' | grep -v '^-ffast-math$$' | xargs) $(PREFIX_MAP)
+export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+export PG_CFLAGS := $(PREFIX_MAP) -Wno-error=date-time -Wno-error=stringop-overflow
+export PG_CXXFLAGS := $(PREFIX_MAP) -Wno-error=overloaded-virtual
+CC_FOR_FLAG_CHECK := $(if $(CC),$(CC),cc)
+CC_SUPPORTS_MISSING_VARIABLE_DECLARATIONS := $(shell printf 'int x;' | $(CC_FOR_FLAG_CHECK) -x c -Werror=missing-variable-declarations -c -o /dev/null - >/dev/null 2>&1 && echo yes)
+
+ifeq ($(PG_MAJOR),18)
+export CFLAGS += -DHAVE_OPENSSL_INIT_SSL -DHAVE_BIO_METH_NEW
+export PG_CFLAGS += -DHAVE_OPENSSL_INIT_SSL -DHAVE_BIO_METH_NEW
+ifeq ($(CC_SUPPORTS_MISSING_VARIABLE_DECLARATIONS),yes)
+export CFLAGS += -Wno-error=missing-variable-declarations
+export PG_CFLAGS += -Wno-error=missing-variable-declarations
+endif
+endif
 
 OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
 ifeq ($(OS_CODENAME),resolute)
@@ -17,50 +37,133 @@ export PG_CFLAGS += -Wno-error=discarded-qualifiers
 export CFLAGS += -Wno-error=discarded-qualifiers
 endif
 
-ANTLR4_RUNTIME_INCLUDE_DIR := /usr/include/antlr4-runtime
-ANTLR4_RUNTIME_LIB_DIR := /usr/lib/$(DEB_HOST_MULTIARCH)
-ANTLR4_RUNTIME_LIB := -lantlr4-runtime
-
 %:
-	dh $@
+	dh $@ --without autoreconf
 
 override_dh_auto_clean:
 	for ext in babelfishpg_money babelfishpg_common babelfishpg_tds babelfishpg_tsql; do \
 		$(MAKE) -C contrib/$$ext clean || true; \
 	done
+	rm -rf $(BUILDSTAGE) debian/bbf-pg_config
+
+override_dh_auto_configure:
+	./configure \
+		--enable-rpath \
+		--prefix=$(PREFIX) \
+		--includedir=$(PREFIX)/include \
+		--mandir=$(PREFIX)/share/man \
+		--datadir=$(PREFIX)/share \
+		--libdir=$(PREFIX)/lib \
+		--docdir=$(PREFIX)/doc \
+		--htmldir=$(PREFIX)/doc/html \
+		--with-system-tzdata=/usr/share/zoneinfo \
+		--with-lz4 \
+		--with-zstd \
+		--with-uuid=e2fs \
+		--with-libxml \
+		--with-libxslt \
+		--with-icu \
+		--without-llvm \
+		--with-python \
+		--with-tcl \
+		--with-openssl \
+		--with-pam \
+		--with-ldap \
+		--with-selinux \
+		--with-systemd \
+		--with-includes=/usr/include \
+		--with-libraries=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		--enable-nls \
+		--enable-dtrace
 
 override_dh_auto_build:
+	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
+	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
+	rm -rf $(BUILDSTAGE)
+	MAKELEVEL=0 $(MAKE) DESTDIR=$(BUILDSTAGE) install-world-bin
+	{ \
+		echo '#!/usr/bin/env bash'; \
+		echo 'set -euo pipefail'; \
+		echo 'real="$(BUILDSTAGE)$(PREFIX)/bin/pg_config"'; \
+		echo 'stage="$(BUILDSTAGE)"'; \
+		echo 'prefix="$(PREFIX)"'; \
+		echo ''; \
+		echo 'if [[ $$# -ne 1 ]]; then'; \
+		echo '  exec "$${real}" "$$@"'; \
+		echo 'fi'; \
+		echo ''; \
+		echo 'case "$$1" in'; \
+		echo '  --bindir|--docdir|--htmldir|--includedir|--includedir-server|--sharedir|--sysconfdir|--pgxs)'; \
+			echo '    out=`"$${real}" "$$1"`'; \
+		echo '    case "$${out}" in'; \
+		echo '      "$${prefix}"*) printf "%s%s\n" "$${stage}" "$${out}" ;;'; \
+		echo '      *) printf "%s\n" "$${out}" ;;'; \
+		echo '    esac'; \
+		echo '    ;;'; \
+		echo '  --libdir|--pkglibdir)'; \
+			echo '    out=`"$${real}" "$$1"`'; \
+		echo '    case "$${out}" in'; \
+		echo '      "$${stage}$${prefix}"*) printf "%s%s\n" "$${prefix}" "$${out#"$${stage}$${prefix}"}" ;;'; \
+		echo '      *) printf "%s\n" "$${out}" ;;'; \
+		echo '    esac'; \
+		echo '    ;;'; \
+		echo '  *) exec "$${real}" "$$1" ;;'; \
+		echo 'esac'; \
+	} > debian/bbf-pg_config
+	chmod +x debian/bbf-pg_config
 	sed -i 's#SET (MYDIR /usr/local/include/antlr4-runtime/)#SET (MYDIR $(ANTLR4_RUNTIME_INCLUDE_DIR)/)#' \
 		contrib/babelfishpg_tsql/antlr/CMakeLists.txt
+	sed -i 's#^export ANTLR4_RUNTIME_INCLUDE_DIR=.*#export ANTLR4_RUNTIME_INCLUDE_DIR=$(ANTLR4_RUNTIME_INCLUDE_DIR)#' \
+		contrib/babelfishpg_tsql/Makefile
+	sed -i 's#^export ANTLR4_RUNTIME_LIB_DIR=.*#export ANTLR4_RUNTIME_LIB_DIR=$(ANTLR4_RUNTIME_LIB_DIR)#' \
+		contrib/babelfishpg_tsql/Makefile
+	cp debian/fault_injection_stub.c contrib/babelfishpg_tds/src/backend/fault_injection/fault_injection_stub.c
+	if [ -f contrib/babelfishpg_tds/src/backend/fault_injection/fault_injection_tests.c ]; then \
+		mv contrib/babelfishpg_tds/src/backend/fault_injection/fault_injection_tests.c \
+			contrib/babelfishpg_tds/src/backend/fault_injection/fault_injection_tests.c.disabled; \
+	fi
 	set -e; \
-	$(MAKE) -C contrib/babelfishpg_money; \
-	$(MAKE) -C contrib/babelfishpg_common; \
-	$(MAKE) -C contrib/babelfishpg_tds; \
-	$(MAKE) -C contrib/babelfishpg_tsql \
-		cmake=$(cmake) \
-		ANTLR4_JAVA_BIN=$(ANTLR4_JAVA_BIN) \
-		ANTLR4_RUNTIME_INCLUDE_DIR=$(ANTLR4_RUNTIME_INCLUDE_DIR) \
-		ANTLR4_RUNTIME_LIB_DIR=$(ANTLR4_RUNTIME_LIB_DIR) \
-		ANTLR4_RUNTIME_LIB=$(ANTLR4_RUNTIME_LIB)
+	export PATH=$(CURDIR)/debian:$(BUILDSTAGE)$(PREFIX)/bin:$$PATH; \
+	export PG_CONFIG=$(CURDIR)/debian/bbf-pg_config; \
+	export PG_SRC=$(CURDIR); \
+	$(MAKE) -C contrib/babelfishpg_money with_llvm=no; \
+	$(MAKE) -C contrib/babelfishpg_common with_llvm=no; \
+	$(MAKE) -C contrib/babelfishpg_tds with_llvm=no; \
+	$(MAKE) -C contrib/babelfishpg_tsql antlr/libantlr_tsql.a cmake=$(cmake) with_llvm=no; \
+	if [ ! -d contrib/babelfishpg_tsql/antlr/antlr4cpp_generated_src/TSqlLexer ]; then \
+		mkdir -p contrib/babelfishpg_tsql/antlr/antlr4cpp_generated_src; \
+		cp -a contrib/babelfishpg_tsql/antlr/CMakeFiles/antlr_tsql.dir/antlr4cpp_generated_src/TSqlLexer \
+			contrib/babelfishpg_tsql/antlr/CMakeFiles/antlr_tsql.dir/antlr4cpp_generated_src/TSqlParser \
+			contrib/babelfishpg_tsql/antlr/antlr4cpp_generated_src/; \
+	fi; \
+	$(MAKE) -C contrib/babelfishpg_tsql cmake=$(cmake) with_llvm=no
 
 override_dh_auto_install:
+	MAKELEVEL=0 $(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world-bin
 	set -e; \
-	$(MAKE) -C contrib/babelfishpg_money DESTDIR=$(CURDIR)/debian/tmp install; \
-	$(MAKE) -C contrib/babelfishpg_common DESTDIR=$(CURDIR)/debian/tmp install; \
-	$(MAKE) -C contrib/babelfishpg_tds DESTDIR=$(CURDIR)/debian/tmp install; \
-	$(MAKE) -C contrib/babelfishpg_tsql \
-		cmake=$(cmake) \
-		ANTLR4_JAVA_BIN=$(ANTLR4_JAVA_BIN) \
-		ANTLR4_RUNTIME_INCLUDE_DIR=$(ANTLR4_RUNTIME_INCLUDE_DIR) \
-		ANTLR4_RUNTIME_LIB_DIR=$(ANTLR4_RUNTIME_LIB_DIR) \
-		ANTLR4_RUNTIME_LIB=$(ANTLR4_RUNTIME_LIB) \
-		DESTDIR=$(CURDIR)/debian/tmp install
+	export PATH=$(CURDIR)/debian:$(BUILDSTAGE)$(PREFIX)/bin:$$PATH; \
+	export PG_CONFIG=$(CURDIR)/debian/bbf-pg_config; \
+	export PG_SRC=$(CURDIR); \
+	$(MAKE) -C contrib/babelfishpg_money install with_llvm=no DESTDIR=$(CURDIR)/debian/tmp \
+		pkglibdir=$(PREFIX)/lib/postgresql datadir=$(PREFIX)/share/postgresql; \
+	$(MAKE) -C contrib/babelfishpg_common install with_llvm=no DESTDIR=$(CURDIR)/debian/tmp \
+		pkglibdir=$(PREFIX)/lib/postgresql datadir=$(PREFIX)/share/postgresql; \
+	$(MAKE) -C contrib/babelfishpg_tsql install with_llvm=no DESTDIR=$(CURDIR)/debian/tmp \
+		pkglibdir=$(PREFIX)/lib/postgresql datadir=$(PREFIX)/share/postgresql; \
+	$(MAKE) -C contrib/babelfishpg_tds install with_llvm=no DESTDIR=$(CURDIR)/debian/tmp \
+		pkglibdir=$(PREFIX)/lib/postgresql datadir=$(PREFIX)/share/postgresql
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l/usr/babelfish-17/lib
+	dh_shlibdeps -l$(PREFIX)/lib -l$(PREFIX)/lib/postgresql
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_test:
+	:
+
+override_dh_installinit:
+	:
+
+override_dh_installsystemd:
 	:

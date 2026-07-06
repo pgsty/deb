@@ -1,65 +1,59 @@
-all: chain
+all: setup build move
 
-TARBALL := babelfishpg-17.8-5.5.0.tar.gz
-PKGDIR := $(HOME)/ext/pkg
-CORE_DEB = $(shell ls -1t $(PKGDIR)/babelfishpg-17_*.deb 2>/dev/null | head -n 1)
-ANTLR_DEB = $(shell ls -1t $(PKGDIR)/libantlr4-runtime413_*.deb 2>/dev/null | head -n 1)
-ANTLR_DEV_DEB = $(shell ls -1t $(PKGDIR)/libantlr4-runtime413-dev_*.deb 2>/dev/null | head -n 1)
+PG_MAJOR ?= 17
+PG_VERSION ?= 17.7
+BBF_VERSION ?= 5.4.0
+DEB_VERSION ?= $(BBF_VERSION)-1PIGSTY
+TARBALL := babelfish-$(PG_MAJOR)-$(PG_VERSION)-$(BBF_VERSION).tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+BUILD_DIR := build
 
-chain: build-pg build-antlr install-prereq setup build move
+build17:
+	$(MAKE) PG_MAJOR=17 PG_VERSION=17.7 BBF_VERSION=5.4.0
 
-build-pg:
-	$(MAKE) -C ../babelfishpg_17
+build18:
+	$(MAKE) PG_MAJOR=18 PG_VERSION=18.3 BBF_VERSION=6.0.0
 
-build-antlr:
-	$(MAKE) -C ../antlr4_runtime413
-
-install-prereq:
-	@if [ -z "$(CORE_DEB)" ] || [ -z "$(ANTLR_DEB)" ] || [ -z "$(ANTLR_DEV_DEB)" ]; then \
-		echo "missing prerequisite debs under $(PKGDIR)"; \
-		ls -l $(PKGDIR) || true; \
-		exit 1; \
-	fi
-	@SUDO=$$( [ "$$(id -u)" -eq 0 ] && echo "" || echo "sudo" ); \
-	APT="$$SUDO apt-get -o DPkg::Lock::Timeout=600"; \
-	SYS_ANTLR_PKGS="$$(dpkg-query -W -f='$${Package}\n' 'antlr4' 'libantlr4-runtime*' 2>/dev/null | tr '\n' ' ')"; \
-	if [ -n "$$SYS_ANTLR_PKGS" ]; then \
-		$$APT -y purge $$SYS_ANTLR_PKGS || true; \
-		$$APT -y autoremove || true; \
-	fi; \
-	$$APT -y install "$(ANTLR_DEB)" "$(ANTLR_DEV_DEB)"; \
-	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	if [ "$$OS_CODENAME" = "resolute" ]; then \
-		$$APT -y install --reinstall "$(CORE_DEB)"; \
-	else \
-		$$APT -y install "$(CORE_DEB)"; \
-	fi; \
-	if [ "$$OS_CODENAME" = "resolute" ] && ! command -v java >/dev/null 2>&1; then \
-		$$APT -y install openjdk-21-jre-headless || $$APT -y install default-jre-headless; \
-	fi
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get babelfish-$(PG_MAJOR) first"; exit 1)
 
 # prepare directory
-setup:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	cp -a build/babelfish_extensions/. build/
-	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog; \
+setup: check-src
+	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf $(SOURCE_TARBALL)
+	mkdir -p $(BUILD_DIR)/buildsrc/contrib
+	cp -a $(BUILD_DIR)/postgresql_modified_for_babelfish/. $(BUILD_DIR)/buildsrc/
+	for ext in babelfishpg_money babelfishpg_common babelfishpg_tsql babelfishpg_tds; do \
+		cp -a $(BUILD_DIR)/babelfish_extensions/contrib/$$ext $(BUILD_DIR)/buildsrc/contrib/; \
+	done
+	rm -rf $(BUILD_DIR)/buildsrc/debian; cp -r debian $(BUILD_DIR)/buildsrc/debian
+	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || true); \
+	if [ -z "$$OS_CODENAME" ] && [ -r /etc/os-release ]; then \
+		. /etc/os-release; \
+		OS_CODENAME=$${VERSION_CODENAME:-$${UBUNTU_CODENAME:-}}; \
+	fi; \
+	OS_CODENAME=$${OS_CODENAME:-unknown}; \
+	perl -pi -e "s/\\@PG_MAJOR\\@/$(PG_MAJOR)/g; s/\\@PG_VERSION\\@/$(PG_VERSION)/g; s/\\@BBF_VERSION\\@/$(BBF_VERSION)/g; s/\\@DEB_VERSION\\@/$(DEB_VERSION)~$${OS_CODENAME}/g" \
+		$(BUILD_DIR)/buildsrc/debian/control \
+		$(BUILD_DIR)/buildsrc/debian/changelog \
+		$(BUILD_DIR)/buildsrc/debian/install \
+		$(BUILD_DIR)/buildsrc/debian/rules; \
 	if [ "$$OS_CODENAME" = "resolute" ]; then \
-		sed -i 's/char[[:space:]]*\*pos;/const char *pos;/' build/contrib/babelfishpg_tds/src/backend/tds/tdsrpc.c; \
+		perl -pi -e 's/typedef bool \(\*pltsql_is_partitioned_table_reloptions_allowed_hook_type\)\(\);/typedef bool (*pltsql_is_partitioned_table_reloptions_allowed_hook_type)(Datum reloptions);/g' \
+			$(BUILD_DIR)/buildsrc/src/include/access/reloptions.h; \
+		perl -pi -e 's/char[[:space:]]*\*pos;/const char *pos;/' $(BUILD_DIR)/buildsrc/contrib/babelfishpg_tds/src/backend/tds/tdsrpc.c; \
 	fi
 
 # building deb
 build:
-	cd build && dpkg-buildpackage -b -us -uc
+	cd $(BUILD_DIR)/buildsrc && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg && cp $(BUILD_DIR)/*.deb ~/ext/pkg/
 
 # remove building artifacts
 clean:
-	rm -rf *.buildinfo *.changes *.ddeb *.deb
+	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all chain build-pg build-antlr install-prereq setup update build move clean ls
+.PHONY: all build17 build18 check-src setup update build move clean ls

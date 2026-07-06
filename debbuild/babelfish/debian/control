@@ -1,27 +1,55 @@
-Source: babelfishpg-17-babelfish
+Source: babelfish-@PG_MAJOR@
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends:
- babelfishpg-17 (>= 17.8),
+ autoconf,
  bison,
+ clang,
  cmake,
  debhelper-compat (= 13),
+ dh-exec (>= 0.13~),
+ docbook-xml,
+ docbook-xsl (>= 1.77),
+ dpkg-dev (>= 1.16~),
  flex,
+ gettext,
  libantlr4-runtime413-dev (>= 4.13.2),
  libicu-dev,
+ libkrb5-dev,
+ libldap2-dev,
+ liblz4-dev,
+ libpam0g-dev,
+ libperl-dev,
+ libreadline-dev,
+ libselinux1-dev [linux-any],
  libssl-dev,
+ libsystemd-dev [linux-any],
+ libxml2-dev,
+ libxml2-utils,
+ libxslt1-dev,
+ libzstd-dev,
+ llvm,
+ llvm-dev,
+ mawk,
  perl,
  pkgconf,
+ python3-dev,
+ systemtap-sdt-dev,
+ tcl-dev,
+ tzdata,
+ uuid-dev,
+ xsltproc,
  zlib1g-dev,
- openjdk-21-jre | default-jre-headless
+ openjdk-21-jre-headless | default-jre-headless
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/babelfish-for-postgresql/babelfish_extensions
+Homepage: https://github.com/babelfish-for-postgresql
 
-Package: babelfishpg-17-babelfish
+Package: babelfish-@PG_MAJOR@
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, babelfishpg-17 (>= 17.8), libantlr4-runtime413 (>= 4.13.2)
-Description: Babelfish extensions for babelfishpg-17
- This package provides four core Babelfish extensions:
- babelfishpg_money, babelfishpg_common, babelfishpg_tds, babelfishpg_tsql.
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata, ssl-cert, libantlr4-runtime413 (>= 4.13.2)
+Description: Babelfish PostgreSQL kernel and extensions for PG @PG_MAJOR@
+ This package ships Babelfish patched PostgreSQL @PG_VERSION@ under
+ /usr/babelfish-@PG_MAJOR@ and includes the core Babelfish extension payload:
+ babelfishpg_money, babelfishpg_common, babelfishpg_tds, and babelfishpg_tsql.
