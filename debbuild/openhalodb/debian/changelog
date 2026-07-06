@@ -1,3 +1,12 @@
+openhalodb (1.0.0-2PIGSTY) unstable; urgency=medium
+
+  * Promote openhalodb to the formal 1.0 release packaging.
+  * Accept the resolute libselinux-dev build dependency name.
+  * Disable LLVM/JIT to match RPM packaging.
+  * Align GSSAPI support and strip non-private RUNPATH entries.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 06 Jul 2026 10:00:00 +0000
+
 openhalodb (1.0-beta1PIGSTY) unstable; urgency=medium
 
   * Switch to upstream openhalodb-1.0 source tarball.

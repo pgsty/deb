@@ -25,9 +25,9 @@ override_dh_auto_configure:
 		--with-system-tzdata=/usr/share/zoneinfo \
 		--with-lz4 --with-zstd \
 		--with-uuid=e2fs --with-libxml --with-libxslt \
-		--with-icu --with-llvm \
+		--with-icu --without-llvm \
 		--with-python --with-tcl \
-		--with-openssl --with-pam --with-ldap \
+		--with-openssl --with-pam --with-gssapi --with-ldap \
 		--with-selinux --with-systemd \
 		--with-includes=/usr/include \
 		--with-libraries=/usr/lib \
@@ -46,6 +46,41 @@ override_dh_auto_build:
 
 override_dh_auto_install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world-bin
+	allowed_runpath="$(PGBASEINSTDIR)/lib"; \
+	runpath_files=$$(mktemp); \
+	find "$(CURDIR)/debian/tmp$(PGBASEINSTDIR)" -type f > "$$runpath_files"; \
+	while IFS= read -r f; do \
+		runpath=$$(readelf -d "$$f" 2>/dev/null | sed -n 's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
+		[ -n "$$runpath" ] || continue; \
+		clean_runpath=""; \
+		old_ifs=$$IFS; \
+		IFS=:; \
+		for path in $$runpath; do \
+			if [ "$$path" = "$$allowed_runpath" ]; then \
+				clean_runpath="$${clean_runpath:+$$clean_runpath:}$$path"; \
+			fi; \
+		done; \
+		IFS=$$old_ifs; \
+		if [ -n "$$clean_runpath" ]; then \
+			[ "$$clean_runpath" = "$$runpath" ] || patchelf --set-rpath "$$clean_runpath" "$$f"; \
+		else \
+			patchelf --remove-rpath "$$f"; \
+		fi; \
+	done < "$$runpath_files"; \
+	rm -f "$$runpath_files"; \
+	bad_runpath=$$(mktemp); \
+	find "$(CURDIR)/debian/tmp$(PGBASEINSTDIR)" -type f > "$$runpath_files"; \
+	while IFS= read -r f; do \
+		runpath=$$(readelf -d "$$f" 2>/dev/null | sed -n 's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
+		[ -z "$$runpath" ] || [ "$$runpath" = "$$allowed_runpath" ] || echo "$$f: $$runpath" >> "$$bad_runpath"; \
+	done < "$$runpath_files"; \
+	rm -f "$$runpath_files"; \
+	if [ -s "$$bad_runpath" ]; then \
+		cat "$$bad_runpath"; \
+		rm -f "$$bad_runpath"; \
+		exit 1; \
+	fi; \
+	rm -f "$$bad_runpath"
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym

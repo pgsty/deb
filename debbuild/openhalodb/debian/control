@@ -9,7 +9,6 @@ Build-Depends:
  autoconf,
  bison,
  flex,
- clang,
  debhelper-compat (= 13),
  dh-exec (>= 0.13~),
  docbook-xml,
@@ -22,16 +21,15 @@ Build-Depends:
  liblz4-dev,
  libperl-dev,
  libreadline-dev,
- libselinux1-dev [linux-any],
+ libselinux1-dev [linux-any] | libselinux-dev [linux-any],
  libssl-dev,
  libsystemd-dev [linux-any],
  libxml2-dev,
  libxml2-utils,
  libxslt1-dev,
  libzstd-dev,
- llvm,
- llvm-dev,
  mawk,
+ patchelf,
  perl (>= 5.8),
  pkgconf,
  python3-dev,
@@ -39,7 +37,7 @@ Build-Depends:
  tcl-dev,
  tzdata,
  uuid-dev,
- xsltproc, zlib1g-dev, libpam0g-dev, libz-dev, libpam-dev
+ xsltproc, zlib1g-dev, libpam0g-dev, libz-dev
 
 
 Package: openhalodb-14
