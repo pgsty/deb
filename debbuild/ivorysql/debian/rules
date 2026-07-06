@@ -6,7 +6,10 @@ export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 export IVORY_CONTRIB := ivorysql_ora ora_btree_gin ora_btree_gist
 
 # Filter out -ffast-math to avoid precision regressions.
-export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
+CC_FOR_STD_CHECK := $(if $(CC),$(CC),cc)
+CC_DEFAULT_STDC_VERSION := $(shell printf '\n' | $(CC_FOR_STD_CHECK) -dM -E -x c - 2>/dev/null | awk '$$2 == "__STDC_VERSION__" { print $$3 }')
+NEED_GNU17_CFLAGS := $(shell printf '%s\n' '$(CC_DEFAULT_STDC_VERSION)' | awk '{ gsub(/L$$/, "", $$1); if ($$1 ~ /^[0-9]+$$/ && $$1 >= 202311) print "-std=gnu17" }')
+export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g') $(NEED_GNU17_CFLAGS)
 export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
 
 %:

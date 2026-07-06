@@ -38,6 +38,13 @@ setup: check-src
 		$(BUILD_DIR)/buildsrc/debian/changelog \
 		$(BUILD_DIR)/buildsrc/debian/install \
 		$(BUILD_DIR)/buildsrc/debian/rules; \
+	for f in \
+		$(BUILD_DIR)/buildsrc/contrib/babelfishpg_common/Makefile \
+		$(BUILD_DIR)/buildsrc/contrib/babelfishpg_money/Makefile \
+		$(BUILD_DIR)/buildsrc/contrib/babelfishpg_tds/Makefile \
+		$(BUILD_DIR)/buildsrc/contrib/babelfishpg_tsql/Makefile; do \
+		sed -i '/^PG_CFLAGS += .*BBF_AFTER_WERROR_CFLAGS/! s|^\(PG_CFLAGS += .*-Werror\)|\1 $$(BBF_AFTER_WERROR_CFLAGS)|' $$f; \
+	done; \
 	if [ "$$OS_CODENAME" = "resolute" ]; then \
 		perl -pi -e 's/typedef bool \(\*pltsql_is_partitioned_table_reloptions_allowed_hook_type\)\(\);/typedef bool (*pltsql_is_partitioned_table_reloptions_allowed_hook_type)(Datum reloptions);/g' \
 			$(BUILD_DIR)/buildsrc/src/include/access/reloptions.h; \

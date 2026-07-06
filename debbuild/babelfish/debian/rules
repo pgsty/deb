@@ -19,8 +19,9 @@ export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS | tr ' ' '\n' | grep -
 export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
 export PG_CFLAGS := $(PREFIX_MAP) -Wno-error=date-time -Wno-error=stringop-overflow
 export PG_CXXFLAGS := $(PREFIX_MAP) -Wno-error=overloaded-virtual
+export BBF_AFTER_WERROR_CFLAGS :=
 CC_FOR_FLAG_CHECK := $(if $(CC),$(CC),cc)
-CC_SUPPORTS_MISSING_VARIABLE_DECLARATIONS := $(shell printf 'int x;' | $(CC_FOR_FLAG_CHECK) -x c -Werror=missing-variable-declarations -c -o /dev/null - >/dev/null 2>&1 && echo yes)
+CC_SUPPORTS_MISSING_VARIABLE_DECLARATIONS := $(shell printf 'int main(void) { return 0; }' | $(CC_FOR_FLAG_CHECK) -x c -Wno-error=missing-variable-declarations -c -o /dev/null - >/dev/null 2>&1 && echo yes)
 
 ifeq ($(PG_MAJOR),18)
 export CFLAGS += -DHAVE_OPENSSL_INIT_SSL -DHAVE_BIO_METH_NEW
@@ -28,6 +29,7 @@ export PG_CFLAGS += -DHAVE_OPENSSL_INIT_SSL -DHAVE_BIO_METH_NEW
 ifeq ($(CC_SUPPORTS_MISSING_VARIABLE_DECLARATIONS),yes)
 export CFLAGS += -Wno-error=missing-variable-declarations
 export PG_CFLAGS += -Wno-error=missing-variable-declarations
+export BBF_AFTER_WERROR_CFLAGS := -Wno-error=missing-variable-declarations
 endif
 endif
 
