@@ -1,2 +1,2 @@
-usr/pgedge-18/*
-usr/share/doc/pgedge-18/*
+usr/pgedge-@PG_MAJOR@/*
+usr/share/doc/pgedge-@PG_MAJOR@/*

@@ -1,4 +1,4 @@
-Source: pgedge-18
+Source: pgedge-@PG_MAJOR@
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
@@ -13,6 +13,7 @@ Build-Depends:
  dpkg-dev (>= 1.16~),
  flex,
  gettext,
+ libjansson-dev,
  libicu-dev,
  libkrb5-dev,
  libldap2-dev,
@@ -31,6 +32,7 @@ Build-Depends:
  llvm-dev,
  mawk,
  patch,
+ patchelf,
  perl (>= 5.8),
  pkgconf,
  python3-dev,
@@ -42,13 +44,14 @@ Build-Depends:
  zlib1g-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/pgEdge/spock
+Homepage: https://github.com/pgEdge
 
-Package: pgedge-18
+Package: pgedge-@PG_MAJOR@
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, tzdata, ssl-cert
-Description: pgEdge patched PostgreSQL 18 core
- PostgreSQL 18 core package built from upstream PostgreSQL source plus pgEdge Spock PG18 patchset.
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata, ssl-cert
+Description: pgEdge PostgreSQL @PG_MAJOR@ with bundled replication extensions
+ PostgreSQL @PG_MAJOR@ core package built from upstream PostgreSQL source plus
+ pgEdge Spock PG@PG_MAJOR@ patchset.
  .
- This package installs binaries into /usr/pgedge-18 and is intended
- to be the base runtime for pgEdge Spock, Snowflake and LOLOR extensions.
+ This package installs PostgreSQL binaries, libraries, headers, Spock, Snowflake
+ and LOLOR into /usr/pgedge-@PG_MAJOR@.

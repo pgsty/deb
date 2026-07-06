@@ -8,7 +8,16 @@ read_default() {
   awk -v k="$1" '$1==k {print $3; exit}' "${SCRIPT_DIR}/versions.mk"
 }
 
-PG_VERSION="${PG_VERSION:-$(read_default PG_VERSION)}"
+PG_MAJOR="${PG_MAJOR:-$(read_default PG_MAJOR)}"
+if [ -z "${PG_VERSION:-}" ]; then
+  case "${PG_MAJOR}" in
+    18) PG_VERSION="18.4" ;;
+    17) PG_VERSION="17.10" ;;
+    16) PG_VERSION="16.14" ;;
+    15) PG_VERSION="15.18" ;;
+    *) echo "unsupported PG_MAJOR=${PG_MAJOR}; expected 15, 16, 17, or 18" >&2; exit 1 ;;
+  esac
+fi
 SPOCK_VERSION="${SPOCK_VERSION:-$(read_default SPOCK_VERSION)}"
 SNOWFLAKE_VERSION="${SNOWFLAKE_VERSION:-$(read_default SNOWFLAKE_VERSION)}"
 LOLOR_VERSION="${LOLOR_VERSION:-$(read_default LOLOR_VERSION)}"

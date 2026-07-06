@@ -2,7 +2,7 @@
 
 export DH_VERBOSE=1
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-SPOCK_VERSION ?= 5.0.6
+SPOCK_VERSION ?= @SPOCK_VERSION@
 
 # Filter out -ffast-math to avoid precision regressions.
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
@@ -15,14 +15,14 @@ override_dh_auto_clean:
 
 override_dh_auto_configure:
 	./configure \
-		--prefix=/usr/pgedge-18 \
-		--bindir=/usr/pgedge-18/bin \
-		--libdir=/usr/pgedge-18/lib \
-		--includedir=/usr/pgedge-18/include \
-		--mandir=/usr/pgedge-18/share/man \
-		--datadir=/usr/pgedge-18/share \
-		--docdir=/usr/share/doc/pgedge-18 \
-		--htmldir=/usr/share/doc/pgedge-18/html \
+		--prefix=/usr/pgedge-@PG_MAJOR@ \
+		--bindir=/usr/pgedge-@PG_MAJOR@/bin \
+		--libdir=/usr/pgedge-@PG_MAJOR@/lib \
+		--includedir=/usr/pgedge-@PG_MAJOR@/include \
+		--mandir=/usr/pgedge-@PG_MAJOR@/share/man \
+		--datadir=/usr/pgedge-@PG_MAJOR@/share \
+		--docdir=/usr/share/doc/pgedge-@PG_MAJOR@ \
+		--htmldir=/usr/share/doc/pgedge-@PG_MAJOR@/html \
 		--with-system-tzdata=/usr/share/zoneinfo \
 		--with-lz4 --with-zstd \
 		--with-uuid=e2fs --with-libxml --with-libxslt \
@@ -38,13 +38,78 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
 	cd ../..
-	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world
+	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
+	rm -rf .pgedge-stage
+	MAKELEVEL=0 $(MAKE) DESTDIR=$(CURDIR)/.pgedge-stage install-world-bin
+	printf '%s\n' \
+		'#!/bin/sh' \
+		'prefix="$${PGEDGE_STAGE}/usr/pgedge-@PG_MAJOR@"' \
+		'case "$$1" in' \
+		'  --version) echo "PostgreSQL @PG_VERSION@" ;;' \
+		'  --bindir) echo "$${prefix}/bin" ;;' \
+		'  --sharedir) echo "$${prefix}/share/postgresql" ;;' \
+		'  --sysconfdir) echo "$${prefix}/etc/postgresql" ;;' \
+		'  --libdir) echo "$${prefix}/lib" ;;' \
+		'  --pkglibdir) echo "$${prefix}/lib/postgresql" ;;' \
+		'  --includedir) echo "$${prefix}/include" ;;' \
+		'  --pkgincludedir) echo "$${prefix}/include/postgresql" ;;' \
+		'  --includedir-server) echo "$${prefix}/include/postgresql/server" ;;' \
+		'  --mandir) echo "$${prefix}/share/man" ;;' \
+		'  --docdir) echo "$${prefix}/doc" ;;' \
+		'  --localedir) echo "$${prefix}/share/locale" ;;' \
+		'  --pgxs) echo "$${prefix}/lib/postgresql/pgxs/src/makefiles/pgxs.mk" ;;' \
+		'  *) exec "$${prefix}/bin/pg_config" "$$@" ;;' \
+		'esac' > .pg_config_build
+	chmod +x .pg_config_build
+	for extdir in .spock .lolor .snowflake; do \
+		PGEDGE_STAGE="$(CURDIR)/.pgedge-stage" \
+		PG_CONFIG="$(CURDIR)/.pg_config_build" \
+		PATH="$(CURDIR)/.pgedge-stage/usr/pgedge-@PG_MAJOR@/bin:$$PATH" \
+		USE_PGXS=1 \
+		MAKELEVEL=0 $(MAKE) -C "$$extdir" PG_CONFIG="$(CURDIR)/.pg_config_build" USE_PGXS=1 -j$(shell nproc); \
+	done
 
 override_dh_auto_install:
-	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world-bin
+	printf '%s\n' \
+		'#!/bin/sh' \
+		'prefix="/usr/pgedge-@PG_MAJOR@"' \
+		'stage_prefix="$${PGEDGE_STAGE}/usr/pgedge-@PG_MAJOR@"' \
+		'case "$$1" in' \
+		'  --version) echo "PostgreSQL @PG_VERSION@" ;;' \
+		'  --bindir) echo "$${prefix}/bin" ;;' \
+		'  --sharedir) echo "$${prefix}/share/postgresql" ;;' \
+		'  --sysconfdir) echo "$${prefix}/etc/postgresql" ;;' \
+		'  --libdir) echo "$${prefix}/lib" ;;' \
+		'  --pkglibdir) echo "$${prefix}/lib/postgresql" ;;' \
+		'  --includedir) echo "$${prefix}/include" ;;' \
+		'  --pkgincludedir) echo "$${prefix}/include/postgresql" ;;' \
+		'  --includedir-server) echo "$${prefix}/include/postgresql/server" ;;' \
+		'  --mandir) echo "$${prefix}/share/man" ;;' \
+		'  --docdir) echo "$${prefix}/doc" ;;' \
+		'  --localedir) echo "$${prefix}/share/locale" ;;' \
+		'  --pgxs) echo "$${stage_prefix}/lib/postgresql/pgxs/src/makefiles/pgxs.mk" ;;' \
+		'  *) exec "$${stage_prefix}/bin/pg_config" "$$@" ;;' \
+		'esac' > .pg_config_install
+	chmod +x .pg_config_install
+	for extdir in .spock .lolor .snowflake; do \
+		PGEDGE_STAGE="$(CURDIR)/.pgedge-stage" \
+		PG_CONFIG="$(CURDIR)/.pg_config_install" \
+		PATH="$(CURDIR)/.pgedge-stage/usr/pgedge-@PG_MAJOR@/bin:$$PATH" \
+		USE_PGXS=1 \
+		MAKELEVEL=0 $(MAKE) -C "$$extdir" PG_CONFIG="$(CURDIR)/.pg_config_install" USE_PGXS=1 install DESTDIR=$(CURDIR)/debian/tmp; \
+	done
+	for binary in \
+		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/bin/spockctrl \
+		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/lib/postgresql/spock.so \
+		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/lib/postgresql/spock_output.so \
+		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/lib/postgresql/lolor.so \
+		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/lib/postgresql/snowflake.so; do \
+		[ -f "$$binary" ] && patchelf --set-rpath "/usr/pgedge-@PG_MAJOR@/lib" "$$binary"; \
+	done
 
 override_dh_shlibdeps:
-	dh_shlibdeps -l/usr/pgedge-18/lib
+	dh_shlibdeps -l/usr/pgedge-@PG_MAJOR@/lib
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
