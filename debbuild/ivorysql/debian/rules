@@ -1,0 +1,106 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export PGBASEINSTDIR=/usr/ivory-@PG_MAJOR@
+export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+export IVORY_CONTRIB := ivorysql_ora ora_btree_gin ora_btree_gist
+
+# Filter out -ffast-math to avoid precision regressions.
+export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
+export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+
+%:
+	dh $@ --without autoreconf
+
+override_dh_auto_clean:
+
+override_dh_auto_configure:
+		# IvorySQL 5.4 keeps the default Unix socket directory in pg_config_manual.h.
+		grep -Eq '^#define DEFAULT_PGSOCKET_DIR[[:space:]]+"/tmp"' src/include/pg_config_manual.h
+		./configure \
+		--enable-rpath \
+		--prefix=$(PGBASEINSTDIR) \
+		--bindir=$(PGBASEINSTDIR)/bin \
+		--includedir=$(PGBASEINSTDIR)/include \
+		--mandir=$(PGBASEINSTDIR)/share/man \
+		--datadir=$(PGBASEINSTDIR)/share \
+		--libdir=$(PGBASEINSTDIR)/lib \
+			--docdir=/usr/share/doc/ivorysql-@PG_MAJOR@ \
+				--htmldir=/usr/share/doc/ivorysql-@PG_MAJOR@/html \
+				--with-extra-version=" (IvorySQL @IVORY_VERSION@)" \
+				--with-pgport=5432 \
+				--with-system-tzdata=/usr/share/zoneinfo \
+		--with-lz4 --with-zstd \
+		--with-liburing --with-libnuma \
+		--with-uuid=e2fs --with-libxml --with-libxslt \
+		--with-icu --with-llvm \
+		--with-gssapi \
+		--with-perl --with-python --with-tcl \
+		--with-openssl --with-pam --with-ldap \
+		--with-selinux --with-systemd \
+		--with-includes=/usr/include \
+		--with-libraries=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		--enable-nls --enable-dtrace
+
+override_dh_auto_build:
+	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
+	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
+	MAKELEVEL=0 $(MAKE) -j$(shell nproc) -C contrib
+	set -e; for dir in $(IVORY_CONTRIB); do \
+		MAKELEVEL=0 $(MAKE) -j$(shell nproc) -C contrib/$$dir; \
+	done
+
+override_dh_auto_install:
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world-bin
+	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp -C contrib install
+	set -e; for dir in $(IVORY_CONTRIB); do \
+		$(MAKE) DESTDIR=$(CURDIR)/debian/tmp -C contrib/$$dir install; \
+	done
+	allowed_runpath="$(PGBASEINSTDIR)/lib"; \
+	runpath_files=$$(mktemp); \
+	bad_runpath=$$(mktemp); \
+	find "$(CURDIR)/debian/tmp$(PGBASEINSTDIR)" -type f > "$$runpath_files"; \
+	while IFS= read -r f; do \
+		runpath=$$(readelf -d "$$f" 2>/dev/null | sed -n 's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
+		[ -n "$$runpath" ] || continue; \
+		clean_runpath=""; \
+		old_ifs=$$IFS; \
+		IFS=:; \
+		for path in $$runpath; do \
+			if [ "$$path" = "$$allowed_runpath" ]; then \
+				clean_runpath="$${clean_runpath:+$$clean_runpath:}$$path"; \
+			fi; \
+		done; \
+		IFS=$$old_ifs; \
+		if [ -n "$$clean_runpath" ]; then \
+			[ "$$clean_runpath" = "$$runpath" ] || patchelf --set-rpath "$$clean_runpath" "$$f"; \
+		else \
+			patchelf --remove-rpath "$$f"; \
+		fi; \
+	done < "$$runpath_files"; \
+	while IFS= read -r f; do \
+		runpath=$$(readelf -d "$$f" 2>/dev/null | sed -n 's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
+		[ -z "$$runpath" ] || [ "$$runpath" = "$$allowed_runpath" ] || echo "$$f: $$runpath" >> "$$bad_runpath"; \
+	done < "$$runpath_files"; \
+	rm -f "$$runpath_files"; \
+	if [ -s "$$bad_runpath" ]; then \
+		cat "$$bad_runpath"; \
+		rm -f "$$bad_runpath"; \
+		exit 1; \
+	fi; \
+	rm -f "$$bad_runpath"
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l$(PGBASEINSTDIR)/lib
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_test:
+	:
+
+override_dh_installinit:
+	:
+
+override_dh_installsystemd:
+	:

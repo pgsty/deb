@@ -1,0 +1,32 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: IvorySQL
+Source: https://github.com/IvorySQL/IvorySQL
+
+Files: *
+Copyright: 1996-2025 PostgreSQL Global Development Group
+           1994 The Regents of the University of California
+           2023-2025 IvorySQL Global Development Team
+License: Apache-2.0 and PostgreSQL
+
+License: Apache-2.0
+ Licensed under the Apache License, Version 2.0. On Debian systems, the full
+ text of the Apache License, Version 2.0 can be found in
+ /usr/share/common-licenses/Apache-2.0.
+
+License: PostgreSQL
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose, without fee, and without a written agreement
+ is hereby granted, provided that the above copyright notice and this
+ paragraph and the following two paragraphs appear in all copies.
+ .
+ In no event shall the University of California be liable to any party for
+ direct, indirect, special, incidental, or consequential damages, including
+ lost profits, arising out of the use of this software and its documentation,
+ even if the University of California has been advised of the possibility of
+ such damage.
+ .
+ The University of California specifically disclaims any warranties, including,
+ but not limited to, the implied warranties of merchantability and fitness for
+ a particular purpose. The software provided hereunder is on an "as is" basis,
+ and the University of California has no obligations to provide maintenance,
+ support, updates, enhancements, or modifications.

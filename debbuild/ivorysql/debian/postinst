@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "configure" ]; then
+    getent group postgres >/dev/null 2>&1 || \
+        addgroup --system --gid 543 postgres 2>/dev/null || addgroup --system postgres
+    getent passwd postgres >/dev/null 2>&1 || \
+        adduser --system --uid 543 --home /var/lib/pgsql --shell /bin/bash \
+            --gecos "PostgreSQL Server" --ingroup postgres postgres 2>/dev/null || \
+        adduser --system --home /var/lib/pgsql --shell /bin/bash \
+            --gecos "PostgreSQL Server" --ingroup postgres postgres
+
+    ldconfig
+fi
+
+exit 0

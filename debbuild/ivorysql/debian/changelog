@@ -1,0 +1,7 @@
+ivorysql-@PG_MAJOR@ (@IVORY_VERSION@-@PKG_REV@) unstable; urgency=medium
+
+  * Add IvorySQL @IVORY_VERSION@ PostgreSQL @PG_MAJOR@ kernel package.
+  * Build a single complete package under /usr/ivory-@PG_MAJOR@ with PGDG-like options.
+  * Keep private RUNPATH entries under /usr/ivory-@PG_MAJOR@/lib.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 05 Jul 2026 21:00:00 +0000
