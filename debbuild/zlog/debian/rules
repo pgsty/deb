@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/architecture.mk
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	$(MAKE)
+
+override_dh_auto_install:
+	install -d debian/zlog/usr/include
+	install -d debian/zlog/usr/lib/$(DEB_HOST_MULTIARCH)
+	install -m 0644 src/zlog.h debian/zlog/usr/include/
+	install -m 0644 src/libzlog.a debian/zlog/usr/lib/$(DEB_HOST_MULTIARCH)/
+	install -m 0755 src/libzlog.so.1.2 debian/zlog/usr/lib/$(DEB_HOST_MULTIARCH)/
+	ln -s libzlog.so.1.2 debian/zlog/usr/lib/$(DEB_HOST_MULTIARCH)/libzlog.so.1
+	ln -s libzlog.so.1.2 debian/zlog/usr/lib/$(DEB_HOST_MULTIARCH)/libzlog.so
+
+override_dh_auto_test:
+

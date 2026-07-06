@@ -1,0 +1,22 @@
+Source: polarstore
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+ g++,
+ make,
+ zlog | libzlog-dev,
+ libaio-dev
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/ApsaraDB/PolarDB-FileSystem
+
+Package: polarstore
+Architecture: any
+Depends: ${misc:Depends}
+Description: PolarStore PFSD SDK for PolarDB
+ PolarStore PFSD SDK files built from PolarDB-FileSystem source and used by
+ PolarDB for PostgreSQL builds with --with-pfsd. This package installs the
+ PFSD header and static library under /usr/local/polarstore/pfsd.

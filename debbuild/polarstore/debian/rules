@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	sed -i -e 's|cmake_minimum_required (VERSION 2.8)|cmake_minimum_required (VERSION 3.5)|' CMakeLists.txt
+	sed -i -e 's|-march=native ||g' CMakeLists.txt
+	sed -i -e 's|-Werror|-Werror -Wno-array-bounds|g' CMakeLists.txt
+	sed -i -e 's|calloc(sizeof(chnl_ctx_shm_t), 1)|calloc(1, sizeof(chnl_ctx_shm_t))|g' src/pfs_sdk/pfsd_chnl_shm.cc src/pfsd/pfsd_chnl_shm.cc
+	cmake -S . -B obj -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+
+override_dh_auto_build:
+	cmake --build obj --target pfsd --parallel
+
+override_dh_auto_install:
+	install -d debian/polarstore/usr/local/polarstore/pfsd/include
+	install -d debian/polarstore/usr/local/polarstore/pfsd/lib
+	install -m 0644 src/pfs_sdk/pfsd_sdk.h debian/polarstore/usr/local/polarstore/pfsd/include/
+	install -m 0644 lib/libpfsd.a debian/polarstore/usr/local/polarstore/pfsd/lib/
+
+override_dh_auto_test:
+
+override_dh_usrlocal:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym

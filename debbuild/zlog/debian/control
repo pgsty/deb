@@ -1,0 +1,19 @@
+Source: zlog
+Section: libs
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), gcc, make
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/HardySimpson/zlog
+
+Package: zlog
+Architecture: any
+Provides: libzlog-dev, libzlog1
+Conflicts: libzlog-dev, libzlog1
+Replaces: libzlog-dev, libzlog1
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: high-performance C logging library
+ zlog is a reliable, high-performance, thread-safe logging library for C.
+ This package ships the zlog header and static/shared libraries needed by
+ PolarDB-FileSystem.
