@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE=1
-export PGBASEINSTDIR=/usr/agens-16
+export PGBASEINSTDIR=/usr/agens-17
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 # Filter out -ffast-math to avoid precision regressions.
@@ -27,11 +27,15 @@ override_dh_auto_configure:
 		--with-lz4 --with-zstd \
 		--with-uuid=e2fs --with-libxml --with-libxslt \
 		--with-icu \
+		--with-gssapi \
 		--with-perl --with-python --with-tcl \
 		--with-openssl --with-pam --with-ldap \
+		--with-selinux --with-systemd \
 		--with-includes=/usr/include \
 		--with-libraries=/usr/lib/$(DEB_HOST_MULTIARCH) \
-		--enable-nls
+		--sysconfdir=/etc/sysconfig/agensgraph \
+		--enable-nls \
+		--enable-dtrace
 
 override_dh_auto_build:
 	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
@@ -40,6 +44,9 @@ override_dh_auto_build:
 
 override_dh_auto_install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world-bin
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l$(PGBASEINSTDIR)/lib
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym

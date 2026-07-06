@@ -16,11 +16,11 @@ make
 
 Required local tarball (default):
 
-`~/ext/src/agensgraph-2.16.0.tar.gz`
+`~/ext/src/agensgraph-2.17.0.tar.gz`
 
 Fetch from upstream release tag:
 
 ```bash
-wget -O ~/ext/src/agensgraph-2.16.0.tar.gz \
-  https://github.com/skaiworldwide-oss/agensgraph/archive/refs/tags/v2.16.0.tar.gz
+wget -O ~/ext/src/agensgraph-2.17.0.tar.gz \
+  https://github.com/skaiworldwide-oss/agensgraph/archive/refs/tags/v2.17.0.tar.gz
 ```
