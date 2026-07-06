@@ -2,6 +2,7 @@
 
 export DH_VERBOSE=1
 export PGBASEINSTDIR=/usr/halo-14
+export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 # Filter out -ffast-math which is known to cause precision issues
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
@@ -27,11 +28,11 @@ override_dh_auto_configure:
 		--with-uuid=e2fs --with-libxml --with-libxslt \
 		--with-icu --without-llvm \
 		--with-python --with-tcl \
-		--with-openssl --with-pam --with-gssapi --with-ldap \
-		--with-selinux --with-systemd \
-		--with-includes=/usr/include \
-		--with-libraries=/usr/lib \
-		--enable-nls --enable-dtrace
+			--with-openssl --with-pam --with-gssapi --with-ldap \
+			--with-selinux --with-systemd \
+			--with-includes=/usr/include \
+			--with-libraries=/usr/lib/$(DEB_HOST_MULTIARCH) \
+			--enable-nls --enable-dtrace
 
 # damn it deps is a real mess here, do not build in parallel
 override_dh_auto_build:
@@ -84,6 +85,9 @@ override_dh_auto_install:
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l$(CURDIR)/debian/openhalodb-14$(PGBASEINSTDIR)/lib
 
 override_dh_auto_test:
 	:

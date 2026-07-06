@@ -42,7 +42,7 @@ Build-Depends:
 
 Package: openhalodb-14
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata
 Description: MySQL wire protocol support for PostgreSQL
  Adding capability for PostgreSQL to work with applications written for MySQL
  but provides much more better performance than MySQL!
