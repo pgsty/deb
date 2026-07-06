@@ -47,8 +47,32 @@ setup: check-src
 	sed -i.bak -e 's|^port=$$(random_unused_port)|port=$(PG_PORT)|' $(BUILD_DIR)/build.sh
 	rm -f $(BUILD_DIR)/build.sh.bak
 	sed -i.bak -e 's|^Package: .*|Package: $(DEB_PACKAGE)|' $(BUILD_DIR)/package/debian/control
+	sed -i.bak -e 's|^Depends: |Depends: adduser, tzdata, |' $(BUILD_DIR)/package/debian/control
 	sed -i.bak -e 's,libicu76,libicu76 | libicu78,' $(BUILD_DIR)/package/debian/control
 	rm -f $(BUILD_DIR)/package/debian/control.bak
+	awk '{ print; if ($$0 == "mkdir -p $${pkgname}/DEBIAN") { \
+		print "cat > $${pkgname}/DEBIAN/postinst <<'\''POSTINST'\''"; \
+		print "#!/bin/sh"; \
+		print "set -e"; \
+		print ""; \
+		print "if [ \"$$1\" = \"configure\" ]; then"; \
+		print "    getent group postgres >/dev/null 2>&1 || \\"; \
+		print "        addgroup --system --gid 543 postgres 2>/dev/null || addgroup --system postgres"; \
+		print "    getent passwd postgres >/dev/null 2>&1 || \\"; \
+		print "        adduser --system --uid 543 --home /var/lib/pgsql --shell /bin/bash \\"; \
+		print "            --gecos \"PostgreSQL Server\" --ingroup postgres postgres 2>/dev/null || \\"; \
+		print "        adduser --system --home /var/lib/pgsql --shell /bin/bash \\"; \
+		print "            --gecos \"PostgreSQL Server\" --ingroup postgres postgres"; \
+		print "fi"; \
+		print ""; \
+		print "exit 0"; \
+		print "POSTINST"; \
+		print "chmod 755 $${pkgname}/DEBIAN/postinst"; \
+	}}' $(BUILD_DIR)/package/debian/build-deb.sh > $(BUILD_DIR)/package/debian/build-deb.sh.new
+	mv $(BUILD_DIR)/package/debian/build-deb.sh.new $(BUILD_DIR)/package/debian/build-deb.sh
+	chmod +x $(BUILD_DIR)/package/debian/build-deb.sh
+	grep -q 'DEBIAN/postinst' $(BUILD_DIR)/package/debian/build-deb.sh || (echo "postinst/adduser injection FAILED"; exit 1)
+	grep -q '^Depends: adduser, tzdata,' $(BUILD_DIR)/package/debian/control || (echo "control adduser/tzdata injection FAILED"; exit 1)
 	patch -d $(BUILD_DIR) -p1 < package-prefix-rpath.patch
 	awk '1; /  \.\/configure \$$configure_flag$$/ { print "  (cd src/backend && MAKELEVEL=0 make submake-generated-headers)" }' $(BUILD_DIR)/build.sh > $(BUILD_DIR)/build.sh.new
 	mv $(BUILD_DIR)/build.sh.new $(BUILD_DIR)/build.sh
