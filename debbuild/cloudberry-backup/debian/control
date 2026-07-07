@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends:
  debhelper-compat (= 13),
- golang-go,
+ golang | golang-go,
  libsqlite3-dev,
  make,
  pkg-config

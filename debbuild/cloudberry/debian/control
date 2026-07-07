@@ -11,7 +11,7 @@ Build-Depends:
  flex,
  g++,
  gcc,
- golang-go,
+ golang | golang-go,
  libapr1-dev,
  libbz2-dev,
  libcurl4-gnutls-dev | libcurl4-openssl-dev,
