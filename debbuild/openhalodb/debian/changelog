@@ -1,4 +1,4 @@
-openhalodb (1.0.0-2PIGSTY) unstable; urgency=medium
+openhalodb (1.0-2PIGSTY) unstable; urgency=medium
 
   * Promote openhalodb to the formal 1.0 release packaging.
   * Accept the resolute libselinux-dev build dependency name.
