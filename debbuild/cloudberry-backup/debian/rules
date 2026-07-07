@@ -3,12 +3,10 @@
 export DH_VERBOSE=1
 export GOPATH := $(CURDIR)/.gopath
 export GOBIN := $(GOPATH)/bin
+export GOPROXY ?= https://goproxy.cn,direct
 export PATH := $(GOBIN):/usr/local/go/bin:$(PATH)
 
 OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
-ifeq ($(OS_CODENAME),resolute)
-export GOPROXY ?= https://goproxy.cn,direct
-endif
 
 %:
 	dh $@

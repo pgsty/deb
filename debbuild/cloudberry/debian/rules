@@ -4,13 +4,14 @@ export DH_VERBOSE=1
 export CB_PREFIX=/usr/cloudberry
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
-# Filter out -ffast-math to avoid precision issues.
-export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
+# Filter out flags that are unsafe for the bundled PostgreSQL/PAX build.
+export CFLAGS := $(filter-out -ffast-math -flto=% -ffat-lto-objects,$(shell dpkg-buildflags --get CFLAGS))
+export CXXFLAGS := $(filter-out -ffast-math -flto=% -ffat-lto-objects,$(shell dpkg-buildflags --get CXXFLAGS))
 OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
 ifeq ($(OS_CODENAME),resolute)
 export CFLAGS += -std=gnu17
 endif
-export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+export LDFLAGS := $(filter-out -flto=% -ffat-lto-objects,$(shell dpkg-buildflags --get LDFLAGS)) -Wl,--as-needed
 export CFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow -Wno-error=maybe-uninitialized -Wno-error=array-bounds
 export CXXFLAGS += -Wno-error=date-time -Wno-error=stringop-overflow -Wno-error=maybe-uninitialized -Wno-error=array-bounds -Wno-error=pessimizing-move -Wno-error=suggest-attribute=format
 export CXXFLAGS += -Wno-error=overloaded-virtual
@@ -56,11 +57,15 @@ override_dh_auto_build:
 	$(MAKE) -j$(shell nproc) -C contrib
 
 override_dh_auto_install:
+	install -d -m 0755 $(CURDIR)/debian/tmp$(CB_PREFIX)/share/postgresql/cdb_init.d
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world-bin
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp -C contrib install
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
+
+override_dh_dwz:
+	:
 
 override_dh_auto_test:
 	:

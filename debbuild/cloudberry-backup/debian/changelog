@@ -1,3 +1,10 @@
+cloudberry-backup (2.1.0-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cloudberry 2.1.0-2PIGSTY.
+  * Route Go module downloads through goproxy.cn for all builders.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 07 Jul 2026 00:00:00 +0000
+
 cloudberry-backup (2.1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial Apache Cloudberry Backup 2.1.0 package.

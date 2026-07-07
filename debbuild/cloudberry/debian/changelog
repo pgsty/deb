@@ -1,3 +1,11 @@
+cloudberry (2.1.0-2PIGSTY) unstable; urgency=medium
+
+  * Pre-create cdb_init.d before installing contrib scripts.
+  * Filter LTO flags to match the RPM Cloudberry kernel build.
+  * Disable dwz debug payload generation.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 07 Jul 2026 00:00:00 +0000
+
 cloudberry (2.1.0-1PIGSTY) unstable; urgency=medium
 
   * Upgrade Apache Cloudberry to 2.1.0.
