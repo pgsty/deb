@@ -1,0 +1,90 @@
+diff --git a/Makefile b/Makefile
+index b9ffd4e..a18c838 100644
+--- a/Makefile
++++ b/Makefile
+@@ -198,11 +198,11 @@ avro:
+ 	mkdir -p avro/lang/c/build
+ 	# builds and installs into local avrolib directory 
+ 	cd avro/lang/c/build && \
+-	cmake .. $(CMAKE_AVRO_ARGS) && cmake --build . && cmake --build . --target install
++	cmake .. $(CMAKE_AVRO_ARGS) && cmake --build . && MAKEFLAGS= DESTDIR= cmake --build . --target install
+ endif
+ 
+ install-avro: avro
+-	install avro/lang/c/build/avrolib/lib*/libavro.* $(DESTDIR)$(PG_LIBDIR)
++	cp -a avro/lang/c/build/avrolib/lib*/libavro.so* $(DESTDIR)$(PG_LIBDIR)/
+ 	install -d $(DESTDIR)$(PG_INCLUDEDIR)/avro
+ 	install avro/lang/c/build/avrolib/include/avro/* $(DESTDIR)$(PG_INCLUDEDIR)/avro
+ 	install avro/lang/c/build/avrolib/include/avro.h $(DESTDIR)$(PG_INCLUDEDIR)
+
+diff --git a/duckdb_pglake/CMakeLists.txt b/duckdb_pglake/CMakeLists.txt
+index ecbce3a..559ef01 100644
+--- a/duckdb_pglake/CMakeLists.txt
++++ b/duckdb_pglake/CMakeLists.txt
+@@ -8,6 +8,6 @@ set(LOADABLE_EXTENSION_NAME ${TARGET_NAME}_loadable_extension)
+ 
+ find_package(OpenSSL 3 REQUIRED)
+-find_library(PG_LIBDIR pq REQUIRED)
++find_library(PG_LIBPQ NAMES pq HINTS "${PG_LIBDIR}" REQUIRED)
+ find_path(PG_INCLUDEDIR libpq-fe.h REQUIRED)
+ 
+ find_package(azure-identity-cpp CONFIG)
+@@ -49,14 +49,8 @@
+ 
+ build_static_extension(${TARGET_NAME} ${EXTENSION_SOURCES})
+ 
+-if(APPLE)
+-  set(LIBPQ_NAME "libpq.dylib")
+-else()
+-  set(LIBPQ_NAME "libpq.so")
+-endif()
+-
+ target_link_libraries(${EXTENSION_NAME}
+-                      ${PG_LIBDIR}/${LIBPQ_NAME}
++                      ${PG_LIBPQ}
+                       Azure::azure-identity Azure::azure-storage-blobs Azure::azure-storage-files-datalake)
+ target_include_directories(
+   ${EXTENSION_NAME} PRIVATE Azure::azure-identity Azure::azure-storage-blobs
+
+diff --git a/pgduck_server/Makefile b/pgduck_server/Makefile
+index a173126..bf69f1c 100644
+--- a/pgduck_server/Makefile
++++ b/pgduck_server/Makefile
+@@ -19,7 +19,7 @@ PG_CPPFLAGS = -std=c11 -I$(PG_INCLUDEDIR) -Iinclude -DPG_LAKE_DELTA_SUPPORT=$(PG_LAKE_DELTA_SUPPORT)
+ # Add dependencies
+ SHLIB_LINK_INTERNAL = $(libpq)
+ 
+-PG_LDFLAGS  = -lduckdb -L$(PG_LIBDIR) -Wl,-rpath,$(PG_LIBDIR)
++PG_LDFLAGS  = -L$(DESTDIR)$(PG_LIBDIR) -lduckdb -Wl,-rpath,'$$ORIGIN/../lib/pg_lake'
+ 
+ # capture all objects in the current directory and in subdirectories
+ OBJS = $(patsubst %.c,%.o,$(wildcard src/*.c)) $(patsubst %.c,%.o,$(wildcard src/*/*.c))
+
+diff --git a/pg_lake_iceberg/Makefile b/pg_lake_iceberg/Makefile
+index fc4693f..555e6b1 100644
+--- a/pg_lake_iceberg/Makefile
++++ b/pg_lake_iceberg/Makefile
+@@ -7,7 +7,7 @@
+ PG_CONFIG ?= pg_config
+ PG_LIBDIR := $(shell $(PG_CONFIG) --libdir)
+ 
+ PG_CPPFLAGS = -I$(libpq_srcdir) -Iinclude -std=gnu99 -g -I../pg_lake_engine/include -I../pg_extension_base/include
+ SHLIB_LINK_INTERNAL = $(libpq)
+-PG_LDFLAGS  = -L$(PG_LIBDIR) -Wl,-rpath,$(PG_LIBDIR) -lavro -lcurl
++PG_LDFLAGS  = -L$(DESTDIR)$(PG_LIBDIR) -Wl,-rpath,'$$ORIGIN/pg_lake' -lavro -lcurl
+
+diff --git a/duckdb_pglake/Makefile b/duckdb_pglake/Makefile
+--- a/duckdb_pglake/Makefile
++++ b/duckdb_pglake/Makefile
+@@ -126,8 +126,8 @@ debug: patch_duckdb
+ 
+ release: patch_duckdb
+ 	mkdir -p build/release
+-	cmake $(GENERATOR) $(BUILD_FLAGS) $(EXT_RELEASE_FLAGS) -DCMAKE_BUILD_TYPE=$(DEBUG_INFO_CONFIG_OPTION) -S $(DUCKDB_SRCDIR) -B build/release
+-	cmake --build build/release -j $(NCORES)
++	MAKEFLAGS= DESTDIR= cmake $(GENERATOR) $(BUILD_FLAGS) $(EXT_RELEASE_FLAGS) -DCMAKE_BUILD_TYPE=$(DEBUG_INFO_CONFIG_OPTION) -S $(DUCKDB_SRCDIR) -B build/release
++	MAKEFLAGS= DESTDIR= cmake --build build/release --target duckdb -j $(NCORES)
+ 	cp build/release/src/$(LIB_NAME) .
+ 
+ #### Misc
+ 

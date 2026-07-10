@@ -1,0 +1,6 @@
+/build/
+/candidate/
+/*.buildinfo
+/*.changes
+/*.deb
+/*.ddeb

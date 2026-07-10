@@ -268,6 +268,9 @@ pg_duckdb:
 pg_ducklake:
 	cd pg_ducklake && make
 
+pg_lake:
+	cd pg_lake && make
+
 duckdb_fdw:
 	cd duckdb_fdw && make
 
@@ -1025,7 +1028,7 @@ collect:
 	geoip pg_geohash pghydro \
 	smlar pg4ml \
 	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_textsearch \
-	citus hydra storage_engine datasketches pg_duckdb duckdb_fdw pg_fkpart pg_clickhouse pg_orca \
+	citus hydra storage_engine datasketches pg_duckdb pg_lake duckdb_fdw pg_fkpart pg_clickhouse pg_orca \
 	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql pg_durable pgmnemo pg_projection pg_stl pg_sorted_heap pg_incremental pgmq pgmb omnigres pg_ai_query \
 	plxslt pg_tle plv8 pljs \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 pg_text_semver hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \

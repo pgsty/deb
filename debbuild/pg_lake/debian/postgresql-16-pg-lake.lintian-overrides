@@ -1,0 +1,7 @@
+# DuckDB intentionally bundles these implementation libraries.
+embedded-library curl [usr/lib/postgresql/*/lib/pg_lake/libduckdb.so]
+embedded-library libxml2 [usr/lib/postgresql/*/lib/pg_lake/libduckdb.so]
+embedded-library zlib [usr/lib/postgresql/*/lib/pg_lake/libduckdb.so]
+
+# pg_lake.so is a PostgreSQL loadable module with server-resolved symbols.
+shared-library-lacks-prerequisites [usr/lib/postgresql/*/lib/pg_lake.so]

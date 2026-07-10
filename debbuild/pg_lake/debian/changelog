@@ -1,11 +1,9 @@
-pg-lake (3.0.0-1PIGSTY) unstable; urgency=medium
+pg-lake (3.4.0-1PIGSTY) unstable; urgency=medium
 
-  * Initial open-source release of pg_lake
-  * Integrates Iceberg and data lake files into PostgreSQL
-  * Support for PostgreSQL 16, 17, and 18
-  * Query and import Parquet, CSV, JSON, and Iceberg files
-  * Export query results to object storage
-  * High-performance query execution using DuckDB
+  * Package the upstream v3.4.0 release.
+  * Build the complete core extension set and pgduck_server.
+  * Vendor the pinned Avro, DuckDB, and duckdb-postgres submodules.
+  * Support PostgreSQL 16, 17, and 18.
   * Used by PGSTY/PIGSTY <https://pgsty.com>
 
- -- Ruohang Feng <rh@vonng.com>  Tue, 05 Nov 2024 12:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Fri, 10 Jul 2026 00:00:00 +0000

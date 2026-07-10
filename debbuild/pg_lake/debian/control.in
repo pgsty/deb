@@ -5,56 +5,68 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13),
                postgresql-all (>= 217~),
                build-essential,
-               cmake,
-               ninja-build,
-               libreadline-dev,
-               zlib1g-dev,
-               flex,
+               autoconf,
+               automake,
                bison,
-               libxml2-dev,
-               libxslt1-dev,
-               libicu-dev,
-               libssl-dev,
-               libgeos-dev,
-               libproj-dev,
+               ca-certificates,
+               cmake,
+               curl,
+               diffutils,
+               file,
+               flex,
+               g++,
+               git,
+               libcurl4-openssl-dev,
                libgdal-dev,
+               libgeos-dev,
+               libicu-dev,
+               libipc-run-perl,
+               libjansson-dev,
                libjson-c-dev,
-               libprotobuf-c-dev,
-               protobuf-c-compiler,
-               uuid-dev,
+               libkrb5-dev,
                liblz4-dev,
                liblzma-dev,
+               libnuma-dev,
+               libossp-uuid-dev,
+               libpam0g-dev,
+               libproj-dev,
+               libprotobuf-c-dev,
+               libreadline-dev,
+               libselinux1-dev,
                libsnappy-dev,
-               perl,
+               libssl-dev,
                libtool,
-               libjansson-dev,
-               libcurl4-openssl-dev,
-               git,
-               pkg-config
+               libxml2-dev,
+               libxslt1-dev,
+               libzstd-dev,
+               ninja-build,
+               patch,
+               perl,
+               pkg-config,
+               protobuf-c-compiler,
+               python3-dev,
+               jq,
+               unzip,
+               uuid-dev,
+               zip,
+               zlib1g-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/Snowflake-Labs/pg_lake
-Vcs-Browser: https://github.com/Snowflake-Labs/pg_lake
-Vcs-Git: https://github.com/Snowflake-Labs/pg_lake.git
+Vcs-Browser: https://github.com/pgsty/deb/tree/main/debbuild/pg_lake
+Vcs-Git: https://github.com/pgsty/deb.git
 
 Package: postgresql-PGVERSION-pg-lake
 Architecture: any
 Provides: postgresql-pg-lake
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Recommends: awscli | aws-cli
-Description: PostgreSQL extension to query and import Iceberg tables and data lake files
- pg_lake integrates Iceberg and data lake files into Postgres as a lakehouse
- system that supports transactions and fast queries on Iceberg tables.
+Suggests: awscli
+Description: PostgreSQL lakehouse extensions for PostgreSQL PGVERSION
+ pg_lake integrates Iceberg tables and Parquet, CSV, and JSON data lake files
+ with PostgreSQL. It provides transactional Iceberg access and delegates
+ analytical execution to a bundled DuckDB engine through pgduck_server.
  .
- Key features:
-  * Create and modify Iceberg tables within Postgres
-  * Query Parquet, CSV, JSON, and Iceberg files in object storage
-  * Import data directly from object storage
-  * Export query results to object storage
-  * Read various geospatial formats
-  * Combine different table types in SQL queries
-  * Automatically infer table columns
-  * High-performance query execution using DuckDB
- .
- This extension includes pg_lake_iceberg, pg_lake_table, and pg_lake_copy
- components, providing comprehensive data lake functionality for PostgreSQL.
+ This package contains the pg_lake extension and its required component
+ extensions, pgduck_server, and the private Avro and DuckDB runtime libraries.
+ Before use, add pg_extension_base to shared_preload_libraries and run the
+ versioned pgduck_server binary. Its first start may download DuckDB spatial.

@@ -1,64 +1,118 @@
 #!/usr/bin/make -f
 
-# Enable verbose mode for debugging
-#export DH_VERBOSE=1
-
-# Compiler settings
 export CC = gcc
 export CXX = g++
+export VCPKG_DISABLE_METRICS = 1
 
-# vcpkg settings
-export VCPKG_VERSION=2025.01.13
-export VCPKG_ROOT=$(CURDIR)/vcpkg
-export VCPKG_INSTALLATION_ROOT=$(VCPKG_ROOT)/installed
+VERSIONS := $(shell cat debian/pgversions)
+PG_LAKE_GIT_VERSION ?= v3.4.0
+PG_LAKE_DELTA_SUPPORT ?= 0
+PGCOMPAT_BUILD_CONFIG ?= Release
+PG_LAKE_CLEAN ?= 1
+# PGDG-style non-system libpq prefixes otherwise become build-tree RUNPATHs;
+# the packaged libraries resolve libpq through the platform loader config.
+DUCKDB_RELEASE_FLAGS ?= -DBUILD_UNITTESTS=OFF -DBUILD_SHELL=OFF -DCMAKE_SKIP_BUILD_RPATH=ON
+VCPKG_TOOLCHAIN_PATH ?= $(HOME)/.cache/pg_lake/vcpkg-2025.10.17/scripts/buildsystems/vcpkg.cmake
 
-# PostgreSQL build extension
-include /usr/share/postgresql-common/pgxs_debian_control.mk
-
-# Main build rule
-%:
-	dh $@
-
-# Setup vcpkg and dependencies before building
-override_dh_auto_configure:
-	# Clone and setup vcpkg if not exists
-	if [ ! -d "$(VCPKG_ROOT)" ]; then \
-		git clone https://github.com/Microsoft/vcpkg.git $(VCPKG_ROOT); \
-		cd $(VCPKG_ROOT) && git checkout $(VCPKG_VERSION); \
-		$(VCPKG_ROOT)/bootstrap-vcpkg.sh; \
-	fi
-	# Install required dependencies via vcpkg
-	$(VCPKG_ROOT)/vcpkg install \
-		azure-identity-cpp \
-		azure-storage-blobs-cpp \
-		azure-storage-files-datalake-cpp \
-		openssl
-	# Configure with cmake
-	cmake -B build -S . \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_TOOLCHAIN_FILE=$(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
+export PG_LAKE_DELTA_SUPPORT
+export PGCOMPAT_BUILD_CONFIG
 
 override_dh_auto_build:
-	# Build pg_lake extensions for all supported PostgreSQL versions
-	+pg_buildext loop postgresql-%v-pg-lake
+	# Building and staging are one ordered operation: Avro and DuckDB headers and
+	# libraries must become visible before their dependants are linked.
 
 override_dh_auto_test:
-	# Skip tests during package build
-	# Tests require specific environment setup including AWS credentials
-
-override_dh_strip:
-	# Strip debugging symbols
-	dh_strip --no-automatic-dbgsym
-
-override_dh_auto_install:
-	# Install for each PostgreSQL version
-	+pg_buildext loop postgresql-%v-pg-lake
-
-override_dh_installdocs:
-	dh_installdocs --all README.md docs/
+	# The upstream suite requires PostgreSQL, pgduck_server, and object storage.
+	# Package-level smoke tests are run after installing the resulting DEB.
 
 override_dh_auto_clean:
-	# Clean build artifacts
-	rm -rf build
-	rm -rf $(VCPKG_ROOT)
-	dh_auto_clean
+	# Use one installed PGXS version to restore the shared source tree.  The
+	# per-major install loop below also cleans between ABI-specific builds.
+	$(MAKE) clean PG_CONFIG=/usr/lib/postgresql/18/bin/pg_config PG_LIBDIR=/usr/lib/postgresql/18/lib
+
+override_dh_auto_install:
+	@test -f "$(VCPKG_TOOLCHAIN_PATH)" || (echo "missing vcpkg toolchain: $(VCPKG_TOOLCHAIN_PATH)"; exit 1)
+	set -eu; \
+	for v in $(VERSIONS); do \
+		pg_config=/usr/lib/postgresql/$$v/bin/pg_config; \
+		pkg=postgresql-$$v-pg-lake; \
+		stage=$(CURDIR)/debian/$$pkg; \
+		pg_libdir=$$($$pg_config --pkglibdir); \
+		pg_includedir=$$($$pg_config --includedir); \
+		rm -rf "$$stage"; \
+		mkdir -p "$$stage$$pg_libdir" "$$stage$$pg_includedir"; \
+		if [ "$(PG_LAKE_CLEAN)" = "1" ]; then $(MAKE) clean PG_CONFIG="$$pg_config" PG_LIBDIR="$$pg_libdir"; fi; \
+		CPATH="$$stage$$pg_includedir$${CPATH:+:$$CPATH}" \
+		LIBRARY_PATH="$$stage$$pg_libdir$${LIBRARY_PATH:+:$$LIBRARY_PATH}" \
+		VCPKG_TOOLCHAIN_PATH="$(VCPKG_TOOLCHAIN_PATH)" \
+		PG_LAKE_GIT_VERSION="$(PG_LAKE_GIT_VERSION)" \
+		DUCKDB_BUILD_USE_CACHE=0 \
+		$(MAKE) PG_CONFIG="$$pg_config" PG_LIBDIR="$$pg_libdir" EXT_RELEASE_FLAGS="$(DUCKDB_RELEASE_FLAGS)" DESTDIR="$$stage" install; \
+		rm -rf "$$stage/usr/include"; \
+		private_libdir="$$stage$$pg_libdir/pg_lake"; \
+		install -d "$$private_libdir"; \
+		mv "$$stage$$pg_libdir/libduckdb.so" "$$private_libdir/"; \
+		mv "$$stage$$pg_libdir"/libavro.so* "$$private_libdir/"; \
+		printf 'postgresql:Depends=postgresql-%s\n' "$$v" > "debian/$$pkg.substvars"; \
+	done
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_dwz:
+	# Debug symbols are intentionally not shipped; a DWZ aggregate would become
+	# an orphaned debug file in the main runtime package.
+
+override_dh_compress:
+	# Keep third-party license and notice texts directly readable, including the
+	# TPC redistribution notice that must remain at the top of its license.
+	dh_compress -Xthird-party
+
+override_dh_makeshlibs:
+	set -e; \
+	for v in $(VERSIONS); do \
+		dh_makeshlibs -p postgresql-$$v-pg-lake -n -Xlibavro -Xlibduckdb; \
+	done
+
+override_dh_shlibdeps:
+	set -e; \
+	for v in $(VERSIONS); do \
+		pkg=postgresql-$$v-pg-lake; \
+		libdir=$(CURDIR)/debian/$$pkg/usr/lib/postgresql/$$v/lib; \
+		dh_shlibdeps -p $$pkg -l$$libdir:$$libdir/pg_lake -- -x$$pkg; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md SOURCE_MANIFEST docs/
+	set -eu; \
+	for v in $(VERSIONS); do \
+		pkg=postgresql-$$v-pg-lake; \
+		docdir=$(CURDIR)/debian/$$pkg/usr/share/doc/$$pkg/third-party; \
+		install -D -m 0644 avro/lang/c/LICENSE "$$docdir/avro/LICENSE"; \
+		install -D -m 0644 avro/lang/c/NOTICE "$$docdir/avro/NOTICE"; \
+		install -D -m 0644 duckdb_pglake/LICENSE "$$docdir/duckdb-pglake/LICENSE"; \
+		install -D -m 0644 duckdb_pglake/duckdb-postgres/LICENSE "$$docdir/duckdb-postgres/LICENSE"; \
+		find duckdb_pglake/duckdb -type f \( -iname 'LICENSE*' -o -iname 'NOTICE*' \) -print | LC_ALL=C sort | \
+		while IFS= read -r license; do \
+			rel=$${license#duckdb_pglake/duckdb/}; \
+			install -D -m 0644 "$$license" "$$docdir/duckdb/$$rel"; \
+		done; \
+		tpc_license="$$docdir/duckdb/extension/tpch/dbgen/LICENSE"; \
+		{ printf '%s\n\n' 'THE TPC SOFTWARE IS AVAILABLE WITHOUT CHARGE FROM TPC.'; \
+		  cat duckdb_pglake/duckdb/extension/tpch/dbgen/LICENSE; } > "$$tpc_license.tmp"; \
+		mv "$$tpc_license.tmp" "$$tpc_license"; \
+		find duckdb_pglake/build -path '*/_deps/*_extension_fc-src/*' -type f \( -iname 'LICENSE*' -o -iname 'NOTICE*' \) -print | LC_ALL=C sort | \
+		while IFS= read -r license; do \
+			component=$$(basename "$$(dirname "$$license")"); \
+			install -D -m 0644 "$$license" "$$docdir/duckdb-extensions/$$component-$$(basename "$$license")"; \
+		done; \
+		find duckdb_pglake/vcpkg_installed -path '*/share/*/copyright' -type f -print | LC_ALL=C sort | \
+		while IFS= read -r license; do \
+			component=$$(basename "$$(dirname "$$license")"); \
+			case "$$component" in vcpkg-cmake|vcpkg-cmake-config) continue ;; esac; \
+			install -D -m 0644 "$$license" "$$docdir/vcpkg/$$component-copyright"; \
+		done; \
+	done
+
+%:
+	dh $@
