@@ -1,0 +1,16 @@
+Source: pg-fact-loader
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/enova/pg_fact_loader
+
+Package: postgresql-PGVERSION-pg-fact-loader
+Architecture: any
+Provides: postgresql-pg-fact-loader
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Build fact tables asynchronously with PostgreSQL
+ Use queue tables to build and maintain fact tables asynchronously with
+ PostgreSQL PGVERSION.

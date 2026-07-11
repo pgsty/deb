@@ -1,0 +1,6 @@
+pg-fact-loader (2.0.1-2PIGSTY) unstable; urgency=medium
+
+  * Fill PGDG's missing PostgreSQL 18 packages on Debian and Ubuntu.
+  * Build PostgreSQL 14 through 18 packages for Ubuntu 26.04.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 00:00:00 +0800

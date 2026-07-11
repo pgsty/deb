@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_build:
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+override_dh_auto_install:
+	+pg_buildext loop postgresql-%v-pg-fact-loader
+	rm -rf debian/postgresql-*-pg-fact-loader/usr/share/doc/postgresql-doc-*
+
+override_dh_installdocs:
+	dh_installdocs --all README.*
+
+%:
+	dh $@
