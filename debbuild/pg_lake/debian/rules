@@ -32,6 +32,8 @@ override_dh_auto_clean:
 
 override_dh_auto_install:
 	@test -f "$(VCPKG_TOOLCHAIN_PATH)" || (echo "missing vcpkg toolchain: $(VCPKG_TOOLCHAIN_PATH)"; exit 1)
+	# Debian's PGXS does not add --pkglibdir to executable link searches. Keep
+	# the staged directory first, then expose libpgcommon/libpgport per major.
 	set -eu; \
 	for v in $(VERSIONS); do \
 		pg_config=/usr/lib/postgresql/$$v/bin/pg_config; \
@@ -43,7 +45,7 @@ override_dh_auto_install:
 		mkdir -p "$$stage$$pg_libdir" "$$stage$$pg_includedir"; \
 		if [ "$(PG_LAKE_CLEAN)" = "1" ]; then $(MAKE) clean PG_CONFIG="$$pg_config" PG_LIBDIR="$$pg_libdir"; fi; \
 		CPATH="$$stage$$pg_includedir$${CPATH:+:$$CPATH}" \
-		LIBRARY_PATH="$$stage$$pg_libdir$${LIBRARY_PATH:+:$$LIBRARY_PATH}" \
+		LIBRARY_PATH="$$stage$$pg_libdir:$$pg_libdir$${LIBRARY_PATH:+:$$LIBRARY_PATH}" \
 		VCPKG_TOOLCHAIN_PATH="$(VCPKG_TOOLCHAIN_PATH)" \
 		PG_LAKE_GIT_VERSION="$(PG_LAKE_GIT_VERSION)" \
 		DUCKDB_BUILD_USE_CACHE=0 \

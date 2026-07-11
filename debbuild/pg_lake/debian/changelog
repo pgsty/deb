@@ -2,6 +2,7 @@ pg-lake (3.4.0-2PIGSTY) unstable; urgency=medium
 
   * Align the package revision with the RPM cross-PG-major co-installation fix.
   * Verify the authoritative source Patch checksum before building.
+  * Expose PostgreSQL's versioned static libraries while linking pgduck_server.
 
  -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 00:00:00 +0800
 
