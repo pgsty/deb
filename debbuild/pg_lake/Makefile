@@ -14,6 +14,7 @@ DUCKDB_HTTPFS_COMMIT := 13f8a814d41a978c3f19eb1dc76069489652ea6f
 DUCKDB_AWS_COMMIT := bc15d211f282d1d78fc0d9fda3d09957ba776423
 DUCKDB_AZURE_COMMIT := 7e1ac3333d946a6bf5b4552722743e03f30a47cd
 SOURCE_SHA256 := fd9fd38b723448a93f3a8265f60655560f8044198cf9c96df26b992cd0b2f2c0
+PATCH_SHA256 := 6220c36c4c363a1a15144ebeb895261228f8593c8080fc34ba1a464e3d50f60c
 
 SOURCE_TARBALL ?= $(firstword $(wildcard \
 	$(HOME)/ext/src/$(TARBALL) \
@@ -33,6 +34,7 @@ check-src:
 	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing authoritative $(TARBALL); run make source to create a candidate, then review and promote it"; exit 1)
 	@test -n "$(SHA256_BIN)" || (echo "missing sha256sum/gsha256sum"; exit 1)
 	@test "$$($(SHA256_BIN) "$(SOURCE_TARBALL)" | awk '{print $$1}')" = "$(SOURCE_SHA256)" || (echo "sha256 mismatch: $(SOURCE_TARBALL)"; exit 1)
+	@test "$$($(SHA256_BIN) "$(SOURCE_PATCHES)" | awk '{print $$1}')" = "$(PATCH_SHA256)" || (echo "sha256 mismatch: $(SOURCE_PATCHES)"; exit 1)
 
 source: refresh-source
 

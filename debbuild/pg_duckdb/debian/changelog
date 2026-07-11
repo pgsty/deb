@@ -1,3 +1,10 @@
+pg-duckdb (1.1.1-2PIGSTY) unstable; urgency=medium
+
+  * Align the package revision with the RPM cross-PG-major co-installation fix.
+  * Debian payload layout is unchanged.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 00:00:00 +0800
+
 pg-duckdb (1.1.1-1PIGSTY) unstable; urgency=low
 
   * https://github.com/duckdb/pg_duckdb/releases/tag/v1.1.1
