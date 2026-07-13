@@ -1,0 +1,3 @@
+Tests: upstream
+Depends: @, postgresql-common, make, libtest-simple-perl
+Restrictions: allow-stderr

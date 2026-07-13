@@ -1,0 +1,94 @@
+Description: Scope background-worker checks to the active test cluster
+ The upstream TAP scripts count operating-system processes using grep. This
+ also counts pg_virtualenv command lines and workers belonging to unrelated
+ PostgreSQL clusters. Query pg_stat_activity instead, which verifies the main
+ and dynamic workers registered by the current temporary cluster only.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-07-11
+
+--- a/t/01_basic.t
++++ b/t/01_basic.t
+@@ -43,7 +43,7 @@ sleep(5);
+ sleep(5);
+ 
+ # Verify that the process is running
+-$ret = `ps auwx | grep pg_dbms_job | grep -v grep | wc -l`;
++$ret = `psql -X -d regress_dbms_job -Atc "SELECT count(*) FROM pg_stat_activity WHERE backend_type LIKE 'pg_dbms_job%'"`;
+ chomp($ret);
+ ok( $ret eq "1", "pg_dbms_job background worker is running");
+ 
+--- a/t/02_async.t
++++ b/t/02_async.t
+@@ -13,7 +13,7 @@ sleep(4);
+ 
+ # We should have the bgw and the child still running,
+ # the current running jobs must not be stopped
+-$ret = `ps auwx | grep pg_dbms_job | grep -v grep | wc -l`;
++$ret = `psql -X -d regress_dbms_job -Atc "SELECT count(*) FROM pg_stat_activity WHERE backend_type LIKE 'pg_dbms_job%'"`;
+ chomp($ret);
+ ok( $ret eq "2", "Background worker pg_dbms_job and subprocess are running: $ret");
+ 
+@@ -33,6 +33,6 @@ ok( $? == 0 && $ret eq "1", "Found $ret async job in the history");
+ sleep(1);
+ 
+ # Now all process must be terminated
+-$ret = `ps auwx | grep pg_dbms_job | grep -v grep | wc -l`;
++$ret = `psql -X -d regress_dbms_job -Atc "SELECT count(*) FROM pg_stat_activity WHERE backend_type LIKE 'pg_dbms_job%'"`;
+ chomp($ret);
+ ok( $ret eq "1", "Asynchronous job is stopped");
+--- a/t/03_async_error.t
++++ b/t/03_async_error.t
+@@ -3,7 +3,7 @@ use Test::Simple tests => 4;
+ # Submit an asynchronous job with a failure
+ 
+ # Verify that the process is running
+-$ret = `ps auwx | grep pg_dbms_job: | grep -v grep | wc -l`;
++$ret = `psql -X -d regress_dbms_job -Atc "SELECT count(*) FROM pg_stat_activity WHERE backend_type = 'pg_dbms_job'"`;
+ chomp($ret);
+ ok( $ret eq "1", "Daemon pg_dbms_job is running");
+ 
+--- a/t/04_queue_interval.t
++++ b/t/04_queue_interval.t
+@@ -3,7 +3,7 @@ use Test::Simple tests => 5;
+ # Submit an asynchronous job and validate that queue_job_interval is respected
+ 
+ # Verify that the process is running
+-$ret = `ps auwx | grep pg_dbms_job: | grep -v grep | wc -l`;
++$ret = `psql -X -d regress_dbms_job -Atc "SELECT count(*) FROM pg_stat_activity WHERE backend_type = 'pg_dbms_job'"`;
+ chomp($ret);
+ ok( $ret eq "1", "Background worker pg_dbms_job is running");
+ 
+--- a/t/05_scheduled.t
++++ b/t/05_scheduled.t
+@@ -3,7 +3,7 @@ use Test::Simple tests => 11;
+ # Test scheduled job with an interval of 6 seconds
+ 
+ # Verify that the process is running
+-$ret = `ps auwx | grep pg_dbms_job: | grep -v grep | wc -l`;
++$ret = `psql -X -d regress_dbms_job -Atc "SELECT count(*) FROM pg_stat_activity WHERE backend_type = 'pg_dbms_job'"`;
+ chomp($ret);
+ ok( $ret eq "1", "Background worker pg_dbms_job is running");
+ 
+--- a/t/06_procedures.t
++++ b/t/06_procedures.t
+@@ -3,7 +3,7 @@ use Test::Simple tests => 20;
+ # Test pg_dbms_job procedures
+ 
+ # Verify that the process is running
+-$ret = `ps auwx | grep pg_dbms_job: | grep -v grep | wc -l`;
++$ret = `psql -X -d regress_dbms_job -Atc "SELECT count(*) FROM pg_stat_activity WHERE backend_type = 'pg_dbms_job'"`;
+ chomp($ret);
+ ok( $ret eq "1", "Background worker pg_dbms_job is running");
+ 
+--- a/t/07_run.t
++++ b/t/07_run.t
+@@ -3,7 +3,7 @@ use Test::Simple tests => 11;
+ # Test procedure dbms_job.run
+ 
+ # Verify that the process is running
+-$ret = `ps auwx | grep pg_dbms_job: | grep -v grep | wc -l`;
++$ret = `psql -X -d regress_dbms_job -Atc "SELECT count(*) FROM pg_stat_activity WHERE backend_type = 'pg_dbms_job'"`;
+ chomp($ret);
+ ok( $ret eq "1", "Background worker pg_dbms_job is running");
+ 

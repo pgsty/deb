@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+for version in $(cat debian/pgversions); do
+	pg_virtualenv -v "$version" -t \
+		-o shared_preload_libraries=pg_dbms_job \
+		-o pg_dbms_job.database=regress_dbms_job \
+		-o pg_dbms_job.username=regress_dbms_job_dba \
+		make PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config" installcheck
+done

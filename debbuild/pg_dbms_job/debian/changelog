@@ -1,0 +1,10 @@
+pg-dbms-job (2.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for pg_dbms_job 2.0.
+  * Build version-specific packages for PostgreSQL 14 through 18.
+  * Keep upstream's Debian-compatible postgresql/libpq-fe.h include path.
+  * Verify source integrity and generate automatic debug symbols.
+  * Make upstream worker tests cluster-scoped and autopkgtest-safe.
+  * Install the upstream changelog through dh_installchangelogs.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 21:50:00 +0800

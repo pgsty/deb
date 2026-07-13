@@ -1,0 +1,16 @@
+Source: pg-dbms-job
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libpq-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/HexaCluster/pg_dbms_job
+
+Package: postgresql-PGVERSION-pg-dbms-job
+Architecture: any
+Provides: postgresql-pg-dbms-job
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Oracle-compatible DBMS_JOB scheduler for PostgreSQL PGVERSION
+ pg_dbms_job provides transactional scheduled and asynchronous jobs through a
+ per-database background worker compatible with the Oracle DBMS_JOB interface.
