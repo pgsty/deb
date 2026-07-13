@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+for version in $(cat debian/pgversions); do
+	pg_virtualenv -v "$version" -t \
+		-o shared_preload_libraries=pg_dbms_errlog \
+		make PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config" installcheck
+done

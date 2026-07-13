@@ -1,0 +1,9 @@
+pg-dbms-errlog (2.4-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for pg_dbms_errlog 2.4.
+  * Build version-specific packages for PostgreSQL 14 through 18.
+  * Generate shared-library dependencies and automatic debug symbols.
+  * Verify source integrity and prevent stale build artifacts.
+  * Install the upstream changelog through dh_installchangelogs.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 21:50:00 +0800

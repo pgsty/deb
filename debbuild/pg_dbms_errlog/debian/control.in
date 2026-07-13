@@ -1,0 +1,17 @@
+Source: pg-dbms-errlog
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/HexaCluster/pg_dbms_errlog
+
+Package: postgresql-PGVERSION-pg-dbms-errlog
+Architecture: any
+Provides: postgresql-pg-dbms-errlog
+Depends: ${postgresql:Depends}, postgresql-PGVERSION-pg-statement-rollback (>= 1.5), ${shlibs:Depends}, ${misc:Depends}
+Description: Oracle-style DML error logging for PostgreSQL PGVERSION
+ pg_dbms_errlog lets DML continue after row errors and records failures in a
+ dedicated error table. It uses shared memory and background workers together
+ with pg_statement_rollback.
