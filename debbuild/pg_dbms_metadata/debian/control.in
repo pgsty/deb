@@ -1,0 +1,18 @@
+Source: pg-dbms-metadata
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/HexaCluster/pg_dbms_metadata
+
+Package: postgresql-PGVERSION-pg-dbms-metadata
+Architecture: all
+Provides: postgresql-pg-dbms-metadata
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Oracle DBMS_METADATA compatibility for PostgreSQL PGVERSION
+ pg_dbms_metadata provides SQL functions and procedures for extracting object
+ DDL in a way compatible with Oracle's DBMS_METADATA package. It can retrieve
+ DDL for tables, views, sequences, routines, indexes, constraints, triggers,
+ types, dependent objects, and role grants.

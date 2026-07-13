@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+
+for version in $(cat debian/pgversions); do
+	pg_virtualenv -v "$version" -t \
+		make PG_CONFIG="/usr/lib/postgresql/$version/bin/pg_config" installcheck
+done

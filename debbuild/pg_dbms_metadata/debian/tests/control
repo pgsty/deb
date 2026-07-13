@@ -1,0 +1,3 @@
+Tests: upstream
+Depends: @, postgresql-common, make
+Restrictions: allow-stderr
