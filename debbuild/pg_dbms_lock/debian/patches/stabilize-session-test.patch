@@ -1,0 +1,21 @@
+Description: Wait for asynchronous session tests to finish before comparison
+ The TAP driver starts two psql sessions in the background. Session one sleeps
+ for a total of thirteen seconds, but the driver waits only seven seconds after
+ the foreground session returns. Depending on scheduling, the output file is
+ compared while psql is still running. Use a conservative wait that covers the
+ complete scripted session and removes the observed PG16 race.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-07-11
+
+--- a/t/03_sessions.t
++++ b/t/03_sessions.t
+@@ -15,7 +15,7 @@
+ $ret = `psql -X -d regress_dbms_lock -f test/sql/session3.sql > results/session3.out 2>&1`;
+ ok( $? == 0, "test for session3 lock");
+ 
+-sleep(7);
++sleep(15);
+ 
+ $ret = `psql -X -d regress_dbms_lock -c "SELECT action, session, (date_trunc('second', executed) - lag(date_trunc('second', executed)) over(PARTITION BY session)) FROM lock_test" > results/session.out`;
+ ok( $? == 0, "result for sessions 2 and 3 work");

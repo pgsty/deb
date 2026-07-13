@@ -1,0 +1,45 @@
+Description: Call the pg_background 2.x API by its exported names
+ pg_background 2.0 removed the v1 pg_background_launch/result functions and
+ exports the handle-based calls as pg_background_launch_v2 and
+ pg_background_result_v2. pg_dbms_lock 2.0 already consumes the v2 handle but
+ calls the removed names, so named lock allocation fails at runtime.
+Author: Pigsty packaging
+Forwarded: no
+Last-Update: 2026-07-11
+
+--- a/pg_dbms_lock.control
++++ b/pg_dbms_lock.control
+@@ -2,4 +2,5 @@ comment = 'Extension to add Oracle DBMS_LOCK full compatibility to PostgreSQL'
+ default_version = '2.0.0'
+ module_pathname = '$libdir/pg_dbms_lock'
++requires = 'pg_background'
+ schema = 'dbms_lock'
+ relocatable = false
+--- a/sql/pg_dbms_lock--2.0.0.sql
++++ b/sql/pg_dbms_lock--2.0.0.sql
+@@ -66,9 +66,9 @@ BEGIN
+         -- Create an entry in the dbms_lock.dbms_lock_allocated table
+         -- that will be completed by the call to dbms_lock.request
+         query := format('INSERT INTO dbms_lock.dbms_lock_allocated VALUES (%L, %s, %L) ON CONFLICT (name) DO UPDATE SET expiration = %L', lockname, lockhandle_id, expire_date::timestamp(0), expire_date::timestamp(0));
+-        query := 'SELECT (h).pid, (h).cookie FROM pg_background_launch(' || quote_literal(query) || ') as h';
++        query := 'SELECT (h).pid, (h).cookie FROM pg_background_launch_v2(' || quote_literal(query) || ') as h';
+         EXECUTE query INTO lockpid, lockcookie_id;
+-        query := 'SELECT * FROM pg_background_result(' || lockpid || ', ' || lockcookie_id || ') as (result TEXT)';
++        query := 'SELECT * FROM pg_background_result_v2(' || lockpid || ', ' || lockcookie_id || ') as (result TEXT)';
+         EXECUTE query;
+ 
+ 	-- Set output parameter
+--- a/updates/pg_dbms_lock--1.0.0--2.0.0.sql
++++ b/updates/pg_dbms_lock--1.0.0--2.0.0.sql
+@@ -35,9 +35,9 @@ BEGIN
+         -- Create an entry in the dbms_lock.dbms_lock_allocated table
+         -- that will be completed by the call to dbms_lock.request
+         query := format('INSERT INTO dbms_lock.dbms_lock_allocated VALUES (%L, %s, %L) ON CONFLICT (name) DO UPDATE SET expiration = %L', lockname, lockhandle_id, expire_date::timestamp(0), expire_date::timestamp(0));
+-        query := 'SELECT (h).pid, (h).cookie FROM pg_background_launch(' || quote_literal(query) || ') as h';
++        query := 'SELECT (h).pid, (h).cookie FROM pg_background_launch_v2(' || quote_literal(query) || ') as h';
+         EXECUTE query INTO lockpid, lockcookie_id;
+-        query := 'SELECT * FROM pg_background_result(' || lockpid || ', ' || lockcookie_id || ') as (result TEXT)';
++        query := 'SELECT * FROM pg_background_result_v2(' || lockpid || ', ' || lockcookie_id || ') as (result TEXT)';
+         EXECUTE query;
+ 
+ 	-- Set output parameter

@@ -1,0 +1,17 @@
+Source: pg-dbms-lock
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/HexaCluster/pg_dbms_lock
+
+Package: postgresql-PGVERSION-pg-dbms-lock
+Architecture: all
+Provides: postgresql-pg-dbms-lock
+Depends: ${postgresql:Depends}, postgresql-PGVERSION-pg-background (>= 2.0), ${misc:Depends}
+Description: Oracle DBMS_LOCK compatibility for PostgreSQL PGVERSION
+ pg_dbms_lock implements Oracle-compatible named and numeric advisory lock
+ operations, including allocation, requests with shared or exclusive modes,
+ explicit release, timeout handling, and sleep support.
