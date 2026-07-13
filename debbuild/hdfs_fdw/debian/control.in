@@ -1,0 +1,17 @@
+Source: hdfs-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), g++, default-jdk-headless, libxml2-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/EnterpriseDB/hdfs_fdw
+
+Package: postgresql-PGVERSION-hdfs-fdw
+Architecture: any
+Provides: postgresql-hdfs-fdw
+Depends: ${postgresql:Depends}, default-jre-headless, ${shlibs:Depends}, ${misc:Depends}
+Description: Hadoop/Hive foreign data wrapper for PostgreSQL PGVERSION
+ hdfs_fdw accesses Hive-compatible remote data sources through an embedded JVM
+ and JDBC bridge. A suitable Hive JDBC driver and remote service are required
+ for actual queries.

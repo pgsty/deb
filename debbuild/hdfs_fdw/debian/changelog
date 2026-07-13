@@ -1,0 +1,10 @@
+hdfs-fdw (2.3.3-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for hdfs_fdw 2.3.3.
+  * Build version-specific packages for PostgreSQL 14 through 18.
+  * Keep the private libhive bridge co-located with an origin rpath.
+  * Verify source integrity and generate automatic debug symbols.
+  * Build Java 8-compatible bytecode, use the Debian Java share directory, and
+    apply full linker hardening to the private bridge.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 21:50:00 +0800

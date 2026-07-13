@@ -1,0 +1,19 @@
+Description: Resolve the co-located private libhive bridge at runtime
+ Each PostgreSQL-version package installs its ABI-independent bridge beside
+ hdfs_fdw.so. Debian's dynamic loader does not otherwise search that private
+ PostgreSQL module directory for DT_NEEDED libraries.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-07-11
+
+--- a/Makefile
++++ b/Makefile
+@@ -11,7 +11,7 @@
+ THRIFT_HOME:="$(shell echo $(THRIFT_HOME))"
+ 
+ PG_CPPFLAGS = -Wno-unused-variable -I$(JDK_INCLUDE) -I$(JDK_INCLUDE)/linux/  -I$(HIVECLIENT_HOME) -DHAVE_NETINET_IN_H -DHAVE_INTTYPES_H
+-SHLIB_LINK := -L$(HIVECLIENT_HOME) -lhive -lstdc++ -L$(JDK_INCLUDE) $(LDFLAGS)
++SHLIB_LINK := -Wl,-rpath,'$$ORIGIN' -L$(HIVECLIENT_HOME) -lhive -lstdc++ -L$(JDK_INCLUDE) $(LDFLAGS)
+ 
+ 
+ OBJS = hdfs_client.o hdfs_query.o hdfs_option.o hdfs_deparse.o hdfs_connection.o hdfs_fdw.o

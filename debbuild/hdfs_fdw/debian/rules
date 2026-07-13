@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+
+export CC = gcc
+export CXX = g++
+export JDK_INCLUDE = /usr/lib/jvm/default-java/include
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_build:
+	$(MAKE) -C libhive USE_PGXS=1 JDK_INCLUDE=$(JDK_INCLUDE)
+	cd libhive/jdbc && javac --release 8 MsgBuf.java JDBCType.java HiveJdbcClient.java
+	cd libhive/jdbc && jar cf HiveJdbcClient-1.0.jar *.class
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+	$(MAKE) -C libhive clean || true
+	rm -f libhive/jdbc/*.class libhive/jdbc/HiveJdbcClient-1.0.jar
+
+override_dh_auto_install:
+	+pg_buildext loop postgresql-%v-hdfs-fdw
+	for d in debian/postgresql-*-hdfs-fdw; do \
+		v=$${d#debian/postgresql-}; v=$${v%-hdfs-fdw}; \
+		install -D -m 0644 libhive/libhive.so $$d/usr/lib/postgresql/$$v/lib/libhive.so; \
+		install -D -m 0644 libhive/jdbc/HiveJdbcClient-1.0.jar $$d/usr/share/java/postgresql-$$v-hdfs-fdw/HiveJdbcClient-1.0.jar; \
+	done
+	rm -rf debian/postgresql-*-hdfs-fdw/usr/share/doc/postgresql-doc-*/
+
+override_dh_installdocs:
+	dh_installdocs --all README.md CONTRIBUTING.md
+
+%:
+	dh $@

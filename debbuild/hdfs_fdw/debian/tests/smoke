@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+for version in $(cat debian/pgversions); do
+	pg_virtualenv -v "$version" -t psql -X -v ON_ERROR_STOP=1 <<SQL
+SET hdfs_fdw.jvmpath = '/usr/lib/jvm/default-java/lib/server';
+SET hdfs_fdw.classpath = '/usr/share/java/postgresql-$version-hdfs-fdw/HiveJdbcClient-1.0.jar';
+CREATE EXTENSION hdfs_fdw;
+SELECT hdfs_fdw_version() = 20303;
+CREATE SERVER hdfs_smoke FOREIGN DATA WRAPPER hdfs_fdw OPTIONS (host '127.0.0.1');
+SELECT count(*) = 1 FROM pg_foreign_server WHERE srvname = 'hdfs_smoke';
+SQL
+done
