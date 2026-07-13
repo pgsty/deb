@@ -1,0 +1,9 @@
+pgbouncer-fdw (1.4.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for pgbouncer_fdw 1.4.0.
+  * Build version-specific packages for PostgreSQL 14 through 18.
+  * Recommend, rather than require, a local PgBouncer daemon.
+  * Verify source integrity and prevent stale build artifacts.
+  * Install the upstream changelog through dh_installchangelogs.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 21:50:00 +0800

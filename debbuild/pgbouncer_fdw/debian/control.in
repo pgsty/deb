@@ -1,0 +1,18 @@
+Source: pgbouncer-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/CrunchyData/pgbouncer_fdw
+
+Package: postgresql-PGVERSION-pgbouncer-fdw
+Architecture: all
+Provides: postgresql-pgbouncer-fdw
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Recommends: pgbouncer (>= 1.17)
+Description: Query and control PgBouncer from PostgreSQL PGVERSION
+ pgbouncer_fdw provides SQL views over PgBouncer SHOW commands and functions
+ for administrative commands. It uses dblink_fdw to connect to one or more
+ PgBouncer admin consoles.
