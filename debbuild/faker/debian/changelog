@@ -1,0 +1,12 @@
+postgresql-faker (0.5.3-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for postgresql_faker 0.5.3.
+  * Build version-specific packages for PostgreSQL 14 through 18.
+  * Quote the json function name for PostgreSQL 17 and later.
+  * Require the upstream-supported Faker API baseline.
+  * Verify source integrity and generate automatic debug symbols.
+  * Remove build-directory paths from PostgreSQL 14 LTO debug information.
+  * Prevent a default-PG18 prebuild from contaminating the PG14 package.
+  * Install the upstream changelog through dh_installchangelogs.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 21:50:00 +0800

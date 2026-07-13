@@ -1,0 +1,16 @@
+Source: postgresql-faker
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://gitlab.com/dalibo/postgresql_faker
+
+Package: postgresql-PGVERSION-faker
+Architecture: any
+Provides: postgresql-faker
+Depends: ${postgresql:Depends}, postgresql-plpython3-PGVERSION, python3-fake-factory (>= 6.1.1), ${misc:Depends}
+Description: Fake data generator for PostgreSQL PGVERSION
+ postgresql_faker exposes the Python Faker library as SQL functions for
+ generating realistic test, training, anonymization, and demonstration data.

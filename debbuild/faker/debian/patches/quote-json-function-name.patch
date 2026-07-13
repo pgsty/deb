@@ -1,0 +1,19 @@
+Description: Quote json function name for PostgreSQL 17 and later
+ PostgreSQL 17 rejects an unquoted function name of json in CREATE FUNCTION.
+ Quoting the lower-case identifier is backwards-compatible and preserves the
+ public SQL name on every supported PostgreSQL release.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-07-11
+
+--- a/faker--0.5.3.sql
++++ b/faker--0.5.3.sql
+@@ -36842,7 +36842,7 @@ return GD['Faker'].csv(header
+   SET search_path = @extschema@
+ ;
+ 
+-CREATE OR REPLACE FUNCTION json("data_columns" TEXT = NULL ,"num_rows" INTEGER = 10 ,"indent" TEXT = NULL ) RETURNS TEXT
++CREATE OR REPLACE FUNCTION "json"("data_columns" TEXT = NULL ,"num_rows" INTEGER = 10 ,"indent" TEXT = NULL ) RETURNS TEXT
+ AS $$
+ try:
+   GD['Faker']

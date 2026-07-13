@@ -1,0 +1,21 @@
+Description: Remove the build directory from native and LTO debug information
+ PostgreSQL 14's GCC LTO link records the current source directory in the
+ generated shared object even when the normal Debian CFLAGS are present. Pass
+ explicit file and debug prefix maps through PG_CPPFLAGS so native objects,
+ LTO partitions, LLVM bitcode, and dbgsym packages are path-independent.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-07-11
+
+--- a/Makefile
++++ b/Makefile
+@@ -9,6 +9,9 @@ REGRESS_OPTS = --inputdir=tests
+ EXTRA_CLEAN = _build _venv $(ZIPBALL)
+ OBJS = faker.o
+ 
++PG_CPPFLAGS += -ffile-prefix-map=$(CURDIR)=.
++PG_CPPFLAGS += -fdebug-prefix-map=$(CURDIR)=.
++
+ PG_CONFIG = pg_config
+ PGXS := $(shell $(PG_CONFIG) --pgxs)
+ include $(PGXS)
