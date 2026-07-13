@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+for version in $(cat debian/pgversions); do
+	pg_virtualenv -v "$version" -t psql -X -v ON_ERROR_STOP=1 <<'SQL'
+CREATE EXTENSION odbc_fdw;
+CREATE SERVER odbc_smoke FOREIGN DATA WRAPPER odbc_fdw OPTIONS (driver 'nonexistent-smoke-driver');
+SELECT count(*) = 1 FROM pg_foreign_server WHERE srvname = 'odbc_smoke';
+SELECT count(*) = 2 FROM pg_proc WHERE proname IN ('odbc_fdw_handler', 'odbc_fdw_validator');
+SQL
+done

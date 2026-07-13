@@ -1,0 +1,16 @@
+Source: odbc-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), unixodbc-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/devrimgunduz/odbc_fdw
+
+Package: postgresql-PGVERSION-odbc-fdw
+Architecture: any
+Provides: postgresql-odbc-fdw
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: ODBC foreign data wrapper for PostgreSQL PGVERSION
+ odbc_fdw provides foreign tables backed by remote data sources reachable
+ through unixODBC and an installed ODBC driver.

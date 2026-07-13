@@ -1,0 +1,7 @@
+odbc-fdw (0.6.1-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for odbc_fdw 0.6.1.
+  * Build version-specific packages for PostgreSQL 14 through 18.
+  * Verify source integrity and generate automatic debug symbols.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 21:50:00 +0800
