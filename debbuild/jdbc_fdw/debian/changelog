@@ -1,0 +1,10 @@
+jdbc-fdw (0.5.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for current upstream jdbc_fdw 0.5.0.
+  * Build version-specific packages for PostgreSQL 14 through 18.
+  * Derive JVM linking from Noble's architecture-neutral default-java path.
+  * Verify source integrity and generate automatic debug symbols.
+  * Replace the absolute JVM RUNPATH with an origin path and packaged link.
+  * Compile Java classes for the upstream-supported Java 8 runtime baseline.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 21:50:00 +0800

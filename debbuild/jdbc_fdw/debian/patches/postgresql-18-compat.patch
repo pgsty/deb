@@ -1,0 +1,61 @@
+Description: Adapt jdbc_fdw 0.5.0 to PostgreSQL 18 planner and EXPLAIN APIs
+ PostgreSQL 18 moved the ExplainState definition into explain_state.h and
+ added the disabled_nodes argument to foreign path constructors.  Pass zero,
+ matching the default used for an enabled path in core callers.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-07-11
+
+--- a/jdbc_fdw.c
++++ b/jdbc_fdw.c
+@@ -16,6 +16,10 @@
+ #include "access/sysattr.h"
+ #include "commands/defrem.h"
+ #include "commands/explain.h"
++#if PG_VERSION_NUM >= 180000
++#include "commands/explain_format.h"
++#include "commands/explain_state.h"
++#endif
+ #include "commands/vacuum.h"
+ #include "foreign/fdwapi.h"
+ #include "funcapi.h"
+@@ -787,6 +791,9 @@ jdbcGetForeignPaths(PlannerInfo *root,
+ 									 NULL,	/* default pathtarget */
+ #endif
+ 									 fpinfo->rows,
++#if PG_VERSION_NUM >= 180000
++									 0,		/* disabled_nodes */
++#endif
+ 									 fpinfo->startup_cost,
+ 									 fpinfo->total_cost,
+ 									 NIL,	/* no pathkeys */
+@@ -2395,6 +2402,9 @@ jdbc_add_foreign_grouping_paths(PlannerInfo *root,
+ 										  grouped_rel,
+ 										  grouped_rel->reltarget,
+ 										  rows,
++#if PG_VERSION_NUM >= 180000
++										  0,	/* disabled_nodes */
++#endif
+ 										  startup_cost,
+ 										  total_cost,
+ 										  NIL,	/* no pathkeys */
+@@ -2540,6 +2550,9 @@ jdbc_add_foreign_final_paths(PlannerInfo *root,
+ 													   path->parent,
+ 													   path->pathtarget,
+ 													   path->rows,
++#if PG_VERSION_NUM >= 180000
++													   0, /* disabled_nodes */
++#endif
+ 													   path->startup_cost,
+ 													   path->total_cost,
+ 													   path->pathkeys,
+@@ -2684,6 +2697,9 @@ jdbc_add_foreign_ordered_paths(PlannerInfo *root,
+ 										   input_rel,
+ 										   root->upper_targets[UPPERREL_FINAL],
+ 										   rows,
++#if PG_VERSION_NUM >= 180000
++										   0, /* disabled_nodes */
++#endif
+ 										   startup_cost,
+ 										   total_cost,
+ 										   pathkeys,

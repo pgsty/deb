@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+for version in $(cat debian/pgversions); do
+	pg_virtualenv -v "$version" -t psql -X -v ON_ERROR_STOP=1 <<'SQL'
+CREATE EXTENSION jdbc_fdw;
+SELECT jdbc_fdw_version() = 500;
+CREATE SERVER jdbc_smoke FOREIGN DATA WRAPPER jdbc_fdw
+  OPTIONS (drivername 'invalid.smoke.Driver', url 'jdbc:invalid:smoke');
+SELECT count(*) = 1 FROM pg_foreign_server WHERE srvname = 'jdbc_smoke';
+SQL
+done

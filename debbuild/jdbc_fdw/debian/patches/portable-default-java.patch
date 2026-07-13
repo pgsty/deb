@@ -1,0 +1,38 @@
+Description: Link the JVM through Debian's architecture-neutral default path
+ Upstream defaults to /usr/lib64 and PGRPM hard-codes an amd64 OpenJDK 8 path.
+ Noble provides /usr/lib/jvm/default-java/lib/server on both amd64 and arm64.
+ Link against that stable alternatives path at build time. Use an origin
+ RUNPATH at runtime; the Debian package supplies a relative libjvm.so link next
+ to the extension, avoiding both a CPU-specific path and an absolute RUNPATH.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-07-11
+
+--- a/Makefile
++++ b/Makefile
+@@ -13,9 +13,9 @@ REGRESS = postgresql/new_test postgresql/aggregates postgresql/date postgresql/float8 postgresql/insert postgresql/select postgresql/update postgresql/delete postgresql/float4 postgresql/int4 postgresql/int8 postgresql/ported_postgres_fdw postgresql/exec_function
+ 
+ JDBC_CONFIG = jdbc_config
+ 
+-LIBDIR=/usr/lib64/
++LIBDIR=/usr/lib/jvm/default-java/lib/server
+ 
+-SHLIB_LINK += -L$(LIBDIR) -ljvm
++SHLIB_LINK += -L$(LIBDIR) -Wl,-rpath,'$$ORIGIN' -ljvm
+ 
+ UNAME = $(shell uname)
+ 
+@@ -33,9 +33,12 @@ PG_CPPFLAGS=-D'SHARE_EXT_DIR=$(datadir)/extension' -I$(libpq_srcdir)
+ # Target to compile all Java source files
+ all:$(JAVA_CLASSES)
+ 
++JAVAC ?= javac
++JAVACFLAGS ?= --release 8
++
+ # Rules for compiling each .java file into a .class
+ %.class: %.java
+-	javac $<
++	$(JAVAC) $(JAVACFLAGS) $<
+ 
+ # Use DATA_built to install .class files
+ DATA_built = $(JAVA_CLASSES)

@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+export CC = gcc
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+override_dh_auto_build:
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+	rm -f *.class
+
+override_dh_auto_install:
+	+pg_buildext loop postgresql-%v-jdbc-fdw
+	for v in $(shell cat debian/pgversions); do \
+		dh_link -p postgresql-$$v-jdbc-fdw \
+			/usr/lib/jvm/default-java/lib/server/libjvm.so \
+			/usr/lib/postgresql/$$v/lib/libjvm.so; \
+	done
+	rm -rf debian/postgresql-*-jdbc-fdw/usr/share/doc/postgresql-doc-*/
+
+override_dh_installdocs:
+	dh_installdocs --all README.md
+
+%:
+	dh $@
