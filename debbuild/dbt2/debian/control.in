@@ -1,0 +1,17 @@
+Source: dbt2-extensions
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/osdldbt/dbt2
+
+Package: postgresql-PGVERSION-dbt2
+Architecture: any
+Provides: postgresql-dbt2
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: DBT-2 PostgreSQL stored functions for PostgreSQL PGVERSION
+ This package contains the C stored functions used by the DBT-2 benchmark.
+ The separate benchmark driver, schemas, and data-generation toolchain are not
+ included.

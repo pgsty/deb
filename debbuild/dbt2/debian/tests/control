@@ -1,0 +1,3 @@
+Tests: smoke
+Depends: @, postgresql-common
+Restrictions: allow-stderr

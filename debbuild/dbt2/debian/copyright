@@ -1,0 +1,17 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: dbt2
+Source: https://github.com/osdldbt/dbt2
+
+Files: *
+Copyright: 2003-2025 The DBT-2 Authors
+           2003-2008 Mark Wong
+           2003-2008 Open Source Development Labs, Inc.
+           2015 2ndQuadrant, Ltd.
+License: Artistic-2.0
+Comment: The current upstream LICENSE and GitHub license metadata both identify
+ Artistic-2.0. The PGRPM spec's GPL-2+ field does not match the source archive.
+
+License: Artistic-2.0
+ The complete verbatim Artistic License 2.0 from the source archive is shipped
+ as LICENSE in the same package documentation directory. It is also available
+ from https://www.perlfoundation.org/artistic-license-20.html.

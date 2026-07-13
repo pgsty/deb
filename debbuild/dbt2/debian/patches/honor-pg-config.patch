@@ -1,0 +1,23 @@
+Description: Honor PG_CONFIG selected by pg_buildext
+ Hard-coding pg_config makes a multi-version build compile every package
+ against whichever PostgreSQL is first in PATH. Use the conventional variable
+ so each package receives headers and PGXS from its matching server version.
+ Preserve Debian's reproducible-build path mapping in both native objects and
+ PostgreSQL's LLVM bitcode output.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-07-11
+
+--- a/Makefile
++++ b/Makefile
+@@ -7,5 +7,8 @@ DATA = dbt2--0.45.0.sql
+ PGFILEDESC = "DBT-2 C stored functions"
+ 
+-PG_CPPFLAGS=-g -fno-omit-frame-pointer -Wall
++PG_CPPFLAGS += -g -fno-omit-frame-pointer -Wall
++PG_CPPFLAGS += -ffile-prefix-map=$(CURDIR)=.
++PG_CPPFLAGS += -fdebug-prefix-map=$(CURDIR)=.
+-PGXS := $(shell pg_config --pgxs)
++PG_CONFIG ?= pg_config
++PGXS := $(shell $(PG_CONFIG) --pgxs)
+ include $(PGXS)
