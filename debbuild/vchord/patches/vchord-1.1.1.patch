@@ -1,9 +1,191 @@
+(B[mdiff --git a/Cargo.lock b/Cargo.lock
+index ebbd547..7f60c91 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -31 +31 @@ name = "always_equal"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -39,10 +38,0 @@ checksum = "4b46cbb362ab8752921c97e041f5e366ee6297bd428a31275b9fcf1e380f7299"
+-[[package]]
+-name = "annotate-snippets"
+-version = "0.11.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "710e8eae58854cdc1790fcb56cca04d712a17be849eeb81da2a724bf4bae2bc4"
+-dependencies = [
+- "anstyle",
+- "unicode-width",
+-]
+-
+@@ -123 +112,0 @@ dependencies = [
+- "annotate-snippets",
+@@ -132 +121 @@ dependencies = [
+- "shlex",
++ "shlex 1.3.0",
+@@ -138 +127 @@ name = "bitflags"
+-version = "2.10.0"
++version = "2.13.1"
+@@ -140 +129 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "812e12b5285cc515a9c72a5c1d3b6d46a19dac5acfef5265968c166106e31dd3"
++checksum = "b588b76d00fde79687d7646a9b5bdf3cc0f655e0bbd080335a95d7e96f3587da"
+@@ -183 +172 @@ dependencies = [
+- "shlex",
++ "shlex 1.3.0",
+@@ -317 +306 @@ name = "convert_case"
+-version = "0.8.0"
++version = "0.11.0"
+@@ -319 +308 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "baaaa0ecca5b51987b9423ccdc971514dd8b0bb7b4060b983d3664dad3f1f89f"
++checksum = "affbf0190ed2caf063e3def54ff444b449371d55c58e513a95ab98eca50adb49"
+@@ -471 +460 @@ name = "distance"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -563 +552 @@ name = "feistel"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -624,12 +612,0 @@ checksum = "e6d5a32815ae3f33302d95fdcb2ce17862f8c65363dcfd29360480ba1001fc9c"
+-[[package]]
+-name = "getrandom"
+-version = "0.3.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "899def5c37c4fd7b2664648c28120ecec138e4d395b459e5ca34f9cce2dd77fd"
+-dependencies = [
+- "cfg-if",
+- "libc",
+- "r-efi",
+- "wasip2",
+-]
+-
+@@ -837 +814 @@ name = "index"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -901 +878 @@ name = "k_means"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -1119 +1096 @@ name = "pgrx"
+-version = "0.17.0"
++version = "0.19.1"
+@@ -1121 +1098 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dd42eed31a68e3e6d7cec284cdaacd8ffa9b2b3ebb3f1df9ec2fd3558834c6e7"
++checksum = "da2d9afc1c8dc8885d777a173755dedd6c0345bfa84fae307a735511bd96b9cc"
+@@ -1140 +1117 @@ name = "pgrx-bindgen"
+-version = "0.17.0"
++version = "0.19.1"
+@@ -1142 +1119 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d30fa3688ab1cb6429ca46725eb32d5d9f186806c0f0aa6419f86e418b8a81ab"
++checksum = "b42d171ae578765094d8597ef04f593f4de7b8694c78a64e23bd69d304251504"
+@@ -1152 +1129 @@ dependencies = [
+- "shlex",
++ "shlex 2.0.1",
+@@ -1157,10 +1133,0 @@ dependencies = [
+-[[package]]
+-name = "pgrx-catalog"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d7b8320f441bd6aa7460a397d1a16dfb915979a1f665c85d9a7bc10d57e38cb8"
+-dependencies = [
+- "paste",
+- "pgrx",
+-]
+-
+@@ -1169 +1136 @@ name = "pgrx-macros"
+-version = "0.17.0"
++version = "0.19.1"
+@@ -1171 +1138 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1ca7cc537daa4cc004f12ad1d31756b506358aa900251a82c3280e719da88fa4"
++checksum = "7039b2a78ed764daced91b20907841ffe4a9b3d0f795ea7e9d37973d1e1509ec"
+@@ -1181 +1148 @@ name = "pgrx-pg-config"
+-version = "0.17.0"
++version = "0.19.1"
+@@ -1183 +1150 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1cd8670ad408093a83615fc68071929d7677b40021a475649a626319c464f0a3"
++checksum = "7ed293ffce438bacdff7e00b76c6a891083a8bbf3670bcfdb6f8125498284816"
+@@ -1194 +1161 @@ dependencies = [
+- "toml 0.9.12+spec-1.1.0",
++ "toml 1.0.0+spec-1.1.0",
+@@ -1201 +1168 @@ name = "pgrx-pg-sys"
+-version = "0.17.0"
++version = "0.19.1"
+@@ -1203 +1170 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d9f81faae87d533b573156261b17521c0c7f66f5ca5dab2b9e6ddbf5a63dbd14"
++checksum = "8b0e16aa08b282f278414081a1c082755def583b4ecfba53114f62e42f8bd06a"
+@@ -1215 +1182 @@ name = "pgrx-sql-entity-graph"
+-version = "0.17.0"
++version = "0.19.1"
+@@ -1217 +1184 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4800fa91a481a83d3c1aaffd1324fcd2e587df0ed342c71d6a66d0899027e505"
++checksum = "c92b0093b2077b9854f35d5d54d4e281dcb9b4e6a10a5a1fed310e58ab84b1e7"
+@@ -1344 +1311 @@ name = "quote"
+-version = "1.0.44"
++version = "1.0.46"
+@@ -1346 +1313 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "21b2ebcf727b7760c461f091f9f0f539b77b8e87f2fd88131e7f1b433b3cece4"
++checksum = "dfbc457d0c7a0759a614551b11a6409e5951f6c7537be1f1b7682b9ae9230368"
+@@ -1359 +1326 @@ name = "rabitq"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -1380 +1347 @@ dependencies = [
+- "getrandom 0.4.1",
++ "getrandom",
+@@ -1608,0 +1576,6 @@ checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
++[[package]]
++name = "shlex"
++version = "2.0.1"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "f8fadd59c855ef2080decdef8ff161eb6661b86933c9d82e5ba29dc602a55aba"
++
+@@ -1611 +1584 @@ name = "simd"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -1631 +1604 @@ name = "simd_macros"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -1640 +1613 @@ name = "small_iter"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -1722 +1695 @@ dependencies = [
+- "getrandom 0.4.1",
++ "getrandom",
+@@ -1855,6 +1827,0 @@ checksum = "f6ccf251212114b54433ec949fd6a7841275f9ada20dddd2f29e9ceea4501493"
+-[[package]]
+-name = "unicode-width"
+-version = "0.2.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b4ac048d71ede7ee76d585517add45da530660ef4390e49b098733c6e897f254"
+-
+@@ -1893 +1860 @@ name = "uuid"
+-version = "1.20.0"
++version = "1.24.0"
+@@ -1895 +1862 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ee48d38b119b0cd71fe4141b30f5ba9c7c5d9f4e7a3a8b4a674e4b6ef789976f"
++checksum = "bf3923a6f5c4c6382e0b653c4117f48d631ea17f38ed86e2a828e6f7412f5239"
+@@ -1897 +1864 @@ dependencies = [
+- "getrandom 0.3.4",
++ "getrandom",
+@@ -1934 +1901 @@ name = "vchord"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -1949 +1915,0 @@ dependencies = [
+- "pgrx-catalog",
+@@ -1969 +1935 @@ name = "vchordg"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -1986 +1952 @@ name = "vchordrq"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -2009 +1975 @@ name = "vector"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -2325 +2291 @@ name = "xtask"
+-version = "0.0.0"
++version = "1.1.1"
+@@ -2331 +2297 @@ dependencies = [
+- "shlex",
++ "shlex 1.3.0",
+diff --git a/Cargo.toml b/Cargo.toml
+index 743081f..bb87adc 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -14,11 +14,11 @@
- 
- [features]
- default = ["simd/init"]
+@@ -17,5 +17,5 @@ default = ["simd/init"]
 -pg14 = ["pgrx/pg14", "pgrx-catalog/pg14"]
 -pg15 = ["pgrx/pg15", "pgrx-catalog/pg15"]
 -pg16 = ["pgrx/pg16", "pgrx-catalog/pg16"]
@@ -14,31 +196,143 @@
 +pg16 = ["pgrx/pg16"]
 +pg17 = ["pgrx/pg17"]
 +pg18 = ["pgrx/pg18"]
- 
- [dependencies]
- always_equal = { path = "./crates/always_equal" }
-@@ -39,8 +39,7 @@
- dary_heap.workspace = true
- humansize = "2.1.3"
- paste.workspace = true
+@@ -42,2 +42 @@ paste.workspace = true
 -pgrx = { version = "=0.17.0", default-features = false, features = ["cshim"] }
 -pgrx-catalog = "0.3.2"
-+pgrx = { version = "=0.18.1", default-features = false, features = ["cshim"] }
- rand.workspace = true
- rayon.workspace = true
- rusqlite = { version = "0.38.0", features = ["bundled"] }
++pgrx = { version = "=0.19.1", default-features = false, features = ["cshim"] }
+@@ -65 +64 @@ members = ["crates/*"]
+-version = "0.0.0"
++version = "1.1.1"
+diff --git a/src/datatype/memory_halfvec.rs b/src/datatype/memory_halfvec.rs
+index e0b1dd8..25c55cb 100644
+--- a/src/datatype/memory_halfvec.rs
++++ b/src/datatype/memory_halfvec.rs
+@@ -218,6 +218,6 @@ unsafe impl SqlTranslatable for HalfvecInput<'_> {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("halfvec")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("halfvec"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(HalfvecInput<'_>);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("halfvec"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("halfvec")));
+@@ -227,6 +227,6 @@ unsafe impl SqlTranslatable for HalfvecOutput {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("halfvec")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("halfvec"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(HalfvecOutput);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("halfvec"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("halfvec")));
+diff --git a/src/datatype/memory_rabitq4.rs b/src/datatype/memory_rabitq4.rs
+index 3d51643..cf61bbc 100644
+--- a/src/datatype/memory_rabitq4.rs
++++ b/src/datatype/memory_rabitq4.rs
+@@ -235,6 +235,6 @@ unsafe impl SqlTranslatable for Rabitq4Input<'_> {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("rabitq4")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("rabitq4"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq4Input<'_>);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("rabitq4"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq4")));
+@@ -244,6 +244,6 @@ unsafe impl SqlTranslatable for Rabitq4Output {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("rabitq4")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("rabitq4"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq4Output);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("rabitq4"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq4")));
+diff --git a/src/datatype/memory_rabitq8.rs b/src/datatype/memory_rabitq8.rs
+index a6d04b1..89cc70a 100644
+--- a/src/datatype/memory_rabitq8.rs
++++ b/src/datatype/memory_rabitq8.rs
+@@ -235,6 +235,6 @@ unsafe impl SqlTranslatable for Rabitq8Input<'_> {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("rabitq8")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("rabitq8"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq8Input<'_>);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("rabitq8"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq8")));
+@@ -244,6 +244,6 @@ unsafe impl SqlTranslatable for Rabitq8Output {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("rabitq8")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("rabitq8"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq8Output);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("rabitq8"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq8")));
+diff --git a/src/datatype/memory_vector.rs b/src/datatype/memory_vector.rs
+index d982fdd..f5a1c18 100644
+--- a/src/datatype/memory_vector.rs
++++ b/src/datatype/memory_vector.rs
+@@ -217,6 +217,6 @@ unsafe impl SqlTranslatable for VectorInput<'_> {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("vector")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("vector"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(VectorInput<'_>);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("vector"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("vector")));
+@@ -226,6 +226,6 @@ unsafe impl SqlTranslatable for VectorOutput {
+-    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
+-        Ok(SqlMapping::As(String::from("vector")))
+-    }
+-    fn return_sql() -> Result<Returns, ReturnsError> {
+-        Ok(Returns::One(SqlMapping::As(String::from("vector"))))
+-    }
++    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(VectorOutput);
++    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
++    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
++        Ok(SqlMappingRef::literal("vector"));
++    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
++        Ok(ReturnsRef::One(SqlMappingRef::literal("vector")));
+diff --git a/src/index/functions.rs b/src/index/functions.rs
+index 922e46d..f44614c 100644
 --- a/src/index/functions.rs
 +++ b/src/index/functions.rs
-@@ -14,26 +14,83 @@
- 
- use crate::index::storage::PostgresRelation;
- use crate::recorder::dump;
+@@ -16,0 +17 @@ use crate::recorder::dump;
 +use pgrx::datum::IntoDatum;
- use pgrx::iter::SetOfIterator;
- use pgrx::pg_sys::Oid;
+@@ -19 +20 @@ use pgrx::pg_sys::Oid;
 -use pgrx_catalog::{PgAm, PgClass, PgClassRelkind};
 +use std::ffi::{CStr, c_char};
- 
+@@ -21,4 +22,56 @@ use pgrx_catalog::{PgAm, PgClass, PgClassRelkind};
 -#[pgrx::pg_extern(sql = "")]
 -fn _vchordg_prewarm(indexrelid: Oid) -> String {
 -    let pg_am = PgAm::search_amname(c"vchordg").unwrap();
@@ -99,35 +393,27 @@
 +
 +fn validate_index(indexrelid: Oid, amname: &CStr, am_label: &str) {
 +    let Some(pg_am_oid) = am_oid_by_name(amname) else {
-         pgrx::error!("vchord is not installed");
-     };
+@@ -27,2 +80 @@ fn _vchordg_prewarm(indexrelid: Oid) -> String {
 -    let pg_class = PgClass::search_reloid(indexrelid).unwrap();
 -    let Some(pg_class) = pg_class.get() else {
 +    let Some(pg_class) = class_info(indexrelid) else {
-         pgrx::error!("the relation does not exist");
-     };
+@@ -31,2 +83,2 @@ fn _vchordg_prewarm(indexrelid: Oid) -> String {
 -    if pg_class.relkind() != PgClassRelkind::Index {
 -        pgrx::error!("the relation {:?} is not an index", pg_class.relname());
 +    if pg_class.relkind != pgrx::pg_sys::RELKIND_INDEX as c_char {
 +        pgrx::error!("the relation {:?} is not an index", pg_class.relname);
-     }
+@@ -34,2 +86,2 @@ fn _vchordg_prewarm(indexrelid: Oid) -> String {
 -    if pg_class.relam() != pg_am.oid() {
 -        pgrx::error!("the index {:?} is not a vchordg index", pg_class.relname());
 +    if pg_class.relam != pg_am_oid {
 +        pgrx::error!("the index {:?} is not a {} index", pg_class.relname, am_label);
-     }
+@@ -36,0 +89,5 @@ fn _vchordg_prewarm(indexrelid: Oid) -> String {
 +}
 +
 +#[pgrx::pg_extern(sql = "")]
 +fn _vchordg_prewarm(indexrelid: Oid) -> String {
 +    validate_index(indexrelid, c"vchordg", "vchordg");
-     let relation = Index::open(indexrelid, pgrx::pg_sys::AccessShareLock as _);
-     let opfamily = unsafe { crate::index::vchordg::opclass::opfamily(relation.raw()) };
-     let index = unsafe { PostgresRelation::new(relation.raw()) };
-@@ -42,20 +99,7 @@
- 
- #[pgrx::pg_extern(sql = "")]
- fn _vchordrq_prewarm(indexrelid: Oid, height: i32) -> String {
+@@ -45,14 +102 @@ fn _vchordrq_prewarm(indexrelid: Oid, height: i32) -> String {
 -    let pg_am = PgAm::search_amname(c"vchordrq").unwrap();
 -    let Some(pg_am) = pg_am.get() else {
 -        pgrx::error!("vchord is not installed");
@@ -143,13 +429,7 @@
 -        pgrx::error!("the index {:?} is not a vchordrq index", pg_class.relname());
 -    }
 +    validate_index(indexrelid, c"vchordrq", "vchordrq");
-     let relation = Index::open(indexrelid, pgrx::pg_sys::AccessShareLock as _);
-     let opfamily = unsafe { crate::index::vchordrq::opclass::opfamily(relation.raw()) };
-     let index = unsafe { PostgresRelation::new(relation.raw()) };
-@@ -89,20 +133,7 @@
- 
- #[pgrx::pg_extern(sql = "")]
- fn _vchordrq_sampled_values(indexrelid: Oid) -> SetOfIterator<'static, String> {
+@@ -92,14 +136 @@ fn _vchordrq_sampled_values(indexrelid: Oid) -> SetOfIterator<'static, String> {
 -    let pg_am = PgAm::search_amname(c"vchordrq").unwrap();
 -    let Some(pg_am) = pg_am.get() else {
 -        pgrx::error!("vchord is not installed");
@@ -165,150 +445,3 @@
 -        pgrx::error!("the index {:?} is not a vchordrq index", pg_class.relname());
 -    }
 +    validate_index(indexrelid, c"vchordrq", "vchordrq");
-     // The user must have access to the index, if not, raise an error from Postgres.
-     let _relation = Index::open(indexrelid, pgrx::pg_sys::AccessShareLock as _);
-     let queries = dump(indexrelid.to_u32());
---- a/src/datatype/memory_vector.rs
-+++ b/src/datatype/memory_vector.rs
-@@ -214,21 +214,21 @@
- // SqlTranslatable
- 
- unsafe impl SqlTranslatable for VectorInput<'_> {
--    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
--        Ok(SqlMapping::As(String::from("vector")))
--    }
--    fn return_sql() -> Result<Returns, ReturnsError> {
--        Ok(Returns::One(SqlMapping::As(String::from("vector"))))
--    }
-+    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(VectorInput<'_>);
-+    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
-+    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
-+        Ok(SqlMappingRef::literal("vector"));
-+    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
-+        Ok(ReturnsRef::One(SqlMappingRef::literal("vector")));
- }
- 
- unsafe impl SqlTranslatable for VectorOutput {
--    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
--        Ok(SqlMapping::As(String::from("vector")))
--    }
--    fn return_sql() -> Result<Returns, ReturnsError> {
--        Ok(Returns::One(SqlMapping::As(String::from("vector"))))
--    }
-+    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(VectorOutput);
-+    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
-+    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
-+        Ok(SqlMappingRef::literal("vector"));
-+    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
-+        Ok(ReturnsRef::One(SqlMappingRef::literal("vector")));
- }
- 
- // ArgAbi
---- a/src/datatype/memory_halfvec.rs
-+++ b/src/datatype/memory_halfvec.rs
-@@ -215,21 +215,21 @@
- // SqlTranslatable
- 
- unsafe impl SqlTranslatable for HalfvecInput<'_> {
--    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
--        Ok(SqlMapping::As(String::from("halfvec")))
--    }
--    fn return_sql() -> Result<Returns, ReturnsError> {
--        Ok(Returns::One(SqlMapping::As(String::from("halfvec"))))
--    }
-+    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(HalfvecInput<'_>);
-+    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
-+    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
-+        Ok(SqlMappingRef::literal("halfvec"));
-+    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
-+        Ok(ReturnsRef::One(SqlMappingRef::literal("halfvec")));
- }
- 
- unsafe impl SqlTranslatable for HalfvecOutput {
--    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
--        Ok(SqlMapping::As(String::from("halfvec")))
--    }
--    fn return_sql() -> Result<Returns, ReturnsError> {
--        Ok(Returns::One(SqlMapping::As(String::from("halfvec"))))
--    }
-+    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(HalfvecOutput);
-+    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
-+    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
-+        Ok(SqlMappingRef::literal("halfvec"));
-+    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
-+        Ok(ReturnsRef::One(SqlMappingRef::literal("halfvec")));
- }
- 
- // ArgAbi
---- a/src/datatype/memory_rabitq4.rs
-+++ b/src/datatype/memory_rabitq4.rs
-@@ -232,21 +232,21 @@
- // SqlTranslatable
- 
- unsafe impl SqlTranslatable for Rabitq4Input<'_> {
--    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
--        Ok(SqlMapping::As(String::from("rabitq4")))
--    }
--    fn return_sql() -> Result<Returns, ReturnsError> {
--        Ok(Returns::One(SqlMapping::As(String::from("rabitq4"))))
--    }
-+    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq4Input<'_>);
-+    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
-+    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
-+        Ok(SqlMappingRef::literal("rabitq4"));
-+    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
-+        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq4")));
- }
- 
- unsafe impl SqlTranslatable for Rabitq4Output {
--    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
--        Ok(SqlMapping::As(String::from("rabitq4")))
--    }
--    fn return_sql() -> Result<Returns, ReturnsError> {
--        Ok(Returns::One(SqlMapping::As(String::from("rabitq4"))))
--    }
-+    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq4Output);
-+    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
-+    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
-+        Ok(SqlMappingRef::literal("rabitq4"));
-+    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
-+        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq4")));
- }
- 
- // ArgAbi
---- a/src/datatype/memory_rabitq8.rs
-+++ b/src/datatype/memory_rabitq8.rs
-@@ -232,21 +232,21 @@
- // SqlTranslatable
- 
- unsafe impl SqlTranslatable for Rabitq8Input<'_> {
--    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
--        Ok(SqlMapping::As(String::from("rabitq8")))
--    }
--    fn return_sql() -> Result<Returns, ReturnsError> {
--        Ok(Returns::One(SqlMapping::As(String::from("rabitq8"))))
--    }
-+    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq8Input<'_>);
-+    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
-+    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
-+        Ok(SqlMappingRef::literal("rabitq8"));
-+    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
-+        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq8")));
- }
- 
- unsafe impl SqlTranslatable for Rabitq8Output {
--    fn argument_sql() -> Result<SqlMapping, ArgumentError> {
--        Ok(SqlMapping::As(String::from("rabitq8")))
--    }
--    fn return_sql() -> Result<Returns, ReturnsError> {
--        Ok(Returns::One(SqlMapping::As(String::from("rabitq8"))))
--    }
-+    const TYPE_IDENT: &'static str = pgrx::pgrx_resolved_type!(Rabitq8Output);
-+    const TYPE_ORIGIN: TypeOrigin = TypeOrigin::External;
-+    const ARGUMENT_SQL: Result<SqlMappingRef, ArgumentError> =
-+        Ok(SqlMappingRef::literal("rabitq8"));
-+    const RETURN_SQL: Result<ReturnsRef, ReturnsError> =
-+        Ok(ReturnsRef::One(SqlMappingRef::literal("rabitq8")));
- }
- 
- // ArgAbi
