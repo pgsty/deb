@@ -1,3 +1,10 @@
+pg-jsonschema (0.3.4-3PIGSTY) unstable; urgency=medium
+
+  * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.
+  * Fetch with --locked and verify cargo pgrx package does not rewrite Cargo.lock.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Jul 2026 00:00:00 +0000
+
 pg-jsonschema (0.3.4-2PIGSTY) unstable; urgency=low
 
   * Rebuild with cargo-pgrx/pgrx 0.18.1.
