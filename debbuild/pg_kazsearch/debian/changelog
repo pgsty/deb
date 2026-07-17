@@ -1,3 +1,9 @@
+pg-kazsearch (2.3.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 2.3.0 and build the locked graph with pgrx 0.19.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Jul 2026 13:30:00 +0800
+
 pg-kazsearch (2.2.0-1PIGSTY) unstable; urgency=medium
 
   * Package upstream release 2.2.0 for PostgreSQL 16-18.
