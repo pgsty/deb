@@ -1,0 +1,22 @@
+diff --git a/graph/Cargo.lock b/graph/Cargo.lock
+index 391d55d..964a45a 100644
+--- a/graph/Cargo.lock
++++ b/graph/Cargo.lock
+@@ -1901,7 +1901,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "32497e9a4c7b38532efcdebeef879707aa9f794296a4f0244f6f69e9bc8574bd"
+ dependencies = [
+  "fastrand",
+- "getrandom 0.3.4",
++ "getrandom 0.4.2",
+  "once_cell",
+  "rustix",
+  "windows-sys",
+diff --git a/graph/rust-toolchain.toml b/graph/rust-toolchain.toml
+index 4f0430e..73cb934 100644
+--- a/graph/rust-toolchain.toml
++++ b/graph/rust-toolchain.toml
+@@ -1,3 +1,3 @@
+ [toolchain]
+-channel = "1.96.0"
++channel = "stable"
+ components = ["rustfmt", "clippy"]
