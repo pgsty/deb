@@ -1,3 +1,10 @@
+pg-mooncake (0.2.0-3PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cargo-pgrx/pgrx 0.19.1 using the RPM-verified patch.
+  * Build PostgreSQL 18 from the fixed Cargo.lock without mutating it.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Jul 2026 13:20:00 +0800
+
 pg-mooncake (0.2.0-2PIGSTY) unstable; urgency=medium
 
   * Rebuild with cargo-pgrx/pgrx 0.18.1.
