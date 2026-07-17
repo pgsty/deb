@@ -1,3 +1,9 @@
+tzf (0.3.0-2PIGSTY) unstable; urgency=medium
+
+  * Build the locked dependency graph with cargo-pgrx/pgrx 0.19.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Jul 2026 13:30:00 +0800
+
 tzf (0.3.0-1PIGSTY) unstable; urgency=medium
 
   * bump to 0.3.0 and patch Cargo metadata to pgrx 0.18.1
