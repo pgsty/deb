@@ -14,4 +14,4 @@ Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Description: Reciprocal rank fusion functions for PostgreSQL
  pg_rrf provides Reciprocal Rank Fusion scoring functions for hybrid search
  workloads inside PostgreSQL. This package builds the pgrx extension for
- PostgreSQL 14 through 17 with cargo-pgrx 0.18.1.
+ PostgreSQL 14 through 18 with cargo-pgrx 0.19.1.
