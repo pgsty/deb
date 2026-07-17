@@ -1,3 +1,9 @@
+pglinter (2.0.0-2PIGSTY) unstable; urgency=medium
+
+  * Build the locked dependency graph with cargo-pgrx/pgrx 0.19.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Jul 2026 13:30:00 +0800
+
 pglinter (2.0.0-1PIGSTY) unstable; urgency=low
 
   * https://github.com/pmpetit/pglinter/releases/tag/2.0.0
