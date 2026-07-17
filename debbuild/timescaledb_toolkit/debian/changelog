@@ -1,3 +1,10 @@
+timescaledb-toolkit (1.23.0-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild with cargo-pgrx/pgrx 0.19.1 using the RPM-verified patch.
+  * Build PostgreSQL 18 from the fixed workspace locks without mutation.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 17 Jul 2026 13:20:00 +0800
+
 timescaledb-toolkit (1.23.0-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/timescale/timescaledb-toolkit/releases/tag/1.23.0
