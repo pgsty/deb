@@ -1,0 +1,12 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 50fef72..cb732c2 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -2,6 +2,7 @@
+ name = "pg_pinyin"
+ version = "0.0.5"
+ edition = "2024"
++rust-version = "1.96"
+ description = "Pinyin romanization and search helpers for PostgreSQL"
+ license = "MIT"
+ 
