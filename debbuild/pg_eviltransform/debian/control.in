@@ -10,8 +10,7 @@ Homepage: https://github.com/aiyou178/pg_eviltransform
 Package: postgresql-PGVERSION-eviltransform
 Architecture: any
 Provides: postgresql-eviltransform
-Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
-Recommends: postgresql-PGVERSION-postgis-3
+Depends: postgresql-PGVERSION, postgresql-PGVERSION-postgis-3, ${shlibs:Depends}, ${misc:Depends}
 Description: Coordinate transform extension based on eviltransform
   Rust/pgrx extension providing bd09 and gcj02 coordinate transform helpers
   for PostgreSQL/PostGIS workflows.
