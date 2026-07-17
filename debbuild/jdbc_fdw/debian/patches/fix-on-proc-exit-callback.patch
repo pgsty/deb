@@ -1,0 +1,33 @@
+Description: Use PostgreSQL's exact process-exit callback signature
+ on_proc_exit has always required a pg_on_exit_callback taking an exit code
+ and Datum argument.  The upstream void(void) declaration relied on a
+ permissive compiler and is rejected by Resolute's compiler for PostgreSQL
+ 16 and later.  Accept and intentionally ignore the callback arguments.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-07-16
+
+--- a/jq.c
++++ b/jq.c
+@@ -100,7 +100,7 @@ static Datum jdbc_convert_object_to_datu
+ /*
+  * JVM destroy function
+  */
+-static void jdbc_destroy_jvm();
++static void jdbc_destroy_jvm(int code, Datum arg);
+ 
+ /*
+  * JVM attach function
+@@ -265,8 +265,11 @@ jdbc_convert_object_to_datum(Oid pgtyp, i
+  * jdbc_destroy_jvm Shuts down the JVM.
+  */
+ static void
+-jdbc_destroy_jvm()
++jdbc_destroy_jvm(int code, Datum arg)
+ {
++	(void) code;
++	(void) arg;
++
+ 	jint res;
+ 
+ 	ereport(DEBUG3, (errmsg("In jdbc_destroy_jvm")));

@@ -1,3 +1,11 @@
+jdbc-fdw (0.5.0-2PIGSTY) unstable; urgency=medium
+
+  * Use PostgreSQL's exact on_proc_exit callback signature so GCC 15 on
+    Ubuntu 26.04 builds PostgreSQL 16 through 18 without incompatible
+    function-pointer errors.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 16 Jul 2026 21:01:00 +0800
+
 jdbc-fdw (0.5.0-1PIGSTY) unstable; urgency=medium
 
   * Initial package for current upstream jdbc_fdw 0.5.0.

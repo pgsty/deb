@@ -1,2 +1,3 @@
 portable-default-java.patch
 postgresql-18-compat.patch
+fix-on-proc-exit-callback.patch
