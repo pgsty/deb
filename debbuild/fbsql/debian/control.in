@@ -1,0 +1,17 @@
+Source: fbsql
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/dsc-chiba-u/FbSQL
+
+Package: postgresql-PGVERSION-fbsql
+Architecture: all
+Provides: postgresql-fbsql
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-plr (>= 8.4.0)
+Description: Formula-based statistical modeling in SQL for PostgreSQL PGVERSION
+ FbSQL provides a relation-oriented statistical modeling DSL. It fits
+ Gaussian and binomial generalized linear models through PL/R and scores
+ relations from the resulting model relation.
