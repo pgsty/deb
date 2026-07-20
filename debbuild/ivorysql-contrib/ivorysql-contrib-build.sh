@@ -72,11 +72,15 @@ build_http() {
 build_pgagent() {
   local source="${WORK_DIR}/pgagent-pgagent-4.2.3"
   local build="${source}/build-ivory"
-  cmake -S "${source}" -B "${build}" \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX="${PGROOT}" \
-    -DPG_CONFIG_PATH="${PG_CONFIG}"
-  cmake --build "${build}" --target run -j"${JOBS}"
+  mkdir -p "${build}"
+  (
+    cd "${build}"
+    cmake \
+      -DMAJOR_VERSION=4 \
+      -DMINOR_VERSION=2 \
+      -DPGAGENT_SOURCE_DIR="${source}" \
+      -P "${source}/cmake/MakeExt.cmake"
+  )
   install -d "${STAGE_DIR}${PGROOT}/share/postgresql/extension"
   install -m 0644 "${build}/pgagent--4.2.sql" "${build}/pgagent.control" \
     "${STAGE_DIR}${PGROOT}/share/postgresql/extension/"
@@ -107,6 +111,7 @@ build_pg_jieba() {
   local build="${source}/build-ivory"
   cmake -S "${source}" -B "${build}" \
     -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DCMAKE_INSTALL_PREFIX="${PGROOT}" \
     -DPG_JIEBA_POSTGRESQL_DIR="${PGROOT}" \
     -DPostgreSQL_EXECUTABLE="${PGROOT}/bin/postgres" \
@@ -124,10 +129,23 @@ build_pg_partman() {
 
 build_pgroonga() {
   local directory="${WORK_DIR}/pgroonga-4.0.4"
-  make -C "${directory}" -j"${JOBS}" \
-    PG_CONFIG="${PG_CONFIG}" HAVE_MSGPACK=1 HAVE_XXHASH=1 enable_rpath=no
-  make -C "${directory}" PG_CONFIG="${PG_CONFIG}" \
-    HAVE_MSGPACK=1 HAVE_XXHASH=1 enable_rpath=no \
+  local -a make_args=(
+    PG_CONFIG="${PG_CONFIG}"
+    HAVE_MSGPACK=1
+    HAVE_XXHASH=1
+    enable_rpath=no
+  )
+
+  if pkg-config --exists msgpack; then
+    :
+  elif pkg-config --exists msgpack-c; then
+    make_args+=(MSGPACK_PACKAGE_NAME=msgpack-c)
+  else
+    fail "PGroonga requires a msgpack pkg-config module"
+  fi
+
+  make -C "${directory}" -j"${JOBS}" "${make_args[@]}"
+  make -C "${directory}" "${make_args[@]}" \
     DESTDIR="${STAGE_DIR}" INSTALL='install -p' install
 }
 

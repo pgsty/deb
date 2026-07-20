@@ -7,7 +7,8 @@ export CPPFLAGS := $(shell dpkg-buildflags --get CPPFLAGS)
 export CFLAGS := $(shell dpkg-buildflags --get CFLAGS) $(CPPFLAGS)
 export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(CPPFLAGS)
 export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
-export IVORYSQL_BUILD_JOBS := $(shell nproc)
+IVORYSQL_BUILD_JOBS ?= $(shell nproc)
+export IVORYSQL_BUILD_JOBS
 
 %:
 	dh $@

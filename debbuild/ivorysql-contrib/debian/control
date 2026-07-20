@@ -30,6 +30,7 @@ Build-Depends:
  libhiredis-dev,
  libicu-dev,
  libjson-c-dev,
+ libkrb5-dev,
  liblz4-dev,
  libmsgpack-dev,
  libpcre2-dev,
