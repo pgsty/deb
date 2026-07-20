@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := nominatim_fdw-1.2.tar.gz
+TARBALL := nominatim_fdw-2.0.0.tar.gz
 
 # prepare directory
 setup:
