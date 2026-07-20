@@ -1,0 +1,6 @@
+pg-fts (0.2.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for upstream PGXN 0.2.0.
+  * Build for PostgreSQL 17 and 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 20 Jul 2026 12:00:00 +0800

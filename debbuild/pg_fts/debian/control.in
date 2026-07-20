@@ -1,0 +1,16 @@
+Source: pg-fts
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://codeberg.org/gregburd/pg_fts
+
+Package: postgresql-PGVERSION-pg-fts
+Architecture: any
+Provides: postgresql-pg-fts
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Full-text search with BM25 ranking for PostgreSQL PGVERSION
+ pg_fts provides BM25 and BM25F relevance ranking, a dedicated inverted-index
+ access method, and boolean, phrase, NEAR, prefix, fuzzy, and regex queries.
