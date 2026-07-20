@@ -696,3 +696,29 @@ index 3ec4b80..71def6e 100644
 +pgrx = "=0.19.1"
 @@ -43 +41,0 @@ postgres-types = "0.2.5"
 -pgrx-tests = "=0.16.1"
+diff --git a/Cargo.lock b/Cargo.lock
+index 41d5245..1ef5b3f 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -1212 +1212 @@
+-version = "0.29.3"
++version = "0.30.1"
+@@ -1214 +1214 @@
+-checksum = "bfefc83482fc7711e37368bd0137b8261a6937f7fd1407c502b966cb901a5796"
++checksum = "4b776031ffc4e2291941f2657fad6276408d4f16aa4084ac4ca934ce8d2d886d"
+diff --git a/Cargo.toml b/Cargo.toml
+index 71def6e..949f58d 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -27 +27 @@
+-pgmq = "0.29"
++pgmq = "0.30.1"
+diff --git a/src/api.rs b/src/api.rs
+index 7f75631..9c32ac0 100644
+--- a/src/api.rs
++++ b/src/api.rs
+@@ -32 +32 @@ pub fn exec(
+-    let prepared_query = query.replace('\'', "''").replace(';', "");
++    let prepared_query = query.replace(';', "");
+@@ -37,0 +38 @@ pub fn exec(
++    let prepared_query = prepared_query.replace('\'', "''");

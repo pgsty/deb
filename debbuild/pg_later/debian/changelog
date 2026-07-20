@@ -1,3 +1,11 @@
+pg-later (0.4.0-4PIGSTY) unstable; urgency=medium
+
+  * Update the Rust pgmq client to 0.30.1 for pgmq 1.10+ message-record
+    compatibility.
+  * Validate SQL before quote-escaping it for the pgmq payload.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 20 Jul 2026 09:30:00 +0800
+
 pg-later (0.4.0-3PIGSTY) unstable; urgency=medium
 
   * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.

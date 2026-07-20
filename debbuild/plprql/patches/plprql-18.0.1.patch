@@ -927,3 +927,40 @@ index 7fd5728..2e6eb5f 100644
 +version = "18.0.1"
 @@ -23 +22,0 @@ default = ["pg18"]
 -pg13 = ["pgrx/pg13", "pgrx-tests/pg13"]
+diff --git a/plprql/src/spi.rs b/plprql/src/spi.rs
+index 914e698..aa7651d 100644
+--- a/plprql/src/spi.rs
++++ b/plprql/src/spi.rs
+@@ -7 +7 @@
+-use pgrx::{IntoDatum, IntoHeapTuple, pg_sys};
++use pgrx::{IntoDatum, IntoHeapTuple, PgTupleDesc, pg_sys};
+@@ -24,0 +25 @@
++        let tuple_desc = unsafe { PgTupleDesc::from_pg_unchecked(tupdesc) };
+@@ -26 +27,26 @@
+-        for any_datum in self.datums.into_iter() {
++        for (index, any_datum) in self.datums.into_iter().enumerate() {
++            let target_oid = tuple_desc
++                .get(index)
++                .unwrap_or_else(|| pgrx::error!("missing return column {} in tuple descriptor", index + 1))
++                .atttypid;
++            let any_datum = match (any_datum, target_oid) {
++                (Some(AnyDatum::Numeric(value)), pg_sys::FLOAT4OID) => {
++                    Some(AnyDatum::F32(f32::try_from(value).unwrap_or_else(|error| {
++                        pgrx::error!(
++                            "could not coerce numeric return column {} to float4: {}",
++                            index + 1,
++                            error
++                        )
++                    })))
++                }
++                (Some(AnyDatum::Numeric(value)), pg_sys::FLOAT8OID) => {
++                    Some(AnyDatum::F64(f64::try_from(value).unwrap_or_else(|error| {
++                        pgrx::error!(
++                            "could not coerce numeric return column {} to float8: {}",
++                            index + 1,
++                            error
++                        )
++                    })))
++                }
++                (value, _) => value,
++            };

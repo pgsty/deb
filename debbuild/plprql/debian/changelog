@@ -1,3 +1,10 @@
+plprql (18.0.1-4PIGSTY) unstable; urgency=medium
+
+  * Coerce numeric table-return values to declared float4/float8 types before
+    forming PostgreSQL tuples.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 20 Jul 2026 09:30:00 +0800
+
 plprql (18.0.1-3PIGSTY) unstable; urgency=medium
 
   * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.
