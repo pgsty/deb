@@ -1,0 +1,17 @@
+diff --git a/Makefile b/Makefile
+index 24725f7..ad7d9a7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -39,10 +39,10 @@ include $(PGXS)
+ DATA_SRC_DIR := $(dir $(firstword $(MAKEFILE_LIST)))data
+ 
+ install-data:
+-	@mkdir -p "$(TIKTOKEN_DATA_DIR)"
++	@mkdir -p "$(DESTDIR)$(TIKTOKEN_DATA_DIR)"
+ 	@for f in cl100k_base o200k_base r50k_base p50k_base p50k_edit; do \
+ 	    src="$(DATA_SRC_DIR)/$$f.tiktoken"; \
+-	    dest="$(TIKTOKEN_DATA_DIR)/$$f.tiktoken"; \
++	    dest="$(DESTDIR)$(TIKTOKEN_DATA_DIR)/$$f.tiktoken"; \
+ 	    echo "Installing $$f.tiktoken …"; \
+ 	    cp "$$src" "$$dest"; \
+ 	done

@@ -1,0 +1,87 @@
+diff --git a/pg_tiktoken_c.c b/pg_tiktoken_c.c
+index 8128127..32012aa 100644
+--- a/pg_tiktoken_c.c
++++ b/pg_tiktoken_c.c
+@@ -215,6 +215,18 @@ bpe_encode_piece(const VocabTable *vocab,
+                  uint32_t *out)
+ {
+     if (plen == 0) return 0;
++
++    /*
++     * The implementation below uses fixed-size stack buffers.  Reject an
++     * unusually long regex piece before indexing those buffers; otherwise a
++     * long unbroken word can corrupt the backend stack.
++     */
++    if (plen > MAX_PIECE_BYTES)
++        ereport(ERROR,
++                (errcode(ERRCODE_PROGRAM_LIMIT_EXCEEDED),
++                 errmsg("pg_tiktoken_c: pre-tokenized piece is %d bytes; maximum supported is %d",
++                        plen, MAX_PIECE_BYTES),
++                 errhint("Split extremely long unbroken text before tokenizing.")));
+ 
+     if (plen == 1) {
+         uint32_t r = vocab_lookup(vocab, piece, 1);
+@@ -333,6 +345,16 @@ bpe_encode_piece(const VocabTable *vocab,
+     "|\\s+(?!\\S)" \
+     "|\\s+"
+ 
++/* GPT-4o / o-series style, aligned with tiktoken's o200k_base pattern. */
++#define O200K_PATTERN \
++    "[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]*[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]+(?i:'s|'t|'re|'ve|'m|'ll|'d)?" \
++    "|[^\\r\\n\\p{L}\\p{N}]?[\\p{Lu}\\p{Lt}\\p{Lm}\\p{Lo}\\p{M}]+[\\p{Ll}\\p{Lm}\\p{Lo}\\p{M}]*(?i:'s|'t|'re|'ve|'m|'ll|'d)?" \
++    "|\\p{N}{1,3}" \
++    "| ?[^\\s\\p{L}\\p{N}]+[\\r\\n/]*" \
++    "|\\s*[\\r\\n]+" \
++    "|\\s+(?!\\S)" \
++    "|\\s+"
++
+ /* ============================================================
+  * Special tokens per encoding
+  * ============================================================ */
+@@ -379,7 +401,7 @@ static SpecialToken o200k_special[] = {
+ static EncoderState g_encoders[N_ENCODERS] = {
+     { "cl100k_base", CL100K_PATTERN, NULL, NULL,
+       cl100k_special,    lengthof(cl100k_special),    false },
+-    { "o200k_base",  CL100K_PATTERN, NULL, NULL,
++    { "o200k_base",  O200K_PATTERN, NULL, NULL,
+       o200k_special,     lengthof(o200k_special),     false },
+     { "r50k_base",   GPT2_PATTERN,   NULL, NULL,
+       r50k_special,      lengthof(r50k_special),      false },
+@@ -459,6 +481,17 @@ resolve_encoding(const char *selector)
+     for (int i = 0; model_aliases[i].model; i++)
+         if (strcmp(selector, model_aliases[i].model) == 0)
+             return model_aliases[i].encoding;
++
++    /* Match the versioned-family aliases documented by the extension. */
++    if (strncmp(selector, "gpt-4o-", strlen("gpt-4o-")) == 0 ||
++        strncmp(selector, "o1-", strlen("o1-")) == 0 ||
++        strncmp(selector, "o3-", strlen("o3-")) == 0 ||
++        strncmp(selector, "o4-", strlen("o4-")) == 0)
++        return "o200k_base";
++    if (strncmp(selector, "gpt-4-", strlen("gpt-4-")) == 0 ||
++        strncmp(selector, "gpt-3.5-turbo-", strlen("gpt-3.5-turbo-")) == 0)
++        return "cl100k_base";
++
+     return selector;
+ }
+ 
+@@ -945,6 +978,19 @@ chunk_text(PG_FUNCTION_ARGS)
+ 
+     if (npieces == 0)
+         PG_RETURN_ARRAYTYPE_P(construct_empty_array(TEXTOID));
++
++    /*
++     * A regex piece is kept intact so returned chunks always contain valid
++     * text.  Fail clearly when such a piece cannot fit instead of silently
++     * returning a chunk larger than the caller's token limit.
++     */
++    for (int pi = 0; pi < npieces; pi++)
++        if (pieces[pi].ntok > chunk_size)
++            ereport(ERROR,
++                    (errcode(ERRCODE_INVALID_PARAMETER_VALUE),
++                     errmsg("chunk_size %d is smaller than an indivisible %d-token text piece",
++                            chunk_size, pieces[pi].ntok),
++                     errhint("Use a larger chunk_size or add separators to long unbroken text.")));
+ 
+     /* ── Greedy chunk assembly ────────────────────────────────── */
+     result_cap    = 16;

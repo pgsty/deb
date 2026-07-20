@@ -1,0 +1,17 @@
+Source: pg-tiktoken-c
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libpcre2-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/relytcloud/pg_tiktoken_c
+
+Package: postgresql-PGVERSION-pg-tiktoken-c
+Architecture: any
+Provides: postgresql-pg-tiktoken-c
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Breaks: ${postgresql:Breaks}
+Description: Fast tiktoken BPE tokenizer for PostgreSQL PGVERSION
+ pg_tiktoken_c provides OpenAI-compatible token counting, token ID encoding,
+ and token-bounded text chunking in PostgreSQL, implemented in C.

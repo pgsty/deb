@@ -1,0 +1,10 @@
+pg-tiktoken-c (1.1-1PIGSTY) unstable; urgency=medium
+
+  * Initial DEB release from upstream main snapshot
+    fa2957b6ece483322f4c4ce0c374b3b77e22b892.
+  * Bundle all five tiktoken vocabularies and honor DESTDIR during packaging.
+  * Align o200k tokenization and model-family aliases with tiktoken behavior.
+  * Reject oversized BPE pieces and impossible chunk limits safely.
+  * Build for PostgreSQL 14 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 20 Jul 2026 12:00:00 +0800
