@@ -1,0 +1,16 @@
+Source: pgsqlmock
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/v-maliutin/pgSQLMock
+
+Package: postgresql-PGVERSION-pgsqlmock
+Architecture: all
+Provides: postgresql-pgsqlmock
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgtap (>= 1.3.4)
+Description: Mocking and faking helpers for PostgreSQL PGVERSION unit tests
+ pgSQLMock extends pgTAP with helpers for mocking functions, faking tables and
+ views, and restoring database objects after unit tests.

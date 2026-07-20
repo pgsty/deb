@@ -1,0 +1,12 @@
+diff --git a/pgsqlmock.control b/pgsqlmock.control
+index dbe9bf0..a3ee615 100644
+--- a/pgsqlmock.control
++++ b/pgsqlmock.control
+@@ -2,6 +2,6 @@
+ comment = 'Faking and mocking functionality extending pgTap (Unit testing for PostgreSQL)'
+ default_version = '1.0.1'
+ module_pathname = '$libdir/pgsqlmock'
+-requires = 'plpgsql, pgTap'
++requires = 'plpgsql, pgtap'
+ relocatable = true
+ superuser = false
