@@ -1,0 +1,19 @@
+--- install_citus_indent.sh
++++ install_citus_indent.sh
+@@ -41,4 +41,12 @@
+-git clone https://github.com/citusdata/tools.git
+-cd tools
+-# checkout to the commit mapped in component governance.
+-git checkout e36e4ea4258989bf527744334f6c633bb67e0686
++TOOLS_REF=e36e4ea4258989bf527744334f6c633bb67e0686
++if [ -s "$INSTALL_DEPENDENCIES_ROOT/citus-tools-${TOOLS_REF}.tar.gz" ]; then
++    mkdir tools
++    tar -C tools --strip-components=1 -xzf "$INSTALL_DEPENDENCIES_ROOT/citus-tools-${TOOLS_REF}.tar.gz"
++else
++    git clone https://github.com/citusdata/tools.git
++fi
++cd tools
++# checkout to the commit mapped in component governance.
++if [ -d .git ]; then
++    git checkout "$TOOLS_REF"
++fi
