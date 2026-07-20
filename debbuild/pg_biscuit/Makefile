@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := Biscuit-2.4.1.tar.gz
+TARBALL := Biscuit-2.4.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
