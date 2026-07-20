@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# Compatibility wrapper for distributions where SFCGAL only exposes pkg-config.
+set -eu
+
+case "${1:-}" in
+  --version)
+    exec pkg-config --modversion sfcgal
+    ;;
+  --cflags)
+    exec pkg-config --cflags sfcgal
+    ;;
+  --libs)
+    exec pkg-config --libs sfcgal
+    ;;
+  --static)
+    printf '%s\n' OFF
+    ;;
+  *)
+    echo "usage: $0 {--version|--cflags|--libs|--static}" >&2
+    exit 2
+    ;;
+esac

@@ -1,0 +1,43 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export IVORYSQL_ROOT=/usr/ivory-@PG_MAJOR@
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+export CPPFLAGS := $(shell dpkg-buildflags --get CPPFLAGS)
+export CFLAGS := $(shell dpkg-buildflags --get CFLAGS) $(CPPFLAGS)
+export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(CPPFLAGS)
+export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
+export IVORYSQL_BUILD_JOBS := $(shell nproc)
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	rm -rf work stage logs FILES.sha256
+
+override_dh_auto_configure:
+	:
+
+override_dh_auto_build:
+	chmod +x ivorysql-contrib-build.sh sfcgal-config-pkgconf
+	./ivorysql-contrib-build.sh
+
+override_dh_auto_install:
+	find stage/usr/ivory-@PG_MAJOR@/bin -maxdepth 1 -type f -name '*.py' \
+		-exec sed -i '1s|^#!/usr/bin/env python$$|#!/usr/bin/python3|' {} +
+
+override_dh_auto_test:
+	test "$$(find stage/usr/ivory-@PG_MAJOR@/share/postgresql/extension -maxdepth 1 -name '*.control' | wc -l)" -eq 29
+	test "$$(find stage/usr/ivory-@PG_MAJOR@/lib/postgresql -maxdepth 1 -type f -name '*.so' | wc -l)" -eq 31
+	test -f stage/usr/ivory-@PG_MAJOR@/lib/postgresql/wal2json.so
+	grep -Eq "^default_version[[:space:]]*=[[:space:]]*'?2[.]8'?" \
+		stage/usr/ivory-@PG_MAJOR@/share/postgresql/extension/plpgsql_check.control
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l/usr/ivory-@PG_MAJOR@/lib
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_dwz:
+	:

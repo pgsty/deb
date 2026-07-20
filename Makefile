@@ -20,6 +20,9 @@ setup:
 	@echo "pig build pgrx"
 	@echo "#pig build pkg <name...>"
 
+ivorysql-contrib:
+	$(MAKE) -C debbuild/ivorysql-contrib
+
 ###############################################################
 #                        1. Building                          #
 ###############################################################
@@ -199,7 +202,7 @@ r:
 	git restore tf/terraform.tf
 
 
-.PHONY: rust deps batch1 batch2 deb-collect \
+.PHONY: rust deps batch1 batch2 deb-collect ivorysql-contrib \
 	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_tiktoken_c pg_summarize pg_polyline pg_tzf pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale timescaledb_toolkit pg_session_jwt pgml plprql pg_later pg_anon pg_smtp_client vchord pg_bestmatch pglite_fusion age \
  	pgdd convert pg_tokenizer pg_render pgx_ulid \
  	pg_net pgjwt pg_gzip pg_bzip vault pgsodium supautils pg_tle plv8 omnigres permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg_duckdb pg_mooncake hydra citus timescaledb pgroonga \

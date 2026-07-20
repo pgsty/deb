@@ -1,0 +1,3 @@
+# IvorySQL keeps libpq's SONAME stable across a product major.  The kernel
+# package is intentionally replaceable by any IvorySQL 5.x build.
+libpq 5 ivorysql-@PG_MAJOR@ (>= 5.0), ivorysql-@PG_MAJOR@ (<< 6.0)

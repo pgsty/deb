@@ -1,0 +1,7 @@
+ivorysql-@PG_MAJOR@-contrib (@IVORY_VERSION@-@PKG_REV@) unstable; urgency=medium
+
+  * Build all 23 upstream projects from source for IvorySQL @IVORY_MAJOR@.
+  * Require the IvorySQL @IVORY_MAJOR@.x ABI range instead of one exact kernel release.
+  * Pin plpgsql_check to the official 2.8 ABI for database compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 20 Jul 2026 11:40:00 +0000

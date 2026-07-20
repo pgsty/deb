@@ -1,0 +1,42 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: IvorySQL extension bundle
+Source: https://github.com/IvorySQL/IvorySQL
+
+Files: *
+Copyright: 1996-2026 PostgreSQL Global Development Group
+           2001-2026 the individual extension authors
+License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and GPL-2.0-or-later and MIT and PostgreSQL
+
+License: Apache-2.0
+ Licensed under the Apache License, Version 2.0. On Debian systems, the full
+ text can be found in /usr/share/common-licenses/Apache-2.0.
+
+License: BSD-2-Clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the copyright notice and this
+ list of conditions are retained. The software is provided without warranty.
+
+License: BSD-3-Clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the copyright notice, this list
+ of conditions, and the disclaimer are retained; project and contributor
+ names may not be used to endorse derived products without permission.
+
+License: GPL-2.0-or-later
+ This program is free software; you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the Free
+ Software Foundation, either version 2, or (at your option) any later version.
+ On Debian systems, the full text can be found in
+ /usr/share/common-licenses/GPL-2.
+
+License: MIT
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files, to deal in the Software
+ without restriction, subject to preservation of the copyright notice. The
+ software is provided without warranty.
+
+License: PostgreSQL
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose, without fee, and without a written agreement
+ is hereby granted, provided that the copyright notice and disclaimer appear
+ in all copies. The software is provided on an "as is" basis without warranty.

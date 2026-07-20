@@ -1,0 +1,73 @@
+Source: ivorysql-@PG_MAJOR@-contrib
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends:
+ autoconf,
+ automake,
+ bison,
+ build-essential,
+ clang,
+ cmake,
+ debhelper-compat (= 13),
+ flex,
+ gettext,
+ git,
+ ivorysql-@PG_MAJOR@ (>= 5.0),
+ ivorysql-@PG_MAJOR@ (<< 6.0),
+ libcgal-dev,
+ libboost-filesystem-dev,
+ libboost-graph-dev,
+ libboost-program-options-dev,
+ libboost-system-dev,
+ libboost-thread-dev,
+ libcurl4-openssl-dev,
+ libgdal-dev,
+ libgeos-dev,
+ libgeotiff-dev,
+ libgmp-dev,
+ libgroonga-dev (>= 15.1.7),
+ libhiredis-dev,
+ libicu-dev,
+ libjson-c-dev,
+ liblz4-dev,
+ libmsgpack-dev,
+ libpcre2-dev,
+ libproj-dev,
+ libprotobuf-c-dev,
+ libreadline-dev,
+ libsfcgal-dev,
+ libssl-dev,
+ libtool,
+ libxerces-c-dev,
+ libxml2-dev,
+ libxml2-utils,
+ libxslt1-dev,
+ libxxhash-dev,
+ libzstd-dev,
+ llvm-dev,
+ perl,
+ pkgconf,
+ protobuf-c-compiler,
+ scws,
+ xsltproc,
+ zlib1g-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/IvorySQL/IvorySQL
+
+Package: ivorysql-@PG_MAJOR@-contrib
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${perl:Depends},
+ ${misc:Depends},
+ ivorysql-@PG_MAJOR@ (>= 5.0),
+ ivorysql-@PG_MAJOR@ (<< 6.0),
+ python3-psycopg2
+Description: External extensions for IvorySQL @IVORY_MAJOR@ / PostgreSQL @PG_MAJOR@
+ This package adds the 29 extension controls and wal2json output plugin that
+ are present in the official IvorySQL @IVORY_VERSION@ bundle but absent from
+ Pigsty's IvorySQL kernel package. All PostgreSQL modules are compiled against
+ /usr/ivory-@PG_MAJOR@ and use normal distribution packages for external
+ runtime libraries.
