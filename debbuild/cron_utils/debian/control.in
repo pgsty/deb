@@ -1,0 +1,16 @@
+Source: cron-utils
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Myshkouski/pg-cron-utils
+
+Package: postgresql-PGVERSION-cron-utils
+Architecture: all
+Provides: postgresql-cron-utils
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Cron expression utilities for PostgreSQL PGVERSION
+ cron_utils provides SQL functions to parse cron expressions, test whether a
+ timestamp matches an expression, and compute previous or next trigger times.
