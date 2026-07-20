@@ -1,0 +1,6 @@
+pg-oidc-validator (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Package upstream snapshot b65bbbe for the PostgreSQL 18 OAuth validator API.
+  * Build with cargo-pgrx/pgrx 0.19.1 and a fixed Cargo.lock.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 20 Jul 2026 21:45:44 +0800

@@ -1,0 +1,14 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pg_oidc_validator_rust
+Source: https://github.com/UnAfraid/pg_oidc_validator_rust
+
+Files: *
+Copyright: 2025 pg_oidc_validator_rust contributors
+License: LicenseRef-Upstream-No-License
+ Upstream does not currently publish a license grant.
+
+Files: debian/*
+Copyright: 2026 Ruohang Feng <rh@vonng.com>
+License: Apache-2.0
+ On Debian systems, the complete text of the Apache License version 2.0 can be
+ found in /usr/share/common-licenses/Apache-2.0.
