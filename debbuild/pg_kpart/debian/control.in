@@ -1,0 +1,18 @@
+Source: pg-kpart
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/hexacluster/pg_kpart
+
+Package: postgresql-PGVERSION-pg-kpart
+Architecture: any
+Provides: postgresql-pg-kpart
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Reject full partition scans that omit the partition key
+ pg_kpart installs a PostgreSQL planner hook that rejects queries which would
+ scan every partition of a partitioned table without a usable partition-key
+ predicate. It is loaded through shared_preload_libraries or
+ session_preload_libraries.
