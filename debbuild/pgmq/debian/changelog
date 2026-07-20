@@ -1,3 +1,9 @@
+pgmq (1.12.0-1PIGSTY) unstable; urgency=low
+
+  * Upgrade to upstream PGXN 1.12.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 19 Jul 2026 23:00:00 +0800
+
 pgmq (1.11.1-1PIGSTY) unstable; urgency=low
 
   * https://github.com/pgmq/pgmq/releases/tag/v1.11.1

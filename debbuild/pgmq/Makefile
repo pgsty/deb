@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgmq-1.11.1.tar.gz
+TARBALL := pgmq-1.12.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 
 check-src:
