@@ -29,6 +29,21 @@ tar -xf "${SOURCE}" -C /tmp/documentdb --strip-component=1
 cp -r /tmp/documentdb/scripts /tmp/install_setup
 cd /tmp/install_setup
 patch -p0 --forward -f < "${WRAPPER_DIR}/documentdb-intelrdfpmath.patch"
+patch -p0 --forward -f < "${WRAPPER_DIR}/documentdb-libbson-cache.patch"
+
+LIBBSON_VERSION="$(bash -c '. ./setup_versions.sh; GetLibbsonVersion')"
+LIBBSON_ARCHIVE="mongo-c-driver-${LIBBSON_VERSION}.tar.gz"
+for candidate in \
+  "${HOME}/debbuild/SOURCES/${LIBBSON_ARCHIVE}" \
+  "${HOME}/ext/src/${LIBBSON_ARCHIVE}" \
+  "${HOME}/pgext/repo/ext/src/${LIBBSON_ARCHIVE}" \
+  "${HOME}/pgsty/repo/ext/src/${LIBBSON_ARCHIVE}"; do
+  if [ -f "${candidate}" ] && tar -tzf "${candidate}" >/dev/null 2>&1; then
+    echo "use cached libbson source: ${candidate}"
+    cp -f "${candidate}" "/tmp/install_setup/${LIBBSON_ARCHIVE}"
+    break
+  fi
+done
 
 # CMake 4 rejects old cmake_minimum_required() policy versions in bundled deps.
 sed -i 's/cmake \.\./cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ../' install_citus_indent.sh
