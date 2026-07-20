@@ -545,14 +545,14 @@ index e621389..4746f04 100644
  
  [patch.crates-io]
 diff --git a/rust-toolchain.toml b/rust-toolchain.toml
-index aaee776..3fe7418 100644
+deleted file mode 100644
+index aaee776..0000000
 --- a/rust-toolchain.toml
-+++ b/rust-toolchain.toml
-@@ -1,3 +1,3 @@
- [toolchain]
++++ /dev/null
+@@ -1,3 +0,0 @@
+-[toolchain]
 -channel = "1.96.0"
-+channel = "stable"
- components = ["rustfmt", "clippy", "rust-analyzer"]
+-components = ["rustfmt", "clippy", "rust-analyzer"]
 diff --git a/stressgres/Cargo.toml b/stressgres/Cargo.toml
 index bafee56..4995ed7 100644
 --- a/stressgres/Cargo.toml

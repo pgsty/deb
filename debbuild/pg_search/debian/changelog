@@ -1,6 +1,7 @@
 pg-search (0.24.3-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.24.3 and build the locked graph with pgrx 0.19.1.
+  * Use the preinstalled builder toolchain without a rustup channel refresh.
 
  -- Ruohang Feng <rh@vonng.com>  Fri, 17 Jul 2026 13:30:00 +0800
 
