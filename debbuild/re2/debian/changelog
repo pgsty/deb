@@ -1,3 +1,9 @@
+re2 (0.4.1-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 0.4.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 19 Jul 2026 23:00:00 +0800
+
 re2 (0.4.0-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 0.4.0.
