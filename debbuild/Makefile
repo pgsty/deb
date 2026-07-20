@@ -48,6 +48,9 @@ pg_summarize:
 pg_tiktoken:
 	cd pg_tiktoken && make
 
+pg_tiktoken_c:
+	cd pg_tiktoken_c && make
+
 pgml:
 	cd pgml && make
 
@@ -171,6 +174,9 @@ pg_timeseries:
 pg_bikram_sambat:
 	cd pg_bikram_sambat && make
 
+cron_utils:
+	cd cron_utils && make
+
 temporal_tables:
 	cd temporal_tables && make
 
@@ -239,6 +245,9 @@ pg_biscuit:
 
 pg_textsearch:
 	cd pg_textsearch && make
+
+pg_fts:
+	cd pg_fts && make
 
 scws:
 	cd scws && make
@@ -702,11 +711,17 @@ pgfincore: # PGDG Included
 system_stats:
 	cd system_stats && make
 
+fbsql:
+	cd fbsql && make
+
 pg_meta:
 	cd pg_meta && make
 
 pg_mockable:
 	cd pg_mockable && make
+
+pgsqlmock:
+	cd pgsqlmock && make
 
 pgnodemx:
 	cd pgnodemx && make
@@ -1056,19 +1071,19 @@ collect:
 
 
 .PHONY: deps collect \
-	block_copy_command timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pgvector pg_vectorize pg_summarize pg_tiktoken pgml pg_search pg_when pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_kazsearch pg_typescript pg_cardano pg_rrf plprql pglite_fusion pg_smtp_client pgmqtt pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_anon pgsmcrypto wrappers pggraph pgrdf jsonschema \
-	timescaledb pg_timeseries pg_bikram_sambat temporal_tables emaj table_version pg_task pg_background pg_partman \
+	block_copy_command timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pgvector pg_vectorize pg_summarize pg_tiktoken pg_tiktoken_c pgml pg_search pg_when pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_kazsearch pg_typescript pg_cardano pg_rrf plprql pglite_fusion pg_smtp_client pgmqtt pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_anon pgsmcrypto wrappers pggraph pgrdf jsonschema \
+	timescaledb pg_timeseries pg_bikram_sambat cron_utils temporal_tables emaj table_version pg_task pg_background pg_partman \
 	geoip pg_geohash pghydro \
 	smlar pg4ml \
-	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_textsearch \
+	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_textsearch pg_fts \
 	citus hydra storage_engine datasketches pg_duckdb pg_ducklake pg_lake duckdb_fdw pg_fkpart pg_clickhouse pg_orca \
-	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql pg_durable pgmnemo pg_projection pg_stl pg_sorted_heap pg_incremental pgmq pgmb omnigres pg_ai_query \
+	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql fbsql pg_durable pgmnemo pg_projection pg_stl pg_sorted_heap pg_incremental pgmq pgmb omnigres pg_ai_query \
 	plxslt pg_tle plv8 pljs \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 pg_text_semver hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
 	pg_gzip pg_http pg_bzip pg_zstd pg_net pg_curl pgjq pg_retry pgjwt pg_html5_email_address pg_utl_smtp url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile external_file pg_byteamagic pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \
 	pg_uuidv7 pg_uuid_v8 permuteseq pg_hashids sequential_uuids topn quantile lower_quantile count_distinct omnisketch ddsketch vasco pgxicor pg_weighted_statistics floatvec aggs_for_vecs aggs_for_arrays parray_gin pg_accumulator pg_csv pg_arraymath pg_math pg_random pg_base36 pg_base62 pg_financial faker dbt2 \
 	pg_rewrite pg_query_rewrite pgdisablelogerror pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_qos pg_savior safeupdate pg_drop_events pg_dbms_lock pg_dbms_errlog pg_dbms_metadata pg_dbms_job \
-	pg_profile pg_tracing pg_stat_monitor pg_store_plans pg_datasentinel pgsentinel pg_ash pgfincore system_stats pg_meta pgnodemx pg_sqlog pgmeminfo plpgsql_check pg_relusage pg_track_optimizer pg_pathcheck pagevis pg_isok \
+	pg_profile pg_tracing pg_stat_monitor pg_store_plans pg_datasentinel pgsentinel pg_ash pgfincore system_stats pg_meta pgsqlmock pgnodemx pg_sqlog pgmeminfo plpgsql_check pg_relusage pg_track_optimizer pg_pathcheck pagevis pg_isok \
 	passwordcheck_cracklib passwordpolicy supautils pgsodium pg_vault pg_tde pg_auth_mon pgcryptokey column_encrypt pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
 	redis \
 	pgspider_ext sqlite_fdw pgbouncer_fdw odbc_fdw hdfs_fdw jdbc_fdw redis_fdw mongo_fdw pg_redis_pubsub kafka_fdw libfq zlog polarstore graphblas lagraph onesparse pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
