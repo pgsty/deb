@@ -1,8 +1,9 @@
 # get documentdb source tarball
 # pig build get documentdb
 
-TARBALL=${1-'documentdb-0.113-0.tar.gz'}
+TARBALL=${1-'documentdb-0.114-0.tar.gz'}
 SOURCE=${SOURCE:-}
+WRAPPER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ -z "${SOURCE}" ]; then
   for candidate in \
@@ -27,6 +28,7 @@ rm -rf /tmp/documentdb /tmp/install_setup; mkdir -p /tmp/documentdb;
 tar -xf "${SOURCE}" -C /tmp/documentdb --strip-component=1
 cp -r /tmp/documentdb/scripts /tmp/install_setup
 cd /tmp/install_setup
+patch -p0 --forward -f < "${WRAPPER_DIR}/documentdb-intelrdfpmath.patch"
 
 # CMake 4 rejects old cmake_minimum_required() policy versions in bundled deps.
 sed -i 's/cmake \.\./cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ../' install_citus_indent.sh

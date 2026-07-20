@@ -1,7 +1,11 @@
-all: build
+all: pre build
 
-TARBALL := timescaledb-2.28.2.tar.gz
+TARBALL := timescaledb-2.28.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+
+pre:
+	apt-get update -qq
+	apt-get install -y cmake libcurl4-openssl-dev libicu-dev libssl-dev
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL); if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -11,7 +15,7 @@ build: check-src build18 build17 build16 build15
 define build_one
 	rm -rf build-$(1); mkdir -p build-$(1)
 	tar -C build-$(1) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	sed -i 's/^version = 2.28.2-dev$$/version = 2.28.2/' build-$(1)/version.config
+	sed -i 's/^version = 2.28.3-dev$$/version = 2.28.3/' build-$(1)/version.config
 	cd build-$(1) && PATH=/usr/lib/postgresql/$(1)/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
 	cd build-$(1)/build && $(MAKE) -j1
 	rm -rf build-$(1)/build/debian; cp -r debian build-$(1)/build/debian
@@ -39,4 +43,4 @@ build15:
 clean:
 	rm -rf build-* *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
+.PHONY: all pre setup update build move clean ls
