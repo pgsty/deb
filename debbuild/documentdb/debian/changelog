@@ -1,6 +1,7 @@
 documentdb (0.114-0PIGSTY) unstable; urgency=medium
 
   * Switch to upstream documentdb v0.114-0
+  * Ignore toolchain-provided ELF boundary symbols in the RUM export validator
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 20 Jul 2026 21:45:44 +0800
 
