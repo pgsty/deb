@@ -1,0 +1,93 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/pkg-info.mk
+include /usr/share/dpkg/architecture.mk
+include /usr/share/dpkg/buildflags.mk
+include /usr/share/dpkg/buildtools.mk
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+MAKEARGS=V=1 \
+	 CC='$(CC)' \
+	 PKG_CONFIG='$(PKG_CONFIG)' \
+	 DESTDIR=debian/haproxy \
+	 PREFIX=/usr \
+	 IGNOREGIT=true \
+	 MANDIR=/usr/share/man \
+	 DOCDIR=/usr/share/doc/haproxy \
+	 USE_PCRE2=1 \
+	 USE_PCRE2_JIT=1 \
+	 USE_OPENSSL=1 \
+	 USE_QUIC_OPENSSL_COMPAT=1 \
+	 USE_QUIC=1 \
+	 USE_SLZ=1 \
+	 USE_LUA=1 \
+	 USE_PROMEX=1 \
+	 LUA_INC=/usr/include/lua5.4 \
+	 EXTRA=admin/halog/halog
+
+ifeq ($(DEB_HOST_ARCH_OS),linux)
+        MAKEARGS+= TARGET=linux-glibc
+	deb_systemdsystemunitdir=/usr/lib/systemd/system
+else ifeq ($(DEB_HOST_ARCH_OS),kfreebsd)
+        MAKEARGS+= TARGET=freebsd
+else
+	MAKEARGS+= TARGET=generic
+endif
+
+MAKEARGS += ADDLIB="-Wl,-no-as-needed -ljemalloc -Wl,-as-needed"
+MAKEARGS += CFLAGS="$(CFLAGS) $(CPPFLAGS)"
+MAKEARGS += LDFLAGS="$(LDFLAGS)"
+MAKEARGS += VERSION="$(DEB_VERSION_UPSTREAM)"
+MAKEARGS += SUBVERS="-$(lastword $(subst -, ,$(DEB_VERSION)))"
+MAKEARGS += VERDATE="$(shell TZ=UTC date -d "@$(SOURCE_DATE_EPOCH)" "+%Y/%m/%d")"
+
+%:
+	dh $@ --with sphinxdoc
+
+override_dh_auto_configure:
+
+override_dh_auto_build-arch:
+	make $(MAKEARGS)
+	make -C admin/systemd $(MAKEARGS)
+	$(MAKE) -C doc/lua-api man
+
+override_dh_auto_build-indep:
+	# Build the HTML documentation, after patching dconv
+	patch -p1 < $(CURDIR)/debian/patches/debianize-dconv.patch
+	python3 -B $(CURDIR)/debian/dconv/dconv.py \
+			-o $(CURDIR)/doc \
+		    $(CURDIR)/doc/intro.txt $(CURDIR)/doc/configuration.txt $(CURDIR)/doc/management.txt
+	patch -p1 -R < $(CURDIR)/debian/patches/debianize-dconv.patch
+	$(MAKE) -C doc/lua-api html
+
+override_dh_auto_clean:
+	make -C admin/systemd clean
+	$(MAKE) -C doc/lua-api clean
+	dh_auto_clean
+
+override_dh_auto_install-arch:
+	make $(MAKEARGS) install
+	install -m 0644 -D debian/rsyslog.conf debian/haproxy/etc/rsyslog.d/49-haproxy.conf
+	install -m 0644 -D debian/logrotate.conf debian/haproxy/etc/logrotate.d/haproxy
+ifneq ($(deb_systemdsystemunitdir),)
+	install -m 0644 -D admin/systemd/haproxy.service debian/haproxy$(deb_systemdsystemunitdir)/haproxy.service
+endif
+
+override_dh_auto_install-indep:
+
+override_dh_installdocs:
+	dh_installdocs -Xsystemd/ -Xhalog/
+
+override_dh_installexamples:
+	dh_installexamples -X build.cfg
+
+override_dh_installinit:
+	dh_installinit --no-restart-after-upgrade --no-stop-on-upgrade
+
+override_dh_installsystemd:
+	dh_installsystemd --no-restart-after-upgrade --no-stop-on-upgrade
+
+override_dh_strip:
+	dh_strip --dbgsym-migration="haproxy-dbg"

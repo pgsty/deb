@@ -1,0 +1,27 @@
+From: Apollon Oikonomopoulos <apoikos@debian.org>
+Date: Sun, 25 Mar 2018 11:31:50 +0200
+Subject: Start after rsyslog.service
+
+As HAProxy is running chrooted by default, we rely on an additional syslog
+socket created by rsyslog inside the chroot for logging. As this socket cannot
+trigger syslog activation, we explicitly order HAProxy after rsyslog.service.
+Note that we are not using syslog.service here, since the additional socket is
+rsyslog-specific.
+Forwarded: no
+Last-Update: 2017-12-01
+---
+ admin/systemd/haproxy.service.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/admin/systemd/haproxy.service.in b/admin/systemd/haproxy.service.in
+index 74e66e3..243acf2 100644
+--- a/admin/systemd/haproxy.service.in
++++ b/admin/systemd/haproxy.service.in
+@@ -1,6 +1,6 @@
+ [Unit]
+ Description=HAProxy Load Balancer
+-After=network-online.target
++After=network-online.target rsyslog.service
+ Wants=network-online.target
+ 
+ [Service]

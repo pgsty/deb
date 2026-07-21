@@ -1,0 +1,59 @@
+#!/bin/sh
+
+set -eux
+
+WDIR=$(dirname "$0")
+. "${WDIR}/utils"
+
+CERT_DIR=/etc/ssl/localhost
+APACHE2_CONFIG=/etc/apache2/sites-available/default-ssl.conf
+
+create_ca
+create_selfsigned_cert ${CERT_DIR}
+
+# Use the self-signed certificate in apache2 config
+sed -i "s#/etc/ssl/certs/ssl-cert-snakeoil.pem#${CERT_DIR}/localhost_cert.pem#" ${APACHE2_CONFIG}
+sed -i "s#/etc/ssl/private/ssl-cert-snakeoil.key#${CERT_DIR}/localhost_key.pem#" ${APACHE2_CONFIG}
+
+cat > /etc/haproxy/haproxy.cfg <<EOF
+global
+        chroot /var/lib/haproxy
+        user haproxy
+        group haproxy
+        daemon
+        maxconn 4096
+
+defaults
+        log global
+        option dontlognull
+        option redispatch
+        retries 3
+        timeout client 50s
+        timeout connect 10s
+        timeout http-request 5s
+        timeout server 50s
+        maxconn 4096
+
+frontend test-front
+    bind *:4433
+    mode tcp
+    option tcplog
+    default_backend test-back
+
+backend test-back
+    mode tcp
+    stick store-request src
+    stick-table type ip size 256k expire 30m
+    option ssl-hello-chk
+    server test-1 localhost:443 check
+EOF
+
+systemctl restart haproxy
+a2enmod ssl
+a2ensite default-ssl
+systemctl restart apache2
+sleep 5  # Apache 2 could be still starting... See #976997. It needs some extra seconds because of SSL
+
+check_index_file "https://localhost:4433"
+
+exit 0

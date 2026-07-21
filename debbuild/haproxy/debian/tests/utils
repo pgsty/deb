@@ -1,0 +1,58 @@
+
+create_ca() {
+  certtool --generate-privkey --bits 4096 --outfile /etc/ssl/private/mycakey.pem
+
+  cat <<EOF > /etc/ssl/ca.info
+cn = Example Company
+ca
+cert_signing_key
+expiration_days = 3650
+EOF
+
+  certtool --generate-self-signed \
+        --load-privkey /etc/ssl/private/mycakey.pem \
+        --template /etc/ssl/ca.info \
+        --outfile /usr/local/share/ca-certificates/mycacert.crt
+
+  update-ca-certificates
+}
+
+create_selfsigned_cert() {
+  dir="$1"
+  mkdir -p "${dir}"
+
+  certtool --generate-privkey --bits 2048 --outfile "${dir}/localhost_key.pem"
+
+  cat <<EOF > "${dir}/localhost.info"
+organization = Example Company
+cn = localhost
+tls_www_server
+encryption_key
+signing_key
+expiration_days = 365
+EOF
+
+  certtool --generate-certificate \
+        --load-privkey "${dir}/localhost_key.pem" \
+        --load-ca-certificate /etc/ssl/certs/mycacert.pem \
+        --load-ca-privkey /etc/ssl/private/mycakey.pem \
+        --template "${dir}/localhost.info" \
+        --outfile "${dir}/localhost_cert.pem"
+
+  cat "${dir}/localhost_cert.pem" "${dir}/localhost_key.pem" | tee "${dir}/localhost.pem"
+  chgrp haproxy "${dir}/localhost_key.pem" "${dir}/localhost.pem"
+  chmod 0640 "${dir}/localhost_key.pem" "${dir}/localhost.pem"
+}
+
+check_index_file() {
+  haproxy_url="$1"
+  # index.html is shipped with apache2
+  # Download it via haproxy and compare
+  if wget -t1 "${haproxy_url}" -O- | cmp /var/www/html/index.html -; then
+      echo "OK: index.html downloaded via haproxy matches the source file."
+  else
+      echo "FAIL: downloaded index.html via haproxy is different from the"
+      echo "      file delivered by apache."
+      exit 1
+  fi
+}

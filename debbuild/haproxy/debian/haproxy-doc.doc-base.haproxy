@@ -1,0 +1,9 @@
+Document: haproxy-doc
+Title: HAProxy Documentation
+Author: Willy Tarreau
+Abstract: This documentation covers the configuration of HAProxy.
+Section: System/Administration
+
+Format: HTML
+Index: /usr/share/doc/haproxy/html/configuration.html
+Files: /usr/share/doc/haproxy/html/*.html

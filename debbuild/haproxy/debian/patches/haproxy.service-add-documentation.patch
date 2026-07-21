@@ -1,0 +1,23 @@
+From: Debian HAProxy Maintainers
+ <pkg-haproxy-maintainers@lists.alioth.debian.org>
+Date: Sun, 25 Mar 2018 11:31:50 +0200
+Subject: Add documentation field to the systemd unit
+
+Forwarded: no
+Last-Update: 2014-01-03
+---
+ admin/systemd/haproxy.service.in | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/admin/systemd/haproxy.service.in b/admin/systemd/haproxy.service.in
+index 243acf2..ac88c37 100644
+--- a/admin/systemd/haproxy.service.in
++++ b/admin/systemd/haproxy.service.in
+@@ -1,5 +1,7 @@
+ [Unit]
+ Description=HAProxy Load Balancer
++Documentation=man:haproxy(1)
++Documentation=file:/usr/share/doc/haproxy/configuration.txt.gz
+ After=network-online.target rsyslog.service
+ Wants=network-online.target
+ 

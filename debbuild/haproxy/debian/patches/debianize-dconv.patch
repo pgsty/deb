@@ -1,0 +1,97 @@
+diff --git a/debian/dconv/dconv.py b/debian/dconv/dconv.py
+index 0c7296b0b009..76282ed0975d 100644
+--- a/debian/dconv/dconv.py
++++ b/debian/dconv/dconv.py
+@@ -56,15 +56,9 @@ def main():
+         option.git_directory = os.path.abspath(option.git_directory)
+ 
+     os.chdir(os.path.dirname(__file__))
+-    # check the haproxy-dconv repository version
+-    dconv_version = git_parser.get_git_version_from_cwd()
+-    if not dconv_version:
+-        sys.exit(1)
+-    haproxy_version = git_parser.get_git_version_in_path(
+-                            option.git_directory
+-                      )
++    haproxy_version = git_parser.get_debian_version_from_cwd()
+     converter.convert_all(files, option.output_directory, option.base,
+-                          version=dconv_version, haproxy_version=haproxy_version)
++                          version="0", haproxy_version=haproxy_version)
+ 
+ 
+ if __name__ == '__main__':
+diff --git a/debian/dconv/parser/git_parser.py b/debian/dconv/parser/git_parser.py
+index 7791f963c6e3..d2601853813b 100644
+--- a/debian/dconv/parser/git_parser.py
++++ b/debian/dconv/parser/git_parser.py
+@@ -40,4 +40,15 @@ def get_git_version_in_path(path):
+ 
+     version = version.decode().lstrip('v').rstrip()  # remove the 'v' tag and the EOL char
+     version = re.sub(r'-g.*', '', version)
+-    return version
+\ No newline at end of file
++    return version
++
++
++def get_debian_version_from_cwd():
++    path = os.getcwd()
++    try:
++        version = subprocess.check_output(["dpkg-parsechangelog", "-Sversion"],
++                                          cwd=os.path.join(path, "..", ".."))
++    except subprocess.CalledProcessError:
++        return False
++
++    return version.decode("utf-8").strip()
+diff --git a/debian/dconv/templates/template.html b/debian/dconv/templates/template.html
+index 184521919957..8b9791b7d81c 100644
+--- a/debian/dconv/templates/template.html
++++ b/debian/dconv/templates/template.html
+@@ -3,8 +3,7 @@
+ 	<head>
+ 		<meta charset="utf-8" />
+ 		<title>${headers['title']} ${headers['version']} - ${headers['subtitle']}</title>
+-		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+-		<link href="https://raw.githubusercontent.com/thomaspark/bootswatch/v3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" />
++		<link href="${base}css/bootstrap.min.css" rel="stylesheet" />
+ 		<link href="${base}css/page.css?${version}" rel="stylesheet" />
+ 	</head>
+ 	<body>
+@@ -75,7 +74,7 @@
+ 					You can use <strong>left</strong> and <strong>right</strong> arrow keys to navigate between chapters.<br>
+ 				</p>
+ 				<p class="text-right">
+-					<small>Converted with <a href="https://github.com/cbonte/haproxy-dconv">haproxy-dconv</a> v<b>${version}</b> on <b>${date}</b></small>
++					<small>Converted with <a href="https://github.com/cbonte/haproxy-dconv">haproxy-dconv</a></small>
+ 				</p>
+ 			</div>
+ 			<!-- /.sidebar -->
+@@ -89,7 +88,7 @@ <h1><a href="http://www.haproxy.org/" title="HAProxy"><img src="${base}img/HAPro
+ 							<h1>${headers['title']}</h1>
+ 							%endif
+ 							<h2>${headers['subtitle']}</h2>
+-							<p><strong>${headers['version']}</strong></p>
++							<p><strong>${headers['version']} (Debian)</strong></p>
+ 							<p>
+ 								${headers['author']}<br>
+ 								${headers['date']}
+@@ -100,8 +99,7 @@ <h2>${headers['subtitle']}</h2>
+ 						<br>
+ 						<hr>
+ 						<div class="text-right">
+-							${headers['title']} ${headers['version'].replace("version ", "")} &ndash; ${headers['subtitle']}<br>
+-							<small>${headers['date']}, ${headers['author']}</small>
++							${headers['title']} ${headers['version'].replace("version ", "")} &ndash; ${headers['subtitle']}
+ 						</div>
+ 					</div>
+ 					<!-- /.col-lg-12 -->
+@@ -113,8 +111,8 @@ <h2>${headers['subtitle']}</h2>
+ 		</div>
+ 		<!-- /#wrapper -->
+ 
+-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
++		<script src="${base}js/jquery.min.js"></script>
++		<script src="${base}js/bootstrap.min.js"></script>
+ 		<script>
+ 			function filterKeywords(text) {
+ 				$('.letter').each(function(idx1, letter) {

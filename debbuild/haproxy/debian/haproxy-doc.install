@@ -1,0 +1,6 @@
+doc/configuration.html usr/share/doc/haproxy/html/
+doc/intro.html usr/share/doc/haproxy/html/
+doc/management.html usr/share/doc/haproxy/html/
+doc/lua-api/_build/html/* usr/share/doc/haproxy/lua/
+debian/dconv/css/* usr/share/doc/haproxy/html/css/
+debian/dconv/img/* usr/share/doc/haproxy/html/img/
