@@ -1,0 +1,16 @@
+Source: pgmonitor
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/CrunchyData/pgmonitor-extension
+
+Package: postgresql-PGVERSION-pgmonitor
+Architecture: any
+Provides: postgresql-pgmonitor
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Collector-friendly PostgreSQL metrics for PGVERSION
+ pgmonitor provides metric views, materialized views, tables, and an optional
+ background worker that refreshes stored metrics for external collectors.
