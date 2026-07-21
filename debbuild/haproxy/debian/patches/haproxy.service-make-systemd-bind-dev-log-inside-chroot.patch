@@ -1,0 +1,20 @@
+From: Vincent Bernat <bernat@debian.org>
+Date: Thu, 25 Nov 2021 21:35:48 +0100
+Subject: haproxy.service: make systemd bind /dev/log inside chroot
+
+This enables logging to work without rsyslog being present.
+---
+ admin/systemd/haproxy.service.in | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/admin/systemd/haproxy.service.in b/admin/systemd/haproxy.service.in
+--- a/admin/systemd/haproxy.service.in
++++ b/admin/systemd/haproxy.service.in
+@@ -8,6 +8,7 @@ Wants=network-online.target
+ [Service]
+ EnvironmentFile=-/etc/default/haproxy
+ EnvironmentFile=-/etc/sysconfig/haproxy
++BindReadOnlyPaths=/dev/log:/var/lib/haproxy/dev/log
+ Environment="CONFIG=/etc/haproxy/haproxy.cfg" "PIDFILE=/run/haproxy.pid" "CFGDIR=/etc/haproxy/conf.d" "EXTRAOPTS=-S /run/haproxy-master.sock"
+ ExecStart=@SBINDIR@/haproxy -Ws -f $CONFIG -f $CFGDIR -p $PIDFILE $EXTRAOPTS
+ ExecReload=@SBINDIR@/haproxy -Ws -f $CONFIG -f $CFGDIR -c $EXTRAOPTS

@@ -1,0 +1,15 @@
+Tests: cli
+Depends: haproxy, socat
+Restrictions: needs-root
+
+Tests: proxy-localhost
+Depends: haproxy, wget, apache2
+Restrictions: needs-root, allow-stderr, isolation-container
+
+Tests: proxy-ssl-termination
+Depends: haproxy, wget, apache2, gnutls-bin, ssl-cert
+Restrictions: needs-root, allow-stderr, isolation-container
+
+Tests: proxy-ssl-pass-through
+Depends: haproxy, wget, apache2, gnutls-bin, ssl-cert
+Restrictions: needs-root, allow-stderr, isolation-container

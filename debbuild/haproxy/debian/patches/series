@@ -1,0 +1,7 @@
+haproxy.service-start-after-syslog.patch
+haproxy.service-add-documentation.patch
+haproxy.service-make-systemd-bind-dev-log-inside-chroot.patch
+reproducible.patch
+
+# applied during the build process:
+# debianize-dconv.patch

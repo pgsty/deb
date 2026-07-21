@@ -1,0 +1,9 @@
+Document: haproxy-lua-api
+Title: HAProxy Lua API Documentation
+Author: Thierry FOURNIER
+Abstract: This documentation covers HAProxy's Lua API
+Section: System/Administration
+
+Format: HTML
+Index: /usr/share/doc/haproxy/lua/index.html
+Files: /usr/share/doc/haproxy/lua/*.html

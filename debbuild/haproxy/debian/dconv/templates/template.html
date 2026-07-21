@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>${headers['title']} ${headers['version']} - ${headers['subtitle']}</title>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="https://raw.githubusercontent.com/thomaspark/bootswatch/v3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" />
+		<link href="${base}css/page.css?${version}" rel="stylesheet" />
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="${base}">HAProxy Documentation</a>
+			</div>
+			<!-- /.navbar-header -->
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="menu">
+				<ul class="nav navbar-nav">
+					%for item in menu:
+						<li class="${'active' if headers['subtitle'] == item[1] else ''}"><a href="${item[0]}">${item[1]}</a></li>
+					%endfor
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="http://www.haproxy.org/">HAProxy Home Page</a></li>
+				</ul>
+			</div>
+		</nav>
+		<!-- /.navbar-static-side -->
+
+		<div id="wrapper">
+
+			<div id="sidebar">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#tab-summary" aria-controls="tab-summary" role="tab" data-toggle="tab">Summary</a></li>
+					% if keywords:
+					<li role="presentation"><a href="#tab-keywords" aria-controls="tab-keywords" role="tab" data-toggle="tab">Keywords</a></li>
+					% endif
+				</ul>
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="tab-summary">
+						<%include file="_summary.html"/>
+					</div>
+					% if keywords:
+					<div role="tabpanel" class="tab-pane" id="tab-keywords">
+						<label for="filter">Filter</label>
+						<input class="form-control" type="text" name="filter" id="filter" onkeyup="filterKeywords(this.value)" placeholder="Enter keyword to search...">
+						<% previous_letter = None %>
+						% for keyword in keywords:
+							<% letter = keyword[0].upper() %>
+							%if letter != previous_letter:
+                                                                % if previous_letter:
+                                                                </div> <!-- /letter -->
+                                                                % endif
+								<div class="letter" id="letter-${letter}"><h4>${letter}</h4>
+								<% previous_letter = letter %>
+							%endif
+							<a class="list-group-item" href="#${keyword}">${keyword}</a>
+						% endfor
+						</div><!-- /letter -->
+					</div>
+					% endif
+				</div>
+
+				<p>
+					Keyboard navigation&nbsp;: <span id="keyboardNavStatus"></span>
+				</p>
+				<p>
+					You can use <strong>left</strong> and <strong>right</strong> arrow keys to navigate between chapters.<br>
+				</p>
+				<p class="text-right">
+					<small>Converted with <a href="https://github.com/cbonte/haproxy-dconv">haproxy-dconv</a> v<b>${version}</b> on <b>${date}</b></small>
+				</p>
+			</div>
+			<!-- /.sidebar -->
+
+			<div id="page-wrapper">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="text-center">
+                            <h1><a href="http://www.haproxy.org/" title="HAProxy"><img src="${base}img/HAProxyCommunityEdition_60px.png?${version}" /></a></h1>
+                            %if headers['title'] != 'HAProxy':
+							<h1>${headers['title']}</h1>
+							%endif
+							<h2>${headers['subtitle']}</h2>
+							<p><strong>${headers['version']}</strong></p>
+							<p>
+								${headers['author']}<br>
+								${headers['date']}
+							</p>
+						</div>
+
+						${document}
+						<br>
+						<hr>
+						<div class="text-right">
+							${headers['title']} ${headers['version'].replace("version ", "")} &ndash; ${headers['subtitle']}<br>
+							<small>${headers['date']}, ${headers['author']}</small>
+						</div>
+					</div>
+					<!-- /.col-lg-12 -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /#page-wrapper -->
+
+		</div>
+		<!-- /#wrapper -->
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script>
+			function filterKeywords(text) {
+				$('.letter').each(function(idx1, letter) {
+					$letter = $(letter)
+					found = false
+					$letter.find('.list-group-item').each(function(idx2, keyword) {
+						$keyword = $(keyword)
+						if ($keyword.text().indexOf(text) != -1) {
+							$keyword.show();
+							found = true
+						}
+						else {
+							$keyword.hide();
+						}
+					})
+					if (found) {
+						$letter.show()
+					}
+					else {
+						$letter.hide()
+					}
+				})
+			}
+		</script>
+		<script>
+			/* EXPERIMENTAL - Previous/Next navigation */
+			var headings = $(":header")
+			var previousTarget = false
+			var nextTarget = false
+			var $previous = $('#previous')
+			var $next = $('#next')
+			function refreshNavigation() {
+				var previous = false
+				var next = false
+				$.each(headings, function(item, value) {
+					var el = $(value)
+
+					// TODO : avoid target recalculation on each refresh
+					var target = el.attr('data-target')
+					if (! target) return true
+
+					var target_el = $('#' + target.replace(/\./, "\\."))
+					if (! target_el.attr('id')) return true
+
+					if (target_el.offset().top < $(window).scrollTop()) {
+						previous = el
+					}
+					if (target_el.offset().top - 1 > $(window).scrollTop()) {
+						next = el
+					}
+					if (next) return false
+				})
+
+				previousTarget = previous ? previous.attr('data-target') : 'top'
+				nextTarget = next ? next.attr('data-target') : 'bottom'
+			}
+
+			$(window).scroll(function () {
+				refreshNavigation()
+			});
+			$(document).ready(function() {
+				refreshNavigation()
+			});
+
+			/* EXPERIMENTAL - Enable keyboard navigation */
+			$(document).keydown(function(e){
+				if (!(e.altKey || e.ctrlKey || e.shiftKey || e.metaKey)) {
+					switch(e.which) {
+						case 37: // left
+						window.location.hash = previousTarget ? previousTarget : 'top'
+						break
+
+						case 39: // right
+						window.location.hash = nextTarget ? nextTarget : 'bottom'
+						break
+
+						default: return // exit this handler for other keys
+					}
+					e.preventDefault()
+				}
+			})
+		</script>
+		${footer}
+		<a class="anchor" name="bottom"></a>
+	</body>
+</html>

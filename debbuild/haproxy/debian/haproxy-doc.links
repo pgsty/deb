@@ -1,0 +1,6 @@
+usr/share/javascript/bootstrap/css/bootstrap.min.css usr/share/doc/haproxy/html/css/bootstrap.min.css
+usr/share/javascript/bootstrap/js/bootstrap.min.js usr/share/doc/haproxy/html/js/bootstrap.min.js
+usr/share/javascript/bootstrap/fonts usr/share/doc/haproxy/html/fonts
+usr/share/javascript/jquery/jquery.min.js usr/share/doc/haproxy/html/js/jquery.min.js
+usr/share/doc/haproxy/html /usr/share/doc/haproxy-doc/html
+usr/share/doc/haproxy/lua /usr/share/doc/haproxy-doc/lua

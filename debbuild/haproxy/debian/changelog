@@ -1,0 +1,3298 @@
+haproxy (3.4.2-1PIGSTY) unstable; urgency=medium
+
+  * New upstream LTS release.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 21 Jul 2026 15:01:32 +0800
+
+haproxy (3.2.21-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 04 Jul 2026 10:00:18 +0200
+
+haproxy (3.2.21-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 04 Jul 2026 09:30:38 +0200
+
+haproxy (3.2.20-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 26 Jun 2026 20:42:13 +0200
+
+haproxy (3.2.20-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Closes: #1140430:
+    - CVE-2026-55203: integer overflow when parsing FCGI header.
+    - CVE-2026-55204: add missing NULL check in HTTP/2 header compression.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 26 Jun 2026 20:37:40 +0200
+
+haproxy (3.2.19-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 11 May 2026 22:03:04 +0200
+
+haproxy (3.2.19-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 11 May 2026 21:58:29 +0200
+
+haproxy (3.2.18-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 08 May 2026 11:51:14 +0200
+
+haproxy (3.2.18-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 08 May 2026 11:36:45 +0200
+
+haproxy (3.2.17-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 01 May 2026 14:20:49 +0200
+
+haproxy (3.2.17-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 01 May 2026 14:12:31 +0200
+
+haproxy (3.2.16-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 25 Apr 2026 08:42:13 +0200
+
+haproxy (3.2.16-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 25 Apr 2026 08:36:56 +0200
+
+haproxy (3.2.15-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 21 Mar 2026 13:41:37 +0100
+
+haproxy (3.2.15-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/rules: remove USE_SYSTEMD=1 (not needed anymore).
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 21 Mar 2026 13:13:12 +0100
+
+haproxy (3.2.14-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 09 Mar 2026 20:41:11 +0100
+
+haproxy (3.2.14-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 09 Mar 2026 20:05:30 +0100
+
+haproxy (3.2.13-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 19 Feb 2026 23:35:09 +0100
+
+haproxy (3.2.13-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 19 Feb 2026 23:30:59 +0100
+
+haproxy (3.2.12-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 13 Feb 2026 22:02:24 +0100
+
+haproxy (3.2.12-1) unstable; urgency=high
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 13 Feb 2026 04:34:13 +0100
+
+haproxy (3.2.11-2~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 11 Feb 2026 23:13:52 +0100
+
+haproxy (3.2.11-2) unstable; urgency=medium
+
+  * CVE-2026-26081: fix integer overflow in QUIC code
+  * CVE-2026-26080: infinite loop in QUIC code
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 11 Feb 2026 22:59:37 +0100
+
+haproxy (3.2.11-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 31 Jan 2026 12:14:10 +0100
+
+haproxy (3.2.11-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 30 Jan 2026 12:17:34 +0100
+
+haproxy (3.2.10-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 20 Dec 2025 12:03:48 +0100
+
+haproxy (3.2.10-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 20 Dec 2025 11:53:17 +0100
+
+haproxy (3.2.9-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 21 Nov 2025 22:15:03 +0100
+
+haproxy (3.2.9-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 21 Nov 2025 22:10:08 +0100
+
+haproxy (3.2.8-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 09 Nov 2025 21:35:30 +0100
+
+haproxy (3.2.8-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 09 Nov 2025 21:31:19 +0100
+
+haproxy (3.2.7-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 25 Oct 2025 14:35:25 +0200
+
+haproxy (3.2.7-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 25 Oct 2025 14:30:48 +0200
+
+haproxy (3.2.6-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 03 Oct 2025 21:16:29 +0200
+
+haproxy (3.2.6-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 03 Oct 2025 17:04:47 +0200
+
+haproxy (3.2.5-2) unstable; urgency=high
+
+  * CVE-2025-11230: fix possible DoS when parsing JSON numbers.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 02 Oct 2025 17:06:08 +0200
+
+haproxy (3.2.5-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 26 Sep 2025 22:01:46 +0200
+
+haproxy (3.2.5-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Upload to unstable.
+  * d/watch: update to version 5.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 26 Sep 2025 21:34:05 +0200
+
+haproxy (3.2.4-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+  * d/rules: build again with USE_QUIC_OPENSSL_COMPAT (libssl too old).
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 14 Aug 2025 07:26:24 +0200
+
+haproxy (3.2.4-1) experimental; urgency=medium
+
+  * d/rules: build again without USE_QUIC_OPENSSL_COMPAT and require
+    libssl (>= 3.5.1).
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 14 Aug 2025 07:07:28 +0200
+
+haproxy (3.2.3-2~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 11 Jul 2025 22:01:13 +0200
+
+haproxy (3.2.3-2) experimental; urgency=medium
+
+  * d/rules: build with USE_QUIC_OPENSSL_COMPAT until libssl (>= 3.5.1) is
+    available in Trixie.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 11 Jul 2025 21:56:54 +0200
+
+haproxy (3.2.3-1) experimental; urgency=medium
+
+  [ Yaacov Akiba Slama ]
+  * d/rules: do not build with USE_QUIC_OPENSSL_COMPAT.
+  * d/control: Build-Depends on libssl (>= 3.5.0).
+
+  [ Vincent Bernat ]
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 15 Jun 2025 10:33:43 +0200
+
+haproxy (3.2.1-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 14 Jun 2025 08:40:05 +0200
+
+haproxy (3.2.1-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/control: build-depends on libcrypt-dev. Closes: #1107033.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 14 Jun 2025 08:31:04 +0200
+
+haproxy (3.2.0-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 29 May 2025 11:00:46 +0200
+
+haproxy (3.2.0-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/copyright: update FSF address.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 29 May 2025 10:26:20 +0200
+
+haproxy (3.1.7-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 19 Apr 2025 17:52:58 +0200
+
+haproxy (3.1.7-1) experimental; urgency=medium
+
+  * New upstream release. Fix CVE-2025-32464.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 19 Apr 2025 17:41:25 +0200
+
+haproxy (3.1.6-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 22 Mar 2025 17:14:04 +0100
+
+haproxy (3.1.6-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/control: drop Pre-Depends on dpkg. Closes: #1100452.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 22 Mar 2025 17:01:14 +0100
+
+haproxy (3.1.5-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 21 Feb 2025 15:09:28 +0100
+
+haproxy (3.1.5-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 21 Feb 2025 14:57:21 +0100
+
+haproxy (3.1.3-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 29 Jan 2025 21:37:16 +0100
+
+haproxy (3.1.3-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 29 Jan 2025 21:26:23 +0100
+
+haproxy (3.1.2-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 12 Jan 2025 16:19:35 +0100
+
+haproxy (3.1.2-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 12 Jan 2025 15:55:49 +0100
+
+haproxy (3.1.1-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 14 Dec 2024 21:34:13 +0100
+
+haproxy (3.1.1-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 14 Dec 2024 21:21:15 +0100
+
+haproxy (3.1.0-2~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 01 Dec 2024 18:17:15 +0100
+
+haproxy (3.1.0-2) experimental; urgency=medium
+
+  [ Helmut Grohne ]
+  * Fix FTCBFS: (Closes: #1079532)
+    + Require a sphinx for the build architecture.
+    + Pass CC and PKG_CONFIG to all make targets.
+    + cross.patch: Honour the passed ${PKG_CONFIG}.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 01 Dec 2024 18:08:58 +0100
+
+haproxy (3.1.0-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 30 Nov 2024 23:34:36 +0100
+
+haproxy (3.0.11-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/control: build-depends on libcrypt-dev. Closes: #1107033.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 03 Jun 2025 07:51:31 +0200
+
+haproxy (3.0.10-1) unstable; urgency=medium
+
+  * New upstream release. Fix CVE-2025-32464.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 25 Apr 2025 15:24:21 +0200
+
+haproxy (3.0.9-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/control: drop Pre-Depends on dpkg. Closes: #1100452
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 22 Mar 2025 17:21:15 +0100
+
+haproxy (3.0.8-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 29 Jan 2025 21:43:30 +0100
+
+haproxy (3.0.7-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 14 Dec 2024 21:40:24 +0100
+
+haproxy (3.0.6-3) unstable; urgency=medium
+
+  [ Helmut Grohne ]
+  * Fix FTCBFS: (Closes: #1079532)
+    + Require a sphinx for the build architecture.
+    + Pass CC and PKG_CONFIG to all make targets.
+    + cross.patch: Honour the passed ${PKG_CONFIG}.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 01 Dec 2024 18:35:09 +0100
+
+haproxy (3.0.6-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Update documentation converter.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 30 Nov 2024 18:28:45 +0100
+
+haproxy (3.0.6-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 11 Nov 2024 17:41:49 +0100
+
+haproxy (3.0.6-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 11 Nov 2024 17:37:04 +0100
+
+haproxy (3.0.5-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 21 Sep 2024 14:45:57 +0200
+
+haproxy (3.0.5-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 21 Sep 2024 11:07:55 +0200
+
+haproxy (3.0.4-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 03 Sep 2024 17:03:50 +0200
+
+haproxy (3.0.4-1) experimental; urgency=medium
+
+  [ Apollon Oikonomopoulos ]
+  * Build against Lua 5.4; thanks to Athos Ribeiro and Lena Voytek.
+    Closes: #1074401.
+
+  [ Vincent Bernat ]
+  * New upstream release. Fix CVE-2024-45506.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 03 Sep 2024 16:58:45 +0200
+
+haproxy (3.0.3-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 04 Aug 2024 13:08:21 +0200
+
+haproxy (3.0.3-1) experimental; urgency=medium
+
+  [ Apollon Oikonomopoulos ]
+  * Build against Lua 5.4; thanks to Athos Ribeiro and Lena Voytek.
+    Closes: #1074401.
+
+  [ Vincent Bernat ]
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 12 Jul 2024 22:02:01 +0200
+
+haproxy (3.0.2-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 14 Jun 2024 22:25:59 +0200
+
+haproxy (3.0.2-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 14 Jun 2024 22:23:20 +0200
+
+haproxy (3.0.1-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 11 Jun 2024 08:09:21 +0200
+
+haproxy (3.0.1-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 11 Jun 2024 04:08:37 +0200
+
+haproxy (3.0.0-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 01 Jun 2024 13:44:05 +0200
+
+haproxy (3.0.0-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/rules: use CFLAGS instead of DEBUG_CFLAGS.
+  * d/rules: let upstream Makefile decides for libatomic.
+  * d/patch: update patches.
+  * d/control: build-depends on pkgconf instead of pkg-config.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 01 Jun 2024 12:25:32 +0200
+
+haproxy (2.9.12-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 11 Nov 2024 17:30:30 +0100
+
+haproxy (2.9.11-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 21 Sep 2024 14:50:05 +0200
+
+haproxy (2.9.10-1) unstable; urgency=medium
+
+  [ Apollon Oikonomopoulos ]
+  * Build against Lua 5.4; thanks to Athos Ribeiro and Lena Voytek.
+    Closes: #1074401.
+
+  [ Vincent Bernat ]
+  * New upstream release. Fix CVE-2024-45506.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 03 Sep 2024 16:43:27 +0200
+
+haproxy (2.9.9-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 14 Jun 2024 21:50:59 +0200
+
+haproxy (2.9.8-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 11 Jun 2024 23:10:44 +0200
+
+haproxy (2.9.7-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Sat, 06 Apr 2024 11:54:15 +0200
+
+haproxy (2.9.7-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 06 Apr 2024 11:40:25 +0200
+
+haproxy (2.9.6-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Fri, 01 Mar 2024 22:07:57 +0100
+
+haproxy (2.9.6-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/install: don't ship halog both in usr/bin and usr/sbin.
+    Closes: #1064788.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 01 Mar 2024 22:01:08 +0100
+
+haproxy (2.9.5-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Thu, 15 Feb 2024 22:28:12 +0100
+
+haproxy (2.9.5-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 15 Feb 2024 22:21:25 +0100
+
+haproxy (2.9.4-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Thu, 01 Feb 2024 22:44:07 +0100
+
+haproxy (2.9.4-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 01 Feb 2024 22:39:57 +0100
+
+haproxy (2.9.3-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Thu, 18 Jan 2024 22:14:49 +0100
+
+haproxy (2.9.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Upload to unstable. Let bite the bullet!
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 18 Jan 2024 21:25:36 +0100
+
+haproxy (2.9.2-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Fri, 12 Jan 2024 21:14:10 +0100
+
+haproxy (2.9.2-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Upload back to experimental.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 12 Jan 2024 20:55:52 +0100
+
+haproxy (2.9.1-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Fri, 15 Dec 2023 15:37:42 +0100
+
+haproxy (2.9.1-1) unstable; urgency=medium
+
+  [ Chris Hofstaedtler ]
+  * d/rules: use dh_installsystemd to install .service files.
+    Closes: #1057943.
+
+  [ Vincent Bernat ]
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 15 Dec 2023 15:33:29 +0100
+
+haproxy (2.9.0-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Sat, 09 Dec 2023 15:47:21 +0100
+
+haproxy (2.9.0-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 09 Dec 2023 15:33:05 +0100
+
+haproxy (2.8.5-2) UNRELEASED; urgency=medium
+
+  * d/rules: use dh_installsystemd to install .service files.
+    Closes: #1057943.
+
+ -- Chris Hofstaedtler <zeha@debian.org>  Sun, 10 Dec 2023 20:15:00 +0100
+
+haproxy (2.8.5-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 09 Dec 2023 16:14:43 +0100
+
+haproxy (2.8.4-2~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Wed, 22 Nov 2023 23:27:28 +0100
+
+haproxy (2.8.4-2) experimental; urgency=medium
+
+  * d/rules: really link against jemalloc.
+  * d/rules: enable USE_QUIC (with USE_QUIC_OPENSSL_COMPAT).
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 22 Nov 2023 22:52:31 +0100
+
+haproxy (2.8.4-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Sat, 18 Nov 2023 21:04:07 +0100
+
+haproxy (2.8.4-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/rules: link against jemalloc.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 17 Nov 2023 19:53:48 +0100
+
+haproxy (2.8.3-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Fri, 08 Sep 2023 20:59:17 +0200
+
+haproxy (2.8.3-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 08 Sep 2023 20:25:39 +0200
+
+haproxy (2.8.2-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Sat, 12 Aug 2023 14:03:10 +0200
+
+haproxy (2.8.2-1) experimental; urgency=medium
+
+  * New upstream release. Fix CVE-2023-40225.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 12 Aug 2023 13:33:36 +0200
+
+haproxy (2.8.1-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Mon, 03 Jul 2023 21:33:04 +0200
+
+haproxy (2.8.1-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 03 Jul 2023 21:13:18 +0200
+
+haproxy (2.8.0-1~bpo12+1) bookworm-backports; urgency=medium
+
+  * Rebuild for bookworm-backports.
+
+ -- Vincent Bernat <bernat@luffy.cx>  Sat, 03 Jun 2023 13:48:18 +0200
+
+haproxy (2.8.0-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/NEWS: remove
+  * d/lintian-overrides: override warning about obsolete lsb-base dependency
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 03 Jun 2023 00:11:07 +0200
+
+haproxy (2.7.8-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 06 May 2023 15:08:44 +0200
+
+haproxy (2.7.7-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 27 Apr 2023 21:22:39 +0200
+
+haproxy (2.7.6-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 31 Mar 2023 08:46:51 +0200
+
+haproxy (2.7.5-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 18 Mar 2023 14:00:02 +0100
+
+haproxy (2.7.4-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 10 Mar 2023 21:18:59 +0100
+
+haproxy (2.7.3-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 15 Feb 2023 08:18:45 +0100
+
+haproxy (2.7.2-2) experimental; urgency=medium
+
+  * BUG/CRITICAL: http: properly reject empty http header field names
+    (CVE-2023-25725).
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 13 Feb 2023 19:37:55 +0100
+
+haproxy (2.7.2-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 20 Jan 2023 22:15:56 +0100
+
+haproxy (2.7.1-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 19 Dec 2022 21:11:23 +0100
+
+haproxy (2.7.0-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 01 Dec 2022 17:25:51 +0100
+
+haproxy (2.6.6-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 22 Oct 2022 10:19:03 +0200
+
+haproxy (2.6.6-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 22 Sep 2022 20:22:23 +0200
+
+haproxy (2.6.5-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 03 Sep 2022 19:33:51 +0200
+
+haproxy (2.6.4-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 22 Aug 2022 19:01:25 +0200
+
+haproxy (2.6.3-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 19 Aug 2022 19:16:11 +0200
+
+haproxy (2.6.2-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 22 Jul 2022 18:21:43 +0200
+
+haproxy (2.6.1-1) experimental; urgency=medium
+
+  [ Lucas Kanashiro ]
+  * d/t/utils: add helper functions to be re-used in tests
+  * d/t/proxy-localhost: refactor to use the check_index_file helper function
+  * d/t/proxy-ssl-termination: add test for the SSL termination proxy feature
+  * d/t/proxy-ssl-pass-through: add test for the SSL Pass-Through proxy feature
+
+  [ Vincent Bernat ]
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 22 Jun 2022 20:06:08 +0200
+
+haproxy (2.6.0-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 02 Jun 2022 08:49:38 +0200
+
+haproxy (2.5.7-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 14 May 2022 12:01:07 +0200
+
+haproxy (2.5.6-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 26 Apr 2022 17:59:23 +0200
+
+haproxy (2.5.5-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 14 Mar 2022 19:26:46 +0100
+
+haproxy (2.5.4-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 25 Feb 2022 17:39:11 +0100
+
+haproxy (2.5.3-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 18 Feb 2022 20:22:25 +0100
+
+haproxy (2.5.2-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 16 Feb 2022 19:09:04 +0100
+
+haproxy (2.5.1-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 11 Jan 2022 19:23:50 +0100
+
+haproxy (2.5.0-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/patches: patch to make logging work without rsyslog with systemd
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 25 Nov 2021 21:20:30 +0100
+
+haproxy (2.4.19-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 30 Sep 2022 09:07:13 +0200
+
+haproxy (2.4.18-1) unstable; urgency=medium
+
+  [ Lucas Kanashiro ]
+  * d/t/utils: add helper functions to be re-used in tests
+  * d/t/proxy-localhost: refactor to use the check_index_file helper function
+  * d/t/proxy-ssl-termination: add test for the SSL termination proxy feature
+  * d/t/proxy-ssl-pass-through: add test for the SSL Pass-Through proxy feature
+
+  [ Vincent Bernat ]
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 27 Jul 2022 15:59:36 +0200
+
+haproxy (2.4.17-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 14 May 2022 14:27:20 +0200
+
+haproxy (2.4.16-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/install: do not install halog explicitely.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 29 Apr 2022 17:42:42 +0200
+
+haproxy (2.4.15-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 14 Mar 2022 20:17:04 +0100
+
+haproxy (2.4.14-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fix compilation with OpenSSL 3.0. Closes: #996423, #1006007.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 25 Feb 2022 18:38:27 +0100
+
+haproxy (2.4.13-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 17 Feb 2022 10:03:46 +0100
+
+haproxy (2.4.12-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 11 Jan 2022 12:06:17 +0100
+
+haproxy (2.4.11-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 07 Jan 2022 17:25:51 +0100
+
+haproxy (2.4.10-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 23 Dec 2021 19:13:26 +0100
+
+haproxy (2.4.9-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 24 Nov 2021 19:42:28 +0100
+
+haproxy (2.4.8-3) unstable; urgency=medium
+
+  * d/logrotate: only use rsyslog-rotate if present. Closes: #1000436.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 24 Nov 2021 09:29:54 +0100
+
+haproxy (2.4.8-2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Enable OpenTracing support.
+
+ -- Stephen Gelman <ssgelm@debian.org>  Tue, 09 Nov 2021 23:06:46 -0600
+
+haproxy (2.4.8-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 04 Nov 2021 08:36:56 +0100
+
+haproxy (2.4.7-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 16 Oct 2021 20:43:13 +0200
+
+haproxy (2.4.7-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 07 Oct 2021 09:08:09 +0200
+
+haproxy (2.4.4-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/patches: remove patches applied upstream.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 08 Sep 2021 08:38:05 +0200
+
+haproxy (2.4.3-2) experimental; urgency=high
+
+  * d/patches: fix missing header name length check in HTX (CVE-2021-40346).
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 04 Sep 2021 11:56:31 +0200
+
+haproxy (2.4.3-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/patches: remove patches applied upstream.
+  * d/patches: h2: match absolute-path not path-absolute for :path.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 21 Aug 2021 16:32:25 +0200
+
+haproxy (2.4.2-2) experimental; urgency=medium
+
+  * Fix HTTP request smuggling via HTTP/2 desync attacks.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 13 Aug 2021 16:12:31 +0200
+
+haproxy (2.4.2-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 07 Jul 2021 21:47:17 +0200
+
+haproxy (2.4.1-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 17 Jun 2021 13:57:57 +0200
+
+haproxy (2.4.0-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/rules: switch to SLZ instead of zlib
+  * d/rules: update build for contrib → admin
+  * d/rules: remove use of USE_REGPARM (outdated)
+  * d/rules: remove hack around gcc_s
+  * d/copyright: update
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 18 May 2021 22:00:05 +0200
+
+haproxy (2.3.10-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 24 Apr 2021 18:22:41 +0200
+
+haproxy (2.3.9-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 30 Mar 2021 19:50:42 +0200
+
+haproxy (2.3.8-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/logrotate: reduce log retention to 7 days. Closes: #985441.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 25 Mar 2021 18:17:18 +0100
+
+haproxy (2.3.7-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 16 Mar 2021 18:41:25 +0100
+
+haproxy (2.3.6-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 04 Mar 2021 13:57:49 +0100
+
+haproxy (2.3.5-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 06 Feb 2021 17:12:53 +0100
+
+haproxy (2.3.4-1) experimental; urgency=medium
+
+  * New upstream release:
+    - Revert "BUG/MINOR: dns: SRV records ignores duplicated AR records"
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 15 Jan 2021 14:13:28 +0100
+
+haproxy (2.3.3-1) experimental; urgency=medium
+
+  * d/tests: sleep before test to let Apache2 start.
+    Closes: #976997.
+  * New upstream release:
+    - BUG/MAJOR: ring: tcp forward on ring can break the reader counter.
+    - BUG/MAJOR: spoa/python: Fixing return None
+    - BUG/MEDIUM: local log format regression. Closes: #974977.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 09 Jan 2021 15:18:10 +0100
+
+haproxy (2.3.2-1) experimental; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: connection: reset conn->owner when detaching from session
+                 list
+    - BUG/MAJOR: filters: Always keep all offsets up to date during data
+                 filtering
+    - BUG/MAJOR: peers: fix partial message decoding
+    - BUG/MAJOR: tcpcheck: Allocate input and output buffers from the buffer
+                 pool
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 28 Nov 2020 20:25:34 +0100
+
+haproxy (2.3.1-1) experimental; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: spoe: Be sure to remove all references on a released spoe
+                 applet
+  * d/patches: remove patches applied upstream.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 14 Nov 2020 23:17:20 +0100
+
+haproxy (2.3.0-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/gbp, d/watch: prepare for 2.3.0 release
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 11 Nov 2020 16:30:10 +0100
+
+haproxy (2.2.17-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/patches: remove upstream-applied patch.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 09 Sep 2021 19:42:08 +0200
+
+haproxy (2.2.16-3) unstable; urgency=high
+
+  * d/patches: fix missing header name length check in HTX (CVE-2021-40346).
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 04 Sep 2021 16:14:51 +0200
+
+haproxy (2.2.16-2) unstable; urgency=medium
+
+  * d/patches: h2: match absolute-path not path-absolute for :path
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 21 Aug 2021 16:19:52 +0200
+
+haproxy (2.2.16-1) unstable; urgency=high
+
+  * New upstream release.
+  * Fix CVE-2021-39240, CVE-2021-39241, CVE-2021-39242.
+  * d/patches: remove upstream-applied patch.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 19 Aug 2021 07:22:05 +0200
+
+haproxy (2.2.15-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 16 Jul 2021 11:18:32 +0200
+
+haproxy (2.2.14-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 29 Apr 2021 15:32:49 +0200
+
+haproxy (2.2.13-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 02 Apr 2021 21:18:28 +0200
+
+haproxy (2.2.12-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 31 Mar 2021 20:31:24 +0200
+
+haproxy (2.2.11-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 18 Mar 2021 21:34:40 +0100
+
+haproxy (2.2.10-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 04 Mar 2021 19:08:41 +0100
+
+haproxy (2.2.9-2) unstable; urgency=medium
+
+  * d/patches: fix agent-check regression putting down servers.
+    Closes: #988779.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 27 May 2021 15:00:01 +0200
+
+haproxy (2.2.9-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: connection: reset conn->owner when detaching from session
+                 list
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 06 Feb 2021 18:52:20 +0100
+
+haproxy (2.2.8-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Revert "BUG/MINOR: dns: SRV records ignores duplicated AR records"
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 14 Jan 2021 11:48:52 +0100
+
+haproxy (2.2.7-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: ring: tcp forward on ring can break the reader counter.
+    - BUG/MAJOR: spoa/python: Fixing return None
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 09 Jan 2021 15:31:08 +0100
+
+haproxy (2.2.6-2) unstable; urgency=medium
+
+  * d/tests: sleep before test to let Apache2 start.
+    Closes: #976997.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 07 Jan 2021 07:56:14 +0100
+
+haproxy (2.2.6-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: filters: Always keep all offsets up to date during data
+                 filtering
+    - BUG/MAJOR: peers: fix partial message decoding
+    - BUG/MAJOR: spoe: Be sure to remove all references on a released spoe
+                 applet
+    - BUG/MAJOR: tcpcheck: Allocate input and output buffers from the buffer
+                 pool
+  * d/patches: remove patches applied upstream
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 30 Nov 2020 20:02:49 +0100
+
+haproxy (2.2.5-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 11 Nov 2020 16:21:12 +0100
+
+haproxy (2.2.5-1) experimental; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: mux-h2: Don't try to send data if we know it is no longer
+                 possible
+  * d/patches: warn if payload of an errorfile doesn't match the C-L
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 08 Nov 2020 19:12:02 +0100
+
+haproxy (2.2.4-1) experimental; urgency=medium
+
+  * New upstream release.
+  * d/patches: drop patch for ARM32
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 02 Oct 2020 21:29:56 +0200
+
+haproxy (2.2.3-2) experimental; urgency=medium
+
+  * d/patches: add upstream patch to fix build on ARM32
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 09 Sep 2020 19:38:52 +0200
+
+haproxy (2.2.3-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: dns: disabled servers through SRV records never recover
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 08 Sep 2020 23:12:05 +0200
+
+haproxy (2.2.2-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: dns: don't treat Authority records as an error
+    - BUG/MAJOR: dns: fix null pointer dereference in
+                 snr_update_srv_status
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 01 Aug 2020 17:06:42 +0200
+
+haproxy (2.2.1-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: tasks: don't requeue global tasks into the local
+                 queue
+    - BUG/MAJOR: dns: Make the do-resolve action thread-safe
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 23 Jul 2020 13:39:14 +0200
+
+haproxy (2.2.0-1) experimental; urgency=medium
+
+  * New upstream version.
+  * Upload to experimental
+  * Update d/watch to look for 2.2 stable releases
+  * d/gbp.conf: set branch names for 2.2
+  * d/patches: refresh patches
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 14 Jul 2020 16:53:23 +0200
+
+haproxy (2.1.7-1) experimental; urgency=medium
+
+  * New upstream version.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 12 Jun 2020 07:50:48 +0200
+
+haproxy (2.1.5-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: mux-fcgi: Stop sending loop if FCGI stream is blocked for
+                 any reason
+    - Revert "BUG/MINOR: connection: always send address-less LOCAL PROXY
+              connections"
+    - Revert "BUG/MINOR: connection: make sure to correctly tag local
+              PROXY connections"
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 01 Jun 2020 08:52:56 +0200
+
+haproxy (2.1.4-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/CRITICAL: hpack: never index a header into the headroom after
+                    wrapping
+    - BUG/MAJOR: http-ana: Always abort the request when a tarpit is
+                 triggered
+    - BUG/MAJOR: list: fix invalid element address calculation
+    - BUG/MAJOR: proxy_protocol: Properly validate TLV lengths
+  * d/control: fix maintainer address. Closes: #955553.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 12 Apr 2020 13:29:54 +0200
+
+haproxy (2.1.3-3) experimental; urgency=medium
+
+  * d/copryight: document OpenSSL exception. Closes: #951782.
+  * d/haproxy.cfg: use "ssl-min-ver" to set minimum version.
+  * d/patches: fix an overflow in HTTP/2 header handling.
+    Fix CVE-2020-11100.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 01 Apr 2020 21:18:57 +0200
+
+haproxy (2.1.3-2) experimental; urgency=medium
+
+  * d/dconv: use Python 3 to build the documentation.
+    Closes: #948296, #950435.
+  * d/dconv: replace cgi.escape by html.escape. Closes: #951416.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 19 Feb 2020 07:53:53 +0100
+
+haproxy (2.1.3-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: hashes: fix the signedness of the hash inputs
+    - BUG/MAJOR: memory: Don't forget to unlock the rwlock if the pool is
+                 empty.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 20 Jan 2020 06:53:23 +0100
+
+haproxy (2.1.2-1) experimental; urgency=medium
+
+  * New upstream version 2.1.2.
+    - BUG/MAJOR: task: add a new TASK_SHARED_WQ flag to fix foreign requeuing
+  * d/logrotate.conf: use rsyslog helper instead of SysV init script.
+    Closes: #946973.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 20 Dec 2019 08:20:33 +0100
+
+haproxy (2.1.1-1) experimental; urgency=medium
+
+  * New upstream version 2.1.1.
+    - BUG/MAJOR: dns: add minimalist error processing on the Rx path
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 14 Dec 2019 11:20:32 +0100
+
+haproxy (2.1.0-2) experimental; urgency=medium
+
+  * Link against libatomic on riscv64
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 29 Nov 2019 14:03:49 +0200
+
+haproxy (2.1.0-1) experimental; urgency=medium
+
+  * New upstream version 2.1.0
+  * Upload to experimental
+  * Update d/watch to look for 2.1 stable releases
+  * d/gbp.conf: set branch names for 2.1
+  * Bump Standards-Version to 4.4.1; no changes needed
+  * Bump dh compat level to 12
+    + B-D on debhelper-compat and remove debian/compat
+    + Override dh_installsystemd with the same args as dh_installinit
+    + Add ${misc:Pre-Depends} to haproxy's Pre-Depends
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 27 Nov 2019 23:30:30 +0200
+
+haproxy (2.0.19-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: mux-h2: Don't try to send data if we know it is no longer
+                 possible
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 06 Nov 2020 19:33:59 +0100
+
+haproxy (2.0.18-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 30 Sep 2020 13:41:09 +0200
+
+haproxy (2.0.17-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: dns: Make the do-resolve action thread-safe
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 01 Aug 2020 20:05:01 +0200
+
+haproxy (2.0.16-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: stream: Mark the server address as unset on new outgoing
+                 connection
+  * d/patches: refresh patches.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 18 Jul 2020 13:50:56 +0200
+
+haproxy (2.0.15-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: stream-int: always detach a faulty endpoint on connect
+                 failure
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 13 Jun 2020 18:48:25 +0200
+
+haproxy (2.0.14-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/CRITICAL: hpack: never index a header into the headroom after
+                    wrapping
+    - BUG/MAJOR: http-ana: Always abort the request when a tarpit is
+                 triggered
+    - BUG/MAJOR: list: fix invalid element address calculation
+    - BUG/MAJOR: proxy_protocol: Properly validate TLV lengths
+  * d/control: fix maintainer address. Closes: #955553.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 16 Apr 2020 18:34:22 +0200
+
+haproxy (2.0.13-2) unstable; urgency=medium
+
+  * d/dconv: replace cgi.escape by html.escape. Closes: #951416.
+  * d/copryight: document OpenSSL exception. Closes: #951782.
+  * d/haproxy.cfg: use "ssl-min-ver" to set minimum version.
+  * Apply one patch to fix an overflow in HTTP/2 header handling.
+    Fix CVE-2020-11100.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 01 Apr 2020 21:49:32 +0200
+
+haproxy (2.0.13-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: hashes: fix the signedness of the hash inputs
+    - BUG/MAJOR: memory: Don't forget to unlock the rwlock if the pool is
+                 empty.
+  * d/dconv: use Python 3 to build the documentation.
+    Closes: #948296, #950435.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 15 Feb 2020 15:32:32 +0100
+
+haproxy (2.0.12-1) unstable; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: task: add a new TASK_SHARED_WQ flag to fix foreign requeuing
+  * d/logrotate.conf: use rsyslog helper instead of SysV init script.
+    Closes: #946973.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 20 Dec 2019 08:20:33 +0100
+
+haproxy (2.0.11-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: dns: add minimalist error processing on the Rx path
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 13 Dec 2019 19:22:03 +0100
+
+haproxy (2.0.10-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: h2: make header field name filtering stronger
+    - BUG/MAJOR: h2: reject header values containing invalid chars
+    - BUG/MAJOR: mux-h2: don't try to decode a response HEADERS frame in
+                 idle state
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 26 Nov 2019 13:22:17 +0100
+
+haproxy (2.0.9-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: stream-int: Don't receive data from mux until SI_ST_EST
+                 is reached
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 16 Nov 2019 17:38:51 +0100
+
+haproxy (2.0.8-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: idle conns: schedule the cleanup task on the correct
+                 threads
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 23 Oct 2019 08:55:55 +0200
+
+haproxy (2.0.7-1) unstable; urgency=medium
+
+  * New upstream release.  
+    - BUG/MAJOR: mux-h2: Handle HEADERS frames received after a RST_STREAM
+                 frame
+    - BUG/MAJOR: mux_h2: Don't consume more payload than received for
+                 skipped frames
+    - BUG/MEDIUM: checks: make sure the connection is ready before trying
+                  to recv
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 27 Sep 2019 19:14:12 +0200
+
+haproxy (2.0.6-2) unstable; urgency=medium
+
+  * d/patches: fix regression with checks.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 18 Sep 2019 08:02:53 +0200
+
+haproxy (2.0.6-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: ssl: ssl_sock was not fully initialized.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 13 Sep 2019 21:25:38 +0200
+
+haproxy (2.0.5-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MEDIUM: mux_h1: Don't bother subscribing in recv if we're not
+                  connected.
+    - BUG/MEDIUM: mux_pt: Don't call unsubscribe if we did not subscribe.
+    - BUG/MEDIUM: proxy: Don't forget the SF_HTX flag when upgrading
+                  TCP=>H1+HTX.
+    - BUG/MEDIUM: proxy: Don't use cs_destroy() when freeing the
+                  conn_stream.
+    - BUG/MEDIUM: stick-table: Wrong stick-table backends parsing.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 16 Aug 2019 19:51:24 +0200
+
+haproxy (2.0.4-1) unstable; urgency=medium
+
+  * New upstream release. Upload to unstable.
+    - BUG/MAJOR: http/sample: use a static buffer for raw -> htx
+                 conversion
+    - BUG/MAJOR: queue/threads: avoid an AB/BA locking issue in
+                 process_srv_queue()
+  * d/haproxy.cfg: update default cipher lists to more secure defaults.
+    TLSv1.0 and TLSv1.1 are disabled, as well as TLS tickets (they are
+    breaking forward secrecy unless correctly rotated).
+    Closes: #932763.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 09 Aug 2019 14:22:23 +0200
+
+haproxy (2.0.3-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/CRITICAL: http_ana: Fix parsing of malformed cookies which start by
+                    a delimiter (CVE-2019-14241)
+    - BUG/MEDIUM: checks: Don't attempt to receive data if we already
+                  subscribed.
+    - BUG/MEDIUM: http/htx: unbreak option http_proxy
+    - DOC: htx: Update comments in HTX files
+    - BUG/MEDIUM: mux-h1: Trim excess server data at the end of a transaction
+    - BUG/MEDIUM: tcp-checks: do not dereference inexisting conn_stream
+  * Bump Standards-Version to 4.4.0; no changes needed
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 23 Jul 2019 13:31:31 -0300
+
+haproxy (2.0.2-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: listener: fix thread safety in resume_listener()
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 17 Jul 2019 12:19:54 +0200
+
+haproxy (2.0.1-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: sample: Wrong stick-table name parsing in "if/unless" ACL
+                 condition.
+    - BUG/MAJOR: mux-h1: Don't crush trash chunk area when outgoing
+                 message is formatted
+  * d/rules: fix crash during reload due to libgcc_s.so missing when
+    chrooted.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 24 Jun 2019 19:28:26 +0200
+
+haproxy (2.0.0-1) experimental; urgency=medium
+
+  * New upstream version.
+  * d/watch: update to follow 2.0.
+  * d/gbp.conf: update for 2.0 and experimental.
+  * d/rules: update to use linux-glibc target.
+  * d/rules: enable prometheus exporter.
+  * d/patches: refresh patches.
+  * d/vim-haproxy.install: update path to vim syntax file.
+  * d/README.Debian: remove outdated information.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 20 Jun 2019 11:40:19 +0200
+
+haproxy (1.9.8-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: map/acl: real fix segfault during show map/acl on CLI
+    - BUG/MAJOR: mux-h2: do not add a stream twice to the send list
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 16 May 2019 01:50:10 +0200
+
+haproxy (1.9.7-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: http_fetch: Get the channel depending on the keyword used
+    - BUG/MAJOR: lb/threads: fix AB/BA locking issue in round-robin LB
+    - BUG/MAJOR: lb/threads: fix insufficient locking on round-robin LB
+    - BUG/MAJOR: muxes: Use the HTX mode to find the best mux for HTTP
+                 proxies only
+    - BUG/MAJOR: task: make sure never to delete a queued task
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 28 Apr 2019 17:37:04 +0200
+
+haproxy (1.9.6-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: checks: segfault during tcpcheck_main
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 30 Mar 2019 12:43:33 +0100
+
+haproxy (1.9.5-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: cache/htx: Set the start-line offset when a cached object
+                 is served
+    - BUG/MAJOR: fd/threads, task/threads: ensure all spin locks are
+                 unlocked
+    - BUG/MAJOR: listener: Make sure the listener exist before using it.
+    - BUG/MAJOR: mux-h2: fix race condition between close on both ends
+    - BUG/MAJOR: spoe: Don't try to get agent config during SPOP
+                 healthcheck
+    - BUG/MAJOR: spoe: Fix initialization of thread-dependent fields
+    - BUG/MAJOR: stats: Fix how huge POST data are read from the channel
+    - BUG/MAJOR: stream: avoid double free on unique_id
+    - BUG/MAJOR: tasks: Use the TASK_GLOBAL flag to know if we're in the
+                 global rq.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 19 Mar 2019 20:13:48 +0100
+
+haproxy (1.9.4-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: config: verify that targets of track-sc and stick rules
+                 are present
+    - BUG/MAJOR: htx/backend: Make all tests on HTTP messages compatible
+                 with HTX
+    - BUG/MAJOR: spoe: verify that backends used by SPOE cover all their
+                 callers' processes
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 07 Feb 2019 12:48:42 +0100
+
+haproxy (1.9.3-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: mux-h2: don't destroy the stream on failed allocation in
+                 h2_snd_buf()
+    - BUG/MEDIUM: checks: fix recent regression on agent-check making it
+                  crash
+    - BUG/MEDIUM: ssl: Fix handling of TLS 1.3 KeyUpdate messages
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 29 Jan 2019 12:59:10 +0100
+
+haproxy (1.9.2-1) experimental; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: cache: fix confusion between zero and uninitialized cache
+                 key
+    - BUG/MEDIUM: checks: Avoid having an associated server for email
+                  checks.
+    - BUG/MEDIUM: connection: properly unregister the mux on failed
+                  initialization
+    - BUG/MEDIUM: h1: Get the h1m state when restarting the headers
+                  parsing
+    - BUG/MEDIUM: h1: Make sure we destroy an inactive connectin that did
+                  shutw.
+    - BUG/MEDIUM: init: Initialize idle_orphan_conns for first server in
+                  server-template
+    - BUG/MEDIUM: mux-h2: decode trailers in HEADERS frames
+    - BUG/MEDIUM: ssl: Disable anti-replay protection and set max data
+                  with 0RTT.
+    - BUG/MEDIUM: ssl: missing allocation failure checks loading tls key
+                  file
+    - BUG/MEDIUM: stats: Get the right scope pointer depending on HTX is
+                  used or not
+  * d/patches: removal of CVE-2018-20615.patch (applied upstream)
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 17 Jan 2019 19:19:27 +0100
+
+haproxy (1.9.0-2) experimental; urgency=medium
+
+  * Fix out-of-bounds read in HTTP2 mux (CVE-2018-20615).
+    Possible crash in H2 HEADERS frame decoder when the PRIORITY flag
+    is present, due to a missing frame size check.
+  * Bump Standards-Version to 4.3.0; no changes needed.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 03 Jan 2019 12:41:02 +0200
+
+haproxy (1.9.0-1) experimental; urgency=medium
+
+  * New upstream version 1.9.0.
+    See https://www.haproxy.com/blog/haproxy-1-9-has-arrived/.
+  * d/watch: update to follow 1.9.
+  * d/gbp.conf: update for 1.9 and experimental.
+  * d/rules: do not override CFLAGS, hijack DEBUG_CFLAGS for this instead.
+  * d/patches: add regression fix for DNS.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 21 Dec 2018 11:13:41 +0100
+
+haproxy (1.8.15-1) unstable; urgency=high
+
+  [ Vincent Bernat ]
+  * d/rules: switch to pcre2. Closes: #911933.
+
+  [ Apollon Oikonomopoulos ]
+  * New upstream version 1.8.15
+    - BUG: dns: Fix off-by-one write in dns_validate_dns_response() (
+    - BUG: dns: Fix out-of-bounds read via signedness error in
+      dns_validate_dns_response()
+    - BUG: dns: Prevent out-of-bounds read in dns_read_name()
+    - BUG: dns: Prevent out-of-bounds read in dns_validate_dns_response()
+      (CVE-2018-20102, closes: #916308)
+    - BUG: dns: Prevent stack-exhaustion via recursion loop in dns_read_name
+      (CVE-2018-20103, closes: #916307)
+    - BUG/MAJOR: http: http_txn_get_path() may deference an inexisting buffer
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 14 Dec 2018 15:31:04 +0200
+
+haproxy (1.8.14-1) unstable; urgency=medium
+
+  * New upstream version.
+    - BUG/CRITICAL: hpack: fix improper sign check on the header index
+                    value (already fixed in 1.8.13-2)
+    - BUG/MAJOR: kqueue: Don't reset the changes number by accident.
+    - BUG/MAJOR: thread: lua: Wrong SSL context initialization.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 23 Sep 2018 12:25:03 +0200
+
+haproxy (1.8.13-2) unstable; urgency=high
+
+  * Fix improper sign check on the HPACK header index value (CVE-2018-14645)
+  * Bump Standards-Version to 4.2.1; no changes needed
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 19 Sep 2018 22:46:58 +0300
+
+haproxy (1.8.13-1) unstable; urgency=medium
+
+  * New upstream version.
+    - BUG/MEDIUM: h2: don't accept new streams if conn_streams are still
+                  in excess
+    - BUG/MEDIUM: h2: make sure the last stream closes the connection
+                  after a timeout
+    - BUG/MEDIUM: h2: never leave pending data in the output buffer on close
+    - BUG/MEDIUM: h2: prevent orphaned streams from blocking a connection
+                  forever
+    - BUG/MEDIUM: stats: don't ask for more data as long as we're responding
+    - BUG/MEDIUM: stream-int: don't immediately enable reading when the
+                  buffer was reportedly full
+    - BUG/MEDIUM: threads/sync: use sched_yield when available
+    - BUG/MEDIUM: threads: Fix the exit condition of the thread barrier
+    - BUG/MEDIUM: threads: properly fix nbthreads == MAX_THREADS
+    - BUG/MEDIUM: threads: unbreak "bind" referencing an incorrect thread
+                  number
+  * d/patches: drop systemd exit status patch (applied upstream).
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 01 Aug 2018 11:36:20 +0200
+
+haproxy (1.8.12-1) unstable; urgency=medium
+
+  * New upstream version.
+     - BUG/MAJOR: stick_table: Complete incomplete SEGV fix
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 27 Jun 2018 20:05:50 +0200
+
+haproxy (1.8.11-1) unstable; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: Stick-tables crash with segfault when the key is not in
+                 the stick-table
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 26 Jun 2018 18:26:05 +0200
+
+haproxy (1.8.10-1) unstable; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: lua: Dead lock with sockets
+    - BUG/MAJOR: map: fix a segfault when using http-request set-map
+    - BUG/MAJOR: ssl: OpenSSL context is stored in non-reserved memory slot
+    - BUG/MAJOR: ssl: Random crash with cipherlist capture
+    - BUG/MEDIUM: cache: don't cache when an Authorization header is present
+    - BUG/MEDIUM: dns: Delay the attempt to run a DNS resolution on check
+                  failure.
+    - BUG/MEDIUM: fd: Don't modify the update_mask in fd_dodelete().
+    - BUG/MEDIUM: fd: Only check update_mask against all_threads_mask.
+    - BUG/MEDIUM: servers: Add srv_addr default placeholder to the state file
+    - BUG/MEDIUM: stick-tables: Decrement ref_cnt in table_* converters
+    - BUG/MEDIUM: threads: Use the sync point to check active jobs and exit
+    - BUG/MEDIUM: threads: handle signal queue only in thread 0
+  * Remove patch from CVE. Included upstream.
+  * d/patches: add a patch for clean stop with systemd.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 22 Jun 2018 20:21:37 +0200
+
+haproxy (1.8.9-2) unstable; urgency=high
+
+  * d/patches: fix CVE-2018-11469: do not cache when an Authorization
+    header is present. Closes: #900084.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 26 May 2018 16:05:07 +0200
+
+haproxy (1.8.9-1) unstable; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: channel: Fix crash when trying to read from a closed socket
+    - BUG/MEDIUM: h2: implement missing support for chunked encoded uploads
+    - BUG/MEDIUM: http: don't always abort transfers on CF_SHUTR
+    - BUG/MEDIUM: lua: Fix segmentation fault if a Lua task exits
+    - BUG/MEDIUM: pollers: Use a global list for fd shared between threads
+    - BUG/MEDIUM: ssl: properly protect SSL cert generation
+    - BUG/MEDIUM: task: Don't free a task that is about to be run
+    - BUG/MEDIUM: threads: Fix the sync point for more than 32 threads
+  * d/rsyslog.conf: use modern syntax and statements, thanks to Guillem
+    Jover. Closes: #897914.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 19 May 2018 15:00:17 +0200
+
+haproxy (1.8.8-1) unstable; urgency=high
+
+  * New upstream version.
+    - BUG/CRITICAL: h2: fix incorrect frame length check
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 19 Apr 2018 17:51:55 +0200
+
+haproxy (1.8.7-1) unstable; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: cache: always initialize newly created objects
+  * d/control: switch maintainer address to tracker.debian.org.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 07 Apr 2018 07:58:34 +0200
+
+haproxy (1.8.6-1) unstable; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: cache: fix random crashes caused by incorrect delete() on
+                 non-first blocks
+    - BUG/MAJOR: h2: remove orphaned streams from the send list before closing
+    - BUG/MEDIUM: h2/threads: never release the task outside of the task
+                  handler
+    - BUG/MEDIUM: h2: always add a stream to the send or fctl list when
+                  blocked
+    - BUG/MEDIUM: h2: don't consider pending data on detach if connection
+                  is in error
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 05 Apr 2018 21:08:12 +0200
+
+haproxy (1.8.5-1) unstable; urgency=medium
+
+  * New upstream version.
+    - BUG/MAJOR: threads/queue: Fix thread-safety issues on the queues
+                 management
+    - BUG/MEDIUM: buffer: Fix the wrapping case in bi_putblk
+    - BUG/MEDIUM: buffer: Fix the wrapping case in bo_putblk
+    - BUG/MEDIUM: fix a 100% cpu usage with cpu-map and nbthread/nbproc
+    - BUG/MEDIUM: h2: also arm the h2 timeout when sending
+    - BUG/MEDIUM: h2: always consume any trailing data after end of output
+                  buffers
+    - BUG/MEDIUM: h2: properly account for DATA padding in flow control
+    - BUG/MEDIUM: http: Switch the HTTP response in tunnel mode as earlier
+                  as possible
+    - BUG/MEDIUM: spoe: Remove idle applets from idle list when HAProxy is
+                  stopping
+    - BUG/MEDIUM: ssl/sample: ssl_bc_* fetch keywords are broken.
+    - BUG/MEDIUM: ssl: Don't always treat SSL_ERROR_SYSCALL as
+                  unrecovarable.
+    - BUG/MEDIUM: ssl: Shutdown the connection for reading on
+                  SSL_ERROR_SYSCALL
+    - BUG/MEDIUM: tcp-check: single connect rule can't detect DOWN servers
+    - BUG/MEDIUM: threads/queue: wake up other threads upon dequeue
+    - BUG/MEDIUM: threads/unix: Fix a deadlock when a listener is
+                  temporarily disabled
+  * Upload to unstable.
+  * d/control: update Vcs-* fields to salsa.debian.org.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 25 Mar 2018 11:31:25 +0200
+
+haproxy (1.8.4-1) experimental; urgency=medium
+
+  * New upstream stable release.
+  * d/patches: document why dconv patch is not in series.
+  * d/docs: ship NOTICE file in haproxy-doc.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 10 Feb 2018 08:43:36 +0100
+
+haproxy (1.8.3-1) experimental; urgency=medium
+
+  * New upstream stable release.
+  * Change default configuration of stats socket to support hitless
+    reload.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 02 Jan 2018 18:48:24 +0100
+
+haproxy (1.8.2-1) experimental; urgency=medium
+
+  * New upstream stable release
+  * Refresh patches
+  * Bump Standards-Version to 4.1.2; no changes needed
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Sun, 24 Dec 2017 14:28:28 +0200
+
+haproxy (1.8.1-1) experimental; urgency=medium
+
+  * New upstream stable release.
+  * Enable PCRE JIT.
+  * systemd: replace Wants/After=syslog.service with After=rsyslog.service
+    (Closes: #882610)
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Sun, 03 Dec 2017 23:59:03 +0200
+
+haproxy (1.8.0-2) experimental; urgency=medium
+
+  * Use libatomic on platforms without 64-bit atomics. Fixes FTBFS on armel,
+    mips, mipsel, powerpc, powerpcspe, sh4 and m68k.
+  * d/rules: use variables defined in architecture.mk and buildflags.mk
+  * d/rules: drop unreachable else case.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 29 Nov 2017 01:21:40 +0200
+
+haproxy (1.8.0-1) experimental; urgency=medium
+
+  * New upstream stable series. Notable new features include:
+    + HTTP/2 support
+    + Support for multiple worker threads to allow scalability across CPUs
+      (e.g. for SSL termination)
+    + Seamless reloads
+    + HTTP small object caching
+    + Dynamic backend server configuration
+    See https://www.haproxy.com/blog/whats-new-haproxy-1-8/ and
+    https://www.mail-archive.com/haproxy@formilux.org/msg28004.html for more
+    detailed descriptions of the new features.
+  * Upload to experimental
+  * Refresh all patches.
+  * d/watch: switch to the 1.8.x upstream stable series
+  * Bump Standards to 4.1.1
+    + Switch haproxy-doc to Priority: optional from extra.
+  * Bump compat to 10:
+    + B-D on debhelper (>= 10)
+    + Drop explicit dh-systemd dependency and invocation
+    + Replace --no-restart-on-upgrade with --no-restart-after-upgrade
+      --no-stop-on-upgrade to make up for DH 10 defaults.
+  * B-D on libsystemd-dev and enable sd_notify() support on Linux.
+  * B-D on python3-sphinx instead of python-sphinx.
+  * d/rules: do not call dpkg-parsechangelog directly.
+  * d/copyright: drop obsolete section.
+  * Drop obsolete lintian overrides.
+  * Do a full-service restart when upgrading from pre-1.8 versions and running
+    under systemd, to migrate to the new process model and service type.
+    + Document this in d/NEWS as well.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 28 Nov 2017 22:25:11 +0200
+
+haproxy (1.7.10-1) unstable; urgency=medium
+
+  * New upstream version release (see CHANGELOG):
+    - BUG/MAJOR: stream-int: don't re-arm recv if send fails
+    - BUG/MAJOR: stream: ensure analysers are always called upon close
+    - BUG/MEDIUM: compression: Fix check on txn in smp_fetch_res_comp_algo
+    - BUG/MEDIUM: connection: remove useless flag CO_FL_DATA_RD_SH
+    - BUG/MEDIUM: deinit: correctly deinitialize the proxy and global
+                  listener tasks
+    - BUG/MEDIUM: deviceatlas: ignore not valuable HTTP request data
+    - BUG/MEDIUM: epoll: ensure we always consider HUP and ERR
+    - BUG/MEDIUM: http: Close streams for connections closed before a
+                  redirect
+    - BUG/MEDIUM: http: Fix a regression bug when a HTTP response is in
+                  TUNNEL mode
+    - BUG/MEDIUM: http: Return an error when url_dec sample converter
+                  failed
+    - BUG/MEDIUM: http: don't automatically forward request close
+    - BUG/MEDIUM: http: don't disable lingering on requests with tunnelled
+                  responses
+    - BUG/MEDIUM: kqueue: Don't bother closing the kqueue after fork.
+    - BUG/MEDIUM: lua: HTTP services must take care of body-less status
+                  codes
+    - BUG/MEDIUM: lua: fix crash when using bogus mode in
+                  register_service()
+    - BUG/MEDIUM: peers: set NOLINGER on the outgoing stream interface
+    - BUG/MEDIUM: prevent buffers being overwritten during build_logline()
+                  execution
+    - BUG/MEDIUM: ssl: fix OCSP expiry calculation
+    - BUG/MEDIUM: stream: don't ignore res.analyse_exp anymore
+    - BUG/MEDIUM: stream: properly set the required HTTP analysers on
+                  use-service
+    - BUG/MEDIUM: tcp-check: don't call tcpcheck_main() from the I/O
+                  handlers!
+    - BUG/MEDIUM: tcp-check: properly indicate polling state before
+                  performing I/O
+    - BUG/MEDIUM: tcp/http: set-dst-port action broken
+  * Fix VERDATE build argument to really use changelog date.
+  * Bump compat to 10.
+  * d/control: B-D on python3-sphinx instead of python-sphinx.
+  * d/control: make haproxy-doc Priority: optional.
+  * d/rules: enable PCRE JIT.
+  * d/rules: use variables defined in *.mk.
+  * d/patches: refresh and replace Wants/After=syslog.service with
+    After=rsyslog.service. Closes: #882610.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 03 Jan 2018 08:29:48 +0100
+
+haproxy (1.7.9-1) unstable; urgency=medium
+
+  * New upstream version release (see CHANGELOG):
+    - BUG/MAJOR: lua/socket: resources not destroyed when the socket is
+                 aborted
+    - BUG/MEDIUM: lua: bad memory access
+    - BUG/MEDIUM: http: Switch HTTP responses in TUNNEL mode when body
+                  length is undefined
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 19 Aug 2017 12:05:02 +0200
+
+haproxy (1.7.8-1) unstable; urgency=medium
+
+  * New upstream version release (see CHANGELOG):
+    - BUG/MAJOR: cli: fix custom io_release was crushed by NULL.
+    - BUG/MAJOR: compression: Be sure to release the compression state in
+                 all cases
+    - BUG/MAJOR: map: fix segfault during 'show map/acl' on cli.
+    - BUG/MEDIUM: filters: Be sure to call flt_end_analyze for both
+                  channels
+    - BUG/MEDIUM: map/acl: fix unwanted flags inheritance.
+  * Bump Standards-Version to 4.0.0. No changes needed.
+  * Update d/watch to use https.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 08 Jul 2017 08:24:35 +0200
+
+haproxy (1.7.7-1) unstable; urgency=medium
+
+  * New upstream version release (see CHANGELOG):
+    - BUG/MEDIUM: http: Drop the connection establishment when a redirect
+                  is performed
+    - BUG/MEDIUM: cfgparse: Check if tune.http.maxhdr is in the range
+                  1..32767
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 26 Jun 2017 14:06:48 +0200
+
+haproxy (1.7.6-1) unstable; urgency=medium
+
+  * New upstream version release (see CHANGELOG):
+    - BUG/MAJOR: Use -fwrapv.
+    - BUG/MAJOR: http: call manage_client_side_cookies() before erasing
+                 the buffer
+    - BUG/MAJOR: server: Segfault after parsing server state file.
+    - BUG/MEDIUM: acl: don't free unresolved args in prune_acl_expr()
+    - BUG/MEDIUM: acl: proprely release unused args in prune_acl_expr()
+    - BUG/MEDIUM: arg: ensure that we properly unlink unresolved arguments
+                  on error
+    - BUG/MEDIUM: lua: memory leak
+    - BUG/MEDIUM: lua: segfault if a converter or a sample doesn't return
+                  anything
+    - BUG/MEDIUM: peers: Peers CLOSE_WAIT issue.
+    - BUG/MEDIUM: unix: never unlink a unix socket from the file system
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 18 Jun 2017 12:34:40 +0200
+
+haproxy (1.7.5-2) unstable; urgency=medium
+
+  * Enable getaddrinfo() support, allowing resolution of hostnames to IPv6
+    addresses (Closes: #862780). Thanks to Anton Eliasson
+    <devel@antoneliasson.se>!
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 17 May 2017 13:01:45 +0300
+
+haproxy (1.7.5-1) unstable; urgency=medium
+
+  * New upstream version release (see CHANGELOG):
+    - BUG/MEDIUM: peers: fix buffer overflow control in intdecode.
+    - BUG/MEDIUM: buffers: Fix how input/output data are injected into buffers
+    - BUG/MEDIUM: http: Fix blocked HTTP/1.0 responses when compression is
+      enabled
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 04 Apr 2017 14:25:38 +0300
+
+haproxy (1.7.4-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    - BUG/MAJOR: connection: update CO_FL_CONNECTED before calling the
+                 data layer
+    - BUG/MAJOR: http: fix typo in http_apply_redirect_rule
+    - BUG/MAJOR: stream-int: do not depend on connection flags to detect
+                 connection
+    - BUG/MEDIUM: cli: Prevent double free in CLI ACL lookup
+    - BUG/MEDIUM: connection: ensure to always report the end of handshakes
+    - BUG/MEDIUM: listener: do not try to rebind another process' socket
+    - BUG/MEDIUM: stream: fix client-fin/server-fin handling
+    - BUG/MEDIUM: tcp: don't require privileges to bind to device
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 31 Mar 2017 11:01:14 +0200
+
+haproxy (1.7.3-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    - BUG/MAJOR: lua segmentation fault when the request is like 'GET
+                 ?arg=val HTTP/1.1'
+    - BUG/MAJOR: dns: restart sockets after fork()
+    - BUG/MEDIUM: tcp: don't poll for write when connect() succeeds
+    - BUG/MEDIUM: http: prevent redirect from overwriting a buffer
+    - BUG/MEDIUM: filters: Do not truncate HTTP response when body length
+                  is undefined
+    - BUG/MEDIUM: http: Prevent replace-header from overwriting a buffer
+    - BUG/MEDIUM: config: reject anything but "if" or "unless" after a
+                  use-backend rule
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 01 Mar 2017 20:03:12 +0100
+
+haproxy (1.7.2-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    + Fix a regression whereby fragmented requests were randomly flagged as
+      bad requests depending on previous buffer contents; this was noticable
+      under low load with authenticated requests.
+    + Fix dynamic address resolution for IPv6-only hosts.
+    + Make sure SSL sessions are not reused when the SNI changes. This makes
+      SNI and SSL health checks play nice together.
+    + Minor improvements:
+      - Add the ability to perform actions on multiple servers via the stats
+        page.
+      - Add the ability to specify a custom HTTP reason field in generated
+        responses.
+      - New sample fetch function, `fc_rcvd_proxy', indicating wheter the
+        PROXY protocol was used on the frontend for a connection or not.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 13 Jan 2017 14:49:05 +0200
+
+haproxy (1.7.1-1) unstable; urgency=medium
+
+  * New upstream stable release.
+  * Upload to unstable.
+  * Notable new features since 1.6:
+    + SPOE (stream processing offload engine) : ability to delegate some
+      slow, unreliable or dangerous processing to external processes.
+    + More statistics in the CSV output.
+    + Support of directories for config files: if the argument to -f
+      is a directory, all files found there are loaded in alphabetical order.
+    + It is now possible to set/unset/preset environment variables directly in
+      the global section and query them through the CLI.
+    + The CLI makes it possible to change a server's address, port, maxconn,
+      check address and port at runtime, without reloading haproxy.
+    + Support for multiple certificates: different certificates for the same
+      domain so that the best one can be picked according to browser support.
+      The main use is to be able to deliver ECDSA certificates to clients
+      supporting them, without breaking compatibility with older clients.
+    + SO_REUSEPORT is now configurable and can be disabled.
+    + Updates to the Lua API, including new classes to access many internal
+      objects like listeners, servers, proxies etc.
+    + Support for a new type of maps consisting of regular expressions with
+      replacement values.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 13 Dec 2016 12:32:32 +0200
+
+haproxy (1.7.0-1) experimental; urgency=medium
+
+  * New upstream stable series.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 25 Nov 2016 18:00:55 +0200
+
+haproxy (1.7~dev6-1) experimental; urgency=medium
+
+  * New upstream development release (Closes: #828337)
+  * Upload to experimental
+  * d/watch: look for 1.7
+  * B-D on zlib1g-dev
+  * haproxy: Depend on lsb-base for the initscript
+  * Ship additional plain-text documentation
+  * haproxy-doc: ship HTML version of management.txt
+  * Update the default SSL cipher list and add a link to Mozilla's SSL
+    configuration generator (Closes: #840735)
+  * d/rules: use SUBVERS to pass the Debian revision to HAPROXY_VERSION
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 10 Nov 2016 16:02:27 +0200
+
+haproxy (1.6.10-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    + Fix retransmits in proxy mode and rare cases of unkillable tasks.
+    + systemd wrapper: do not leave old processes behind when reloading too
+      fast.
+    + systemd wrapper: correctly set the status code.
+    + Fix two bugs in the peers' task management possibly causing some
+      CLOSE_WAIT connection after some rare race conditions.
+    + Make SO_REUSEPORT use configurable via the "-dR" command line switch
+      or the "noreuseport" config option in the global section.
+  * B-D on libssl1.0-dev (Closes: #828337); upstream does not currently
+    support OpenSSL 1.1 for the 1.6 series.
+  * haproxy: depend on lsb-base for the initscript's use of
+    /lib/lsb/init-functions.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Mon, 21 Nov 2016 11:46:16 +0200
+
+haproxy (1.6.9-2) unstable; urgency=medium
+
+  * Enable Linux namespace support.
+  * Pass the full Debian version and package release date from d/changelog to
+    the build system.
+  * initscript: reorder the reload command arguments to always parse EXTRAOPTS
+    properly.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 28 Sep 2016 10:45:43 +0300
+
+haproxy (1.6.9-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    + BUG/MAJOR: stream: properly mark the server address as unset on
+      connect retry
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 31 Aug 2016 07:44:27 +0200
+
+haproxy (1.6.8-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    + BUG/MAJOR: compression: initialize avail_in/next_in even during
+      flush
+    + BUG/MAJOR: server: the "sni" directive could randomly cause trouble
+    + BUG/MAJOR: stick-counters: possible crash when using sc_trackers
+      with wrong table
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 14 Aug 2016 14:17:08 +0200
+
+haproxy (1.6.7-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    + BUG/MAJOR: fix use-after-free crash on start
+    + BUG/MEDIUM: dns: fix alignment issues in the DNS response parser
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 14 Jul 2016 08:29:43 +0200
+
+haproxy (1.6.6-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    + BUG/MAJOR: fix listening IP address storage for frontends
+    + BUG/MAJOR: http: fix breakage of "reqdeny" causing random crashes
+    + BUG/MEDIUM: stick-tables: fix breakage in table converters
+    + BUG/MEDIUM: dns: unbreak DNS resolver after header fix
+    + BUG/MEDIUM: stats: show servers state may show an servers from another
+      backend
+    + BUG/MEDIUM: fix risk of segfault with "show tls-keys"
+    + BUG/MEDIUM: sticktables: segfault in some configuration error cases
+    + BUG/MEDIUM: lua: converters doesn't work
+    + BUG/MEDIUM: http: add-header: buffer overwritten
+    + BUG/MEDIUM: external-checks: close all FDs right after the fork()
+    + BUG/MAJOR: external-checks: use asynchronous signal delivery
+  * Drop haproxy.service-check-config-before-reload.patch. Applied
+    upstream.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 28 Jun 2016 10:13:33 +0200
+
+haproxy (1.6.5-2) unstable; urgency=high
+
+  * Add a patch to fix CVE-2016-5360. Closes: #826869.
+    + BUG/MAJOR: http: fix breakage of "reqdeny" causing random crashes
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 11 Jun 2016 22:23:50 +0200
+
+haproxy (1.6.5-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    + BUG/MAJOR: channel: fix miscalculation of available buffer space
+    + BUG/MAJOR: Fix crash in http_get_fhdr with exactly MAX_HDR_HISTORY
+      headers
+    + BUG/MEDIUM: channel: don't allow to overwrite the reserve until
+      connected
+    + BUG/MEDIUM: channel: fix inconsistent handling of 4GB-1 transfers
+    + BUG/MEDIUM: channel: incorrect polling condition may delay event
+      delivery
+    + BUG/MEDIUM: dns: fix alignment issue when building DNS queries
+    + BUG/MEDIUM: fix maxaccept computation on per-process listeners
+    + BUG/MEDIUM: Fix RFC5077 resumption when more than TLS_TICKETS_NO are
+      present
+    + BUG/MEDIUM: http: fix risk of CPU spikes with pipelined requests from
+      dead client
+    + BUG/MEDIUM: log: fix risk of segfault when logging HTTP fields in TCP
+      mode
+    + BUG/MEDIUM: lua: protects the upper boundary of the argument list for
+      converters/fetches.
+    + BUG/MEDIUM: peers: fix incorrect age in frequency counters
+    + BUG/MEDIUM: sample: initialize the pointer before parse_binary call.
+    + BUG/MEDIUM: stats: show backend may show an empty or incomplete result
+    + BUG/MEDIUM: stats: show servers state may show an empty or incomplete
+      result
+    + BUG/MEDIUM: stick-tables: some sample-fetch doesn't work in the
+      connection state.
+    + BUG/MEDIUM: stream: ensure the SI_FL_DONT_WAKE flag is properly cleared
+    + BUG/MEDIUM: trace.c: rdtsc() is defined in two files
+    + MEDIUM: unblock signals on startup.
+  * Bump standards to 3.9.8; no changes needed.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 11 May 2016 11:07:24 +0300
+
+haproxy (1.6.4-3) unstable; urgency=medium
+
+  * d/init: remove support for dynamic script name. This enable haproxy to
+    be started on boot.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 24 Mar 2016 20:36:08 +0100
+
+haproxy (1.6.4-2) unstable; urgency=medium
+
+  * d/init: fix SysV init script w/ respect to handling EXTRAOPTS on check.
+  * d/control: add Pre-Depends for dpkg-maintscript-helper support of
+    dir_to_symlink.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 19 Mar 2016 16:35:20 +0100
+
+haproxy (1.6.4-1) unstable; urgency=medium
+
+  * New upstream release (see CHANGELOG):
+    + BUG/MAJOR: http-reuse: fix risk of orphaned connections.
+    + BUG/MAJOR: lua: applets can't sleep.
+    + BUG/MAJOR: samples: check smp->strm before using it. 
+    + BUG/MAJOR: servers state: server port is erased when dns resolution is
+      enabled on a server.
+    + BUG/MAJOR: vars: always retrieve the stream and session from the sample
+    + BUG/MEDIUM: buffers: do not round up buffer size during allocation
+    + BUG/MEDIUM: dns: no DNS resolution happens if no ports provided to the
+      nameserver
+    + BUG/MEDIUM: servers state: server port is used uninitialized
+    + BUG/MEDIUM: config: Adding validation to stick-table expire value.
+    + BUG/MEDIUM: sample: http_date() doesn't provide the right day of the
+      week
+    + BUG/MEDIUM: channel: fix miscalculation of available buffer space.
+    + BUG/MEDIUM: http-reuse: do not share private connections across backends
+    + BUG/MEDIUM: ssl: fix off-by-one in ALPN list allocation
+    + BUG/MEDIUM: ssl: fix off-by-one in NPN list allocation
+    + BUG/MEDIUM: stats: stats bind-process doesn't propagate the process mask
+      correctly
+    + BUG/MEDIUM: chunks: always reject negative-length chunks
+    + BUG/MEDIUM: cfgparse: wrong argument offset after parsing server "sni"
+      keyword
+
+  [ Vincent Bernat ]
+  * haproxy.init: append ${EXTRAOPTS} when verifying configuration file.
+  * haproxy.init: move EXTRAOPTS after all other parameters.
+  * haproxy.init: management of multiple HAProxy instances with SysV
+    init.d script, courtesy of Ivan Savcic.
+
+  [ Apollon Oikonomopoulos ]
+  * Bump standards to 3.9.7:
+    + haproxy-doc: move the additional documentation from
+      /usr/share/doc/haproxy-doc to /usr/share/doc/haproxy, as per the
+      recommendation in Policy §12.3.
+    + Add compatibility symlinks from /usr/share/doc/haproxy-doc to
+      /usr/share/doc/haproxy.
+  * Enable all hardening flags.
+  * d/control: use HTTPS for Vcs-*
+  * Use www.haproxy.org as the project's homepage in d/control and
+    d/copyright.
+  * d/copyright: adjust debian/* years.
+  * Add basic DEP-8 tests.
+  * Drop the haproxy-dbg binary package in favor of ddebs.
+  * haproxy-doc:
+    + Use dpkg-maintscript-helper dir_to_symlink for the compatibility
+      symlinks.
+    + Add Lua documentation doc-base entry.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 15 Mar 2016 21:04:11 +0200
+
+haproxy (1.6.3-1) unstable; urgency=medium
+
+  [ Apollon Oikonomopoulos ]
+  * haproxy.init: use s-s-d's --pidfile option.
+    Thanks to Louis Bouchard (Closes: 804530)
+
+  [ Vincent Bernat ]
+  * watch: fix d/watch to look for 1.6 version
+  * Imported Upstream version 1.6.3
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 31 Dec 2015 08:10:10 +0100
+
+haproxy (1.6.2-2) unstable; urgency=medium
+
+  * Enable USE_REGPARM on amd64 as well.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 03 Nov 2015 21:21:30 +0100
+
+haproxy (1.6.2-1) unstable; urgency=medium
+
+  * New upstream release.
+    - BUG/MAJOR: dns: first DNS response packet not matching queried
+                      hostname may lead to a loop
+    - BUG/MAJOR: http: don't requeue an idle connection that is already
+                       queued
+  * Upload to unstable.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 03 Nov 2015 13:36:22 +0100
+
+haproxy (1.6.1-2) experimental; urgency=medium
+
+  * Build the Lua manpage in -arch, fixes FTBFS in binary-only builds.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Thu, 22 Oct 2015 12:19:41 +0300
+
+haproxy (1.6.1-1) experimental; urgency=medium
+
+  [ Vincent Bernat ]
+  * New upstream release.
+    - BUG/MAJOR: ssl: free the generated SSL_CTX if the LRU cache is
+                      disabled
+  * Drop 0001-BUILD-install-only-relevant-and-existing-documentati.patch.
+
+  [ Apollon Oikonomopoulos ]
+  * Ship and generate Lua API documentation.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 22 Oct 2015 10:45:55 +0200
+
+haproxy (1.6.0+ds1-1) experimental; urgency=medium
+
+  * New upstream release!
+  * Add a patch to fix documentation installation:
+    + 0001-BUILD-install-only-relevant-and-existing-documentati.patch
+  * Update HAProxy documentation converter to a more recent version.
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 14 Oct 2015 17:29:19 +0200
+
+haproxy (1.6~dev7-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 06 Oct 2015 16:01:26 +0200
+
+haproxy (1.6~dev5-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 14 Sep 2015 15:50:28 +0200
+
+haproxy (1.6~dev4-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Refresh debian/copyright.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 30 Aug 2015 23:54:10 +0200
+
+haproxy (1.6~dev3-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Enable Lua support.
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 15 Aug 2015 17:51:29 +0200
+
+haproxy (1.5.15-1) unstable; urgency=medium
+
+  * New upstream stable release including the following fix:
+    - BUG/MAJOR: http: don't call http_send_name_header() after an error
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 02 Nov 2015 07:34:19 +0100
+
+haproxy (1.5.14-1) unstable; urgency=high
+
+  * New upstream version. Fix an information leak (CVE-2015-3281):
+    - BUG/MAJOR: buffers: make the buffer_slow_realign() function
+                 respect output data.
+  * Add $named as a dependency for init script. Closes: #790638.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 03 Jul 2015 19:49:02 +0200
+
+haproxy (1.5.13-1) unstable; urgency=medium
+
+  * New upstream stable release including the following fixes:
+    - MAJOR: peers: allow peers section to be used with nbproc > 1
+    - BUG/MAJOR: checks: always check for end of list before proceeding
+    - MEDIUM: ssl: replace standards DH groups with custom ones
+    - BUG/MEDIUM: ssl: fix tune.ssl.default-dh-param value being overwritten
+    - BUG/MEDIUM: cfgparse: segfault when userlist is misused
+    - BUG/MEDIUM: stats: properly initialize the scope before dumping stats
+    - BUG/MEDIUM: http: don't forward client shutdown without NOLINGER
+                  except for tunnels
+    - BUG/MEDIUM: checks: do not dereference head of a tcp-check at the end
+    - BUG/MEDIUM: checks: do not dereference a list as a tcpcheck struct
+    - BUG/MEDIUM: peers: apply a random reconnection timeout
+    - BUG/MEDIUM: config: properly compute the default number of processes
+                  for a proxy
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 27 Jun 2015 20:52:07 +0200
+
+haproxy (1.5.12-1) unstable; urgency=medium
+
+  * New upstream stable release including the following fixes:
+    - BUG/MAJOR: http: don't read past buffer's end in http_replace_value
+    - BUG/MAJOR: http: prevent risk of reading past end with balance
+                 url_param
+    - BUG/MEDIUM: Do not consider an agent check as failed on L7 error
+    - BUG/MEDIUM: patern: some entries are not deleted with case
+                  insensitive match
+    - BUG/MEDIUM: buffer: one byte miss in buffer free space check
+    - BUG/MEDIUM: http: thefunction "(req|res)-replace-value" doesn't
+                  respect the HTTP syntax
+    - BUG/MEDIUM: peers: correctly configure the client timeout
+    - BUG/MEDIUM: http: hdr_cnt would not count any header when called
+                  without name
+    - BUG/MEDIUM: listener: don't report an error when resuming unbound
+                  listeners
+    - BUG/MEDIUM: init: don't limit cpu-map to the first 32 processes only
+    - BUG/MEDIUM: stream-int: always reset si->ops when si->end is
+                  nullified
+    - BUG/MEDIUM: http: remove content-length from chunked messages
+    - BUG/MEDIUM: http: do not restrict parsing of transfer-encoding to
+                  HTTP/1.1
+    - BUG/MEDIUM: http: incorrect transfer-coding in the request is a bad
+                  request
+    - BUG/MEDIUM: http: remove content-length form responses with bad
+                  transfer-encoding
+    - BUG/MEDIUM: http: wait for the exact amount of body bytes in
+                  wait_for_request_body
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 02 May 2015 16:38:28 +0200
+
+haproxy (1.5.11-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 26 Apr 2015 17:46:58 +0200
+
+haproxy (1.5.11-1) experimental; urgency=medium
+
+  * New upstream stable release including the following fixes:
+    - BUG/MAJOR: log: don't try to emit a log if no logger is set
+    - BUG/MEDIUM: backend: correctly detect the domain when
+                  use_domain_only is used
+    - BUG/MEDIUM: Do not set agent health to zero if server is disabled
+                  in config
+    - BUG/MEDIUM: Only explicitly report "DOWN (agent)" if the agent health
+                  is zero
+    - BUG/MEDIUM: http: fix header removal when previous header ends with
+                  pure LF
+    - BUG/MEDIUM: channel: fix possible integer overflow on reserved size
+                  computation
+    - BUG/MEDIUM: channel: don't schedule data in transit for leaving until
+                  connected
+    - BUG/MEDIUM: http: make http-request set-header compute the string
+                  before removal
+  * Upload to experimental.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 01 Feb 2015 09:22:27 +0100
+
+haproxy (1.5.10-1) experimental; urgency=medium
+
+  * New upstream stable release including the following fixes:
+      - BUG/MAJOR: stream-int: properly check the memory allocation return
+      - BUG/MEDIUM: sample: fix random number upper-bound
+      - BUG/MEDIUM: patterns: previous fix was incomplete
+      - BUG/MEDIUM: payload: ensure that a request channel is available
+      - BUG/MEDIUM: tcp-check: don't rely on random memory contents
+      - BUG/MEDIUM: tcp-checks: disable quick-ack unless next rule is an expect
+      - BUG/MEDIUM: config: do not propagate processes between stopped
+                    processes
+      - BUG/MEDIUM: memory: fix freeing logic in pool_gc2()
+      - BUG/MEDIUM: compression: correctly report zlib_mem
+  * Upload to experimental.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 04 Jan 2015 13:17:56 +0100
+
+haproxy (1.5.9-1) experimental; urgency=medium
+
+  * New upstream stable release including the following fixes:
+      - BUG/MAJOR: sessions: unlink session from list on out
+                   of memory
+      - BUG/MEDIUM: pattern: don't load more than once a pattern
+                    list.
+      - BUG/MEDIUM: connection: sanitize PPv2 header length before
+                    parsing address information
+      - BUG/MAJOR: frontend: initialize capture pointers earlier
+      - BUG/MEDIUM: checks: fix conflicts between agent checks and
+                    ssl healthchecks
+      - BUG/MEDIUM: ssl: force a full GC in case of memory shortage
+      - BUG/MEDIUM: ssl: fix bad ssl context init can cause
+                                 segfault in case of OOM.
+  * Upload to experimental.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 07 Dec 2014 16:37:36 +0100
+
+haproxy (1.5.8-3) unstable; urgency=medium
+
+  * Remove RC4 from the default cipher string shipped in configuration.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 27 Feb 2015 11:29:23 +0100
+
+haproxy (1.5.8-2) unstable; urgency=medium
+
+  * Cherry-pick the following patches from 1.5.9 release:
+      - 8a0b93bde77e BUG/MAJOR: sessions: unlink session from list on out
+                                of memory
+      - bae03eaad40a BUG/MEDIUM: pattern: don't load more than once a pattern
+                                 list.
+      - 93637b6e8503 BUG/MEDIUM: connection: sanitize PPv2 header length before
+                                 parsing address information
+      - 8ba50128832b BUG/MAJOR: frontend: initialize capture pointers earlier
+      - 1f96a87c4e14 BUG/MEDIUM: checks: fix conflicts between agent checks and
+                                 ssl healthchecks
+      - 9bcc01ae2598 BUG/MEDIUM: ssl: force a full GC in case of memory shortage
+      - 909514970089 BUG/MEDIUM: ssl: fix bad ssl context init can cause
+                                 segfault in case of OOM.
+  * Cherry-pick the following patches from future 1.5.10 release:
+      - 1e89acb6be9b BUG/MEDIUM: payload: ensure that a request channel is
+                                 available
+      - bad3c6f1b6d7 BUG/MEDIUM: patterns: previous fix was incomplete
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 07 Dec 2014 11:11:21 +0100
+
+haproxy (1.5.8-1) unstable; urgency=medium
+
+  * New upstream stable release including the following fixes:
+
+     + BUG/MAJOR: buffer: check the space left is enough or not when input
+                  data in a buffer is wrapped
+     + BUG/MINOR: ssl: correctly initialize ssl ctx for invalid certificates
+     + BUG/MEDIUM: tcp: don't use SO_ORIGINAL_DST on non-AF_INET sockets
+     + BUG/MEDIUM: regex: fix pcre_study error handling
+     + BUG/MEDIUM: tcp: fix outgoing polling based on proxy protocol
+     + BUG/MINOR: log: fix request flags when keep-alive is enabled
+     + BUG/MAJOR: cli: explicitly call cli_release_handler() upon error
+     + BUG/MEDIUM: http: don't dump debug headers on MSG_ERROR
+  * Also includes the following new features:
+     + MINOR: ssl: add statement to force some ssl options in global.
+     + MINOR: ssl: add fetchs 'ssl_c_der' and 'ssl_f_der' to return DER
+              formatted certs
+  * Disable SSLv3 in the default configuration file.
+
+ -- Vincent Bernat <bernat@debian.org>  Fri, 31 Oct 2014 13:48:19 +0100
+
+haproxy (1.5.6-1) unstable; urgency=medium
+
+  * New upstream stable release including the following fixes:
+    + BUG/MEDIUM: systemd: set KillMode to 'mixed'
+    + MINOR: systemd: Check configuration before start
+    + BUG/MEDIUM: config: avoid skipping disabled proxies
+    + BUG/MINOR: config: do not accept more track-sc than configured
+    + BUG/MEDIUM: backend: fix URI hash when a query string is present
+  * Drop systemd patches:
+    + haproxy.service-also-check-on-start.patch
+    + haproxy.service-set-killmode-to-mixed.patch
+  * Refresh other patches.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 20 Oct 2014 18:10:21 +0200
+
+haproxy (1.5.5-1) unstable; urgency=medium
+
+  [ Vincent Bernat ]
+  * initscript: use start-stop-daemon to reliably terminate all haproxy
+    processes. Also treat stopping a non-running haproxy as success.
+    (Closes: #762608, LP: #1038139)
+
+  [ Apollon Oikonomopoulos ]
+  * New upstream stable release including the following fixes:
+    + DOC: Address issue where documentation is excluded due to a gitignore
+      rule.
+    + MEDIUM: Improve signal handling in systemd wrapper.
+    + BUG/MINOR: config: don't propagate process binding for dynamic
+      use_backend
+    + MINOR: Also accept SIGHUP/SIGTERM in systemd-wrapper
+    + DOC: clearly state that the "show sess" output format is not fixed
+    + MINOR: stats: fix minor typo fix in stats_dump_errors_to_buffer()
+    + DOC: indicate in the doc that track-sc* can wait if data are missing
+    + MEDIUM: http: enable header manipulation for 101 responses
+    + BUG/MEDIUM: config: propagate frontend to backend process binding again.
+    + MEDIUM: config: properly propagate process binding between proxies
+    + MEDIUM: config: make the frontends automatically bind to the listeners'
+      processes
+    + MEDIUM: config: compute the exact bind-process before listener's
+      maxaccept
+    + MEDIUM: config: only warn if stats are attached to multi-process bind
+      directives
+    + MEDIUM: config: report it when tcp-request rules are misplaced
+    + MINOR: config: detect the case where a tcp-request content rule has no
+      inspect-delay
+    + MEDIUM: systemd-wrapper: support multiple executable versions and names
+    + BUG/MEDIUM: remove debugging code from systemd-wrapper
+    + BUG/MEDIUM: http: adjust close mode when switching to backend
+    + BUG/MINOR: config: don't propagate process binding on fatal errors.
+    + BUG/MEDIUM: check: rule-less tcp-check must detect connect failures
+    + BUG/MINOR: tcp-check: report the correct failed step in the status
+    + DOC: indicate that weight zero is reported as DRAIN
+  * Add a new patch (haproxy.service-set-killmode-to-mixed.patch) to fix the
+    systemctl stop action conflicting with the systemd wrapper now catching
+    SIGTERM.
+  * Bump standards to 3.9.6; no changes needed.
+  * haproxy-doc: link to tracker.debian.org instead of packages.qa.debian.org.
+  * d/copyright: move debian/dconv/* paragraph after debian/*, so that it
+    actually matches the files it is supposed to.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 08 Oct 2014 12:34:53 +0300
+
+haproxy (1.5.4-1) unstable; urgency=high
+
+  * New upstream version.
+    + Fix a critical bug that, under certain unlikely conditions, allows a
+      client to crash haproxy.
+  * Prefix rsyslog configuration file to ensure to log only to
+    /var/log/haproxy. Thanks to Paul Bourke for the patch.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 02 Sep 2014 19:14:38 +0200
+
+haproxy (1.5.3-1) unstable; urgency=medium
+
+  * New upstream stable release, fixing the following issues:
+    + Memory corruption when building a proxy protocol v2 header
+    + Memory leak in SSL DHE key exchange
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 25 Jul 2014 10:41:36 +0300
+
+haproxy (1.5.2-1) unstable; urgency=medium
+
+  * New upstream stable release. Important fixes:
+    + A few sample fetch functions when combined in certain ways would return
+      malformed results, possibly crashing the HAProxy process.
+    + Hash-based load balancing and http-send-name-header would fail for
+      requests which contain a body which starts to be forwarded before the
+      data is used.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Mon, 14 Jul 2014 00:42:32 +0300
+
+haproxy (1.5.1-1) unstable; urgency=medium
+
+  * New upstream stable release:
+    + Fix a file descriptor leak for clients that disappear before connecting.
+    + Do not staple expired OCSP responses.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Tue, 24 Jun 2014 12:56:30 +0300
+
+haproxy (1.5.0-1) unstable; urgency=medium
+
+  * New upstream stable series. Notable changes since the 1.4 series:
+    + Native SSL support on both sides with SNI/NPN/ALPN and OCSP stapling.
+    + IPv6 and UNIX sockets are supported everywhere
+    + End-to-end HTTP keep-alive for better support of NTLM and improved
+      efficiency in static farms
+    + HTTP/1.1 response compression (deflate, gzip) to save bandwidth
+    + PROXY protocol versions 1 and 2 on both sides
+    + Data sampling on everything in request or response, including payload
+    + ACLs can use any matching method with any input sample
+    + Maps and dynamic ACLs updatable from the CLI
+    + Stick-tables support counters to track activity on any input sample
+    + Custom format for logs, unique-id, header rewriting, and redirects
+    + Improved health checks (SSL, scripted TCP, check agent, ...)
+    + Much more scalable configuration supports hundreds of thousands of
+      backends and certificates without sweating
+
+  * Upload to unstable, merge all 1.5 work from experimental. Most important
+    packaging changes since 1.4.25-1 include:
+    + systemd support.
+    + A more sane default config file.
+    + Zero-downtime upgrades between 1.5 releases by gracefully reloading
+      HAProxy during upgrades.
+    + HTML documentation shipped in the haproxy-doc package.
+    + kqueue support for kfreebsd.
+
+  * Packaging changes since 1.5~dev26-2:
+    + Drop patches merged upstream:
+      o Fix-reference-location-in-manpage.patch
+      o 0001-BUILD-stats-workaround-stupid-and-bogus-Werror-forma.patch
+    + d/watch: look for stable 1.5 releases
+    + systemd: respect CONFIG and EXTRAOPTS when specified in
+      /etc/default/haproxy.
+    + initscript: test the configuration before start or reload.
+    + initscript: remove the ENABLED flag and logic.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Fri, 20 Jun 2014 11:05:17 +0300
+
+haproxy (1.5~dev26-2) experimental; urgency=medium
+
+  * initscript: start should not fail when haproxy is already running
+    + Fixes upgrades from post-1.5~dev24-1 installations
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 04 Jun 2014 13:20:39 +0300
+
+haproxy (1.5~dev26-1) experimental; urgency=medium
+
+  * New upstream development version.
+     + Add a patch to fix compilation with -Werror=format-security
+
+ -- Vincent Bernat <bernat@debian.org>  Wed, 28 May 2014 20:32:10 +0200
+
+haproxy (1.5~dev25-1) experimental; urgency=medium
+
+  [ Vincent Bernat ]
+  * New upstream development version.
+  * Rename "contimeout", "clitimeout" and "srvtimeout" in the default
+    configuration file to "timeout connection", "timeout client" and
+    "timeout server".
+
+  [ Apollon Oikonomopoulos ]
+  * Build on kfreebsd using the "freebsd" target; enables kqueue support.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 15 May 2014 00:20:11 +0200
+
+haproxy (1.5~dev24-2) experimental; urgency=medium
+
+  * New binary package: haproxy-doc
+    + Contains the HTML documentation built using a version of Cyril Bonté's
+      haproxy-dconv (https://github.com/cbonte/haproxy-dconv).
+    + Add Build-Depends-Indep on python and python-mako
+    + haproxy Suggests: haproxy-doc
+  * systemd: check config file for validity on reload.
+  * haproxy.cfg:
+    + Enable the stats socket by default and bind it to
+      /run/haproxy/admin.sock, which is accessible by the haproxy group.
+      /run/haproxy creation is handled by the initscript for sysv-rc and a
+      tmpfiles.d config for systemd.
+    + Set the default locations for CA and server certificates to
+      /etc/ssl/certs and /etc/ssl/private respectively.
+    + Set the default cipher list to be used on listening SSL sockets to
+      enable PFS, preferring ECDHE ciphers by default.
+  * Gracefully reload HAProxy on upgrade instead of performing a full restart.
+  * debian/rules: split build into binary-arch and binary-indep.
+  * Build-depend on debhelper >= 9, set compat to 9.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Sun, 27 Apr 2014 13:37:17 +0300
+
+haproxy (1.5~dev24-1) experimental; urgency=medium
+
+  * New upstream development version, fixes major regressions introduced in
+    1.5~dev23:
+
+    + Forwarding of a message body (request or response) would automatically
+      stop after the transfer timeout strikes, and with no error.
+    + Redirects failed to update the msg->next offset after consuming the
+      request, so if they were made with keep-alive enabled and starting with
+      a slash (relative location), then the buffer was shifted by a negative
+      amount of data, causing a crash.
+    + The code to standardize DH parameters caused an important performance
+      regression for, so it was temporarily reverted for the time needed to
+      understand the cause and to fix it.
+
+    For a complete release announcement, including other bugfixes and feature
+    enhancements, see http://deb.li/yBVA.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Sun, 27 Apr 2014 11:09:37 +0300
+
+haproxy (1.5~dev23-1) experimental; urgency=medium
+
+  * New upstream development version; notable changes since 1.5~dev22:
+    + SSL record size optimizations to speed up both, small and large
+      transfers.
+    + Dynamic backend name support in use_backend.
+    + Compressed chunked transfer encoding support.
+    + Dynamic ACL manipulation via the CLI.
+    + New "language" converter for extracting language preferences from
+      Accept-Language headers.
+  * Remove halog source and systemd unit files from
+    /usr/share/doc/haproxy/contrib, they are built and shipped in their
+    appropriate locations since 1.5~dev19-2.
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Wed, 23 Apr 2014 11:12:34 +0300
+
+haproxy (1.5~dev22-1) experimental; urgency=medium
+
+  * New upstream development version
+  * watch: use the source page and not the main one
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Mon, 03 Feb 2014 17:45:51 +0200
+
+haproxy (1.5~dev21+20140118-1) experimental; urgency=medium
+
+  * New upstream development snapshot, with the following fixes since
+    1.5-dev21:
+     + 00b0fb9 BUG/MAJOR: ssl: fix breakage caused by recent fix abf08d9
+     + 410f810 BUG/MEDIUM: map: segmentation fault with the stats's socket
+                           command "set map ..."
+     + abf08d9 BUG/MAJOR: connection: fix mismatch between rcv_buf's API and
+                          usage
+     + 35249cb BUG/MINOR: pattern: pattern comparison executed twice
+     + c920096 BUG/MINOR: http: don't clear the SI_FL_DONT_WAKE flag between
+                          requests
+     + b800623 BUG/MEDIUM: stats: fix HTTP/1.0 breakage introduced in previous
+                           patch
+     + 61f7f0a BUG/MINOR: stream-int: do not clear the owner upon unregister
+     + 983eb31 BUG/MINOR: channel: CHN_INFINITE_FORWARD must be unsigned
+     + a3ae932 BUG/MEDIUM: stats: the web interface must check the tracked
+                           servers before enabling
+     + e24d963 BUG/MEDIUM: checks: unchecked servers could not be enabled
+                           anymore
+     + 7257550 BUG/MINOR: http: always disable compression on HTTP/1.0
+     + 9f708ab BUG/MINOR: checks: successful check completion must not
+                          re-enable MAINT servers
+     + ff605db BUG/MEDIUM: backend: do not re-initialize the connection's
+                           context upon reuse
+     + ea90063 BUG/MEDIUM: stream-int: fix the keep-alive idle connection
+                           handler
+  * Update debian/copyright to reflect the license of ebtree/
+    (closes: #732614)
+  * Synchronize debian/copyright with source
+  * Add Documentation field to the systemd unit file
+
+ -- Apollon Oikonomopoulos <apoikos@debian.org>  Mon, 20 Jan 2014 10:07:34 +0200
+
+haproxy (1.5~dev21-1) experimental; urgency=low
+
+  [ Prach Pongpanich ]
+  * Bump Standards-Version to 3.9.5
+
+  [ Thomas Bechtold ]
+  * debian/control: Add haproxy-dbg binary package for debug symbols.
+
+  [ Apollon Oikonomopoulos ]
+  * New upstream development version.
+  * Require syslog to be operational before starting. Closes: #726323.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 17 Dec 2013 01:38:04 +0700
+
+haproxy (1.5~dev19-2) experimental; urgency=low
+
+  [ Vincent Bernat ]
+  * Really enable systemd support by using dh-systemd helper.
+  * Don't use -L/usr/lib and rely on default search path. Closes: #722777.
+  
+  [ Apollon Oikonomopoulos ]
+  * Ship halog.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 12 Sep 2013 21:58:05 +0200
+
+haproxy (1.5~dev19-1) experimental; urgency=high
+
+  [ Vincent Bernat ]
+  * New upstream version.
+     + CVE-2013-2175: fix a possible crash when using negative header
+       occurrences.
+     + Drop 0002-Fix-typo-in-src-haproxy.patch: applied upstream.
+  * Enable gzip compression feature.
+
+  [ Prach Pongpanich ]
+  * Drop bashism patch. It seems useless to maintain a patch to convert
+    example scripts from /bin/bash to /bin/sh.
+  * Fix reload/restart action of init script (LP: #1187469)
+  
+ -- Vincent Bernat <bernat@debian.org>  Mon, 17 Jun 2013 22:03:58 +0200
+
+haproxy (1.5~dev18-1) experimental; urgency=low
+
+  [ Apollon Oikonomopoulos ]
+  * New upstream development version
+
+  [ Vincent Bernat ]
+  * Add support for systemd. Currently, /etc/default/haproxy is not used
+    when using systemd.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 26 May 2013 12:33:00 +0200
+
+haproxy (1.4.25-1) unstable; urgency=medium
+
+  [ Prach Pongpanich ]
+  * New upstream version.
+  * Update watch file to use the source page.
+  * Bump Standards-Version to 3.9.5.
+
+  [ Thomas Bechtold ]
+  * debian/control: Add haproxy-dbg binary package for debug symbols.
+
+  [ Apollon Oikonomopoulos ]
+  * Require syslog to be operational before starting. Closes: #726323.
+  * Document how to bind non-local IPv6 addresses.
+  * Add a reference to configuration.txt.gz to the manpage.
+  * debian/copyright: synchronize with source.
+
+ -- Prach Pongpanich <prachpub@gmail.com>  Fri, 28 Mar 2014 09:35:09 +0700
+
+haproxy (1.4.24-2) unstable; urgency=low
+
+  [ Apollon Oikonomopoulos ]
+  * Ship contrib/halog as /usr/bin/halog.
+  
+  [ Vincent Bernat ]
+  * Don't use -L/usr/lib and rely on default search path. Closes: #722777.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 15 Sep 2013 14:36:27 +0200
+
+haproxy (1.4.24-1) unstable; urgency=high
+
+  [ Vincent Bernat ]
+  * New upstream version.
+     + CVE-2013-2175: fix a possible crash when using negative header
+       occurrences.
+
+  [ Prach Pongpanich ]
+  * Drop bashism patch. It seems useless to maintain a patch to convert
+    example scripts from /bin/bash to /bin/sh.
+  * Fix reload/restart action of init script (LP: #1187469).
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 17 Jun 2013 21:56:26 +0200
+
+haproxy (1.4.23-1) unstable; urgency=low
+
+  [ Apollon Oikonomopoulos ]
+  * New upstream version (Closes: #643650, #678953)
+     + This fixes CVE-2012-2942 (Closes: #674447)
+     + This fixes CVE-2013-1912 (Closes: #704611)
+  * Ship vim addon as vim-haproxy (Closes: #702893)
+  * Check for the configuration file after sourcing /etc/default/haproxy
+    (Closes: #641762)
+  * Use /dev/log for logging by default (Closes: #649085)
+
+  [ Vincent Bernat ]
+  * debian/control:
+     + add Vcs-* fields
+     + switch maintenance to Debian HAProxy team. (Closes: #706890)
+     + drop dependency to quilt: 3.0 (quilt) format is in use.
+  * debian/rules:
+     + don't explicitly call dh_installchangelog.
+     + use dh_installdirs to install directories.
+     + use dh_install to install error and configuration files.
+     + switch to `linux2628` Makefile target for Linux.
+  * debian/postrm:
+     + remove haproxy user and group on purge.
+  * Ship a more minimal haproxy.cfg file: no `listen` blocks but `global`
+    and `defaults` block with appropriate configuration to use chroot and
+    logging in the expected way.
+
+  [ Prach Pongpanich ]
+  * debian/copyright:
+     + add missing copyright holders
+     + update years of copyright
+  * debian/rules:
+     + build with -Wl,--as-needed to get rid of unnecessary depends
+  * Remove useless files in debian/haproxy.{docs,examples}
+  * Update debian/watch file, thanks to Bart Martens
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 06 May 2013 20:02:14 +0200
+
+haproxy (1.4.15-1) unstable; urgency=low
+
+  * New upstream release with critical bug fix (Closes: #631351)
+
+ -- Christo Buschek <crito@30loops.net>  Thu, 14 Jul 2011 18:17:05 +0200
+
+haproxy (1.4.13-1) unstable; urgency=low
+
+  * New maintainer upload (Closes: #615246)
+  * New upstream release
+  * Standards-version goes 3.9.1 (no change)
+  * Added patch bashism (Closes: #581109)
+  * Added a README.source file.
+
+ -- Christo Buschek <crito@30loops.net>  Thu, 11 Mar 2011 12:41:59 +0000
+
+haproxy (1.4.8-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Arnaud Cornet <acornet@debian.org>  Fri, 18 Jun 2010 00:42:53 +0100
+
+haproxy (1.4.4-1) unstable; urgency=low
+
+  * New upstream release
+  * Add splice and tproxy support
+  * Add regparm optimization on i386
+  * Switch to dpkg-source 3.0 (quilt) format
+
+ -- Arnaud Cornet <acornet@debian.org>  Thu, 15 Apr 2010 20:00:34 +0100
+
+haproxy (1.4.2-1) unstable; urgency=low
+
+  * New upstream release
+  * Remove debian/patches/haproxy.1-hyphen.patch gone upstream
+  * Tighten quilt build dep (Closes: #567087)
+  * standards-version goes 3.8.4 (no change)
+  * Add $remote_fs to init.d script required start and stop
+
+ -- Arnaud Cornet <acornet@debian.org>  Sat, 27 Mar 2010 15:19:48 +0000
+
+haproxy (1.3.22-1) unstable; urgency=low
+
+  * New upstream bugfix release
+
+ -- Arnaud Cornet <acornet@debian.org>  Mon, 19 Oct 2009 22:31:45 +0100
+
+haproxy (1.3.21-1) unstable; urgency=low
+
+  [ Michael Shuler ]
+  * New Upstream Version (Closes: #538992)
+  * Added override for example shell scripts in docs (Closes: #530096)
+  * Added upstream changelog to docs
+  * Added debian/watch
+  * Updated debian/copyright format
+  * Added haproxy.1-hyphen.patch, to fix hyphen in man page
+  * Upgrade Standards-Version to 3.8.3 (no change needed)
+  * Upgrade debian/compat to 7 (no change needed)
+
+  [ Arnaud Cornet ]
+  * New upstream version.
+  * Merge Michael's work, few changelog fixes
+  * Add debian/README.source to point to quilt doc
+  * Depend on debhelper >= 7.0.50~ and use overrides in debian/rules
+
+ -- Arnaud Cornet <acornet@debian.org>  Sun, 18 Oct 2009 14:01:29 +0200
+
+haproxy (1.3.18-1) unstable; urgency=low
+
+  * New Upstream Version (Closes: #534583).
+  * Add contrib directory in docs
+
+ -- Arnaud Cornet <acornet@debian.org>  Fri, 26 Jun 2009 00:11:01 +0200
+
+haproxy (1.3.15.7-2) unstable; urgency=low
+
+  * Fix build without debian/patches directory (Closes: #515682) using
+    /usr/share/quilt/quilt.make.
+
+ -- Arnaud Cornet <acornet@debian.org>  Tue, 17 Feb 2009 08:55:12 +0100
+
+haproxy (1.3.15.7-1) unstable; urgency=low
+
+  * New Upstream Version.
+  * Remove upstream patches:
+  -use_backend-consider-unless.patch
+  -segfault-url_param+check_post.patch
+  -server-timeout.patch
+  -closed-fd-remove.patch
+  -connection-slot-during-retry.patch
+  -srv_dynamic_maxconn.patch
+  -do-not-pause-backends-on-reload.patch
+  -acl-in-default.patch
+  -cookie-capture-check.patch
+  -dead-servers-queue.patch
+
+ -- Arnaud Cornet <acornet@debian.org>  Mon, 16 Feb 2009 11:20:21 +0100
+
+haproxy (1.3.15.2-2~lenny1) testing-proposed-updates; urgency=low
+
+  * Rebuild for lenny to circumvent pcre3 shlibs bump.
+
+ -- Arnaud Cornet <acornet@debian.org>  Wed, 14 Jan 2009 11:28:36 +0100
+
+haproxy (1.3.15.2-2) unstable; urgency=low
+
+  * Add stable branch bug fixes from upstream (Closes: #510185).
+    - use_backend-consider-unless.patch: consider "unless" in use_backend
+    - segfault-url_param+check_post.patch: fix segfault with url_param +
+    check_post
+    - server-timeout.patch: consider server timeout in all circumstances
+    - closed-fd-remove.patch: drop info about closed file descriptors
+    - connection-slot-during-retry.patch: do not release the connection slot
+    during a retry
+    - srv_dynamic_maxconn.patch: dynamic connection throttling api fix
+    - do-not-pause-backends-on-reload.patch: make reload reliable
+    - acl-in-default.patch: allow acl-related keywords in defaults sections
+    - cookie-capture-check.patch: cookie capture is declared in the frontend
+    but checked on the backend
+    - dead-servers-queue.patch: make dead servers not suck pending connections
+  * Add quilt build-dependancy. Use quilt in debian/rules to apply
+    patches.
+
+ -- Arnaud Cornet <acornet@debian.org>  Wed, 31 Dec 2008 08:50:21 +0100
+
+haproxy (1.3.15.2-1) unstable; urgency=low
+
+  * New Upstream Version (Closes: #497186).
+
+ -- Arnaud Cornet <acornet@debian.org>  Sat, 30 Aug 2008 18:06:31 +0200
+
+haproxy (1.3.15.1-1) unstable; urgency=low
+
+  * New Upstream Version
+  * Upgrade standards version to 3.8.0 (no change needed).
+  * Build with TARGET=linux26 on linux, TARGET=generic on other systems.
+
+ -- Arnaud Cornet <acornet@debian.org>  Fri, 20 Jun 2008 00:38:50 +0200
+
+haproxy (1.3.14.5-1) unstable; urgency=low
+
+  * New Upstream Version (Closes: #484221)
+  * Use debhelper 7, drop CDBS.
+
+ -- Arnaud Cornet <acornet@debian.org>  Wed, 04 Jun 2008 19:21:56 +0200
+
+haproxy (1.3.14.3-1) unstable; urgency=low
+
+  * New Upstream Version
+  * Add status argument support to init-script to conform to LSB.
+  * Cleanup pidfile after stop in init script. Init script return code fixups.
+
+ -- Arnaud Cornet <acornet@debian.org>  Sun, 09 Mar 2008 21:30:29 +0100
+
+haproxy (1.3.14.2-3) unstable; urgency=low
+
+  * Add init script support for nbproc > 1 in configuration. That is,
+    multiple haproxy processes.
+  * Use 'option redispatch' instead of redispatch in debian default
+    config.
+
+ -- Arnaud Cornet <acornet@debian.org>  Sun, 03 Feb 2008 18:22:28 +0100
+
+haproxy (1.3.14.2-2) unstable; urgency=low
+
+  * Fix init scripts's reload function to use -sf instead of -st (to wait for
+    active session to finish cleanly). Also support dash. Thanks to
+    Jean-Baptiste Quenot for noticing.
+
+ -- Arnaud Cornet <acornet@debian.org>  Thu, 24 Jan 2008 23:47:26 +0100
+
+haproxy (1.3.14.2-1) unstable; urgency=low
+
+  * New Upstream Version
+  * Simplify DEB_MAKE_INVOKE, as upstream now supports us overriding
+    CFLAGS.
+  * Move haproxy to usr/sbin.
+
+ -- Arnaud Cornet <acornet@debian.org>  Mon, 21 Jan 2008 22:42:51 +0100
+
+haproxy (1.3.14.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Drop dfsg list and hash code rewrite (merged upstream).
+  * Add a HAPROXY variable in init script.
+  * Drop makefile patch, fix debian/rules accordingly. Drop build-dependancy
+    on quilt.
+  * Manpage now upstream. Ship upstream's and drop ours.
+
+ -- Arnaud Cornet <acornet@debian.org>  Tue, 01 Jan 2008 22:50:09 +0100
+
+haproxy (1.3.12.dfsg2-1) unstable; urgency=low
+
+  * New upstream bugfix release.
+  * Use new Homepage tag.
+  * Bump standards-version (no change needed).
+  * Add build-depend on quilt and add patch to allow proper CFLAGS passing to
+    make.
+
+ -- Arnaud Cornet <acornet@debian.org>  Tue, 25 Dec 2007 21:52:59 +0100
+
+haproxy (1.3.12.dfsg-1) unstable; urgency=low
+
+  * Initial release (Closes: #416397).
+  * The DFSG removes files with GPL-incompabitle license and adds a
+    re-implementation by me.
+
+ -- Arnaud Cornet <acornet@debian.org>  Fri, 17 Aug 2007 09:33:41 +0200

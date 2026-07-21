@@ -1,0 +1,173 @@
+/* Global Styles */
+
+body {
+	margin-top: 50px;
+	background: #fff;
+}
+
+a.anchor {
+	display: block; position: relative; top: -50px; visibility: hidden;
+}
+
+/* ------------------------------- */
+
+/* Wrappers */
+
+/* ------------------------------- */
+
+#index .well {
+	background-color: #033c73;
+	color: #fff;
+}
+#index small, #index .small {
+	color: #aaa;
+}
+
+#wrapper {
+    width: 100%;
+}
+
+#index .panel-body {
+	background-color: #2fa4e7;
+	color: #fff;
+}
+
+#page-wrapper {
+    padding: 0 15px 50px;
+    width: 720px;
+    background-color: #fff;
+    margin-left: 350px;
+}
+
+#sidebar {
+	position: fixed;
+	width: 350px;
+	top: 50px;
+	bottom: 0;
+	padding: 15px;
+        color: #ffffff;
+        background-color: #033c73;
+        border-right: 1px solid #ccc;
+        overflow-y: auto;
+}
+#sidebar li > a {
+    color: #fff;
+}
+#sidebar li.active > a,
+#sidebar li > a:hover {
+    color: #555 !important;
+}
+
+#sidebar .tab-content {
+  background-color: #fff;
+  color: #000;
+  padding: 0.5em;
+}
+#sidebar-summary {
+}
+#sidebar-keywords {
+}
+.summary td {
+  vertical-align: top;
+}
+
+/* ------------------------------- */
+
+/* Misc */
+
+/* ------------------------------- */
+
+.well-small ul {
+	padding: 0px;
+}
+.table th,
+.table td.pagination-centered {
+	text-align: center;
+}
+
+
+pre {
+	overflow: visible; /* Workaround for dropdown menus */
+}
+
+pre.text {
+        padding: 0;
+	font-size: 13px;
+	color: #000;
+	background: transparent;
+        border: none;
+        margin-bottom: 18px;
+}
+pre.arguments {
+        font-size: 13px;
+        color: #000;
+        background: transparent;
+}
+
+.comment {
+	color: #888;
+}
+small, .small {
+	color: #888;
+}
+.level1 {
+	font-size: 125%;
+}
+.sublevels {
+	border-left: 1px solid #ccc;
+	padding-left: 10px;
+}
+.tab {
+	padding-left: 1.25em;
+}
+.keyword  {
+    font-family: Menlo, Monaco, "Courier New", monospace;
+    white-space: pre;
+    background: #eee;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.label-see-also {
+	background-color: #999;
+}
+.label-disabled {
+	background-color: #ccc;
+}
+h5 {
+	text-decoration: underline;
+}
+
+.example-desc {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 18px;
+}
+.noheight {
+	min-height: 0 !important;
+}
+.separator {
+    margin-bottom: 18px;
+}
+
+div {
+	word-wrap: break-word;
+}
+
+html, body {
+	width: 100%;
+	min-height: 100%:
+}
+
+.dropdown-menu > li {
+	white-space: nowrap;
+}
+/* TEMPORARILY HACKS WHILE PRE TAGS ARE USED
+-------------------------------------------------- */
+
+h5,
+.unpre,
+.example-desc,
+.dropdown-menu {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        white-space: normal;
+}

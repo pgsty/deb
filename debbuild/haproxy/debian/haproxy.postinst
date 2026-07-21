@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+adduser --system --disabled-password --disabled-login --home /var/lib/haproxy \
+        --no-create-home --quiet --force-badname --group haproxy
+
+#DEBHELPER#
+
+if [ -n "$2" ]; then
+	if dpkg --compare-versions "$2" lt "1.8.0-1~" && [ -d /run/systemd/system ]; then
+		# Do a full restart when upgrading to 1.8 series on systemd, as
+		# the systemd wrapper is no longer there.
+		invoke-rc.d haproxy restart || true
+	elif dpkg --compare-versions "$2" gt "1.5~dev24-2~"; then
+		# Reload already running instances. Since 1.5~dev24-2 we do not stop
+		# haproxy in prerm during upgrades.
+		invoke-rc.d haproxy reload || true
+	fi
+fi
+
+exit 0

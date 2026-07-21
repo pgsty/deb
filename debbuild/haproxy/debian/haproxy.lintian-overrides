@@ -1,0 +1,2 @@
+# We want to keep this dependency as it is easier on backports
+haproxy: depends-on-obsolete-package Depends: lsb-base (>= 3.0-6)

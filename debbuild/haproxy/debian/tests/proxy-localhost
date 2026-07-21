@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -eux
+
+WDIR=$(dirname "$0")
+. "${WDIR}/utils"
+
+cat > /etc/haproxy/haproxy.cfg <<EOF
+global
+        chroot /var/lib/haproxy
+        user haproxy
+        group haproxy
+        daemon
+        maxconn 4096
+
+defaults
+        log global
+        option dontlognull
+        option redispatch
+        retries 3
+        timeout client 50s
+        timeout connect 10s
+        timeout http-request 5s
+        timeout server 50s
+        maxconn 4096
+
+frontend test-front
+    bind *:8080
+    mode http
+    default_backend test-back
+
+backend test-back
+    mode http
+    stick store-request src
+    stick-table type ip size 256k expire 30m
+    server test-1 localhost:80
+EOF
+
+service haproxy restart
+sleep 2  # Apache 2 could be still starting... See #976997.
+
+check_index_file "http://localhost:8080"
+
+exit 0

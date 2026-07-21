@@ -1,0 +1,2 @@
+dir_to_symlink /usr/share/doc/haproxy-doc/html /usr/share/doc/haproxy/html 1.6.3-2~
+dir_to_symlink /usr/share/doc/haproxy-doc/lua /usr/share/doc/haproxy/lua 1.6.3-2~
