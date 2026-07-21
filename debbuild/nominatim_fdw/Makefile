@@ -1,11 +1,13 @@
 all: setup build move
 
 TARBALL := nominatim_fdw-2.0.0.tar.gz
+SOURCE_PATCH := patches/nominatim_fdw-2.0.0.patch
 
 # prepare directory
 setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	patch -d build -p1 --forward -f < $(SOURCE_PATCH)
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
