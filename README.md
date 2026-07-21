@@ -1,6 +1,6 @@
 # PGSTY Deb Package Builder
 
-Extensions Building Scripts for PostgreSQL 13 - 18 on Debian 12/13 Ubuntu 22/24.
+Extension build scripts for PostgreSQL 13-18 on Debian 12/13 and Ubuntu 22.04/24.04/26.04.
 
 - [Pigsty PGSQL Repo](https://pgext.cloud/repo/pgsql)
 - [DEB Change Log](https://pgext.cloud/release/deb)
