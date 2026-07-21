@@ -1,5 +1,8 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
+@@ -1 +1 @@
+-cmake_minimum_required(VERSION 2.8.0 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 @@ -89,0 +90 @@
 +                      NO_SONAME TRUE
 --- a/pg_jieba.cpp
