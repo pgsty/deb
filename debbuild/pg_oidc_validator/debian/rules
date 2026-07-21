@@ -8,7 +8,7 @@ PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
 override_dh_auto_test:
 
 override_dh_auto_build:
-	# Built by the outer Makefile with the pinned Rust dependency graph.
+	# Built by the outer Makefile with the PostgreSQL 18 C++23 toolchain.
 
 override_dh_auto_clean:
 	# Keep the pre-built validator module for packaging.
@@ -20,6 +20,6 @@ override_dh_auto_install:
 	for PG_VERSION in $(PG_VERSIONS); do \
 		FULL_NAME=postgresql-$$PG_VERSION-pg-oidc-validator; \
 		dh_installdirs -p$$FULL_NAME; \
-		install -D -m 0755 target/release/liboidc_validator.so \
-			$(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/oidc_validator.so; \
+		install -D -m 0755 pg_oidc_validator.so \
+			$(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/pg_oidc_validator.so; \
 	done
