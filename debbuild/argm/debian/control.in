@@ -1,0 +1,16 @@
+Source: argm
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/bashtanov/argm
+
+Package: postgresql-PGVERSION-argm
+Architecture: any
+Provides: postgresql-argm
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Argmax, argmin, and anyold aggregates for PostgreSQL
+ argm provides polymorphic aggregates that return the value associated with
+ the greatest or least sorting key, plus an efficient arbitrary-value aggregate.
