@@ -1,0 +1,8 @@
+diff --git a/nominatim_fdw.c b/nominatim_fdw.c
+index 2d61aa8..beeb7a1 100644
+--- a/nominatim_fdw.c
++++ b/nominatim_fdw.c
+@@ -344,0 +345 @@ Datum nominatim_fdw_settings(PG_FUNCTION_ARGS)
++#if LIBCURL_VERSION_NUM >= 0x074200
+@@ -346,0 +348 @@ Datum nominatim_fdw_settings(PG_FUNCTION_ARGS)
++#endif
