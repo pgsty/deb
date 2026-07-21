@@ -1,0 +1,16 @@
+Source: pg-jieba
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cmake, g++
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jaiminpan/pg_jieba
+
+Package: postgresql-PGVERSION-pg-jieba
+Architecture: any
+Provides: postgresql-pg-jieba
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Chinese full-text search parser for PostgreSQL PGVERSION
+ pg_jieba embeds the cppjieba tokenizer and provides text search parsers,
+ configurations, dictionaries, and query segmentation support.

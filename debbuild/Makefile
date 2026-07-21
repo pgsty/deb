@@ -263,6 +263,9 @@ zhparser:
 pg_cjk_parser:
 	cd pg_cjk_parser && make
 
+pg_jieba:
+	cd pg_jieba && make
+
 
 ###############################################################
 #            Category: OLAP - OLAP & Analytics               #
@@ -1092,7 +1095,7 @@ collect:
 	timescaledb pg_timeseries pg_bikram_sambat cron_utils temporal_tables emaj table_version pg_task pg_background pg_partman \
 	geoip pg_geohash pghydro \
 	smlar pg4ml \
-	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_cjk_parser pg_textsearch pg_fts \
+	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_cjk_parser pg_jieba pg_textsearch pg_fts \
 	citus hydra storage_engine datasketches pg_duckdb pg_ducklake pg_lake duckdb_fdw pg_fkpart pg_kpart pg_clickhouse pg_orca \
 	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql fbsql pg_durable pgmnemo pg_projection pg_stl pg_sorted_heap pg_incremental pgmq pgmb omnigres pg_ai_query \
 	plxslt pg_tle plv8 pljs plx \
