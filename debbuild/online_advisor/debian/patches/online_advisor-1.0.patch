@@ -1,0 +1,44 @@
+Description: Build online_advisor 1.0 with PostgreSQL 14 and 18
+ PostgreSQL 14 does not provide MarkGUCPrefixReserved, but its compatibility
+ name EmitWarningsOnPlaceholders works on every supported release. PostgreSQL
+ 18 retains the void ExecutorStart hook contract, so remove the premature bool
+ return handling. The hook fix is included in upstream main commit e24652f8.
+Origin: upstream, https://github.com/knizhnik/online_advisor/commit/e24652f824ffac872141634394ea76320fbae4f0
+Forwarded: not-needed
+Last-Update: 2026-07-21
+
+--- a/online_advisor.c
++++ b/online_advisor.c
+@@ -55,0 +56,2 @@
++void	_PG_init(void);
++
+@@ -221,3 +222,0 @@
+-#if PG_VERSION_NUM>=180000
+-static bool advisor_ExecutorStart(QueryDesc *queryDesc, int eflags);
+-#else
+@@ -225 +223,0 @@
+-#endif
+@@ -460 +458 @@
+-	MarkGUCPrefixReserved("online_advisor");
++	EmitWarningsOnPlaceholders("online_advisor");
+@@ -776,6 +773,0 @@
+-#if PG_VERSION_NUM>=180000
+-static bool
+-advisor_ExecutorStart(QueryDesc *queryDesc, int eflags)
+-{
+-	bool plan_valid;
+-#else
+@@ -785 +776,0 @@
+-#endif
+@@ -796,5 +786,0 @@
+-#if PG_VERSION_NUM>=180000
+-	plan_valid = prev_ExecutorStart
+-		? prev_ExecutorStart(queryDesc, eflags)
+-		: standard_ExecutorStart(queryDesc, eflags);
+-#else
+@@ -805 +790,0 @@
+-#endif
+@@ -814,3 +798,0 @@
+-#if PG_VERSION_NUM>=180000
+-	return plan_valid;
+-#endif
