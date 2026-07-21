@@ -1,0 +1,16 @@
+Source: pg-flight-recorder
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), gawk
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/dventimisupabase/pg_flight_recorder
+
+Package: postgresql-PGVERSION-pg-flight-recorder
+Architecture: all
+Provides: postgresql-pg-flight-recorder
+Depends: postgresql-PGVERSION, postgresql-PGVERSION-cron, ${misc:Depends}
+Description: Server-side PostgreSQL performance flight recorder
+ pg_flight_recorder captures performance telemetry through pg_cron and ships
+ the pgfr_record collector plus pgfr_analyze reporting extension.

@@ -1,0 +1,32 @@
+--- a/pgfr_record/install.sql
++++ b/pgfr_record/install.sql
+@@ -38,4 +38,2 @@
+--- Schedule all pg_cron jobs via the single source of truth (enable()).
+--- pg_cron's cron.schedule() replaces same-named jobs, so this is idempotent
+--- across re-runs.
+-select pgfr_record.enable();
++-- Run pgfr_record.enable() after CREATE EXTENSION has committed. Calling it
++-- here creates ON COMMIT DROP temporary tables as extension members.
+--- a/pgfr_record/sql/06_partition_infra.sql
++++ b/pgfr_record/sql/06_partition_infra.sql
+@@ -494,2 +494 @@
+-SELECT pgfr_record.snapshot();
+-SELECT pgfr_record.sample();
++-- Initial collection is performed by enable() after CREATE EXTENSION.
+--- a/pgfr_record/sql/07_sparse_collectors.sql
++++ b/pgfr_record/sql/07_sparse_collectors.sql
+@@ -327,4 +327,10 @@
+-insert into pgfr_record.config (key, value, updated_at)
+-select 'pgss_last_dealloc', dealloc::text, now()
+-from pg_stat_statements_info
+-on conflict (key) do nothing;
++do $$
++begin
++    if exists (select 1 from pg_extension where extname = 'pg_stat_statements') then
++        insert into pgfr_record.config (key, value, updated_at)
++        select 'pgss_last_dealloc', dealloc::text, now()
++        from pg_stat_statements_info
++        on conflict (key) do nothing;
++    end if;
++end;
++$$;

@@ -1,0 +1,5 @@
+pg-flight-recorder (2.29.2-1PIGSTY) unstable; urgency=medium
+
+  * Package pgfr_record and pgfr_analyze for PostgreSQL 15 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 21 Jul 2026 18:00:00 +0800
