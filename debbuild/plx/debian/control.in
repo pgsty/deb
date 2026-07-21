@@ -1,0 +1,17 @@
+Source: plx
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/commandprompt/plx
+
+Package: postgresql-PGVERSION-plx
+Architecture: any
+Provides: postgresql-plx
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Transpile multiple procedural dialects to PL/pgSQL
+ plx transpiles functions written in Ruby, PHP, JavaScript, TypeScript, Python,
+ Go, COBOL, Oracle PL/SQL, or Transact-SQL syntax into PL/pgSQL at CREATE
+ FUNCTION time and executes them with PostgreSQL's standard PL/pgSQL runtime.
