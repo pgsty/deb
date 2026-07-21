@@ -1,0 +1,16 @@
+Source: pg-roast
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/samirketema/pg_roast
+
+Package: postgresql-PGVERSION-pg-roast
+Architecture: any
+Provides: postgresql-pg-roast
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Opinionated PostgreSQL database auditor
+ pg_roast audits schema design, security configuration, operational health,
+ and query behavior. It supports manual audits and periodic background audits.
