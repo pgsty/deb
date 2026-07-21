@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+PKG_NAME := pg-flight-recorder
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+EXT_VERSION := $(shell dpkg-parsechangelog -SVersion | sed 's/-.*//')
+
+%:
+	dh $@
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+override_dh_auto_build:
+	bash scripts/build_dbdev_package.sh pgfr_record pgfr_record/pgfr_record--$(EXT_VERSION).sql
+	bash scripts/build_dbdev_package.sh pgfr_analyze pgfr_analyze/pgfr_analyze--$(EXT_VERSION).sql
+
+override_dh_auto_install:
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
+		FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+		EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+		install -d $$EXT_DIR; \
+		sed "s/default_version = '0.0.0'/default_version = '$(EXT_VERSION)'/" pgfr_record/extension.control > $$EXT_DIR/pgfr_record.control; \
+		sed "s/default_version = '0.0.0'/default_version = '$(EXT_VERSION)'/" pgfr_analyze/extension.control > $$EXT_DIR/pgfr_analyze.control; \
+		install -m 0644 pgfr_record/pgfr_record--$(EXT_VERSION).sql $$EXT_DIR/; \
+		install -m 0644 pgfr_analyze/pgfr_analyze--$(EXT_VERSION).sql $$EXT_DIR/; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md REFERENCE.md PG18_COMPAT.md NOTICE
