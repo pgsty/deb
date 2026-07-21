@@ -1,0 +1,17 @@
+Source: pg-oidc-validator-rust
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, libssl-dev
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/UnAfraid/pg_oidc_validator_rust
+
+Package: postgresql-PGVERSION-pg-oidc-validator-rust
+Architecture: any
+Provides: postgresql-pg-oidc-validator-rust
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: OIDC bearer-token validator for PostgreSQL 18
+ pg_oidc_validator_rust validates PostgreSQL 18 OAuth bearer tokens through OIDC
+ discovery and the issuer JWKS endpoint, then returns the token subject as the
+ authenticated identity. Load it with oauth_validator_libraries.
