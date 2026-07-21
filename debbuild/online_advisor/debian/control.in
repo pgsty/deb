@@ -1,0 +1,16 @@
+Source: online-advisor
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/knizhnik/online_advisor
+
+Package: postgresql-PGVERSION-online-advisor
+Architecture: any
+Provides: postgresql-online-advisor
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Suggest missing indexes and statistics online for PostgreSQL PGVERSION
+ online_advisor instruments query execution and reports candidate indexes,
+ extended statistics, and statements that may benefit from being prepared.
