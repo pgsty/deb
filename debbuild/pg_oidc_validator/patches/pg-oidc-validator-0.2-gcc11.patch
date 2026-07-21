@@ -1,0 +1,197 @@
+--- a/src/pg_oidc_validator.cpp	2025-12-18 01:31:44.000000000 +0800
++++ b/src/pg_oidc_validator.cpp	2026-07-21 11:49:10.660381119 +0800
+@@ -1,6 +1,7 @@
+ #include <jwt-cpp/jwt.h>
+ 
+-#include <ranges>
++#include <algorithm>
++#include <sstream>
+ #include <string>
+ 
+ #include "http_cache.hpp"
+@@ -30,6 +31,18 @@
+ 
+ static char* authn_field = nullptr;
+ 
++template <typename Range>
++std::string join_strings(const Range& values) {
++  std::string result;
++  for (const auto& value : values) {
++    if (!result.empty()) {
++      result += ", ";
++    }
++    result += value;
++  }
++  return result;
++}
++
+ extern "C" void _PG_init() {
+   DefineCustomStringVariable("pg_oidc_validator.authn_field",
+                              gettext_noop("OAuth field used for matching PostgreSQL users"), nullptr, &authn_field,
+@@ -48,10 +61,11 @@
+     elog(WARNING, "Failed to attach to HTTP cache: %s", ex.what());
+   }
+ 
+-  auto required_scopes_range = std::string(MyProcPort->hba->oauth_scope) | std::views::split(' ') |
+-                               std::views::transform([](auto r) { return std::string(r.data(), r.size()); });
+-
+-  const scopes_t required_scopes(required_scopes_range.begin(), required_scopes_range.end());
++  scopes_t required_scopes;
++  std::istringstream required_scopes_stream(MyProcPort->hba->oauth_scope);
++  for (std::string scope; required_scopes_stream >> scope;) {
++    required_scopes.insert(scope);
++  }
+   const std::string issuer = MyProcPort->hba->oauth_issuer;
+ 
+   http_client http;
+@@ -94,8 +108,14 @@
+   PG_TRY();
+   {
+     if (!payload.contains(authn_field)) {
+-      const auto available_claims = payload | std::views::keys | std::views::join_with(std::string(", "));
+-      const std::string claims_str(available_claims.begin(), available_claims.end());
++      std::string claims_str;
++      for (const auto& [claim, value] : payload) {
++        (void)value;
++        if (!claims_str.empty()) {
++          claims_str += ", ";
++        }
++        claims_str += claim;
++      }
+       elog(WARNING, "OAuth failed: claim '%s' (authn_field) is missing. Available claims: %s", authn_field,
+            claims_str.c_str());
+       return false;
+@@ -120,14 +140,13 @@
+     // in the JWT instead. This requires a custom matching code.
+     res->authorized = azure_scopes_match(required_scopes, received_scopes);
+   } else {
+-    res->authorized = std::ranges::includes(received_scopes, required_scopes);
++    res->authorized = std::includes(received_scopes.begin(), received_scopes.end(), required_scopes.begin(),
++                                    required_scopes.end());
+   }
+ 
+   if (!res->authorized) {
+-    const auto req = required_scopes | std::views::join_with(std::string(", "));
+-    const std::string req_str(req.begin(), req.end());
+-    const auto rec = received_scopes | std::views::join_with(std::string(", "));
+-    const std::string rec_str(rec.begin(), rec.end());
++    const std::string req_str = join_strings(required_scopes);
++    const std::string rec_str = join_strings(received_scopes);
+     elog(LOG, "Authorization failed because of scope mismatch. Required scopes: %s. Received scopes: %s",
+          req_str.c_str(), rec_str.c_str());
+   } else {
+--- a/src/jwk.cpp	2025-12-18 01:31:44.000000000 +0800
++++ b/src/jwk.cpp	2026-07-21 11:49:10.668826516 +0800
+@@ -1,7 +1,7 @@
+ #include "jwk.hpp"
+ 
+-#include <ranges>
+ #include <regex>
++#include <sstream>
+ 
+ extern "C" {
+ #include "postgres.h"
+@@ -39,7 +39,7 @@
+   const auto e_it = keyObject.find("e");
+ 
+   if (n_it == keyObject.end() || e_it == keyObject.end()) {
+-    throw std::runtime_error(std::format("RSA key missing required 'n'/'e' components (kid: {})", kid));
++    throw std::runtime_error("RSA key missing required 'n'/'e' components (kid: " + kid + ")");
+   }
+ 
+   const std::string n = n_it->second.to_str();
+@@ -60,7 +60,7 @@
+   } else if (alg == "PS512") {
+     verifier = verifier.allow_algorithm(jwt::algorithm::ps512(pem_key));
+   } else {
+-    throw std::runtime_error(std::format("Unsupported RSA algorithm: {} (kid: {})", alg, kid));
++    throw std::runtime_error("Unsupported RSA algorithm: " + alg + " (kid: " + kid + ")");
+   }
+ }
+ 
+@@ -71,7 +71,7 @@
+   const auto crv_it = keyObject.find("crv");
+ 
+   if (x_it == keyObject.end() || y_it == keyObject.end() || crv_it == keyObject.end()) {
+-    throw std::runtime_error(std::format("EC key missing required 'x'/'y'/'crv' components (kid: {})", kid));
++    throw std::runtime_error("EC key missing required 'x'/'y'/'crv' components (kid: " + kid + ")");
+   }
+ 
+   const std::string x = x_it->second.to_str();
+@@ -87,7 +87,8 @@
+   } else if (alg == "ES512" && crv == "P-521") {
+     verifier = verifier.allow_algorithm(jwt::algorithm::es512(pem_key));
+   } else {
+-    throw std::runtime_error(std::format("Unsupported EC algorithm/curve combination: {}/{} (kid: {})", alg, crv, kid));
++    throw std::runtime_error("Unsupported EC algorithm/curve combination: " + alg + "/" + crv + " (kid: " + kid +
++                             ")");
+   }
+ }
+ 
+@@ -96,7 +97,7 @@
+   const auto k_it = keyObject.find("k");
+ 
+   if (k_it == keyObject.end()) {
+-    throw std::runtime_error(std::format("HMAC key missing required 'k' component (kid: {})", kid));
++    throw std::runtime_error("HMAC key missing required 'k' component (kid: " + kid + ")");
+   }
+ 
+   const std::string k = keyObject.at("k").to_str();
+@@ -108,13 +109,13 @@
+   } else if (alg == "HS512") {
+     verifier = verifier.allow_algorithm(jwt::algorithm::hs512{k});
+   } else {
+-    throw std::runtime_error(std::format("Unsupported HMAC algorithm: {} (kid: {})", alg, kid));
++    throw std::runtime_error("Unsupported HMAC algorithm: " + alg + " (kid: " + kid + ")");
+   }
+ }
+ 
+ std::string get_required_parameter(picojson::object const& key_object, std::string const& name) {
+   if (!key_object.contains(name)) {
+-    throw std::runtime_error(std::format("Required parameter '{}' is missing", name));
++    throw std::runtime_error("Required parameter '" + name + "' is missing");
+   }
+   return key_object.at(name).to_str();
+ }
+@@ -171,7 +172,7 @@
+     } else if (kty == "oct") {
+       configure_hmac_key(key_object, kid, alg, verifier);
+     } else {
+-      throw std::runtime_error(std::format("Unsupported key type: {} (kid: {})", kty, kid));
++      throw std::runtime_error("Unsupported key type: " + kty + " (kid: " + kid + ")");
+     }
+ 
+     break;
+@@ -191,19 +192,25 @@
+ }
+ 
+ bool issuer_is_azure(const std::string& issuer) {
+-  return issuer.contains("login.microsoftonline.com") || issuer.contains("sts.windows.net");
++  return issuer.find("login.microsoftonline.com") != std::string::npos ||
++         issuer.find("sts.windows.net") != std::string::npos;
+ }
+ 
+ scopes_t parse_jwt_scopes(const picojson::value& jsonScopes) {
+   if (jsonScopes.is<picojson::array>()) {
+-    const auto scope_range =
+-        jsonScopes.get<picojson::array>() | std::ranges::views::transform(&picojson::value::to_str);
+-    return {scope_range.begin(), scope_range.end()};
++    scopes_t scopes;
++    for (const auto& scope : jsonScopes.get<picojson::array>()) {
++      scopes.insert(scope.to_str());
++    }
++    return scopes;
+   }
+   if (jsonScopes.is<std::string>()) {
+-    auto scope_range = jsonScopes.get<std::string>() | std::views::split(' ') |
+-                       std::views::transform([](auto r) { return std::string(r.data(), r.size()); });
+-    return {scope_range.begin(), scope_range.end()};
++    scopes_t scopes;
++    std::istringstream scope_stream(jsonScopes.get<std::string>());
++    for (std::string scope; scope_stream >> scope;) {
++      scopes.insert(scope);
++    }
++    return scopes;
+   }
+ 
+   return {};

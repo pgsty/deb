@@ -1,5 +1,6 @@
 pg-oidc-validator (0.2-1PIGSTY) unstable; urgency=medium
 
   * Initial release for Percona pg_oidc_validator 0.2 and PostgreSQL 18.
+  * Keep the source compatible with GCC 11 and 12 standard libraries.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 21 Jul 2026 12:00:00 +0800

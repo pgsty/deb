@@ -2,7 +2,7 @@ Source: pg-oidc-validator
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), g++ (>= 13), libcurl4-openssl-dev, libssl-dev
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), g++, libcurl4-openssl-dev, libssl-dev
 Standards-Version: 4.7.2
 Rules-Requires-Root: no
 Homepage: https://github.com/percona/pg_oidc_validator
