@@ -1,0 +1,16 @@
+Source: pgmemento
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgMemento/pgMemento
+
+Package: postgresql-PGVERSION-pgmemento
+Architecture: all
+Provides: postgresql-pgmemento
+Depends: postgresql-PGVERSION, ${misc:Depends}
+Description: Transaction-based audit trail and schema versioning for PostgreSQL PGVERSION
+ pgMemento provides row auditing, DDL tracking, schema versioning, and
+ restoration helpers implemented entirely in PL/pgSQL.

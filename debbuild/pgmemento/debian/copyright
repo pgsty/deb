@@ -1,0 +1,13 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pgMemento
+Source: https://github.com/pgMemento/pgMemento
+
+Files: *
+Copyright: Felix Kunde <felix-kunde@gmx.de>
+License: LGPL-3.0-only
+ This program is free software: you can redistribute it and/or modify it under
+ the terms of the GNU Lesser General Public License as published by the Free
+ Software Foundation, version 3 of the License.
+ .
+ On Debian systems, the complete text of the GNU Lesser General Public License
+ version 3 can be found in "/usr/share/common-licenses/LGPL-3".
