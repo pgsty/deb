@@ -2,7 +2,6 @@ all: pre setup build move
 
 TARBALL := documentdb-0.114-0.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
-SOURCE_PATCH := documentdb-0.114-export-validation.patch
 
 check-src:
 	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL) under $(HOME)/ext/src, $(HOME)/pgsty/repo/ext/src, or ../SOURCES; run pig build get first if needed"; exit 1)
@@ -16,7 +15,6 @@ pre:
 setup: check-src
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	patch -d build -p1 --forward -f < $(SOURCE_PATCH)
 	sed -i 's/char \*substring = memchr(/const char *substring = memchr(/' build/pg_documentdb_core/src/types/string_view.c
 	sed -i "s/char \\*dotPosition = strchr(currentNameSpace, '\\.');/const char *dotPosition = strchr(currentNameSpace, '.');/" build/pg_documentdb/src/aggregation/bson_aggregation_output_pipeline.c
 	sed -i "s/char \\*leftSubstring = memchr(path, '\\.', pathLength);/const char *leftSubstring = memchr(path, '.', pathLength);/" build/pg_documentdb/src/aggregation/bson_project.c

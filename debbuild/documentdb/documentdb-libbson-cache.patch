@@ -1,7 +1,0 @@
---- install_setup_libbson.sh
-+++ install_setup_libbson.sh
-@@ -31 +31,3 @@
--curl -s -L https://github.com/mongodb/mongo-c-driver/releases/download/$DRIVER_VERSION/mongo-c-driver-$DRIVER_VERSION.tar.gz -o ./mongo-c-driver-$DRIVER_VERSION.tar.gz
-+if [ ! -s "./mongo-c-driver-$DRIVER_VERSION.tar.gz" ]; then
-+    curl -fL --retry 3 --retry-delay 2 --connect-timeout 15 --max-time 300 https://github.com/mongodb/mongo-c-driver/releases/download/$DRIVER_VERSION/mongo-c-driver-$DRIVER_VERSION.tar.gz -o ./mongo-c-driver-$DRIVER_VERSION.tar.gz
-+fi
