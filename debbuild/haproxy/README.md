@@ -8,7 +8,9 @@ HAProxy 3.4.2.
 
 Supported builders:
 
+- Debian 11 (`d11`, `d11a`)
 - Debian 12 / 13 (`d12`, `d12a`, `d13`, `d13a`)
+- Ubuntu 20.04 (`u20`, `u20a`)
 - Ubuntu 22.04 / 24.04 / 26.04 (`u22`, `u22a`, `u24`, `u24a`, `u26`, `u26a`)
 
 The package version is suffixed with the builder codename, for example

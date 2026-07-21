@@ -7,7 +7,7 @@ Build-Depends: debhelper-compat (= 12),
                libpcre2-dev,
                libssl-dev,
                libcrypt-dev,
-               liblua5.4-dev,
+               liblua5.4-dev | liblua5.3-dev,
                libjemalloc-dev,
                python3-sphinx:native,
                pkgconf

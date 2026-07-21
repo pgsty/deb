@@ -8,6 +8,8 @@ include /usr/share/dpkg/buildtools.mk
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
+LUA_VERSION := $(shell if test -d /usr/include/lua5.4; then echo 5.4; else echo 5.3; fi)
+
 MAKEARGS=V=1 \
 	 CC='$(CC)' \
 	 PKG_CONFIG='$(PKG_CONFIG)' \
@@ -24,7 +26,7 @@ MAKEARGS=V=1 \
 	 USE_SLZ=1 \
 	 USE_LUA=1 \
 	 USE_PROMEX=1 \
-	 LUA_INC=/usr/include/lua5.4 \
+	 LUA_INC=/usr/include/lua$(LUA_VERSION) \
 	 EXTRA=admin/halog/halog
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)

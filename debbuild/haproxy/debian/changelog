@@ -1,6 +1,7 @@
 haproxy (3.4.2-1PIGSTY) unstable; urgency=medium
 
   * New upstream LTS release.
+  * Add a Lua 5.3 fallback for Ubuntu 20.04 builds.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 21 Jul 2026 15:01:32 +0800
 
