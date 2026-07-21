@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+EXTVERSION := 0.7.4
+
+%:
+	dh $@
+
+override_dh_auto_test:
+
+override_dh_auto_build:
+	cd extension && ./compile.sh > ../pgmemento--$(EXTVERSION).sql
+
+override_dh_auto_clean:
+	rm -f pgmemento--$(EXTVERSION).sql
+
+override_dh_auto_install:
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
+	    FULL_NAME=postgresql-$$PG_VERSION-pgmemento; \
+	    EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    mkdir -p $$EXT_DIR; \
+	    install -m 0644 extension/pgmemento.control $$EXT_DIR/; \
+	    install -m 0644 pgmemento--$(EXTVERSION).sql $$EXT_DIR/; \
+	    for OLD_VERSION in 0.7 0.7.1 0.7.2 0.7.3; do \
+	        install -m 0644 UPGRADE_v07_to_v074.sql \
+	            $$EXT_DIR/pgmemento--$$OLD_VERSION--$(EXTVERSION).sql; \
+	    done; \
+	done
+	rm -rf debian/postgresql-*-pgmemento/usr/share/doc/postgresql-doc-*
+
+override_dh_installdocs:
+	dh_installdocs --all README.md
