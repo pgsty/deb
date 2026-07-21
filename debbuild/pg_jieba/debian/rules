@@ -1,0 +1,42 @@
+#!/usr/bin/make -f
+
+export CC = gcc
+export CXX = g++
+
+PG_VERSIONS = 14 15 16 17 18
+PG_JIEBA_BUILD_JOBS ?= 2
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+override_dh_auto_configure:
+
+override_dh_auto_build:
+	set -e; for ver in $(PG_VERSIONS); do \
+		echo "=== Building pg_jieba for PostgreSQL $$ver ==="; \
+		pg_config=/usr/lib/postgresql/$$ver/bin/pg_config; \
+		PATH="/usr/lib/postgresql/$$ver/bin:$$PATH" cmake \
+			-S $(CURDIR) -B $(CURDIR)/build-pg$$ver \
+			-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+			-DCMAKE_INSTALL_PREFIX=/usr \
+			-DPostgreSQL_INCLUDE_DIR=/usr/include/postgresql \
+			-DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgresql/$$ver/server \
+			-DPostgreSQL_LIBRARY="$$("$$pg_config" --libdir)/libpq.so"; \
+		cmake --build $(CURDIR)/build-pg$$ver --parallel $(PG_JIEBA_BUILD_JOBS); \
+	done
+
+override_dh_auto_install:
+	set -e; for ver in $(PG_VERSIONS); do \
+		DESTDIR=$(CURDIR)/debian/postgresql-$$ver-pg-jieba \
+			cmake --install $(CURDIR)/build-pg$$ver; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md HISTORY LICENSE
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+%:
+	dh $@
