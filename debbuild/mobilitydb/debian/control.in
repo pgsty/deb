@@ -1,0 +1,30 @@
+Source: mobilitydb
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13),
+               cmake,
+               libgeos-dev,
+               libgsl-dev,
+               libjson-c-dev,
+               libproj-dev,
+               postgresql-18-postgis-3,
+               postgresql-all <!nocheck>,
+               postgresql-server-dev-all
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://mobilitydb.com/
+Vcs-Browser: https://github.com/pgsty/deb/tree/main/debbuild/mobilitydb
+Vcs-Git: https://github.com/pgsty/deb.git
+
+Package: postgresql-PGVERSION-mobilitydb
+Architecture: any
+Depends: postgresql-PGVERSION-postgis-3,
+         ${misc:Depends},
+         ${postgresql:Depends},
+         ${shlibs:Depends}
+Breaks: ${postgresql:Breaks}
+Description: Geospatial trajectory data management and analysis platform
+ MobilityDB is a database management system for moving-object geospatial
+ trajectories, such as GPS traces. It adds temporal and spatiotemporal types,
+ indexes, and functions to PostgreSQL and PostGIS.

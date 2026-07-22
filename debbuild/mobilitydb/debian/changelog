@@ -1,0 +1,8 @@
+mobilitydb (1.3.0-2PIGSTY) unstable; urgency=medium
+
+  * Package MobilityDB 1.3.0 for PostgreSQL 18 on Ubuntu 22.04.
+  * Reuse the PGDG 1.3.0-2 patches and packaging rules.
+  * Drop architecture-is-* build dependencies unavailable on Jammy; the
+    Pigsty target architectures are 64-bit little-endian amd64 and arm64.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 22 Jul 2026 09:00:00 +0800

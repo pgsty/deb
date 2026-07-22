@@ -1,0 +1,187 @@
+--- a/postgis/liblwgeom/liblwgeom.h.in
++++ b/postgis/liblwgeom/liblwgeom.h.in
+@@ -34,7 +34,7 @@
+ #include <stdio.h>
+ #include <stdbool.h>
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ 
+ #include "proj.h"
+ 
+--- a/postgis/liblwgeom/liblwgeom_internal.h
++++ b/postgis/liblwgeom/liblwgeom_internal.h
+@@ -29,7 +29,7 @@
+ #ifndef _LIBLWGEOM_INTERNAL_H
+ #define _LIBLWGEOM_INTERNAL_H 1
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ 
+ #include "lwgeom_log.h"
+ 
+--- a/postgis/liblwgeom/lwgeom_geos_clean.c
++++ b/postgis/liblwgeom/lwgeom_geos_clean.c
+@@ -22,7 +22,7 @@
+  *
+  **********************************************************************/
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ 
+ #include "liblwgeom.h"
+ #include "lwgeom_geos.h"
+--- a/postgis/liblwgeom/lwgeom_geos_split.c
++++ b/postgis/liblwgeom/lwgeom_geos_split.c
+@@ -22,7 +22,7 @@
+  *
+  **********************************************************************/
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ /*#define POSTGIS_DEBUG_LEVEL 4*/
+ #include "lwgeom_geos.h"
+ #include "liblwgeom_internal.h"
+--- a/postgis/liblwgeom/lwgeom_transform.c
++++ b/postgis/liblwgeom/lwgeom_transform.c
+@@ -23,7 +23,7 @@
+  **********************************************************************/
+ 
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ #include "liblwgeom_internal.h"
+ #include "lwgeom_log.h"
+ #include <string.h>
+--- a/postgis/liblwgeom/lwgeom_wrapx.c
++++ b/postgis/liblwgeom/lwgeom_wrapx.c
+@@ -22,7 +22,7 @@
+  *
+  **********************************************************************/
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ /*#define POSTGIS_DEBUG_LEVEL 4*/
+ #include "lwgeom_geos.h"
+ #include "liblwgeom_internal.h"
+--- a/postgis/liblwgeom/lwin_encoded_polyline.c
++++ b/postgis/liblwgeom/lwin_encoded_polyline.c
+@@ -28,7 +28,7 @@
+ #include <math.h>
+ 
+ #include "liblwgeom.h"
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ 
+ LWGEOM*
+ lwgeom_from_encoded_polyline(const char *encodedpolyline, int precision)
+--- a/postgis/liblwgeom/lwin_geojson.c
++++ b/postgis/liblwgeom/lwin_geojson.c
+@@ -26,7 +26,7 @@
+ 
+ #include "liblwgeom.h"
+ #include "lwgeom_log.h"
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ 
+ #if defined(HAVE_LIBJSON)
+ 
+--- a/postgis/liblwgeom/lwin_wkb.c
++++ b/postgis/liblwgeom/lwin_wkb.c
+@@ -23,7 +23,7 @@
+  **********************************************************************/
+ 
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ /*#define POSTGIS_DEBUG_LEVEL 4*/
+ #include "liblwgeom_internal.h" /* NOTE: includes lwgeom_log.h */
+ #include "lwgeom_log.h"
+--- a/postgis/liblwgeom/lwpoint.c
++++ b/postgis/liblwgeom/lwpoint.c
+@@ -26,7 +26,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ /*#define POSTGIS_DEBUG_LEVEL 4*/
+ #include "liblwgeom_internal.h"
+ #include "lwgeom_log.h"
+--- a/postgis/liblwgeom/lwstroke.c
++++ b/postgis/liblwgeom/lwstroke.c
+@@ -30,7 +30,7 @@
+ #include <stdarg.h>
+ #include <string.h>
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ 
+ /*#define POSTGIS_DEBUG_LEVEL 3*/
+ 
+--- a/postgis/liblwgeom/lwutil.c
++++ b/postgis/liblwgeom/lwutil.c
+@@ -33,7 +33,7 @@
+ #include <ctype.h> /* for tolower */
+ 
+ /* Global variables */
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ #include "liblwgeom_internal.h"
+ #include "lwgeom_log.h"
+ 
+--- a/postgis/liblwgeom/ptarray.c
++++ b/postgis/liblwgeom/ptarray.c
+@@ -28,7 +28,7 @@
+ #include <string.h>
+ #include <stdlib.h>
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ /*#define POSTGIS_DEBUG_LEVEL 4*/
+ #include "liblwgeom_internal.h"
+ #include "lwgeom_log.h"
+--- a/postgis/libpgcommon/gserialized_gist.c
++++ b/postgis/libpgcommon/gserialized_gist.c
+@@ -14,7 +14,7 @@
+ #include "access/itup.h"
+ #include "access/skey.h"
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ 
+ /*#define POSTGIS_DEBUG_LEVEL 4*/
+ 
+--- a/postgis/libpgcommon/lwgeom_cache.c
++++ b/postgis/libpgcommon/lwgeom_cache.c
+@@ -17,7 +17,7 @@
+ #include "fmgr.h"
+ #include "utils/memutils.h"
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ 
+ /* Include for VARATT_EXTERNAL_GET_POINTER */
+ #if POSTGIS_PGSQL_VERSION < 130
+--- a/postgis/libpgcommon/lwgeom_pg.c
++++ b/postgis/libpgcommon/lwgeom_pg.c
+@@ -33,7 +33,7 @@
+ #include <catalog/pg_extension.h>
+ #include <commands/extension.h>
+ 
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ 
+ #include <utils/regproc.h>
+ 
+--- a/postgis/libpgcommon/lwgeom_transform.c
++++ b/postgis/libpgcommon/lwgeom_transform.c
+@@ -21,7 +21,7 @@
+ #include "utils/hsearch.h"
+ 
+ /* PostGIS headers */
+-#include "../postgis_config.h"
++#include "postgis_config.h"
+ #include "liblwgeom.h"
+ #include "lwgeom_pg.h"
+ #include "lwgeom_cache.h"

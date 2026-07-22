@@ -1,0 +1,14 @@
+Depends:
+ cmake,
+ g++,
+ libgeos-dev,
+ libgsl-dev,
+ libjson-c-dev,
+ libproj-dev,
+ postgresql-common-dev,
+ xz-utils,
+ @,
+Tests:
+ installcheck,
+Restrictions:
+ allow-stderr,

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -eux
+
+# re-exec as postgres when running as root
+if [ "$(id -un)" = "root" ]; then
+    exec su -c "$0" postgres
+fi
+
+# put temporary build trees into /tmp
+trap "rm -rf /tmp/test-*/" EXIT
+
+export LANG=C.UTF-8
+export PGOPTIONS="-c session_preload_libraries=postgis-3"
+
+pg_buildext run_installed /usr/bin/cmake -B /tmp/test-%v
+# exclude 'build' test which rebuilds the extension
+pg_buildext run_installed /usr/bin/make ARGS="-E build" -C /tmp/test-%v test

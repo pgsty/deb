@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+export DEB_CPPFLAGS_MAINT_APPEND := -DNDEBUG
+
+%:
+	dh $@ --with pgxs
+
+override_dh_auto_configure:
+	+pg_buildext run dh_auto_configure -Bbuild-%v -- -DPOSTGRESQL_PG_CONFIG=/usr/lib/postgresql/%v/bin/pg_config
+
+override_dh_installdocs:
+	dh_installdocs --all README.*
+
+override_dh_pgxs_test:
+	# nothing to do here, see debian/tests/* instead

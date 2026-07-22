@@ -219,6 +219,9 @@ pg_geohash:
 pghydro:
 	cd pghydro && make
 
+mobilitydb:
+	cd mobilitydb && make
+
 
 ###############################################################
 #            Category: RAG  - RAG & Vector                   #
