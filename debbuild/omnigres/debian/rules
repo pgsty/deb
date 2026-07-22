@@ -2,6 +2,7 @@
 
 SRC_DIR := omnigres
 PKG_NAME := omnigres
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
 
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
@@ -18,10 +19,14 @@ override_dh_auto_configure:
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
+override_dh_dwz:
+	# External Clang may emit DWARF newer than the distribution dwz supports.
+
 override_dh_auto_install:
-	for PG_VERSION in 14 15 16 17 18; do \
-	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
+	set -eu; for PG_VERSION in $(PG_VERSIONS); do \
 	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+	    test -d pg$$PG_VERSION/packaged/extension; \
+	    set -- pg$$PG_VERSION/packaged/*.so; test -e "$$1"; \
 	    dh_installdirs -p$$FULL_NAME; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \

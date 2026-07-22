@@ -1,0 +1,25 @@
+diff --git a/extensions/omni_shmem/deps/oink.hpp b/extensions/omni_shmem/deps/oink.hpp
+index 594152f..509ec71 100644
+--- a/extensions/omni_shmem/deps/oink.hpp
++++ b/extensions/omni_shmem/deps/oink.hpp
+@@ -5,6 +5,7 @@
+ #include <atomic>
+ #include <chrono>
+ #include <map>
++#include <optional>
+ #include <typeindex>
+ 
+ #include <boost/interprocess/allocators/allocator.hpp>
+diff --git a/extensions/omni_csv/omni_csv.cpp b/extensions/omni_csv/omni_csv.cpp
+index 49deebd..a7d207e 100644
+--- a/extensions/omni_csv/omni_csv.cpp
++++ b/extensions/omni_csv/omni_csv.cpp
+@@ -7,7 +7,7 @@ PG_MODULE_MAGIC;
+ #include <csv.hpp>
+ #include <ranges>
+ 
+-constexpr auto default_format() {
++auto default_format() {
+   csv::CSVFormat format;
+   format.delimiter({'|', ',', '\t'});
+   return format;
