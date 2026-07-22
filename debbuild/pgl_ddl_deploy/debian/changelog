@@ -1,0 +1,5 @@
+pgl-ddl-deploy (2.2.1-1PIGSTY) unstable; urgency=medium
+
+  * Package pgl_ddl_deploy 2.2.1 for PostgreSQL 14 through 17
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 22 Jul 2026 00:36:58 +0800
