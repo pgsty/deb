@@ -387,6 +387,9 @@ pljs: # PGDG Included
 plx:
 	cd plx && make
 
+plproxy:
+	cd plproxy && make
+
 ###############################################################
 #            Category: TYPE - Data Types                     #
 ###############################################################
@@ -1116,7 +1119,7 @@ collect:
 	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_cjk_parser pg_jieba pg_textsearch pg_fts \
 	citus hydra storage_engine datasketches pg_duckdb pg_ducklake pg_lake duckdb_fdw pg_fkpart pg_kpart pg_clickhouse pg_orca \
 	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql fbsql pg_durable pgmnemo pg_projection pg_stl pg_sorted_heap pg_incremental pgmq pgmb omnigres pg_ai_query \
-	plxslt pg_tle plv8 pljs plx \
+	plxslt pg_tle plv8 pljs plx plproxy \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pguint pg_uint128 pg_text_semver hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
 	pg_gzip pg_http pg_bzip pg_zstd pg_net pg_curl pgjq pg_retry pgjwt pg_html5_email_address pg_utl_smtp url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile external_file pg_byteamagic pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \
 	pg_uuidv7 pg_uuid_v8 permuteseq pg_hashids sequential_uuids topn quantile lower_quantile count_distinct omnisketch ddsketch vasco pgxicor pg_weighted_statistics floatvec aggs_for_vecs aggs_for_arrays parray_gin pg_accumulator pg_arraymath pg_math pg_random pg_base36 pg_base62 pg_financial argm faker dbt2 \
