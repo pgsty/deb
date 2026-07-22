@@ -1,25 +1,31 @@
 #!/usr/bin/make -f
 
-# Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
-export CC = gcc
-
 include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+EXTENSIONS := hunspell_cs_cz hunspell_de_de hunspell_en_us hunspell_fr \
+	hunspell_ne_np hunspell_nl_nl hunspell_nn_no hunspell_pt_pt \
+	hunspell_ru_ru hunspell_ru_ru_aot
 
 override_dh_auto_build:
 
 override_dh_auto_test:
 
 override_dh_auto_clean:
-	# Disable the clean step to avoid cleaning up pre-built binaries
+	# Nothing to clean: all extensions contain SQL and dictionary data only.
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-hunspell
-
-override_dh_installdocs:
-
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
+		PKG=postgresql-$$PG_VERSION-hunspell; \
+		for EXTENSION in $(EXTENSIONS); do \
+			$(MAKE) -C $$EXTENSION USE_PGXS=1 \
+				PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
+				install DESTDIR=$(CURDIR)/debian/$$PKG; \
+		done; \
+	done
 
 %:
 	dh $@

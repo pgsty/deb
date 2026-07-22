@@ -8,8 +8,41 @@ Rules-Requires-Root: no
 Homepage: https://github.com/postgrespro/hunspell_dicts
 
 Package: postgresql-PGVERSION-hunspell
-Architecture: any
-Provides: postgresql-hunspell
-Depends: ${postgresql:Depends}, ${misc:Depends}
+Architecture: all
+Provides:
+ postgresql-hunspell,
+ postgresql-PGVERSION-hunspell-cs-cz,
+ postgresql-PGVERSION-hunspell-de-de,
+ postgresql-PGVERSION-hunspell-en-us,
+ postgresql-PGVERSION-hunspell-fr,
+ postgresql-PGVERSION-hunspell-ne-np,
+ postgresql-PGVERSION-hunspell-nl-nl,
+ postgresql-PGVERSION-hunspell-nn-no,
+ postgresql-PGVERSION-hunspell-pt-pt,
+ postgresql-PGVERSION-hunspell-ru-ru,
+ postgresql-PGVERSION-hunspell-ru-ru-aot
+Breaks:
+ postgresql-PGVERSION-hunspell-cs-cz,
+ postgresql-PGVERSION-hunspell-de-de,
+ postgresql-PGVERSION-hunspell-en-us,
+ postgresql-PGVERSION-hunspell-fr,
+ postgresql-PGVERSION-hunspell-ne-np,
+ postgresql-PGVERSION-hunspell-nl-nl,
+ postgresql-PGVERSION-hunspell-nn-no,
+ postgresql-PGVERSION-hunspell-ru-ru,
+ postgresql-PGVERSION-hunspell-ru-ru-aot
+Replaces:
+ postgresql-PGVERSION-hunspell-cs-cz,
+ postgresql-PGVERSION-hunspell-de-de,
+ postgresql-PGVERSION-hunspell-en-us,
+ postgresql-PGVERSION-hunspell-fr,
+ postgresql-PGVERSION-hunspell-ne-np,
+ postgresql-PGVERSION-hunspell-nl-nl,
+ postgresql-PGVERSION-hunspell-nn-no,
+ postgresql-PGVERSION-hunspell-ru-ru,
+ postgresql-PGVERSION-hunspell-ru-ru-aot
+Depends: postgresql-PGVERSION, ${misc:Depends}
 Description: Hunspell dictionaries for PostgreSQL
-  The repository contains Hunspell dictionaries for several languages listed below.
+ This package contains Czech, German, English, French, Nepali, Dutch,
+ Norwegian, Portuguese, and Russian Hunspell dictionaries and text search
+ configurations for PostgreSQL PGVERSION.

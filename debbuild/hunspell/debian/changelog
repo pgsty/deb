@@ -1,3 +1,10 @@
+hunspell (1.0-2PIGSTY) unstable; urgency=medium
+
+  * Merge all dictionaries into the hunspell package.
+  * Rename the bundled Portuguese stopword file to avoid PostgreSQL conflicts.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 22 Jul 2026 04:30:00 +0000
+
 hunspell (1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>

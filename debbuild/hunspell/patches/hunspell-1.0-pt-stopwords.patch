@@ -1,0 +1,14 @@
+diff --git a/hunspell_pt_pt/Makefile b/hunspell_pt_pt/Makefile
+index 568883b..84f242f 100644
+--- a/hunspell_pt_pt/Makefile
++++ b/hunspell_pt_pt/Makefile
+@@ -4 +4 @@ DATA = hunspell_pt_pt--1.0.sql
+-DATA_TSEARCH = pt_pt.affix pt_pt.dict portuguese.stop
++DATA_TSEARCH = pt_pt.affix pt_pt.dict pt_pt.stop
+diff --git a/hunspell_pt_pt/hunspell_pt_pt--1.0.sql b/hunspell_pt_pt/hunspell_pt_pt--1.0.sql
+index 5fde283..7a1b858 100644
+--- a/hunspell_pt_pt/hunspell_pt_pt--1.0.sql
++++ b/hunspell_pt_pt/hunspell_pt_pt--1.0.sql
+@@ -10 +10 @@ CREATE TEXT SEARCH DICTIONARY portuguese_hunspell (
+-    StopWords = portuguese
++    StopWords = pt_pt

@@ -1,151 +1,32 @@
 all: setup build move
 
 TARBALL := hunspell-1.0.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+SOURCE_PATCH := patches/hunspell-1.0-pt-stopwords.patch
+BUILD_DIR := build
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
-# prepare directory
-setup:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-build: build-cs-cz build-de-de build-en-us build-fr build-ne-np build-nl-nl build-nn-no build-ru-ru build-ru-ru-aot #build-pt-pt
+setup: check-src
+	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	find $(BUILD_DIR) -name '._*' -delete
+	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	patch -d $(BUILD_DIR) -p1 < "$(SOURCE_PATCH)"
+	mv $(BUILD_DIR)/hunspell_pt_pt/portuguese.stop $(BUILD_DIR)/hunspell_pt_pt/pt_pt.stop
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
-build-cs-cz:
-	$(eval LANGUAGE=cs-cz)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
+build:
+	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
-build-de-de:
-	$(eval LANGUAGE=de-de)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
-
-build-en-us:
-	$(eval LANGUAGE=en-us)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
-
-build-fr:
-	$(eval LANGUAGE=fr)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
-
-build-ne-np:
-	$(eval LANGUAGE=ne-np)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
-
-build-nl-nl:
-	$(eval LANGUAGE=nl-nl)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
-
-build-nn-no:
-	$(eval LANGUAGE=nn-no)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
-
-# conflict with pg system dict
-build-pt-pt:
-	$(eval LANGUAGE=pt-pt)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
-
-build-ru-ru:
-	$(eval LANGUAGE=ru-ru)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
-
-build-ru-ru-aot:
-	$(eval LANGUAGE=ru-ru-aot)
-	$(eval LANGUAGE_UNDERSCORE=$(subst -,_,$(LANGUAGE)))
-	rm -rf build/hunspell_$(LANGUAGE_UNDERSCORE)/debian; cp -r debian build/hunspell_$(LANGUAGE_UNDERSCORE)/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "1s/hunspell/hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/changelog
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "1s/Source: hunspell/Source: hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/control.in
-	sed -i "s/-hunspell/-hunspell-$(LANGUAGE)/" build/hunspell_$(LANGUAGE_UNDERSCORE)/debian/rules
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && pg_buildext updatecontrol
-	cd build/hunspell_$(LANGUAGE_UNDERSCORE) && dpkg-buildpackage -b -us -uc
-
-# collect deb
 move:
-	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
 
-# remove building craps
 clean:
-	rm -rf *.buildinfo *.changes *.ddeb *.deb
+	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
+.PHONY: all check-src setup build move clean
