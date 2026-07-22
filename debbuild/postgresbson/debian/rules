@@ -2,8 +2,9 @@
 
 export CC = gcc
 VERSIONS := $(shell sed -e 's/#.*//' -e '/^[[:space:]]*$$/d' debian/pgversions)
-LIBBSON_CFLAGS := $(strip $(shell pkg-config --cflags libbson-1.0))
-LIBBSON_LIBS := $(strip $(shell pkg-config --libs libbson-1.0))
+LIBBSON_PC := $(shell pkg-config --exists libbson-1.0 && echo libbson-1.0 || echo bson2)
+LIBBSON_CFLAGS := $(strip $(shell pkg-config --cflags $(LIBBSON_PC)))
+LIBBSON_LIBS := $(strip $(shell pkg-config --libs $(LIBBSON_PC)))
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
