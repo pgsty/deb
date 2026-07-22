@@ -1,0 +1,151 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export PGBASEINSTDIR=/usr/pgtde-@PG_MAJOR@
+export PGTDE_STAGE=$(CURDIR)/.pgtde-stage
+export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+# PostgreSQL does not support fast-math. GCC 15 and later default to C23, so
+# force GNU17 only when the compiler advertises a C23-or-newer default.
+CC_FOR_STD_CHECK := $(if $(CC),$(CC),cc)
+CC_DEFAULT_STDC_VERSION := $(shell printf '\n' | $(CC_FOR_STD_CHECK) -dM -E -x c - 2>/dev/null | awk '$$2 == "__STDC_VERSION__" { print $$3 }')
+NEED_GNU17_CFLAGS := $(shell printf '%s\n' '$(CC_DEFAULT_STDC_VERSION)' | awk '{ gsub(/L$$/, "", $$1); if ($$1 ~ /^[0-9]+$$/ && $$1 >= 202311) print "-std=gnu17" }')
+export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g') $(NEED_GNU17_CFLAGS)
+export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
+
+%:
+	dh $@ --without autoreconf
+
+override_dh_auto_clean:
+
+override_dh_auto_configure:
+	./configure \
+		--enable-rpath \
+		--prefix=$(PGBASEINSTDIR) \
+		--bindir=$(PGBASEINSTDIR)/bin \
+		--includedir=$(PGBASEINSTDIR)/include \
+		--mandir=$(PGBASEINSTDIR)/share/man \
+		--datadir=$(PGBASEINSTDIR)/share \
+		--libdir=$(PGBASEINSTDIR)/lib \
+		--docdir=/usr/share/doc/pgtde-@PG_MAJOR@ \
+		--htmldir=/usr/share/doc/pgtde-@PG_MAJOR@/html \
+		--with-system-tzdata=/usr/share/zoneinfo \
+		--with-lz4 --with-zstd --with-liburing \
+		--with-uuid=e2fs --with-libxml --with-libxslt \
+		--with-icu --without-llvm --with-gssapi \
+		--with-perl --with-python --with-tcl \
+		--with-openssl --with-pam --with-ldap \
+		--with-selinux --with-systemd --with-libcurl \
+		--with-includes=/usr/include \
+		--with-libraries=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		--enable-nls --enable-dtrace
+
+override_dh_auto_build:
+	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
+	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
+	rm -rf $(PGTDE_STAGE)
+	$(MAKE) DESTDIR=$(PGTDE_STAGE) -j$(shell nproc) install-world-bin
+	PGTDE_STAGE=$(PGTDE_STAGE) meson setup .pgtde-build .pg_tde-src \
+		--buildtype=release -Dpg_config=$(CURDIR)/.pgtde-pg-config
+	PGTDE_STAGE=$(PGTDE_STAGE) meson compile -C .pgtde-build
+	PGTDE_STAGE=$(PGTDE_STAGE) meson install -C .pgtde-build
+	install -D -m 0644 \
+		.pg_tde-src/ci_scripts/perl/PostgreSQL/Test/TdeCluster.pm \
+		$(PGTDE_STAGE)$(PGBASEINSTDIR)/lib/postgresql/pgxs/src/test/perl/PostgreSQL/Test/TdeCluster.pm
+	set -e; find "$(PGTDE_STAGE)$(PGBASEINSTDIR)" -type f \
+		\( -name 'pg_tde*' -o -name 'pg_tde.so' \) -perm /111 | \
+	while IFS= read -r file; do \
+		patchelf --set-rpath $(PGBASEINSTDIR)/lib "$$file" 2>/dev/null || true; \
+	done
+
+override_dh_auto_install:
+	rm -rf debian/tmp debian/pgtde-@PG_MAJOR@-contrib
+	mkdir -p debian/tmp
+	cp -a $(PGTDE_STAGE)/usr debian/tmp/
+	set -e; for mapping in \
+		pg_tde_basebackup:pg_basebackup \
+		pg_tde_checksums:pg_checksums \
+		pg_tde_resetwal:pg_resetwal \
+		pg_tde_rewind:pg_rewind \
+		pg_tde_waldump:pg_waldump \
+		pg_tde_upgrade:pg_upgrade; do \
+		source_name=$${mapping%%:*}; target_name=$${mapping##*:}; \
+		test -x "debian/tmp$(PGBASEINSTDIR)/bin/$$source_name"; \
+		mv -f "debian/tmp$(PGBASEINSTDIR)/bin/$$source_name" \
+			"debian/tmp$(PGBASEINSTDIR)/bin/$$target_name"; \
+		ln -s "$$target_name" "debian/tmp$(PGBASEINSTDIR)/bin/$$source_name"; \
+	done
+	set -e; contrib="debian/pgtde-@PG_MAJOR@-contrib"; \
+	for path in \
+		$(PGBASEINSTDIR)/bin/pg_tde_change_key_provider \
+		$(PGBASEINSTDIR)/bin/pg_tde_archive_decrypt \
+		$(PGBASEINSTDIR)/bin/pg_tde_restore_encrypt \
+		$(PGBASEINSTDIR)/lib/postgresql/pg_tde.so \
+		$(PGBASEINSTDIR)/share/postgresql/extension/pg_tde.control \
+		$(PGBASEINSTDIR)/lib/postgresql/pgxs/src/test/perl/PostgreSQL/Test/TdeCluster.pm; do \
+		install -d "$$contrib$$(dirname "$$path")"; \
+		mv "debian/tmp$$path" "$$contrib$$path"; \
+	done; \
+	for file in debian/tmp$(PGBASEINSTDIR)/share/postgresql/extension/pg_tde*.sql; do \
+		path=$${file#debian/tmp}; \
+		install -d "$$contrib$$(dirname "$$path")"; \
+		mv "$$file" "$$contrib$$path"; \
+	done
+	allowed_runpath="$(PGBASEINSTDIR)/lib"; \
+	runpath_files=$$(mktemp); \
+	bad_runpath=$$(mktemp); \
+	find "$(CURDIR)/debian/tmp$(PGBASEINSTDIR)" \
+		"$(CURDIR)/debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)" \
+		-type f > "$$runpath_files"; \
+	while IFS= read -r file; do \
+		runpath=$$(readelf -d "$$file" 2>/dev/null | sed -n \
+			's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
+		[ -n "$$runpath" ] || continue; \
+		clean_runpath=""; old_ifs=$$IFS; IFS=:; \
+		for path in $$runpath; do \
+			[ "$$path" = "$$allowed_runpath" ] && \
+				clean_runpath="$${clean_runpath:+$$clean_runpath:}$$path"; \
+		done; \
+		IFS=$$old_ifs; \
+		if [ -n "$$clean_runpath" ]; then \
+			[ "$$clean_runpath" = "$$runpath" ] || patchelf --set-rpath "$$clean_runpath" "$$file"; \
+		else \
+			patchelf --remove-rpath "$$file"; \
+		fi; \
+	done < "$$runpath_files"; \
+	while IFS= read -r file; do \
+		runpath=$$(readelf -d "$$file" 2>/dev/null | sed -n \
+			's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
+		[ -z "$$runpath" ] || [ "$$runpath" = "$$allowed_runpath" ] || \
+			echo "$$file: $$runpath" >> "$$bad_runpath"; \
+	done < "$$runpath_files"; \
+	rm -f "$$runpath_files"; \
+	if [ -s "$$bad_runpath" ]; then \
+		cat "$$bad_runpath"; rm -f "$$bad_runpath"; exit 1; \
+	fi; \
+	rm -f "$$bad_runpath"
+	test "$$(debian/tmp$(PGBASEINSTDIR)/bin/pg_config --version)" = \
+		"PostgreSQL @PG_VERSION@ - Percona Server for PostgreSQL @PG_VERSION@.@PERCONA_RELEASE@"
+	test -f debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)/lib/postgresql/pg_tde.so
+	test -f debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)/share/postgresql/extension/pg_tde.control
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l$(PGBASEINSTDIR)/lib
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_dwz:
+	:
+
+override_dh_auto_test:
+	:
+
+override_dh_installinit:
+	:
+
+override_dh_installsystemd:
+	:
+
+override_dh_missing:
+	dh_missing --fail-missing
