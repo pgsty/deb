@@ -1053,6 +1053,10 @@ ivorysql: ivorysql-18
 ivorysql-18:
 	cd ivorysql && make PG_MAJOR=18
 
+pgtde: pgtde-18
+pgtde-18:
+	cd pgtde && make PG_MAJOR=18
+
 orioledb: orioledb-18
 oriole: orioledb
 orioledb-16:
@@ -1137,5 +1141,5 @@ collect:
 	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback plpgsql_wrap spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto re2 rdf_fdw ulak \
 	pgl_ddl_deploy pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl pg_fact_loader \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
-	openhalodb ivorysql ivorysql-18 oriole oriole_16 oriole_17 oriole_18 oriole_all orioledb orioledb-16 orioledb-17 orioledb-18 orioledb-all antlr4 babelfish babelfish-17 babelfish-18 cloudberry cloudberry-backup cloudberry-pxf polardb agensgraph inchi \
+	openhalodb ivorysql ivorysql-18 pgtde pgtde-18 oriole oriole_16 oriole_17 oriole_18 oriole_all orioledb orioledb-16 orioledb-17 orioledb-18 orioledb-all antlr4 babelfish babelfish-17 babelfish-18 cloudberry cloudberry-backup cloudberry-pxf polardb agensgraph inchi \
 	pgedge-15 pgedge-16 pgedge-17 pgedge-18

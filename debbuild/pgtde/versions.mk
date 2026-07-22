@@ -1,0 +1,21 @@
+PG_MAJOR ?= 18
+
+ifeq ($(PG_MAJOR),18)
+PG_VERSION ?= 18.4
+PERCONA_RELEASE ?= 2
+PGTDE_VERSION ?= 2.2.1
+else
+$(error pgtde supports PG_MAJOR=18 for now)
+endif
+
+PKG_REV ?= 1PIGSTY
+PACKAGE ?= pgtde-$(PG_MAJOR)
+CORE_TARBALL := percona-postgresql-$(PG_VERSION).tar.gz
+TDE_TARBALL := percona-pg_tde$(PG_MAJOR)-$(PGTDE_VERSION).tar.gz
+PG_CONFIG_WRAPPER := pgtde-pg-config
+
+SOURCE_DIR ?= ../SOURCES
+CORE_SOURCE ?= $(SOURCE_DIR)/$(CORE_TARBALL)
+TDE_SOURCE ?= $(SOURCE_DIR)/$(TDE_TARBALL)
+PG_CONFIG_SOURCE ?= $(SOURCE_DIR)/$(PG_CONFIG_WRAPPER)
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
