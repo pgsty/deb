@@ -1,3 +1,9 @@
+decoder-raw (1.0-2PIGSTY) unstable; urgency=medium
+
+  * Fix PostgreSQL 14-16 tuple buffer handling with newer toolchains
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 21 Jul 2026 23:45:00 +0800
+
 decoder-raw (1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>

@@ -1,0 +1,52 @@
+diff --git a/decoder_raw.c b/decoder_raw.c
+index 840a9ad..28f515f 100644
+--- a/decoder_raw.c
++++ b/decoder_raw.c
+@@ -29,6 +29,15 @@
+ 
+ PG_MODULE_MAGIC;
+ 
++#if PG_VERSION_NUM < 170000
++#define DECODER_RAW_TUPLE(change, member) \
++	((change)->data.tp.member == NULL ? NULL : \
++	 &(change)->data.tp.member->tuple)
++#else
++#define DECODER_RAW_TUPLE(change, member) \
++	((change)->data.tp.member)
++#endif
++
+ /* These must be available to pg_dlsym() */
+ extern void _PG_init(void);
+ extern void _PG_output_plugin_init(OutputPluginCallbacks *cb);
+@@ -592,7 +601,7 @@ decoder_raw_change(LogicalDecodingContext *ctx, ReorderBufferTXN *txn,
+ 				OutputPluginPrepareWrite(ctx, true);
+ 				decoder_raw_insert(ctx->out,
+ 								   relation,
+-								   change->data.tp.newtuple);
++								   DECODER_RAW_TUPLE(change, newtuple));
+ 				OutputPluginWrite(ctx, true);
+ 			}
+ 			break;
+@@ -599,8 +608,10 @@ decoder_raw_change(LogicalDecodingContext *ctx, ReorderBufferTXN *txn,
+ 		case REORDER_BUFFER_CHANGE_UPDATE:
+ 			if (!is_rel_non_selective)
+ 			{
+-				HeapTuple	oldtuple = change->data.tp.oldtuple;
+-				HeapTuple	newtuple = change->data.tp.newtuple;
++				HeapTuple	oldtuple =
++					DECODER_RAW_TUPLE(change, oldtuple);
++				HeapTuple	newtuple =
++					DECODER_RAW_TUPLE(change, newtuple);
+ 
+ 				OutputPluginPrepareWrite(ctx, true);
+ 				decoder_raw_update(ctx->out,
+@@ -616,7 +627,7 @@ decoder_raw_change(LogicalDecodingContext *ctx, ReorderBufferTXN *txn,
+ 				OutputPluginPrepareWrite(ctx, true);
+ 				decoder_raw_delete(ctx->out,
+ 								   relation,
+-								   change->data.tp.oldtuple);
++								   DECODER_RAW_TUPLE(change, oldtuple));
+ 				OutputPluginWrite(ctx, true);
+ 			}
+ 			break;
+
