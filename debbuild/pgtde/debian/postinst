@@ -9,8 +9,6 @@ if [ "$1" = "configure" ]; then
             --gecos "PostgreSQL Server" --ingroup postgres postgres 2>/dev/null || \
         adduser --system --home /var/lib/pgsql --shell /bin/bash \
             --gecos "PostgreSQL Server" --ingroup postgres postgres
-
-    ldconfig
 fi
 
 exit 0

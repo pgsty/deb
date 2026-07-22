@@ -1,0 +1,7 @@
+# This package shares the private kernel's FHS root and RUNPATH. PostgreSQL
+# modules are loaded by postgres and need not link libc directly.
+pgtde-18-contrib: custom-library-search-path * [usr/pgtde-18/*]
+pgtde-18-contrib: file-in-unusual-dir [usr/pgtde-18/*]
+pgtde-18-contrib: non-standard-dir-in-usr [usr/pgtde-18/]
+pgtde-18-contrib: library-not-linked-against-libc [usr/pgtde-18/lib/postgresql/*.so]
+pgtde-18-contrib: shared-library-lacks-prerequisites [usr/pgtde-18/lib/postgresql/*.so]

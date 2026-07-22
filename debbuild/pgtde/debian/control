@@ -4,27 +4,39 @@ Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends:
  autoconf,
+ automake,
  bison,
  debhelper-compat (= 13),
  dpkg-dev (>= 1.16~),
  flex,
  gettext,
+ libgdal-dev,
+ libgeos-dev,
+ libgeotiff-dev,
+ libgmp-dev,
  libcurl4-openssl-dev,
  libicu-dev,
  libjson-c-dev,
  libkrb5-dev,
  libldap2-dev,
+ libtool,
  liblz4-dev,
  libpam0g-dev,
+ libpcre2-dev,
  libperl-dev,
+ libproj-dev,
+ libprotobuf-c-dev,
+ protobuf-c-compiler,
  libreadline-dev,
  libselinux1-dev [linux-any],
  libssl-dev,
+ libsfcgal-dev,
  libsystemd-dev [linux-any],
  liburing-dev,
  libxml2-dev,
  libxml2-utils,
  libxslt1-dev,
+ libxerces-c-dev,
  libzstd-dev,
  mawk,
  meson,
@@ -46,17 +58,17 @@ Homepage: https://www.percona.com/postgresql/software/postgresql-distribution
 Package: pgtde-@PG_MAJOR@
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata, ssl-cert
-Description: Percona PostgreSQL @PG_VERSION@ kernel with TDE-aware tools
+Description: Percona PostgreSQL @PG_VERSION@ kernel with pg_tde
  This package ships Percona Server for PostgreSQL @PG_VERSION@.@PERCONA_RELEASE@
  under /usr/pgtde-@PG_MAJOR@. It includes the server, client tools, headers,
- PGXS files, procedural languages, bundled contrib extensions, and TDE-aware
- PostgreSQL utilities exposed under their canonical pg_* names.
+ PGXS files, procedural languages, pg_tde, and TDE-aware PostgreSQL utilities
+ exposed under their canonical pg_* names.
 
 Package: pgtde-@PG_MAJOR@-contrib
 Architecture: any
-Depends: pgtde-@PG_MAJOR@ (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
-Provides: pg-tde (= @PGTDE_VERSION@)
-Description: pg_tde @PGTDE_VERSION@ extension for pgtde-@PG_MAJOR@
- This package provides the pg_tde transparent data encryption extension,
- its SQL files, and TDE-specific operational helpers for the private
- /usr/pgtde-@PG_MAJOR@ PostgreSQL installation.
+Depends: pgtde-@PG_MAJOR@ (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}, libdbd-pg-perl
+Description: Percona PostgreSQL extensions for pgtde-@PG_MAJOR@
+ This package provides PostgreSQL bundled contrib plus PostGIS client and
+ utils, pgvector, wal2json, pg_repack, pgaudit, pgaudit set_user,
+ pg_stat_monitor, and pg_gather for /usr/pgtde-@PG_MAJOR@. pg_tde is part of
+ the main pgtde-@PG_MAJOR@ package.
