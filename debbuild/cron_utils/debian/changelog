@@ -1,3 +1,9 @@
+cron-utils (0.1.0-2PIGSTY) unstable; urgency=medium
+
+  * Avoid installing README.md into the shared PostgreSQL documentation path.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 22 Jul 2026 02:30:00 +0800
+
 cron-utils (0.1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial package for the upstream PGXN unstable distribution 0.1.0.
