@@ -1,0 +1,15 @@
+diff --git a/imgsmlr_idx.c b/imgsmlr_idx.c
+index 492945f..54f951d 100644
+--- a/imgsmlr_idx.c
++++ b/imgsmlr_idx.c
+@@ -78,8 +78,8 @@ signature_decompress(PG_FUNCTION_ARGS)
+ {
+ 	GISTENTRY  *entry = (GISTENTRY *) PG_GETARG_POINTER(0);
+-	bytea	   *key = (bytea *) pg_detoast_datum(DatumGetPointer(entry->key));
++	bytea	   *key = DatumGetByteaP(entry->key);
+ 
+-	if (key != DatumGetByteaP(entry->key))
++	if (PointerGetDatum(key) != entry->key)
+ 	{
+ 		GISTENTRY  *retval = (GISTENTRY *) palloc(sizeof(GISTENTRY));
+ 
