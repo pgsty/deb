@@ -1,0 +1,16 @@
+Source: pgl-ddl-deploy
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/enova/pgl_ddl_deploy
+
+Package: postgresql-PGVERSION-pgl-ddl-deploy
+Architecture: any
+Provides: postgresql-pgl-ddl-deploy
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Breaks: ${postgresql:Breaks}
+Description: Transparent DDL replication for PostgreSQL
+ Automated DDL deployment using pglogical or native logical replication.

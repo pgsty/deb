@@ -1011,6 +1011,9 @@ ulak:
 pglogical_ticker:
 	cd pglogical_ticker && make
 
+pgl_ddl_deploy:
+	cd pgl_ddl_deploy && make
+
 pg_failover_slots:
 	cd pg_failover_slots && make
 
@@ -1129,7 +1132,7 @@ collect:
 	redis \
 	pgspider_ext sqlite_fdw pgbouncer_fdw odbc_fdw hdfs_fdw jdbc_fdw redis_fdw mongo_fdw pg_redis_pubsub kafka_fdw libfq zlog polarstore graphblas lagraph onesparse pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
 	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback plpgsql_wrap spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto re2 rdf_fdw ulak \
-	pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl pg_fact_loader \
+	pgl_ddl_deploy pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl pg_fact_loader \
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
 	openhalodb ivorysql ivorysql-18 oriole oriole_16 oriole_17 oriole_18 oriole_all orioledb orioledb-16 orioledb-17 orioledb-18 orioledb-all antlr4 babelfish babelfish-17 babelfish-18 cloudberry cloudberry-backup cloudberry-pxf polardb agensgraph inchi \
 	pgedge-15 pgedge-16 pgedge-17 pgedge-18
