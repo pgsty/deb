@@ -3,6 +3,7 @@
 export DH_VERBOSE=1
 export PGBASEINSTDIR=/usr/pgtde-@PG_MAJOR@
 export PGTDE_STAGE=$(CURDIR)/.pgtde-stage
+export PGTDE_CONTRIB_STAGE=$(CURDIR)/.pgtde-contrib-stage
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 # PostgreSQL does not support fast-math. GCC 15 and later default to C23, so
@@ -43,9 +44,12 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
 	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
-	rm -rf $(PGTDE_STAGE)
-	$(MAKE) DESTDIR=$(PGTDE_STAGE) -j$(shell nproc) install-world-bin
-	PGTDE_STAGE=$(PGTDE_STAGE) meson setup .pgtde-build .pg_tde-src \
+	rm -rf $(PGTDE_STAGE) $(PGTDE_CONTRIB_STAGE)
+	mkdir -p $(PGTDE_STAGE) $(PGTDE_CONTRIB_STAGE)
+	$(MAKE) DESTDIR=$(PGTDE_STAGE) -j$(shell nproc) install
+	$(MAKE) -C contrib DESTDIR=$(PGTDE_CONTRIB_STAGE) -j$(shell nproc) install
+	PGTDE_STAGE=$(PGTDE_STAGE) PGTDE_PG_CONFIG_MODE=stage \
+		meson setup .pgtde-build .pg_tde-src \
 		--buildtype=release -Dpg_config=$(CURDIR)/.pgtde-pg-config
 	PGTDE_STAGE=$(PGTDE_STAGE) meson compile -C .pgtde-build
 	PGTDE_STAGE=$(PGTDE_STAGE) meson install -C .pgtde-build
@@ -57,11 +61,61 @@ override_dh_auto_build:
 	while IFS= read -r file; do \
 		patchelf --set-rpath $(PGBASEINSTDIR)/lib "$$file" 2>/dev/null || true; \
 	done
+	set -e; \
+		build_pg_config=$(CURDIR)/.pgtde-pg-config; \
+		ext_cppflags="-I$(PGTDE_STAGE)$(PGBASEINSTDIR)/include/server -I$(PGTDE_STAGE)$(PGBASEINSTDIR)/include"; \
+		ext_ldflags="-L$(PGTDE_STAGE)$(PGBASEINSTDIR)/lib -Wl,-rpath,$(PGBASEINSTDIR)/lib $(LDFLAGS)"; \
+		build_pgxs() { \
+			srcdir="$$1"; \
+			MAKELEVEL=0 $(MAKE) -C "$$srcdir" -j$(shell nproc) \
+				USE_PGXS=1 PG_CONFIG="$$build_pg_config" \
+				CPPFLAGS="$$ext_cppflags" LDFLAGS="$$ext_ldflags"; \
+			MAKELEVEL=0 $(MAKE) -C "$$srcdir" \
+				USE_PGXS=1 PG_CONFIG="$$build_pg_config" \
+				CPPFLAGS="$$ext_cppflags" LDFLAGS="$$ext_ldflags" \
+				DESTDIR=$(PGTDE_CONTRIB_STAGE) install; \
+		}; \
+		build_pgxs .pgvector-src; \
+		build_pgxs .wal2json-src; \
+		build_pgxs .pg_repack-src; \
+		build_pgxs .pgaudit-src; \
+		build_pgxs .set_user-src; \
+		build_pgxs .pg_stat_monitor-src
+	cd .postgis-src && ./autogen.sh
+	cd .postgis-src && \
+		CPPFLAGS="-I$(PGTDE_STAGE)$(PGBASEINSTDIR)/include/server -I$(PGTDE_STAGE)$(PGBASEINSTDIR)/include" \
+		LDFLAGS="-L$(PGTDE_STAGE)$(PGBASEINSTDIR)/lib -Wl,-rpath,$(PGBASEINSTDIR)/lib $(LDFLAGS)" \
+		./configure \
+			--prefix=$(PGBASEINSTDIR) \
+			--bindir=$(PGBASEINSTDIR)/bin \
+			--datadir=$(PGBASEINSTDIR)/share/postgresql \
+			--libdir=$(PGBASEINSTDIR)/lib/postgresql \
+			--mandir=$(PGBASEINSTDIR)/share/man \
+			--with-pgconfig=$(CURDIR)/.pgtde-pg-config \
+			--with-sfcgal=$(CURDIR)/.pgtde-sfcgal-config \
+			--with-protobuf --without-gui --enable-rpath
+	$(MAKE) -C .postgis-src -j$(shell nproc)
+	$(MAKE) -C .postgis-src DESTDIR=$(PGTDE_CONTRIB_STAGE) install
+	install -d $(PGTDE_CONTRIB_STAGE)$(PGBASEINSTDIR)/share/postgresql/postgis-utils
+	install -m 0755 .postgis-src/utils/*.pl \
+		$(PGTDE_CONTRIB_STAGE)$(PGBASEINSTDIR)/share/postgresql/postgis-utils/
+	set -e; nested_stage="$(PGTDE_CONTRIB_STAGE)$(PGTDE_STAGE)"; \
+	if [ -d "$$nested_stage" ]; then \
+		cp -a "$$nested_stage/." "$(PGTDE_CONTRIB_STAGE)/"; \
+	fi; \
+	find "$(PGTDE_CONTRIB_STAGE)" -mindepth 1 -maxdepth 1 ! -name usr \
+		-exec rm -rf -- {} +
+	find $(PGTDE_CONTRIB_STAGE)$(PGBASEINSTDIR)/lib/postgresql \
+		-type f -name '*.so' -exec patchelf --remove-rpath {} +
+	install -D -m 0644 .pg_gather-src/gather.sql \
+		$(PGTDE_CONTRIB_STAGE)$(PGBASEINSTDIR)/share/postgresql/contrib/gather.sql
 
 override_dh_auto_install:
-	rm -rf debian/tmp debian/pgtde-@PG_MAJOR@-contrib
-	mkdir -p debian/tmp
-	cp -a $(PGTDE_STAGE)/usr debian/tmp/
+	test ! -e $(PGTDE_CONTRIB_STAGE)/root
+	rm -rf debian/tmp debian/pgtde-@PG_MAJOR@ debian/pgtde-@PG_MAJOR@-contrib
+	mkdir -p debian/pgtde-@PG_MAJOR@ debian/pgtde-@PG_MAJOR@-contrib
+	cp -a $(PGTDE_STAGE)/usr debian/pgtde-@PG_MAJOR@/
+	cp -a $(PGTDE_CONTRIB_STAGE)/usr debian/pgtde-@PG_MAJOR@-contrib/
 	set -e; for mapping in \
 		pg_tde_basebackup:pg_basebackup \
 		pg_tde_checksums:pg_checksums \
@@ -70,67 +124,63 @@ override_dh_auto_install:
 		pg_tde_waldump:pg_waldump \
 		pg_tde_upgrade:pg_upgrade; do \
 		source_name=$${mapping%%:*}; target_name=$${mapping##*:}; \
-		test -x "debian/tmp$(PGBASEINSTDIR)/bin/$$source_name"; \
-		mv -f "debian/tmp$(PGBASEINSTDIR)/bin/$$source_name" \
-			"debian/tmp$(PGBASEINSTDIR)/bin/$$target_name"; \
-		ln -s "$$target_name" "debian/tmp$(PGBASEINSTDIR)/bin/$$source_name"; \
+		test -x "debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)/bin/$$source_name"; \
+		mv -f "debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)/bin/$$source_name" \
+			"debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)/bin/$$target_name"; \
+		ln -s "$$target_name" "debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)/bin/$$source_name"; \
 	done
-	set -e; contrib="debian/pgtde-@PG_MAJOR@-contrib"; \
-	for path in \
-		$(PGBASEINSTDIR)/bin/pg_tde_change_key_provider \
-		$(PGBASEINSTDIR)/bin/pg_tde_archive_decrypt \
-		$(PGBASEINSTDIR)/bin/pg_tde_restore_encrypt \
-		$(PGBASEINSTDIR)/lib/postgresql/pg_tde.so \
-		$(PGBASEINSTDIR)/share/postgresql/extension/pg_tde.control \
-		$(PGBASEINSTDIR)/lib/postgresql/pgxs/src/test/perl/PostgreSQL/Test/TdeCluster.pm; do \
-		install -d "$$contrib$$(dirname "$$path")"; \
-		mv "debian/tmp$$path" "$$contrib$$path"; \
-	done; \
-	for file in debian/tmp$(PGBASEINSTDIR)/share/postgresql/extension/pg_tde*.sql; do \
-		path=$${file#debian/tmp}; \
-		install -d "$$contrib$$(dirname "$$path")"; \
-		mv "$$file" "$$contrib$$path"; \
-	done
-	allowed_runpath="$(PGBASEINSTDIR)/lib"; \
-	runpath_files=$$(mktemp); \
-	bad_runpath=$$(mktemp); \
-	find "$(CURDIR)/debian/tmp$(PGBASEINSTDIR)" \
-		"$(CURDIR)/debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)" \
-		-type f > "$$runpath_files"; \
-	while IFS= read -r file; do \
-		runpath=$$(readelf -d "$$file" 2>/dev/null | sed -n \
-			's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
-		[ -n "$$runpath" ] || continue; \
-		clean_runpath=""; old_ifs=$$IFS; IFS=:; \
-		for path in $$runpath; do \
-			[ "$$path" = "$$allowed_runpath" ] && \
-				clean_runpath="$${clean_runpath:+$$clean_runpath:}$$path"; \
-		done; \
-		IFS=$$old_ifs; \
-		if [ -n "$$clean_runpath" ]; then \
-			[ "$$clean_runpath" = "$$runpath" ] || patchelf --set-rpath "$$clean_runpath" "$$file"; \
-		else \
-			patchelf --remove-rpath "$$file"; \
+	set -e; \
+		allowed_runpath="$(PGBASEINSTDIR)/lib"; \
+		runpath_files=$$(mktemp); \
+		bad_runpath=$$(mktemp); \
+		find "$(CURDIR)/debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)" \
+			"$(CURDIR)/debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)" \
+			-type f > "$$runpath_files"; \
+		while IFS= read -r file; do \
+			runpath=$$(readelf -d "$$file" 2>/dev/null | sed -n \
+				's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
+			[ -n "$$runpath" ] || continue; \
+			clean_runpath=""; old_ifs=$$IFS; IFS=:; \
+			for path in $$runpath; do \
+				[ "$$path" = "$$allowed_runpath" ] && \
+					clean_runpath="$${clean_runpath:+$$clean_runpath:}$$path"; \
+			done; \
+			IFS=$$old_ifs; \
+			if [ -n "$$clean_runpath" ]; then \
+				[ "$$clean_runpath" = "$$runpath" ] || patchelf --set-rpath "$$clean_runpath" "$$file"; \
+			else \
+				patchelf --remove-rpath "$$file"; \
+			fi; \
+		done < "$$runpath_files"; \
+		while IFS= read -r file; do \
+			runpath=$$(readelf -d "$$file" 2>/dev/null | sed -n \
+				's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
+			[ -z "$$runpath" ] || [ "$$runpath" = "$$allowed_runpath" ] || \
+				echo "$$file: $$runpath" >> "$$bad_runpath"; \
+		done < "$$runpath_files"; \
+		rm -f "$$runpath_files"; \
+		if [ -s "$$bad_runpath" ]; then \
+			cat "$$bad_runpath"; rm -f "$$bad_runpath"; exit 1; \
 		fi; \
-	done < "$$runpath_files"; \
-	while IFS= read -r file; do \
-		runpath=$$(readelf -d "$$file" 2>/dev/null | sed -n \
-			's/.*(RUNPATH).*Library runpath: \[\(.*\)\].*/\1/p;s/.*(RPATH).*Library rpath: \[\(.*\)\].*/\1/p' | head -n1); \
-		[ -z "$$runpath" ] || [ "$$runpath" = "$$allowed_runpath" ] || \
-			echo "$$file: $$runpath" >> "$$bad_runpath"; \
-	done < "$$runpath_files"; \
-	rm -f "$$runpath_files"; \
-	if [ -s "$$bad_runpath" ]; then \
-		cat "$$bad_runpath"; rm -f "$$bad_runpath"; exit 1; \
-	fi; \
-	rm -f "$$bad_runpath"
-	test "$$(debian/tmp$(PGBASEINSTDIR)/bin/pg_config --version)" = \
+		rm -f "$$bad_runpath"
+	test "$$(debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)/bin/pg_config --version)" = \
 		"PostgreSQL @PG_VERSION@ - Percona Server for PostgreSQL @PG_VERSION@.@PERCONA_RELEASE@"
-	test -f debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)/lib/postgresql/pg_tde.so
-	test -f debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)/share/postgresql/extension/pg_tde.control
+	test -f debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)/lib/postgresql/pg_tde.so
+	test -f debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)/share/postgresql/extension/pg_tde.control
+	set -e; for extension in \
+		postgis postgis_raster postgis_sfcgal postgis_tiger_geocoder postgis_topology \
+		address_standardizer address_standardizer_data_us vector pg_repack pgaudit \
+		set_user pg_stat_monitor; do \
+		test -f "debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)/share/postgresql/extension/$$extension.control"; \
+	done
+	test -f debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)/lib/postgresql/wal2json.so
+	test -f debian/pgtde-@PG_MAJOR@-contrib$(PGBASEINSTDIR)/share/postgresql/contrib/gather.sql
 
 override_dh_shlibdeps:
 	dh_shlibdeps -l$(PGBASEINSTDIR)/lib
+
+override_dh_makeshlibs:
+	dh_makeshlibs --no-scripts
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
