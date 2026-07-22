@@ -1,0 +1,33 @@
+diff --git a/pgbson.c b/pgbson.c
+index 0231294..68bf054 100644
+--- a/pgbson.c
++++ b/pgbson.c
+@@ -43,7 +43,7 @@
+ 
+ 
+ // Others:  
+-#include "bson.h"  // obviously...
++#include <bson/bson.h>  // obviously...
+ 
+ 
+ 
+@@ -658,8 +658,18 @@ Datum bson_get_jsonb_array(PG_FUNCTION_ARGS)
+ 
+     if(rc) {
+ 	size_t blen;
++	char* jsons;
++#if BSON_MAJOR_VERSION >= 2
++	bson_json_opts_t* opts;
++
++	opts = bson_json_opts_new(BSON_JSON_MODE_LEGACY, BSON_MAX_LEN_UNLIMITED);
++	bson_json_opts_set_outermost_array(opts, true);
++	jsons = bson_as_json_with_opts(&b2, &blen, opts);
++	bson_json_opts_destroy(opts);
++#else
+ 	// This is what makes it all possible:
+-	char* jsons = bson_array_as_json(&b2, &blen);
++	jsons = bson_array_as_json(&b2, &blen);
++#endif
+ 
+ 	// Well ...  HELLO there!
+ 	Jsonb *jsonb =

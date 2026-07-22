@@ -1,3 +1,9 @@
+postgresbson (2.0.4-2PIGSTY) unstable; urgency=medium
+
+  * Support the libbson 2 pkg-config name used by Ubuntu 26.04.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 22 Jul 2026 02:30:00 +0800
+
 postgresbson (2.0.4-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN bson 2.0.4.
