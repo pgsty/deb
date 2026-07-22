@@ -1,0 +1,16 @@
+Source: plproxy
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), flex, bison, libpq-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/plproxy/plproxy
+
+Package: postgresql-PGVERSION-plproxy
+Architecture: any
+Provides: postgresql-plproxy
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: database partitioning implemented as a PostgreSQL procedural language
+ PL/Proxy is a PostgreSQL procedural language handler for remote procedure calls
+ between PostgreSQL databases, with optional sharding.
