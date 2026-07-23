@@ -1,6 +1,7 @@
 all: setup build move
 
 TARBALL := wal2mongo-1.0.7.tar.gz
+PG_VERSIONS ?=
 
 # prepare directory
 setup:
@@ -8,6 +9,7 @@ setup:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
+	@if [ -n "$(strip $(PG_VERSIONS))" ]; then printf '%s\n' $(PG_VERSIONS) > build/debian/pgversions; fi
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
 
@@ -25,5 +27,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 
