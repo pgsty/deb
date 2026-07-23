@@ -1,3 +1,9 @@
+wal2mongo (1.0.7-2PIGSTY) unstable; urgency=medium
+
+  * Add PostgreSQL 17 and 18 support
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 22 Jul 2026 21:42:39 +0800
+
 wal2mongo (1.0.7-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>

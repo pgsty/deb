@@ -1,0 +1,63 @@
+--- a/wal2mongo.c
++++ b/wal2mongo.c
+@@ -30,6 +30,15 @@
+ 
+ PG_MODULE_MAGIC;
+ 
++#if PG_VERSION_NUM < 170000
++#define WAL2MONGO_TUPLE(change, member) \
++	((change)->data.tp.member == NULL ? NULL : \
++	 &(change)->data.tp.member->tuple)
++#else
++#define WAL2MONGO_TUPLE(change, member) \
++	((change)->data.tp.member)
++#endif
++
+ /* These must be available to pg_dlsym() */
+ extern void _PG_init(void);
+ extern void _PG_output_plugin_init(OutputPluginCallbacks *cb);
+@@ -806,7 +815,7 @@
+ 				appendStringInfoString(ctx->out, " (no-tuple-data)");
+ 			else
+ 				tuple_to_stringinfo(ctx->out, tupdesc,
+-									&change->data.tp.newtuple->tuple,
++									WAL2MONGO_TUPLE(change, newtuple),
+ 									true, NULL);
+ 			appendStringInfoString(ctx->out, " );");
+ 			break;
+@@ -822,7 +831,7 @@
+ 				pkAttrs = RelationGetIndexAttrBitmap(relation,
+ 													 INDEX_ATTR_BITMAP_PRIMARY_KEY);
+ 				tuple_to_stringinfo(ctx->out, tupdesc,
+-									&change->data.tp.oldtuple->tuple,
++									WAL2MONGO_TUPLE(change, oldtuple),
+ 									true, pkAttrs);
+ 				bms_free(pkAttrs);
+ 			}
+@@ -844,7 +853,7 @@
+ 					else
+ 					{
+ 						tuple_to_stringinfo(ctx->out, tupdesc,
+-											&change->data.tp.newtuple->tuple,
++											WAL2MONGO_TUPLE(change, newtuple),
+ 											true, pkAttrs);
+ 						bms_free(pkAttrs);
+ 					}
+@@ -855,7 +864,7 @@
+ 			{
+ 				appendStringInfoString(ctx->out, ", \{ $set: ");
+ 				tuple_to_stringinfo(ctx->out, tupdesc,
+-									&change->data.tp.newtuple->tuple,
++									WAL2MONGO_TUPLE(change, newtuple),
+ 									false, NULL);
+ 				appendStringInfoString(ctx->out, " }");
+ 			}
+@@ -876,7 +885,7 @@
+ 				pkAttrs = RelationGetIndexAttrBitmap(relation,
+ 												     INDEX_ATTR_BITMAP_PRIMARY_KEY);
+ 				tuple_to_stringinfo(ctx->out, tupdesc,
+-									&change->data.tp.oldtuple->tuple,
++									WAL2MONGO_TUPLE(change, oldtuple),
+ 									true, pkAttrs);
+ 				bms_free(pkAttrs);
+ 			}
