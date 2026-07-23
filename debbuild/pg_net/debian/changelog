@@ -1,3 +1,9 @@
+pg-net (0.20.5-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/supabase/pg_net/releases/tag/v0.20.5
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 23 Jul 2026 08:30:00 +0800
+
 pg-net (0.20.3-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/supabase/pg_net/releases/tag/v0.20.3
