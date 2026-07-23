@@ -1,0 +1,73 @@
+--- a/ddl_deparse.c
++++ b/ddl_deparse.c
+@@ -107,7 +107,7 @@
+ 				strtype = "ADD OIDS (and recurse)";
+ 				break;
+ #endif
+-#if PG_VERSION_NUM >= 120000
++#if PG_VERSION_NUM >= 120000 && PG_VERSION_NUM < 180000
+ 			case AT_CheckNotNull:
+ 				strtype = "CHECK NOT NULL";
+ 				break;
+@@ -138,6 +138,11 @@
+ 			case AT_DropExpression:
+ 				strtype = "DROP EXPRESSION";
+ 				break;
++#if PG_VERSION_NUM >= 170000
++			case AT_SetExpression:
++				strtype = "SET EXPRESSION";
++				break;
++#endif
+ 			case AT_SetCompression:
+ 				strtype = "SET COMPRESSION";
+ 				break;
+--- a/pgl_ddl_deploy--2.2.sql
++++ b/pgl_ddl_deploy--2.2.sql
+@@ -3050,11 +3050,18 @@
+             (
+               (NOT $BUILD$||include_only_repset_tables||$BUILD$) AND
+               (
+-                (schema_name !~* '^(pg_catalog|pg_toast)$'
+-                AND schema_name !~* c_include_schema_regex)
+-                OR (object_type = 'schema'
+-                AND object_identity !~* '^(pg_catalog|pg_toast)$'
+-                AND object_identity !~* c_include_schema_regex)
++                (
++                  (schema_name !~* '^(pg_catalog|pg_toast)$'
++                  AND schema_name !~* c_include_schema_regex)
++                  OR (object_type = 'schema'
++                  AND object_identity !~* '^(pg_catalog|pg_toast)$'
++                  AND object_identity !~* c_include_schema_regex)
++                )
++                AND NOT (
++                  object_type = 'trigger'
++                  AND NOT original
++                  AND object_identity ~* '^"RI_ConstraintTrigger'
++                )
+               )
+             )
+           --include_only_repset_tables cannot be used with DROP because
+@@ -4207,11 +4215,18 @@
+             (
+               (NOT $BUILD$||include_only_repset_tables||$BUILD$) AND
+               (
+-                (schema_name !~* '^(pg_catalog|pg_toast)$'
+-                AND schema_name !~* c_include_schema_regex)
+-                OR (object_type = 'schema'
+-                AND object_identity !~* '^(pg_catalog|pg_toast)$'
+-                AND object_identity !~* c_include_schema_regex)
++                (
++                  (schema_name !~* '^(pg_catalog|pg_toast)$'
++                  AND schema_name !~* c_include_schema_regex)
++                  OR (object_type = 'schema'
++                  AND object_identity !~* '^(pg_catalog|pg_toast)$'
++                  AND object_identity !~* c_include_schema_regex)
++                )
++                AND NOT (
++                  object_type = 'trigger'
++                  AND NOT original
++                  AND object_identity ~* '^"RI_ConstraintTrigger'
++                )
+               )
+             )
+           --include_only_repset_tables cannot be used with DROP because
