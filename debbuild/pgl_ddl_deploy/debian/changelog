@@ -1,3 +1,9 @@
+pgl-ddl-deploy (2.2.1-2PIGSTY) unstable; urgency=medium
+
+  * Add PostgreSQL 18 support
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 22 Jul 2026 21:42:39 +0800
+
 pgl-ddl-deploy (2.2.1-1PIGSTY) unstable; urgency=medium
 
   * Package pgl_ddl_deploy 2.2.1 for PostgreSQL 14 through 17
