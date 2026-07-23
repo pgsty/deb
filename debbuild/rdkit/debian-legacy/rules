@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export PG_SUPPORTED_VERSIONS = installed
+export CPPFLAGS := $(shell dpkg-buildflags --get CPPFLAGS)
+export CFLAGS := $(shell dpkg-buildflags --get CFLAGS) $(CPPFLAGS)
+export CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(CPPFLAGS)
+export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	:
+
+override_dh_auto_build:
+	+RDBASE=$(CURDIR) RDKIT_INCLUDEDIR=/usr/include/rdkit STATIC_LINK=0 RDKIT_LIBDIR=/usr/lib pg_buildext build $(CURDIR)/Code/PgSQL/rdkit build-%v
+
+override_dh_auto_test:
+	:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	+RDBASE=$(CURDIR) RDKIT_INCLUDEDIR=/usr/include/rdkit STATIC_LINK=0 RDKIT_LIBDIR=/usr/lib pg_buildext install $(CURDIR)/Code/PgSQL/rdkit build-%v postgresql-%v-rdkit
+
+override_dh_auto_clean:
+	pg_buildext clean $(CURDIR)/Code/PgSQL/rdkit build-%v

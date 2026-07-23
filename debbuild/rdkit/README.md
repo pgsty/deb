@@ -1,74 +1,52 @@
-# RDKit on Debian 13 and Ubuntu 24
+# RDKit cartridge gap packages
 
-This recipe packages the Debian `rdkit 202503.6-4` source package for Pigsty.
+This recipe deliberately does not publish another RDKit runtime. It only fills
+PostgreSQL-major gaps and links each cartridge against the public distribution
+runtime and development package:
 
-It builds:
+- Debian 12 / Ubuntu 22.04: build PostgreSQL 17 and 18 from the official PGDG
+  `202303.3` source, using PGDG `librdkit1` and `librdkit-dev`.
+- Ubuntu 26.04: build PostgreSQL 14-17 from Debian `202503.6` source, using
+  Ubuntu `librdkit1t64` and `librdkit-dev`.
+- Debian 13 / Ubuntu 24.04: do not build; PGDG supplies RDKit and cartridges
+  for PostgreSQL 14-18.
 
-- target platform: Debian 13 (`d13`, `d13a`) and Ubuntu 24 (`u24`, `u24a`)
-- target PostgreSQL majors: 14-18 when the corresponding PostgreSQL development
-  packages are available on the builder
-- output packages:
-  - `librdkit1t64`
-  - `postgresql-14-rdkit` ... `postgresql-18-rdkit`
+The generated `postgresql-PGVERSION-rdkit` packages follow the repository's
+normal `pg_buildext` convention: `debian/pgversions` selects the supported
+majors, `PGVERSION` expands the binary package name, and `${shlibs:Depends}`
+records the runtime ABI requirement found by `dpkg-shlibdeps`. No PostgreSQL
+major is duplicated as a literal binary-package stanza.
 
-The actual PostgreSQL package set comes from the installed
-`postgresql-server-dev-*` packages. The recipe exports
-`PG_SUPPORTED_VERSIONS=installed`, so `pg_buildext supported-versions`
-follows what is actually present on the builder:
+Existing Pigsty full-runtime packages remain installable and are not forcibly
+downgraded.
 
-- stock Debian 13: normally only PostgreSQL 17 is available, so the build
-  yields `postgresql-17-rdkit`
-- Pigsty/PGDG-prepared builders: PostgreSQL 14-18 can be installed together,
-  so the build can yield `postgresql-14-rdkit` through `postgresql-18-rdkit`
+## Migration
 
-On Ubuntu 24 (`noble`), the recipe follows PGDG's packaging behavior and
-disables InChI support automatically. Noble ships `libinchi 1.03`, which lacks
-the `MakeINCHIFromMolfileText` API required by the Debian 13 InChI-enabled
-build.
-
-If you have already backported and installed newer `libinchi` packages on
-Ubuntu 24, build with `ENABLE_INCHI=1` to keep InChI support enabled.
+Keep the existing Pigsty full-runtime packages available for installed hosts
+and exact-version reinstalls, but do not create new duplicates on Trixie,
+Noble, or Resolute PG18. Before publishing this transition, make the
+new-install manifest or repository policy choose the complete PGDG/Ubuntu
+package set on those combinations. Pigsty installs
+`roles/node/files/rdkit-migration.pref`, which gives only the historical
+Pigsty `202503.6-4PIGSTY` t64 builds priority 400. The retained packages
+therefore stay available, while a fresh install prefers an upstream package
+at priority 500. APT does not downgrade an installed Pigsty runtime because
+the upstream priority remains below 1000. On Bookworm and Jammy the PGDG
+version already sorts above the legacy Pigsty runtime, so publish the new
+PG17-18 cartridge-only packages before relying on that normal upgrade path.
 
 ## Source files
 
-Fetch the Debian source package first:
+Fetch the source package first:
 
 ```bash
 pig build get rdkit
 ```
 
-If `pig build get` does not provide the files, copy them from the local
-authoritative mirror `~/pgsty/repo/ext/src/` into `../SOURCES/` next to this
-recipe:
-
-- `rdkit_202503.6-4.dsc`
-- `rdkit_202503.6.orig.tar.xz`
-- `rdkit_202503.6-4.debian.tar.xz`
-
-This recipe uses `dpkg-source -x` so Debian's upstream patches are preserved.
-
-## One-time build dependencies
-
-```bash
-apt-get update
-apt-get install -y \
-  build-essential \
-  architecture-is-64-bit architecture-is-little-endian \
-  bison catch2 cmake debhelper-compat dpkg-dev flex \
-  libboost-dev libboost-iostreams-dev libboost-program-options-dev \
-  libboost-regex-dev libboost-thread-dev libcairo2-dev libeigen3-dev \
-  libfreetype-dev libsqlite3-dev \
-  postgresql-server-dev-all rapidjson-dev zlib1g-dev
-```
-
-Install `libinchi-dev` as well when building on Debian 13. The recipe removes
-that build dependency automatically on Ubuntu 24, where RDKit is built without
-InChI support.
-
-To build PostgreSQL 14-18 together, the builder must also have
-`postgresql-server-dev-14` through `postgresql-server-dev-18` installed.
-Stock Debian 13 does not provide all of these packages; use a Pigsty/PGDG repo
-prepared builder if you need the full 14-18 matrix.
+If it is unavailable, copy only the three files for the active suite from
+`~/pgsty/repo/ext/src/` into `../SOURCES/`. The Makefile names the exact files
+for Bookworm, Jammy, and Resolute and uses `dpkg-source -x` to retain the
+official source patch stack.
 
 ## Build
 
@@ -77,13 +55,6 @@ cd ~/debbuild/rdkit
 make
 ```
 
-`make` always builds every PostgreSQL major detected by `pg_buildext
-supported-versions`. The resulting `.deb` files are copied to `~/ext/pkg/`.
-
-To build an InChI-enabled cartridge on Ubuntu 24 after installing a backported
-`libinchi-dev`/`libinchi1.07`, run:
-
-```bash
-cd ~/debbuild/rdkit
-make ENABLE_INCHI=1
-```
+The resulting cartridge packages are copied to `~/ext/pkg/`. On Trixie and
+Noble the target exits before building and explains that PGDG already covers
+the full active matrix.

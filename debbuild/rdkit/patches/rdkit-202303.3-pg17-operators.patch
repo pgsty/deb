@@ -1,0 +1,51 @@
+--- a/Code/PgSQL/rdkit/rdkit.sql.in
++++ b/Code/PgSQL/rdkit/rdkit.sql.in
+@@ -1262,12 +1262,22 @@
+     LEFTARG = mol,
+     RIGHTARG = mol,
+     PROCEDURE = mol_eq,
+-    COMMUTATOR = '=',
+-    NEGATOR = '<>',
++    COMMUTATOR = '@=',
++    NEGATOR = '@<>',
+     RESTRICT = eqsel,
+     JOIN = eqjoinsel
+ );
+ 
++CREATE OPERATOR @<> (
++    LEFTARG = mol,
++    RIGHTARG = mol,
++    PROCEDURE = mol_ne,
++    COMMUTATOR = '@<>',
++    NEGATOR = '@=',
++    RESTRICT = neqsel,
++    JOIN = neqjoinsel
++);
++
+ -- bfp comparison
+ 
+ CREATE OR REPLACE FUNCTION bfp_cmp(bfp,bfp)
+@@ -1572,12 +1582,22 @@
+     LEFTARG = reaction,
+     RIGHTARG = reaction,
+     PROCEDURE = reaction_eq,
+-    COMMUTATOR = '=',
+-    NEGATOR = '<>',
++    COMMUTATOR = '@=',
++    NEGATOR = '@<>',
+     RESTRICT = eqsel,
+     JOIN = eqjoinsel
+ );
+ 
++CREATE OPERATOR @<> (
++    LEFTARG = reaction,
++    RIGHTARG = reaction,
++    PROCEDURE = reaction_ne,
++    COMMUTATOR = '@<>',
++    NEGATOR = '@=',
++    RESTRICT = neqsel,
++    JOIN = neqjoinsel
++);
++
+ 
+ -- Operator classes for btree

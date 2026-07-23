@@ -1,0 +1,31 @@
+--- a/Code/PgSQL/rdkit/Makefile
++++ b/Code/PgSQL/rdkit/Makefile
+@@ -33,6 +33,7 @@ endif
+ 
+ RDKLIBS       = ${AVALONLIBS} ${INCHILIBS} -lRDKitMolDraw2D -lRDKitMolTransforms -lRDKitMolHash -lRDKitFMCS -lRDKitChemReactions -lRDKitChemTransforms -lRDKitFileParsers -lRDKitSmilesParse -lRDKitFingerprints -lRDKitSubgraphs -lRDKitDescriptors -lRDKitPartialCharges -lRDKitSubstructMatch  -lRDKitGraphMol -lRDKitEigenSolvers -lRDKitDataStructs -lRDKitDepictor -lRDKitRDGeometryLib -lRDKitRDGeneral
+ RDKIT_LIBDIR ?= ${RDKIT}/lib
++RDKIT_INCLUDEDIR ?= ${RDKIT}/Code
+ 
+ ifeq ($(STATIC_LINK),0)
+   SHLIB_LINK += -L${RDKIT_LIBDIR} ${RDKLIBS}
+@@ -48,10 +49,10 @@ endif
+ 
+ SHLIB_LINK += ${THREADLIBS}
+ 
+-PG_CPPFLAGS = -I${BOOSTHOME}/include -I${RDKIT}/Code -DRDKITVER='"007300"' -DRDK_TOOLKIT_VERSION='"2023.03.3"' ${AVALONFLAGS} ${INCHIFLAGS}
++PG_CPPFLAGS = -I${BOOSTHOME}/include -I${RDKIT_INCLUDEDIR} -DRDKITVER='"007300"' -DRDK_TOOLKIT_VERSION='"2023.03.3"' ${AVALONFLAGS} ${INCHIFLAGS}
+ 
+ CPLUSPLUSFLAGS = $(filter-out -fexcess-precision=standard -Wmissing-prototypes -Wdeclaration-after-statement, $(CFLAGS))
+-CPLUSPLUSFLAGS += -Wno-unused-function
++CPLUSPLUSFLAGS += -std=c++17 -Wno-unused-function
+ #CPLUSPLUSFLAGS += -march=native
+ CPLUSPLUSFLAGS += $(PG_CPPFLAGS)
+ CPLUSPLUSFLAGS := $(filter-out -fexcess-precision=standard,$(CPLUSPLUSFLAGS))
+@@ -100,6 +101,7 @@ endif
+ REGRESS    = rdkit-91 props btree molgist bfpgist-91 bfpgin sfpgist slfpgist fps reaction ${INCHIREGRESS} ${AVALONREGRESS}
+ DATA_built = $(EXTENSION)--$(EXTVERSION).sql
+ EXTRA_CLEAN = $(EXTENSION)--$(EXTVERSION).sql
++override with_llvm = no
+ include $(PGXS)
+ 
+ # save our current CC value:
