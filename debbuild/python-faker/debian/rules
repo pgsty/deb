@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=fake-factory
+
+%:
+	dh $@ --with=python3 --buildsystem=pybuild
+
+override_dh_auto_test:
+
+execute_after_dh_auto_install:
+	rm -f debian/python3-fake-factory/usr/bin/faker
+	rmdir --ignore-fail-on-non-empty debian/python3-fake-factory/usr/bin

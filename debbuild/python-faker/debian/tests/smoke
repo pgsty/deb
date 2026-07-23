@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+
+python3 -c "from faker import Faker; f=Faker(); assert f.name(); assert '@' in f.email()"

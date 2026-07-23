@@ -1,0 +1,22 @@
+Source: faker
+Section: python
+Priority: optional
+Maintainer: Pigsty Packaging Team <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               python3-all,
+               python3-setuptools
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/joke2k/faker
+
+Package: python3-fake-factory
+Architecture: all
+Depends: ${misc:Depends},
+         ${python3:Depends},
+         python3-dateutil
+Description: Faker is a Python library that generates fake data (Python 3)
+ The fake data can be used to bootstrap a database, create XML documents, or
+ anonymize data taken from a production service.
+ .
+ This is the Python 3 version of the package.
