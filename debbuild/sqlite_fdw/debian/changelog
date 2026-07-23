@@ -1,3 +1,9 @@
+sqlite-fdw (2.5.0-2PIGSTY) unstable; urgency=medium
+
+  * Add PostgreSQL 18 support
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 22 Jul 2026 21:42:39 +0800
+
 sqlite-fdw (2.5.0-1PIGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 17 support
