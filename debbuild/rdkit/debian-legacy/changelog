@@ -1,0 +1,7 @@
+rdkit (202303.3-4PIGSTY~SUITE) unstable; urgency=medium
+
+  * Build cartridge-only PostgreSQL 17-18 gap packages.
+  * Link against PGDG's librdkit1 instead of duplicating the runtime.
+  * Backport PostgreSQL 17-18 compatibility fixes.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 23 Jul 2026 12:00:00 +0800

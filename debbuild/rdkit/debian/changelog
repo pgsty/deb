@@ -1,3 +1,11 @@
+rdkit (202503.6-5PIGSTY~resolute) resolute; urgency=medium
+
+  * Build cartridge-only PostgreSQL 14-17 gap packages for Ubuntu 26.04.
+  * Link against Ubuntu's librdkit1t64 instead of duplicating the runtime.
+  * Leave PostgreSQL 18 to the complete Ubuntu archive package.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 23 Jul 2026 12:00:00 +0800
+
 rdkit (202503.6-4PIGSTY) unstable; urgency=medium
 
   * Package RDKit 202503.6 for PostgreSQL 14-18 on Debian 13 and Ubuntu 24.

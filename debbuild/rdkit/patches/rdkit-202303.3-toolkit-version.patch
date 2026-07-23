@@ -1,0 +1,11 @@
+--- a/Code/PgSQL/rdkit/Makefile
++++ b/Code/PgSQL/rdkit/Makefile
+@@ -48,7 +48,7 @@ endif
+ 
+ SHLIB_LINK += ${THREADLIBS}
+ 
+-PG_CPPFLAGS = -I${BOOSTHOME}/include -I${RDKIT}/Code -DRDKITVER='"007300"' -DRDK_TOOLKIT_VERSION='"2022.09.01"' ${AVALONFLAGS} ${INCHIFLAGS}
++PG_CPPFLAGS = -I${BOOSTHOME}/include -I${RDKIT}/Code -DRDKITVER='"007300"' -DRDK_TOOLKIT_VERSION='"2023.03.3"' ${AVALONFLAGS} ${INCHIFLAGS}
+ 
+ CPLUSPLUSFLAGS = $(filter-out -fexcess-precision=standard -Wmissing-prototypes -Wdeclaration-after-statement, $(CFLAGS))
+ CPLUSPLUSFLAGS += -Wno-unused-function

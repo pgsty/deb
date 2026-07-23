@@ -82,11 +82,6 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	mkdir -p $(CURDIR)/debian/librdkit1t64/usr/lib/$(DEB_HOST_MULTIARCH)
-	cp -a $(BUILD_DIR)/lib/libRDKit*.so.* $(CURDIR)/debian/librdkit1t64/usr/lib/$(DEB_HOST_MULTIARCH)/
-	mkdir -p $(CURDIR)/debian/librdkit1t64/usr/share/RDKit
-	cp -a $(CURDIR)/Data $(CURDIR)/debian/librdkit1t64/usr/share/RDKit/
-
 	set -e; for v in $$(pg_buildext supported-versions); do \
 		mkdir -p $(CURDIR)/debian/postgresql-$$v-rdkit/usr/lib/postgresql/$$v/lib; \
 		mkdir -p $(CURDIR)/debian/postgresql-$$v-rdkit/usr/share/postgresql/$$v/extension; \
