@@ -1,7 +1,6 @@
 all: setup build move
 
-TARBALL := emaj-4.7.1.tar.gz
-# WARNING! THIS SOURCE IS PATCHED WITH MAKEFILE & CONTROL FILE
+TARBALL := emaj-5.0.0.tar.gz
 
 # prepare directory
 setup:
@@ -26,5 +25,3 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
-
