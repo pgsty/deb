@@ -1,0 +1,16 @@
+Source: pgmp
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libgmp-dev, python3
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/dvarrazzo/pgmp
+
+Package: postgresql-PGVERSION-pgmp
+Architecture: any
+Provides: postgresql-pgmp
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: multiple precision arithmetic types for PostgreSQL
+ pgmp adds integer and rational PostgreSQL data types backed by the GNU
+ Multiple Precision Arithmetic Library.

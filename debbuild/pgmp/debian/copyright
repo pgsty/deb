@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pgmp
+Source: https://github.com/dvarrazzo/pgmp
+
+Files: *
+Copyright: 2011-2026 Daniele Varrazzo and pgmp contributors
+License: LGPL-3.0-or-later
+
+License: LGPL-3.0-or-later
+ On Debian systems, the complete text of the GNU Lesser General Public
+ License version 3 can be found in /usr/share/common-licenses/LGPL-3.
