@@ -14,7 +14,10 @@ override_dh_auto_install:
 	rm -rf debian/postgresql-*-pgmnemo/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:
-	dh_installdocs --all README.md CHANGELOG.md
+	dh_installdocs --all README.md
+
+override_dh_installchangelogs:
+	dh_installchangelogs CHANGELOG.md
 
 %:
 	dh $@
