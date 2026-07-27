@@ -1,14 +1,12 @@
-This file is part of E-Maj, an extension for PostgreSQL.
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: E-Maj
+Source: https://github.com/dalibo/emaj
 
-E-Maj is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-any later version.
+Files: *
+Copyright: 2017-2018 Philippe Beaudoin
+           2019-2026 Dalibo
+License: GPL-3.0-or-later
 
-E-Maj is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+License: GPL-3.0-or-later
+ On Debian systems, the complete text of the GNU General Public License
+ version 3 can be found in /usr/share/common-licenses/GPL-3.

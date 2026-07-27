@@ -8,7 +8,10 @@ Rules-Requires-Root: no
 Homepage: https://github.com/dalibo/emaj
 
 Package: postgresql-PGVERSION-emaj
-Architecture: any
+Architecture: all
 Provides: postgresql-emaj
-Depends: ${postgresql:Depends}, ${misc:Depends}, ${perl:Depends}
-Description: E-Maj is a PostgreSQL extension that tracks updates on tables sets with rollback capabilities
+Depends: ${postgresql:Depends}, ${misc:Depends}, ${perl:Depends}, libdbi-perl, libdbd-pg-perl
+Description: table change logging and rollback for PostgreSQL
+ E-Maj records table changes through triggers and can inspect or roll them back
+ to named marks. It also includes statistics, monitoring, and parallel rollback
+ client tools.
