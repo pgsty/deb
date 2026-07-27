@@ -1,0 +1,8 @@
+pgcontext (0.2.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for PostgreSQL 17 and 18.
+  * Build the upstream locked workspace with cargo-pgrx 0.19.1.
+  * Include the upgrade SQL and optional pgcontext_pgvector bridge.
+  * Preserve the upstream Apache NOTICE in the package payload.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 27 Jul 2026 18:00:00 +0800
