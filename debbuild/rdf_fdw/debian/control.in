@@ -12,5 +12,5 @@ Architecture: any
 Provides: postgresql-rdf-fdw
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: RDF triplestore foreign data wrapper for PostgreSQL
-  rdf_fdw is a PostgreSQL foreign data wrapper for RDF triplestores exposed
-  through SPARQL endpoints.
+ rdf_fdw is a PostgreSQL foreign data wrapper for RDF triplestores exposed
+ through SPARQL endpoints.

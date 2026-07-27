@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := rdf_fdw-2.6.0.tar.gz
+TARBALL := rdf_fdw-2.7.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
