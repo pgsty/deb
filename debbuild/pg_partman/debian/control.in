@@ -10,8 +10,8 @@ Homepage: https://github.com/pgpartman/pg_partman
 Package: postgresql-PGVERSION-pg-partman
 Architecture: any
 Provides: postgresql-pg-partman
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, python3:any, python3-psycopg2
 Description: Partition management extension for PostgreSQL
-  pg_partman is an extension to create and manage both time-based and number-based
-  table partition sets. Native partitioning in PostgreSQL 14+ is supported.
-  Child table & trigger function creation is all managed by the extension itself.
+ pg_partman creates and manages time-based and number-based table partition
+ sets. Native partitioning in PostgreSQL 14+ is supported.
+ Child table and trigger function creation is managed by the extension itself.
