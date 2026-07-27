@@ -1,3 +1,11 @@
+pggraph (1.0.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 1.0.0 with pgrx 0.19.1.
+  * Keep Cargo.lock immutable and use the validated builder toolchain.
+  * Preserve the upstream Apache NOTICE in the package payload.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 27 Jul 2026 18:00:00 +0800
+
 pggraph (0.1.8-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.1.8 and build the locked graph with pgrx 0.19.1.

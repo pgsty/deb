@@ -1,13 +1,13 @@
 all: setup build move
 
-TARBALL := pggraph-0.1.8.tar.gz
+TARBALL := pggraph-1.0.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.1
 CRATE_DIR := graph
-SOURCE_PATCH := patches/pggraph-0.1.8.patch
+SOURCE_PATCH := patches/pggraph-1.0.0.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
