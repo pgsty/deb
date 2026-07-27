@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_partman-5.4.2.tar.gz
+TARBALL := pg_partman-5.5.0.tar.gz
 
 # prepare directory
 setup:

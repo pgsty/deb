@@ -1,3 +1,11 @@
+pg-partman (5.5.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 5.5.0.
+  * Use Python 3 shebangs and declare the Python and psycopg2 runtime
+    dependencies.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 27 Jul 2026 18:00:00 +0800
+
 pg-partman (5.4.2-1PIGSTY) unstable; urgency=medium
 
   * routine update
