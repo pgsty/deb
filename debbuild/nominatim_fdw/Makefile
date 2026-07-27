@@ -1,7 +1,7 @@
 all: setup build move
 
-TARBALL := nominatim_fdw-2.0.0.tar.gz
-SOURCE_PATCH := patches/nominatim_fdw-2.0.0.patch
+TARBALL := nominatim_fdw-2.1.0.tar.gz
+SOURCE_PATCH := patches/nominatim_fdw-2.1.0.patch
 
 # prepare directory
 setup:
