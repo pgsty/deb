@@ -1,0 +1,5 @@
+pgmp (1.0.6-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for upstream PGXN 1.0.6.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 27 Jul 2026 18:00:00 +0800
