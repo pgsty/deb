@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: qdgc
+Source: https://github.com/ragnvald/qdgc
+
+Files: *
+Copyright: 2026 Ragnvald Larsen and qdgc contributors
+License: Apache-2.0
+
+License: Apache-2.0
+ On Debian systems, the complete text of the Apache License 2.0 can be found
+ in /usr/share/common-licenses/Apache-2.0.

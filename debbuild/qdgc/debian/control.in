@@ -1,0 +1,17 @@
+Source: qdgc
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/ragnvald/qdgc
+
+Package: postgresql-PGVERSION-qdgc
+Architecture: all
+Provides: postgresql-qdgc
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Suggests: postgresql-PGVERSION-postgis-3
+Description: Extended Quarter Degree Grid Cell codes for PostgreSQL
+ qdgc implements Extended Quarter Degree Grid Cell encoding, decoding, and
+ navigation in pure SQL. It also includes an optional PostGIS bridge.
