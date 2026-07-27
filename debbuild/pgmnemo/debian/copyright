@@ -1,5 +1,11 @@
-Apache License 2.0
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pgmnemo
+Source: https://github.com/pgmnemo/pgmnemo
 
-Copyright (c) pgmnemo contributors
+Files: *
+Copyright: 2026 Alex Gaydabura and pgmnemo contributors
+License: Apache-2.0
 
-https://github.com/pgmnemo/pgmnemo
+License: Apache-2.0
+ On Debian systems, the complete text of the Apache License 2.0 can be found
+ in /usr/share/common-licenses/Apache-2.0.
