@@ -1,0 +1,26 @@
+diff --git a/nominatim_fdw.c b/nominatim_fdw.c
+index 4a34ad5..6b17de4 100644
+--- a/nominatim_fdw.c
++++ b/nominatim_fdw.c
+@@ -375,8 +375,13 @@ Datum nominatim_fdw_settings(PG_FUNCTION_ARGS)
+-		appendStringInfo(&buffer, "zlib %s,", ver->libz_version);
+-	if (ver->libssh_version)
+-		appendStringInfo(&buffer, "libSSH %s,", ver->libssh_version);
+-	if (ver->nghttp2_version)
+-		appendStringInfo(&buffer, "nghttp2 %s,", ver->nghttp2_version);
+-
+-#ifdef NOMINATIM_FDW_CC
+-	appendStringInfo(&buffer, "compiled by %s,", NOMINATIM_FDW_CC);
++		appendStringInfo(&buffer, "zlib %s,", ver->libz_version);
++	if (ver->libssh_version)
++		appendStringInfo(&buffer, "libSSH %s,", ver->libssh_version);
++#if LIBCURL_VERSION_NUM >= 0x074200
++	if (ver->nghttp2_version)
++		appendStringInfo(&buffer, "nghttp2 %s,", ver->nghttp2_version);
++#elif defined(CURL_VERSION_HTTP2)
++	if (ver->features & CURL_VERSION_HTTP2)
++		appendStringInfoString(&buffer, "HTTP2,");
++#endif
++
++#ifdef NOMINATIM_FDW_CC
++	appendStringInfo(&buffer, "compiled by %s,", NOMINATIM_FDW_CC);

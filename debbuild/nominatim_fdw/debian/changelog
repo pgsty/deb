@@ -1,3 +1,10 @@
+nominatim-fdw (2.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 2.1.0.
+  * Refresh the libcurl nghttp2 compatibility patch.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 27 Jul 2026 18:00:00 +0800
+
 nominatim-fdw (2.0.0-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 2.0.0.

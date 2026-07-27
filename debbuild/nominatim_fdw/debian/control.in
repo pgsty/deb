@@ -12,6 +12,5 @@ Architecture: any
 Provides: postgresql-nominatim-fdw
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: Nominatim Foreign Data Wrapper for PostgreSQL
-  nominatim_fdw is a PostgreSQL Foreign Data Wrapper (FDW) to access data from
-  Nominatim servers using simple function calls.
-
+ nominatim_fdw is a PostgreSQL Foreign Data Wrapper (FDW) to access data from
+ Nominatim servers using simple function calls.
