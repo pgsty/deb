@@ -1,0 +1,17 @@
+Source: postbis
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/no0p/postbis
+
+Package: postgresql-PGVERSION-postbis
+Architecture: any
+Provides: postgresql-postbis
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Biological sequence data types and functions for PostgreSQL
+ PostBIS provides compact DNA, RNA, amino-acid, and aligned biological
+ sequence types, together with type modifiers, sequence functions,
+ comparison operators, and btree and hash operator classes.
