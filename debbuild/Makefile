@@ -353,6 +353,9 @@ pg_durable:
 pgmnemo:
 	cd pgmnemo && make
 
+pgzint:
+	cd pgzint && make
+
 pg_projection:
 	cd pg_projection && make
 
@@ -1137,7 +1140,7 @@ collect:
 	smlar pg4ml rdkit \
 	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_cjk_parser pg_jieba pg_textsearch pg_fts \
 	citus hydra storage_engine datasketches pg_duckdb pg_ducklake pg_lake duckdb_fdw pg_fkpart pg_kpart pg_clickhouse pg_orca \
-	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql fbsql pg_durable pgmnemo pg_projection pg_stl pg_sorted_heap pg_incremental pgmq pgmb omnigres pg_ai_query \
+	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql fbsql pg_durable pgmnemo pgzint pg_projection pg_stl pg_sorted_heap pg_incremental pgmq pgmb omnigres pg_ai_query \
 	plxslt pg_tle plv8 pljs plx plproxy \
 	pgpdf md5hash pg_country pg_xenophile pg_currency pgcollection pgmp pguint pg_uint128 pg_roaringbitmap pg_unit pg_text_semver hashtypes pg_duration pg_uri pg_emailaddr pg_acl timestamp9 chkpass \
 	pg_gzip pg_http pg_bzip pg_zstd pg_net pg_curl pgjq pg_retry pgjwt pg_html5_email_address pg_utl_smtp url_encode pgsql_tweaks pg_extra_time pgqr pg_protobuf pg_envvar floatfile external_file pg_byteamagic pg_readme ddl_historization data_historization pg_schedoc pg_hashlib pg_xxhash shacrypt cryptint pg_ecdsa pgsparql \

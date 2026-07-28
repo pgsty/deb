@@ -1,0 +1,7 @@
+pgzint (0.2.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for upstream PGXN 0.2.0.
+  * Require Zint 2.14.0 for BARCODE_MEMORY_FILE support.
+  * Build on Trixie and Resolute, where Zint 2.14 or newer is available.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 27 Jul 2026 18:00:00 +0800
