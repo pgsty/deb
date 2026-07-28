@@ -1,0 +1,17 @@
+Source: pgwasm
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jnicholls/pgwasm
+
+Package: postgresql-PGVERSION-pgwasm
+Architecture: any
+Provides: postgresql-pgwasm
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: WebAssembly component runtime for PostgreSQL
+ pgwasm runs WebAssembly components inside PostgreSQL and exposes their exports
+ as strongly typed SQL functions. It uses Wasmtime's component model and keeps
+ WASI capabilities disabled unless a database administrator enables them.
