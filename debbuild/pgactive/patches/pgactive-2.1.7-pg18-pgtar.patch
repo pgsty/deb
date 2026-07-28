@@ -1,0 +1,59 @@
+diff --git a/src/compat/18/pg_dump/pg_backup_archiver.c b/src/compat/18/pg_dump/pg_backup_archiver.c
+--- a/src/compat/18/pg_dump/pg_backup_archiver.c
++++ b/src/compat/18/pg_dump/pg_backup_archiver.c
+@@ -42,6 +42,7 @@
+ #include "pg_backup_archiver.h"
+ #include "pg_backup_db.h"
+ #include "pg_backup_utils.h"
++#include "pgtar.h"
+ 
+ #define TEXT_DUMP_HEADER "--\n-- PostgreSQL database dump\n--\n\n"
+ #define TEXT_DUMPALL_HEADER "--\n-- PostgreSQL database cluster dump\n--\n\n"
+diff --git a/src/compat/18/pg_dump/pg_backup_archiver.h b/src/compat/18/pg_dump/pg_backup_archiver.h
+index 47419f8..12d18d5 100644
+--- a/src/compat/18/pg_dump/pg_backup_archiver.h
++++ b/src/compat/18/pg_dump/pg_backup_archiver.h
+@@ -464,7 +464,5 @@ extern void InitArchiveFmt_Null(ArchiveHandle *AH);
+ extern void InitArchiveFmt_Directory(ArchiveHandle *AH);
+ extern void InitArchiveFmt_Tar(ArchiveHandle *AH);
+ 
+-extern bool isValidTarHeader(char *header);
+-
+ extern void ReconnectToServer(ArchiveHandle *AH, const char *dbname);
+ extern void IssueCommandPerBlob(ArchiveHandle *AH, TocEntry *te,
+diff --git a/src/compat/18/pg_dump/pg_backup_tar.c b/src/compat/18/pg_dump/pg_backup_tar.c
+index e31a456..83bf88d 100644
+--- a/src/compat/18/pg_dump/pg_backup_tar.c
++++ b/src/compat/18/pg_dump/pg_backup_tar.c
+@@ -984,31 +984,6 @@ tarPrintf(TAR_MEMBER *th, const char *fmt,...)
+ 	return (int) cnt;
+ }
+ 
+-bool
+-isValidTarHeader(char *header)
+-{
+-	int			sum;
+-	int			chk = tarChecksum(header);
+-
+-	sum = read_tar_number(&header[TAR_OFFSET_CHECKSUM], 8);
+-
+-	if (sum != chk)
+-		return false;
+-
+-	/* POSIX tar format */
+-	if (memcmp(&header[TAR_OFFSET_MAGIC], "ustar\0", 6) == 0 &&
+-		memcmp(&header[TAR_OFFSET_VERSION], "00", 2) == 0)
+-		return true;
+-	/* GNU tar format */
+-	if (memcmp(&header[TAR_OFFSET_MAGIC], "ustar  \0", 8) == 0)
+-		return true;
+-	/* not-quite-POSIX format written by pre-9.3 pg_dump */
+-	if (memcmp(&header[TAR_OFFSET_MAGIC], "ustar00\0", 8) == 0)
+-		return true;
+-
+-	return false;
+-}
+-
+ /* Given the member, write the TAR header & copy the file */
+ static void
+ _tarAddFile(ArchiveHandle *AH, TAR_MEMBER *th)

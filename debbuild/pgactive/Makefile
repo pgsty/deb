@@ -1,12 +1,22 @@
+.NOTPARALLEL:
+
 all: setup build move
 
 TARBALL := pgactive-2.1.7.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+SOURCE_PATCH := patches/pgactive-2.1.7-pg18-pgtar.patch
+
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
+
+check-patches:
+	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
 
 # prepare directory
-setup:
+setup: check-src check-patches
 	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	pg_buildext updatecontrol
+	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	(cd build && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
@@ -14,7 +24,6 @@ setup:
 # building deb
 build: build18 build17 build16 build15 build14
 build18:
-	sed -i "1s/17/18/g" build/debian/rules
 	echo "18" > build/debian/pgversions
 	cd build && pg_buildext updatecontrol
 	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
@@ -22,7 +31,6 @@ build18:
 	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 build17:
-	sed -i "1s/17/17/g" build/debian/rules
 	echo "17" > build/debian/pgversions
 	cd build && pg_buildext updatecontrol
 	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
@@ -30,7 +38,6 @@ build17:
 	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 build16:
-	sed -i "1s/17/16/g" build/debian/rules
 	echo "16" > build/debian/pgversions
 	cd build && pg_buildext updatecontrol
 	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
@@ -38,7 +45,6 @@ build16:
 	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 build15:
-	sed -i "1s/17/15/g" build/debian/rules
 	echo "15" > build/debian/pgversions
 	cd build && pg_buildext updatecontrol
 	cd build/ && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
@@ -46,7 +52,6 @@ build15:
 	cd build/ && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 build14:
-	sed -i "1s/17/14/g" build/debian/rules
 	echo "14" > build/debian/pgversions
 	cd build && pg_buildext updatecontrol
 	cd build/ && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
@@ -61,5 +66,4 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
-
+.PHONY: all check-src check-patches setup update build move clean ls
