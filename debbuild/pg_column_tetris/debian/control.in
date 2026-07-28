@@ -1,0 +1,17 @@
+Source: pg-column-tetris
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rogerwelin/pg_column_tetris
+
+Package: postgresql-PGVERSION-pg-column-tetris
+Architecture: all
+Provides: postgresql-pg-column-tetris
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Enforce efficient PostgreSQL column alignment
+ pg_column_tetris detects avoidable row padding caused by inefficient column
+ ordering. It can warn about or reject suboptimal CREATE TABLE statements and
+ audit existing tables.
