@@ -2,7 +2,7 @@
 
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
-export LIBRARY_PATH := /usr/lib/postgresql/17/lib
+export LIBRARY_PATH := $(shell pg_config --pkglibdir)
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 

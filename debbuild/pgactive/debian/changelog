@@ -1,3 +1,11 @@
+pgactive (2.1.7-2PIGSTY) unstable; urgency=medium
+
+  * Resolve LIBRARY_PATH from the active PostgreSQL pg_config.
+  * Serialize per-major builds that share the same source tree.
+  * Use PostgreSQL 18's libpgport implementation of isValidTarHeader.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 28 Jul 2026 12:00:00 +0800
+
 pgactive (2.1.7-1PIGSTY) unstable; urgency=medium
 
   * bump to 2.1.7 with pg18 support
