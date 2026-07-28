@@ -1,0 +1,5 @@
+pg-column-tetris (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Add package for upstream 0.1.0 snapshot e70f986.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 28 Jul 2026 11:00:00 +0800
