@@ -1,0 +1,10 @@
+pgwasm (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Package upstream snapshot 535b5336 with Wasmtime 44.
+  * Migrate to cargo-pgrx/pgrx 0.19.1 and fix the ARM64 c_char comparison.
+  * Handle PostgreSQL 18 ProcedureCreate and defer backend-only initialization.
+  * Remove dynamic functions through PostgreSQL's dependency-aware
+    deletion path.
+  * Allocate and roll back production shared-memory metric slots.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 28 Jul 2026 00:00:00 +0800

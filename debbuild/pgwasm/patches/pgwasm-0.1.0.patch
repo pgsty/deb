@@ -1,0 +1,1216 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index a61f9c6..309bd74 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -41,16 +41,6 @@ dependencies = [
+  "libc",
+ ]
+ 
+-[[package]]
+-name = "annotate-snippets"
+-version = "0.11.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "710e8eae58854cdc1790fcb56cca04d712a17be849eeb81da2a724bf4bae2bc4"
+-dependencies = [
+- "anstyle",
+- "unicode-width",
+-]
+-
+ [[package]]
+ name = "anstyle"
+ version = "1.0.14"
+@@ -98,7 +88,6 @@ version = "0.72.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "993776b509cfb49c750f11b8f07a46fa23e0a1386ffc01fb1e7d343efc387895"
+ dependencies = [
+- "annotate-snippets",
+  "bitflags",
+  "cexpr",
+  "clang-sys",
+@@ -107,15 +96,15 @@ dependencies = [
+  "quote",
+  "regex",
+  "rustc-hash",
+- "shlex",
++ "shlex 1.3.0",
+  "syn",
+ ]
+ 
+ [[package]]
+ name = "bitflags"
+-version = "2.11.1"
++version = "2.13.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c4512299f36f043ab09a583e57bceb5a5aab7a73db1805848e8fef3c9e8c78b3"
++checksum = "b588b76d00fde79687d7646a9b5bdf3cc0f655e0bbd080335a95d7e96f3587da"
+ 
+ [[package]]
+ name = "bitvec"
+@@ -257,25 +246,26 @@ dependencies = [
+ 
+ [[package]]
+ name = "cargo-platform"
+-version = "0.1.9"
++version = "0.3.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e35af189006b9c0f00a064685c727031e3ed2d8020f7ba284d78cc2671bd36ea"
++checksum = "dd0061da739915fae12ea00e16397555ed4371a6bb285431aab930f61b0aa4ba"
+ dependencies = [
+  "serde",
++ "serde_core",
+ ]
+ 
+ [[package]]
+ name = "cargo_metadata"
+-version = "0.18.1"
++version = "0.23.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2d886547e41f740c616ae73108f6eb70afe6d940c7bc697cb30f13daec073037"
++checksum = "ef987d17b0a113becdd19d3d0022d04d7ef41f9efe4f3fb63ac44ba61df3ade9"
+ dependencies = [
+  "camino",
+  "cargo-platform",
+  "semver",
+  "serde",
+  "serde_json",
+- "thiserror 1.0.69",
++ "thiserror 2.0.18",
+ ]
+ 
+ [[package]]
+@@ -285,7 +275,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "374b7c592d9c00c1f4972ea58390ac6b18cbb6ab79011f3bdc90a0b82ca06b77"
+ dependencies = [
+  "serde",
+- "toml",
++ "toml 0.9.12+spec-1.1.0",
+ ]
+ 
+ [[package]]
+@@ -297,7 +287,7 @@ dependencies = [
+  "find-msvc-tools",
+  "jobserver",
+  "libc",
+- "shlex",
++ "shlex 1.3.0",
+ ]
+ 
+ [[package]]
+@@ -359,13 +349,15 @@ dependencies = [
+ 
+ [[package]]
+ name = "clap-cargo"
+-version = "0.14.1"
++version = "0.18.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "23b2ea69cefa96b848b73ad516ad1d59a195cdf9263087d977f648a818c8b43e"
++checksum = "936551935c8258754bb8216aec040957d261f977303754b9bf1a213518388006"
+ dependencies = [
+  "anstyle",
+  "cargo_metadata",
+  "clap",
++ "serde",
++ "serde_json",
+ ]
+ 
+ [[package]]
+@@ -428,9 +420,9 @@ checksum = "a6ef517f0926dd24a1582492c791b6a4818a4d94e789a334894aa15b0d12f55c"
+ 
+ [[package]]
+ name = "convert_case"
+-version = "0.8.0"
++version = "0.11.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "baaaa0ecca5b51987b9423ccdc971514dd8b0bb7b4060b983d3664dad3f1f89f"
++checksum = "affbf0190ed2caf063e3def54ff444b449371d55c58e513a95ab98eca50adb49"
+ dependencies = [
+  "unicode-segmentation",
+ ]
+@@ -724,6 +716,16 @@ dependencies = [
+  "winapi",
+ ]
+ 
++[[package]]
++name = "dispatch2"
++version = "0.3.1"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "1e0e367e4e7da84520dedcac1901e4da967309406d1e51017ae1abfb97adbd38"
++dependencies = [
++ "bitflags",
++ "objc2",
++]
++
+ [[package]]
+ name = "displaydoc"
+ version = "0.2.5"
+@@ -795,7 +797,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
+ dependencies = [
+  "libc",
+- "windows-sys 0.61.2",
++ "windows-sys 0.52.0",
+ ]
+ 
+ [[package]]
+@@ -1208,7 +1210,7 @@ dependencies = [
+  "js-sys",
+  "log",
+  "wasm-bindgen",
+- "windows-core 0.62.2",
++ "windows-core",
+ ]
+ 
+ [[package]]
+@@ -1591,6 +1593,15 @@ dependencies = [
+  "winapi",
+ ]
+ 
++[[package]]
++name = "objc2"
++version = "0.6.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3a12a8ed07aefc768292f076dc3ac8c48f3781c8f2d5851dd3d98950e8c5a89f"
++dependencies = [
++ "objc2-encode",
++]
++
+ [[package]]
+ name = "objc2-core-foundation"
+ version = "0.3.2"
+@@ -1598,6 +1609,45 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "2a180dd8642fa45cdb7dd721cd4c11b1cadd4929ce112ebd8b9f5803cc79d536"
+ dependencies = [
+  "bitflags",
++ "dispatch2",
++ "objc2",
++]
++
++[[package]]
++name = "objc2-encode"
++version = "4.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ef25abbcd74fb2609453eb695bd2f860d389e457f67dc17cafc8b8cbc89d0c33"
++
++[[package]]
++name = "objc2-foundation"
++version = "0.3.2"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "e3e0adef53c21f888deb4fa59fc59f7eb17404926ee8a6f59f5df0fd7f9f3272"
++dependencies = [
++ "bitflags",
++ "objc2",
++]
++
++[[package]]
++name = "objc2-io-kit"
++version = "0.3.2"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "33fafba39597d6dc1fb709123dfa8289d39406734be322956a69f0931c73bb15"
++dependencies = [
++ "libc",
++ "objc2-core-foundation",
++]
++
++[[package]]
++name = "objc2-open-directory"
++version = "0.3.2"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "bb82bed227edf5201dfedf072bba4015a33d3d4a98519837295a90f0a23f676d"
++dependencies = [
++ "objc2",
++ "objc2-core-foundation",
++ "objc2-foundation",
+ ]
+ 
+ [[package]]
+@@ -1699,9 +1749,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pgrx"
+-version = "0.18.0"
++version = "0.19.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "56737d5e26e6b5021c32270543f1cc40a5a4b7e5195a619b43545a43e77383f0"
++checksum = "da2d9afc1c8dc8885d777a173755dedd6c0345bfa84fae307a735511bd96b9cc"
+ dependencies = [
+  "bitflags",
+  "bitvec",
+@@ -1720,9 +1770,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pgrx-bindgen"
+-version = "0.18.0"
++version = "0.19.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "61aa5a299ea64ef04a2b4ee4022f2f4631112a603133abdedcde7c7b81373761"
++checksum = "b42d171ae578765094d8597ef04f593f4de7b8694c78a64e23bd69d304251504"
+ dependencies = [
+  "bindgen",
+  "cc",
+@@ -1732,16 +1782,16 @@ dependencies = [
+  "proc-macro2",
+  "quote",
+  "regex",
+- "shlex",
++ "shlex 2.0.1",
+  "syn",
+  "walkdir",
+ ]
+ 
+ [[package]]
+ name = "pgrx-macros"
+-version = "0.18.0"
++version = "0.19.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dcdc8db853dd1b13e632488b87af8aeaf0007c87504f459fbc36530341c836d4"
++checksum = "7039b2a78ed764daced91b20907841ffe4a9b3d0f795ea7e9d37973d1e1509ec"
+ dependencies = [
+  "pgrx-sql-entity-graph",
+  "proc-macro2",
+@@ -1751,9 +1801,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pgrx-pg-config"
+-version = "0.18.0"
++version = "0.19.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "398ee37175cd1320b57de3cb7ff3617d0e9ebab99409e842431ff43e9c4f021a"
++checksum = "7ed293ffce438bacdff7e00b76c6a891083a8bbf3670bcfdb6f8125498284816"
+ dependencies = [
+  "cargo_toml",
+  "codepage",
+@@ -1764,16 +1814,16 @@ dependencies = [
+  "serde",
+  "serde_json",
+  "thiserror 2.0.18",
+- "toml",
++ "toml 1.1.2+spec-1.1.0",
+  "url",
+  "winapi",
+ ]
+ 
+ [[package]]
+ name = "pgrx-pg-sys"
+-version = "0.18.0"
++version = "0.19.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cb29319be9ab6cba07134c6169f2935e52620cd339f4019cfcf968576ba12cf1"
++checksum = "8b0e16aa08b282f278414081a1c082755def583b4ecfba53114f62e42f8bd06a"
+ dependencies = [
+  "cee-scape",
+  "libc",
+@@ -1785,9 +1835,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pgrx-sql-entity-graph"
+-version = "0.18.0"
++version = "0.19.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "22ac641175b0a104d16dce47dd828060479c9fde517a840d75d6b5ccce2ae7b9"
++checksum = "c92b0093b2077b9854f35d5d54d4e281dcb9b4e6a10a5a1fed310e58ab84b1e7"
+ dependencies = [
+  "convert_case",
+  "eyre",
+@@ -1801,9 +1851,9 @@ dependencies = [
+ 
+ [[package]]
+ name = "pgrx-tests"
+-version = "0.18.0"
++version = "0.19.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b064dffd008c9bebed62e00d82c9c9cef49ba40071bfa38d31359f4a6c1a907d"
++checksum = "6d39ff1aef126fe3e10c193aa358009476beaf35b9ae80c8ed86334e9a6c40c6"
+ dependencies = [
+  "clap-cargo",
+  "eyre",
+@@ -1813,9 +1863,9 @@ dependencies = [
+  "pgrx-macros",
+  "pgrx-pg-config",
+  "postgres",
+- "rand 0.9.4",
++ "rand 0.10.1",
+  "regex",
+- "shlex",
++ "shlex 2.0.1",
+  "sysinfo",
+  "tempfile",
+  "thiserror 2.0.18",
+@@ -2024,20 +2074,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "5ca0ecfa931c29007047d1bc58e623ab12e5590e8c7cc53200d5202b69266d8a"
+ dependencies = [
+  "libc",
+- "rand_chacha 0.3.1",
++ "rand_chacha",
+  "rand_core 0.6.4",
+ ]
+ 
+-[[package]]
+-name = "rand"
+-version = "0.9.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "44c5af06bb1b7d3216d91932aed5265164bf384dc89cd6ba05cf59a35f5f76ea"
+-dependencies = [
+- "rand_chacha 0.9.0",
+- "rand_core 0.9.5",
+-]
+-
+ [[package]]
+ name = "rand"
+ version = "0.10.1"
+@@ -2059,16 +2099,6 @@ dependencies = [
+  "rand_core 0.6.4",
+ ]
+ 
+-[[package]]
+-name = "rand_chacha"
+-version = "0.9.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d3022b5f1df60f26e1ffddd6c66e8aa15de382ae63b3a0c1bfc0e4d3e3f325cb"
+-dependencies = [
+- "ppv-lite86",
+- "rand_core 0.9.5",
+-]
+-
+ [[package]]
+ name = "rand_core"
+ version = "0.6.4"
+@@ -2078,15 +2108,6 @@ dependencies = [
+  "getrandom 0.2.17",
+ ]
+ 
+-[[package]]
+-name = "rand_core"
+-version = "0.9.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "76afc826de14238e6e8c374ddcc1fa19e374fd8dd986b0d2af0d02377261d83c"
+-dependencies = [
+- "getrandom 0.3.4",
+-]
+-
+ [[package]]
+ name = "rand_core"
+ version = "0.10.1"
+@@ -2225,7 +2246,7 @@ dependencies = [
+  "errno",
+  "libc",
+  "linux-raw-sys 0.12.1",
+- "windows-sys 0.61.2",
++ "windows-sys 0.52.0",
+ ]
+ 
+ [[package]]
+@@ -2400,6 +2421,12 @@ version = "1.3.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
+ 
++[[package]]
++name = "shlex"
++version = "2.0.1"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "f8fadd59c855ef2080decdef8ff161eb6661b86933c9d82e5ba29dc602a55aba"
++
+ [[package]]
+ name = "siphasher"
+ version = "1.0.2"
+@@ -2487,14 +2514,16 @@ dependencies = [
+ 
+ [[package]]
+ name = "sysinfo"
+-version = "0.34.2"
++version = "0.39.6"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a4b93974b3d3aeaa036504b8eefd4c039dced109171c1ae973f1dc63b2c7e4b2"
++checksum = "d2071df9448915b71c4fe6d25deaf1c22f12bd234f01540b77312bb8e41361e6"
+ dependencies = [
+  "libc",
+  "memchr",
+  "ntapi",
+  "objc2-core-foundation",
++ "objc2-io-kit",
++ "objc2-open-directory",
+  "windows",
+ ]
+ 
+@@ -2536,7 +2565,7 @@ dependencies = [
+  "getrandom 0.4.2",
+  "once_cell",
+  "rustix 1.1.4",
+- "windows-sys 0.61.2",
++ "windows-sys 0.52.0",
+ ]
+ 
+ [[package]]
+@@ -2710,12 +2739,27 @@ dependencies = [
+  "indexmap",
+  "serde_core",
+  "serde_spanned",
+- "toml_datetime",
++ "toml_datetime 0.7.5+spec-1.1.0",
+  "toml_parser",
+  "toml_writer",
+  "winnow 0.7.15",
+ ]
+ 
++[[package]]
++name = "toml"
++version = "1.1.2+spec-1.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "81f3d15e84cbcd896376e6730314d59fb5a87f31e4b038454184435cd57defee"
++dependencies = [
++ "indexmap",
++ "serde_core",
++ "serde_spanned",
++ "toml_datetime 1.1.1+spec-1.1.0",
++ "toml_parser",
++ "toml_writer",
++ "winnow 1.0.2",
++]
++
+ [[package]]
+ name = "toml_datetime"
+ version = "0.7.5+spec-1.1.0"
+@@ -2725,6 +2769,15 @@ dependencies = [
+  "serde_core",
+ ]
+ 
++[[package]]
++name = "toml_datetime"
++version = "1.1.1+spec-1.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3165f65f62e28e0115a00b2ebdd37eb6f3b641855f9d636d3cd4103767159ad7"
++dependencies = [
++ "serde_core",
++]
++
+ [[package]]
+ name = "toml_parser"
+ version = "1.1.2+spec-1.1.0"
+@@ -2860,9 +2913,9 @@ checksum = "b6c140620e7ffbb22c2dee59cafe6084a59b5ffc27a8859a5f0d494b5d52b6be"
+ 
+ [[package]]
+ name = "uuid"
+-version = "1.23.1"
++version = "1.24.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ddd74a9687298c6858e9b88ec8935ec45d22e8fd5e6394fa1bd4e99a87789c76"
++checksum = "bf3923a6f5c4c6382e0b653c4117f48d631ea17f38ed86e2a828e6f7412f5239"
+ dependencies = [
+  "getrandom 0.4.2",
+  "js-sys",
+@@ -3199,7 +3252,7 @@ dependencies = [
+  "serde",
+  "serde_derive",
+  "sha2 0.10.9",
+- "toml",
++ "toml 0.9.12+spec-1.1.0",
+  "wasmtime-environ",
+  "windows-sys 0.61.2",
+  "zstd",
+@@ -3558,7 +3611,7 @@ version = "0.1.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
+ dependencies = [
+- "windows-sys 0.61.2",
++ "windows-sys 0.52.0",
+ ]
+ 
+ [[package]]
+@@ -3588,24 +3641,23 @@ dependencies = [
+ 
+ [[package]]
+ name = "windows"
+-version = "0.57.0"
++version = "0.62.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "12342cb4d8e3b046f3d80effd474a7a02447231330ef77d71daa6fbc40681143"
++checksum = "527fadee13e0c05939a6a05d5bd6eec6cd2e3dbd648b9f8e447c6518133d8580"
+ dependencies = [
+- "windows-core 0.57.0",
+- "windows-targets",
++ "windows-collections",
++ "windows-core",
++ "windows-future",
++ "windows-numerics",
+ ]
+ 
+ [[package]]
+-name = "windows-core"
+-version = "0.57.0"
++name = "windows-collections"
++version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d2ed2439a290666cd67ecce2b0ffaad89c2a56b976b736e6ece670297897832d"
++checksum = "23b2d95af1a8a14a3c7367e1ed4fc9c20e0a26e79551b1454d72583c97cc6610"
+ dependencies = [
+- "windows-implement 0.57.0",
+- "windows-interface 0.57.0",
+- "windows-result 0.1.2",
+- "windows-targets",
++ "windows-core",
+ ]
+ 
+ [[package]]
+@@ -3614,22 +3666,22 @@ version = "0.62.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "b8e83a14d34d0623b51dce9581199302a221863196a1dde71a7663a4c2be9deb"
+ dependencies = [
+- "windows-implement 0.60.2",
+- "windows-interface 0.59.3",
++ "windows-implement",
++ "windows-interface",
+  "windows-link",
+- "windows-result 0.4.1",
++ "windows-result",
+  "windows-strings",
+ ]
+ 
+ [[package]]
+-name = "windows-implement"
+-version = "0.57.0"
++name = "windows-future"
++version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9107ddc059d5b6fbfbffdfa7a7fe3e22a226def0b2608f72e9d552763d3e1ad7"
++checksum = "e1d6f90251fe18a279739e78025bd6ddc52a7e22f921070ccdc67dde84c605cb"
+ dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn",
++ "windows-core",
++ "windows-link",
++ "windows-threading",
+ ]
+ 
+ [[package]]
+@@ -3643,17 +3695,6 @@ dependencies = [
+  "syn",
+ ]
+ 
+-[[package]]
+-name = "windows-interface"
+-version = "0.57.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "29bee4b38ea3cde66011baa44dba677c432a78593e202392d1e9070cf2a7fca7"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn",
+-]
+-
+ [[package]]
+ name = "windows-interface"
+ version = "0.59.3"
+@@ -3672,12 +3713,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "f0805222e57f7521d6a62e36fa9163bc891acd422f971defe97d64e70d0a4fe5"
+ 
+ [[package]]
+-name = "windows-result"
+-version = "0.1.2"
++name = "windows-numerics"
++version = "0.3.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5e383302e8ec8515204254685643de10811af0ed97ea37210dc26fb0032647f8"
++checksum = "6e2e40844ac143cdb44aead537bbf727de9b044e107a0f1220392177d15b0f26"
+ dependencies = [
+- "windows-targets",
++ "windows-core",
++ "windows-link",
+ ]
+ 
+ [[package]]
+@@ -3741,6 +3783,15 @@ dependencies = [
+  "windows_x86_64_msvc",
+ ]
+ 
++[[package]]
++name = "windows-threading"
++version = "0.2.1"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3949bd5b99cafdf1c7ca86b43ca564028dfe27d66958f2470940f73d86d75b37"
++dependencies = [
++ "windows-link",
++]
++
+ [[package]]
+ name = "windows_aarch64_gnullvm"
+ version = "0.52.6"
+diff --git a/Cargo.toml b/Cargo.toml
+index dfa35f0..e095382 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -15,8 +15,8 @@ version = "0.1.0"
+ anyhow = "1"
+ hex = "0.4"
+ libc = "0.2"
+-pgrx = "0.18"
+-pgrx-tests = "0.18"
++pgrx = "=0.19.1"
++pgrx-tests = "=0.19.1"
+ serde = { version = "1", features = ["derive"] }
+ serde_json = "1"
+ sha2 = "0.11"
+diff --git a/README.md b/README.md
+index 3265e8d..0713d9a 100644
+--- a/README.md
++++ b/README.md
+@@ -134,7 +134,7 @@ hot/cold reconfiguration semantics.
+ ## Development
+ 
+ This is a [pgrx](https://github.com/pgcentralfoundation/pgrx) extension
+-pinned to pgrx `0.18` with Wasmtime `44`. The repository is a Cargo
++pinned to pgrx `0.19.1` with Wasmtime `44`. The repository is a Cargo
+ workspace; the extension crate is `pgwasm/`.
+ 
+ Useful commands (see [AGENTS.md](AGENTS.md) for the authoritative testing
+diff --git a/pgwasm/src/lib.rs b/pgwasm/src/lib.rs
+index d634d24..7838709 100644
+--- a/pgwasm/src/lib.rs
++++ b/pgwasm/src/lib.rs
+@@ -1,4 +1,6 @@
+-use pgrx::prelude::*;
++use std::sync::OnceLock;
++
++use pgrx::{pg_sys, prelude::*};
+ 
+ mod abi;
+ mod artifacts;
+@@ -20,19 +22,30 @@ mod wit;
+ 
+ pg_module_magic!(name, version);
+ 
++static BACKEND_INIT: OnceLock<()> = OnceLock::new();
++
++pub(crate) fn ensure_backend_init() {
++    BACKEND_INIT.get_or_init(|| {
++        runtime::init();
++        catalog::init();
++    });
++}
++
+ #[allow(non_snake_case)]
+ #[pg_guard]
+ pub extern "C-unwind" fn _PG_init() {
+     guc::register_gucs();
+     shmem::init();
+-    runtime::init();
+-    catalog::init();
++    if unsafe { !pg_sys::process_shared_preload_libraries_in_progress } {
++        ensure_backend_init();
++    }
+ }
+ 
+ mod sql_api {
+     use pgrx::prelude::*;
+ 
+     use crate::{
++        ensure_backend_init,
+         errors::{ErrorContext, IntoReport},
+         lifecycle::{load, reconfigure, reload, unload},
+     };
+@@ -43,6 +56,7 @@ mod sql_api {
+         bytes_or_path: pgrx::Json,
+         options: default!(Option<pgrx::Json>, NULL),
+     ) -> bool {
++        ensure_backend_init();
+         load::load_impl(module_name, bytes_or_path, options).or_report(ErrorContext::default())
+     }
+ 
+@@ -52,6 +66,7 @@ mod sql_api {
+         policy: Option<pgrx::Json>,
+         limits: Option<pgrx::Json>,
+     ) -> bool {
++        ensure_backend_init();
+         reconfigure::reconfigure_impl(module_name, policy, limits)
+             .or_report(ErrorContext::default())
+     }
+@@ -62,16 +77,19 @@ mod sql_api {
+         bytes_or_path: pgrx::Json,
+         options: default!(Option<pgrx::Json>, NULL),
+     ) -> bool {
++        ensure_backend_init();
+         reload::reload_impl(module_name, bytes_or_path, options).or_report(ErrorContext::default())
+     }
+ 
+     #[pg_extern(name = "pgwasm_unload")]
+     fn unload(module_name: &str, cascade: default!(bool, false)) -> bool {
++        ensure_backend_init();
+         unload::unload_impl(module_name, cascade).or_report(ErrorContext::default())
+     }
+ 
+     #[pg_extern(name = "pgwasm_unload_all")]
+     fn unload_all() -> i64 {
++        ensure_backend_init();
+         unload::unload_all_impl()
+             .map(|n| n as i64)
+             .or_report(ErrorContext::default())
+@@ -82,6 +100,7 @@ mod views_api {
+     use pgrx::{JsonB, pg_sys::Oid, prelude::*};
+ 
+     use crate::{
++        ensure_backend_init,
+         errors::{ErrorContext, IntoReport},
+         views,
+     };
+@@ -101,6 +120,7 @@ mod views_api {
+             name!(shared, bool),
+         ),
+     > {
++        ensure_backend_init();
+         views::modules_sql().or_report(ErrorContext::default())
+     }
+ 
+@@ -118,6 +138,7 @@ mod views_api {
+             name!(last_seen_generation, i64),
+         ),
+     > {
++        ensure_backend_init();
+         views::functions_sql().or_report(ErrorContext::default())
+     }
+ 
+@@ -133,6 +154,7 @@ mod views_api {
+             name!(last_seen_generation, i64),
+         ),
+     > {
++        ensure_backend_init();
+         views::wit_types_sql().or_report(ErrorContext::default())
+     }
+ 
+@@ -146,6 +168,7 @@ mod views_api {
+             name!(limits_json, JsonB),
+         ),
+     > {
++        ensure_backend_init();
+         views::policy_effective_sql().or_report(ErrorContext::default())
+     }
+ 
+@@ -163,6 +186,7 @@ mod views_api {
+             name!(shared, bool),
+         ),
+     > {
++        ensure_backend_init();
+         views::stats_sql().or_report(ErrorContext::default())
+     }
+ 
+diff --git a/pgwasm/src/lifecycle/load.rs b/pgwasm/src/lifecycle/load.rs
+index 4d4523e..3394db0 100644
+--- a/pgwasm/src/lifecycle/load.rs
++++ b/pgwasm/src/lifecycle/load.rs
+@@ -231,7 +231,7 @@ fn load_component_path(
+ 
+     // Register after artifacts exist: nested SPI during earlier steps can abort subtransactions; a
+     // scoped `AbortSub` hook must not run cleanup until the module directory is populated.
+-    register_abort_artifact_cleanup(module_id_u64);
++    register_abort_load_cleanup(module_id_u64);
+ 
+     let _registered_types = udt::register_type_plan(&type_plan, module_id_u64, extension_oid)?;
+ 
+@@ -287,6 +287,10 @@ fn load_component_path(
+         Ok(())
+     })?;
+ 
++    // Reserve metrics slots only after export rows exist. Slot exhaustion is an explicitly
++    // supported degraded mode (`shared = false`), so it must not fail module loading.
++    let _ = shmem::allocate_slots(module_id_u64, export_rows.len());
++
+     if let Some(config) = load_hook_config {
+         hooks::on_load(module_id_u64, &config)?;
+     }
+@@ -336,7 +340,7 @@ fn load_core_path(
+     let wasm_dir = artifacts::module_dir(module_id_u64)?;
+     artifacts::write_checksum(&wasm_dir, wasm_sha256_bytes)?;
+ 
+-    register_abort_artifact_cleanup(module_id_u64);
++    register_abort_load_cleanup(module_id_u64);
+ 
+     let export_specs = plan_core_export_proc_specs(bytes)?;
+     let mut export_rows: Vec<exports::NewExport> = Vec::new();
+@@ -384,6 +388,7 @@ fn load_core_path(
+         Ok(())
+     })?;
+ 
++    let _ = shmem::allocate_slots(module_id_u64, export_rows.len());
+     shmem::bump_generation(module_id_u64);
+ 
+     Ok(true)
+@@ -399,24 +404,30 @@ fn try_prewarm_component_pool_note(module_id_u64: u64) {
+     );
+ }
+ 
+-/// Remove on-disk artifacts if the surrounding (sub)transaction aborts. Uses only filesystem I/O
+-/// (no SPI) because PostgreSQL forbids SPI in transaction abort callbacks.
++/// Release shared-memory slots and remove on-disk artifacts if the surrounding
++/// (sub)transaction aborts. This uses no SPI because PostgreSQL forbids SPI in transaction
++/// abort callbacks.
+ ///
+ /// `AbortSub` runs for **every** subtransaction abort in this backend (including SPI/savepoint
+ /// cleanups). Only act when the aborted subtransaction is the same one that was current when the
+ /// load registered this hook; otherwise nested aborts would delete artifacts mid-load.
+-fn register_abort_artifact_cleanup(module_id_u64: u64) {
++fn register_abort_load_cleanup(module_id_u64: u64) {
+     let registered_sub_id = unsafe { pg_sys::GetCurrentSubTransactionId() };
+     pgrx::register_xact_callback(pgrx::PgXactCallbackEvent::Abort, move || {
+-        remove_module_artifact_dir_if_present(module_id_u64);
++        clean_up_aborted_load(module_id_u64);
+     });
+     register_subxact_callback(PgSubXactCallbackEvent::AbortSub, move |my_subid, _| {
+         if my_subid == registered_sub_id {
+-            remove_module_artifact_dir_if_present(module_id_u64);
++            clean_up_aborted_load(module_id_u64);
+         }
+     });
+ }
+ 
++fn clean_up_aborted_load(module_id_u64: u64) {
++    shmem::free_slots(module_id_u64);
++    remove_module_artifact_dir_if_present(module_id_u64);
++}
++
+ fn remove_module_artifact_dir_if_present(module_id_u64: u64) {
+     let _ = artifacts::with_artifact_fs_lock(|| {
+         if let Ok(dir) = artifacts::module_dir(module_id_u64)
+diff --git a/pgwasm/src/lifecycle/reload.rs b/pgwasm/src/lifecycle/reload.rs
+index 4cb6c55..b276ea8 100644
+--- a/pgwasm/src/lifecycle/reload.rs
++++ b/pgwasm/src/lifecycle/reload.rs
+@@ -256,6 +256,7 @@ fn reload_component(
+     let type_plan = typing::plan_types(module_name, &decoded)?;
+ 
+     let old_exports = exports::list_by_module(module_id)?;
++    let old_slot_count = shmem::allocated_export_slots(module_id_u64);
+ 
+     let wasm_engine = engine::try_shared_engine()?;
+     let _compiled = component::compile(wasm_engine, bytes)?;
+@@ -328,7 +329,13 @@ fn reload_component(
+         Ok(())
+     })?;
+ 
+-    finish_reload_after_catalog_commit(module_id_u64, module_id, effective)?;
++    finish_reload_after_catalog_commit(
++        module_id_u64,
++        module_id,
++        effective,
++        old_slot_count,
++        new_specs.len(),
++    )?;
+ 
+     Ok(true)
+ }
+@@ -357,6 +364,7 @@ fn reload_core(
+         .collect();
+ 
+     let old_exports = exports::list_by_module(module_id)?;
++    let old_slot_count = shmem::allocated_export_slots(module_id_u64);
+     let old_by_wasm: HashMap<String, &exports::ExportRow> = old_exports
+         .iter()
+         .map(|row| (row.wasm_name.clone(), row))
+@@ -403,7 +411,13 @@ fn reload_core(
+         Ok(())
+     })?;
+ 
+-    finish_reload_after_catalog_commit(module_id_u64, module_id, effective)?;
++    finish_reload_after_catalog_commit(
++        module_id_u64,
++        module_id,
++        effective,
++        old_slot_count,
++        new_specs.len(),
++    )?;
+ 
+     Ok(true)
+ }
+@@ -412,7 +426,11 @@ fn finish_reload_after_catalog_commit(
+     module_id_u64: u64,
+     module_id: i64,
+     effective: &EffectivePolicy,
++    old_slot_count: Option<usize>,
++    new_slot_count: usize,
+ ) -> Result<()> {
++    let _ = shmem::allocate_slots(module_id_u64, new_slot_count);
++    register_shmem_slot_rollback(module_id_u64, old_slot_count);
+     pool::drain(module_id_u64)?;
+ 
+     if exports::get_by_module_and_wasm_name(module_id, ON_RECONFIGURE_WASM_NAME)?.is_some() {
+@@ -423,6 +441,25 @@ fn finish_reload_after_catalog_commit(
+     Ok(())
+ }
+ 
++fn register_shmem_slot_rollback(module_id_u64: u64, old_slot_count: Option<usize>) {
++    let registered_sub_id = unsafe { pg_sys::GetCurrentSubTransactionId() };
++    pgrx::register_xact_callback(pgrx::PgXactCallbackEvent::Abort, move || {
++        restore_shmem_slots(module_id_u64, old_slot_count);
++    });
++    register_subxact_callback(PgSubXactCallbackEvent::AbortSub, move |my_subid, _| {
++        if my_subid == registered_sub_id {
++            restore_shmem_slots(module_id_u64, old_slot_count);
++        }
++    });
++}
++
++fn restore_shmem_slots(module_id_u64: u64, old_slot_count: Option<usize>) {
++    shmem::free_slots(module_id_u64);
++    if let Some(slot_count) = old_slot_count {
++        let _ = shmem::allocate_slots(module_id_u64, slot_count);
++    }
++}
++
+ fn map_udt_error_to_breaking(err: PgWasmError, breaking_allowed: bool) -> PgWasmError {
+     if breaking_allowed {
+         return err;
+diff --git a/pgwasm/src/proc_reg.rs b/pgwasm/src/proc_reg.rs
+index 9857c91..03337a2 100644
+--- a/pgwasm/src/proc_reg.rs
++++ b/pgwasm/src/proc_reg.rs
+@@ -171,9 +171,22 @@ pub(crate) fn unregister(fn_oid: pg_sys::Oid) -> Result<(), PgWasmError> {
+         ));
+     }
+ 
++    let procedure = pg_sys::ObjectAddress {
++        classId: pg_sys::ProcedureRelationId,
++        objectId: fn_oid,
++        objectSubId: 0,
++    };
+     unsafe {
+-        // SAFETY: caller provides a function OID within an active backend transaction context.
+-        pg_sys::RemoveFunctionById(fn_oid);
++        // SAFETY: caller provides a live function OID within an active backend transaction.
++        // Use PostgreSQL's dependency-aware deletion path so outgoing pg_depend rows, shared
++        // dependencies, comments, labels, and initial privileges are removed with pg_proc.
++        // Dynamic exports are extension members, so skip the extension ownership edge while
++        // retaining DROP RESTRICT checks for ordinary dependents such as views.
++        pg_sys::performDeletion(
++            &procedure,
++            pg_sys::DropBehavior::DROP_RESTRICT,
++            pg_sys::PERFORM_DELETION_SKIP_EXTENSIONS as i32,
++        );
+     }
+     Ok(())
+ }
+@@ -225,13 +238,55 @@ unsafe fn procedure_create(
+     }
+ }
+ 
+-#[cfg(any(
+-    feature = "pg14",
+-    feature = "pg15",
+-    feature = "pg16",
+-    feature = "pg17",
+-    feature = "pg18"
+-))]
++#[cfg(any(feature = "pg14", feature = "pg15", feature = "pg16", feature = "pg17"))]
++#[allow(clippy::too_many_arguments)]
++unsafe fn procedure_create(
++    spec: &ProcSpec,
++    schema_oid: pg_sys::Oid,
++    replace_exports: bool,
++    c_language_oid: pg_sys::Oid,
++    arg_type_vector: *mut pg_sys::oidvector,
++    all_arg_types: Datum,
++    arg_modes: Datum,
++    arg_names: Datum,
++    procost: f32,
++    prorows: f32,
++) -> pg_sys::ObjectAddress {
++    unsafe {
++        // SAFETY: caller validates arguments and pointer lifetimes for ProcedureCreate.
++        pg_sys::ProcedureCreate(
++            spec.name.as_pg_cstr(),
++            schema_oid,
++            replace_exports,
++            spec.returns_set,
++            spec.ret_type,
++            pg_sys::GetUserId(),
++            c_language_oid,
++            pg_sys::Oid::from(pg_sys::F_FMGR_C_VALIDATOR),
++            TRAMPOLINE_SYMBOL.as_pg_cstr(),
++            EXTENSION_LIBRARY_PATH.as_pg_cstr(),
++            std::ptr::null_mut(),
++            pg_sys::PROKIND_FUNCTION as c_char,
++            false,
++            false,
++            spec.strict,
++            spec.volatility.to_pg_char(),
++            spec.parallel.to_pg_char(),
++            arg_type_vector,
++            all_arg_types,
++            arg_modes,
++            arg_names,
++            std::ptr::null_mut(),
++            Datum::null(),
++            Datum::null(),
++            pg_sys::InvalidOid,
++            procost,
++            prorows,
++        )
++    }
++}
++
++#[cfg(feature = "pg18")]
+ #[allow(clippy::too_many_arguments)]
+ unsafe fn procedure_create(
+     spec: &ProcSpec,
+@@ -271,6 +326,7 @@ unsafe fn procedure_create(
+             arg_names,
+             std::ptr::null_mut(),
+             Datum::null(),
++            std::ptr::null_mut(),
+             Datum::null(),
+             pg_sys::InvalidOid,
+             procost,
+@@ -624,18 +680,26 @@ mod tests {
+     }
+ 
+     #[pg_test]
+-    fn unregister_removes_pg_proc_row() {
++    fn unregister_removes_pg_proc_row_and_dependencies() {
+         let spec = base_spec(unique_name("proc_reg_unregister"));
+         let fn_oid = register(&spec, extension_oid(), false).expect("register should succeed");
+ 
+         unregister(fn_oid).expect("unregister should succeed");
+ 
+-        let count = Spi::get_one::<i64>(&format!(
++        let proc_count = Spi::get_one::<i64>(&format!(
+             "SELECT count(*) FROM pg_proc WHERE oid = {}",
+             u32::from(fn_oid)
+         ))
+         .expect("count query should run");
+-        assert_eq!(Some(0), count);
++        assert_eq!(Some(0), proc_count);
++
++        let dependency_count = Spi::get_one::<i64>(&format!(
++            "SELECT count(*) FROM pg_depend \
++             WHERE classid = 'pg_proc'::regclass AND objid = {}",
++            u32::from(fn_oid)
++        ))
++        .expect("dependency count query should run");
++        assert_eq!(Some(0), dependency_count);
+     }
+ 
+     #[pg_test]
+diff --git a/pgwasm/src/runtime/host.rs b/pgwasm/src/runtime/host.rs
+index c03eab8..e143cad 100644
+--- a/pgwasm/src/runtime/host.rs
++++ b/pgwasm/src/runtime/host.rs
+@@ -167,7 +167,7 @@ fn spi_entry_to_host_value(
+     typoid: pg_sys::Oid,
+ ) -> Result<query::Value, String> {
+     unsafe {
+-        if pg_sys::get_typtype(typoid) == pg_sys::TYPTYPE_PSEUDO as i8 {
++        if pg_sys::get_typtype(typoid) == pg_sys::TYPTYPE_PSEUDO as libc::c_char {
+             return spi_unknown_type_via_text(entry);
+         }
+     }
+diff --git a/pgwasm/src/shmem.rs b/pgwasm/src/shmem.rs
+index bddfe4f..6acd1cb 100644
+--- a/pgwasm/src/shmem.rs
++++ b/pgwasm/src/shmem.rs
+@@ -137,14 +137,12 @@ pub(crate) enum ExportCounterKind {
+     Traps,
+ }
+ 
+-#[cfg(feature = "pg_test")]
+ #[derive(Clone, Copy, Debug, Eq, PartialEq)]
+ pub(crate) enum ShmemOverflow {
+     ExportSlots,
+     ModuleSlots,
+ }
+ 
+-#[cfg(feature = "pg_test")]
+ #[derive(Clone, Copy, Debug, Eq, PartialEq)]
+ pub(crate) struct SlotRefs {
+     pub(crate) export_len: usize,
+@@ -226,7 +224,6 @@ impl ModuleSlot {
+     }
+ }
+ 
+-#[cfg(feature = "pg_test")]
+ impl ModuleSlot {
+     fn claim(&self, module_id: u64, export_start: usize, export_len: usize) {
+         self.module_id.store(module_id, Ordering::Relaxed);
+@@ -295,7 +292,6 @@ impl ExportSlot {
+     }
+ }
+ 
+-#[cfg(feature = "pg_test")]
+ impl ExportSlot {
+     fn claim(&self, module_id: u64, export_index: usize) {
+         self.module_id.store(module_id, Ordering::Relaxed);
+@@ -381,7 +377,6 @@ pub(crate) fn read_export_counter(
+ }
+ 
+ /// Reserve one module slot and `n_exports` export slots under CatalogLock.
+-#[cfg(feature = "pg_test")]
+ pub(crate) fn allocate_slots(module_id: u64, n_exports: usize) -> Result<SlotRefs, ShmemOverflow> {
+     with_catalog_lock_exclusive(|| {
+         let Some(shared_state) = shared_state_ref() else {
+@@ -399,11 +394,18 @@ pub(crate) fn allocate_slots(module_id: u64, n_exports: usize) -> Result<SlotRef
+             let export_len = shared_state.module_slots[module_slot]
+                 .export_len
+                 .load(Ordering::Relaxed) as usize;
+-            return Ok(SlotRefs {
+-                module_slot,
+-                export_start,
+-                export_len,
+-            });
++            if export_len == n_exports {
++                return Ok(SlotRefs {
++                    module_slot,
++                    export_start,
++                    export_len,
++                });
++            }
++
++            for slot in &shared_state.export_slots[export_start..export_start + export_len] {
++                slot.clear();
++            }
++            shared_state.module_slots[module_slot].clear();
+         }
+ 
+         let module_slot =
+@@ -436,6 +438,19 @@ pub(crate) fn allocate_slots(module_id: u64, n_exports: usize) -> Result<SlotRef
+     })
+ }
+ 
++/// Return the number of export slots currently reserved for `module_id`.
++pub(crate) fn allocated_export_slots(module_id: u64) -> Option<usize> {
++    with_catalog_lock_shared(|| {
++        let shared_state = shared_state_ref()?;
++        let module_slot = find_module_slot_index(shared_state, module_id)?;
++        Some(
++            shared_state.module_slots[module_slot]
++                .export_len
++                .load(Ordering::Relaxed) as usize,
++        )
++    })
++}
++
+ /// Release module and export slots under CatalogLock.
+ pub(crate) fn free_slots(module_id: u64) {
+     with_catalog_lock_exclusive(|| {
+@@ -533,7 +548,6 @@ fn find_module_slot_index(shared_state: &SharedState, module_id: u64) -> Option<
+     })
+ }
+ 
+-#[cfg(feature = "pg_test")]
+ fn find_free_module_slot_index(shared_state: &SharedState) -> Option<usize> {
+     shared_state
+         .module_slots
+@@ -553,7 +567,6 @@ fn find_export_slot_index(
+     })
+ }
+ 
+-#[cfg(any(test, feature = "pg_test"))]
+ fn find_contiguous_free_range<F>(
+     total_slots: usize,
+     needed_slots: usize,
+diff --git a/pgwasm/src/trampoline.rs b/pgwasm/src/trampoline.rs
+index 8e8d631..9cc582f 100644
+--- a/pgwasm/src/trampoline.rs
++++ b/pgwasm/src/trampoline.rs
+@@ -34,6 +34,7 @@ use crate::{
+ #[pg_guard]
+ #[unsafe(no_mangle)]
+ pub unsafe extern "C-unwind" fn pgwasm_udf_trampoline(fcinfo: FunctionCallInfo) -> Datum {
++    crate::ensure_backend_init();
+     unsafe { trampoline_impl(fcinfo) }
+ }
+ 
