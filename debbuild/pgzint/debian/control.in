@@ -1,0 +1,16 @@
+Source: pgzint
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libzint-dev (>= 2.14.0)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/davidbeauchamp/pgzint
+
+Package: postgresql-PGVERSION-pgzint
+Architecture: any
+Provides: postgresql-pgzint
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Zint barcode generation functions for PostgreSQL
+ pgzint exposes the Zint barcode library to PostgreSQL and returns
+ PNG-formatted barcodes for the symbologies supported by Zint.
