@@ -1,28 +1,36 @@
 all: setup build move
 
-#TARBALL := pg_net-0.9.2.tar.gz
-TARBALL := pg_net-0.20.5.tar.gz
+VERSION := 0.20.5
+TARBALL := pg_net-$(VERSION).tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+BUILD_DIR := build
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+SUITE ?= $(shell (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}))
+SUPPORTED_SUITES := bookworm trixie noble resolute
 
-# prepare directory
-setup:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	pg_buildext updatecontrol
-	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+check-suite:
+	@case "$(SUITE)" in \
+	  bookworm|trixie|noble|resolute) ;; \
+	  *) echo "unsupported pg_net build suite: $(SUITE); pg_net $(VERSION) requires libcurl >= 7.83; supported suites: $(SUPPORTED_SUITES)" >&2; exit 1 ;; \
+	esac
 
-# building deb
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
+
+setup: check-suite check-src
+	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	sed -i "1s/PIGSTY)/PIGSTY~$(SUITE))/" $(BUILD_DIR)/debian/changelog
+
 build:
-	cd build && pg_buildext updatecontrol
-	cd build && dpkg-buildpackage -b -us -uc
+	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
-# collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
 
-# remove building craps
 clean:
-	rm -rf *.buildinfo *.changes *.ddeb *.deb
+	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
+.PHONY: all check-suite check-src setup build move clean
