@@ -1,3 +1,10 @@
+postbis (1.0-2PIGSTY) unstable; urgency=medium
+
+  * Rebuild all supported Debian and Ubuntu targets with the corrected
+    alphabet allocation and indexed random-access slice sizing.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 28 Jul 2026 14:14:00 +0800
+
 postbis (1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial DEB release from upstream snapshot
