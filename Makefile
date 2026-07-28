@@ -2,7 +2,7 @@
 # File      :   Makefile
 # Desc      :   pgsty/deb repo shortcuts
 # Ctime     :   2024-07-28
-# Mtime     :   2025-11-02
+# Mtime     :   2026-07-28
 # Path      :   Makefile
 # Author    :   Ruohang Feng (rh@vonng.com)
 # License   :   Apache-2.0
@@ -205,7 +205,7 @@ r:
 .PHONY: rust deps batch1 batch2 deb-collect ivorysql-contrib \
 	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_tiktoken_c pg_summarize pg_polyline pg_tzf pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale timescaledb_toolkit pg_session_jwt pgml plprql pg_later pg_anon pg_smtp_client vchord pg_bestmatch pglite_fusion age \
  	pgdd convert pg_tokenizer pg_render pgx_ulid \
- 	pg_net pgjwt pg_gzip pg_bzip vault pgsodium supautils pg_tle plv8 omnigres permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash pg_tde hunspell  zhparser duckdb_fdw pg_duckdb pg_mooncake hydra citus timescaledb pgroonga \
+	pg_net pgjwt pg_gzip pg_bzip vault pgsodium supautils pg_tle plv8 omnigres permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash hunspell zhparser duckdb_fdw pg_duckdb pg_mooncake hydra citus timescaledb pgroonga \
  	pg_timeseries pgmq pgmb pg_plan_filter pg_relusage pg_track_optimizer pg_uint128 \
  	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
 	pg_fkpart pg_kpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj table_version pg_statement_rollback \
