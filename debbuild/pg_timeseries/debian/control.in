@@ -10,7 +10,6 @@ Homepage: https://github.com/ChuckHend/pg_timeseries
 Package: postgresql-PGVERSION-pg-timeseries
 Architecture: any
 Provides: postgresql-pg-timeseries
-Depends: ${postgresql:Depends}, ${misc:Depends}
-Recommends: postgresql-PGVERSION-pg-partman, postgresql-PGVERSION-pg-cron
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-partman, postgresql-PGVERSION-cron
 Description: Simple and focused time-series tables for PostgreSQL
   The purpose of this extension is to provide a cohesive user experience around the creation, maintenance, and use of time-series tables.

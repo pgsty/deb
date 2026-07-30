@@ -19,7 +19,7 @@ override_dh_auto_install:
 	rm -rf debian/postgresql-*-pg-timeseries/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:
-	dh_installdocs --all README.*
+	dh_installdocs --all doc/timeseries.md
 
 %:
 	dh $@
