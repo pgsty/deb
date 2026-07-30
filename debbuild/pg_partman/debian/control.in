@@ -7,9 +7,11 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/pgpartman/pg_partman
 
-Package: postgresql-PGVERSION-pg-partman
+Package: postgresql-PGVERSION-partman
 Architecture: any
-Provides: postgresql-pg-partman
+Provides: postgresql-PGVERSION-pg-partman, postgresql-pg-partman
+Conflicts: postgresql-PGVERSION-pg-partman
+Replaces: postgresql-PGVERSION-pg-partman
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, python3:any, python3-psycopg2
 Description: Partition management extension for PostgreSQL
  pg_partman creates and manages time-based and number-based table partition
