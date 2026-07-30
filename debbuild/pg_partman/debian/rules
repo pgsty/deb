@@ -15,9 +15,9 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-pg-partman
-	rm -rf debian/postgresql-*-pg-partman/usr/share/doc/postgresql-doc-*/
-	find debian/postgresql-*-pg-partman/usr/lib/postgresql -type f -name '*.py' \
+	+pg_buildext loop postgresql-%v-partman
+	rm -rf debian/postgresql-*-partman/usr/share/doc/postgresql-doc-*/
+	find debian/postgresql-*-partman/usr/lib/postgresql -type f -name '*.py' \
 	    -exec sed -i '1s|^#!/usr/bin/env python$$|#!/usr/bin/python3|' {} +
 
 override_dh_installdocs:
