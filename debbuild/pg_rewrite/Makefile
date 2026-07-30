@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_rewrite-REL2_0_0.tar.gz
+TARBALL := pg_rewrite-REL2_2.tar.gz
 
 # prepare directory
 setup:

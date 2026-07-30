@@ -1,3 +1,11 @@
+pg-rewrite (2.2-2PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 2.2.
+  * Rename binary packages to postgresql-<major>-pg-rewrite to match PGDG.
+  * Replace the previous postgresql-<major>-rewrite packages on upgrade.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 29 Jul 2026 21:09:02 +0800
+
 pg-rewrite (2.0.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
