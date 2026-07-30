@@ -13,8 +13,8 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-rewrite
-	rm -rf debian/postgresql-*-rewrite/usr/share/doc/postgresql-doc-*/
+	+pg_buildext loop postgresql-%v-pg-rewrite
+	rm -rf debian/postgresql-*-pg-rewrite/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:
 	dh_installdocs --all README.*
