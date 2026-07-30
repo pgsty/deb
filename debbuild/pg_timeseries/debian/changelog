@@ -1,3 +1,21 @@
+pg-timeseries (0.2.1-4PIGSTY) unstable; urgency=medium
+
+  * Promote the required pg_partman and pg_cron extensions to dependencies.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Jul 2026 20:15:00 +0800
+
+pg-timeseries (0.2.1-3PIGSTY) unstable; urgency=medium
+
+  * Install the real documentation file instead of a broken README symlink.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 29 Jul 2026 21:39:45 +0800
+
+pg-timeseries (0.2.1-2PIGSTY) unstable; urgency=medium
+
+  * Recommend the PGDG-compatible pg_partman package name.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 29 Jul 2026 20:46:17 +0800
+
 pg-timeseries (0.2.1-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 0.2.1.
