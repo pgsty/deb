@@ -1,3 +1,13 @@
+pg-search (0.25.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 0.25.0.
+  * Add the new OpenBLAS build dependency for SuperKMeans.
+  * Add the new runtime dependency on pgvector.
+  * Align upstream pgrx 0.19.0 dependencies with builder cargo-pgrx 0.19.1.
+  * Use the validated builder stable Rust toolchain.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Jul 2026 09:30:00 +0800
+
 pg-search (0.24.3-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.24.3 and build the locked graph with pgrx 0.19.1.
