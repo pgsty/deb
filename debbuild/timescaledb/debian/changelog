@@ -1,3 +1,10 @@
+timescaledb-tsl (2.29.0-1PIGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.29.0
+  * Drop PostgreSQL 15, which is no longer supported upstream.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Jul 2026 09:30:00 +0800
+
 timescaledb-tsl (2.28.3-1PIGSTY) unstable; urgency=medium
 
   * https://github.com/timescale/timescaledb/releases/tag/2.28.3
