@@ -1,3 +1,10 @@
+pgvector (0.8.6-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.8.6.
+  * Disable upstream -march=native for portable builder artifacts.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 30 Jul 2026 09:30:00 +0800
+
 pgvector (0.8.5-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 0.8.5.

@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgvector-0.8.5.tar.gz
+TARBALL := pgvector-0.8.6.tar.gz
 
 # prepare directory
 setup:
