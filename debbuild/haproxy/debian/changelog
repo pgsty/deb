@@ -1,9 +1,16 @@
-haproxy (3.4.2-1PIGSTY) unstable; urgency=medium
+haproxy (3.4.3-1PIGSTY) unstable; urgency=medium
 
-  * New upstream LTS release.
-  * Add a Lua 5.3 fallback for Ubuntu 20.04 builds.
+  * New upstream release.
+  * Align the RPM and DEB runtime contract on haproxy.cfg plus conf.d.
+  * Create /etc/haproxy/conf.d and use it from the SysV init script.
+  * Track the portable parts of Debian's 3.4 packaging baseline.
+  * Keep the watch file compatible with the oldest supported devscripts.
+  * Let debhelper install and manage the generated systemd unit.
+  * Use native OpenSSL QUIC APIs when available.
+  * Remove an obsolete adduser compatibility option.
+  * Verify the upstream source archive before unpacking.
 
- -- Ruohang Feng <rh@vonng.com>  Tue, 21 Jul 2026 15:01:32 +0800
+ -- Ruohang Feng <rh@vonng.com>  Fri, 31 Jul 2026 14:02:00 +0800
 
 haproxy (3.2.21-1~bpo12+1) bookworm-backports; urgency=medium
 
