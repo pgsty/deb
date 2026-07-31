@@ -8,7 +8,7 @@ include /usr/share/dpkg/buildtools.mk
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-LUA_VERSION := $(shell if test -d /usr/include/lua5.4; then echo 5.4; else echo 5.3; fi)
+OPENSSL_HAS_NATIVE_QUIC := $(shell $(PKG_CONFIG) --atleast-version=3.5.2 openssl 2>/dev/null && echo yes)
 
 MAKEARGS=V=1 \
 	 CC='$(CC)' \
@@ -21,17 +21,15 @@ MAKEARGS=V=1 \
 	 USE_PCRE2=1 \
 	 USE_PCRE2_JIT=1 \
 	 USE_OPENSSL=1 \
-	 USE_QUIC_OPENSSL_COMPAT=1 \
 	 USE_QUIC=1 \
 	 USE_SLZ=1 \
 	 USE_LUA=1 \
 	 USE_PROMEX=1 \
-	 LUA_INC=/usr/include/lua$(LUA_VERSION) \
+	 LUA_INC=/usr/include/lua5.4 \
 	 EXTRA=admin/halog/halog
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
         MAKEARGS+= TARGET=linux-glibc
-	deb_systemdsystemunitdir=/usr/lib/systemd/system
 else ifeq ($(DEB_HOST_ARCH_OS),kfreebsd)
         MAKEARGS+= TARGET=freebsd
 else
@@ -45,6 +43,10 @@ MAKEARGS += VERSION="$(DEB_VERSION_UPSTREAM)"
 MAKEARGS += SUBVERS="-$(lastword $(subst -, ,$(DEB_VERSION)))"
 MAKEARGS += VERDATE="$(shell TZ=UTC date -d "@$(SOURCE_DATE_EPOCH)" "+%Y/%m/%d")"
 
+ifneq ($(OPENSSL_HAS_NATIVE_QUIC),yes)
+MAKEARGS += USE_QUIC_OPENSSL_COMPAT=1
+endif
+
 %:
 	dh $@ --with sphinxdoc
 
@@ -53,6 +55,7 @@ override_dh_auto_configure:
 override_dh_auto_build-arch:
 	make $(MAKEARGS)
 	make -C admin/systemd $(MAKEARGS)
+	install -m 0644 admin/systemd/haproxy.service debian/haproxy.service
 	$(MAKE) -C doc/lua-api man
 
 override_dh_auto_build-indep:
@@ -67,15 +70,13 @@ override_dh_auto_build-indep:
 override_dh_auto_clean:
 	make -C admin/systemd clean
 	$(MAKE) -C doc/lua-api clean
+	rm -f debian/haproxy.service
 	dh_auto_clean
 
 override_dh_auto_install-arch:
 	make $(MAKEARGS) install
 	install -m 0644 -D debian/rsyslog.conf debian/haproxy/etc/rsyslog.d/49-haproxy.conf
 	install -m 0644 -D debian/logrotate.conf debian/haproxy/etc/logrotate.d/haproxy
-ifneq ($(deb_systemdsystemunitdir),)
-	install -m 0644 -D admin/systemd/haproxy.service debian/haproxy$(deb_systemdsystemunitdir)/haproxy.service
-endif
 
 override_dh_auto_install-indep:
 
