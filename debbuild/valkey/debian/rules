@@ -34,9 +34,12 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	./runtest --clients 1 --verbose --dump-logs --no-latency \
 		--tags -mptcp \
 		--skipunit integration/dual-channel-replication
+	# TclTLS can deadlock on large bidirectional buffers in containers. Both
+	# skipped cases are exercised by the normal suite above.
 	./runtest --clients 1 --tls --verbose --dump-logs --no-latency \
 		--tags -mptcp \
 		--skiptest "For unauthenticated clients output buffer is limited" \
+		--skiptest "Test child sending info" \
 		--skipunit integration/dual-channel-replication
 	./runtest-sentinel
 	rm -rf tests/tls

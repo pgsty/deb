@@ -40,8 +40,11 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 		--skiptest "diskless slow replicas drop during rdb pipe" \
 		--skiptest "diskless fast replicas drop during rdb pipe" \
 		--skiptest "diskless all replicas drop during rdb pipe"
+	# TclTLS can deadlock on large bidirectional buffers in containers. Both
+	# skipped cases are exercised by the normal suite above.
 	./runtest --clients 1 --tls --verbose --no-latency \
 		--skiptest "For unauthenticated clients output buffer is limited" \
+		--skiptest "Test child sending info" \
 		--skiptest "diskless no replicas drop during rdb pipe" \
 		--skiptest "diskless slow replicas drop during rdb pipe" \
 		--skiptest "diskless fast replicas drop during rdb pipe" \
