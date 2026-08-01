@@ -1,0 +1,125 @@
+valkey (9.1.1-1PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
+
+  * Build Valkey as valkey, valkey-dev, and valkey-dbgsym packages.
+  * Preserve the former runtime package names as versioned virtual packages.
+  * Enable TLS, systemd integration, hardening, and upstream tests.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 01 Aug 2026 02:00:00 +0800
+
+valkey (8.1.4+dfsg1-2) unstable; urgency=medium
+
+  * Fix CVE-2025-67733 (Closes: #1130911).
+    A malicious user can use scripting commands to inject arbitrary
+    information into the response stream for the given client, potentially
+    corrupting or returning tampered data to other users on the same
+    connection. The error handling code for lua scripts does not properly
+    handle null characters.
+    - d/p/CVE-2025-67733.patch
+  * Fix CVE-2026-21863 (Closes: #1130911).
+    A malicious actor with access to the Valkey clusterbus port can send an
+    invalid packet that may cause an out bound read, which might result in
+    the system crashing. The Valkey clusterbus packet processing code does
+    not validate that a clusterbus ping extension packet is located within
+    buffer of the clusterbus packet before attempting to read it.
+    - d/p/CVE-2026-21863.patch
+
+ -- Lucas Kanashiro <kanashiro@debian.org>  Mon, 30 Mar 2026 18:47:11 -0300
+
+valkey (8.1.4+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fixes CVE-2025-49844, CVE-2025-46817, CVE-2025-46818 and CVE-2025-46819
+      (Closes: #1117687)
+  * Update patches.
+    Remove d/p/CVE-2025-*.patch already applied by upstream
+
+ -- Lucas Kanashiro <kanashiro@debian.org>  Thu, 23 Oct 2025 21:30:33 -0300
+
+valkey (8.1.1+dfsg1-3) unstable; urgency=medium
+
+  * Fix CVE-2025-32023 (Closes: #1108978)
+    An authenticated user may use a specially crafted string to trigger a
+    stack/heap out of bounds write on hyperloglog operations, potentially
+    leading to remote code execution. The bug likely affects all Valkey
+    versions with hyperloglog operations implemented.
+    An additional workaround to mitigate the problem without patching the
+    valkey-server executable is to prevent users from executing hyperloglog
+    operations. This can be done using ACL to restrict HLL commands.
+    - d/p/CVE-2025-32023.patch
+  * Fix CVE-2025-48367 (Closes: #1108982)
+    An unauthenticated connection can cause repeated IP protocol errors,
+    leading to client starvation and, ultimately, a denial of service.
+    - d/p/CVE-2025-48367.patch
+  * d/copyright: fix path of the lua files, thanks to lintian!
+
+ -- Lucas Kanashiro <kanashiro@debian.org>  Wed, 09 Jul 2025 05:53:22 -0300
+
+valkey (8.1.1+dfsg1-2) unstable; urgency=medium
+
+  * Fix CVE-2025-49112 (Closes: #1107210)
+    setDeferredReply in networking.c in Valkey through 8.1.1 has an integer
+    underflow for prev->size - prev->used.
+    - d/p/CVE-2025-49112.patch
+
+ -- Lucas Kanashiro <kanashiro@debian.org>  Thu, 12 Jun 2025 14:42:42 -0300
+
+valkey (8.1.1+dfsg1-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Check length of AOF file name in valkey-check-aof (CVE-2025-27151)
+    (Closes: #1106824)
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 09 Jun 2025 10:47:39 +0200
+
+valkey (8.1.1+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release.
+    + Fix CVE-2025-21605 (Closes: #1104012)
+  * Refresh patches
+  * Declare compliance with Debian Policy 4.7.2
+
+ -- Lucas Kanashiro <kanashiro@debian.org>  Mon, 28 Apr 2025 15:49:27 -0300
+
+valkey (8.0.2+dfsg1-1) unstable; urgency=medium
+
+  [ Christian Göttsche ]
+  * 0003-Use-get_current_dir_name-over-PATHMAX.patch: free allocated memory
+  * d/rules: enable LTO
+  * valkey-tools.postinst: create directories with default SELinux context
+
+  [ Lucas Kanashiro ]
+  * New upstream version 8.0.2+dfsg1
+    - Fixes CVE-2024-46981 and CVE-2024-51741 (Closes: #1092371)
+
+ -- Lucas Kanashiro <kanashiro@debian.org>  Mon, 13 Jan 2025 23:55:00 -0300
+
+valkey (8.0.1+dfsg1-1) unstable; urgency=medium
+
+  [ Lena Voytek ]
+  * New upstream release 8.0.1
+  * Refresh patches against new version:
+    - d/p/debian-packaging/0001-Set-Debian-configuration-defaults.patch
+    - d/p/0002-Add-CPPFLAGS-to-upstream-makefiles.patch
+    - d/p/0003-Use-get_current_dir_name-over-PATHMAX.patch
+    - d/p/0004-Add-support-for-USE_SYSTEM_JEMALLOC-flag.patch
+  * d/valkey-server.docs: Remove MANIFESTO
+  * d/valkey-tools.examples: Remove redis-trib.rb
+
+  [ Lucas Kanashiro ]
+  * d/copyright: remove superfluous file pattern
+
+ -- Lucas Kanashiro <kanashiro@debian.org>  Fri, 18 Oct 2024 19:23:21 -0300
+
+valkey (7.2.5+dfsg1-2) unstable; urgency=medium
+
+  * d/copyright: remove the excluded files paragraph.
+  * d/copyright: add missing License field.
+  * d/watch: add version mangle and repack suffix because of dfsg.
+
+ -- Lucas Kanashiro <kanashiro@debian.org>  Fri, 09 Aug 2024 19:01:26 -0300
+
+valkey (7.2.5+dfsg1-1) unstable; urgency=medium
+
+  * Initial packaging (Closes: #1068342).
+
+ -- Lucas Kanashiro <kanashiro@debian.org>  Wed, 26 Jun 2024 18:35:47 -0300

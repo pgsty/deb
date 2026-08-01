@@ -1,0 +1,2 @@
+usr/bin/valkey-check-rdb usr/bin/valkey-server
+usr/bin/valkey-check-rdb usr/bin/valkey-sentinel

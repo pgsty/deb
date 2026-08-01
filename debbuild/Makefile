@@ -2,7 +2,7 @@
 # File      :   Makefile
 # Desc      :   pgsty/deb repo shortcuts
 # Ctime     :   2024-07-28
-# Mtime     :   2026-07-28
+# Mtime     :   2026-08-01
 # Path      :   Makefile
 # Author    :   Ruohang Feng (rh@vonng.com)
 # License   :   Apache-2.0
@@ -876,6 +876,9 @@ pg_strict:
 redis:
 	cd redis && make
 
+valkey:
+	cd valkey && make
+
 
 ###############################################################
 #            Category: FDW  - FDW                            #
@@ -1157,7 +1160,7 @@ collect:
 	pg_rewrite pg_query_rewrite pg_column_tetris online_advisor pgmemento pg_roast pgdisablelogerror pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_qos pg_savior safeupdate pg_drop_events pg_dbms_lock pg_dbms_errlog pg_dbms_metadata pg_dbms_job \
 	pg_profile pg_flight_recorder pgmonitor pg_tracing pg_stat_monitor pg_store_plans pg_datasentinel pgsentinel pg_ash pgfincore system_stats pg_meta pg_mockable pgsqlmock pgnodemx pg_sqlog pgmeminfo pg_stat_backtrace plpgsql_check pg_relusage pg_track_optimizer pg_pathcheck pagevis pg_isok \
 	passwordcheck_cracklib passwordpolicy supautils pgsodium pg_vault pg_auth_mon pgcryptokey column_encrypt pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
-	redis \
+	redis valkey \
 	multicorn pgspider_ext sqlite_fdw pgbouncer_fdw odbc_fdw hdfs_fdw jdbc_fdw redis_fdw mongo_fdw pg_redis_pubsub kafka_fdw libfq zlog polarstore graphblas lagraph onesparse pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
 	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback plpgsql_wrap spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto re2 rdf_fdw ulak \
 	pglogical_ticker pgl_ddl_deploy pg_failover_slots db_migrator pgactive wal2mongo decoder_raw pg_bulkload logical_ddl pg_fact_loader \

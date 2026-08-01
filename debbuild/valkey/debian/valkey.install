@@ -1,0 +1,7 @@
+valkey.conf                        etc/valkey
+sentinel.conf                      etc/valkey
+debian/bash_completion.d/*         usr/share/bash-completion/completions
+src/valkey-benchmark               usr/bin
+src/valkey-check-aof               usr/bin
+src/valkey-check-rdb               usr/bin
+src/valkey-cli                     usr/bin

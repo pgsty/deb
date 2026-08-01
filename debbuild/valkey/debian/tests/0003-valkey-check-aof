@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Smoke test valkey-check-aof
+
+valkey-check-aof 2>&1 | grep -qsi usage:

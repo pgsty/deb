@@ -1,0 +1,23 @@
+.TH VALKEY-SERVER 1 "March 20, 2009"
+.SH NAME
+valkey-server \- Persistent key-value database
+.SH SYNOPSIS
+.B valkey-server
+.RI configfile
+.SH DESCRIPTION
+Valkey is a key-value database. It is similar to memcached but the dataset is
+not volatile and other datatypes (such as lists and sets) are natively
+supported.
+.PP
+.SH OPTIONS
+.IP "configfile"
+Read options from specified configuration file.
+.SH NOTES
+On Debian GNU/Linux systems, \fBvalkey-server\fP can be managed with the
+\fBvalkey.service\fP systemd unit. It uses \fB/etc/valkey/valkey.conf\fP by
+default.
+.SH AUTHOR
+\fBvalkey-server\fP was written by Salvatore Sanfilippo.
+.PP
+This manual page was written by Chris Lamb <lamby@debian.org> for the Debian
+project (but may be used by others).

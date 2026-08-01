@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Run the benchmarking
+
+set -eu
+
+service valkey start
+
+sleep 5
+
+valkey-benchmark -P 10

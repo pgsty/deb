@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# Test valkey-check-rdb
+
+set -eu
+
+service valkey start
+
+sleep 5
+
+# Perform a synchronous save to ensure the RDB file exists.
+valkey-cli SAVE
+
+valkey-check-rdb /var/lib/valkey/dump.rdb

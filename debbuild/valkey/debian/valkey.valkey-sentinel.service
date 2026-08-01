@@ -1,0 +1,21 @@
+[Unit]
+Description=Valkey Sentinel
+Documentation=https://valkey.io/topics/sentinel/
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+User=valkey
+Group=valkey
+WorkingDirectory=/var/lib/valkey
+ExecStart=/usr/bin/valkey-sentinel /etc/valkey/sentinel.conf --daemonize no --supervised systemd
+RuntimeDirectory=valkey
+RuntimeDirectoryMode=0755
+UMask=007
+PrivateTmp=true
+NoNewPrivileges=true
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,21 @@
+[Unit]
+Description=Valkey persistent key-value database
+Documentation=https://valkey.io/topics/
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+User=valkey
+Group=valkey
+WorkingDirectory=/var/lib/valkey
+ExecStart=/usr/bin/valkey-server /etc/valkey/valkey.conf --daemonize no --supervised systemd
+RuntimeDirectory=valkey
+RuntimeDirectoryMode=0755
+UMask=007
+PrivateTmp=true
+NoNewPrivileges=true
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

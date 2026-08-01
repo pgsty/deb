@@ -1,0 +1,6 @@
+debian/valkey-benchmark.1
+debian/valkey-check-aof.1
+debian/valkey-check-rdb.1
+debian/valkey-cli.1
+debian/valkey-sentinel.1
+debian/valkey-server.1
