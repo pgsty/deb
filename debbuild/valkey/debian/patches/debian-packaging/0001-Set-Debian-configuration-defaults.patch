@@ -1,0 +1,110 @@
+Description: Set safe distribution configuration defaults
+Author: Ruohang Feng <rh@vonng.com>
+Origin: vendor
+Forwarded: not-needed
+Last-Update: 2026-08-01
+---
+--- a/sentinel.conf
++++ b/sentinel.conf
+@@ -3,7 +3,7 @@
+ # By default protected mode is disabled in sentinel mode. Sentinel is reachable
+ # from interfaces different than localhost. Make sure the sentinel instance is
+ # protected from the outside world via firewalling or other means.
+-protected-mode no
++protected-mode yes
+ 
+ # port <sentinel-port>
+ # The port that this sentinel instance will run on
+@@ -12,12 +12,13 @@
+ # By default Valkey Sentinel does not run as a daemon. Use 'yes' if you need it.
+ # Note that Valkey will write a pid file in /var/run/valkey-sentinel.pid when
+ # daemonized.
+-daemonize no
++daemonize yes
++supervised auto
+ 
+ # When running daemonized, Valkey Sentinel writes a pid file in
+ # /var/run/valkey-sentinel.pid by default. You can specify a custom pid file
+ # location here.
+-pidfile /var/run/valkey-sentinel.pid
++pidfile /run/valkey/sentinel.pid
+ 
+ # Specify the server verbosity level.
+ # This can be one of:
+@@ -31,7 +31,7 @@
+ # Specify the log file name. Also the empty string can be used to force
+ # Sentinel to log on the standard output. Note that if you use standard
+ # output for logging but daemonize, logs will be sent to /dev/null
+-logfile ""
++logfile /var/log/valkey/sentinel.log
+ 
+ # To enable logging to the system logger, just set 'syslog-enabled' to yes,
+ # and optionally update the other syslog parameters to suit your needs.
+@@ -70,7 +70,7 @@
+ # For Valkey Sentinel to chdir to /tmp at startup is the simplest thing
+ # for the process to don't interfere with administrative tasks such as
+ # unmounting filesystems.
+-dir /tmp
++dir /var/lib/valkey
+ 
+ # sentinel monitor <master-name> <ip> <valkey-port> <quorum>
+ #
+--- a/valkey.conf
++++ b/valkey.conf
+@@ -163,9 +163,9 @@
+ # incoming connections. There is no default, so the server will not listen
+ # on a unix socket when not specified.
+ #
+-# unixsocket /run/valkey.sock
++unixsocket /run/valkey/valkey.sock
+ # unixsocketgroup wheel
+-# unixsocketperm 700
++unixsocketperm 770
+ 
+ # Close the connection after a client is idle for N seconds (0 to disable)
+ timeout 0
+@@ -393,7 +393,7 @@
+ # By default the server does not run as a daemon. Use 'yes' if you need it.
+ # Note that the server will write a pid file in /var/run/valkey.pid when daemonized.
+ # When the server is supervised by upstart or systemd, this parameter has no impact.
+-daemonize no
++daemonize yes
+ 
+ # If you run the server from upstart or systemd, the server can interact with your
+ # supervision tree. Options:
+@@ -411,7 +411,7 @@
+ # The default is "no". To run under upstart/systemd, you can simply uncomment
+ # the line below:
+ #
+-# supervised auto
++supervised auto
+ 
+ # If a pid file is specified, the server writes it where specified at startup
+ # and removes it at exit.
+@@ -425,7 +425,7 @@
+ #
+ # Note that on modern Linux systems "/run/valkey.pid" is more conforming
+ # and should be used instead.
+-pidfile /var/run/valkey_6379.pid
++pidfile /run/valkey/valkey.pid
+ 
+ # Specify the server verbosity level.
+ # This can be one of:
+@@ -457,7 +457,7 @@
+ # Specify the log file name. Also the empty string can be used to force
+ # the server to log on the standard output. Note that if you use standard
+ # output for logging but daemonize, logs will be sent to /dev/null
+-logfile ""
++logfile /var/log/valkey/valkey.log
+ 
+ # To enable logging to the system logger, just set 'syslog-enabled' to yes,
+ # and optionally update the other syslog parameters to suit your needs.
+@@ -661,7 +661,7 @@
+ # Note that modifying 'dir' during runtime may have unexpected behavior,
+ # for example when a child process is running, related file operations may
+ # have unexpected effects.
+-dir ./
++dir /var/lib/valkey
+ 
+ ################################# REPLICATION #################################
+ 

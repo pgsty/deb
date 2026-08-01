@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Show the INFO from "valkey-cli"
+
+set -eu
+
+service valkey start
+
+sleep 5
+
+valkey-cli INFO
+valkey-cli LOLWUT

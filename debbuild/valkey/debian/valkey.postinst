@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -eu
+
+USER=valkey
+GROUP=valkey
+
+setup_dir() {
+    dir="$1"
+    mode="$2"
+    group="$3"
+
+    mkdir -p "$dir"
+    if ! dpkg-statoverride --list "$dir" >/dev/null 2>&1; then
+        chown "$USER:$group" "$dir"
+        chmod "$mode" "$dir"
+    fi
+}
+
+if [ "$1" = configure ]; then
+    if ! getent passwd "$USER" >/dev/null; then
+        adduser --system --home /var/lib/valkey --quiet --group "$USER"
+    fi
+    setup_dir /etc/valkey 0750 "$GROUP"
+    setup_dir /var/lib/valkey 0750 "$GROUP"
+    setup_dir /var/log/valkey 0750 "$GROUP"
+
+    for conffile in /etc/valkey/valkey.conf /etc/valkey/sentinel.conf; do
+        [ -e "$conffile" ] || continue
+        if ! dpkg-statoverride --list "$conffile" >/dev/null 2>&1; then
+            dpkg-statoverride --update --add "$USER" "$GROUP" 0640 "$conffile"
+        fi
+    done
+fi
+
+#DEBHELPER#
+
+exit 0

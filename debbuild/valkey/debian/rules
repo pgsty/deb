@@ -1,0 +1,53 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all optimize=+lto
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,-no-as-needed -ldl -latomic
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+export BUILD_TLS = yes
+export CFLAGS CPPFLAGS LDFLAGS
+
+# Build jemalloc in parallel
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	MAKEFLAGS += -j$(NUMJOBS)
+	export MAKEFLAGS
+endif
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f src/release.h
+
+override_dh_auto_build:
+	dh_auto_build -- V=1 BUILD_WITH_SYSTEMD=yes BUILD_TLS=yes
+
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	./utils/gen-test-certs.sh
+	# Container kernels can expose the MPTCP client API while rejecting MPTCP
+	# server sockets. The dual-channel replication unit needs over 2 GB of
+	# transient memory, so exclude both environment-specific units here.
+	./runtest --clients 1 --verbose --dump-logs --no-latency \
+		--tags -mptcp \
+		--skipunit integration/dual-channel-replication
+	./runtest --clients 1 --tls --verbose --dump-logs --no-latency \
+		--tags -mptcp \
+		--skipunit integration/dual-channel-replication
+	./runtest-sentinel
+	rm -rf tests/tls
+	find tests/tmp ! -name .gitignore -type f -exec rm -rfv {} +
+endif
+
+override_dh_auto_install:
+	:
+
+override_dh_installsystemd:
+	dh_installsystemd --no-enable --no-start
+	dh_installsystemd --no-enable --no-start --name=valkey-sentinel
+
+override_dh_installchangelogs:
+	dh_installchangelogs --keep 00-RELEASENOTES
