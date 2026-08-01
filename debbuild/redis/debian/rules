@@ -6,6 +6,10 @@ export DEB_LDFLAGS_MAINT_APPEND = -ldl -latomic
 include /usr/share/dpkg/architecture.mk
 include /usr/share/dpkg/buildflags.mk
 
+ifeq ($(DEB_HOST_ARCH),amd64)
+TLS_AUTH_SKIP = --skiptest "For unauthenticated clients output buffer is limited"
+endif
+
 ifneq ($(DEB_HOST_GNU_TYPE),)
 CC = $(DEB_HOST_GNU_TYPE)-gcc
 endif
@@ -41,6 +45,7 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 		--skiptest "diskless fast replicas drop during rdb pipe" \
 		--skiptest "diskless all replicas drop during rdb pipe"
 	./runtest --clients 1 --tls --verbose --no-latency \
+		$(TLS_AUTH_SKIP) \
 		--skiptest "diskless no replicas drop during rdb pipe" \
 		--skiptest "diskless slow replicas drop during rdb pipe" \
 		--skiptest "diskless fast replicas drop during rdb pipe" \

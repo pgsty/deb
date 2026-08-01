@@ -3,7 +3,12 @@
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all optimize=+lto
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,-no-as-needed -ldl -latomic
 DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/architecture.mk
 include /usr/share/dpkg/buildflags.mk
+
+ifeq ($(DEB_HOST_ARCH),amd64)
+TLS_AUTH_SKIP = --skiptest "For unauthenticated clients output buffer is limited"
+endif
 
 export BUILD_TLS = yes
 export CFLAGS CPPFLAGS LDFLAGS
@@ -36,6 +41,7 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 		--skipunit integration/dual-channel-replication
 	./runtest --clients 1 --tls --verbose --dump-logs --no-latency \
 		--tags -mptcp \
+		$(TLS_AUTH_SKIP) \
 		--skipunit integration/dual-channel-replication
 	./runtest-sentinel
 	rm -rf tests/tls
