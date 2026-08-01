@@ -3,7 +3,7 @@ valkey (9.1.1-1PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
   * Build Valkey as valkey, valkey-dev, and valkey-dbgsym packages.
   * Preserve the former runtime package names as versioned virtual packages.
   * Enable TLS, systemd integration, hardening, and upstream tests.
-  * Avoid an amd64 TclTLS zero-window stall in one output-buffer pressure test.
+  * Avoid a TclTLS zero-window stall in one duplicated output-buffer test.
 
  -- Ruohang Feng <rh@vonng.com>  Sat, 01 Aug 2026 02:00:00 +0800
 
