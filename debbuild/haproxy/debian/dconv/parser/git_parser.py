@@ -41,3 +41,14 @@ def get_git_version_in_path(path):
     version = version.decode().lstrip('v').rstrip()  # remove the 'v' tag and the EOL char
     version = re.sub(r'-g.*', '', version)
     return version
+
+
+def get_debian_version_from_cwd():
+    path = os.getcwd()
+    try:
+        version = subprocess.check_output(["dpkg-parsechangelog", "-Sversion"],
+                                          cwd=os.path.join(path, "..", ".."))
+    except subprocess.CalledProcessError:
+        return False
+
+    return version.decode("utf-8").strip()

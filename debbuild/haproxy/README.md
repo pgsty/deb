@@ -4,9 +4,10 @@ This recipe builds HAProxy 3.4.3 from the official upstream tarball with one
 portable Debian packaging overlay.
 
 The overlay tracks Debian's `3.4.2-1` packaging where it is portable across the
-supported builders and is refreshed for HAProxy 3.4.3. It shares the runtime
-contract documented in
-`~/pgsty/rpm/HAPROXY.md` with the RPM package.
+supported builders and is refreshed for HAProxy 3.4.3. Its runtime contract is
+kept aligned with the RPM spec and the RPM `haproxy-utils.tar.gz` helper source.
+All permanent upstream-source changes are carried in the single versioned patch
+`debian/patches/haproxy-3.4.3.patch`; Debian-only files are maintained directly.
 
 Supported builders:
 
@@ -23,14 +24,20 @@ intentionally omitted: it is deprecated upstream and its development package
 is not available across the full supported distribution matrix.
 
 The package creates `/etc/haproxy/conf.d` and generates its vendor unit from
-HAProxy's `admin/systemd/haproxy.service.in`. Both systemd and the compatibility
-SysV init script load `/etc/haproxy/haproxy.cfg` first and then `conf.d`.
+HAProxy's `admin/systemd/haproxy.service.in`. The unit reads only
+`/etc/default/haproxy`, uses `EXTRAOPTS`, and loads `/etc/haproxy/haproxy.cfg`
+before complete configuration sections from `conf.d`. The compatibility SysV
+init script follows the same configuration order. The default configuration is
+byte-identical to the RPM helper asset: it provides stdout logging, conservative
+TCP defaults, and loopback-only health, statistics, and Prometheus endpoints at
+`127.0.0.1:9101`.
+
 Distribution-specific user-management and dependency choices remain in this
 overlay so one recipe can build across all supported Debian and Ubuntu releases.
 In particular, the recipe keeps `adduser` instead of requiring the newer
-`dh-sequence-installsysusers`. The generated unit is staged as
-`debian/haproxy.service`, allowing each debhelper version to select its native
-vendor-unit directory and generate the matching maintainer scripts.
+`dh-sequence-installsysusers`. `dh_installsystemd` still generates the matching
+maintainer scripts, while the payload is normalized to the canonical
+`/usr/lib/systemd/system/haproxy.service` path on every supported target.
 
 ```bash
 cd ~/debbuild

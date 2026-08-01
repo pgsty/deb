@@ -56,15 +56,9 @@ def main():
         option.git_directory = os.path.abspath(option.git_directory)
 
     os.chdir(os.path.dirname(__file__))
-    # check the haproxy-dconv repository version
-    dconv_version = git_parser.get_git_version_from_cwd()
-    if not dconv_version:
-        sys.exit(1)
-    haproxy_version = git_parser.get_git_version_in_path(
-                            option.git_directory
-                      )
+    haproxy_version = git_parser.get_debian_version_from_cwd()
     converter.convert_all(files, option.output_directory, option.base,
-                          version=dconv_version, haproxy_version=haproxy_version)
+                          version="0", haproxy_version=haproxy_version)
 
 
 if __name__ == '__main__':

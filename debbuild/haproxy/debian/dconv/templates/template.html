@@ -3,8 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>${headers['title']} ${headers['version']} - ${headers['subtitle']}</title>
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="https://raw.githubusercontent.com/thomaspark/bootswatch/v3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" />
+		<link href="${base}css/bootstrap.min.css" rel="stylesheet" />
 		<link href="${base}css/page.css?${version}" rel="stylesheet" />
 	</head>
 	<body>
@@ -75,7 +74,7 @@
 					You can use <strong>left</strong> and <strong>right</strong> arrow keys to navigate between chapters.<br>
 				</p>
 				<p class="text-right">
-					<small>Converted with <a href="https://github.com/cbonte/haproxy-dconv">haproxy-dconv</a> v<b>${version}</b> on <b>${date}</b></small>
+					<small>Converted with <a href="https://github.com/cbonte/haproxy-dconv">haproxy-dconv</a></small>
 				</p>
 			</div>
 			<!-- /.sidebar -->
@@ -89,7 +88,7 @@
 							<h1>${headers['title']}</h1>
 							%endif
 							<h2>${headers['subtitle']}</h2>
-							<p><strong>${headers['version']}</strong></p>
+							<p><strong>${headers['version']} (Debian)</strong></p>
 							<p>
 								${headers['author']}<br>
 								${headers['date']}
@@ -100,8 +99,7 @@
 						<br>
 						<hr>
 						<div class="text-right">
-							${headers['title']} ${headers['version'].replace("version ", "")} &ndash; ${headers['subtitle']}<br>
-							<small>${headers['date']}, ${headers['author']}</small>
+							${headers['title']} ${headers['version'].replace("version ", "")} &ndash; ${headers['subtitle']}
 						</div>
 					</div>
 					<!-- /.col-lg-12 -->
@@ -113,8 +111,8 @@
 		</div>
 		<!-- /#wrapper -->
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="${base}js/jquery.min.js"></script>
+		<script src="${base}js/bootstrap.min.js"></script>
 		<script>
 			function filterKeywords(text) {
 				$('.letter').each(function(idx1, letter) {

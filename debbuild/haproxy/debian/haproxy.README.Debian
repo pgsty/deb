@@ -1,29 +1,37 @@
-Syslog support
---------------
-Upstream recommends using syslog over UDP to log from HAProxy processes, as
-this allows seamless logging from chroot'ed processes without access to
-/dev/log. However, many syslog implementations do not enable UDP syslog by
-default.
+Default logging
+---------------
+The package baseline logs to standard output. Under systemd, messages are
+captured by the service manager and are available through:
 
-The default HAProxy configuration in Debian uses /dev/log for logging and
-ships an rsyslog snippet that creates /dev/log in HAProxy's chroot and logs all
-HAProxy messages to /var/log/haproxy.log. To take advantage of this, you must
-restart rsyslog after installing this package. For other syslog daemons you
-will have to take manual measures to enable UDP logging or create /dev/log
-under HAProxy's chroot:
-a. For sysklogd, add SYSLOG="-a /var/lib/haproxy/dev/log" to
-   /etc/default/syslog.
-b. For inetutils-syslogd, add SYSLOGD_OPTS="-a /var/lib/haproxy/dev/log" to
-   /etc/default/inetutils-syslogd.
+    journalctl -u haproxy
 
-Prometheus exporter
--------------------
-HAProxy is shipped with a builtin Prometheus exporter. To enable it,
-you need to configure the Prometheus endpoint:
+This default does not require a syslog daemon and remains usable after HAProxy
+enters its chroot.
 
-    frontend stats
-        bind *:8404
-        http-request use-service prometheus-exporter if { path /metrics }
-        stats enable
-        stats uri /stats
-        stats refresh 10s
+Optional syslog integration
+---------------------------
+To route HAProxy logs through syslog instead, replace the global stdout target
+with an appropriate local target, for example:
+
+    global
+        log /dev/log local0
+
+The package ships an optional rsyslog snippet that routes HAProxy messages to
+/var/log/haproxy.log and provides the chroot socket for SysV operation. Under
+systemd, the vendor unit also makes the host /dev/log available inside the
+default chroot. Reload or restart rsyslog after installing the package if you
+use that integration. Other syslog implementations require their own routing
+rules and chroot socket handling.
+
+Loopback observability
+----------------------
+The package baseline binds its observability frontend only to
+127.0.0.1:9101. It provides:
+
+    http://127.0.0.1:9101/healthz  process liveness
+    http://127.0.0.1:9101/stats    read-only HAProxy statistics
+    http://127.0.0.1:9101/metrics  built-in Prometheus exporter
+
+The frontend has no administrative action or credential. It is intentionally
+not reachable from other hosts. A deployment that exposes it remotely must add
+its own listener and explicit network policy in deployment-owned configuration.
