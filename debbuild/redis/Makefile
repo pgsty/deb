@@ -1,16 +1,17 @@
 all: setup build move
 
-VERSION := 7.2.7
+VERSION := 7.2.15
 TARBALL := redis-$(VERSION).tar.gz
 SOURCEDIR ?= ../SOURCES
 SOURCE := $(SOURCEDIR)/$(TARBALL)
 SOURCE_URL := https://download.redis.io/releases/$(TARBALL)
-SOURCE_SHA256 := 72c081e3b8cfae7144273d26d76736f08319000af46c01515cad5d29765cead5
+SOURCE_SHA256 := 7bf7975331511fdb788e85dae63964b128fccee1df026a10db57444babc9c9c4
 OS_CODENAME ?= $(shell command -v lsb_release >/dev/null 2>&1 && lsb_release -sc || (. /etc/os-release 2>/dev/null && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown)
+DEB_BUILD_OPTIONS ?= parallel=$(shell nproc)
 
 deps:
 	apt-get update
-	apt-get install -y build-essential ca-certificates curl debhelper dpkg-dev libssl-dev libsystemd-dev lsb-release pkg-config
+	apt-get install -y build-essential ca-certificates curl debhelper dpkg-dev libssl-dev libsystemd-dev lsb-release openssl pkgconf procps quilt tcl tcl-tls
 
 $(SOURCE):
 	mkdir -p $(SOURCEDIR)
@@ -27,26 +28,32 @@ $(SOURCE):
 			wget -O "$(SOURCE)" "$(SOURCE_URL)"; \
 		fi; \
 	fi
+
+verify: $(SOURCE)
 	echo "$(SOURCE_SHA256)  $(SOURCE)" | sha256sum -c -
 
 # prepare directory
-setup: $(SOURCE)
+setup: verify
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf $(SOURCE)
 	rm -rf build/debian; cp -r debian build/debian
 	sed -i "s/@RELEASE@/$(OS_CODENAME)/g" build/debian/changelog
-	chmod +x build/debian/rules build/debian/bin/generate-systemd-service-files
+	chmod +x build/debian/rules
+	cd build && QUILT_PATCHES=debian/patches quilt push -a
 
-# build redis, redis-server, redis-sentinel, redis-tools
+# build redis, redis-dev, and redis-dbgsym
 build:
-	cd build && DEB_BUILD_PROFILES=nocheck dpkg-buildpackage -b -us -uc
+	cd build && DEB_BUILD_OPTIONS="$(DEB_BUILD_OPTIONS)" dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg
+	@set -e; found=0; for pkg in ./*.deb ./*.ddeb; do \
+		[ -e "$$pkg" ] || continue; cp "$$pkg" ~/ext/pkg/; found=1; \
+	done; test "$$found" -eq 1
 
 # remove build artifacts
 clean:
 	rm -rf build *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all deps setup build move clean
+.PHONY: all deps verify setup build move clean

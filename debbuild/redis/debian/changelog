@@ -1,3 +1,11 @@
+redis (6:7.2.15-1PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
+
+  * Build Redis as redis, redis-dev, and redis-dbgsym packages.
+  * Preserve the former runtime package names as versioned virtual packages.
+  * Enable TLS, systemd integration, hardening, and upstream tests.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 01 Aug 2026 02:00:00 +0800
+
 redis (7.2.7-1PIGSTY~@RELEASE@) @RELEASE@; urgency=low
 
   * Rebuild Redis 7.2.7 with Pigsty version suffix.

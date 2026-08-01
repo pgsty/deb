@@ -4,5 +4,7 @@
 
 set -eu
 
+service redis start
+
 redis-cli INFO
 redis-cli LOLWUT
