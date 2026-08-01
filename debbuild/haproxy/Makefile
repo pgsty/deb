@@ -21,6 +21,7 @@ setup: check-src
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	cp -a debian $(BUILD_DIR)/debian
 	tar -C $(BUILD_DIR) -xf "$(SOURCE_DEBIAN)" debian/dconv
+	patch --batch --fuzz=0 -d $(BUILD_DIR) -p1 < dconv.patch
 	@codename=$$(. /etc/os-release && echo $$VERSION_CODENAME); \
 		test -n "$$codename" && \
 		sed -i "1s/1PIGSTY) unstable/1PIGSTY~$$codename) $$codename/" $(BUILD_DIR)/debian/changelog

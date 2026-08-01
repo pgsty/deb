@@ -5,12 +5,20 @@ haproxy (3.4.3-1PIGSTY) unstable; urgency=medium
   * Create /etc/haproxy/conf.d and use it from the SysV init script.
   * Track the portable parts of Debian's 3.4 packaging baseline.
   * Keep the watch file compatible with the oldest supported devscripts.
-  * Let debhelper install and manage the generated systemd unit.
+  * Consolidate permanent upstream changes into haproxy-3.4.3.patch and keep
+    Debian dconv adaptations directly in the packaging overlay.
+  * Let debhelper manage the generated systemd unit and maintainer scripts.
+  * Use /etc/default/haproxy as the shared RPM and DEB environment interface.
+  * Install the vendor unit in /usr/lib/systemd/system on every target.
+  * Ship a conservative TCP baseline with stdout logging and loopback-only
+    health, statistics, and Prometheus endpoints on port 9101.
+  * Keep the packaged syslog integration optional.
+  * Use /run in the legacy init script and refresh its compatibility notes.
   * Use native OpenSSL QUIC APIs when available.
   * Remove an obsolete adduser compatibility option.
   * Verify the upstream source archive before unpacking.
 
- -- Ruohang Feng <rh@vonng.com>  Fri, 31 Jul 2026 14:02:00 +0800
+ -- Ruohang Feng <rh@vonng.com>  Sat, 01 Aug 2026 15:24:23 +0800
 
 haproxy (3.2.21-1~bpo12+1) bookworm-backports; urgency=medium
 

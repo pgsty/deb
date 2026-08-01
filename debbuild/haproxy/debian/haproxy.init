@@ -13,7 +13,7 @@
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 BASENAME=haproxy
-PIDFILE=/var/run/${BASENAME}.pid
+PIDFILE=/run/${BASENAME}.pid
 CONFIG=/etc/${BASENAME}/${BASENAME}.cfg
 CFGDIR=/etc/${BASENAME}/conf.d
 HAPROXY=/usr/sbin/haproxy
@@ -64,10 +64,9 @@ haproxy_stop()
 	ret=0
 	tmppid="$(mktemp)"
 
-	# HAProxy's pidfile may contain multiple PIDs, if nbproc > 1, so loop
-	# over each PID. Note that start-stop-daemon has a --pid option, but it
-	# was introduced in dpkg 1.17.6, post wheezy, so we use a temporary
-	# pidfile instead to ease backports.
+	# Keep compatibility with pidfiles containing multiple PIDs by stopping
+	# each PID separately. start-stop-daemon's --pid option was introduced in
+	# dpkg 1.17.6, so use a temporary single-PID file for old backports.
 	for pid in $(cat $PIDFILE); do
 		echo "$pid" > "$tmppid"
 		start-stop-daemon --quiet --oknodo --stop \

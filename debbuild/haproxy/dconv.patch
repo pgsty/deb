@@ -1,8 +1,9 @@
-diff --git a/debian/dconv/dconv.py b/debian/dconv/dconv.py
-index 0c7296b0b009..76282ed0975d 100644
+Description: retain Debian documentation adaptations without vendoring dconv
+Origin: PGSTY packaging overlay
+
 --- a/debian/dconv/dconv.py
 +++ b/debian/dconv/dconv.py
-@@ -56,15 +56,9 @@ def main():
+@@ -56,15 +56,9 @@
          option.git_directory = os.path.abspath(option.git_directory)
  
      os.chdir(os.path.dirname(__file__))
@@ -20,11 +21,9 @@ index 0c7296b0b009..76282ed0975d 100644
  
  
  if __name__ == '__main__':
-diff --git a/debian/dconv/parser/git_parser.py b/debian/dconv/parser/git_parser.py
-index 7791f963c6e3..d2601853813b 100644
 --- a/debian/dconv/parser/git_parser.py
 +++ b/debian/dconv/parser/git_parser.py
-@@ -40,4 +40,15 @@ def get_git_version_in_path(path):
+@@ -40,4 +40,15 @@
  
      version = version.decode().lstrip('v').rstrip()  # remove the 'v' tag and the EOL char
      version = re.sub(r'-g.*', '', version)
@@ -42,8 +41,6 @@ index 7791f963c6e3..d2601853813b 100644
 +        return False
 +
 +    return version.decode("utf-8").strip()
-diff --git a/debian/dconv/templates/template.html b/debian/dconv/templates/template.html
-index 184521919957..8b9791b7d81c 100644
 --- a/debian/dconv/templates/template.html
 +++ b/debian/dconv/templates/template.html
 @@ -3,8 +3,7 @@
@@ -65,7 +62,7 @@ index 184521919957..8b9791b7d81c 100644
  				</p>
  			</div>
  			<!-- /.sidebar -->
-@@ -89,7 +88,7 @@ <h1><a href="http://www.haproxy.org/" title="HAProxy"><img src="${base}img/HAPro
+@@ -89,7 +88,7 @@
  							<h1>${headers['title']}</h1>
  							%endif
  							<h2>${headers['subtitle']}</h2>
@@ -74,7 +71,7 @@ index 184521919957..8b9791b7d81c 100644
  							<p>
  								${headers['author']}<br>
  								${headers['date']}
-@@ -100,8 +99,7 @@ <h2>${headers['subtitle']}</h2>
+@@ -100,8 +99,7 @@
  						<br>
  						<hr>
  						<div class="text-right">
@@ -84,7 +81,7 @@ index 184521919957..8b9791b7d81c 100644
  						</div>
  					</div>
  					<!-- /.col-lg-12 -->
-@@ -113,8 +111,8 @@ <h2>${headers['subtitle']}</h2>
+@@ -113,8 +111,8 @@
  		</div>
  		<!-- /#wrapper -->
  

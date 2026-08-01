@@ -59,12 +59,10 @@ override_dh_auto_build-arch:
 	$(MAKE) -C doc/lua-api man
 
 override_dh_auto_build-indep:
-	# Build the HTML documentation, after patching dconv
-	patch -p1 < $(CURDIR)/debian/patches/debianize-dconv.patch
+	# Build the HTML documentation with the packaged dconv adaptations.
 	python3 -B $(CURDIR)/debian/dconv/dconv.py \
 			-o $(CURDIR)/doc \
-		    $(CURDIR)/doc/intro.txt $(CURDIR)/doc/configuration.txt $(CURDIR)/doc/management.txt
-	patch -p1 -R < $(CURDIR)/debian/patches/debianize-dconv.patch
+			    $(CURDIR)/doc/intro.txt $(CURDIR)/doc/configuration.txt $(CURDIR)/doc/management.txt
 	$(MAKE) -C doc/lua-api html
 
 override_dh_auto_clean:
@@ -91,6 +89,13 @@ override_dh_installinit:
 
 override_dh_installsystemd:
 	dh_installsystemd --no-restart-after-upgrade --no-stop-on-upgrade
+	# Normalize the payload path even on older debhelper releases that install
+	# package.service helpers below /lib. Maintainer scripts were generated above.
+	install -m 0644 -D debian/haproxy.service \
+		debian/haproxy/usr/lib/systemd/system/haproxy.service
+	rm -f debian/haproxy/lib/systemd/system/haproxy.service
+	rmdir --ignore-fail-on-non-empty debian/haproxy/lib/systemd/system \
+		debian/haproxy/lib/systemd debian/haproxy/lib 2>/dev/null || true
 
 override_dh_strip:
 	dh_strip --dbgsym-migration="haproxy-dbg"
