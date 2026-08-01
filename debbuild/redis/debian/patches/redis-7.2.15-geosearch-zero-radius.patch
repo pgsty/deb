@@ -1,0 +1,41 @@
+From: Ruohang Feng <rh@vonng.com>
+Date: Sun, 2 Aug 2026 01:45:00 +0800
+Subject: Fix zero-radius GEOSEARCH rounding
+
+Origin: vendor
+Bug: https://github.com/valkey-io/valkey/issues/2051
+Forwarded: no
+Last-Update: 2026-08-02
+
+Redis 7.2 and Valkey share this geospatial distance implementation. Compiler
+optimizations can leave tiny rounding errors in both the longitude comparison
+and the latitude conversion. Backport the Valkey near-zero longitude
+comparison and return the mathematically exact result for identical latitude
+inputs so a zero-radius GEOSEARCH includes its source member.
+---
+ src/geohash_helper.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/src/geohash_helper.c b/src/geohash_helper.c
+--- a/src/geohash_helper.c
++++ b/src/geohash_helper.c
+@@ -224,14 +224,16 @@ double geohashGetLatDistance(double lat1d, double lat2d) {
+ double geohashGetLatDistance(double lat1d, double lat2d) {
++    if (lat1d == lat2d) return 0.0;
+     return EARTH_RADIUS_IN_METERS * fabs(deg_rad(lat2d) - deg_rad(lat1d));
+ }
+-
++
+ /* Calculate distance using haversine great circle distance formula. */
+ double geohashGetDistance(double lon1d, double lat1d, double lon2d, double lat2d) {
+     double lat1r, lon1r, lat2r, lon2r, u, v, a;
+     lon1r = deg_rad(lon1d);
+     lon2r = deg_rad(lon2d);
+     v = sin((lon2r - lon1r) / 2);
+-    /* if v == 0 we can avoid doing expensive math when lons are practically the same */
+-    if (v == 0.0)
++    const double GEO_EPSILON = 1e-15;
++    /* Avoid expensive math when longitudes are practically the same. */
++    if (fabs(v) <= GEO_EPSILON)
+         return geohashGetLatDistance(lat1d, lat2d);
+     lat1r = deg_rad(lat1d);
