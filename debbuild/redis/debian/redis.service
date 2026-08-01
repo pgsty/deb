@@ -1,0 +1,21 @@
+[Unit]
+Description=Redis persistent key-value database
+Documentation=https://redis.io/docs/latest/
+After=network.target network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+User=redis
+Group=redis
+WorkingDirectory=/var/lib/redis
+ExecStart=/usr/bin/redis-server /etc/redis/redis.conf --daemonize no --supervised systemd
+RuntimeDirectory=redis
+RuntimeDirectoryMode=0755
+UMask=007
+PrivateTmp=true
+NoNewPrivileges=true
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

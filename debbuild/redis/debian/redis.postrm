@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -eu
+
+#DEBHELPER#
+
+if [ "$1" = purge ]; then
+    for conffile in /etc/redis/redis.conf /etc/redis/sentinel.conf; do
+        dpkg-statoverride --remove "$conffile" 2>/dev/null || test $? -eq 2
+    done
+fi
+
+exit 0

@@ -3,12 +3,13 @@ Date: Tue, 10 Oct 2017 09:56:42 +0100
 Subject: Set Debian configuration defaults.
 
 ---
- redis.conf    | 12 ++++++------
- sentinel.conf |  9 +++++----
- 2 files changed, 11 insertions(+), 10 deletions(-)
-
 --- a/redis.conf
 +++ b/redis.conf
+@@ -155,2 +155,2 @@
+-# unixsocket /run/redis.sock
++unixsocket /run/redis/redis.sock
+-# unixsocketperm 700
++unixsocketperm 770
 @@ -306,7 +306,7 @@
  # By default Redis does not run as a daemon. Use 'yes' if you need it.
  # Note that Redis will write a pid file in /var/run/redis.pid when daemonized.
@@ -32,7 +33,7 @@ Subject: Set Debian configuration defaults.
  # Note that on modern Linux systems "/run/redis.pid" is more conforming
  # and should be used instead.
 -pidfile /var/run/redis_6379.pid
-+pidfile /run/redis/redis-server.pid
++pidfile /run/redis/redis.pid
  
  # Specify the server verbosity level.
  # This can be one of:
@@ -41,7 +42,7 @@ Subject: Set Debian configuration defaults.
  # Redis to log on the standard output. Note that if you use standard
  # output for logging but daemonize, logs will be sent to /dev/null
 -logfile ""
-+logfile /var/log/redis/redis-server.log
++logfile /var/log/redis/redis.log
  
  # To enable logging to the system logger, just set 'syslog-enabled' to yes,
  # and optionally update the other syslog parameters to suit your needs.
@@ -90,7 +91,7 @@ Subject: Set Debian configuration defaults.
  # /var/run/redis-sentinel.pid by default. You can specify a custom pid file
  # location here.
 -pidfile /var/run/redis-sentinel.pid
-+pidfile /run/sentinel/redis-sentinel.pid
++pidfile /run/redis/sentinel.pid
  
  # Specify the server verbosity level.
  # This can be one of:
@@ -99,7 +100,7 @@ Subject: Set Debian configuration defaults.
  # Sentinel to log on the standard output. Note that if you use standard
  # output for logging but daemonize, logs will be sent to /dev/null
 -logfile ""
-+logfile /var/log/redis/redis-sentinel.log
++logfile /var/log/redis/sentinel.log
  
  # To enable logging to the system logger, just set 'syslog-enabled' to yes,
  # and optionally update the other syslog parameters to suit your needs.

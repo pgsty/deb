@@ -1,6 +1,6 @@
 .TH REDIS-SENTINEL 1 "March 20, 2009"
 .SH NAME
-redis-sentinel \- Persistent key-value database (cluster mode)
+redis-sentinel \- Redis high availability monitor
 .SH SYNOPSIS
 .B redis-sentinel
 .RI configfile
@@ -13,9 +13,9 @@ supported.
 .IP "configfile"
 Read options from specified configuration file.
 .SH NOTES
-On Debian GNU/Linux systems, \fBredis-sentinel\fP is typically started via the
-\fB/etc/init.d/redis-sentinel\fP initscript, not manually. This defaults to using
-\fB/etc/redis/sentinel.conf\fP as a configuration file.
+On Debian GNU/Linux systems, \fBredis-sentinel\fP can be managed with the
+\fBredis-sentinel.service\fP systemd unit. It uses
+\fB/etc/redis/sentinel.conf\fP by default.
 .SH AUTHOR
 \fBredis-sentinel\fP was written by Salvatore Sanfilippo.
 .PP

@@ -4,4 +4,6 @@
 
 set -eu
 
+service redis start
+
 redis-benchmark -P 10

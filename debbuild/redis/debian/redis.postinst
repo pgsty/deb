@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -eu
+
+USER=redis
+GROUP=redis
+
+setup_dir() {
+    dir="$1"
+    mode="$2"
+    group="$3"
+
+    mkdir -p "$dir"
+    if ! dpkg-statoverride --list "$dir" >/dev/null 2>&1; then
+        chown "$USER:$group" "$dir"
+        chmod "$mode" "$dir"
+    fi
+}
+
+if [ "$1" = configure ]; then
+    if ! getent passwd "$USER" >/dev/null; then
+        adduser --system --home /var/lib/redis --quiet --group "$USER"
+    fi
+    setup_dir /etc/redis 0750 "$GROUP"
+    setup_dir /var/lib/redis 0750 "$GROUP"
+    setup_dir /var/log/redis 0750 "$GROUP"
+
+    for conffile in /etc/redis/redis.conf /etc/redis/sentinel.conf; do
+        [ -e "$conffile" ] || continue
+        if ! dpkg-statoverride --list "$conffile" >/dev/null 2>&1; then
+            dpkg-statoverride --update --add "$USER" "$GROUP" 0640 "$conffile"
+        fi
+    done
+fi
+
+#DEBHELPER#
+
+exit 0
