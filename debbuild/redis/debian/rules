@@ -27,6 +27,22 @@ override_dh_auto_install:
 override_dh_installsystemd:
 	dh_installsystemd --no-enable --no-start
 	dh_installsystemd --no-enable --no-start --name=redis-sentinel
+	unit="$$(find debian/redis -type f -path '*/systemd/system/redis.service' -print -quit)"; \
+		test -n "$$unit"; \
+		grep -qxF Type=notify "$$unit"; \
+		grep -qxF TimeoutStartSec=infinity "$$unit"; \
+		grep -qxF TimeoutStopSec=infinity "$$unit"
+	unit="$$(find debian/redis -type f -path '*/systemd/system/redis-sentinel.service' -print -quit)"; \
+		test -n "$$unit"; grep -qxF Type=notify "$$unit"; \
+		grep -qxF TimeoutStartSec=infinity "$$unit"; \
+		grep -qxF TimeoutStopSec=infinity "$$unit"
+
+execute_after_dh_link:
+	test -x debian/redis/usr/bin/redis-server
+	test ! -L debian/redis/usr/bin/redis-server
+	test "$$(readlink debian/redis/usr/bin/redis-check-rdb)" = redis-server
+	test "$$(readlink debian/redis/usr/bin/redis-check-aof)" = redis-server
+	test "$$(readlink debian/redis/usr/bin/redis-sentinel)" = redis-server
 
 override_dh_auto_build:
 	dh_auto_build --parallel -- V=1 MALLOC=jemalloc BUILD_TLS=yes BUILD_WITH_SYSTEMD=yes

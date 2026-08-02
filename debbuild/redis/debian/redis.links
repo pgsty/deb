@@ -1,2 +1,3 @@
-usr/bin/redis-check-rdb usr/bin/redis-server
-usr/bin/redis-check-rdb usr/bin/redis-sentinel
+usr/bin/redis-server usr/bin/redis-check-aof
+usr/bin/redis-server usr/bin/redis-check-rdb
+usr/bin/redis-server usr/bin/redis-sentinel

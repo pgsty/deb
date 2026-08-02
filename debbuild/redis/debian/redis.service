@@ -6,6 +6,8 @@ Wants=network-online.target
 
 [Service]
 Type=notify
+TimeoutStartSec=infinity
+TimeoutStopSec=infinity
 User=redis
 Group=redis
 WorkingDirectory=/var/lib/redis
