@@ -52,6 +52,22 @@ override_dh_auto_install:
 override_dh_installsystemd:
 	dh_installsystemd --no-enable --no-start
 	dh_installsystemd --no-enable --no-start --name=valkey-sentinel
+	unit="$$(find debian/valkey -type f -path '*/systemd/system/valkey.service' -print -quit)"; \
+		test -n "$$unit"; \
+		grep -qxF Type=notify "$$unit"; \
+		grep -qxF TimeoutStartSec=infinity "$$unit"; \
+		grep -qxF TimeoutStopSec=infinity "$$unit"
+	unit="$$(find debian/valkey -type f -path '*/systemd/system/valkey-sentinel.service' -print -quit)"; \
+		test -n "$$unit"; grep -qxF Type=notify "$$unit"; \
+		grep -qxF TimeoutStartSec=infinity "$$unit"; \
+		grep -qxF TimeoutStopSec=infinity "$$unit"
+
+execute_after_dh_link:
+	test -x debian/valkey/usr/bin/valkey-server
+	test ! -L debian/valkey/usr/bin/valkey-server
+	test "$$(readlink debian/valkey/usr/bin/valkey-check-rdb)" = valkey-server
+	test "$$(readlink debian/valkey/usr/bin/valkey-check-aof)" = valkey-server
+	test "$$(readlink debian/valkey/usr/bin/valkey-sentinel)" = valkey-server
 
 override_dh_installchangelogs:
 	dh_installchangelogs --keep 00-RELEASENOTES
