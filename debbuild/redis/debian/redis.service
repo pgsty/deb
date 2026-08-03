@@ -6,13 +6,14 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-TimeoutStartSec=infinity
-TimeoutStopSec=infinity
+TimeoutStartSec=1800s
+TimeoutStopSec=900s
 User=redis
 Group=redis
 WorkingDirectory=/var/lib/redis
 ExecStart=/usr/bin/redis-server /etc/redis/redis.conf --daemonize no --supervised systemd
 RuntimeDirectory=redis
+RuntimeDirectoryPreserve=yes
 RuntimeDirectoryMode=0755
 UMask=007
 PrivateTmp=true

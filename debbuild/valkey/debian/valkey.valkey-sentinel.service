@@ -6,13 +6,12 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-TimeoutStartSec=infinity
-TimeoutStopSec=infinity
 User=valkey
 Group=valkey
 WorkingDirectory=/var/lib/valkey
 ExecStart=/usr/bin/valkey-sentinel /etc/valkey/sentinel.conf --daemonize no --supervised systemd
 RuntimeDirectory=valkey
+RuntimeDirectoryPreserve=yes
 RuntimeDirectoryMode=0755
 UMask=007
 PrivateTmp=true
