@@ -6,13 +6,14 @@ Wants=network-online.target
 
 [Service]
 Type=notify
-TimeoutStartSec=infinity
-TimeoutStopSec=infinity
+TimeoutStartSec=1800s
+TimeoutStopSec=900s
 User=valkey
 Group=valkey
 WorkingDirectory=/var/lib/valkey
 ExecStart=/usr/bin/valkey-server /etc/valkey/valkey.conf --daemonize no --supervised systemd
 RuntimeDirectory=valkey
+RuntimeDirectoryPreserve=yes
 RuntimeDirectoryMode=0755
 UMask=007
 PrivateTmp=true

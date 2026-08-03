@@ -27,15 +27,8 @@ override_dh_auto_install:
 override_dh_installsystemd:
 	dh_installsystemd --no-enable --no-start
 	dh_installsystemd --no-enable --no-start --name=redis-sentinel
-	unit="$$(find debian/redis -type f -path '*/systemd/system/redis.service' -print -quit)"; \
-		test -n "$$unit"; \
-		grep -qxF Type=notify "$$unit"; \
-		grep -qxF TimeoutStartSec=infinity "$$unit"; \
-		grep -qxF TimeoutStopSec=infinity "$$unit"
-	unit="$$(find debian/redis -type f -path '*/systemd/system/redis-sentinel.service' -print -quit)"; \
-		test -n "$$unit"; grep -qxF Type=notify "$$unit"; \
-		grep -qxF TimeoutStartSec=infinity "$$unit"; \
-		grep -qxF TimeoutStopSec=infinity "$$unit"
+	test -n "$$(find debian/redis -type f -path '*/systemd/system/redis.service' -print -quit)"
+	test -n "$$(find debian/redis -type f -path '*/systemd/system/redis-sentinel.service' -print -quit)"
 
 execute_after_dh_link:
 	test -x debian/redis/usr/bin/redis-server

@@ -3,7 +3,8 @@ redis (6:7.2.15-3PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
   * Make redis-server the sole multicall ELF and provide Sentinel and both
     persistence checkers as forward symlinks.
   * Remove the transitional split-package relationships.
-  * Align systemd startup and shutdown timeouts with the upstream service units.
+  * Set bounded server timeouts, use systemd defaults for Sentinel, and
+    preserve the shared runtime directory.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 03 Aug 2026 00:04:16 +0800
 
