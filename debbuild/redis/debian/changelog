@@ -1,3 +1,25 @@
+redis (6:7.2.15-4PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
+
+  * Drop 0001-fix-ftbfs-on-kfreebsd. Adding __GLIBC__ to a condition that
+    already tests __linux__ is a no-op on the platforms we build.
+  * Assert the binary is not linked against a system libjemalloc. Without the
+    vendored copy, JEMALLOC_FRAG_HINT and je_get_defrag_hint() are missing,
+    HAVE_DEFRAG is dropped and activedefrag is refused at runtime.
+  * Stop the units on removal. dh_installsystemd runs with --no-start, which
+    also suppresses the stop-on-remove snippet it would otherwise generate, so
+    the servers kept running after their binaries were gone.
+  * Drop the inherited ruby-redis suggestion. A server package has no business
+    recommending a client library.
+  * Drop debian/gbp.conf and debian/source/options. Both configure a
+    git-buildpackage source workflow this repository does not use; the build
+    unpacks a pristine tarball and produces binaries only.
+  * Request optimize=+lto explicitly. Ubuntu enables it by default but Debian
+    does not, so the Debian builds were the only ones in the matrix without it.
+  * Drop the deprecated --parallel from dh_auto_build, a no-op since compat 10.
+  * Dump server logs on test failure, matching the Valkey recipe.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 06 Aug 2026 09:03:24 +0800
+
 redis (6:7.2.15-3PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
 
   * Make redis-server the sole multicall ELF and provide Sentinel and both

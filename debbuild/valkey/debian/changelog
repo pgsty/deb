@@ -1,3 +1,25 @@
+valkey (9.1.1-4PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
+
+  * Drop 0003-Use-get_current_dir_name-over-PATHMAX. It trades a stack buffer
+    on a cold error path for a libc allocation that zmalloc must not release,
+    and the RPM packaging never carried it.
+  * Drop 0001-Fix-FTBFS-on-kFreeBSD. Adding __GLIBC__ to a condition that
+    already tests __linux__ is a no-op on the platforms we build.
+  * Pass MALLOC=jemalloc explicitly rather than relying on the upstream Linux
+    default, and assert the binary is not linked against a system libjemalloc.
+    Without the vendored copy, VALKEY_VENDORED_JEMALLOC is undefined,
+    HAVE_DEFRAG is dropped and activedefrag is refused at runtime.
+  * Stop the units on removal. dh_installsystemd runs with --no-start, which
+    also suppresses the stop-on-remove snippet it would otherwise generate, so
+    the servers kept running after their binaries were gone.
+  * Drop the inherited ruby-redis suggestion. A server package has no business
+    recommending a client library, let alone a Redis client for Valkey.
+  * Drop -Wl,-no-as-needed from the link flags. It defeated the default
+    --as-needed and pulled a libatomic1 dependency the binaries do not use a
+    single symbol from.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 06 Aug 2026 09:03:24 +0800
+
 valkey (9.1.1-3PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
 
   * Make valkey-server the sole multicall ELF and provide Sentinel and both
