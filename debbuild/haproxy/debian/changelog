@@ -1,3 +1,34 @@
+haproxy (3.4.3-2PIGSTY) unstable; urgency=medium
+
+  * Consume the shared haproxy-utils archive instead of keeping downstream
+    copies of the baseline configuration, environment file, logrotate rule,
+    rsyslog snippet, tmpfiles definition, and halog manual page. The RPM spec
+    consumes the same archive, so both packages ship these files byte for byte.
+  * Ship the systemd unit from that archive and reduce the source patch to the
+    single Debian specific build metadata change. The upstream unit template is
+    verified against a fixed SHA-256 digest at build time.
+  * Set RestartSec so Restart=always survives the systemd start rate limit.
+  * Set an explicit maxconn and a runtime stats socket in the baseline config.
+  * Ship no default network listener. The baseline serves the local runtime
+    API socket only; deployments define their listeners in conf.d.
+  * Install halog, iprange, and ip6range as user commands in /usr/bin.
+  * Recommend socat, which haproxy-reload needs, and logrotate.
+  * Also install the upstream error pages in /usr/share/haproxy so that one
+    configuration works unchanged on RPM and DEB targets.
+  * Create the service account through getent guarded adduser calls.
+  * Reload rather than restart on upgrade, and drop the obsolete version
+    comparisons in the postinst.
+  * Link against the system allocator, matching the RPM packages. jemalloc is
+    a supported upstream option and lowers CPU use on connection churn heavy
+    workloads, but it costs about 40 MB of resident memory per process and is
+    only available from EPEL on Enterprise Linux. Keeping it would either add
+    an EPEL runtime dependency to a component installed on every node, or
+    leave the two package families with different memory and performance
+    behaviour.
+  * Declare Rules-Requires-Root and refresh Standards-Version.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 02 Aug 2026 00:30:00 +0800
+
 haproxy (3.4.3-1PIGSTY) unstable; urgency=medium
 
   * New upstream release.

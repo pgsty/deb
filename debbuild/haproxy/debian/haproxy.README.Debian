@@ -1,3 +1,17 @@
+Relationship with the Pigsty RPM packages
+-----------------------------------------
+This package and the Pigsty HAProxy RPM packages share one runtime contract.
+The baseline configuration, the systemd unit, /etc/default/haproxy, the
+logrotate rule, the rsyslog snippet, the tmpfiles definition and the shipped
+error pages all come from a single haproxy-utils archive and are installed byte
+for byte identically on every supported distribution.
+
+Distribution native mechanisms are deliberately kept: this package still uses
+adduser, a SysV init script, a vim addon, and Debian's HTML documentation, and
+it still ships the error pages under /etc/haproxy/errors so that existing
+configurations keep working. /usr/share/haproxy holds the same pages and is the
+path that also exists on the RPM side.
+
 Default logging
 ---------------
 The package baseline logs to standard output. Under systemd, messages are
@@ -23,15 +37,62 @@ default chroot. Reload or restart rsyslog after installing the package if you
 use that integration. Other syslog implementations require their own routing
 rules and chroot socket handling.
 
-Loopback observability
-----------------------
-The package baseline binds its observability frontend only to
-127.0.0.1:9101. It provides:
+No default listener
+-------------------
+The package baseline ships no network listener. The only open interface is the
+local runtime API socket described below: the service starts, validates, and
+reloads cleanly while it waits for a deployment to add complete listener
+sections under /etc/haproxy/conf.d. Statistics pages, health endpoints, and
+the built-in Prometheus exporter are deployment concerns and belong in those
+listener sections.
 
-    http://127.0.0.1:9101/healthz  process liveness
-    http://127.0.0.1:9101/stats    read-only HAProxy statistics
-    http://127.0.0.1:9101/metrics  built-in Prometheus exporter
+Runtime API
+-----------
+The baseline also opens the HAProxy runtime API on a local socket:
 
-The frontend has no administrative action or credential. It is intentionally
-not reachable from other hosts. A deployment that exposes it remotely must add
-its own listener and explicit network policy in deployment-owned configuration.
+    /run/haproxy/admin.sock
+
+The socket is mode 660. Its directory is 2775 haproxy:haproxy, so the socket
+created by the master process before it drops privileges ends up owned by the
+haproxy group. Only root and members of that group can use it, for example
+through the packaged helper:
+
+    haproxy-reload
+
+That helper needs socat, which this package recommends.
+
+Connection limit
+----------------
+The baseline sets an explicit "maxconn 8192". Without it HAProxy derives the
+limit from the host file descriptor limit, which differs between distributions
+and would make both the connection ceiling and the resident memory footprint
+depend on the systemd defaults of the machine. Raise it in your own
+configuration if the deployment needs more.
+
+Upgrades
+--------
+Package upgrades reload the running instance rather than restarting it. The
+reload path validates the configuration and then signals the master process to
+re-execute, so the new binary is picked up while established connections drain
+on the previous workers. A stopped service stays stopped.
+
+Changing EXTRAOPTS in /etc/default/haproxy is the exception: process arguments
+are only re-read on a full restart. Note also that EXTRAOPTS replaces the unit
+default outright, so keep -S /run/haproxy-master.sock unless you intend to
+disable the master CLI socket.
+
+Memory allocator
+----------------
+Since 3.4.3-2PIGSTY this package links against the system allocator instead of
+jemalloc, matching the Pigsty RPM packages.
+
+jemalloc is a supported option upstream and measurably lowers CPU use on
+connection churn heavy workloads, at the cost of roughly 40 MB of additional
+resident memory per process. It was dropped here because libjemalloc is only
+available from EPEL on Enterprise Linux, so keeping it would either add an
+EPEL runtime dependency to a component installed on every node, or leave the
+two package families with different memory and performance behaviour. For the
+database proxying workload these packages target, where connections are long
+lived and the connection rate is low, that trade did not pay for itself.
+
+Rebuild with -ljemalloc in ADDLIB if your workload is allocator bound.

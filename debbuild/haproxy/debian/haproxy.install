@@ -1,2 +1,3 @@
-debian/haproxy.cfg etc/haproxy
+utils/haproxy.cfg etc/haproxy
 examples/errorfiles/*.http etc/haproxy/errors
+examples/errorfiles/*.http usr/share/haproxy

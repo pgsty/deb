@@ -1,2 +1,9 @@
 # We want to keep this dependency as it is easier on backports
 haproxy: depends-on-obsolete-package Depends: lsb-base (>= 3.0-6)
+
+# The upstream error pages are shipped twice on purpose. /usr/share/haproxy is
+# the canonical location shared with the Pigsty RPM packages, so one HAProxy
+# configuration works unchanged on every supported distribution.
+# /etc/haproxy/errors is kept because existing Debian configurations point at
+# it and because Debian treats these pages as locally editable.
+haproxy: duplicate-files *

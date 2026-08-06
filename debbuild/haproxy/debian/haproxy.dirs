@@ -1,5 +1,6 @@
 etc/haproxy
 etc/haproxy/conf.d
 etc/haproxy/errors
+usr/share/haproxy
 var/lib/haproxy
 var/lib/haproxy/dev

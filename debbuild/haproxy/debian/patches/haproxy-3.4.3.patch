@@ -1,20 +1,20 @@
-Description: align HAProxy 3.4.3 with the Pigsty package contract
- Pigsty carries one compact, version-specific downstream patch for changes to
- the upstream source tree:
+Description: omit build path remapping flags from the embedded build metadata
+ dpkg passes -ffile-prefix-map to make the build reproducible. HAProxy embeds
+ the verbose CFLAGS string into its version banner, so without this change the
+ build machine's directory layout would leak into `haproxy -vv` output and the
+ banner would differ between otherwise identical builds.
  .
-  * document the packaged systemd service;
-  * order optional rsyslog integration without requiring it;
-  * expose only /etc/default/haproxy as the environment interface;
-  * make the host /dev/log socket optionally available inside the chroot; and
-  * omit build-path remapping flags from the embedded build metadata.
+ This is now the only permanent change the Pigsty packaging makes to the
+ upstream source tree. The downstream systemd unit and every other packaging
+ asset is shared with the RPM spec through the haproxy-utils archive instead
+ of being patched in here.
 Author: Debian HAProxy Maintainers <pkg-haproxy-maintainers@lists.alioth.debian.org>,
  Ruohang Feng <rh@vonng.com>
 Forwarded: not-needed
 Last-Update: 2026-08-01
 ---
- Makefile                           | 2 +-
- admin/systemd/haproxy.service.in  | 6 ++++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
 --- a/Makefile
@@ -22,14 +22,3 @@ diff --git a/Makefile b/Makefile
 @@ -1076 +1076 @@ src/version.o:	src/version.c $(DEP)
 -	      -DBUILD_CFLAGS='"$(strip $(VERBOSE_CFLAGS))"' \
 +	      -DBUILD_CFLAGS='"$(filter-out -ffile-prefix-map=%,$(strip $(VERBOSE_CFLAGS)))"' \
-diff --git a/admin/systemd/haproxy.service.in b/admin/systemd/haproxy.service.in
---- a/admin/systemd/haproxy.service.in
-+++ b/admin/systemd/haproxy.service.in
-@@ -3 +3,3 @@
--After=network-online.target
-+Documentation=man:haproxy(1)
-+Documentation=file:/usr/share/doc/haproxy/configuration.txt.gz
-+After=network-online.target rsyslog.service
-@@ -8 +10 @@
--EnvironmentFile=-/etc/sysconfig/haproxy
-+BindReadOnlyPaths=-/dev/log:/var/lib/haproxy/dev/log
