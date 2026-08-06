@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -eu
+
+# dh_installsystemd runs with --no-start, which also suppresses the snippet it
+# would otherwise add here, so stop the units explicitly. Without this the
+# servers keep running after their binaries have been removed.
+if [ -z "${DPKG_ROOT:-}" ] && [ "$1" = remove ] && [ -d /run/systemd/system ]; then
+    deb-systemd-invoke stop valkey.service valkey-sentinel.service >/dev/null || true
+fi
+
+#DEBHELPER#
+
+exit 0

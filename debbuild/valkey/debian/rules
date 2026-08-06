@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all optimize=+lto
-export DEB_LDFLAGS_MAINT_APPEND = -Wl,-no-as-needed -ldl -latomic
+export DEB_LDFLAGS_MAINT_APPEND = -ldl -latomic
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
@@ -23,7 +23,7 @@ override_dh_auto_clean:
 	rm -f src/release.h
 
 override_dh_auto_build:
-	dh_auto_build -- V=1 BUILD_WITH_SYSTEMD=yes BUILD_TLS=yes
+	dh_auto_build -- V=1 MALLOC=jemalloc BUILD_WITH_SYSTEMD=yes BUILD_TLS=yes
 
 override_dh_auto_test:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
@@ -61,6 +61,10 @@ execute_after_dh_link:
 	test "$$(readlink debian/valkey/usr/bin/valkey-check-rdb)" = valkey-server
 	test "$$(readlink debian/valkey/usr/bin/valkey-check-aof)" = valkey-server
 	test "$$(readlink debian/valkey/usr/bin/valkey-sentinel)" = valkey-server
+	# Keep the vendored jemalloc. Against a system libjemalloc the generated
+	# header lacks VALKEY_VENDORED_JEMALLOC, so HAVE_DEFRAG is dropped and
+	# activedefrag is refused at runtime; it also loses --with-lg-quantum=3.
+	! objdump -p debian/valkey/usr/bin/valkey-server | grep -q 'NEEDED.*libjemalloc'
 
 override_dh_installchangelogs:
 	dh_installchangelogs --keep 00-RELEASENOTES

@@ -21,8 +21,6 @@ Depends:
  adduser,
  ${misc:Depends},
  ${shlibs:Depends}
-Suggests:
- ruby-redis
 Description: Persistent key-value database with server and tools
  Valkey is an in-memory data structure server supporting strings, hashes,
  lists, sets, streams, transactions, Pub/Sub, Lua scripting, replication,
