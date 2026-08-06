@@ -10,6 +10,17 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
 OPENSSL_HAS_NATIVE_QUIC := $(shell $(PKG_CONFIG) --atleast-version=3.5.2 openssl 2>/dev/null && echo yes)
 
+# The packaged vendor unit is a downstream asset shared byte for byte with the
+# RPM spec. Verify that the upstream template it was derived from has not
+# changed, so an upstream revision fails the build instead of silently
+# diverging from the shipped unit.
+SERVICE_IN_SHA256 := 937ff126740ce81e487929cb3c927c608de18b86396e0939bb5fd632897db783
+
+# halog, iprange, and ip6range are user commands and go to /usr/bin.
+# haproxy-reload and haproxy-dump-certs drive the master CLI socket and stay
+# in /usr/sbin, where upstream's install-admin target puts them.
+USER_TOOLS = admin/halog/halog admin/iprange/iprange admin/iprange/ip6range
+
 MAKEARGS=V=1 \
 	 CC='$(CC)' \
 	 PKG_CONFIG='$(PKG_CONFIG)' \
@@ -25,8 +36,7 @@ MAKEARGS=V=1 \
 	 USE_SLZ=1 \
 	 USE_LUA=1 \
 	 USE_PROMEX=1 \
-	 LUA_INC=/usr/include/lua5.4 \
-	 EXTRA=admin/halog/halog
+	 LUA_INC=/usr/include/lua5.4
 
 ifeq ($(DEB_HOST_ARCH_OS),linux)
         MAKEARGS+= TARGET=linux-glibc
@@ -36,7 +46,6 @@ else
 	MAKEARGS+= TARGET=generic
 endif
 
-MAKEARGS += ADDLIB="-Wl,-no-as-needed -ljemalloc -Wl,-as-needed"
 MAKEARGS += CFLAGS="$(CFLAGS) $(CPPFLAGS)"
 MAKEARGS += LDFLAGS="$(LDFLAGS)"
 MAKEARGS += VERSION="$(DEB_VERSION_UPSTREAM)"
@@ -51,11 +60,14 @@ endif
 	dh $@ --with sphinxdoc
 
 override_dh_auto_configure:
+	echo "$(SERVICE_IN_SHA256)  admin/systemd/haproxy.service.in" | sha256sum -c -
+	# Stage the shared packaging assets where debhelper looks for them.
+	install -m 0644 utils/haproxy.service debian/haproxy.service
+	install -m 0644 utils/haproxy.default debian/haproxy.default
+	install -m 0644 utils/haproxy.tmpfiles debian/haproxy.tmpfile
 
 override_dh_auto_build-arch:
-	make $(MAKEARGS)
-	make -C admin/systemd $(MAKEARGS)
-	install -m 0644 admin/systemd/haproxy.service debian/haproxy.service
+	make $(MAKEARGS) EXTRA="$(USER_TOOLS)"
 	$(MAKE) -C doc/lua-api man
 
 override_dh_auto_build-indep:
@@ -66,20 +78,26 @@ override_dh_auto_build-indep:
 	$(MAKE) -C doc/lua-api html
 
 override_dh_auto_clean:
-	make -C admin/systemd clean
 	$(MAKE) -C doc/lua-api clean
-	rm -f debian/haproxy.service
+	rm -f debian/haproxy.service debian/haproxy.default debian/haproxy.tmpfile
 	dh_auto_clean
 
 override_dh_auto_install-arch:
-	make $(MAKEARGS) install
-	install -m 0644 -D debian/rsyslog.conf debian/haproxy/etc/rsyslog.d/49-haproxy.conf
-	install -m 0644 -D debian/logrotate.conf debian/haproxy/etc/logrotate.d/haproxy
+	# install runs install-bin, install-admin, install-man, and install-doc.
+	# EXTRA is empty here so the user commands are not also placed in
+	# /usr/sbin; they are installed into /usr/bin right below.
+	make $(MAKEARGS) EXTRA= install
+	install -m 0755 -d debian/haproxy/usr/bin
+	install -m 0755 $(USER_TOOLS) debian/haproxy/usr/bin
+	install -m 0644 -D utils/haproxy.rsyslog debian/haproxy/etc/rsyslog.d/49-haproxy.conf
+	install -m 0644 -D utils/haproxy.logrotate debian/haproxy/etc/logrotate.d/haproxy
 
 override_dh_auto_install-indep:
 
 override_dh_installdocs:
-	dh_installdocs -Xsystemd/ -Xhalog/
+	# cli/ holds haproxy-reload and haproxy-dump-certs, which install-admin
+	# already installs into /usr/sbin; do not ship a second copy as docs.
+	dh_installdocs -Xsystemd/ -Xhalog/ -Xcli/
 
 override_dh_installexamples:
 	dh_installexamples -X build.cfg

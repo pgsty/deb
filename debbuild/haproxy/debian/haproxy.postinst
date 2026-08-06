@@ -2,21 +2,32 @@
 
 set -e
 
-adduser --system --disabled-password --disabled-login --home /var/lib/haproxy \
-        --no-create-home --quiet --group haproxy
+case "$1" in
+    configure)
+        # Create the service account before the debhelper snippets below apply
+        # the tmpfiles definition, which chowns the runtime directory to it.
+        # The getent guards keep this idempotent and independent of adduser
+        # option changes across the supported Debian and Ubuntu releases.
+        if ! getent group haproxy >/dev/null; then
+            addgroup --system --quiet haproxy
+        fi
+        if ! getent passwd haproxy >/dev/null; then
+            adduser --system --quiet --ingroup haproxy \
+                    --home /var/lib/haproxy --no-create-home \
+                    --disabled-login haproxy
+        fi
+    ;;
+esac
 
 #DEBHELPER#
 
-if [ -n "$2" ]; then
-	if dpkg --compare-versions "$2" lt "1.8.0-1~" && [ -d /run/systemd/system ]; then
-		# Do a full restart when upgrading to 1.8 series on systemd, as
-		# the systemd wrapper is no longer there.
-		invoke-rc.d haproxy restart || true
-	elif dpkg --compare-versions "$2" gt "1.5~dev24-2~"; then
-		# Reload already running instances. Since 1.5~dev24-2 we do not stop
-		# haproxy in prerm during upgrades.
-		invoke-rc.d haproxy reload || true
-	fi
+if [ "$1" = configure ] && [ -n "$2" ]; then
+    # HAProxy is a load balancer: reload the running instance instead of
+    # restarting it. The reload path validates the configuration and then
+    # signals the master to re-execute, which picks up the freshly installed
+    # binary while established connections drain on the previous workers.
+    # A stopped service stays stopped.
+    invoke-rc.d haproxy reload || true
 fi
 
 exit 0
