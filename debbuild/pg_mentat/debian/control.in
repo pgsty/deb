@@ -1,0 +1,17 @@
+Source: pg-mentat
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/gburd/pg_mentat
+
+Package: postgresql-PGVERSION-pg-mentat
+Architecture: any
+Provides: postgresql-pg-mentat
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Datomic-compatible Datalog query engine for PostgreSQL PGVERSION
+ pg_mentat implements a Datomic-compatible immutable fact store and Datalog
+ query engine inside PostgreSQL, including pull queries, time travel, and
+ transaction processing through SQL functions.
