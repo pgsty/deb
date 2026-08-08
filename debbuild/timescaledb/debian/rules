@@ -22,8 +22,10 @@ override_dh_auto_test:
 
 override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-timescaledb-tsl
+	rm -rf debian/postgresql-*-timescaledb-tsl/usr/lib/postgresql/*/lib/pgxs/src/test/perl/
 
 override_dh_installdocs:
+	dh_installdocs --all
 
 
 %:
