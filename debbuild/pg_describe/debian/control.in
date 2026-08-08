@@ -1,0 +1,16 @@
+Source: pg-describe
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/sajonaro/pg_describe
+
+Package: postgresql-PGVERSION-pg-describe
+Architecture: any
+Provides: postgresql-pg-describe
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Describe query parameters and result columns without execution
+ pg_describe reports query parameters and result columns without executing the
+ query, including type, name, provenance, and nullability information.
