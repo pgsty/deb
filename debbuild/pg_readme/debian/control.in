@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/bigsmoke/pg_readme
 
 Package: postgresql-PGVERSION-pg-readme
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-readme
 Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: Functions to generate a `README.md` document for a database extension or schema
@@ -16,4 +16,3 @@ Description: Functions to generate a `README.md` document for a database extensi
   based on `COMMENT` objects found in the `pg_description` system catalog
   The pg_readme PostgreSQL extension provides functions to generate a README.md document
   for a database extension or schema, based on COMMENT objects found in the pg_description system catalog.
-
