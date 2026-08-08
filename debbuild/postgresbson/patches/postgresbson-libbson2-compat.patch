@@ -1,5 +1,3 @@
-diff --git a/pgbson.c b/pgbson.c
-index 0231294..68bf054 100644
 --- a/pgbson.c
 +++ b/pgbson.c
 @@ -43,7 +43,7 @@
@@ -11,7 +9,7 @@ index 0231294..68bf054 100644
  
  
  
-@@ -658,8 +658,18 @@ Datum bson_get_jsonb_array(PG_FUNCTION_ARGS)
+@@ -745,8 +745,18 @@ Datum bson_get_jsonb_array(PG_FUNCTION_ARGS)
  
      if(rc) {
  	size_t blen;

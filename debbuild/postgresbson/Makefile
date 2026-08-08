@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := postgresbson-2.0.4.tar.gz
+TARBALL := postgresbson-2.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
