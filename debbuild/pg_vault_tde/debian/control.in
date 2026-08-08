@@ -1,0 +1,17 @@
+Source: pg-vault-tde
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libssl-dev (>= 3.0), libcurl4-openssl-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/labmiriade/pg_vault_tde
+
+Package: postgresql-PGVERSION-pg-vault-tde
+Architecture: any
+Provides: postgresql-pg-vault-tde
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Transparent Data Encryption for PostgreSQL
+ pg_vault_tde encrypts table and index data at rest through custom access
+ methods and supports Vault, OpenBao, local wallets, and PKCS#11 key providers.
+ The module must be configured in shared_preload_libraries before use.
