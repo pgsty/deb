@@ -1,0 +1,6 @@
+pg-describe (1.0.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for upstream PGXN 1.0.0.
+  * Build for the upstream-supported PostgreSQL 17 and 18 releases.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 07 Aug 2026 09:30:00 +0800
