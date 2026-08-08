@@ -1,0 +1,16 @@
+Source: cat-tools
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/decibel/cat_tools
+
+Package: postgresql-PGVERSION-cat-tools
+Architecture: all
+Provides: postgresql-cat-tools
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Tools for interfacing with the PostgreSQL catalog
+ cat_tools provides SQL functions and views for inspecting and working with
+ PostgreSQL system catalogs.
