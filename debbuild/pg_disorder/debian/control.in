@@ -1,0 +1,17 @@
+Source: pg-disorder
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/viralpraxis/pg_disorder
+
+Package: postgresql-PGVERSION-pg-disorder
+Architecture: any
+Provides: postgresql-pg-disorder
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Perturb unordered SELECT results to expose test failures
+ pg_disorder is a test-only module that reverses or shuffles rows from eligible
+ SELECT statements without ORDER BY. Load it with session_preload_libraries;
+ it is not intended for production use.

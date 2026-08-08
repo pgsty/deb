@@ -1,0 +1,5 @@
+pg-disorder (0.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Initial package for upstream PGXN 0.1.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 07 Aug 2026 09:30:00 +0800
