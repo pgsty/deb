@@ -1,23 +1,12 @@
-diff --git a/pgbson.c b/pgbson.c
-index 90a2f9c..0231294 100644
 --- a/pgbson.c
 +++ b/pgbson.c
-@@ -18,9 +18,8 @@
- 
- //#define  PGBSON_DEBUG
- 
+@@ -21,3 +21,2 @@
 -#ifdef PGBSON_DEBUG
 -#include <stdio.h>    // only for fprintf() debugging....
 -#endif
 +#include <stdio.h>    // snprintf/fprintf
 +#include <time.h>
- 
- 
- // The Postgres family of #includes
-@@ -481,6 +480,26 @@ static Timestamp _cvt_datetime_to_ts(int64_t millis_since_epoch)
-     return ts;
- }
- 
+@@ -483,0 +483,20 @@
 +static void _format_datetime_to_iso8601(int64_t millis_since_epoch, char *buf, size_t bufsize)
 +{
 +    time_t t_unix;
@@ -38,29 +27,19 @@ index 90a2f9c..0231294 100644
 +             unix_tm.tm_hour, unix_tm.tm_min, unix_tm.tm_sec, millis);
 +}
 +
- 
- PG_FUNCTION_INFO_V1(bson_get_datetime);
- Datum bson_get_datetime(PG_FUNCTION_ARGS)
-@@ -792,9 +811,6 @@ Datum bson_get_binary(PG_FUNCTION_ARGS)
- 
- 
- 
+@@ -882,3 +900,0 @@
 -extern void
 -_bson_iso8601_date_format (int64_t msec_since_epoch, bson_string_t *str);
 -
- PG_FUNCTION_INFO_V1(bson_as_text);  // text bson_get(bson, dotpath)
- Datum bson_as_text(PG_FUNCTION_ARGS)
- {
-@@ -856,11 +872,7 @@ Datum bson_as_text(PG_FUNCTION_ARGS)
- 	    }
- 	    case BSON_TYPE_DATE_TIME: {
- 		int64_t millis_since_epoch = bson_iter_date_time (&target);
+@@ -953,10 +969 @@
 -		bson_string_t* str = bson_string_new (NULL);
 -		_bson_iso8601_date_format(millis_since_epoch, str);
--		bson_strncpy (valbuf, str->str, str->len);
--		valbuf[str->len] = '\0';
+-		// The size arg to bson_strncpy is the size of the DESTINATION,
+-		// not the source: it copies at most size-1 bytes and always
+-		// NUL terminates at dst[size-1].  Passing str->len therefore
+-		// chopped the last character (the trailing "Z" of the ISO8601
+-		// date) and the manual NUL below wrote one byte past that.
+-		// sizeof(valbuf) is both correct and bounded.
+-		bson_strncpy (valbuf, str->str, sizeof(valbuf));
 -		bson_string_free(str, true); // true means "free segment" ?
 +		_format_datetime_to_iso8601(millis_since_epoch, valbuf, sizeof(valbuf));
- 		txt = valbuf;
- 		break;		
- 	    }								

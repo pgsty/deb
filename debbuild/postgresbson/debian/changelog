@@ -1,3 +1,11 @@
+postgresbson (2.1.0-1PIGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN bson 2.1.0.
+  * Refresh the system libbson compatibility fix.
+  * Accept pkg-config on Jammy where pkgconf conflicts with the native package.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 07 Aug 2026 09:30:00 +0800
+
 postgresbson (2.0.4-2PIGSTY) unstable; urgency=medium
 
   * Support the libbson 2 pkg-config name used by Ubuntu 26.04.
