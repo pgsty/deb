@@ -1,0 +1,102 @@
+--- a/plruby_spi.c
++++ b/plruby_spi.c
+@@ -1308,7 +1308,7 @@
+ 
+ 	/* Output redirection */
+ 	rb_define_module_function(rb_mPLRuby, "__log",
+-							  RUBY_METHOD_FUNC(plruby_do_log), 1);
++							  plruby_do_log, 1);
+ 	plruby_eval_string(plruby_output_ruby, "plruby output setup");
+ 	{
+ 		VALUE		out = rb_const_get(rb_mPLRuby, rb_intern("OUT"));
+@@ -1318,65 +1318,65 @@
+ 	}
+ 
+ 	/* Messaging */
+-	rb_define_global_function("elog", RUBY_METHOD_FUNC(plruby_elog), 2);
+-	rb_define_global_function("pg_raise", RUBY_METHOD_FUNC(plruby_pg_raise), -1);
++	rb_define_global_function("elog", plruby_elog, 2);
++	rb_define_global_function("pg_raise", plruby_pg_raise, -1);
+ 
+ 	/* Quoting */
+ 	rb_define_global_function("quote_literal",
+-							  RUBY_METHOD_FUNC(plruby_quote_literal), 1);
++							  plruby_quote_literal, 1);
+ 	rb_define_global_function("quote_nullable",
+-							  RUBY_METHOD_FUNC(plruby_quote_nullable), 1);
++							  plruby_quote_nullable, 1);
+ 	rb_define_global_function("quote_ident",
+-							  RUBY_METHOD_FUNC(plruby_quote_ident), 1);
++							  plruby_quote_ident, 1);
+ 
+ 	/* SRF support */
+ 	rb_define_module_function(rb_mPLRuby, "__set_binding",
+-							  RUBY_METHOD_FUNC(plruby_set_binding), 1);
++							  plruby_set_binding, 1);
+ 	rb_define_global_function("return_next",
+-							  RUBY_METHOD_FUNC(plruby_return_next), -1);
++							  plruby_return_next, -1);
+ 
+ 	/* SPI query API */
+-	rb_define_global_function("spi_exec", RUBY_METHOD_FUNC(plruby_spi_exec), -1);
++	rb_define_global_function("spi_exec", plruby_spi_exec, -1);
+ 	rb_define_global_function("spi_fetch_row",
+-							  RUBY_METHOD_FUNC(plruby_spi_fetch_row), 1);
++							  plruby_spi_fetch_row, 1);
+ 	rb_define_global_function("spi_processed",
+-							  RUBY_METHOD_FUNC(plruby_spi_processed), 1);
++							  plruby_spi_processed, 1);
+ 	rb_define_global_function("spi_status",
+-							  RUBY_METHOD_FUNC(plruby_spi_status), 1);
++							  plruby_spi_status, 1);
+ 	rb_define_global_function("spi_colnames",
+-							  RUBY_METHOD_FUNC(plruby_spi_colnames), 1);
++							  plruby_spi_colnames, 1);
+ 	rb_define_global_function("spi_coltypes",
+-							  RUBY_METHOD_FUNC(plruby_spi_coltypes), 1);
++							  plruby_spi_coltypes, 1);
+ 	rb_define_global_function("spi_coltypmods",
+-							  RUBY_METHOD_FUNC(plruby_spi_coltypmods), 1);
++							  plruby_spi_coltypmods, 1);
+ 	rb_define_global_function("spi_rewind",
+-							  RUBY_METHOD_FUNC(plruby_spi_rewind), 1);
++							  plruby_spi_rewind, 1);
+ 
+ 	/* Cursor streaming (block form + Cursor#each layered in the prelude below) */
+ 	rb_define_global_function("__spi_query",
+-							  RUBY_METHOD_FUNC(plruby_spi_query), -1);
++							  plruby_spi_query, -1);
+ 	rb_define_global_function("spi_fetchrow",
+-							  RUBY_METHOD_FUNC(plruby_spi_fetchrow), 1);
++							  plruby_spi_fetchrow, 1);
+ 	rb_define_global_function("spi_cursor_close",
+-							  RUBY_METHOD_FUNC(plruby_spi_cursor_close), 1);
++							  plruby_spi_cursor_close, 1);
+ 
+ 	/* Prepared statements */
+ 	rb_define_global_function("spi_prepare",
+-							  RUBY_METHOD_FUNC(plruby_spi_prepare), -1);
++							  plruby_spi_prepare, -1);
+ 	rb_define_global_function("spi_exec_prepared",
+-							  RUBY_METHOD_FUNC(plruby_spi_exec_prepared), -1);
++							  plruby_spi_exec_prepared, -1);
+ 	rb_define_global_function("__spi_query_prepared",
+-							  RUBY_METHOD_FUNC(plruby_spi_query_prepared), -1);
++							  plruby_spi_query_prepared, -1);
+ 	rb_define_global_function("spi_freeplan",
+-							  RUBY_METHOD_FUNC(plruby_spi_freeplan), 1);
++							  plruby_spi_freeplan, 1);
+ 
+ 	/* Transaction control + subtransactions */
+ 	rb_define_global_function("spi_commit",
+-							  RUBY_METHOD_FUNC(plruby_spi_commit), 0);
++							  plruby_spi_commit, 0);
+ 	rb_define_global_function("spi_rollback",
+-							  RUBY_METHOD_FUNC(plruby_spi_rollback), 0);
++							  plruby_spi_rollback, 0);
+ 	rb_define_global_function("subtransaction",
+-							  RUBY_METHOD_FUNC(plruby_subtransaction), -1);
++							  plruby_subtransaction, -1);
+ 
+ 	/* Ruby-level layer for the cursor block form and Cursor#each */
+ 	plruby_eval_string(plruby_spi_prelude, "plruby spi prelude");

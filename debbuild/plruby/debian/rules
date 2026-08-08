@@ -1,0 +1,40 @@
+#!/usr/bin/make -f
+
+export CC = gcc
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+COMPONENTS := . jsonb_plruby hstore_plruby ltree_plruby
+
+%:
+	dh $@
+
+override_dh_auto_test:
+
+override_dh_auto_build:
+	# Build each PostgreSQL major directly into its binary package staging tree.
+
+override_dh_auto_clean:
+	# The outer recipe recreates the source tree for every build.
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym
+
+override_dh_auto_install:
+	+set -e; for PG_VERSION in $(PG_VERSIONS); do \
+		FULL_NAME=postgresql-$$PG_VERSION-plruby; \
+		PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+		dh_installdirs -p$$FULL_NAME; \
+		for COMPONENT in $(COMPONENTS); do \
+			$(MAKE) -C $$COMPONENT clean PG_CONFIG=$$PG_CONFIG RUBY=/usr/bin/ruby; \
+			$(MAKE) -C $$COMPONENT PG_CONFIG=$$PG_CONFIG RUBY=/usr/bin/ruby; \
+			$(MAKE) -C $$COMPONENT PG_CONFIG=$$PG_CONFIG RUBY=/usr/bin/ruby \
+				install DESTDIR=$(CURDIR)/debian/$$FULL_NAME; \
+		done; \
+		printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
+		printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md CHANGELOG.md INSTALL
