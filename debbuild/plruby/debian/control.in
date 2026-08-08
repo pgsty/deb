@@ -1,0 +1,17 @@
+Source: plruby
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), ruby-dev
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/commandprompt/plruby
+
+Package: postgresql-PGVERSION-plruby
+Architecture: any
+Provides: postgresql-plruby
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Ruby procedural language for PostgreSQL PGVERSION
+ PL/Ruby embeds the MRI Ruby interpreter as an untrusted PostgreSQL procedural
+ language. The package also includes the jsonb, hstore, and ltree transform
+ extensions shipped by upstream.
