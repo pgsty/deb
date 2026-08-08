@@ -1,12 +1,12 @@
 all: setup build move
 
-TARBALL := pg_search-0.25.0.tar.gz
+TARBALL := pg_search-0.25.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
 PGRX_VERSION := 0.19.1
-SOURCE_PATCH := patches/pg-search-0.25.0.patch
+SOURCE_PATCH := patches/pg-search-0.25.1.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_BUILD_JOBS ?= 2
 

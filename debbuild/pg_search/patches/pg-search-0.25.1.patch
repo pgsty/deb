@@ -1,25 +1,8 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index e09cd55..0f7a094 100644
+index 089af98..8e6ed67 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -1082,7 +1082,7 @@ version = "3.9.1"
- source = "registry+https://github.com/rust-lang/crates.io-index"
- checksum = "519bd3116aeeb42d5372c29d982d16d0170d3d4a5ed85fc7dd91642ffff3c67c"
- dependencies = [
-- "darling 0.20.11",
-+ "darling 0.21.3",
-  "ident_case",
-  "prettyplease",
-  "proc-macro2",
-@@ -1971,6 +1971,7 @@ dependencies = [
-  "ident_case",
-  "proc-macro2",
-  "quote",
-+ "strsim",
-  "syn 2.0.117",
- ]
-
-@@ -5766,9 +5767,9 @@ dependencies = [
+@@ -5767,9 +5767,9 @@ dependencies = [
 
  [[package]]
  name = "pgrx"
@@ -31,7 +14,7 @@ index e09cd55..0f7a094 100644
  dependencies = [
   "bitflags 2.13.0",
   "bitvec",
-@@ -5787,9 +5788,9 @@ dependencies = [
+@@ -5788,9 +5788,9 @@ dependencies = [
 
  [[package]]
  name = "pgrx-bindgen"
@@ -43,7 +26,7 @@ index e09cd55..0f7a094 100644
  dependencies = [
   "bindgen",
   "cc",
-@@ -5806,9 +5807,9 @@ dependencies = [
+@@ -5807,9 +5807,9 @@ dependencies = [
 
  [[package]]
  name = "pgrx-macros"
@@ -55,7 +38,7 @@ index e09cd55..0f7a094 100644
  dependencies = [
   "pgrx-sql-entity-graph",
   "proc-macro2",
-@@ -5818,9 +5819,9 @@ dependencies = [
+@@ -5819,9 +5819,9 @@ dependencies = [
 
  [[package]]
  name = "pgrx-pg-config"
@@ -67,7 +50,7 @@ index e09cd55..0f7a094 100644
  dependencies = [
   "cargo_toml",
   "codepage",
-@@ -5838,9 +5839,9 @@ dependencies = [
+@@ -5839,9 +5839,9 @@ dependencies = [
 
  [[package]]
  name = "pgrx-pg-sys"
@@ -79,7 +62,7 @@ index e09cd55..0f7a094 100644
  dependencies = [
   "cee-scape",
   "libc",
-@@ -5852,9 +5853,9 @@ dependencies = [
+@@ -5853,9 +5853,9 @@ dependencies = [
 
  [[package]]
  name = "pgrx-sql-entity-graph"
@@ -91,7 +74,7 @@ index e09cd55..0f7a094 100644
  dependencies = [
   "convert_case",
   "eyre",
-@@ -5868,9 +5869,9 @@ dependencies = [
+@@ -5869,9 +5869,9 @@ dependencies = [
 
  [[package]]
  name = "pgrx-tests"
@@ -104,10 +87,10 @@ index e09cd55..0f7a094 100644
   "clap-cargo",
   "eyre",
 diff --git a/Cargo.toml b/Cargo.toml
-index 044db24..e3f2e9f 100644
+index 55d32f7..d2ca778 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -47,8 +47,8 @@ tantivy = { git = "https://github.com/paradedb/tantivy.git", package = "tantivy"
+@@ -66,8 +66,8 @@ tantivy = { git = "https://github.com/paradedb/tantivy.git", package = "tantivy"
    "stemmer",
    "stopwords",
  ], default-features = false }
