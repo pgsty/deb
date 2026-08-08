@@ -1,0 +1,17 @@
+Source: pg-turbovec
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, git, libopenblas-dev
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://codeberg.org/gregburd/pg_turbovec
+
+Package: postgresql-PGVERSION-pg-turbovec
+Architecture: any
+Provides: postgresql-pg-turbovec
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: TurboQuant-compressed vector search for PostgreSQL PGVERSION
+ pg_turbovec provides compressed vector types and a PostgreSQL index access
+ method backed by the TurboQuant quantizer. It supports exact and approximate
+ nearest-neighbor search with L2, inner-product, cosine, and L1 distances.
