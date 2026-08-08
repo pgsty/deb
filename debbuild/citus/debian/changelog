@@ -1,3 +1,9 @@
+citus (14.2.0-1PIGSTY) unstable; urgency=low
+
+  * Update to upstream 14.2.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 07 Aug 2026 09:30:00 +0800
+
 citus (14.1.0-1PIGSTY) unstable; urgency=low
 
   * Update to upstream 14.1.0 with PostgreSQL 18 support.
