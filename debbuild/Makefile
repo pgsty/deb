@@ -174,6 +174,9 @@ jsonschema:
 pg_mentat:
 	cd pg_mentat && make
 
+pg_turbovec:
+	cd pg_turbovec && make
+
 
 
 ###############################################################
@@ -1164,7 +1167,7 @@ collect:
 
 
 .PHONY: deps collect haproxy \
-	block_copy_command timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pgvector pg_vectorize pg_summarize pg_tiktoken pg_tiktoken_c pgml pg_search pg_when pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_kazsearch pg_typescript pg_cardano pg_rrf plprql pglite_fusion pg_smtp_client pgmqtt pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_oidc_validator_rust pg_oidc_validator pg_anon pgsmcrypto wrappers pggraph pgcontext pgrdf pgwasm jsonschema pg_mentat \
+	block_copy_command timescaledb_toolkit pg_later pg_polyline pg_tzf vchord pgvectorscale pgvector pg_vectorize pg_summarize pg_tiktoken pg_tiktoken_c pgml pg_search pg_when pg_bestmatch vchord_bm25 pg_tokenizer pg_mooncake pg_parquet pg_graphql pg_jsonschema pg_kazsearch pg_typescript pg_cardano pg_rrf plprql pglite_fusion pg_smtp_client pgmqtt pg_render pg_idkit pgx_ulid pg_base58 pg_convert pgdd pg_explain_ui pg_session_jwt pg_oidc_validator_rust pg_oidc_validator pg_anon pgsmcrypto wrappers pggraph pgcontext pgrdf pgwasm jsonschema pg_mentat pg_turbovec \
 	timescaledb pg_timeseries pg_bikram_sambat cron_utils temporal_tables emaj table_version pg_task pg_background pg_partman \
 	geoip qdgc pg_geohash pghydro mobilitydb \
 	smlar pg4ml rdkit \
