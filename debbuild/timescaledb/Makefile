@@ -1,6 +1,7 @@
 all: pre build
 
-TARBALL := timescaledb-2.29.0.tar.gz
+VERSION := 2.29.1
+TARBALL := timescaledb-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 
 pre:
@@ -15,7 +16,8 @@ build: check-src build18 build17 build16
 define build_one
 	rm -rf build-$(1); mkdir -p build-$(1)
 	tar -C build-$(1) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	sed -i 's/^version = 2.29.0-dev$$/version = 2.29.0/' build-$(1)/version.config
+	sed -i 's/^version = $(VERSION)-dev$$/version = $(VERSION)/' build-$(1)/version.config
+	grep -qx 'version = $(VERSION)' build-$(1)/version.config
 	cd build-$(1) && PATH=/usr/lib/postgresql/$(1)/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./bootstrap -DSEND_TELEMETRY_DEFAULT=NO -DREGRESS_CHECKS=OFF
 	cd build-$(1)/build && $(MAKE) -j1
 	rm -rf build-$(1)/build/debian; cp -r debian build-$(1)/build/debian
