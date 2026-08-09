@@ -1,3 +1,10 @@
+polarstore (1.2.42-2PGSTY) unstable; urgency=medium
+
+  * Rebuild PolarStore PFSD SDK with the PGSTY package release brand.
+  * Require zlog 1.2.18 or newer and libaio development files.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 09 Aug 2026 04:54:16 +0000
+
 polarstore (1.2.42-1PIGSTY) unstable; urgency=medium
 
   * Build PolarStore PFSD SDK from PolarDB-FileSystem source.

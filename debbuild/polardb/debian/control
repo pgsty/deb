@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends:
  build-essential,
- polarstore,
+ polarstore (>= 1.2.42),
  bison,
  flex,
  uuid-dev,

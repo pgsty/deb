@@ -1155,8 +1155,8 @@ haproxy:
 deps:
 	sudo dpkg -i ~/libduckdb_*.deb
 	sudo dpkg -i ~/libfq_*.deb
-	sudo dpkg -i ~/zlog_*.deb
-	sudo dpkg -i ~/polarstore_*.deb
+	sudo apt-get install -y "$(HOME)/ext/pkg/zlog_1.2.18-2PGSTY~$$(lsb_release -sc)_$$(dpkg --print-architecture).deb"
+	sudo apt-get install -y "$(HOME)/ext/pkg/polarstore_1.2.42-2PGSTY~$$(lsb_release -sc)_$$(dpkg --print-architecture).deb"
 	sudo dpkg -i ~/libgraphblas10_*.deb ~/libgraphblas-dev_*.deb
 	sudo dpkg -i ~/liblagraph1_*.deb ~/liblagraphx1_*.deb ~/liblagraph-dev_*.deb
 	sudo dpkg -i ~/scws_*.deb

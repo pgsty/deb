@@ -1,0 +1,30 @@
+diff --git a/package/debian/build-deb.sh b/package/debian/build-deb.sh
+--- a/package/debian/build-deb.sh
++++ b/package/debian/build-deb.sh
+@@ -36,2 +35,0 @@
+-distname=$(grep '^ID=' /etc/os-release | awk -F'=' '{print $2}')
+-distversion=$(grep 'VERSION_ID=' /etc/os-release | awk -F\" '{print $2}')
+@@ -38,0 +37,2 @@
++pgsty_release=${PGSTY_RELEASE:-2PGSTY}
++distcodename=${DISTRO_CODENAME:-}
+@@ -40 +40,15 @@
+-pkgname=${package}_${polar_version}-${polar_commit}-${distname}${distversion}_${arch}
++if [[ -z ${distcodename} ]]; then
++  distcodename=$(lsb_release -sc 2>/dev/null || true)
++fi
++if [[ -z ${distcodename} && -r /etc/os-release ]]; then
++  . /etc/os-release
++  distcodename=${VERSION_CODENAME:-${UBUNTU_CODENAME:-}}
++fi
++if [[ -z ${distcodename} ]]; then
++  echo "unable to determine distro codename" >&2
++  exit 1
++fi
++
++package_release=${pgsty_release}~${distcodename}
++
++pkgname=${debpkgname}_${polar_version}-${package_release}_${arch}
+@@ -45 +59,2 @@
+-echo 'Version: '${polar_version}'-'${polar_commit}'' >> ${pkgname}/DEBIAN/control
++echo 'Version: '${polar_version}'-'${package_release}'' >> ${pkgname}/DEBIAN/control
++echo 'X-Pigsty-Source-Commit: '${polar_commit}'' >> ${pkgname}/DEBIAN/control
