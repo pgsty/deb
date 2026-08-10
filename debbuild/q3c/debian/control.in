@@ -1,0 +1,18 @@
+Source: postgresql-q3c
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/segasai/q3c
+
+Package: postgresql-PGVERSION-q3c
+Architecture: any
+Provides: postgresql-q3c
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Breaks: ${postgresql:Breaks}
+Description: PostgreSQL PGVERSION extension used for indexing the sky
+ Q3C is designed for large astronomical catalogues and other catalogues of
+ objects on a sphere. It provides fast circular, elliptical and polygonal
+ searches, as well as fast cross-matches.
