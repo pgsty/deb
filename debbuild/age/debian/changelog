@@ -1,3 +1,11 @@
+age (1.8.0-1PGSTY) unstable; urgency=medium
+
+  * Build Apache AGE 1.8.0 from the official PostgreSQL 18 release archive.
+  * Keep PostgreSQL 17 on the upstream AGE 1.7.0 branch.
+  * https://github.com/apache/age/releases/tag/PG18%2Fv1.8.0-rc0
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 11 Aug 2026 11:29:22 +0800
+
 age (1.7.0-2PIGSTY) unstable; urgency=medium
 
   * Build PG17/18 from the unified age-1.7.0 source archive with PG branch checkout.
