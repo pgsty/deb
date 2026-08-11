@@ -1,0 +1,52 @@
+From 03510e89de1b55364dc7626bacc27f7b7a50a37e Mon Sep 17 00:00:00 2001
+From: Jeremy Schneider <schneider@ardentperf.com>
+Date: Wed, 4 Mar 2026 19:24:44 -0800
+Subject: [PATCH] fix: prevent connection failures when cgroup is disabled or
+ unsupported
+
+When cgroup_enabled is false (via GUC or unsupported cgroup mode such as
+hybrid), the CA hook was still installed and set_cgpath() would ERROR on
+every connection. Skip the hook install and guard set_cgpath()
+accordingly.
+---
+ cgroup.c   | 4 ++++
+ pgnodemx.c | 9 ++++++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/cgroup.c b/cgroup.c
+index 99391fb..9b1be92 100644
+--- a/cgroup.c
++++ b/cgroup.c
+@@ -796,6 +796,10 @@ set_cgpath(void)
+ {
+ 	char		   *ftr = PROC_CGROUP_FILE;
+ 
++	/* ERROR here will break all ability to connect; guard against disabled cgroup */
++	if (!cgroup_enabled)
++		return;
++
+ 	init_or_reset_cgpath();
+ 
+ 	/* obtain a list of cgroup controllers */
+diff --git a/pgnodemx.c b/pgnodemx.c
+index 61f08e4..4eadbf4 100644
+--- a/pgnodemx.c
++++ b/pgnodemx.c
+@@ -286,9 +286,12 @@ _PG_init(void)
+ 	 */
+ 	proc_enabled = check_procfs();
+ 
+-	/* Install backend session post-auth hook */
+-	next_client_auth_hook = ClientAuthentication_hook;
+-	ClientAuthentication_hook = CA_hook;
++	/* Install backend session post-auth hook only if cgroup is enabled */
++	if (cgroup_enabled)
++	{
++		next_client_auth_hook = ClientAuthentication_hook;
++		ClientAuthentication_hook = CA_hook;
++	}
+ 
+ 	inited = true;
+ }
+-- 
+2.43.0

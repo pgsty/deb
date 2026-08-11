@@ -1,3 +1,11 @@
+pgnodemx (2.0.1-1PGSTY) unstable; urgency=medium
+
+  * Update to pgnodemx 2.0.1.
+  * Prevent connection failures when cgroup support is disabled or unavailable.
+  * https://github.com/pgnodemx/pgnodemx/releases/tag/v2.0.1
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 11 Aug 2026 11:29:22 +0800
+
 pgnodemx (1.7-1PIGSTY) unstable; urgency=medium
 
   * PG17: https://github.com/CrunchyData/pgnodemx/releases/tag/v1.7
