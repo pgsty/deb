@@ -1,3 +1,10 @@
+pgsentinel (1.4.2-1PGSTY) unstable; urgency=low
+
+  * Update to pgsentinel 1.4.2.
+  * https://github.com/pgsentinel/pgsentinel/releases/tag/v1.4.2
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 11 Aug 2026 11:29:22 +0800
+
 pgsentinel (1.4.1-1PIGSTY) unstable; urgency=low
 
   * https://github.com/pgsentinel/pgsentinel/releases/tag/v1.4.1
