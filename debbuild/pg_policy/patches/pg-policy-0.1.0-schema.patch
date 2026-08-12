@@ -1,0 +1,229 @@
+--- a/pg_policy.control
++++ b/pg_policy.control
+@@ -2,5 +2,5 @@
+ comment = 'Agentic policy language for PostgreSQL — guardrails, guidance, and session-aware controls'
+ default_version = '0.1.0'
+ relocatable = false
+-schema = pg_policy
++schema = policy
+ superuser = false
+--- a/sql/pg_policy--0.1.0.sql
++++ b/sql/pg_policy--0.1.0.sql
+@@ -1,7 +1,7 @@
+ -- complain if script is sourced in psql, rather than via CREATE EXTENSION
+ \echo Use "CREATE EXTENSION pg_policy" to load this file. \quit
+
+-COMMENT ON SCHEMA pg_policy IS
++COMMENT ON SCHEMA policy IS
+   'Agentic policy language: guardrails, guidance, and session-aware controls';
+
+ --------------------------------------------------------------------------------
+@@ -97,6 +97,7 @@
+ RETURNS text
+ LANGUAGE sql
+ STABLE
++SET search_path = policy, pg_catalog
+ AS $$
+   SELECT value FROM settings WHERE key = p_key;
+ $$;
+@@ -104,6 +105,7 @@
+ CREATE OR REPLACE FUNCTION set_setting(p_key text, p_value text)
+ RETURNS void
+ LANGUAGE plpgsql
++SET search_path = policy, pg_catalog
+ AS $$
+ BEGIN
+   INSERT INTO settings(key, value) VALUES (p_key, p_value)
+@@ -119,6 +121,7 @@
+ RETURNS text
+ LANGUAGE plpgsql
+ IMMUTABLE
++SET search_path = policy, pg_catalog
+ AS $$
+ DECLARE
+   m text[];
+@@ -135,6 +138,7 @@
+ RETURNS jsonb
+ LANGUAGE plpgsql
+ IMMUTABLE
++SET search_path = policy, pg_catalog
+ AS $$
+ DECLARE
+   v_effect text;
+@@ -324,6 +328,7 @@
+ )
+ RETURNS bigint
+ LANGUAGE plpgsql
++SET search_path = policy, pg_catalog
+ AS $$
+ DECLARE
+   ir jsonb;
+@@ -371,6 +376,7 @@
+ CREATE OR REPLACE FUNCTION drop_policy(p_name text)
+ RETURNS boolean
+ LANGUAGE plpgsql
++SET search_path = policy, pg_catalog
+ AS $$
+ BEGIN
+   DELETE FROM policies WHERE name = p_name;
+@@ -390,6 +396,7 @@
+ )
+ RETURNS text
+ LANGUAGE plpgsql
++SET search_path = policy, pg_catalog
+ AS $$
+ BEGIN
+   INSERT INTO sessions(session_id, principal_type, principal_id, attributes)
+@@ -412,6 +419,7 @@
+ )
+ RETURNS bigint
+ LANGUAGE plpgsql
++SET search_path = policy, pg_catalog
+ AS $$
+ DECLARE
+   id bigint;
+@@ -435,6 +443,7 @@
+ RETURNS boolean
+ LANGUAGE sql
+ IMMUTABLE
++SET search_path = policy, pg_catalog
+ AS $$
+   SELECT p_pattern = '*' OR p_pattern = p_value;
+ $$;
+@@ -443,6 +452,7 @@
+ RETURNS boolean
+ LANGUAGE plpgsql
+ IMMUTABLE
++SET search_path = policy, pg_catalog
+ AS $$
+ DECLARE
+   r record;
+@@ -491,6 +501,7 @@
+ RETURNS boolean
+ LANGUAGE plpgsql
+ STABLE
++SET search_path = policy, pg_catalog
+ AS $$
+ DECLARE
+   cnt bigint;
+@@ -544,6 +555,7 @@
+ )
+ RETURNS jsonb
+ LANGUAGE plpgsql
++SET search_path = policy, pg_catalog
+ AS $$
+ DECLARE
+   mode text;
+@@ -656,7 +656,7 @@
+ -- Convenience wrappers
+ --------------------------------------------------------------------------------
+
+-CREATE OR REPLACE FUNCTION check(
++CREATE OR REPLACE FUNCTION "check"(
+   p_agent text,
+   p_tool text,
+   p_context jsonb DEFAULT '{}'::jsonb,
+@@ -664,6 +676,7 @@
+ )
+ RETURNS boolean
+ LANGUAGE sql
++SET search_path = policy, pg_catalog
+ AS $$
+   SELECT (evaluate(
+     'agent', p_agent, 'tool', p_tool, '*', '*', p_context, p_session_id, false
+@@ -678,6 +691,7 @@
+ )
+ RETURNS jsonb
+ LANGUAGE sql
++SET search_path = policy, pg_catalog
+ AS $$
+   SELECT evaluate(
+     'agent', p_agent, 'tool', p_tool, '*', '*', p_context, p_session_id, true
+--- a/README.md
++++ b/README.md
+@@ -7,7 +7,7 @@
+ ```sql
+ CREATE EXTENSION pg_policy;
+
+-SELECT pg_policy.upsert_policy('block_ddl', $apl$
++SELECT policy.upsert_policy('block_ddl', $apl$
+ forbid
+   principal agent "research_bot"
+   action tool "execute_sql"
+@@ -15,9 +15,9 @@
+   reason "Research agents may not run DDL"
+ $apl$);
+
+-SELECT pg_policy.set_setting('enforcement_mode', 'enforce');
++SELECT policy.set_setting('enforcement_mode', 'enforce');
+
+-SELECT pg_policy.check(
++SELECT policy."check"(
+   'research_bot',
+   'execute_sql',
+   '{"statement_type":"DROP"}'::jsonb
+@@ -84,9 +84,9 @@
+
+ ```sql
+ -- Soft onboarding: observe only
+-SELECT pg_policy.set_setting('enforcement_mode', 'log_only');
++SELECT policy.set_setting('enforcement_mode', 'log_only');
+
+-SELECT pg_policy.upsert_policy('export_budget', $apl$
++SELECT policy.upsert_policy('export_budget', $apl$
+ forbid
+   principal agent "research_bot"
+   action tool "export_csv"
+@@ -96,9 +96,9 @@
+   reason "Export budget exceeded"
+ $apl$);
+
+-SELECT pg_policy.open_session('sess-1', 'agent', 'research_bot');
++SELECT policy.open_session('sess-1', 'agent', 'research_bot');
+
+-SELECT pg_policy.evaluate(
++SELECT policy.evaluate(
+   'agent', 'research_bot', 'tool', 'export_csv',
+   '*', '*', '{}'::jsonb, 'sess-1'
+ );
+@@ -107,7 +107,7 @@
+ Promote to enforce after a shadow period:
+
+ ```sql
+-SELECT pg_policy.set_setting('enforcement_mode', 'enforce');
++SELECT policy.set_setting('enforcement_mode', 'enforce');
+ ```
+
+ ---
+@@ -118,7 +118,7 @@
+ Agent / MCP gateway
+         │
+         ▼
+- pg_policy.evaluate(...)
++ policy.evaluate(...)
+         │
+         ├─ match APL policies (permit/forbid/guide)
+         ├─ evaluate context + temporal session events
+--- a/doc/pg_policy.md
++++ b/doc/pg_policy.md
+@@ -12,7 +12,7 @@
+ ## Quick start
+
+ ```sql
+-SELECT pg_policy.upsert_policy('block_ddl', $apl$
++SELECT policy.upsert_policy('block_ddl', $apl$
+ forbid
+   principal agent "research_bot"
+   action tool "execute_sql"
+@@ -20,9 +20,9 @@
+   reason "Research agents may not run DDL"
+ $apl$);
+
+-SELECT pg_policy.set_setting('enforcement_mode', 'enforce');
++SELECT policy.set_setting('enforcement_mode', 'enforce');
+
+-SELECT pg_policy.evaluate(
++SELECT policy.evaluate(
+   'agent', 'research_bot', 'tool', 'execute_sql',
+   '*', '*', '{"statement_type":"DROP"}'::jsonb
+ );

@@ -1,0 +1,6 @@
+pg-policy (0.1.0-1PGSTY) unstable; urgency=medium
+
+  * Add package for upstream PGXN 0.1.0 and PostgreSQL 14 through 18.
+  * Repair the upstream schema, reserved function name, and API search path.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 12 Aug 2026 08:00:00 +0800
