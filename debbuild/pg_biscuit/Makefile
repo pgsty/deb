@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := Biscuit-2.4.3.tar.gz
+TARBALL := Biscuit-3.0.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -25,7 +25,7 @@ setup: check-src
 		sed -i.bak '/^[[:space:]]*-fPIC$$/a override CFLAGS += -fno-lto' $(BUILD_DIR)/Makefile; \
 		rm -f $(BUILD_DIR)/Makefile.bak; \
 	fi; \
-	sed -i.bak "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
+	sed -i.bak "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
 	rm -f $(BUILD_DIR)/debian/changelog.bak
 
 apply-patches:
