@@ -1,0 +1,26 @@
+--- a/src/binary/connection.c
++++ b/src/binary/connection.c
+@@ -175,6 +175,7 @@ openssl_min_proto_version(tls_version v) {
+
+ static void
+ tls_connect(ch_binary_connection_t* conn, const char* host, tls_version min_version) {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     static int openssl_init_done = 0;
+
+     if (!openssl_init_done) {
+@@ -183,6 +184,7 @@ tls_connect(ch_binary_connection_t* conn, const char* host, tls_version min_version) {
+         OpenSSL_add_all_algorithms();
+         openssl_init_done = 1;
+     }
++#endif
+
+     conn->ssl_ctx = SSL_CTX_new(TLS_client_method());
+     if (!conn->ssl_ctx) {
+@@ -266,7 +268,7 @@ tls_connect(ch_binary_connection_t* conn, const char* host, tls_version min_vers
+
+ ch_binary_connection_t*
+ ch_binary_connect(ch_connection_details* details) {
+-    const char* host = details->host ? details->host : "127.0.0.1";
++    const char* volatile host = details->host ? details->host : "127.0.0.1";
+     int port;
+     bool tls;
