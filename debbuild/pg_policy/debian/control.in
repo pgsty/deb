@@ -1,0 +1,18 @@
+Source: pg-policy
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/rahiakil/pg-policy
+
+Package: postgresql-PGVERSION-pg-policy
+Architecture: all
+Provides: postgresql-pg-policy
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Agent policy language for PostgreSQL PGVERSION
+ pg_policy stores and evaluates agent-oriented guardrails, guidance policies,
+ session events, and decision logs. It complements PostgreSQL row-level
+ security rather than replacing it. The API is installed in the policy schema
+ because PostgreSQL reserves schema names beginning with pg_.
