@@ -1,3 +1,9 @@
+pg-turbovec (1.29.0-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream pg_turbovec 1.29.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 12 Aug 2026 08:00:00 +0800
+
 pg-turbovec (1.28.3-1PIGSTY) unstable; urgency=medium
 
   * Initial release for pg_turbovec 1.28.3 and PostgreSQL 14 through 18.
