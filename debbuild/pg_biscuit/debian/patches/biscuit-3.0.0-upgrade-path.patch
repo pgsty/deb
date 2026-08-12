@@ -1,0 +1,81 @@
+--- a/Makefile
++++ b/Makefile
+@@ -27,6 +27,8 @@
+ 	sql/biscuit--2.2.3--2.3.0.sql \
+ 	sql/biscuit--2.3.0.sql \
+ 	sql/biscuit--2.3.0--2.4.0.sql \
++	sql/biscuit--2.4.0--2.4.1.sql \
++	sql/biscuit--2.4.1--2.5.0.sql \
+ 	sql/biscuit--2.5.0--3.0.0.sql
+ 
+ # Regression tests: `make installcheck` runs sql/*.sql from test/sql against a
+--- a/sql/biscuit--2.4.0--2.4.1.sql
++++ b/sql/biscuit--2.4.0--2.4.1.sql
+@@ -0,0 +1,5 @@
++-- biscuit--2.4.0--2.4.1.sql
++-- The 2.4.0 and 2.4.1 extension SQL files are identical.
++-- Normalize the catalog version before applying later upgrade scripts.
++
++\echo Use "ALTER EXTENSION biscuit UPDATE TO '2.4.1'" to load this file. \quit
+--- a/sql/biscuit--2.4.1--2.5.0.sql
++++ b/sql/biscuit--2.4.1--2.5.0.sql
+@@ -0,0 +1,59 @@
++-- biscuit--2.4.1--2.5.0.sql
++-- Restore the catalog changes described for 2.5.0 but absent from its PGXN
++-- distribution, then continue through the upstream 2.5.0 -> 3.0.0 script.
++
++\echo Use "ALTER EXTENSION biscuit UPDATE TO '2.5.0'" to load this file. \quit
++
++ALTER OPERATOR CLASS biscuit_text_ops USING biscuit RENAME TO biscuit_ops;
++ALTER OPERATOR FAMILY biscuit_text_ops USING biscuit RENAME TO biscuit_ops;
++
++CREATE OPERATOR FAMILY biscuit_like_ops USING biscuit;
++
++CREATE OPERATOR CLASS biscuit_like_ops
++FOR TYPE text USING biscuit FAMILY biscuit_like_ops AS
++    OPERATOR 1 ~~ (text, text),
++    OPERATOR 2 !~~ (text, text),
++    FUNCTION 1 biscuit_like_support(internal);
++
++COMMENT ON OPERATOR CLASS biscuit_like_ops USING biscuit IS
++'Operator class for text types - supports LIKE and NOT LIKE only. ILIKE and
++NOT ILIKE queries cannot use an index built with this opclass; the planner
++will fall back to a sequential scan (or another eligible index) for those
++quals. Skips building the case-insensitive (_lower) index structures,
++roughly halving memory usage and build time versus biscuit_ops.
++VARCHAR types will implicitly cast to text to use this class.';
++
++CREATE OPERATOR FAMILY biscuit_ilike_ops USING biscuit;
++
++CREATE OPERATOR CLASS biscuit_ilike_ops
++FOR TYPE text USING biscuit FAMILY biscuit_ilike_ops AS
++    OPERATOR 3 ~~* (text, text),
++    OPERATOR 4 !~~* (text, text),
++    FUNCTION 1 biscuit_like_support(internal);
++
++COMMENT ON OPERATOR CLASS biscuit_ilike_ops USING biscuit IS
++'Operator class for text types - supports ILIKE and NOT ILIKE only. LIKE and
++NOT LIKE queries cannot use an index built with this opclass; the planner
++will fall back to a sequential scan (or another eligible index) for those
++quals. Skips building the case-sensitive index structures, roughly halving
++memory usage and build time versus biscuit_ops.
++VARCHAR types will implicitly cast to text to use this class.';
++
++COMMENT ON OPERATOR CLASS biscuit_ops USING biscuit IS
++'Default operator class for text types - supports LIKE, NOT LIKE, ILIKE, and
++NOT ILIKE. Builds both the case-sensitive and case-insensitive (_lower)
++index structures for every column, so it costs roughly 2x the memory/build
++time of biscuit_like_ops or biscuit_ilike_ops alone. Use biscuit_like_ops or
++biscuit_ilike_ops instead if you only need one case-sensitivity mode.
++VARCHAR types will implicitly cast to text to use this class.';
++
++COMMENT ON VIEW biscuit_operators IS
++'Shows which operators are registered for Biscuit indexes, grouped by
++opfamily. Text columns can use biscuit_ops (LIKE+ILIKE, default),
++biscuit_like_ops (LIKE/NOT LIKE only), or biscuit_ilike_ops (ILIKE/NOT ILIKE
++only) -- each has its own opfamily, so this view will show a separate row
++group per opclass actually in use. CHAR(n)/bpchar columns are supported via
++an expression index on (col::text), not a native opclass.';
++
++INSERT INTO biscuit_version_table (version, description) VALUES
++('2.5.0', 'Split biscuit_text_ops into biscuit_ops (default, LIKE+ILIKE), biscuit_like_ops (LIKE-only), and biscuit_ilike_ops (ILIKE-only) so LIKE-only or ILIKE-only indexes no longer build the unused case-sensitivity structures');

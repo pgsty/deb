@@ -1,3 +1,11 @@
+pg-biscuit (3.0.0-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to stable PGXN distribution 3.0.0.
+  * Ship the WAL-logged on-disk format; existing 2.x indexes require REINDEX.
+  * Restore the missing update path from packaged extension versions 2.4.0/2.4.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 12 Aug 2026 16:45:00 +0800
+
 pg-biscuit (2.4.3-1PIGSTY) unstable; urgency=medium
 
   * Upgrade to latest stable PGXN distribution 2.4.3.
