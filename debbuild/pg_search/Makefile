@@ -1,12 +1,12 @@
 all: setup build move
 
-TARBALL := pg_search-0.25.1.tar.gz
+TARBALL := pg_search-0.25.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
 PGRX_VERSION := 0.19.1
-SOURCE_PATCH := patches/pg-search-0.25.1.patch
+SOURCE_PATCH := patches/pg-search-0.25.2.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_BUILD_JOBS ?= 2
 
@@ -25,7 +25,7 @@ setup: check-src check-patches
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	perl -0pi -e "s/PIGSTY\\)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
