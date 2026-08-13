@@ -1,4 +1,4 @@
-fbsql (0.1.0-1PIGSTY) unstable; urgency=medium
+fbsql (0.1.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for upstream PGXN 0.1.0.
   * Require PL/R 8.4.0 or newer and PostgreSQL 16 through 18.
