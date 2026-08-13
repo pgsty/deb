@@ -7,7 +7,7 @@ else
 $(error ivorysql-contrib supports PG_MAJOR=18 for now)
 endif
 
-PKG_REV ?= 2PIGSTY
+PKG_REV ?= 1PGSTY
 PACKAGE ?= ivorysql-$(PG_MAJOR)-contrib
 TARBALL := $(PACKAGE)-$(IVORY_VERSION)-sources.tar.gz
 
