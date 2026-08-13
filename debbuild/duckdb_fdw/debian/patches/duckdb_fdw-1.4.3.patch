@@ -1,8 +1,3 @@
-Description: build latest duckdb_fdw against DuckDB 1.4.3 from pg_duckdb
-Author: Ruohang Feng <rh@vonng.com>
-Forwarded: not-needed
-Last-Update: 2026-04-13
-
 --- a/sqlite3_api_wrapper.cpp
 +++ b/sqlite3_api_wrapper.cpp
 @@ -30,6 +30,17 @@
@@ -85,3 +80,35 @@ Last-Update: 2026-04-13
  		return SQLITE_RANGE;
  	}
  	stmt->bound_values[idx - 1] = value;
+
+--- a/Makefile
++++ b/Makefile
+@@ -79,11 +79,11 @@
+ 
+ 
+ install-duckdb:  $(shlib)
+-	$(install_bin) -m 755 libduckdb$(DLSUFFIX) $(DESTDIR)$(PG_LIB)
++	@:
+ 
+ install: install-duckdb
+ 
+ uninstall-duckdb:
+-	rm -f $(DESTDIR)$(PG_LIB)/libduckdb$(DLSUFFIX)
++	@:
+ 
+ uninstall: uninstall-duckdb
+
+diff --git a/Makefile b/Makefile
+index 1df20a4..8fd9a75 100644
+--- a/Makefile
++++ b/Makefile
+@@ -38,9 +38,6 @@ ifeq ($(detected_OS),Linux)
+     # DLSUFFIX = .so
+     PG_CXXFLAGS = -std=c++11
+     detected_arch := $(shell uname -m)
+-    ifeq ($(detected_arch),x86_64)
+-        PG_CXXFLAGS = -std=c++11 -D_GLIBCXX_USE_CXX11_ABI=0
+-    endif
+ endif
+ 
+ SHLIB_LINK := -L. -lduckdb -lstdc++

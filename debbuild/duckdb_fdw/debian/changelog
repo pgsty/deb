@@ -1,4 +1,4 @@
-duckdb-fdw (1.4.3-1PIGSTY) unstable; urgency=medium
+duckdb-fdw (1.4.3-1PGSTY) unstable; urgency=medium
 
   * Rebase to duckdb_fdw main at 870bc43
   * Pin build headers to DuckDB 1.4.3 from pg_duckdb 1.1.1
