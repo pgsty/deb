@@ -1,4 +1,4 @@
-pglinter (2.0.0-2PIGSTY) unstable; urgency=medium
+pglinter (2.0.0-1PGSTY) unstable; urgency=medium
 
   * Build the locked dependency graph with cargo-pgrx/pgrx 0.19.1.
 

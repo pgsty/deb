@@ -1,3 +1,13 @@
-PostgreSQL License
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pglinter
+Source: https://github.com/pmpetit/pglinter
+Comment: The 2.0.0 archive LICENSE is Apache-2.0, although META.json still says
+ PostgreSQL.  The archive LICENSE is treated as authoritative here.
 
-https://github.com/pmpetit/pglinter/blob/main/META.json
+Files: *
+Copyright: Pierre-Marie Petit and contributors
+License: Apache-2.0
+
+License: Apache-2.0
+ On Debian systems, the complete text of the Apache License, Version 2.0 can
+ be found in /usr/share/common-licenses/Apache-2.0.
