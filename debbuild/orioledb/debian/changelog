@@ -1,4 +1,4 @@
-orioledb-18 (1.8-0.beta16PIGSTY) unstable; urgency=medium
+orioledb-18 (1.8~beta16-1PGSTY) unstable; urgency=medium
 
   * Merge the OriolePG kernel and OrioleDB extension into bundled packages.
   * Rename package output to orioledb-PGMAJOR.
