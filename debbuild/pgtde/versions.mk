@@ -16,7 +16,7 @@ else
 $(error pgtde supports PG_MAJOR=18 for now)
 endif
 
-PKG_REV ?= 2PIGSTY
+PKG_REV ?= 1PGSTY
 PACKAGE ?= pgtde-$(PG_MAJOR)
 CORE_TARBALL := percona-postgresql-$(PG_VERSION).tar.gz
 TDE_TARBALL := percona-pg_tde$(PG_MAJOR)-$(PGTDE_VERSION).tar.gz
