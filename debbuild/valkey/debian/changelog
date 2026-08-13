@@ -1,4 +1,4 @@
-valkey (9.1.1-4PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
+valkey (9.1.1-1PGSTY~@RELEASE@) @RELEASE@; urgency=medium
 
   * Drop 0003-Use-get_current_dir_name-over-PATHMAX. It trades a stack buffer
     on a cold error path for a libc allocation that zmalloc must not release,
