@@ -1,4 +1,4 @@
-pg-pinyin (0.0.5-1PIGSTY) unstable; urgency=medium
+pg-pinyin (0.0.5-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.0.5 and build the locked graph with pgrx 0.19.1.
 
