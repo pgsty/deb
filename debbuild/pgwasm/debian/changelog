@@ -1,4 +1,4 @@
-pgwasm (0.1.0-1PIGSTY) unstable; urgency=medium
+pgwasm (0.1.0-1PGSTY) unstable; urgency=medium
 
   * Package upstream snapshot 535b5336 with Wasmtime 44.
   * Migrate to cargo-pgrx/pgrx 0.19.1 and fix the ARM64 c_char comparison.
