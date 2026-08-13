@@ -1,4 +1,4 @@
-pg-auth-mon (3.0-3PIGSTY) unstable; urgency=low
+pg-auth-mon (3.0-1PGSTY) unstable; urgency=low
 
   * add pg18 support
 
