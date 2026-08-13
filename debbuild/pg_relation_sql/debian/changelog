@@ -1,0 +1,5 @@
+pg-relation-sql (0.2.2-1PGSTY) unstable; urgency=medium
+
+  * Add the upstream PGXN 0.2.2 standalone SQL package.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 14 Aug 2026 07:30:00 +0800
