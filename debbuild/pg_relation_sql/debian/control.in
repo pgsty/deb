@@ -1,0 +1,17 @@
+Source: pg-relation-sql
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/asmgit/pg_relation_sql
+
+Package: postgresql-PGVERSION-pg-relation-sql
+Architecture: all
+Provides: postgresql-pg-relation-sql
+Depends: postgresql-PGVERSION, ${misc:Depends}
+Description: Navigate PostgreSQL foreign-key relations through generated SQL functions
+ pg_relation_sql turns every foreign key into lookup and list functions for
+ navigating declared relations. Upstream intentionally ships a standalone SQL
+ script rather than a CREATE EXTENSION package.
