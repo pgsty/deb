@@ -1,4 +1,4 @@
-cloudberry (2.1.0-2PIGSTY) unstable; urgency=medium
+cloudberry (2.1.0-1PGSTY) unstable; urgency=medium
 
   * Pre-create cdb_init.d before installing contrib scripts.
   * Filter LTO flags to match the RPM Cloudberry kernel build.
