@@ -8,13 +8,13 @@ License: PostgreSQL
 
 Files: cmake/*
 Copyright: 2021, Vicky Vergara <vicky@georepublic.org>
-License: BSD-2-clause
+License: BSD-2-Clause
 
 Files: cmake/FindDBLATEX.cmake
 Copyright: 2015, KiCad Developers
  2015, KiCad Developers
  2015, Brian Sidebotham <brian.sidebotham@gmail.com>
-License: GPL-3+ or CC-BY-3.0
+License: GPL-3.0-or-later or CC-BY-3.0
 
 Files: cmake/FindDBTOEPUB.cmake
  cmake/FindXz.cmake
@@ -30,30 +30,30 @@ License: BSL-1.0
 Files: cmake/FindGEOS.cmake
 Copyright: 2021, Esteban Zimanyi
  2008, Mateusz Loskot <mateusz@loskot.net>
-License: BSD-2-clause
+License: BSD-2-Clause
 
 Files: cmake/FindGit.cmake
 Copyright: Kitware Inc.
-License: 3D-SC-SLA-1
+License: 3D-Slicer-1.0
 
 Files: cmake/FindPOSTGIS.cmake
 Copyright: 2015, pgRouting colaborators
-License: GPL-2 or BSL-1.0
+License: GPL-2.0-only or BSL-1.0
 
 Files: cmake/FindPOSTGRESQL.cmake
 Copyright: 2021, Vicky Vergara <vicky@georepublic.org>
  2006, Jaroslaw Staniek, <js@iidea.pl>
-License: BSD-2-clause
+License: BSD-2-Clause
 
 Files: cmake/FindPROJ.cmake
 Copyright: 2021, Vicky Vergara <vicky at georepublic dot de>
  2007, Martin Dobias <wonder.sk at gmail.com>
-License: BSD-2-clause
+License: BSD-2-Clause
 
 Files: datagen/*
 Copyright: 2016-2023, Université libre de Bruxelles and MobilityDB
  2001-2023, PostGIS contributors
-License: GPL-2+ or PostgreSQL
+License: GPL-2.0-or-later or PostgreSQL
 
 Files: doc/*
 Copyright: MobilityDB Contributors
@@ -65,7 +65,7 @@ License: PostgreSQL
 
 Files: doc/docbook.css
 Copyright: 2001, 2003, 2010, The FreeBSD Documentation Project
-License: BSD-2-clause
+License: BSD-2-Clause
 
 Files: doc/images/srf.vsdx
  doc/images/tiling.vsdx
@@ -75,7 +75,7 @@ License: CC-BY-SA-3.0
 Files: meos/*
 Copyright: 2016-2023, Université libre de Bruxelles and MobilityDB
  2000-2023, PostGIS contributors
-License: GPL-2+ or PostgreSQL
+License: GPL-2.0-or-later or PostgreSQL
 
 Files: meos/postgres/c.h
  meos/postgres/pg_config_manual.h
@@ -115,12 +115,12 @@ Files: meos/postgres/port/snprintf.c
 Copyright: 1996-2021, PostgreSQL Global Development Group
  1988, 1993, The Regents of the University of California.
  1983, 1995, 1996, Eric P. Allman
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: meos/postgres/port/sort_template.h
 Copyright: 2021, PostgreSQL Global Development Group
  1992-1994, Regents of the University of California
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: meos/postgres/port/win32_port.h
 Copyright: 1996-2023, PostgreSQL Global Development Group
@@ -135,7 +135,7 @@ Files: meos/postgres/timezone/localtime.c
  meos/postgres/timezone/private.h
  meos/postgres/timezone/tzfile.h
 Copyright: public-domain
-License: public-domain
+License: LicenseRef-Public-Domain
  This program is in the public domain.
 
 Files: meos/postgres/utils/*
@@ -146,15 +146,15 @@ License: PostgreSQL
 Files: mobilitydb/*
 Copyright: 2016-2023, Université libre de Bruxelles and MobilityDB
  2000-2023, PostGIS contributors
-License: GPL-2+ or PostgreSQL
+License: GPL-2.0-or-later or PostgreSQL
 
 Files: postgis/*
 Copyright: 2001-2006, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/Makefile.in
 Copyright: 2008, Mark Cave-Ayland <mark.cave-ayland@siriusit.co.uk>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/bytebuffer.c
  postgis/liblwgeom/bytebuffer.h
@@ -167,7 +167,7 @@ Files: postgis/liblwgeom/bytebuffer.c
  postgis/liblwgeom/lwout_twkb.h
  postgis/liblwgeom/measures.h
 Copyright: 2010, 2013-2015, 2018, Nicklas AvÃ©n <nicklas.aven@jordogskog.no>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/gbox.c
  postgis/liblwgeom/gserialized.h
@@ -181,13 +181,13 @@ Files: postgis/liblwgeom/gbox.c
  postgis/liblwgeom/lwtree.c
  postgis/liblwgeom/lwtree.h
 Copyright: 2008-2015, 2019, Paul Ramsey <pramsey@cleverelephant.ca>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/gserialized1.c
  postgis/liblwgeom/gserialized2.c
 Copyright: 2017, Darafei Praliaskouski <me@komzpa.net>
  2009, Paul Ramsey <pramsey@cleverelephant.ca>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/liblwgeom.h.in
  postgis/liblwgeom/liblwgeom_internal.h
@@ -196,7 +196,7 @@ Copyright: 2011, 2012, Sandro Santilli <strk@kbt.io>
  2008, 2011, Paul Ramsey <pramsey@cleverelephant.ca>
  2007, 2008, Mark Cave-Ayland <mark.cave-ayland@siriusit.co.uk>
  2001-2006, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/liblwgeom_topo.h
  postgis/liblwgeom/liblwgeom_topo_internal.h
@@ -206,11 +206,11 @@ Files: postgis/liblwgeom/liblwgeom_topo.h
  postgis/liblwgeom/lwgeom_topo.c
  postgis/liblwgeom/lwgeom_wrapx.c
 Copyright: 2009-2020, Sandro Santilli <strk@kbt.io>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lookup3.c
 Copyright: 2006, Bob Jenkins
-License: public-domain
+License: LicenseRef-Public-Domain
  This program is in the public domain.
 
 Files: postgis/liblwgeom/lwboundingcircle.c
@@ -219,13 +219,13 @@ Files: postgis/liblwgeom/lwboundingcircle.c
  postgis/liblwgeom/lwunionfind.c
  postgis/liblwgeom/lwunionfind.h
 Copyright: 2015, 2016, Daniel Baston <dbaston@gmail.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwgeodetic.c
  postgis/liblwgeom/lwspheroid.c
 Copyright: 2009, Paul Ramsey <pramsey@cleverelephant.ca>
  2009, David Skea <David.Skea@gov.bc.ca>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwgeodetic_tree.c
  postgis/liblwgeom/lwin_wkt.h
@@ -233,59 +233,59 @@ Files: postgis/liblwgeom/lwgeodetic_tree.c
  postgis/liblwgeom/lwprint.c
 Copyright: 2011-2015, Sandro Santilli <strk@kbt.io>
  2010-2015, Paul Ramsey <pramsey@cleverelephant.ca>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwgeom.c
 Copyright: 2017, 2018, Daniel Baston <dbaston@gmail.com>
  2001-2006, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwgeom_api.c
 Copyright: 2017, Darafei Praliaskouski <me@komzpa.net>
  2001-2006, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwgeom_geos.c
 Copyright: 2017, 2018, Darafei Praliaskouski <me@komzpa.net>
  2015-2018, Daniel Baston <dbaston@gmail.com>
  2011-2020, Sandro Santilli <strk@kbt.io>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwgeom_geos.h
 Copyright: 2018, Darafei Praliaskouski <me@komzpa.net>
  2011, Sandro Santilli <strk@kbt.io>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwgeom_median.c
 Copyright: 2017, Darafei Praliaskouski <me@komzpa.net>
  2015, Daniel Baston <dbaston@gmail.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwgeom_sfcgal.c
  postgis/liblwgeom/lwgeom_sfcgal.h
  postgis/liblwgeom/lwtriangle.c
 Copyright: 2010, 2012, 2013, Oslandia <infos@oslandia.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwhomogenize.c
 Copyright: 2010, Olivier Courtin <olivier.courtin@oslandia.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwin_encoded_polyline.c
  postgis/liblwgeom/lwout_encoded_polyline.c
 Copyright: 2014, Kashif Rasul <kashif.rasul@gmail.com> and
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwin_geojson.c
 Copyright: 2019, Darafei Praliaskouski <me@komzpa.net>
  2013, Sandro Santilli <strk@kbt.io>
  2011, Kashif Rasul <kashif.rasul@gmail.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwin_wkt_parse.c
  postgis/liblwgeom/lwin_wkt_parse.h
 Copyright: 1984, 1989, 1990, 2000-2015, Free Software Foundation, Inc.
-License: GPL-3+ with Bison-2.2 exception
+License: GPL-3.0-or-later with Bison-exception-2.2 exception
  This program is free software: you can redistribute it and/or modify it
  under the terms of the GNU General Public License as published by the
  Free Software Foundation, either version 3 of the License, or (at your
@@ -322,51 +322,51 @@ Copyright: 2018, Darafei Praliaskouski <me@komzpa.net>
  2011, Paul Ramsey <pramsey@cleverelephant.ca>
  2007, 2008, Mark Cave-Ayland <mark.cave-ayland@siriusit.co.uk>
  2001-2006, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwkmeans.c
 Copyright: 2018-2020, Darafei Praliaskouski <me@komzpa.net>
  2016, Paul Ramsey <pramsey@cleverelephant.ca>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwline.c
  postgis/liblwgeom/lwpoly.c
  postgis/liblwgeom/ptarray.c
 Copyright: 2012, Sandro Santilli <strk@kbt.io>
  2001-2006, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwout_geojson.c
 Copyright: 2009, 2010, Olivier Courtin <olivier.courtin@oslandia.com>
  2001-2003, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwout_gml.c
 Copyright: 2011, Sandro Santilli <strk@kbt.io>
  2010-2012, Oslandia <infos@oslandia.com>
  2001-2003, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwout_kml.c
 Copyright: 2010, Paul Ramsey <pramsey@cleverelephant.ca>
  2006, Corporacion Autonoma Regional de Santander
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwout_x3d.c
  postgis/liblwgeom/lwout_x3d.h
 Copyright: 2011-2017, Arrival 3D, Regina Obe
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwrandom.c
  postgis/liblwgeom/lwrandom.h
 Copyright: 2019, Mike Taves
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwstroke.c
 Copyright: 2018, Daniel Baston <dbaston@gmail.com>
  2017, Sandro Santilli <strk@kbt.io>
  2001-2006, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/lwutil.c
 Copyright: 2010, Olivier Courtin <olivier.courtin@camptocamp.com>
@@ -374,45 +374,45 @@ Copyright: 2010, Olivier Courtin <olivier.courtin@camptocamp.com>
  2008, 2009, Mark Cave-Ayland <mark.cave-ayland@siriusit.co.uk>
  2006, Mark Leslie <mark.leslie@lisasoft.com>
  2004-2015, Sandro Santilli <strk@kbt.io>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/measures.c
 Copyright: 2019, Darafei Praliaskouski <me@komzpa.net>
  2012, Paul Ramsey <pramsey@cleverelephant.ca>
  2010, Nicklas AvÃ©n <nicklas.aven@jordogskog.no>
  2001-2006, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/measures3d.c
  postgis/liblwgeom/measures3d.h
 Copyright: 2019, Darafei Praliaskouski <me@komzpa.net>
  2011, Nicklas AvÃ©n <nicklas.aven@jordogskog.no>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/stringbuffer.c
  postgis/liblwgeom/stringbuffer.h
 Copyright: 2009, Paul Ramsey <pramsey@cleverelephant.ca>
  2002, Thamer Alharbash
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/liblwgeom/varint.c
  postgis/liblwgeom/varint.h
 Copyright: 2014, Sandro Santilli <strk@kbt.io>
  2013, Nicklas AvÃ©n <nicklas.aven@jordogskog.no>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/libpgcommon/common.h
 Copyright: 2011, OSGeo
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/libpgcommon/gserialized_gist.c
 Copyright: 2009, Paul Ramsey <pramsey@cleverelephant.ca>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/libpgcommon/lwgeom_cache.c
  postgis/libpgcommon/lwgeom_cache.h
 Copyright: 2012, Sandro Santilli <strk@kbt.io>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/libpgcommon/lwgeom_pg.c
  postgis/libpgcommon/lwgeom_pg.h
@@ -420,16 +420,16 @@ Copyright: 2011, Sandro Santilli <strk@kbt.io>
  2009-2011, Paul Ramsey <pramsey@cleverelephant.ca>
  2008, Mark Cave-Ayland <mark.cave-ayland@siriusit.co.uk>
  2004-2007, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/libpgcommon/lwgeom_transform.c
  postgis/libpgcommon/lwgeom_transform.h
 Copyright: 2001-2003, Refractions Research Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/libpgcommon/shared_gserialized.c
 Copyright: 2020, Raúl Marín
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: postgis/ryu/*
 Copyright: no-info-found
@@ -467,7 +467,7 @@ Comment:
  On Debian systems, the complete text of the Apache License,
  Version 2.0 can be found in '/usr/share/common-licenses/Apache-2.0'.
 
-License: BSD-2-clause
+License: BSD-2-Clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are
  met:
@@ -491,7 +491,7 @@ License: BSD-2-clause
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-License: BSD-3-clause
+License: BSD-3-Clause
  The BSD License
  .
  Redistribution and use in source and binary forms, with or without
@@ -548,7 +548,7 @@ License: BSL-1.0
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 
-License: GPL-2+
+License: GPL-2.0-or-later
  This program is free software; you can redistribute it and/or modify it
  under the terms of the GNU General Public License as published by the
  Free Software Foundation; either version 2 of the License, or (at your
@@ -565,7 +565,7 @@ Comment:
  On Debian systems, the complete text of version 2 of the GNU General
  Public License can be found in '/usr/share/common-licenses/GPL-2'.
 
-License: GPL-3+
+License: GPL-3.0-or-later
  This program is free software: you can redistribute it and/or modify it
  under the terms of the GNU General Public License as published by the
  Free Software Foundation, either version 3 of the License, or (at your
@@ -1285,7 +1285,7 @@ License: CC-BY-SA-3.0
        to be included in the License; this License is not intended to
        restrict the license of any rights under applicable law.
 
-License: GPL-2
+License: GPL-2.0-only
  This program is free software; you can redistribute it and/or modify it
  under the terms of the GNU General Public License as published by the
  Free Software Foundation; version 2.
@@ -1301,7 +1301,7 @@ Comment:
  On Debian systems, the full text of the GNU General Public License
  version 2 can be found in the file '/usr/share/common-licenses/GPL-2'.
 
-License: 3D-SC-SLA-1
+License: 3D-Slicer-1.0
  For more information, please see:
  .
                        https://www.slicer.org
