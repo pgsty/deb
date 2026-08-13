@@ -1,4 +1,4 @@
-pg-later (0.4.0-4PIGSTY) unstable; urgency=medium
+pg-later (0.4.0-1PGSTY) unstable; urgency=medium
 
   * Update the Rust pgmq client to 0.30.1 for pgmq 1.10+ message-record
     compatibility.
