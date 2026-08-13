@@ -1,4 +1,4 @@
-pg-kazsearch (2.3.0-1PIGSTY) unstable; urgency=medium
+pg-kazsearch (2.3.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 2.3.0 and build the locked graph with pgrx 0.19.1.
 
