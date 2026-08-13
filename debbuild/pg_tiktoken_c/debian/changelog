@@ -1,4 +1,4 @@
-pg-tiktoken-c (1.1-1PIGSTY) unstable; urgency=medium
+pg-tiktoken-c (1.1-1PGSTY) unstable; urgency=medium
 
   * Initial DEB release from upstream main snapshot
     fa2957b6ece483322f4c4ce0c374b3b77e22b892.

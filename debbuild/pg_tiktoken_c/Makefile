@@ -4,8 +4,7 @@ TARBALL := pg_tiktoken_c-1.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-SOURCE_PATCHES := patches/pg-tiktoken-c-1.1-destdir.patch \
-	patches/pg-tiktoken-c-1.1-correctness.patch
+SOURCE_PATCHES := patches/pg-tiktoken-c-1.1.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -22,7 +21,7 @@ setup: check-src check-patches
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 apply-patches:
 	@set -e; for patch_file in $(SOURCE_PATCHES); do \
