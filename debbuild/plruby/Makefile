@@ -5,7 +5,7 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-SOURCE_PATCH := patches/plruby-2.5.0-ruby-method-signatures.patch
+SOURCE_PATCH := patches/plruby-2.5.0.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -21,7 +21,7 @@ setup: check-src check-patches
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release && echo $${VERSION_CODENAME:-unknown})); \
-	perl -0pi -e "s/PIGSTY\)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"

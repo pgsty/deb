@@ -1,4 +1,4 @@
-plruby (2.5.0-1PIGSTY) unstable; urgency=medium
+plruby (2.5.0-1PGSTY) unstable; urgency=medium
 
   * Initial release for PL/Ruby 2.5.0 and PostgreSQL 14 through 18.
   * Package the jsonb, hstore, and ltree transform extensions.
