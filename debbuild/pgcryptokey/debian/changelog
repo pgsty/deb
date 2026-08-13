@@ -1,4 +1,4 @@
-pgcryptokey (0.85-1PIGSTY) unstable; urgency=medium
+pgcryptokey (0.85-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 

@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 This software is released under the Postgres license:
 
 	https://www.postgresql.org/about/licence/
