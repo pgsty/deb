@@ -19,7 +19,7 @@ setup: check-src
 		OS_CODENAME=$${VERSION_CODENAME:-$${UBUNTU_CODENAME:-}}; \
 	fi; \
 	OS_CODENAME=$${OS_CODENAME:-unknown}; \
-	perl -pi -e 'if ($$. == 1) { s/PIGSTY\)/PIGSTY~'"$${OS_CODENAME}"'\)/ }' $(BUILD_DIR)/debian/changelog
+	perl -pi -e 'if ($$. == 1) { s/PGSTY\)/PGSTY~'"$${OS_CODENAME}"'\)/ }' $(BUILD_DIR)/debian/changelog
 
 build:
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
