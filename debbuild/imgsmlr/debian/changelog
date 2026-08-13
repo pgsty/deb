@@ -1,4 +1,4 @@
-imgsmlr (1.0-2PIGSTY) unstable; urgency=medium
+imgsmlr (1.0-1PGSTY) unstable; urgency=medium
 
   * Fix varlena detoasting with newer toolchains
 
