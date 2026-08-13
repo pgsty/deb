@@ -1,4 +1,4 @@
-postgresql-faker (0.5.3-1PIGSTY) unstable; urgency=medium
+postgresql-faker (0.5.3-1PGSTY) unstable; urgency=medium
 
   * Initial package for postgresql_faker 0.5.3.
   * Build version-specific packages for PostgreSQL 14 through 18.

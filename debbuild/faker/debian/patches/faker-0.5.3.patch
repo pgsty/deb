@@ -1,0 +1,27 @@
+diff --git a/Makefile b/Makefile
+index 2835b40..4ebae6c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -9,6 +9,9 @@ REGRESS_OPTS = --inputdir=tests
+ EXTRA_CLEAN = _build _venv $(ZIPBALL)
+ OBJS = faker.o
+ 
++PG_CPPFLAGS += -ffile-prefix-map=$(CURDIR)=.
++PG_CPPFLAGS += -fdebug-prefix-map=$(CURDIR)=.
++
+ PG_CONFIG = pg_config
+ PGXS := $(shell $(PG_CONFIG) --pgxs)
+ include $(PGXS)
+diff --git a/faker--0.5.3.sql b/faker--0.5.3.sql
+index 28a6110..5189d43 100644
+--- a/faker--0.5.3.sql
++++ b/faker--0.5.3.sql
+@@ -36842,7 +36842,7 @@ $$
+   SET search_path = @extschema@
+ ;
+ 
+-CREATE OR REPLACE FUNCTION json("data_columns" TEXT = NULL ,"num_rows" INTEGER = 10 ,"indent" TEXT = NULL ) RETURNS TEXT
++CREATE OR REPLACE FUNCTION "json"("data_columns" TEXT = NULL ,"num_rows" INTEGER = 10 ,"indent" TEXT = NULL ) RETURNS TEXT
+ AS $$
+ try:
+   GD['Faker']
