@@ -1,4 +1,4 @@
-acl (1.0.4-1PIGSTY) unstable; urgency=medium
+acl (1.0.4-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
