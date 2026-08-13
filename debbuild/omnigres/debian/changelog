@@ -1,4 +1,4 @@
-omnigres (20251108-2PIGSTY) unstable; urgency=medium
+omnigres (20251108-1PGSTY) unstable; urgency=medium
 
   * Build with current GCC or Clang toolchains across supported distributions.
   * Validate packaged extension payload before assembling binary packages.
