@@ -1,4 +1,4 @@
-system-stats (4.1-1PIGSTY) unstable; urgency=medium
+system-stats (4.1-1PGSTY) unstable; urgency=medium
 
   * https://github.com/EnterpriseDB/system_stats/releases/tag/v4.1
 
