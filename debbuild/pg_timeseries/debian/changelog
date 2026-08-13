@@ -1,4 +1,4 @@
-pg-timeseries (0.2.1-4PIGSTY) unstable; urgency=medium
+pg-timeseries (0.2.1-1PGSTY) unstable; urgency=medium
 
   * Promote the required pg_partman and pg_cron extensions to dependencies.
 
