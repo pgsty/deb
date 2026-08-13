@@ -19,7 +19,7 @@ setup: check-src
 	dpkg-source -x "$(SOURCE_DSC)" $(BUILD_DIR)
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/1.07.3+dfsg-1)/1.07.3+dfsg-1PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
+	sed -i "1s/1.07.3+dfsg-1)/1.07.3+dfsg-1PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
 	if [ "$$OS_CODENAME" = "noble" ]; then \
 		sed -i '2iexport DEB_BUILD_MAINT_OPTIONS = optimize=-lto' $(BUILD_DIR)/debian/rules; \
 	fi
