@@ -42,7 +42,7 @@ build17: check-src17
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	sed -n '/^age (1\.7\.0-2PIGSTY)/,$$p' debian/changelog > $(BUILD_DIR)/debian/changelog
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/1\.7\.0-2PIGSTY)/1.7.0-1PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 	echo '17' > $(BUILD_DIR)/debian/pgversions
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
 	cd $(BUILD_DIR) && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
