@@ -2,7 +2,7 @@ all: check-src setup build move
 
 TARBALL := pgnodemx-2.0.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/pgnodemx-2.0.1-cgroup-disabled.patch
+SOURCE_PATCH := patches/pgnodemx-2.0.1.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
@@ -35,4 +35,3 @@ clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all check-src setup build move clean
-
