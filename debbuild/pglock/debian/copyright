@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 PostgreSQL License
 
 License is declared as `postgresql` in the upstream `META.json`.
