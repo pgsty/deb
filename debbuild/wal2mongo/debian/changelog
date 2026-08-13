@@ -1,4 +1,4 @@
-wal2mongo (1.0.7-2PIGSTY) unstable; urgency=medium
+wal2mongo (1.0.7-1PGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 17 and 18 support
 
