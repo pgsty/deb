@@ -1,4 +1,4 @@
-postgresbson (2.1.0-1PIGSTY) unstable; urgency=medium
+postgresbson (2.1.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN bson 2.1.0.
   * Refresh the system libbson compatibility fix.
