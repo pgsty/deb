@@ -7,7 +7,7 @@ PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
 ORIOLEDB_VERSION := 1.8
 ORIOLEDB_BETA := beta16
-ORIOLEDB_DEB_VERSION := 1.8-0.beta16
+ORIOLEDB_DEB_VERSION := 1.8~beta16-1
 ORIOLEDB_TARBALL := orioledb-$(ORIOLEDB_BETA).tar.gz
 ORIOLEDB_SOURCE_TARBALL ?= $(SOURCE_DIR)/$(ORIOLEDB_TARBALL)
 
@@ -60,7 +60,7 @@ setup: check-src
 	fi
 	grep -Eq '^[[:space:]]*orioledb[[:space:]]*\\[[:space:]]*$$' $(BUILD_DIR)/contrib/Makefile || (echo "failed to inject orioledb into contrib/Makefile" >&2; exit 1)
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	PACKAGE_VERSION="$(ORIOLEDB_DEB_VERSION)PIGSTY~$${OS_CODENAME}"; \
+	PACKAGE_VERSION="$(ORIOLEDB_DEB_VERSION)PGSTY~$${OS_CODENAME}"; \
 	sed -e 's|@SOURCE_PACKAGE@|$(SOURCE_PACKAGE)|g' \
 		-e 's|@PACKAGE@|$(PACKAGE)|g' \
 		-e 's|@PG_MAJOR@|$(PG_MAJOR)|g' \
