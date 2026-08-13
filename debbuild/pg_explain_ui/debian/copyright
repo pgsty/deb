@@ -1,3 +1,5 @@
-PostgreSQL License
+SPDX-License-Identifier: LicenseRef-Upstream-No-License
 
-Not determined yet
+The pg_explain_ui 0.0.2 source archive does not contain a LICENSE, COPYING,
+NOTICE, copyright statement, or package metadata declaring a license.  Do not
+publish binary packages until upstream provides an explicit license grant.
