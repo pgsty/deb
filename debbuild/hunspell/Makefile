@@ -2,7 +2,7 @@ all: setup build move
 
 TARBALL := hunspell-1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/hunspell-1.0-pt-stopwords.patch
+SOURCE_PATCH := patches/hunspell-1.0.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
@@ -17,7 +17,7 @@ setup: check-src
 	patch -d $(BUILD_DIR) -p1 < "$(SOURCE_PATCH)"
 	mv $(BUILD_DIR)/hunspell_pt_pt/portuguese.stop $(BUILD_DIR)/hunspell_pt_pt/pt_pt.stop
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
