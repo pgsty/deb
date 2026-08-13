@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 pg_retry PostgreSQL Extension
 
 Copyright (c) 2025, Prince Roshan
