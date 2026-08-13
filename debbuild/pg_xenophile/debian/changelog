@@ -1,4 +1,4 @@
-pg-xenophile (0.8.3-1PIGSTY) unstable; urgency=medium
+pg-xenophile (0.8.3-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
