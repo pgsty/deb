@@ -1,4 +1,4 @@
-documentdb (0.114-0PIGSTY) unstable; urgency=medium
+documentdb (0.114-1PGSTY) unstable; urgency=medium
 
   * Switch to upstream documentdb v0.114-0
 
