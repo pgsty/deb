@@ -1,4 +1,4 @@
-sslutils (1.4-2PIGSTY) unstable; urgency=medium
+sslutils (1.4-1PGSTY) unstable; urgency=medium
 
   * Rebuild for PostgreSQL 18
 
