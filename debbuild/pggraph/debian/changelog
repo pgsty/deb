@@ -1,4 +1,4 @@
-pggraph (1.0.0-1PIGSTY) unstable; urgency=medium
+pggraph (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 1.0.0 with pgrx 0.19.1.
   * Keep Cargo.lock immutable and use the validated builder toolchain.
