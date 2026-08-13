@@ -1,4 +1,4 @@
-pg-typescript (0.1.0-3PIGSTY) unstable; urgency=medium
+pg-typescript (0.1.0-1PGSTY) unstable; urgency=medium
 
   * Build with pgrx 0.19.1 and the official shared-library-safe rusty_v8 149.4.0 archive.
   * Embed Deno runtime sources so TypeScript functions do not read the build tree.
