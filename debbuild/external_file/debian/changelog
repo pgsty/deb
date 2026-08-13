@@ -1,4 +1,4 @@
-external-file (1.2-1PIGSTY) unstable; urgency=medium
+external-file (1.2-1PGSTY) unstable; urgency=medium
 
   * Package external_file from upstream tag v1.2
     https://github.com/darold/external_file/tree/v1.2
