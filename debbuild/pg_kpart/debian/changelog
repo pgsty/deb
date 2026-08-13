@@ -1,4 +1,4 @@
-pg-kpart (1.0-1PIGSTY) unstable; urgency=medium
+pg-kpart (1.0-1PGSTY) unstable; urgency=medium
 
   * Initial release for pg_kpart 1.0 and PostgreSQL 14 through 18
 
