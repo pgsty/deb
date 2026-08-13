@@ -1,4 +1,4 @@
-pg-auditor (0.2-1PIGSTY) unstable; urgency=medium
+pg-auditor (0.2-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
