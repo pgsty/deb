@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 pgspider_ext is an extension to construct High-Performance SQL Cluster Engine
 for distributed big data.
 
