@@ -1,4 +1,4 @@
-polarstore (1.2.42-2PGSTY) unstable; urgency=medium
+polarstore (1.2.42-1PGSTY) unstable; urgency=medium
 
   * Rebuild PolarStore PFSD SDK with the PGSTY package release brand.
   * Require zlog 1.2.18 or newer and libaio development files.
