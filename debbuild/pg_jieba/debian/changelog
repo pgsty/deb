@@ -1,4 +1,4 @@
-pg-jieba (2.0.1-1PIGSTY) unstable; urgency=medium
+pg-jieba (2.0.1-1PGSTY) unstable; urgency=medium
 
   * Initial release with cppjieba commit 45809955 vendored in the source
     archive.
