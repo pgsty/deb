@@ -1,4 +1,4 @@
-kafka-fdw (0.0.3-2PIGSTY) unstable; urgency=low
+kafka-fdw (0.0.3-1PGSTY) unstable; urgency=low
 
   * https://github.com/adjust/kafka_fdw/releases/tag/0.0.3
 
