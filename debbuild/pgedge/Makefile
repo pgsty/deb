@@ -39,7 +39,7 @@ setup: check-src
 		-e "s/@SNOWFLAKE_VERSION@/$(SNOWFLAKE_VERSION)/g" \
 		-e "s/@PKG_REV@/$(PKG_REV)/g" {} +
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build:
 	cd $(BUILD_DIR) && SPOCK_VERSION=$(SPOCK_VERSION) dpkg-buildpackage -b -us -uc
