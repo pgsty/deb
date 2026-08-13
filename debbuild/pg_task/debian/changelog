@@ -1,4 +1,4 @@
-pg-task (2.1.29-2PIGSTY) unstable; urgency=medium
+pg-task (2.1.29-1PGSTY) unstable; urgency=medium
 
   * Build postgres.c with pcre2grep on builders without pcregrep.
 
