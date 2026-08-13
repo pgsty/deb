@@ -1,4 +1,4 @@
-roaringbitmap (1.2.0-2PIGSTY) unstable; urgency=medium
+roaringbitmap (1.2.0-1PGSTY) unstable; urgency=medium
 
   * Use the system llvm-lto path for builder LLVM compatibility.
 
