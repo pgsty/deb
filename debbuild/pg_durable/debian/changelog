@@ -1,4 +1,4 @@
-pg-durable (0.2.3-1PIGSTY) unstable; urgency=medium
+pg-durable (0.2.3-1PGSTY) unstable; urgency=medium
 
   * Update to upstream pg_durable 0.2.3.
   * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.
