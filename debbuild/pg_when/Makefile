@@ -1,12 +1,12 @@
 all: setup build move
 
-TARBALL := pg_when-0.1.9.tar.gz
+TARBALL := pg_when-0.1.10.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.1
-SOURCE_PATCHES := patches/pg-when-0.1.9.patch
+SOURCE_PATCHES := patches/pg-when-0.1.10.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 
 check-src:
@@ -15,7 +15,7 @@ check-src:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	find $(BUILD_DIR) -name '._*' -delete
+	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	@$(MAKE) apply-patches
@@ -27,7 +27,7 @@ apply-patches:
 	for p in $(SOURCE_PATCHES); do \
 		test -f "$$p" || (echo "missing source patch $$p"; exit 1); \
 		echo "apply $$p"; \
-		patch -d $(BUILD_DIR) -p1 < "$$p"; \
+		patch -d $(BUILD_DIR) -p1 --forward -f < "$$p"; \
 	done
 
 build: building packaging
