@@ -8,7 +8,7 @@ setup:
 	tar -C $(BUILD_DIR) --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build:
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
