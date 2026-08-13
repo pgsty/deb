@@ -1,4 +1,4 @@
-pg-column-tetris (0.1.0-1PIGSTY) unstable; urgency=medium
+pg-column-tetris (0.1.0-1PGSTY) unstable; urgency=medium
 
   * Add package for upstream 0.1.0 snapshot e70f986.
 
