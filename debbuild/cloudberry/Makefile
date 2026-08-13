@@ -8,7 +8,7 @@ setup:
 	tar -C $(BUILD_DIR) --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
 	if [ "$$OS_CODENAME" = "resolute" ]; then \
 		sed -i 's/xmlErrorPtr error/const xmlError *error/g' $(BUILD_DIR)/src/backend/utils/adt/xml.c; \
 	fi
