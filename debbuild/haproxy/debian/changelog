@@ -1,4 +1,4 @@
-haproxy (3.4.3-2PIGSTY) unstable; urgency=medium
+haproxy (3.4.3-1PGSTY) unstable; urgency=medium
 
   * Consume the shared haproxy-utils archive instead of keeping downstream
     copies of the baseline configuration, environment file, logrotate rule,
