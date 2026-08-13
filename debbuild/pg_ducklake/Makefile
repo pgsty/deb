@@ -2,7 +2,7 @@ all: build move
 
 TARBALL := pg_ducklake-1.0.0.tar.gz
 ROARING_TARBALL := CRoaring-4.7.1-amalgamation.tar.gz
-PATCH := patches/pg-ducklake-1.0.0-tarball-build.patch
+PATCH := patches/pg_ducklake-1.0.0.patch
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 ROARING_SOURCE_TARBALL ?= ../SOURCES/$(ROARING_TARBALL)
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -22,7 +22,7 @@ build18 build17 build16 build15 build14: check-src
 	tar -C $(BUILD_DIR) -xzf "$(ROARING_SOURCE_TARBALL)"
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$(lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 	sed -i "s/PGVERSION/$(@:build%=%)/g" $(BUILD_DIR)/debian/control
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
