@@ -1,4 +1,4 @@
-pdu (3.0.25.12-1PIGSTY) unstable; urgency=medium
+pdu (3.0.25.12-1PGSTY) unstable; urgency=medium
 
   * Build version-bound PDU binaries for PostgreSQL 14 through 18.
   * Install binaries into the matching /usr/lib/postgresql/<major>/bin layout.
