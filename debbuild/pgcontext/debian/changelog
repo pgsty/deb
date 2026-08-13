@@ -1,4 +1,4 @@
-pgcontext (0.2.0-1PIGSTY) unstable; urgency=medium
+pgcontext (0.2.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for PostgreSQL 17 and 18.
   * Build the upstream locked workspace with cargo-pgrx 0.19.1.
