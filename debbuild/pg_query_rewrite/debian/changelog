@@ -1,4 +1,4 @@
-pg-query-rewrite (0.0.5-1PIGSTY) unstable; urgency=medium
+pg-query-rewrite (0.0.5-1PGSTY) unstable; urgency=medium
 
   * Package upstream master snapshot carrying extension version 0.0.5
     commit 2f3e0c80027fc98a5fcb7be0e951abd3676baa56
