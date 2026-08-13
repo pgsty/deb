@@ -22,7 +22,7 @@ setup: check-src check-patch
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	patch -d $(BUILD_DIR) -p1 --forward -f < $(SOURCE_PATCH)
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release && echo $${VERSION_CODENAME:-unknown})); \
-	perl -0pi -e "s/PIGSTY\)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build: building packaging
 
