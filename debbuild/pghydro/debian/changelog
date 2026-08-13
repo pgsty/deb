@@ -1,4 +1,4 @@
-pghydro (6.6-1PIGSTY) unstable; urgency=medium
+pghydro (6.6-1PGSTY) unstable; urgency=medium
 
   * Package upstream release v.6.6x carrying PgHydro 6.6
     SQL extensions for PostgreSQL and PostGIS
