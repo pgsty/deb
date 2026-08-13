@@ -1,4 +1,4 @@
-pgxicor (0.1.1-1PIGSTY) unstable; urgency=medium
+pgxicor (0.1.1-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.1.1.
   * Keep the libcurl build dependency aligned with RPM.
