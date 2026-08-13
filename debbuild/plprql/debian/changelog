@@ -1,4 +1,4 @@
-plprql (18.0.1-4PIGSTY) unstable; urgency=medium
+plprql (18.0.1-1PGSTY) unstable; urgency=medium
 
   * Coerce numeric table-return values to declared float4/float8 types before
     forming PostgreSQL tuples.
