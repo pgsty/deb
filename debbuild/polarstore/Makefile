@@ -3,7 +3,7 @@
 all: setup build verify move
 
 VERSION := 1.2.42
-DEB_RELEASE ?= 2PGSTY
+DEB_RELEASE ?= 1PGSTY
 ZLOG_VERSION := 1.2.18
 PFS_COMMIT := d0c5dc6
 BUILD_DIR := build
