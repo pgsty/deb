@@ -1,4 +1,4 @@
-tzf (0.3.0-2PIGSTY) unstable; urgency=medium
+tzf (0.3.0-1PGSTY) unstable; urgency=medium
 
   * Build the locked dependency graph with cargo-pgrx/pgrx 0.19.1.
 
