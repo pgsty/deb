@@ -6,11 +6,11 @@ TARBALL := decoder_raw-1.0.tar.gz
 setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	patch -d build -p1 < patches/decoder_raw-reorderbuffer-tuple.patch
+	patch -d build -p1 < patches/decoder_raw-1.0.patch
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
 build:
