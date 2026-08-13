@@ -1,4 +1,4 @@
-sqlite-fdw (2.5.0-2PIGSTY) unstable; urgency=medium
+sqlite-fdw (2.5.0-1PGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 18 support
 
