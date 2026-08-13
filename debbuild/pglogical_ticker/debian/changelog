@@ -1,4 +1,4 @@
-pglogical-ticker (1.4.1-2PIGSTY) unstable; urgency=medium
+pglogical-ticker (1.4.1-1PGSTY) unstable; urgency=medium
 
   * Patch for PostgreSQL 18 support
   * Initial Debian release, used by PGSTY/PIGSTY <https://pgsty.com>
