@@ -1,4 +1,4 @@
-pg-stl (1.0.0-1PIGSTY) unstable; urgency=medium
+pg-stl (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for upstream PGXN 1.0.0.
 
