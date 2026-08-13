@@ -1,3 +1,10 @@
+pg-oidc-validator (1.1.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.1.0.
+  * Drop the downstream compatibility patch after validating GCC 11 and 12 builds.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 14 Aug 2026 07:30:00 +0800
+
 pg-oidc-validator (0.2-1PGSTY) unstable; urgency=medium
 
   * Initial release for Percona pg_oidc_validator 0.2 and PostgreSQL 18.
