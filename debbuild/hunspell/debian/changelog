@@ -1,4 +1,4 @@
-hunspell (1.0-2PIGSTY) unstable; urgency=medium
+hunspell (1.0-1PGSTY) unstable; urgency=medium
 
   * Merge all dictionaries into the hunspell package.
   * Rename the bundled Portuguese stopword file to avoid PostgreSQL conflicts.
