@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 PostgreSQL License
 
 This software, plan_filter module for PostgreSQL, is released under
