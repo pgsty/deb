@@ -1,4 +1,4 @@
-faker (22.0.0-1PIGSTY) unstable; urgency=medium
+faker (22.0.0-1PGSTY) unstable; urgency=medium
 
   * Backport the Ubuntu Noble runtime package for Bookworm and Jammy.
   * Build only python3-fake-factory for postgresql-faker.

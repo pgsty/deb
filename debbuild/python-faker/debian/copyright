@@ -4,14 +4,14 @@ Source: https://github.com/joke2k/faker
 
 Files: *
 Copyright: 2012 Daniele Faraglia
-License: Expat
+License: MIT
 
 Files: debian/*
 Copyright: 2015-2016 Christopher Baines <mail@cbaines.net>
            2026 Pigsty Packaging Team <rh@vonng.com>
-License: Expat
+License: MIT
 
-License: Expat
+License: MIT
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
