@@ -1,4 +1,4 @@
-cloudberry-pxf (2.1.0-2PIGSTY) unstable; urgency=medium
+cloudberry-pxf (2.1.0-1PGSTY) unstable; urgency=medium
 
   * Rebuild with cloudberry 2.1.0-2PIGSTY.
   * Route Go module downloads through goproxy.cn for all builders.

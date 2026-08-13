@@ -14,7 +14,7 @@ setup:
 	sed -i "s#^distributionUrl=.*#distributionUrl=file://$$(pwd)/$(BUILD_DIR)/server/gradle/wrapper/gradle-8.5-bin.zip#" $(BUILD_DIR)/server/gradle/wrapper/gradle-wrapper.properties
 	sed -i "s#^distributionSha256Sum=.*#distributionSha256Sum=9d926787066a081739e8200858338b4a69e837c3a821a33aca9db09dd4a41026#" $(BUILD_DIR)/server/gradle/wrapper/gradle-wrapper.properties
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build:
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
