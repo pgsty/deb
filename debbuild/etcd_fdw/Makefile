@@ -30,7 +30,7 @@ setup: check-src check-patches
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
-	perl -0pi -e "s/PIGSTY\\)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"

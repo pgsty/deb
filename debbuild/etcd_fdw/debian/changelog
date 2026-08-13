@@ -1,4 +1,4 @@
-etcd-fdw (0.0.1-2PIGSTY) unstable; urgency=medium
+etcd-fdw (0.0.1-1PGSTY) unstable; urgency=medium
 
   * Rebuild with cargo-pgrx/pgrx 0.19.1 using the RPM-verified patch.
   * Lock the root and bundled wrappers graphs and build PostgreSQL 18 only.
