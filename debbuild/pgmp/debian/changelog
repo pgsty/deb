@@ -1,4 +1,4 @@
-pgmp (1.0.6-1PIGSTY) unstable; urgency=medium
+pgmp (1.0.6-1PGSTY) unstable; urgency=medium
 
   * Initial package for upstream PGXN 1.0.6.
 
