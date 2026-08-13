@@ -1,4 +1,4 @@
-datasketches (1.7.0-1PIGSTY) unstable; urgency=medium
+datasketches (1.7.0-1PGSTY) unstable; urgency=medium
 
   * Package Apache DataSketches PostgreSQL 1.7.0
     with Apache DataSketches C++ core 5.0.0
