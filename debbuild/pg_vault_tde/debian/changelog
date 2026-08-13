@@ -1,4 +1,4 @@
-pg-vault-tde (1.7.0-1PIGSTY) unstable; urgency=medium
+pg-vault-tde (1.7.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for upstream PGXN 1.7.0.
   * Package PostgreSQL 17 and 18 with OpenSSL and libcurl support.
