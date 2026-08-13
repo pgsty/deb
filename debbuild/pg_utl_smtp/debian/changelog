@@ -1,4 +1,4 @@
-pg-utl-smtp (1.0.0-2PIGSTY) unstable; urgency=medium
+pg-utl-smtp (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Remove PGXS-installed docs to fix file conflict with other extensions
 
