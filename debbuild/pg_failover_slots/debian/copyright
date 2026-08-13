@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 Postgres Failover Slots (pg_failover_slots)
 
 Copyright (c) 2023, EnterpriseDB Corporation.
