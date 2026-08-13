@@ -15,7 +15,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	patch -d $(BUILD_DIR) -p1 --forward -f < debian/patches/0001-use-system-suitesparse-packages.patch
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i.bak "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog && rm -f $(BUILD_DIR)/debian/changelog.bak
+	sed -i.bak "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog && rm -f $(BUILD_DIR)/debian/changelog.bak
 
 build:
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc

@@ -1,4 +1,4 @@
-onesparse (1.0.0-1PIGSTY) unstable; urgency=medium
+onesparse (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Package the official upstream v1.0.0 release for PostgreSQL 18.
   * Keep the system GraphBLAS/LAGraph patch applied during setup.
