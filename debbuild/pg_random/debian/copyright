@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 Copyright (c) 2019, Tomas Vondra (tomas.vondra@postgresql.org).
 
 Permission to use, copy, modify, and distribute this software and its documentation
