@@ -5,7 +5,7 @@ Source: https://github.com/redis/redis
 
 Files: *
 Copyright: © 2006-2020 Salvatore Sanfilippo <antirez@gmail.com>
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files:
  src/rio.*
@@ -17,13 +17,13 @@ Files:
 Copyright:
  © 2009-2012 Pieter Noordhuis <pcnoordhuis@gmail.com>
  © 2009-2012 Salvatore Sanfilippo <antirez@gmail.com>
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: deps/linenoise/*
 Copyright:
  © 2010-2016 Salvatore Sanfilippo <antirez@gmail.com>
  © 2010-2013 Pieter Noordhuis <pcnoordhuis@gmail.com>
-License: BSD-2-clause
+License: BSD-2-Clause
 
 Files:
  src/lzf.h
@@ -33,40 +33,40 @@ Files:
 Copyright:
  © 2000-2007 Marc Alexander Lehmann <schmorp@schmorp.de>
  © 2009-2012 Salvatore Sanfilippo <antirez@gmail.com>
-License: BSD-2-clause
+License: BSD-2-Clause
 
 Files: src/setproctitle.c
 Copyright:
  © 2010 William Ahern
  © 2013 Salvatore Sanfilippo
  © 2013 Stam He
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: src/ae_evport.c
 Copyright: © 2012 Joyent, Inc.
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: src/ae_kqueue.c
 Copyright: © 2009 Harish Mallipeddi <harish.mallipeddi@gmail.com>
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: utils/install_server.sh
 Copyright: © 2011 Dvir Volk <dvirsk@gmail.com>
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: deps/jemalloc/*
 Copyright:
  © 2002-present Jason Evans <jasone@canonware.com>
  © 2007-2012 Mozilla Foundation
  © 2009-present Facebook, Inc.
-License: BSD-2-clause
+License: BSD-2-Clause
 
 Files: deps/hdr_histogram/*
 Copyright:
  © 2012-2014 Gil Tene
  © 2014 Michael Barker
  © 2014 Matt Warren
-License: CC0 or BSD-2-clause
+License: CC0-1.0 or BSD-2-Clause
 
 Files: deps/fpconv/*
 Copyright:
@@ -76,7 +76,7 @@ License: BSL-1.0
 
 Files: src/pqsort.*
 Copyright: © 1992-1993 The Regents of the University of California
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: deps/lua/*
 Copyright: © 1994-2012 Lua.org, PUC-Ri
@@ -101,9 +101,9 @@ License: MIT
 
 Files: debian/*
 Copyright: © 2009 Chris Lamb <lamby@debian.org>
-License: BSD-3-clause
+License: BSD-3-Clause
 
-License: BSD-2-clause
+License: BSD-2-Clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
@@ -148,7 +148,7 @@ License: BSL-1.0
  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 
-License: CC0
+License: CC0-1.0
  To the extent possible under law, the authors have dedicated all copyright and
  related and neighboring rights to this software to the public domain worldwide.
  This software is distributed without any warranty.
@@ -156,7 +156,7 @@ License: CC0
  A copy of the CC0 Public Domain Dedication is available at
  <https://creativecommons.org/publicdomain/zero/1.0/>.
 
-License: BSD-3-clause
+License: BSD-3-Clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions
  are met:
