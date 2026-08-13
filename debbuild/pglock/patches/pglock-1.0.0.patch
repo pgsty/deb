@@ -19,7 +19,7 @@ script because the extension control file already owns the target schema.
 @@ -5,8 +5,6 @@
  -- because it is automatically created by postgres due to being declared in
  -- the extension control fi
- 
+
 -CREATE SCHEMA IF NOT EXISTS pglock;
 -
  -- Serializable isolation prevents race conditions in lock/unlock operations
