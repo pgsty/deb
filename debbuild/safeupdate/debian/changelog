@@ -1,4 +1,4 @@
-pg-safeupdate (1.5-2PIGSTY) unstable; urgency=medium
+pg-safeupdate (1.5-1PGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 18 support
 
