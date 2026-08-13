@@ -1,4 +1,4 @@
-ttl-index (3.0.0-1PIGSTY) unstable; urgency=low
+ttl-index (3.0.0-1PGSTY) unstable; urgency=low
 
   * https://github.com/ibrahimkarimeddin/postgres-extensions-pg_ttl/releases/tag/v3.0.0
 
