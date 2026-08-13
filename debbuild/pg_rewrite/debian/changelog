@@ -1,4 +1,4 @@
-pg-rewrite (2.2-2PIGSTY) unstable; urgency=medium
+pg-rewrite (2.2-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 2.2.
   * Rename binary packages to postgresql-<major>-pg-rewrite to match PGDG.
