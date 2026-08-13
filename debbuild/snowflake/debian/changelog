@@ -1,4 +1,4 @@
-snowflake (2.4-1PIGSTY) unstable; urgency=medium
+snowflake (2.4-1PGSTY) unstable; urgency=medium
 
   * Build snowflake from upstream source for pgedge-18.
 
