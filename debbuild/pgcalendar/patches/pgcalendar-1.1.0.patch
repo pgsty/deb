@@ -22,7 +22,7 @@ package installs cleanly as a proper versioned SQL extension.
  -- pgcalendar extension installation script
 --- Version: 1.0.0
 +-- Version: 1.1.0
- 
+
  -- Create the extension schema
 -CREATE SCHEMA IF NOT EXISTS pgcalendar;
 -
