@@ -4,7 +4,7 @@ SRC_DIR := ~/plv8
 PKG_NAME := plv8
 
 TARBALL := plv8-3.2.4.tar.gz
-SOURCE_PATCH := patches/plv8-3.2.4-gcc15-algorithm.patch
+SOURCE_PATCH := patches/plv8-3.2.4.patch
 PLV8_BUILD_JOBS ?= 4
 
 pre:
@@ -21,7 +21,7 @@ setup:
 	cp -r debian $(SRC_DIR)/debian
 	cd $(SRC_DIR) && pg_buildext updatecontrol
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(SRC_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(SRC_DIR)/debian/changelog
 
 # building deb
 build:
