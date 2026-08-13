@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 This is an extension for PostgreSQL that provides a uri data type. Advantages over using plain text for storing URIs include:
 
 URI syntax checking
