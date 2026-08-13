@@ -1,4 +1,4 @@
-pg-savior (0.1.0-1PIGSTY) unstable; urgency=medium
+pg-savior (0.1.0-1PGSTY) unstable; urgency=medium
 
   * Update pg_savior to upstream PGXN 0.1.0.
   * Package the new safety hooks and document the preload requirement.
