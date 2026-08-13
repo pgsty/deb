@@ -22,7 +22,7 @@ Files: duckdb_pglake/duckdb/third_party/*
        duckdb_pglake/duckdb/src/include/duckdb/storage/compression/alprd/algorithm/*
        duckdb_pglake/vcpkg_installed/*
 Copyright: Various upstream authors
-License: bundled-third-party
+License: LicenseRef-Bundled-Third-Party
  DuckDB and its build dependencies contain vendored components under Apache,
  BSD, Boost, ICU, MIT, PostgreSQL, zlib, and other component-specific
  licenses.  The complete component license and notice files are installed by
@@ -31,7 +31,7 @@ License: bundled-third-party
 
 Files: duckdb_pglake/duckdb/extension/tpch/dbgen/*
 Copyright: Transaction Processing Performance Council
-License: TPC-EULA-2.2
+License: LicenseRef-TPC-EULA-2.2
  This is a restrictive license, not an open-source/permissive grant.  In
  particular, redistribution is subject to clause 9 of the agreement and may
  not be charged for.  The complete agreement is shipped at
@@ -76,14 +76,14 @@ License: MIT
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 
-License: bundled-third-party
+License: LicenseRef-Bundled-Third-Party
  This identifier describes the collection of licenses attached to embedded
  third-party components; it is not a single license grant and does not imply
  that every component is permissively licensed.  The corresponding verbatim
  license and notice files are shipped in the binary package under
  /usr/share/doc/postgresql-*-pg-lake/third-party/.
 
-License: TPC-EULA-2.2
+License: LicenseRef-TPC-EULA-2.2
  The TPC-H dbgen sources are governed by the Transaction Processing
  Performance Council End User License Agreement version 2.2.  The complete
  verbatim agreement is shipped in the binary package at the path identified

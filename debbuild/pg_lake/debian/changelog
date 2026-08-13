@@ -1,4 +1,4 @@
-pg-lake (3.4.0-2PIGSTY) unstable; urgency=medium
+pg-lake (3.4.0-1PGSTY) unstable; urgency=medium
 
   * Align the package revision with the RPM cross-PG-major co-installation fix.
   * Verify the authoritative source Patch checksum before building.

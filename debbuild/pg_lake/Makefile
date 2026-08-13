@@ -26,7 +26,7 @@ PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 VCPKG_ROOT ?= $(HOME)/.cache/pg_lake/vcpkg-$(VCPKG_VERSION)
 VCPKG_TOOLCHAIN_PATH := $(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
 SOURCE_CANDIDATE_DIR ?= $(CURDIR)/candidate
-SOURCE_PATCHES := patches/pg_lake-3.4.0-pg-libdir.patch
+SOURCE_PATCHES := patches/pg_lake-3.4.0.patch
 TAR_BIN := $(shell command -v gtar 2>/dev/null || command -v tar)
 SHA256_BIN := $(shell command -v sha256sum 2>/dev/null || command -v gsha256sum 2>/dev/null)
 
@@ -74,7 +74,7 @@ setup: check-src
 	@set -e; for p in $(SOURCE_PATCHES); do echo "apply $$p"; git -C $(BUILD_DIR) apply --whitespace=nowarn "$(CURDIR)/$$p"; done
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
 
 vcpkg: setup
