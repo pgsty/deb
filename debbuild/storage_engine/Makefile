@@ -12,7 +12,7 @@ setup: check-src
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 build: build18 build17 build16 build15
 
