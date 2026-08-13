@@ -1,4 +1,4 @@
-pg-session-jwt (0.5.0-2PIGSTY) unstable; urgency=medium
+pg-session-jwt (0.5.0-1PGSTY) unstable; urgency=medium
 
   * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.
   * Fetch with --locked and verify cargo pgrx package does not rewrite Cargo.lock.
