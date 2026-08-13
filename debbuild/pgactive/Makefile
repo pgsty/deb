@@ -4,7 +4,7 @@ all: setup build move
 
 TARBALL := pgactive-2.1.7.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/pgactive-2.1.7-pg18-pgtar.patch
+SOURCE_PATCH := patches/pgactive-2.1.7.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -19,7 +19,7 @@ setup: check-src check-patches
 	(cd build && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
 build: build18 build17 build16 build15 build14

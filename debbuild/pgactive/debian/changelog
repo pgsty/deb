@@ -1,4 +1,4 @@
-pgactive (2.1.7-2PIGSTY) unstable; urgency=medium
+pgactive (2.1.7-1PGSTY) unstable; urgency=medium
 
   * Resolve LIBRARY_PATH from the active PostgreSQL pg_config.
   * Serialize per-major builds that share the same source tree.
