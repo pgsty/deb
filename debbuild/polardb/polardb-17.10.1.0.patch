@@ -5,7 +5,7 @@ diff --git a/package/debian/build-deb.sh b/package/debian/build-deb.sh
 -distname=$(grep '^ID=' /etc/os-release | awk -F'=' '{print $2}')
 -distversion=$(grep 'VERSION_ID=' /etc/os-release | awk -F\" '{print $2}')
 @@ -38,0 +37,2 @@
-+pgsty_release=${PGSTY_RELEASE:-2PGSTY}
++pgsty_release=${PGSTY_RELEASE:-1PGSTY}
 +distcodename=${DISTRO_CODENAME:-}
 @@ -40 +40,15 @@
 -pkgname=${package}_${polar_version}-${polar_commit}-${distname}${distversion}_${arch}
@@ -28,3 +28,18 @@ diff --git a/package/debian/build-deb.sh b/package/debian/build-deb.sh
 -echo 'Version: '${polar_version}'-'${polar_commit}'' >> ${pkgname}/DEBIAN/control
 +echo 'Version: '${polar_version}'-'${package_release}'' >> ${pkgname}/DEBIAN/control
 +echo 'X-Pigsty-Source-Commit: '${polar_commit}'' >> ${pkgname}/DEBIAN/control
+
+--- a/build.sh
++++ b/build.sh
+@@ -82 +82,2 @@
+-  configure_flag+=" --prefix=$base_dir --with-pgport=$port ${extra_configure_flag-}"
++  package_prefix="${POLAR_PACKAGE_PREFIX:-$base_dir}"
++  configure_flag+=" --prefix=$package_prefix --with-pgport=$port ${extra_configure_flag-}"
+@@ -251 +252 @@
+-export LDFLAGS="-Wl,-rpath,'\$\$ORIGIN/../lib:$base_dir/lib',--build-id=sha1 ${LDFLAGS-}"
++export LDFLAGS="-Wl,-rpath,'\$\$ORIGIN/../lib',--build-id=sha1 ${LDFLAGS-}"
+--- a/package/debian/build-deb.sh
++++ b/package/debian/build-deb.sh
+@@ -52 +52 @@
+-./build.sh --ec="--prefix=${buildroot}/${pkgname}${prefix} --with-pfsd" --debug=off --ni
++DESTDIR=${buildroot}/${pkgname} POLAR_PACKAGE_PREFIX=${prefix} ./build.sh --ec="--with-pfsd" --debug=off --ni

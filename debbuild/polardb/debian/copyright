@@ -1,0 +1,13 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: PolarDB for PostgreSQL
+Source: https://github.com/polardb/PolarDB-for-PostgreSQL
+
+Files: *
+Copyright: 1994-2026 The PostgreSQL Global Development Group and contributors
+           2024-2026 Alibaba Group Holding Limited and contributors
+           Various bundled component authors
+License: Apache-2.0 and PostgreSQL and BSD-2-Clause and BSD-3-Clause and MIT and Spencer-94
+ PolarDB contains PostgreSQL-derived code, PolarDB-specific code, and bundled
+ extension components. The binary package also ships the upstream top-level
+ LICENSE and COPYRIGHT files; component-specific notices remain in the source
+ archive.
