@@ -1,3 +1,1 @@
-portable-default-java.patch
-postgresql-18-compat.patch
-fix-on-proc-exit-callback.patch
+jdbc_fdw-0.5.0.patch

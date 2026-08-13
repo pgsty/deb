@@ -1,4 +1,4 @@
-jdbc-fdw (0.5.0-2PIGSTY) unstable; urgency=medium
+jdbc-fdw (0.5.0-1PGSTY) unstable; urgency=medium
 
   * Use PostgreSQL's exact on_proc_exit callback signature so GCC 15 on
     Ubuntu 26.04 builds PostgreSQL 16 through 18 without incompatible
