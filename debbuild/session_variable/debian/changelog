@@ -1,4 +1,4 @@
-session-variable (3.4-1PIGSTY) unstable; urgency=medium
+session-variable (3.4-1PGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 17 support: https://github.com/splendiddata/session_variable/releases/tag/3.4
 
