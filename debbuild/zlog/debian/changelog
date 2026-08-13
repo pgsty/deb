@@ -1,4 +1,4 @@
-zlog (1.2.18-2PGSTY) unstable; urgency=medium
+zlog (1.2.18-1PGSTY) unstable; urgency=medium
 
   * Rebuild zlog with the PGSTY package release brand.
 

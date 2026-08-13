@@ -3,7 +3,7 @@
 all: setup build verify move
 
 VERSION := 1.2.18
-DEB_RELEASE ?= 2PGSTY
+DEB_RELEASE ?= 1PGSTY
 TARBALL := zlog-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
