@@ -6,6 +6,7 @@ pigsty-deb.iml
 
 deb/
 src/
+!src
 tmp/
 
 .terraform/
