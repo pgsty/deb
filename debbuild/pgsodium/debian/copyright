@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL AND BSD-2-Clause AND MIT
+
 # pgsodium License
 
 Copyright (c) 2020 Michel Pelletier and Contributors
