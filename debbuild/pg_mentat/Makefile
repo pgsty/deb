@@ -6,7 +6,7 @@ BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.1
-SOURCE_PATCH := patches/pg-mentat-1.5.7-pgrx-0.19.1.patch
+SOURCE_PATCH := patches/pg-mentat-1.5.7.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -22,7 +22,7 @@ setup: check-src check-patches
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release && echo $${VERSION_CODENAME:-unknown})); \
-	perl -0pi -e "s/PIGSTY\)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
