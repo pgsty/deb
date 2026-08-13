@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 This software, PostgreSQL Firebird Foreign Data Wrapper, is released under
 the terms of the PostgreSQL License.
 
