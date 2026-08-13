@@ -1,4 +1,4 @@
-pg-tracing (0.1.3-2PIGSTY) unstable; urgency=medium
+pg-tracing (0.1.3-1PGSTY) unstable; urgency=medium
 
   * Rebuild with pg14/18 support
 
