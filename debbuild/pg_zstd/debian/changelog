@@ -1,4 +1,4 @@
-pg-zstd (1.1.2-2PIGSTY) unstable; urgency=medium
+pg-zstd (1.1.2-1PGSTY) unstable; urgency=medium
 
   * rename deb package to postgresql-$v-zstd
 
