@@ -1,4 +1,4 @@
-pg4ml (2.0-2PIGSTY) unstable; urgency=medium
+pg4ml (2.0-1PGSTY) unstable; urgency=medium
 
   * Fix sh issue to build against PG18
 
