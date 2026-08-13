@@ -1,4 +1,4 @@
-pg-cjk-parser (0.1.0-1PIGSTY) unstable; urgency=medium
+pg-cjk-parser (0.1.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
   * Declare the ICU development dependency.
