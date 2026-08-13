@@ -1,4 +1,4 @@
-emaj (5.0.0-1PIGSTY) unstable; urgency=medium
+emaj (5.0.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 5.0.0.
   * Mark the pure SQL and Perl package as architecture-independent.
