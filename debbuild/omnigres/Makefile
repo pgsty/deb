@@ -8,7 +8,7 @@ PG_VERSIONS ?= 14 15 16 17 18
 CMAKE ?= cmake
 CMAKE_MIN_VERSION := 3.25.1
 DPKG_BUILDPACKAGE_FLAGS ?=
-SOURCE_PATCHES := patches/omnigres-toolchain-compat.patch
+SOURCE_PATCHES := patches/omnigres-20251108.patch
 
 pre:
 	apt install -y flex bison netcat-traditional python3-dev python3-venv
@@ -31,7 +31,7 @@ setup: check-src
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
 	if [ "$$OS_CODENAME" = "resolute" ]; then \
 		find $(BUILD_DIR)/deps -name CMakeLists.txt -exec sed -i -E 's/cmake_minimum_required\(VERSION (2\.[0-9]+(\.[0-9]+)?|3\.[0-4](\.[0-9]+)?)\)/cmake_minimum_required(VERSION 3.5)/' {} +; \
 	fi
