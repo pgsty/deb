@@ -1,4 +1,4 @@
-odbc-fdw (0.6.1-1PIGSTY) unstable; urgency=medium
+odbc-fdw (0.6.1-1PGSTY) unstable; urgency=medium
 
   * Initial package for odbc_fdw 0.6.1.
   * Build version-specific packages for PostgreSQL 14 through 18.
