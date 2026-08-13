@@ -1,4 +1,4 @@
-pgmqtt (0.4.1-1PIGSTY) unstable; urgency=medium
+pgmqtt (0.4.1-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.4.1 and build the locked graph with pgrx 0.19.1.
 
