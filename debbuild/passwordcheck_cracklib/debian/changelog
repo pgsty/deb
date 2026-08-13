@@ -1,4 +1,4 @@
-passwordcheck-cracklib (3.1.0-2PIGSTY) unstable; urgency=low
+passwordcheck-cracklib (3.1.0-1PGSTY) unstable; urgency=low
 
   * https://github.com/dverite/postgres-password-check/releases/tag/3.1.0
 
