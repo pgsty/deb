@@ -1,4 +1,4 @@
-pg-mentat (1.5.7-1PIGSTY) unstable; urgency=medium
+pg-mentat (1.5.7-1PGSTY) unstable; urgency=medium
 
   * Initial release for pg_mentat 1.5.7 and PostgreSQL 14 through 18.
   * Migrate the locked dependency graph from upstream pgrx 0.17.0 to 0.19.1.
