@@ -1,2 +1,1 @@
-pg-background-v2-api.patch
-stabilize-session-test.patch
+pg_dbms_lock-2.0.patch

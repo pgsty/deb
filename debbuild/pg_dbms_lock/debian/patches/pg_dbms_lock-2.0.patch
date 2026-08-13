@@ -1,20 +1,16 @@
-Description: Call the pg_background 2.x API by its exported names
- pg_background 2.0 removed the v1 pg_background_launch/result functions and
- exports the handle-based calls as pg_background_launch_v2 and
- pg_background_result_v2. pg_dbms_lock 2.0 already consumes the v2 handle but
- calls the removed names, so named lock allocation fails at runtime.
-Author: Pigsty packaging
-Forwarded: no
-Last-Update: 2026-07-11
-
+diff --git a/pg_dbms_lock.control b/pg_dbms_lock.control
+index 460ddf4..d631319 100644
 --- a/pg_dbms_lock.control
 +++ b/pg_dbms_lock.control
-@@ -2,4 +2,5 @@ comment = 'Extension to add Oracle DBMS_LOCK full compatibility to PostgreSQL'
+@@ -1,5 +1,6 @@
+ comment = 'Extension to add Oracle DBMS_LOCK full compatibility to PostgreSQL'
  default_version = '2.0.0'
  module_pathname = '$libdir/pg_dbms_lock'
 +requires = 'pg_background'
  schema = 'dbms_lock'
  relocatable = false
+diff --git a/sql/pg_dbms_lock--2.0.0.sql b/sql/pg_dbms_lock--2.0.0.sql
+index dd0f020..b051e8d 100644
 --- a/sql/pg_dbms_lock--2.0.0.sql
 +++ b/sql/pg_dbms_lock--2.0.0.sql
 @@ -66,9 +66,9 @@ BEGIN
@@ -29,6 +25,21 @@ Last-Update: 2026-07-11
          EXECUTE query;
  
  	-- Set output parameter
+diff --git a/t/03_sessions.t b/t/03_sessions.t
+index ab70c87..8e73669 100755
+--- a/t/03_sessions.t
++++ b/t/03_sessions.t
+@@ -15,7 +15,7 @@ ok( $? == 0, "test for session2 lock");
+ $ret = `psql -X -d regress_dbms_lock -f test/sql/session3.sql > results/session3.out 2>&1`;
+ ok( $? == 0, "test for session3 lock");
+ 
+-sleep(7);
++sleep(15);
+ 
+ $ret = `psql -X -d regress_dbms_lock -c "SELECT action, session, (date_trunc('second', executed) - lag(date_trunc('second', executed)) over(PARTITION BY session)) FROM lock_test" > results/session.out`;
+ ok( $? == 0, "result for sessions 2 and 3 work");
+diff --git a/updates/pg_dbms_lock--1.0.0--2.0.0.sql b/updates/pg_dbms_lock--1.0.0--2.0.0.sql
+index f0f683f..8965376 100644
 --- a/updates/pg_dbms_lock--1.0.0--2.0.0.sql
 +++ b/updates/pg_dbms_lock--1.0.0--2.0.0.sql
 @@ -35,9 +35,9 @@ BEGIN
