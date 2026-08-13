@@ -1,4 +1,4 @@
-decoder-raw (1.0-2PIGSTY) unstable; urgency=medium
+decoder-raw (1.0-1PGSTY) unstable; urgency=medium
 
   * Fix PostgreSQL 14-16 tuple buffer handling with newer toolchains
 
