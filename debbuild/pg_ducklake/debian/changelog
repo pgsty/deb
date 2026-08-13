@@ -1,4 +1,4 @@
-pg-ducklake (1.0.0-2PIGSTY) unstable; urgency=medium
+pg-ducklake (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Align the package revision with the RPM platform and PostgreSQL guards.
   * Debian platform behavior is unchanged.
