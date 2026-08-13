@@ -1,4 +1,4 @@
-rdkit (202303.3-4PIGSTY~SUITE) unstable; urgency=medium
+rdkit (202303.3-1PGSTY~SUITE) unstable; urgency=medium
 
   * Build cartridge-only PostgreSQL 17-18 gap packages.
   * Link against PGDG's librdkit1 instead of duplicating the runtime.

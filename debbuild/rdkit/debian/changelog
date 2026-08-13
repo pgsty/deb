@@ -1,4 +1,4 @@
-rdkit (202503.6-5PIGSTY~resolute) resolute; urgency=medium
+rdkit (202503.6-1PGSTY~resolute) resolute; urgency=medium
 
   * Build cartridge-only PostgreSQL 14-17 gap packages for Ubuntu 26.04.
   * Link against Ubuntu's librdkit1t64 instead of duplicating the runtime.
