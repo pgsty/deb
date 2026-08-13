@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 Copyright (c) 2013-2023 Marti Raudsepp <marti@juffo.org>
 
 Permission to use, copy, modify, and distribute this software and its
