@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 pguint
 
 Copyright © 2019, Peter Eisentraut <peter@eisentraut.org>
