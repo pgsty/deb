@@ -1,4 +1,4 @@
-cat-tools (0.3.0-1PIGSTY) unstable; urgency=medium
+cat-tools (0.3.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for upstream PGXN 0.3.0.
 
