@@ -5,7 +5,7 @@ so RDKit can later be built with InChI enabled again.
 
 It produces:
 
-- `1.07.3+dfsg-1PIGSTY~noble` on noble
+- `1.07.3+dfsg-1PGSTY~noble` on noble
 - `libinchi1.07`
 - `libinchi-dev`
 - `libinchi-bin`
