@@ -1,4 +1,4 @@
-pg-strict (1.0.5-3PIGSTY) unstable; urgency=medium
+pg-strict (1.0.5-1PGSTY) unstable; urgency=medium
 
   * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.
   * Fetch with --locked and verify cargo pgrx package does not rewrite Cargo.lock.
