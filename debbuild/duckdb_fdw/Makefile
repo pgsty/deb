@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := duckdb_fdw-git20251102-870bc43.tar.gz
+TARBALL := duckdb_fdw-1.4.3.tar.gz
 PG_DUCKDB_TARBALL := pg_duckdb-1.1.1.tar.gz
 
 # prepare directory
@@ -16,7 +16,7 @@ setup:
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
 build:
