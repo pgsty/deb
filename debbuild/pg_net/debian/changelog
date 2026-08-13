@@ -1,4 +1,4 @@
-pg-net (0.20.5-2PIGSTY) unstable; urgency=medium
+pg-net (0.20.5-1PGSTY) unstable; urgency=medium
 
   * Declare Bookworm, Trixie, Noble, and Resolute as supported build suites.
   * Reject Jammy because its libcurl 7.81 lacks the header API required by pg_net.

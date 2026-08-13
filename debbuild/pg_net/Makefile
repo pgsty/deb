@@ -21,7 +21,7 @@ setup: check-suite check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
-	sed -i "1s/PIGSTY)/PIGSTY~$(SUITE))/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$(SUITE))/" $(BUILD_DIR)/debian/changelog
 
 build:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
