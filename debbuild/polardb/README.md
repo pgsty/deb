@@ -25,11 +25,11 @@ Prefix:  /usr/polar-17
 ```
 
 The output `.deb` file follows the Pigsty Debian repository naming style. The
-release defaults to `2PGSTY`, and the build script appends the detected distro
+release defaults to `1PGSTY`, and the build script appends the detected distro
 codename:
 
 ```text
-polardb-17_17.10.1.0-2PGSTY~bookworm_<arch>.deb
+polardb-17_17.10.1.0-1PGSTY~bookworm_<arch>.deb
 ```
 
 The source commit remains available as the `X-Pigsty-Source-Commit` binary
@@ -38,7 +38,7 @@ overridden when intentionally incrementing the Pigsty package release, while
 `DISTRO_CODENAME` is available as an explicit builder override.
 
 The initial `17.10.1.0-accf02e2` package revision sorts newer than
-`17.10.1.0-2PGSTY~<codename>` under Debian version ordering. Remove the legacy
+`17.10.1.0-1PGSTY~<codename>` under Debian version ordering. Remove the legacy
 repository entries before publishing the corrected package; the repository
 must not expose both revisions at the same time.
 
@@ -94,7 +94,7 @@ apt-get install -y "$HOME/ext/pkg/$polarstore_deb"
 Before continuing, verify that the installed zlog and PolarStore versions are
 the exact artifacts produced for the current suite and architecture. The
 package metadata uses ordinary upstream minimum versions; exact
-`2PGSTY~<codename>` provenance is a build-pipeline gate, not a dependency
+`1PGSTY~<codename>` provenance is a build-pipeline gate, not a dependency
 constraint.
 
 The official full-feature build also needs the normal PostgreSQL kernel build
