@@ -1,4 +1,4 @@
-citus (14.2.0-1PIGSTY) unstable; urgency=low
+citus (14.2.0-1PGSTY) unstable; urgency=low
 
   * Update to upstream 14.2.0.
 
