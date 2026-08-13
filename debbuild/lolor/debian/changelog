@@ -1,4 +1,4 @@
-lolor (1.2.2-1PIGSTY) unstable; urgency=medium
+lolor (1.2.2-1PGSTY) unstable; urgency=medium
 
   * Build lolor from upstream source for pgedge-18.
 

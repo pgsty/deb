@@ -14,7 +14,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	sed -i -E "1s/\([^)]+\)/($(LOLOR_VERSION)-$(PKG_REV))/" $(BUILD_DIR)/debian/changelog
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build:
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
