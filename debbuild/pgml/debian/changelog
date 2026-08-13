@@ -1,4 +1,4 @@
-pgml (2.10.0-1PIGSTY) unstable; urgency=low
+pgml (2.10.0-1PGSTY) unstable; urgency=low
 
   * PostgreSQL 17 support with pgrx 0.12.9
 
