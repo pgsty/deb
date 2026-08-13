@@ -1,4 +1,4 @@
-cron-utils (0.1.0-2PIGSTY) unstable; urgency=medium
+cron-utils (0.1.0-1PGSTY) unstable; urgency=medium
 
   * Avoid installing README.md into the shared PostgreSQL documentation path.
 
