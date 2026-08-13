@@ -1,4 +1,4 @@
-pg-partman (5.5.0-2PIGSTY) unstable; urgency=medium
+pg-partman (5.5.0-1PGSTY) unstable; urgency=medium
 
   * Rename binary packages to postgresql-<major>-partman to match PGDG.
   * Replace the previous postgresql-<major>-pg-partman packages on upgrade.
