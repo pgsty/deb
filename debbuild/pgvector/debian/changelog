@@ -1,4 +1,4 @@
-pgvector (0.8.6-1PIGSTY) unstable; urgency=medium
+pgvector (0.8.6-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.8.6.
   * Disable upstream -march=native for portable builder artifacts.
