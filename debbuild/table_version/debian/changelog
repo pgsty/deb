@@ -1,4 +1,4 @@
-table-version (1.11.1-1PIGSTY) unstable; urgency=medium
+table-version (1.11.1-1PGSTY) unstable; urgency=medium
 
   * https://github.com/linz/postgresql-tableversion/releases/tag/1.11.1
 
