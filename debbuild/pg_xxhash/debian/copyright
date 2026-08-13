@@ -1,3 +1,5 @@
+SPDX-License-Identifier: MIT AND BSD-2-Clause
+
 pg_xxhash
 Copyright (c) 2021-2022 Igor Hatarist
 
