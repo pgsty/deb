@@ -1,4 +1,4 @@
-redis (6:7.2.15-4PIGSTY~@RELEASE@) @RELEASE@; urgency=medium
+redis (6:7.2.15-1PGSTY~@RELEASE@) @RELEASE@; urgency=medium
 
   * Drop 0001-fix-ftbfs-on-kfreebsd. Adding __GLIBC__ to a condition that
     already tests __linux__ is a no-op on the platforms we build.
