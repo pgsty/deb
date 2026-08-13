@@ -1,5 +1,9 @@
-MIT License
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: fsm_core
+Source: https://github.com/Nirajkashyap/fsm
 
-Copyright (c) 2025 Niraj
-
-https://github.com/Nirajkashyap/fsm/blob/main/LICENSE
+Files: *
+Copyright: 2025 Niraj Kashyap
+License: Apache-2.0
+ On Debian systems, the complete text of the Apache License version 2.0 can be
+ found in /usr/share/common-licenses/Apache-2.0.
