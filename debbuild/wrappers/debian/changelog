@@ -1,4 +1,4 @@
-wrappers (0.6.2-1PIGSTY) unstable; urgency=medium
+wrappers (0.6.2-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.6.2 and build the locked graph with pgrx 0.19.1.
 
