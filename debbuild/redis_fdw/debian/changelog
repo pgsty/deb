@@ -1,4 +1,4 @@
-redis-fdw (1.0-2PIGSTY) unstable; urgency=medium
+redis-fdw (1.0-1PGSTY) unstable; urgency=medium
 
   * Add PG 18 support
 
