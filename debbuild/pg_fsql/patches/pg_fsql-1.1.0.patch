@@ -9,7 +9,7 @@ remaining compatible with older supported branches.
 +++ b/src/execute.c
 @@ -158,8 +158,8 @@
          }
- 
+
          /* Copy datum out of SPI memory context before SPI_finish */
 -        attbyval = SPI_tuptable->tupdesc->attrs[0].attbyval;
 -        attlen   = SPI_tuptable->tupdesc->attrs[0].attlen;
