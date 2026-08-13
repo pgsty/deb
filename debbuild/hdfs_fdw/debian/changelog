@@ -1,4 +1,4 @@
-hdfs-fdw (2.3.3-1PIGSTY) unstable; urgency=medium
+hdfs-fdw (2.3.3-1PGSTY) unstable; urgency=medium
 
   * Initial package for hdfs_fdw 2.3.3.
   * Build version-specific packages for PostgreSQL 14 through 18.
