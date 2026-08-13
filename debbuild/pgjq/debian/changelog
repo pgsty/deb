@@ -1,4 +1,4 @@
-pgjq (0.1.0-1PIGSTY) unstable; urgency=medium
+pgjq (0.1.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
