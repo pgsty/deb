@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 pg_html5_email_address
 
 Copyright © 2022–2023, Rowan Rodrik van der Molen
