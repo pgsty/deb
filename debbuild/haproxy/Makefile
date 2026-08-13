@@ -33,7 +33,7 @@ setup: check-src
 	patch --batch --fuzz=0 -d $(BUILD_DIR) -p1 < dconv.patch
 	@codename=$$(. /etc/os-release && echo $$VERSION_CODENAME); \
 		test -n "$$codename" && \
-		sed -i "1s/2PIGSTY) unstable/2PIGSTY~$$codename) $$codename/" $(BUILD_DIR)/debian/changelog
+		sed -i "1s/1PGSTY) unstable/1PGSTY~$$codename) $$codename/" $(BUILD_DIR)/debian/changelog
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 
 build:

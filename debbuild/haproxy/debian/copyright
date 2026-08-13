@@ -5,7 +5,7 @@ Source: http://www.haproxy.org/
 
 Files: *
 Copyright: Copyright 2000-2021  Willy Tarreau <w@1wt.eu>.
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -14,7 +14,7 @@ Comment:
 Files: .github/matrix.py
 Copyright: 2020, Tim Duesterhus <tim@bastelstu.be>
   2019, Ilya Shipitsin <chipitsine@gmail.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -30,7 +30,7 @@ Comment:
 
 Files: addons/ot/*
 Copyright: 2017, 2020, HAProxy Technologies
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -38,7 +38,7 @@ Comment:
 
 Files: addons/promex/service-prometheus.c
 Copyright: 2018, 2019, Christopher Faulet <cfaulet@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -46,7 +46,7 @@ Comment:
 
 Files: addons/wurfl/dummy/*
 Copyright: ScientiaMobile, Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -54,7 +54,7 @@ Comment:
 
 Files: addons/wurfl/dummy/Makefile
 Copyright: Copyright 2000-2021  Willy Tarreau <w@1wt.eu>.
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -62,7 +62,7 @@ Comment:
 
 Files: admin/halog/fgets2.c
 Copyright: 2000-2012, Willy Tarreau <w@1wt.eu>
-License: LGPL-2.1
+License: LGPL-2.1-only
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -70,7 +70,7 @@ Comment:
 
 Files: admin/halog/halog.c
 Copyright: 2000-2020, Willy Tarreau <w@1wt.eu>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -78,7 +78,7 @@ Comment:
 
 Files: admin/iprange/*
 Copyright: 2000-2021, Willy Tarreau <w@1wt.eu>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -86,7 +86,7 @@ Comment:
 
 Files: admin/netsnmp-perl/*
 Copyright: 2007-2010, Krzysztof Piotr Oledzki <ole@ans.pl>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -94,7 +94,7 @@ Comment:
 
 Files: admin/release-estimator/release-estimator.py
 Copyright: 2020, HAProxy Technologies, Daniel Corbett <dcorbett@haproxy.com>
-License: GPL-3+
+License: GPL-3.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -103,7 +103,7 @@ Comment:
 Files: admin/wireshark-dissectors/peers/packet-happp.c
 Copyright: 2016, Frédéric Lécaille <flecaille@haproxy.com>
   1998, Gerald Combs
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -115,7 +115,7 @@ Copyright: Copyright (C) 2007-2011, Arnaud Cornet <acornet@debian.org>
            Copyright (C) 2013, Prach Pongpanich <prachpub@gmail.com>
            Copyright (C) 2013-2016, Apollon Oikonomopoulos <apoikos@debian.org>
            Copyright (C) 2013-2016, Vincent Bernat <bernat@debian.org>
-License: GPL-2
+License: GPL-2.0-only
 
 Files: debian/dconv/*
 Copyright: 2012, Cyril Bonté
@@ -127,7 +127,7 @@ Comment:
 
 Files: dev/base64/*
 Copyright: 2009, 2010, Krzysztof Piotr Oledzki <ole@ans.pl>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -135,7 +135,7 @@ Comment:
 
 Files: dev/tcploop/tcploop.c
 Copyright: 2012-2017, Willy Tarreau <w@1wt.eu>
-License: Expat
+License: MIT
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -143,7 +143,7 @@ Comment:
 
 Files: include/*
 Copyright: 2000-2020, Willy Tarreau - w@1wt.eu
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/api-t.h
   include/haproxy/api.h
@@ -153,26 +153,26 @@ Files: include/haproxy/api-t.h
   include/haproxy/initcall.h
   include/haproxy/istbuf.h
 Copyright: 2000-2020, Willy Tarreau - w@1wt.eu
-License: Expat
+License: MIT
 
 Files: include/haproxy/arg-t.h
   include/haproxy/arg.h
   include/haproxy/protobuf-t.h
   include/haproxy/protobuf.h
 Copyright: 2012, Willy Tarreau <w@1wt.eu>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/atomic.h
   include/haproxy/thread-t.h
   include/haproxy/thread.h
 Copyright: 2020, Willy Tarreau - w@1wt.eu
   2017, Christopher Faulet - cfaulet@haproxy.com
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/auth-t.h
   include/haproxy/auth.h
 Copyright: 2009, 2010, Krzysztof Piotr Oledzki <ole@ans.pl>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: include/haproxy/base64.h
   include/haproxy/signal-t.h
@@ -180,25 +180,25 @@ Files: include/haproxy/base64.h
   include/haproxy/uri_auth-t.h
   include/haproxy/uri_auth.h
 Copyright: 2000-2020, Willy Tarreau <w@1wt.eu>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: include/haproxy/check-t.h
 Copyright: 2008, 2009, Krzysztof Piotr Oledzki <ole@ans.pl>
   2000-2020, Willy Tarreau - w@1wt.eu
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: include/haproxy/compression-t.h
 Copyright: 2012, Exceliance, David Du Colombier <dducolombier@exceliance.fr>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/compression.h
 Copyright: 2012, (C) Exceliance, David Du Colombier <dducolombier@exceliance.fr>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/counters-t.h
 Copyright: 2011-2014, Willy Tarreau <w@1wt.eu>
   2008, 2009, Krzysztof Piotr Oledzki <ole@ans.pl>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/dgram-t.h
   include/haproxy/dgram.h
@@ -210,21 +210,21 @@ Files: include/haproxy/dgram-t.h
   include/haproxy/resolvers-t.h
   include/haproxy/resolvers.h
 Copyright: 2014, 2020, Baptiste Assmann <bedis9@gmail.com>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/dict-t.h
   include/haproxy/dict.h
 Copyright: 2019, Frédéric Lécaille <flecaille@haproxy.com>
-License: Expat
+License: MIT
 
 Files: include/haproxy/dns.h
 Copyright: 2020, HAProxy Technologies
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/extcheck.h
 Copyright: 2014, Horms Solutions Ltd, Simon Horman <horms@verge.net.au>
   2000-2009, 2020, Willy Tarreau <w@1wt.eu>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/fcgi-app-t.h
   include/haproxy/fcgi-app.h
@@ -237,24 +237,24 @@ Files: include/haproxy/fcgi-app-t.h
   include/haproxy/spoe-t.h
   include/haproxy/spoe.h
 Copyright: 2017-2019, HAProxy Technologies, Christopher Faulet <cfaulet@haproxy.com>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/filters-t.h
   include/haproxy/filters.h
   include/haproxy/flt_http_comp.h
 Copyright: 2015, Qualys Inc., Christopher Faulet <cfaulet@qualys.com>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/h2.h
 Copyright: 2017, HAProxy Technologies
   2000-2017, Willy Tarreau - w@1wt.eu
-License: Expat
+License: MIT
 
 Files: include/haproxy/hlua-t.h
   include/haproxy/hlua.h
   include/haproxy/hlua_fcn.h
 Copyright: 2015, 2016, Thierry Fournier <tfournier@arpalert.org>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/hpack-dec.h
   include/haproxy/hpack-enc.h
@@ -265,54 +265,54 @@ Files: include/haproxy/hpack-dec.h
   include/haproxy/http-hdr.h
 Copyright: 2017, HAProxy Technologies
   2014-2020, Willy Tarreau <willy@haproxy.org>
-License: Expat
+License: MIT
 
 Files: include/haproxy/mailers-t.h
 Copyright: 2015, Horms Solutions Ltd., Simon Horman <horms@verge.net.au>
   2010, EXCELIANCE, Emeric Brun <ebrun@exceliance.fr>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/mailers.h
 Copyright: 2020, Willy Tarreau <w@1wt.eu>
   2015, Horms Solutions Ltd., Simon Horman <horms@verge.net.au>
   2010, EXCELIANCE, Emeric Brun <ebrun@exceliance.fr>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/mworker-t.h
   include/haproxy/mworker.h
 Copyright: HAProxy Technologies 2019, - William Lallemand <wlallemand@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: include/haproxy/namespace-t.h
   include/haproxy/namespace.h
 Copyright: 2015-2020, Willy Tarreau
   2014, Tamas Kovacs, Sarkozi Laszlo, Krisztian Kovacs
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/net_helper.h
 Copyright: 2017-2020, Willy Tarreau
   2017, Olivier Houchard
-License: Expat
+License: MIT
 
 Files: include/haproxy/openssl-compat.h
 Copyright: Copyright 2000-2013 Willy Tarreau - w@1wt.eu
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/peers-t.h
   include/haproxy/peers.h
   include/haproxy/ssl_sock-t.h
   include/haproxy/ssl_sock.h
 Copyright: 2010, 2012, EXCELIANCE, Emeric Brun <ebrun@exceliance.fr>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/proto_quic.h
   include/haproxy/quic_sock.h
 Copyright: 2020, Frédéric Lécaille <flecaille@haproxy.com>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/proto_sockpair.h
 Copyright: HAProxy Technologies - William Lallemand <wlallemand@haproxy.com>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/proto_udp.h
   include/haproxy/quic_cc-t.h
@@ -322,16 +322,16 @@ Files: include/haproxy/proto_udp.h
   include/haproxy/quic_loss-t.h
   include/haproxy/quic_loss.h
 Copyright: 2019, 2020, HAProxy Technologies, Frédéric Lécaille <flecaille@haproxy.com>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/qpack-tbl-t.h
 Copyright: 2020, HAProxy Technologies, Frédéric Lécaille <flecaille@haproxy.com>
-License: Expat
+License: MIT
 
 Files: include/haproxy/quic_tls-t.h
   include/haproxy/quic_tls.h
 Copyright: 2019, 2020, HAProxy Technologies, Frédéric Lécaille <flecaille@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: include/haproxy/sample-t.h
   include/haproxy/sample.h
@@ -340,24 +340,24 @@ Files: include/haproxy/sample-t.h
   include/haproxy/stick_table.h
 Copyright: 2010, 2012, 2013, 2020, Willy Tarreau <w@1wt.eu>
   2009, 2010, EXCELIANCE, Emeric Brun <ebrun@exceliance.fr>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/shctx-t.h
   include/haproxy/shctx.h
 Copyright: 2011, 2012, EXCELIANCE
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: include/haproxy/ssl_ckch-t.h
   include/haproxy/ssl_ckch.h
   include/haproxy/ssl_crtlist-t.h
   include/haproxy/ssl_crtlist.h
 Copyright: 2020, HAProxy Technologies, William Lallemand <wlallemand@haproxy.com>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/ssl_utils.h
 Copyright: 2020, HAProxy Technologies, William Lallemand <wlallemand@haproxy.com>
   2012, EXCELIANCE, Emeric Brun <ebrun@exceliance.fr>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/tcpcheck-t.h
 Copyright: 2020, Gaetan Rivet <grive@u256.net>
@@ -365,7 +365,7 @@ Copyright: 2020, Gaetan Rivet <grive@u256.net>
   2013, Baptiste Assmann <bedis9@gmail.com>
   2007-2010, Krzysztof Piotr Oledzki <ole@ans.pl>
   2000-2009, 2020, Willy Tarreau <w@1wt.eu>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: include/haproxy/tcpcheck.h
 Copyright: 2020, Gaetan Rivet <grive@u256.net>
@@ -373,61 +373,61 @@ Copyright: 2020, Gaetan Rivet <grive@u256.net>
   2013, Baptiste Assmann <bedis9@gmail.com>
   2007-2010, Krzysztof Piotr Oledzki <ole@ans.pl>
   2000-2009, 2020, Willy Tarreau <w@1wt.eu>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/uri_normalizer-t.h
   include/haproxy/uri_normalizer.h
 Copyright: 2021, Tim Duesterhus <tim@bastelstu.be>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: include/haproxy/vars-t.h
   include/haproxy/vars.h
 Copyright: 2015, Thierry FOURNIER <tfournier@arpalert.org>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/haproxy/xref-t.h
   include/haproxy/xref.h
 Copyright: 2020, Willy Tarreau - w@1wt.eu
   2017, Thierry Fournier <thierry.fournier@ozon.io>
-License: Expat
+License: MIT
 
 Files: include/import/*
 Copyright: 2002-2011, - Willy Tarreau <w@1wt.eu>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/import/atomic-ops.h
 Copyright: Copyright 2000-2013 Willy Tarreau - w@1wt.eu
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/import/eb32sctree.h
 Copyright: 2002-2017, - Willy Tarreau <w@1wt.eu>
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/import/ist.h
 Copyright: 2000-2020, Willy Tarreau - w@1wt.eu
-License: Expat
+License: MIT
 
 Files: include/import/lru.h
   include/import/plock.h
   include/import/slz.h
 Copyright: 2012-2017, Willy Tarreau <w@1wt.eu>
-License: Expat
+License: MIT
 
 Files: include/import/mjson.h
 Copyright: 2018-2020, Cesanta Software Limited
-License: Expat
+License: MIT
 
 Files: include/import/sha1.h
 Copyright: 2009-2015, Linus Torvalds and others.
-License: LGPL-2.1
+License: LGPL-2.1-only
 
 Files: include/import/xxhash.h
 Copyright: 2012-2020, Yann Collet
-License: BSD-2-clause
+License: BSD-2-Clause
 
 Files: src/*
 Copyright: 2000-2020, Willy Tarreau <w@1wt.eu>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -443,7 +443,7 @@ Files: src/action.c
   src/mux_fcgi.c
   src/server_state.c
 Copyright: 2016-2019, 2021, HAProxy Technologies, Christopher Faulet <cfaulet@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -451,18 +451,18 @@ Comment:
 
 Files: src/auth.c
 Copyright: 2009, 2010, Krzysztof Piotr Oledzki <ole@ans.pl>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: src/base64.c
   src/server.c
   src/stats.c
 Copyright: 2007-2010, Krzysztof Piotr Oledzki <ole@ans.pl>
   2000-2012, Willy Tarreau <w@1wt.eu>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: src/cache.c
 Copyright: 2017, 2020, HAProxy Technologies
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -475,7 +475,7 @@ Files: src/cfgparse-global.c
   src/vars.c
   src/version.c
 Copyright: Copyright 2000-2015  Willy Tarreau <w@1wt.eu>.
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -486,7 +486,7 @@ Files: src/cfgparse-ssl.c
   src/ssl_utils.c
 Copyright: 2020, HAProxy Technologies, William Lallemand <wlallemand@haproxy.com>
   2012, EXCELIANCE, Emeric Brun <ebrun@exceliance.fr>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -496,7 +496,7 @@ Files: src/check.c
   src/cli.c
 Copyright: 2007-2010, Krzysztof Piotr Oledzki <ole@ans.pl>
   2000-2012, Willy Tarreau <w@1wt.eu>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -504,13 +504,13 @@ Comment:
 
 Files: src/compression.c
 Copyright: 2012, Exceliance, David Du Colombier <dducolombier@exceliance.fr>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: src/debug.c
   src/haproxy.c
   src/wdt.c
 Copyright: 2000-2021, Willy Tarreau <willy@haproxy.org>.
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -521,7 +521,7 @@ Files: src/dgram.c
   src/mqtt.c
   src/resolvers.c
 Copyright: 2014, 2020, Baptiste Assmann <bedis9@gmail.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -529,7 +529,7 @@ Comment:
 
 Files: src/dns.c
 Copyright: 2017, 2020, HAProxy Technologies
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: src/eb32sctree.c
   src/eb32tree.c
@@ -541,7 +541,7 @@ Files: src/eb32sctree.c
   src/ebsttree.c
   src/ebtree.c
 Copyright: 2002-2011, - Willy Tarreau <w@1wt.eu>
-License: LGPL-2.1
+License: LGPL-2.1-only
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -549,7 +549,7 @@ Comment:
 
 Files: src/ev_evports.c
 Copyright: 2018, Joyent, Inc.
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -558,7 +558,7 @@ Comment:
 Files: src/extcheck.c
 Copyright: 2014, Horms Solutions Ltd, Simon Horman <horms@verge.net.au>
   2000-2009, 2020, Willy Tarreau <w@1wt.eu>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -566,7 +566,7 @@ Comment:
 
 Files: src/fcgi.c
 Copyright: 2019, HAProxy Technologies, Christopher Faulet <cfaulet@haproxy.com>
-License: Expat
+License: MIT
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -576,7 +576,7 @@ Files: src/filters.c
   src/flt_http_comp.c
   src/flt_trace.c
 Copyright: 2015, Qualys Inc., Christopher Faulet <cfaulet@qualys.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -585,7 +585,7 @@ Comment:
 Files: src/h2.c
 Copyright: 2017, Willy Tarreau <w@1wt.eu>
   2017, HAProxy Technologies
-License: Expat
+License: MIT
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -594,7 +594,7 @@ Comment:
 Files: src/hlua.c
   src/hlua_fcn.c
 Copyright: 2015, 2016, Thierry Fournier <tfournier@arpalert.org>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -606,7 +606,7 @@ Files: src/hpack-dec.c
   src/hpack-tbl.c
 Copyright: 2017, HAProxy Technologies
   2014-2020, Willy Tarreau <willy@haproxy.org>
-License: Expat
+License: MIT
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -614,16 +614,16 @@ Comment:
 
 Files: src/lru.c
 Copyright: 2012-2017, Willy Tarreau <w@1wt.eu>
-License: Expat
+License: MIT
 
 Files: src/mailers.c
 Copyright: 2020, Willy Tarreau <w@1wt.eu>
   2015, Horms Solutions Ltd, Simon Horman <horms@verge.net.au>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: src/mjson.c
 Copyright: 2018-2020, Cesanta Software Limited
-License: Expat
+License: MIT
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -631,7 +631,7 @@ Comment:
 
 Files: src/mux_h1.c
 Copyright: 2018, 2019, Christopher Faulet <cfaulet@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -640,7 +640,7 @@ Comment:
 Files: src/mworker-prog.c
   src/proto_sockpair.c
 Copyright: HAProxy Technologies - William Lallemand <wlallemand@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -648,7 +648,7 @@ Comment:
 
 Files: src/mworker.c
 Copyright: HAProxy Technologies 2019, - William Lallemand <wlallemand@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -657,11 +657,11 @@ Comment:
 Files: src/peers.c
   src/ssl_sock.c
 Copyright: 2010, 2012, EXCELIANCE, Emeric Brun <ebrun@exceliance.fr>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: src/proto_quic.c
 Copyright: 2020, Frédéric Lécaille <flecaille@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -672,7 +672,7 @@ Files: src/proto_udp.c
   src/quic_sock.c
   src/xprt_quic.c
 Copyright: 2019, 2020, HAProxy Technologies, Frédéric Lécaille <flecaille@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -680,7 +680,7 @@ Comment:
 
 Files: src/proto_uxdg.c
 Copyright: 2020, HAProxy Technologies, Emeric Brun <ebrun@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -688,7 +688,7 @@ Comment:
 
 Files: src/qpack-tbl.c
 Copyright: 2020, HAProxy Technologies, Frédéric Lécaille <flecaille@haproxy.com>
-License: Expat
+License: MIT
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -697,7 +697,7 @@ Comment:
 Files: src/quic_cc.c
   src/quic_cc_newreno.c
 Copyright: 2019, 2020, HAProxy Technologies, Frédéric Lécaille <flecaille@haproxy.com>
-License: LGPL-2.1
+License: LGPL-2.1-only
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -707,7 +707,7 @@ Files: src/ring.c
   src/sink.c
   src/trace.c
 Copyright: 2000-2020, Willy Tarreau - w@1wt.eu
-License: LGPL-2.1
+License: LGPL-2.1-only
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -717,11 +717,11 @@ Files: src/sample.c
   src/stick_table.c
 Copyright: 2010, 2012, Willy Tarreau <w@1wt.eu>
   2009, 2010, EXCELIANCE, Emeric Brun <ebrun@exceliance.fr>
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: src/sha1.c
 Copyright: 2009-2015, Linus Torvalds and others.
-License: LGPL-2.1
+License: LGPL-2.1-only
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -729,11 +729,11 @@ Comment:
 
 Files: src/shctx.c
 Copyright: 2011, 2012, EXCELIANCE
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: src/slz.c
 Copyright: 2012-2017, Willy Tarreau <w@1wt.eu>
-License: Expat
+License: MIT
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -742,7 +742,7 @@ Comment:
 Files: src/ssl_ckch.c
   src/ssl_crtlist.c
 Copyright: 2020, HAProxy Technologies, William Lallemand <wlallemand@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -754,7 +754,7 @@ Copyright: 2020, Gaetan Rivet <grive@u256.net>
   2013, Baptiste Assmann <bedis9@gmail.com>
   2007-2010, Krzysztof Piotr Oledzki <ole@ans.pl>
   2000-2009, 2020, Willy Tarreau <w@1wt.eu>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -762,7 +762,7 @@ Comment:
 
 Files: src/thread.c
 Copyright: 2017, Christopher Fauet - cfaulet@haproxy.com
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -770,7 +770,7 @@ Comment:
 
 Files: src/uri_normalizer.c
 Copyright: 2021, Tim Duesterhus <tim@bastelstu.be>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -778,7 +778,7 @@ Comment:
 
 Files: src/xprt_handshake.c
 Copyright: 2019, HAProxy Technologies, Olivier Houchard <ohouchard@haproxy.com>
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -786,7 +786,7 @@ Comment:
 
 Files: tests/exp/filltab25.c
 Copyright: 2007, willy tarreau.
-License: GPL-2+
+License: GPL-2.0-or-later
 Comment:
  An OpenSSL exception is present in the LICENSE file: "This program is
  released under the GPL with the additional exemption that compiling,
@@ -808,7 +808,7 @@ License: Apache-2.0
  On Debian systems, the full text of the Apache License version 2.0 can be
  found in the file `/usr/share/common-licenses/Apache-2.0'.
 
-License: BSD-2-clause
+License: BSD-2-Clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are
  met:
@@ -832,7 +832,7 @@ License: BSD-2-clause
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-License: Expat
+License: MIT
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
  "Software"), to deal in the Software without restriction, including
@@ -852,7 +852,7 @@ License: Expat
  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-License: GPL-2
+License: GPL-2.0-only
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License version 2 as
  published by the Free Software Foundation.
@@ -860,7 +860,7 @@ License: GPL-2
  On Debian systems, the complete text of the GNU General Public License, version
  2, can be found in /usr/share/common-licenses/GPL-2.
 
-License: GPL-2+
+License: GPL-2.0-or-later
  This program is free software; you can redistribute it
  and/or modify it under the terms of the GNU General Public
  License as published by the Free Software Foundation; either
@@ -880,7 +880,7 @@ License: GPL-2+
  License version 2 can be found in the file
  `/usr/share/common-licenses/GPL-2'.
 
-License: GPL-3+
+License: GPL-3.0-or-later
  This software is Copyright (c) 2020 by X. Ample.
  .
  This is free software, licensed under:
@@ -894,7 +894,7 @@ License: GPL-3+
  On Debian systems, the complete text of version 3 of the GNU General
  Public License can be found in '/usr/share/common-licenses/GPL-3'.
 
-License: LGPL-2.1
+License: LGPL-2.1-only
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public
  License as published by the Free Software Foundation; either
