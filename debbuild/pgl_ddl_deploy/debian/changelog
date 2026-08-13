@@ -1,4 +1,4 @@
-pgl-ddl-deploy (2.2.1-2PIGSTY) unstable; urgency=medium
+pgl-ddl-deploy (2.2.1-1PGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 18 support
 
