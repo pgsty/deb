@@ -1,4 +1,4 @@
-postbis (1.0-2PIGSTY) unstable; urgency=medium
+postbis (1.0-1PGSTY) unstable; urgency=medium
 
   * Rebuild all supported Debian and Ubuntu targets with the corrected
     alphabet allocation and indexed random-access slice sizing.
