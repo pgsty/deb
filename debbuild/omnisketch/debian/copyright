@@ -1,3 +1,5 @@
+SPDX-License-Identifier: PostgreSQL
+
 
 Copyright (c) 2024, Tomas Vondra (tomas.vondra@postgresql.org).
 
