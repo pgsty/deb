@@ -1,4 +1,4 @@
-vault (0.3.1-1PIGSTY) unstable; urgency=medium
+vault (0.3.1-1PGSTY) unstable; urgency=medium
 
   * Change to C extension
 
