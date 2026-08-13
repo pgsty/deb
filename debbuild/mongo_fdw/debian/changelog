@@ -1,4 +1,4 @@
-mongo-fdw (5.5.3-1PIGSTY) unstable; urgency=medium
+mongo-fdw (5.5.3-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
