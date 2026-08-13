@@ -15,7 +15,7 @@ setup: check-src
 	rm -f $(BUILD_DIR)/.cargo/config.toml
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
 	if [ "$$OS_CODENAME" = "resolute" ]; then \
 		test -f "../SOURCES/$(VENDOR_TARBALL)" || (echo "missing ../SOURCES/$(VENDOR_TARBALL), copy it into ../SOURCES for Ubuntu 26 builds"; exit 1); \
 		mkdir -p $(BUILD_DIR)/vendor; \
