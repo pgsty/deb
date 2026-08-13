@@ -1,4 +1,4 @@
-topn (2.7.0-1PIGSTY) unstable; urgency=medium
+topn (2.7.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
