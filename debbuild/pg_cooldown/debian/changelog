@@ -1,4 +1,4 @@
-pg-cooldown (0.1-2PIGSTY) unstable; urgency=low
+pg-cooldown (0.1-1PGSTY) unstable; urgency=low
 
   * remove pg13/pg18 support
 
