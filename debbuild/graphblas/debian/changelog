@@ -1,4 +1,4 @@
-graphblas (10.2.0-1PIGSTY) unstable; urgency=medium
+graphblas (10.2.0-1PGSTY) unstable; urgency=medium
 
   * Package SuiteSparse:GraphBLAS 10.2.0 as runtime and development libraries.
 
