@@ -4,21 +4,21 @@ Source: https://repo.percona.com/ppg-18.4/yum/release/9/SRPMS/
 
 Files: .postgis-src/*
 Copyright: 2001-2026 PostGIS contributors
-License: GPL-2+
+License: GPL-2.0-or-later
 
 Files: .pg_gather-src/*
 Copyright: 2021-2026 Jobin Augustine and contributors
-License: GPL-3
+License: GPL-3.0-only
 
 Files: .wal2json-src/*
 Copyright: 2013-2018 Euler Taveira de Oliveira
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: .pg_repack-src/*
 Copyright: 2008-2011 NIPPON TELEGRAPH AND TELEPHONE CORPORATION
            2011 Itagaki Takahiro
            2012-2015 The Reorg Development Team
-License: BSD-3-clause
+License: BSD-3-Clause
 
 Files: .set_user-src/*
 Copyright: 2015-2020 Crunchy Data Solutions, Inc.
@@ -56,7 +56,7 @@ License: PostgreSQL
  purpose, and without obligations to provide maintenance, support, updates,
  enhancements, or modifications.
 
-License: GPL-2+
+License: GPL-2.0-or-later
  This program is free software; you can redistribute it and/or modify it
  under the terms of the GNU General Public License as published by the Free
  Software Foundation; either version 2 of the License, or (at your option)
@@ -65,7 +65,7 @@ License: GPL-2+
  On Debian systems, the complete text of the GNU General Public License
  version 2 can be found in /usr/share/common-licenses/GPL-2.
 
-License: GPL-3
+License: GPL-3.0-only
  This program is free software; you can redistribute it and/or modify it
  under the terms of the GNU General Public License as published by the Free
  Software Foundation; version 3 of the License.
@@ -73,7 +73,7 @@ License: GPL-3
  On Debian systems, the complete text of the GNU General Public License
  version 3 can be found in /usr/share/common-licenses/GPL-3.
 
-License: BSD-3-clause
+License: BSD-3-Clause
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  .
