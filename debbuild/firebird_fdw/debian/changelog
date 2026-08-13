@@ -1,4 +1,4 @@
-firebird-fdw (1.4.2-2PIGSTY) unstable; urgency=medium
+firebird-fdw (1.4.2-1PGSTY) unstable; urgency=medium
 
   * Rebuild firebird_fdw 1.4.2 against libfq 0.6.2
   * Align the Firebird build dependency with RPM packaging
