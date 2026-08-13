@@ -1,4 +1,4 @@
-antlr4-runtime413 (4.13.2-1PIGSTY) unstable; urgency=medium
+antlr4-runtime413 (4.13.2-1PGSTY) unstable; urgency=medium
 
   * Package ANTLR4 C++ runtime 4.13.2 as standalone runtime/dev packages.
 

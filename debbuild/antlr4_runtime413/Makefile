@@ -9,7 +9,7 @@ setup:
 	rmdir build/antlr4-cpp-runtime-4.13.2-source
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 build:
 	cd build && dpkg-buildpackage -b -us -uc
