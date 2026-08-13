@@ -1,4 +1,4 @@
-pgbouncer-fdw (1.4.0-1PIGSTY) unstable; urgency=medium
+pgbouncer-fdw (1.4.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for pgbouncer_fdw 1.4.0.
   * Build version-specific packages for PostgreSQL 14 through 18.
