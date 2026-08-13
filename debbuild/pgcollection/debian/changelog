@@ -1,4 +1,4 @@
-collection (2.0.0-1PIGSTY) unstable; urgency=low
+collection (2.0.0-1PGSTY) unstable; urgency=low
 
   * https://github.com/aws/pgcollection/releases/tag/v2.0.0
 
