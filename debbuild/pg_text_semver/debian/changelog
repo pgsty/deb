@@ -1,4 +1,4 @@
-pg-text-semver (1.2.1-1PIGSTY) unstable; urgency=medium
+pg-text-semver (1.2.1-1PGSTY) unstable; urgency=medium
 
   * Package pg_text_semver from upstream tag v1.2.1
     https://github.com/bigsmoke/pg_text_semver/tree/v1.2.1
