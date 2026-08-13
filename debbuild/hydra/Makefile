@@ -9,7 +9,7 @@ setup:
 	pg_buildext updatecontrol
 	rm -rf build/columnar/debian; cp -r debian build/columnar/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/columnar/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/columnar/debian/changelog
 
 build: build16 build15 build14
 
