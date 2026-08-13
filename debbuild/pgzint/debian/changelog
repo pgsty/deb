@@ -1,4 +1,4 @@
-pgzint (0.2.0-1PIGSTY) unstable; urgency=medium
+pgzint (0.2.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for upstream PGXN 0.2.0.
   * Require Zint 2.14.0 for BARCODE_MEMORY_FILE support.
