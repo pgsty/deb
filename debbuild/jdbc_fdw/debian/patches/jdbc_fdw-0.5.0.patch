@@ -1,0 +1,111 @@
+diff --git a/Makefile b/Makefile
+index 990c382..c0520b7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -13,7 +13,7 @@ REGRESS = postgresql/new_test postgresql/aggregates postgresql/date postgresql/f
+ 
+ JDBC_CONFIG = jdbc_config
+ 
+-LIBDIR=/usr/lib64/
++LIBDIR ?= /usr/lib/jvm/java-openjdk/lib/server
+ 
+ SHLIB_LINK += -L$(LIBDIR) -ljvm
+ 
+@@ -30,12 +30,15 @@ JAVA_CLASSES = $(patsubst %.java,%.class,$(JAVA_SOURCES))
+ 
+ PG_CPPFLAGS=-D'SHARE_EXT_DIR=$(datadir)/extension' -I$(libpq_srcdir)
+ 
++JAVAC ?= javac
++JAVACFLAGS ?= --release 8
++
+ # Target to compile all Java source files
+ all:$(JAVA_CLASSES)
+ 
+ # Rules for compiling each .java file into a .class
+ %.class: %.java
+-	javac $<
++	$(JAVAC) $(JAVACFLAGS) $<
+ 
+ # Use DATA_built to install .class files
+ DATA_built = $(JAVA_CLASSES)
+diff --git a/jdbc_fdw.c b/jdbc_fdw.c
+index 2745744..818bb97 100644
+--- a/jdbc_fdw.c
++++ b/jdbc_fdw.c
+@@ -20,6 +20,10 @@
+ #include "access/sysattr.h"
+ #include "commands/defrem.h"
+ #include "commands/explain.h"
++#if PG_VERSION_NUM >= 180000
++#include "commands/explain_format.h"
++#include "commands/explain_state.h"
++#endif
+ #include "commands/vacuum.h"
+ #include "foreign/fdwapi.h"
+ #include "funcapi.h"
+@@ -787,6 +791,9 @@ jdbcGetForeignPaths(PlannerInfo *root,
+ 									 NULL,	/* default pathtarget */
+ #endif
+ 									 fpinfo->rows,
++#if PG_VERSION_NUM >= 180000
++									 0,		/* disabled_nodes */
++#endif
+ 									 fpinfo->startup_cost,
+ 									 fpinfo->total_cost,
+ 									 NIL,	/* no pathkeys */
+@@ -2395,6 +2402,9 @@ jdbc_add_foreign_grouping_paths(PlannerInfo *root, RelOptInfo *input_rel,
+ 										  grouped_rel,
+ 										  grouped_rel->reltarget,
+ 										  rows,
++#if PG_VERSION_NUM >= 180000
++										  0,	/* disabled_nodes */
++#endif
+ 										  startup_cost,
+ 										  total_cost,
+ 										  NIL,	/* no pathkeys */
+@@ -2540,6 +2550,9 @@ jdbc_add_foreign_final_paths(PlannerInfo *root, RelOptInfo *input_rel,
+ 													   path->parent,
+ 													   path->pathtarget,
+ 													   path->rows,
++#if PG_VERSION_NUM >= 180000
++													   0, /* disabled_nodes */
++#endif
+ 													   path->startup_cost,
+ 													   path->total_cost,
+ 													   path->pathkeys,
+@@ -2684,6 +2697,9 @@ jdbc_add_foreign_final_paths(PlannerInfo *root, RelOptInfo *input_rel,
+ 										   input_rel,
+ 										   root->upper_targets[UPPERREL_FINAL],
+ 										   rows,
++#if PG_VERSION_NUM >= 180000
++										   0, /* disabled_nodes */
++#endif
+ 										   startup_cost,
+ 										   total_cost,
+ 										   pathkeys,
+diff --git a/jq.c b/jq.c
+index b8aa811..7a4b6f2 100644
+--- a/jq.c
++++ b/jq.c
+@@ -100,7 +100,7 @@ static Datum jdbc_convert_object_to_datum(Oid, int32, jobject);
+ /*
+  * JVM destroy function
+  */
+-static void jdbc_destroy_jvm();
++static void jdbc_destroy_jvm(int code, Datum arg);
+ 
+ /*
+  * JVM attach function
+@@ -265,8 +265,11 @@ jdbc_convert_object_to_datum(Oid pgtype, int32 pgtypmod, jobject obj)
+  * jdbc_destroy_jvm Shuts down the JVM.
+  */
+ static void
+-jdbc_destroy_jvm()
++jdbc_destroy_jvm(int code, Datum arg)
+ {
++	(void) code;
++	(void) arg;
++
+ 	jint res;
+ 
+ 	ereport(DEBUG3, (errmsg("In jdbc_destroy_jvm")));
