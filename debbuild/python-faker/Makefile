@@ -21,7 +21,7 @@ setup: clean-artifacts check-src
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	case " $(SUPPORTED_CODENAMES) " in *" $$OS_CODENAME "*) ;; *) echo "unsupported suite: $$OS_CODENAME (expected: $(SUPPORTED_CODENAMES))"; exit 1;; esac; \
-	sed -i "1s/1PIGSTY)/1PIGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/1PGSTY)/1PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build: setup
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
