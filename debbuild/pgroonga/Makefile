@@ -9,7 +9,7 @@ setup:
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog; \
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog; \
 	if [ "$$OS_CODENAME" = "resolute" ]; then \
 		sed -i 's/libgroonga0 (>= 15.1.7)/libgroonga0t64 | libgroonga0 (>= 15.1.7)/' build/debian/control.in; \
 	fi
