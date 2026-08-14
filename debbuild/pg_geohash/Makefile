@@ -6,6 +6,9 @@ TARBALL := pg_geohash-1.0.tar.gz
 setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	mv build/pg_geohash-1.0.sql build/pg_geohash--1.0.sql
+	sed -i 's/pg_geohash-1.0.sql/pg_geohash--1.0.sql/' build/Makefile
+	sed -i -e '/^PGXS :=/i PG_CONFIG ?= pg_config' -e 's/pg_config --pgxs/$$(PG_CONFIG) --pgxs/' build/Makefile
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
@@ -25,5 +28,3 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
-
