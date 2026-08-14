@@ -1,3 +1,9 @@
+pg-geohash (1.0-2PGSTY) unstable; urgency=medium
+
+  * Rebuild with corrected license metadata.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 14 Aug 2026 11:03:20 +0800
+
 pg-geohash (1.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
