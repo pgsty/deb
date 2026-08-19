@@ -2,10 +2,10 @@ Source: pg-base58
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), clang, rust-toolchain (>= 1.96.0), cargo-pgrx-0191
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/Fell-x27/pg_base58
+Homepage: https://github.com/Vonng/pg_base58
 
 Package: postgresql-PGVERSION-pg-base58
 Architecture: any

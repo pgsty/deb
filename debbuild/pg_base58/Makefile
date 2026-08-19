@@ -8,6 +8,7 @@ PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.1
 CRATE_DIR := .
 SOURCE_PATCH := patches/pg-base58-0.0.1.patch
+PGRX_HOME := $(CURDIR)/$(BUILD_DIR)/.pgrx-0191
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -33,7 +34,7 @@ build: building packaging
 
 building: check-pgrx
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
-	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
+	PGRX_HOME="$(PGRX_HOME)" cargo-pgrx-0191 init \
 	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
 	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
 	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
@@ -41,27 +42,29 @@ building: check-pgrx
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.before
-	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=true cargo fetch --locked
+	cd $(BUILD_DIR)/$(CRATE_DIR) && CARGO_NET_GIT_FETCH_WITH_CLI=true rust-toolchain cargo fetch --locked
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
+	set -e; \
 	for PG_VERSION in $(PG_VERSIONS); do \
-	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+	    PGRX_HOME="$(PGRX_HOME)" CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=true cargo-pgrx-0191 package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
 
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.after && cmp .pgrx-locks.before .pgrx-locks.after && rm -f .pgrx-locks.before .pgrx-locks.after
 
 check-pgrx:
-	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
+	@CURRENT=$$(cargo-pgrx-0191 --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
-	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
+	    echo "cargo-pgrx-0191 $(PGRX_VERSION) is required" >&2; \
 	    exit 1; \
-	fi
+	fi; \
+	RUST_VERSION=$$(rust-toolchain rustc --version 2>/dev/null | awk '{print $$2}'); \
+	if [ "$$(printf '%s\n' 1.96.0 "$$RUST_VERSION" | sort -V | head -1)" != "1.96.0" ]; then echo "rust-toolchain 1.96 or newer is required, found $$RUST_VERSION" >&2; exit 1; fi
 
 packaging:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
-	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
