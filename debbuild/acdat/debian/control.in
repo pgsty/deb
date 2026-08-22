@@ -1,0 +1,17 @@
+Source: acdat
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Vonng/ac
+
+Package: postgresql-PGVERSION-acdat
+Architecture: any
+Provides: postgresql-acdat
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: compiled multi-pattern matching for PostgreSQL
+ acdat compiles large exact-literal dictionaries into immutable Aho-Corasick
+ Double-Array machines. It scans text or bytea values once to test for matches,
+ enumerate overlapping hits, or perform deterministic replacement.

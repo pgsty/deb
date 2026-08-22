@@ -1,0 +1,6 @@
+acdat (0.1.0-1PGSTY) unstable; urgency=medium
+
+  * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>.
+  * Build for PostgreSQL 14 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 22 Aug 2026 23:44:00 +0800
