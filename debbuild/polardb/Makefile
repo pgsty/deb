@@ -2,7 +2,7 @@
 
 all: setup build verify move
 
-POLAR_VERSION := 17.10.1.0
+POLAR_VERSION := 17.11.1.0
 TARBALL := polardb-for-postgresql-$(POLAR_VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build-postgres
@@ -11,7 +11,7 @@ PG_MAJOR := 17
 DEB_PACKAGE := polardb-$(PG_MAJOR)
 INSTALL_PREFIX := /usr/polar-$(PG_MAJOR)
 PG_PORT := 5432
-POLAR_COMMIT := accf02e2
+POLAR_COMMIT := ff510dfc
 POLAR_BRANCH := POLARDB_17_STABLE
 POLARSTORE_VERSION := 1.2.42
 DEB_RELEASE ?= 1PGSTY
@@ -64,7 +64,7 @@ check-build-deps:
 setup: check-src check-release check-platform
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	patch -d $(BUILD_DIR) -p1 < polardb-17.10.1.0.patch
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 < polardb-17.11.1.0.patch
 	sed -i.bak -e "s|^code_commit=.*|code_commit=\$${POLAR_COMMIT:-$(POLAR_COMMIT)}|" $(BUILD_DIR)/package/debian/build-deb.sh
 	sed -i.bak -e "s|^code_branch=.*|code_branch=\$${POLAR_BRANCH:-$(POLAR_BRANCH)}|" $(BUILD_DIR)/package/debian/build-deb.sh
 	sed -i.bak -e "s|^polar_commit=.*|polar_commit=\$${POLAR_COMMIT:-$(POLAR_COMMIT)}|" $(BUILD_DIR)/package/debian/build-deb.sh
@@ -78,7 +78,6 @@ setup: check-src check-release check-platform
 	rm -f $(BUILD_DIR)/build.sh.bak
 	sed -i.bak -e 's|^Package: .*|Package: $(DEB_PACKAGE)|' $(BUILD_DIR)/package/debian/control
 	sed -i.bak -e 's|^Depends: |Depends: adduser, tzdata, |' $(BUILD_DIR)/package/debian/control
-	sed -i.bak -e 's,libicu76,libicu76 | libicu78,' $(BUILD_DIR)/package/debian/control
 	rm -f $(BUILD_DIR)/package/debian/control.bak
 	cp debian/copyright $(BUILD_DIR)/package/debian/copyright
 	awk '{ print; if ($$0 == "mkdir -p $${pkgname}/DEBIAN") { \
@@ -106,7 +105,7 @@ setup: check-src check-release check-platform
 	grep -q '^Depends: adduser, tzdata,' $(BUILD_DIR)/package/debian/control || (echo "control adduser/tzdata injection FAILED"; exit 1)
 	grep -Fq 'pgsty_release=$${PGSTY_RELEASE:-' $(BUILD_DIR)/package/debian/build-deb.sh || (echo "PGSTY release injection FAILED"; exit 1)
 	grep -q 'package_release=$${pgsty_release}~$${distcodename}' $(BUILD_DIR)/package/debian/build-deb.sh || (echo "PGSTY package release injection FAILED"; exit 1)
-	awk '/^dpkg-deb --build --root-owner-group/ { print "mkdir -p $${pkgname}/usr/share/doc/$${debpkgname}"; print "cp ./copyright $${pkgname}/usr/share/doc/$${debpkgname}/copyright"; print "cp ../../../COPYRIGHT ../../../LICENSE $${pkgname}/usr/share/doc/$${debpkgname}/" } 1' \
+	awk '/^dpkg-deb --build --root-owner-group/ { print "mkdir -p $${pkgname}/usr/share/doc/$${debpkgname}"; print "cp ./copyright $${pkgname}/usr/share/doc/$${debpkgname}/copyright"; print "cp ../../COPYRIGHT ../../LICENSE $${pkgname}/usr/share/doc/$${debpkgname}/" } 1' \
 		$(BUILD_DIR)/package/debian/build-deb.sh > $(BUILD_DIR)/package/debian/build-deb.sh.new
 	mv $(BUILD_DIR)/package/debian/build-deb.sh.new $(BUILD_DIR)/package/debian/build-deb.sh
 	chmod +x $(BUILD_DIR)/package/debian/build-deb.sh

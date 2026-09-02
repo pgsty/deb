@@ -1,3 +1,4 @@
+# Rebased with --fuzz=0 on PolarDB v17.11.1.0 (ff510dfc).
 diff --git a/package/debian/build-deb.sh b/package/debian/build-deb.sh
 --- a/package/debian/build-deb.sh
 +++ b/package/debian/build-deb.sh
