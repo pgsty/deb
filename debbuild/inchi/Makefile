@@ -1,8 +1,8 @@
 all: check-src setup build move
 
-DSC_FILE := inchi_1.07.3+dfsg-1.dsc
-ORIG_FILE := inchi_1.07.3+dfsg.orig.tar.xz
-DEBIAN_FILE := inchi_1.07.3+dfsg-1.debian.tar.xz
+DSC_FILE := inchi_1.07.5+dfsg-1.dsc
+ORIG_FILE := inchi_1.07.5+dfsg.orig.tar.xz
+DEBIAN_FILE := inchi_1.07.5+dfsg-1.debian.tar.xz
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 SOURCE_DSC ?= ../SOURCES/$(DSC_FILE)
@@ -19,7 +19,7 @@ setup: check-src
 	dpkg-source -x "$(SOURCE_DSC)" $(BUILD_DIR)
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/1.07.3+dfsg-1)/1.07.3+dfsg-1PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
+	sed -i "1s/1.07.5+dfsg-1)/1.07.5+dfsg-1PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
 	if [ "$$OS_CODENAME" = "noble" ]; then \
 		sed -i '2iexport DEB_BUILD_MAINT_OPTIONS = optimize=-lto' $(BUILD_DIR)/debian/rules; \
 	fi
