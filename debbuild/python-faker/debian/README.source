@@ -1,15 +1,17 @@
 Pigsty Python Faker backport
 ============================
 
-This recipe is based on Ubuntu Noble's official faker 22.0.0-1 source package:
+This recipe keeps the minimal runtime-only packaging model originally based on
+Ubuntu Noble's faker 22.0.0-1 source package:
 
   https://launchpad.net/ubuntu/+source/faker/22.0.0-1
 
-It uses the official faker_22.0.0.orig.tar.gz unchanged.  The recipe keeps the
-official pybuild packaging model but builds only python3-fake-factory, which is
-the runtime package required by postgresql-*-faker.  The separate faker CLI
-package, its generated manual page, and upstream's large optional pytest stack
-are intentionally omitted from this runtime-only backport.
+It now uses the official Faker 40.37.0 tag archive unchanged.  The recipe keeps
+the pybuild packaging model but builds only python3-fake-factory, which is the
+runtime package required by postgresql-*-faker.  The separate faker CLI package
+and upstream's large optional pytest stack are intentionally omitted from this
+runtime-only backport.  Faker 40.37.0 requires Python 3.10 or newer and no
+longer requires python-dateutil at runtime.
 
 The Makefile permits builds only on bookworm and jammy and appends the suite to
 the Debian version.  Trixie, Noble, and Resolute must continue to use their

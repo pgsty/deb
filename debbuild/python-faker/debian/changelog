@@ -1,3 +1,11 @@
+faker (40.37.0-1PGSTY) unstable; urgency=medium
+
+  * Update the Bookworm and Jammy backport to Faker 40.37.0.
+  * Drop the obsolete python3-dateutil runtime dependency.
+  * Require Python 3.10 or newer, matching upstream.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 15:38:00 +0800
+
 faker (22.0.0-1PGSTY) unstable; urgency=medium
 
   * Backport the Ubuntu Noble runtime package for Bookworm and Jammy.
