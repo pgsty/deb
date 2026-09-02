@@ -1,3 +1,9 @@
+pg-auth-mon (5.0-1PGSTY) unstable; urgency=medium
+
+  * Bump distribution package to 5.0 (extension version remains 1.1).
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 12:30:41 +0800
+
 pg-auth-mon (3.0-1PGSTY) unstable; urgency=low
 
   * add pg18 support
