@@ -1,3 +1,11 @@
+pg-local-cache (2.0.1-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the official pg_local_cache 2.0.1 release.
+  * Retain both 1.x local_cache.get overloads as C compatibility entry points.
+  * Preserve old function OIDs, ACLs, comments, attributes and dependencies.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 06:15:00 +0800
+
 pg-local-cache (1.3.0-1PGSTY) unstable; urgency=medium
 
   * Add package for upstream PGXN 1.3.0 and PostgreSQL 14 through 18.
