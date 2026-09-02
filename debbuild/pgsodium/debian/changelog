@@ -1,3 +1,11 @@
+pgsodium (3.1.11-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 3.1.11 with the mask_role security fix and IPcrypt.
+  * Link a symbol-prefixed private libsodium 1.0.22 static archive so the
+    system libsodium ABI and pg_vault remain isolated.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 07:20:00 +0800
+
 pgsodium (3.1.9-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
