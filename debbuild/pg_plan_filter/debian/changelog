@@ -1,3 +1,9 @@
+pg-plan-filter (1.0.0-1PGSTY) unstable; urgency=medium
+
+  * Bump to official v1.0.0 source.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:57:58 +0800
+
 pg-plan-filter (0.0.1-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
