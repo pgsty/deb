@@ -1,3 +1,9 @@
+pg-fts (1.5.3-1PGSTY) unstable; urgency=medium
+
+  * Bump to 1.5.3.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 12:56:57 +0800
+
 pg-fts (0.2.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for upstream PGXN 0.2.0.
