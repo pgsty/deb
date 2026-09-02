@@ -1,6 +1,6 @@
 diff --git a/Cargo.lock b/Cargo.lock
 new file mode 100644
-index 0000000..69b0333
+index 0000000000000000000000000000000000000000..2b85a261bd238a0e0653bc19c525e5bb92577ae7
 --- /dev/null
 +++ b/Cargo.lock
 @@ -0,0 +1,4587 @@
@@ -2142,7 +2142,7 @@ index 0000000..69b0333
 +
 +[[package]]
 +name = "pg_trickle"
-+version = "0.90.0"
++version = "0.92.0"
 +dependencies = [
 + "aho-corasick",
 + "chrono",
@@ -4592,7 +4592,7 @@ index 0000000..69b0333
 +source = "registry+https://github.com/rust-lang/crates.io-index"
 +checksum = "b8848ee67ecc8aedbaf3e4122217aff892639231befc6a1b58d29fff4c2cabaa"
 diff --git a/Cargo.toml b/Cargo.toml
-index 3118624..b4c7caa 100644
+index f15aea72990cb937e3b53654f05fc141ee966fce..f4f5bf4d6d28ae7997b0970f2086e8782b5a7571 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
 @@ -15,7 +15,7 @@ members = ["."]
@@ -4647,28 +4647,28 @@ index 3118624..b4c7caa 100644
  
 diff --git a/PACKAGING-UPGRADE.md b/PACKAGING-UPGRADE.md
 new file mode 100644
-index 0000000..a535fef
+index 0000000000000000000000000000000000000000..cd7e265e512bdde26e2ba8af245d6e02782e632b
 --- /dev/null
 +++ b/PACKAGING-UPGRADE.md
-@@ -0,0 +1,98 @@
-+# pg_trickle 0.81.0 to 0.90.0
+@@ -0,0 +1,103 @@
++# pg_trickle 0.81.0 to 0.92.0
 +
-+The package carries all 27 adjacent extension-update edges from 0.81.0 to
-+0.90.0. Do not treat this as a single unattended `ALTER EXTENSION` operation.
++The package carries all 29 adjacent extension-update edges from 0.81.0 to
++0.92.0. Do not treat this as a single unattended `ALTER EXTENSION` operation.
 +
 +## Continuous write outage from 0.81.0 through V2 recreation
 +
-+The package contains one 0.90.0 shared library for every intermediate SQL
++The package contains one 0.92.0 shared library for every intermediate SQL
 +catalog. Stop application writes and scheduling before replacing the 0.81.0
-+package, and keep them stopped until the SQL catalog is 0.90.0, the V1 graph is
++package, and keep them stopped until the SQL catalog is 0.92.0, the V1 graph is
 +dropped, the V2 graph is recreated, and consumers are resnapshotted.
 +
 +In particular, the 0.82.0 to 0.83.0 edge cannot rebuild dynamic CDC functions
 +inside `ALTER EXTENSION` because they are intentionally not extension members.
-+Do not call `rebuild_cdc_triggers()` at 0.83.0: the 0.90.0 writer references V2
++Do not call `rebuild_cdc_triggers()` at 0.83.0: the 0.92.0 writer references V2
 +APIs and storage contracts that do not exist at that intermediate version.
 +Proceed through adjacent SQL edges under the same write outage. Final DAG
-+recreation at matching runtime/catalog 0.90.0 creates current V2 writers and
++recreation at matching runtime/catalog 0.92.0 creates current V2 writers and
 +fresh buffers. `rebuild_cdc_triggers()` itself is restricted to base-table
 +dependencies so it never mistakes `changes_pgt_<pgt_id>` propagation buffers
 +for OID-named base-table buffers.
@@ -4677,7 +4677,7 @@ index 0000000..a535fef
 +`create_stream_table` and `create_stream_table_if_not_exists` `CALLED ON NULL
 +INPUT`, and keeps all three creation/alteration entry points `SECURITY DEFINER`,
 +pinned to `pgtrickle, pg_catalog, pg_temp`, and revoked from `PUBLIC`, matching
-+a fresh 0.90.0 install. These attributes are required because their optional
++a fresh 0.92.0 install. These attributes are required because their optional
 +defaults are NULL and the runtime validates the saved security-definer search
 +path.
 +
@@ -4686,7 +4686,7 @@ index 0000000..a535fef
 +relations are deliberately not converted in place and are rejected by the V2
 +runtime.
 +
-+For this package, one 0.90.0 shared library accompanies every adjacent SQL
++For this package, one 0.92.0 shared library accompanies every adjacent SQL
 +edge. Use this tested order for the breaking boundary:
 +
 +1. Take a tested physical backup. Disable scheduling cluster-wide, drain
@@ -4707,7 +4707,7 @@ index 0000000..a535fef
 +   `DROP ... RESTRICT`; non-default owner/config/comment/view metadata is a
 +   deliberate fail-closed condition. Resolve and explicitly restore such state
 +   rather than using `CASCADE`.
-+2. Install the 0.90.0 package, restart PostgreSQL, and run adjacent SQL edges
++2. Install the 0.92.0 package, restart PostgreSQL, and run adjacent SQL edges
 +   through 0.87.15 without executing intermediate DML or CDC writers.
 +3. Advance to 0.87.16 and verify that V1 state fails closed without changing
 +   source or stream data. Advance to 0.87.17, register every
@@ -4718,10 +4718,11 @@ index 0000000..a535fef
 +   `pg_trickle_dump` and `pg_dump`. The recreation preflight must report both
 +   the still-present V1 graph and non-terminal consumers as incompatible.
 +4. Keep writes and scheduling paused and advance the SQL catalog through
-+   0.88.0, 0.89.0, and 0.90.0. Do not call stream-table lifecycle APIs while
-+   the 0.90.0 runtime and an intermediate SQL catalog differ. The 0.90.0
-+   runtime's drop path requires catalog objects introduced by 0.89.0.
-+5. With runtime and SQL catalog both at 0.90.0, detach exported external
++   0.88.0, 0.89.0, 0.90.0, 0.91.0, and 0.92.0. Do not call stream-table
++   lifecycle APIs while the 0.92.0 runtime and an intermediate SQL catalog
++   differ. The 0.92.0 runtime's drop path requires catalog objects introduced
++   by 0.89.0.
++5. With runtime and SQL catalog both at 0.92.0, detach exported external
 +   dependents and drop V1 stream tables in reverse dependency order. Never
 +   rewrite or cast V1 identifiers, and never reuse old change buffers. Verify
 +   that source tables remain and the old graph is absent. The preflight is
@@ -4741,16 +4742,20 @@ index 0000000..a535fef
 +   preflight to pass on the new V2 graph. Assert that every new dependency has
 +   a matching V2 `(row_identity_version,row_probe_version)=(2,1)` buffer and
 +   tracking entry, with no orphaned V1 key.
-+7. Re-enable writes and scheduling only after every resnapshot, then verify the
++7. Keep the capture instance quiesced until `preflight_upgrade()` and
++   `validate_recovery()` pass. A restored or cloned database whose capture
++   identity changed remains quarantined; use the superuser-only
++   `recover_capture_instance()` workflow only for an intentional adoption.
++   Re-enable writes and scheduling only after every resnapshot, then verify the
 +   loaded library version, `pg_extension.extversion`, source and derived data,
 +   restart, and a tested dump/restore.
 +
 +Writes made during DAG recreation are not replayed. Keep the scheduler disabled
 +until every affected stream table and external consumer has been recreated and
-+resnapshotted. Consult the v0.90.0 upstream `docs/UPGRADING.md` for the complete
++resnapshotted. Consult the v0.92.0 upstream `docs/UPGRADING.md` for the complete
 +preflight, inventory, rollback, and privacy requirements.
 diff --git a/build.rs b/build.rs
-index 96ae00a..2885160 100644
+index 96ae00a098200af335b6b9d2c0135bd0a1b1abd9..288516009789eec4092738c9c7d38eeff42f3ce5 100644
 --- a/build.rs
 +++ b/build.rs
 @@ -23,6 +23,17 @@ fn main() {
@@ -4772,7 +4777,7 @@ index 96ae00a..2885160 100644
          .arg(&script)
          .current_dir(manifest_path)
 diff --git a/sql/pg_trickle--0.81.1--0.82.0.sql b/sql/pg_trickle--0.81.1--0.82.0.sql
-index eee308c..263063e 100644
+index eee308c9878c01386d03965ea16195567e5de2b9..263063ea6927160de0f29a71115f56b795c7a4d9 100644
 --- a/sql/pg_trickle--0.81.1--0.82.0.sql
 +++ b/sql/pg_trickle--0.81.1--0.82.0.sql
 @@ -2,9 +2,102 @@
@@ -5149,7 +5154,7 @@ index eee308c..263063e 100644
      buffer_key       TEXT PRIMARY KEY,
      source_kind      TEXT NOT NULL CHECK (source_kind IN ('BASE', 'STREAM_TABLE')),
 diff --git a/sql/pg_trickle--0.82.0--0.83.0.sql b/sql/pg_trickle--0.82.0--0.83.0.sql
-index 77c175f..e62e0df 100644
+index 77c175f19e3bb12a2d006597e1ad3e395db14c7b..e62e0dfc46c288c2383dc5588e55f3d4aeb1b91b 100644
 --- a/sql/pg_trickle--0.82.0--0.83.0.sql
 +++ b/sql/pg_trickle--0.82.0--0.83.0.sql
 @@ -1,8 +1,9 @@
@@ -5235,7 +5240,7 @@ index 77c175f..e62e0df 100644
  INSERT INTO pgtrickle.pgt_schema_version (version, description)
  VALUES (
 diff --git a/sql/pg_trickle--0.84.0--0.85.0.sql b/sql/pg_trickle--0.84.0--0.85.0.sql
-index 0374b44..68d462b 100644
+index 0374b44b14c23dd9be1bcb9cb96842134bf3ceb2..68d462b3ed0515fb369252f6f432cef96ec09dd4 100644
 --- a/sql/pg_trickle--0.84.0--0.85.0.sql
 +++ b/sql/pg_trickle--0.84.0--0.85.0.sql
 @@ -55,10 +55,10 @@ BEGIN
@@ -5252,7 +5257,7 @@ index 0374b44..68d462b 100644
      END IF;
      IF NOT EXISTS (
 diff --git a/sql/pg_trickle--0.85.0--0.86.0.sql b/sql/pg_trickle--0.85.0--0.86.0.sql
-index 5b6ec8e..5eb877d 100644
+index 5b6ec8eea78d6d18b9ea925801ecb0e48c06eb34..5eb877de693bc6ffca0344a48e8b5136d79108e3 100644
 --- a/sql/pg_trickle--0.85.0--0.86.0.sql
 +++ b/sql/pg_trickle--0.85.0--0.86.0.sql
 @@ -72,6 +72,64 @@ LEFT JOIN pgtrickle.pgt_refresh_summary s ON s.pgt_id = st.pgt_id
@@ -5477,7 +5482,7 @@ index 5b6ec8e..5eb877d 100644
 -GRANT EXECUTE ON FUNCTION pgtrickle.get_refresh_history(text, integer) TO PUBLIC;
 -GRANT EXECUTE ON FUNCTION pgtrickle.preview_stream_table(text, text, text, text) TO PUBLIC;
 diff --git a/sql/pg_trickle--0.87.12--0.87.13.sql b/sql/pg_trickle--0.87.12--0.87.13.sql
-index 0003ed4..ac1692c 100644
+index 0003ed4cf769a04f218da570c92f9375c3f801ff..ac1692cf65ec73e1aa78dca279da9914e2c2aae1 100644
 --- a/sql/pg_trickle--0.87.12--0.87.13.sql
 +++ b/sql/pg_trickle--0.87.12--0.87.13.sql
 @@ -48,6 +48,12 @@ ALTER TABLE pgtrickle.pgt_outbox_config
@@ -5494,7 +5499,7 @@ index 0003ed4..ac1692c 100644
      SECURITY DEFINER; -- nosemgrep: sql.security-definer.present — external pg_tide calls run as the captured caller.
  ALTER FUNCTION pgtrickle.attach_outbox(text, integer, integer)
 diff --git a/sql/pg_trickle--0.87.14--0.87.15.sql b/sql/pg_trickle--0.87.14--0.87.15.sql
-index a3f5c10..f2efd19 100644
+index a3f5c10da83db304b3545029b0f89d9cdaea01fe..f2efd19354f2173c44f0277d995cd927188d6933 100644
 --- a/sql/pg_trickle--0.87.14--0.87.15.sql
 +++ b/sql/pg_trickle--0.87.14--0.87.15.sql
 @@ -15,3 +15,8 @@ CREATE OR REPLACE FUNCTION pgtrickle."row_probe_v1"(
@@ -5507,7 +5512,7 @@ index a3f5c10..f2efd19 100644
 +REVOKE EXECUTE ON FUNCTION pgtrickle.encode_row_id_v2(text, anyelement) FROM PUBLIC;
 +REVOKE EXECUTE ON FUNCTION pgtrickle.row_probe_v1(bytea) FROM PUBLIC;
 diff --git a/sql/pg_trickle--0.87.16--0.87.17.sql b/sql/pg_trickle--0.87.16--0.87.17.sql
-index 33ec207..9f8c451 100644
+index 33ec2075b31abeba0cd50df432ca127bb359a0e5..9f8c451a7c468c43df75efec6c73c62268256a03 100644
 --- a/sql/pg_trickle--0.87.16--0.87.17.sql
 +++ b/sql/pg_trickle--0.87.16--0.87.17.sql
 @@ -168,7 +168,7 @@ $row_identity_v2_acknowledge_inventory$;
@@ -5582,7 +5587,7 @@ index 33ec207..9f8c451 100644
          )
      );
 diff --git a/sql/pg_trickle--0.87.6--0.87.7.sql b/sql/pg_trickle--0.87.6--0.87.7.sql
-index 2df2001..398c640 100644
+index 2df2001351afefdff2b07d36a7b4161a3be7ece7..398c640a636e159c93a3d87b802cc7258cab6629 100644
 --- a/sql/pg_trickle--0.87.6--0.87.7.sql
 +++ b/sql/pg_trickle--0.87.6--0.87.7.sql
 @@ -41,8 +41,3 @@ WHERE c.oid = st.pgt_relid
@@ -5595,7 +5600,7 @@ index 2df2001..398c640 100644
 -    'already expanded). Set at CREATE and on any ALTER that changes the '
 -    'query; preserved by configuration-only ALTERs and ownership transfer.';
 diff --git a/sql/pg_trickle--0.89.0--0.90.0.sql b/sql/pg_trickle--0.89.0--0.90.0.sql
-index ceb5b7a..f931fb5 100644
+index ceb5b7aff61eaaa7922aa73d0980763853ef5e01..f931fb5b056687e53382fa4fa9b2e1e69771fd90 100644
 --- a/sql/pg_trickle--0.89.0--0.90.0.sql
 +++ b/sql/pg_trickle--0.89.0--0.90.0.sql
 @@ -1,5 +1,89 @@
@@ -6143,7 +6148,7 @@ index ceb5b7a..f931fb5 100644
  INSERT INTO pgtrickle.pgt_schema_version (version, description)
  VALUES ('0.90.0',
 diff --git a/src/api/diagnostics.rs b/src/api/diagnostics.rs
-index d32cd9a..5482f61 100644
+index d32cd9a9c5dab1fdfe893ee1d104c404d51c56f1..5482f612b459b6c64587b5e9d7ac2485c99366e8 100644
 --- a/src/api/diagnostics.rs
 +++ b/src/api/diagnostics.rs
 @@ -335,7 +335,7 @@ pub(super) fn rebuild_cdc_triggers() -> &'static str {
@@ -6156,10 +6161,10 @@ index d32cd9a..5482f61 100644
                  &[],
              )
 diff --git a/src/lib.rs b/src/lib.rs
-index 6da8ac5..e548a3b 100644
+index 575cd9d72965ad4c311b0d157a6ae771c3df45e2..962374568fbe357f21199069fb9b639cc4e77762 100644
 --- a/src/lib.rs
 +++ b/src/lib.rs
-@@ -1025,7 +1025,7 @@ $row_identity_v2_acknowledge_inventory$;
+@@ -1049,7 +1049,7 @@ $row_identity_v2_acknowledge_inventory$;
  
  CREATE OR REPLACE FUNCTION pgtrickle.row_identity_v2_acknowledge_consumer(
      p_consumer_id BIGINT,
@@ -6168,7 +6173,7 @@ index 6da8ac5..e548a3b 100644
  )
  RETURNS VOID
  LANGUAGE plpgsql
-@@ -1038,8 +1038,8 @@ BEGIN
+@@ -1062,8 +1062,8 @@ BEGIN
          RAISE EXCEPTION 'pg_trickle: row-identity inventory requires the extension owner or superuser'
              USING ERRCODE = '42501';
      END IF;
@@ -6179,7 +6184,7 @@ index 6da8ac5..e548a3b 100644
              USING ERRCODE = '22023';
      END IF;
      UPDATE pgtrickle.pgt_row_identity_v2_consumers
-@@ -1108,7 +1108,7 @@ DECLARE
+@@ -1132,7 +1132,7 @@ DECLARE
      v_max_index_bytes BIGINT;
      v_scheduler_paused BOOLEAN;
      v_inventory_ack BOOLEAN;
@@ -6188,7 +6193,7 @@ index 6da8ac5..e548a3b 100644
      v_change_schema TEXT := COALESCE(
          current_setting('pg_trickle.change_buffer_schema', TRUE),
          'pgtrickle_changes'
-@@ -1222,9 +1222,10 @@ BEGIN
+@@ -1246,9 +1246,10 @@ BEGIN
        INTO v_inventory_ack
        FROM pgtrickle.pgt_row_identity_v2_inventory
       WHERE inventory_id;
@@ -6201,7 +6206,7 @@ index 6da8ac5..e548a3b 100644
  
      v_check := jsonb_build_object(
          'check', 'SUPPORTED_POSTGRESQL_MAJOR', 'ok', v_server_major = 18,
-@@ -1264,8 +1265,8 @@ BEGIN
+@@ -1288,8 +1289,8 @@ BEGIN
      ));
      v_checks := array_append(v_checks, jsonb_build_object(
          'check', 'EXTERNAL_CONSUMER_INVENTORY',
@@ -6212,7 +6217,7 @@ index 6da8ac5..e548a3b 100644
      ));
  
      SELECT jsonb_agg(value) INTO v_check_list FROM unnest(v_checks) AS checks(value);
-@@ -1278,12 +1279,12 @@ BEGIN
+@@ -1302,12 +1303,12 @@ BEGIN
          'release', '0.87.17',
          'checks', COALESCE(v_check_list, '[]'::JSONB),
          'instructions', jsonb_build_array(

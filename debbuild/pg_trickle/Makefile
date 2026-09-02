@@ -1,6 +1,6 @@
 all: setup build move
 
-VERSION := 0.90.0
+VERSION := 0.92.0
 TARBALL := pg_trickle-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
