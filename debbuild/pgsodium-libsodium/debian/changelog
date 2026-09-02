@@ -1,0 +1,6 @@
+pgsodium-libsodium (1.0.22-1PGSTY) unstable; urgency=medium
+
+  * Package libsodium 1.0.22 as a private, symbol-prefixed PIC static archive
+    for pgsodium without replacing the system libsodium ABI.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 07:15:00 +0800

@@ -1,0 +1,50 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = optimize=-lto
+
+PRIVATE_DIR := $(CURDIR)/debian/private
+PACKAGE_DIR := $(CURDIR)/debian/pgsodium-libsodium-dev
+STATIC_LIB := $(CURDIR)/src/libsodium/.libs/libsodium.a
+PRIVATE_PREFIX := pgsodium_private_
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- --disable-shared --enable-static --with-pic
+
+override_dh_auto_build:
+	dh_auto_build
+	mkdir -p $(PRIVATE_DIR)
+	LC_ALL=C nm -g --defined-only -P $(STATIC_LIB) | \
+		awk '$$1 ~ /^[A-Za-z_][A-Za-z0-9_]*$$/ { print $$1 }' | \
+		sort -u > $(PRIVATE_DIR)/symbols.txt
+	test "$$(wc -l < $(PRIVATE_DIR)/symbols.txt)" -gt 700
+	awk '{ print $$1, "$(PRIVATE_PREFIX)" $$1 }' \
+		$(PRIVATE_DIR)/symbols.txt > $(PRIVATE_DIR)/redefine.syms
+	objcopy --redefine-syms=$(PRIVATE_DIR)/redefine.syms \
+		$(STATIC_LIB) $(PRIVATE_DIR)/libsodium-pgsodium.a
+	{ \
+		echo '#ifndef PGSODIUM_LIBSODIUM_SYMBOLS_H'; \
+		echo '#define PGSODIUM_LIBSODIUM_SYMBOLS_H'; \
+		awk '{ print "#define " $$1 " " $$2 }' $(PRIVATE_DIR)/redefine.syms; \
+		echo '#endif'; \
+	} > $(PRIVATE_DIR)/pgsodium-libsodium-symbols.h
+	LC_ALL=C nm -g --defined-only -P $(PRIVATE_DIR)/libsodium-pgsodium.a | \
+		awk '$$1 ~ /^[A-Za-z_][A-Za-z0-9_]*$$/ { print $$1 }' | \
+		awk '!/^$(PRIVATE_PREFIX)/ { bad = 1; print > "/dev/stderr" } END { exit bad }'
+
+override_dh_auto_test:
+	dh_auto_test
+
+override_dh_auto_install:
+	install -d $(PACKAGE_DIR)/usr/include/pgsodium-libsodium
+	install -d $(PACKAGE_DIR)/usr/lib/pgsodium-libsodium
+	cp -a src/libsodium/include/sodium \
+		$(PACKAGE_DIR)/usr/include/pgsodium-libsodium/
+	install -m 0644 src/libsodium/include/sodium.h \
+		$(PACKAGE_DIR)/usr/include/pgsodium-libsodium/sodium.h
+	install -m 0644 $(PRIVATE_DIR)/pgsodium-libsodium-symbols.h \
+		$(PACKAGE_DIR)/usr/include/pgsodium-libsodium/
+	install -m 0644 $(PRIVATE_DIR)/libsodium-pgsodium.a \
+		$(PACKAGE_DIR)/usr/lib/pgsodium-libsodium/
