@@ -1,5 +1,7 @@
-pg-ash (1.2-1PGSTY) unstable; urgency=medium
+pg-ash (1.5-1PGSTY) unstable; urgency=medium
 
-  * https://github.com/NikolayS/pg_ash/releases/tag/v1.2
+  * Upgrade to upstream release v1.5.
+  * Package the complete SQL upgrade chain through 1.5.
+  * Let the installer create its ash schema, as required by upstream SQL.
 
- -- Ruohang Feng <rh@vonng.com>  Wed, 18 Feb 2026 12:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 17:30:00 +0800
