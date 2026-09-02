@@ -1,0 +1,49 @@
+diff --git a/Makefile b/Makefile
+index 9a4175d..d75e86c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,6 +2,9 @@ MODULE_big = pg_crash
+ OBJS = pg_crash.o $(WIN32RES)
+ PGFILEDESC = "pg_crash"
+ 
++EXTENSION = pg_crash
++DATA = pg_crash--0.3.sql pg_crash--1.0.sql pg_crash--1.0--0.3.sql
++
+ PG_CONFIG = pg_config
+ PGXS := $(shell $(PG_CONFIG) --pgxs)
+ include $(PGXS)
+diff --git a/pg_crash--0.3.sql b/pg_crash--0.3.sql
+new file mode 100644
+index 0000000..7704f8b
+--- /dev/null
++++ b/pg_crash--0.3.sql
+@@ -0,0 +1,2 @@
++-- pg_crash is a shared_preload_libraries module and defines no SQL objects.
++-- This empty script keeps extension catalog and pg_dump compatibility.
+diff --git a/pg_crash--1.0--0.3.sql b/pg_crash--1.0--0.3.sql
+new file mode 100644
+index 0000000..4e3ab9a
+--- /dev/null
++++ b/pg_crash--1.0--0.3.sql
+@@ -0,0 +1,2 @@
++-- The historical Pigsty 1.0 package defined no SQL objects.
++-- Preserve the existing extension catalog row while adopting upstream 0.3.
+diff --git a/pg_crash--1.0.sql b/pg_crash--1.0.sql
+new file mode 100644
+index 0000000..8e00a0e
+--- /dev/null
++++ b/pg_crash--1.0.sql
+@@ -0,0 +1,2 @@
++-- Compatibility script for catalogs created with the historical Pigsty 1.0 package.
++-- pg_crash is a shared_preload_libraries module and defines no SQL objects.
+diff --git a/pg_crash.control b/pg_crash.control
+new file mode 100644
+index 0000000..226fa1a
+--- /dev/null
++++ b/pg_crash.control
+@@ -0,0 +1,5 @@
++# Compatibility metadata for the historically extension-shaped Pigsty package.
++comment = 'Send configured signals to PostgreSQL processes for failure testing.'
++default_version = '0.3'
++module_pathname = '$libdir/pg_crash'
++relocatable = true
