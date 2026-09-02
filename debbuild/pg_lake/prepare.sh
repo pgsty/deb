@@ -4,9 +4,9 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
-VERSION="${VERSION:-3.4.0}"
+VERSION="${VERSION:-3.4.3}"
 UPSTREAM_REPO="${UPSTREAM_REPO:-https://github.com/Snowflake-Labs/pg_lake.git}"
-EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-9242798331c415358490587670e4b81a9d4eb4e7}"
+EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-1ac40b5a90252422a29f9a8a8d3e568619fa27e6}"
 EXPECTED_AVRO_COMMIT="${EXPECTED_AVRO_COMMIT:-2b11dba4fb28c7bb6ff08b40509a6a71fcaf4c21}"
 EXPECTED_DUCKDB_COMMIT="${EXPECTED_DUCKDB_COMMIT:-6ddac802ffa9bcfbcc3f5f0d71de5dff9b0bc250}"
 EXPECTED_DUCKDB_POSTGRES_COMMIT="${EXPECTED_DUCKDB_POSTGRES_COMMIT:-b63ef4b1eb007320840b6d1760f3c9b139bb3b49}"
@@ -87,15 +87,13 @@ if ! "${TAR_BIN}" --version 2>/dev/null | grep -q 'GNU tar'; then
     exit 1
 fi
 
-# Reflogs contain clone-time timestamps but are not needed by the build-time
-# commit, status, checkout, or apply checks.
-find "${SOURCE_DIR}/.git" -type d -name logs -prune -exec rm -rf {} +
-
 COPYFILE_DISABLE=1 GZIP=-n "${TAR_BIN}" \
     --sort=name \
     --mtime="@${SOURCE_DATE_EPOCH}" \
     --owner=0 --group=0 --numeric-owner \
     --pax-option=delete=atime,delete=ctime \
+    --exclude='*/.git' --exclude='*/.git/*' \
+    --exclude='*/.DS_Store' --exclude='*/._*' \
     -C "${WORK_DIR}" -czf "${OUT_DIR}/${TARBALL}" \
     "$(basename "${SOURCE_DIR}")"
 
