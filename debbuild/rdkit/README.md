@@ -1,21 +1,28 @@
-# RDKit cartridge gap packages
+# RDKit suite and cartridge gap packages
 
-This recipe deliberately does not publish another RDKit runtime. It only fills
-PostgreSQL-major gaps and links each cartridge against the public distribution
-runtime and development package:
+This recipe has two suite-specific modes.  The legacy Bookworm/Jammy inputs
+only fill PostgreSQL-major gaps and link against the public distribution
+runtime, while Resolute builds one complete, ABI-coherent RDKit suite:
 
 - Debian 12 / Ubuntu 22.04: build PostgreSQL 17 and 18 from the official PGDG
   `202303.3` source, using PGDG `librdkit1` and `librdkit-dev`.
-- Ubuntu 26.04: build PostgreSQL 14-17 from Debian `202503.6` source, using
-  Ubuntu `librdkit1t64` and `librdkit-dev`.
+- Ubuntu 26.04: build the complete `202603.6` suite (runtime, development,
+  data, Python bindings, and PostgreSQL 14-17 cartridges) from the Pigsty
+  Resolute source triad with system InChI 1.07.5.
 - Debian 13 / Ubuntu 24.04: do not build; PGDG supplies RDKit and cartridges
   for PostgreSQL 14-18.
 
-The generated `postgresql-PGVERSION-rdkit` packages follow the repository's
-normal `pg_buildext` convention: `debian/pgversions` selects the supported
-majors, `PGVERSION` expands the binary package name, and `${shlibs:Depends}`
-records the runtime ABI requirement found by `dpkg-shlibdeps`. No PostgreSQL
-major is duplicated as a literal binary-package stanza.
+The generated cartridge packages follow the repository's normal
+`pg_buildext` convention.  The Resolute build also emits `librdkit1t64`,
+`librdkit-dev`, `rdkit-data`, and `python3-rdkit` from the same source and
+compiler invocation, so the C++ and Python ABI cannot drift from the
+cartridges.
+
+Bookworm and Jammy remain pinned to the 202303.3 gap build. Their Boost 1.74
+toolchain predates Boost.JSON (introduced in 1.75), while RDKit 2026.03.6
+requires Boost 1.81 and uses Boost.JSON in MolInterchange. Updating those
+suites would require a coordinated Boost backport or disabling a supported
+RDKit feature, so the old triads are intentionally retained.
 
 Existing Pigsty full-runtime packages remain installable and are not forcibly
 downgraded.
@@ -55,6 +62,6 @@ cd ~/debbuild/rdkit
 make
 ```
 
-The resulting cartridge packages are copied to `~/ext/pkg/`. On Trixie and
-Noble the target exits before building and explains that PGDG already covers
-the full active matrix.
+The resulting packages are copied to `~/ext/pkg/`. On Trixie and Noble the
+target exits before building and explains that PGDG already covers the full
+active matrix.

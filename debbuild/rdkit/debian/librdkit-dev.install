@@ -1,0 +1,4 @@
+usr/include/rdkit
+usr/lib/cmake/rdkit
+usr/lib/cmake/rdkitpython
+usr/lib/libRDKit*.so

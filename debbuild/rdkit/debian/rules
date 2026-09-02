@@ -10,10 +10,13 @@ export LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 BUILD_DIR := $(CURDIR)/obj-build
+PY3VERS := $(shell py3versions -v -d)
+PY3 := $(shell which python$(PY3VERS))
 OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
 ENABLE_INCHI ?= 0
 DEFAULT_PG_MAJOR := $(shell pg_buildext supported-versions | tail -n 1)
-NUMJOBS := $(shell nproc)
+NUMJOBS ?= 2
+RDKIT_RELEASE := $(shell dpkg-parsechangelog -SVersion | sed -E 's/^([0-9]{4})([0-9]{2}\.[0-9]+).*/\1.\2/')
 INCHI_CMAKE_FLAGS := $(if $(filter 1,$(ENABLE_INCHI)),-DRDK_BUILD_INCHI_SUPPORT=ON,$(if $(filter noble,$(OS_CODENAME)),-DRDK_BUILD_INCHI_SUPPORT=OFF,-DRDK_BUILD_INCHI_SUPPORT=ON))
 CMAKE_FLAGS := \
 	-DCMAKE_BUILD_TYPE=None \
@@ -21,8 +24,10 @@ CMAKE_FLAGS := \
 	-DCMAKE_SKIP_RPATH=ON \
 	-DRDK_INSTALL_INTREE=OFF \
 	-DRDK_INSTALL_STATIC_LIBS=OFF \
+	-DRDK_BUILD_SWIG_WRAPPERS=OFF \
 	-DRDK_BUILD_THREADSAFE_SSS=ON \
-	-DRDK_BUILD_PYTHON_WRAPPERS=OFF \
+	-DRDK_BUILD_PYTHON_WRAPPERS=ON \
+	-DRDK_INSTALL_PYTHON_TESTS=OFF \
 	-DRDK_BUILD_CPP_TESTS=OFF \
 	-DRDK_BUILD_TEST_GZIP=OFF \
 	$(INCHI_CMAKE_FLAGS) \
@@ -35,8 +40,10 @@ CMAKE_FLAGS := \
 	-DRDK_BUILD_CAIRO_SUPPORT=ON \
 	-DRDK_BUILD_CHEMDRAW_SUPPORT=OFF \
 	-DRDK_BUILD_PUBCHEMSHAPE_SUPPORT=OFF \
+	-DRDK_BUILD_XYZ2MOL_SUPPORT=OFF \
 	-DRDK_INSTALL_COMIC_FONTS=OFF \
 	-DBoost_NO_BOOST_CMAKE=TRUE \
+	-DPython_EXECUTABLE=$(PY3) \
 	-DPostgreSQL_CONFIG=/usr/lib/postgresql/$(DEFAULT_PG_MAJOR)/bin/pg_config \
 	-DPostgreSQL_TYPE_INCLUDE_DIR=/usr/include/postgresql/$(DEFAULT_PG_MAJOR)/server
 
@@ -62,6 +69,7 @@ override_dh_auto_configure:
 				-DRDK_USE_URF=OFF \
 				-DBoost_NO_BOOST_CMAKE=TRUE \
 				-DRDK_PGSQL_STATIC=OFF \
+				-DRDKit_RELEASENAME=$(RDKIT_RELEASE) \
 				-DRDKit_CodeDir=../../../Code \
 				../); \
 	done
@@ -82,6 +90,13 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
+	dh_auto_install --builddirectory=$(BUILD_DIR)
+	mkdir -p $(CURDIR)/debian/tmp/usr/lib/python3
+	if [ -d $(CURDIR)/debian/tmp/usr/lib/python$(PY3VERS)/site-packages ]; then \
+		mv $(CURDIR)/debian/tmp/usr/lib/python$(PY3VERS)/site-packages $(CURDIR)/debian/tmp/usr/lib/python3/dist-packages; \
+	fi
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/python$(PY3VERS)
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/python3/dist-packages/rdkit/docs
 	set -e; for v in $$(pg_buildext supported-versions); do \
 		mkdir -p $(CURDIR)/debian/postgresql-$$v-rdkit/usr/lib/postgresql/$$v/lib; \
 		mkdir -p $(CURDIR)/debian/postgresql-$$v-rdkit/usr/share/postgresql/$$v/extension; \
@@ -90,6 +105,12 @@ override_dh_auto_install:
 		cp Code/PgSQL/rdkit/build-$$v/rdkit--*.sql $(CURDIR)/debian/postgresql-$$v-rdkit/usr/share/postgresql/$$v/extension/; \
 		cp Code/PgSQL/rdkit/build-$$v/update_sql/*.sql $(CURDIR)/debian/postgresql-$$v-rdkit/usr/share/postgresql/$$v/extension/; \
 	done
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/postgresql
+	rm -rf $(CURDIR)/debian/tmp/usr/share/postgresql
+
+override_dh_python3:
+	dh_python3 -ppython3-rdkit
+	dh_numpy3 -ppython3-rdkit
 
 override_dh_auto_clean:
 	rm -rf $(BUILD_DIR) Code/PgSQL/rdkit/build-* Code/PgSQL/rdkit/External
