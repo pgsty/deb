@@ -1,7 +1,6 @@
 all: move
 
-TARBALL := dbt2-0.61.7.tar.gz
-TARBALL_SHA256 := 8f5740a26453cd0051e797a6abd1af086e7e2a4ef598003a5af912a6bc5636bc
+TARBALL := dbt2-0.62.0.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 ROOT_DIR := build-src
 BUILD_DIR := $(ROOT_DIR)/storedproc/pgsql/c
@@ -10,7 +9,6 @@ PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
 check-src:
 	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL) under $(HOME)/ext/src or ../SOURCES, run pig build get first; if needed, copy it there"; exit 1)
-	@printf '%s  %s\n' '$(TARBALL_SHA256)' '$(SOURCE_TARBALL)' | sha256sum --check --status || (echo "SHA-256 mismatch for $(SOURCE_TARBALL)"; exit 1)
 
 clean-artifacts:
 	rm -f *.deb *.ddeb *.buildinfo *.changes

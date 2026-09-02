@@ -1,0 +1,428 @@
+Description: Honor PG_CONFIG selected by pg_buildext
+ Hard-coding pg_config makes a multi-version build compile every package
+ against whichever PostgreSQL is first in PATH. Use the conventional variable
+ so each package receives headers and PGXS from its matching server version.
+ Preserve Debian's reproducible-build path mapping in both native objects and
+ PostgreSQL's LLVM bitcode output. Preserve 0.45 function OIDs, dependent
+ objects, effective ACLs, comments, owners, strictness and execution
+ attributes while exposing the expanded 0.46 row types through parse-bound
+ compatibility projections.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-09-01
+
+--- a/Makefile
++++ b/Makefile
+@@ -7,5 +7,8 @@ DATA = dbt2--0.45.0.sql dbt2--0.45.0--0.46.0.sql
+ PGFILEDESC = "DBT-2 C stored functions"
+ 
+-PG_CFLAGS=-g -fno-omit-frame-pointer -Wall
++PG_CFLAGS += -g -fno-omit-frame-pointer -Wall
++PG_CFLAGS += -ffile-prefix-map=$(CURDIR)=.
++PG_CFLAGS += -fdebug-prefix-map=$(CURDIR)=.
+-PGXS := $(shell pg_config --pgxs)
++PG_CONFIG ?= pg_config
++PGXS := $(shell $(PG_CONFIG) --pgxs)
+ include $(PGXS)
+--- a/dbt2--0.45.0--0.46.0.sql
++++ b/dbt2--0.45.0--0.46.0.sql
+@@ -8,16 +8,64 @@
+ \echo Use "ALTER EXTENSION dbt2 UPDATE" to load this file. \quit
+ 
+ /*
+- * The functions now also return the transaction output data that a
+- * TPC-C terminal must display.  Changing the returned columns requires
+- * dropping and recreating the functions.
++ * The 0.46 C entry points return the expanded terminal output introduced by
++ * DBT-2 0.62.0.  PostgreSQL cannot replace a function while changing its OUT
++ * row type.  Renaming preserves the old function OID and every dependency;
++ * the old OID is then converted to a SQL compatibility projection, while the
++ * public name is assigned to the expanded C function.
++ *
++ * SQL-standard compatibility bodies are parsed while the extension script
++ * runs, so their calls are bound to the new function OIDs rather than being
++ * resolved through a caller-controlled search_path at execution time.  The
++ * binding also survives ALTER EXTENSION SET SCHEMA.
++ *
++ * This also makes fresh default installation deterministic: dbt2 has no
++ * direct 0.46 base SQL, so CREATE EXTENSION follows this same 0.45--0.46 edge.
+  */
+ 
+-DROP FUNCTION new_order (INTEGER, INTEGER, INTEGER, INTEGER, INTEGER,
++CREATE TEMP TABLE dbt2_internal_045_to_046_function_metadata
++ON COMMIT DROP AS
++SELECT p.oid AS source_oid,
++       p.proowner,
++       p.proacl,
++       p.prosecdef,
++       p.proisstrict,
++       p.provolatile,
++       p.proparallel,
++       p.proleakproof,
++       p.procost,
++       p.prorows,
++       p.proconfig,
++       p.prosupport,
++       obj_description(p.oid, 'pg_proc') AS comment
++  FROM pg_proc AS p
++ WHERE p.oid IN (
++    'new_order(integer,integer,integer,integer,integer,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info)'::regprocedure,
++    'order_status(integer,integer,integer,text)'::regprocedure,
++    'payment(integer,integer,integer,integer,integer,text,real)'::regprocedure
++ );
++
++DO $dbt2_security_label_guard$
++BEGIN
++    IF EXISTS (
++        SELECT 1
++          FROM pg_seclabel AS label
++          JOIN dbt2_internal_045_to_046_function_metadata AS metadata
++            ON metadata.source_oid = label.objoid
++         WHERE label.classoid = 'pg_proc'::regclass
++    ) THEN
++        RAISE EXCEPTION
++            'dbt2 migration cannot clone provider-specific function security labels';
++    END IF;
++END
++$dbt2_security_label_guard$;
++
++ALTER FUNCTION new_order (INTEGER, INTEGER, INTEGER, INTEGER, INTEGER,
+     new_order_info, new_order_info, new_order_info, new_order_info,
+     new_order_info, new_order_info, new_order_info, new_order_info,
+     new_order_info, new_order_info, new_order_info, new_order_info,
+-    new_order_info, new_order_info, new_order_info);
++    new_order_info, new_order_info, new_order_info)
++    RENAME TO dbt2_legacy_045_new_order;
+ 
+ CREATE FUNCTION new_order (
+     w_id INTEGER,
+@@ -58,8 +106,48 @@
+ ) AS 'MODULE_PATHNAME', 'new_order'
+ LANGUAGE C VOLATILE;
+ 
+-DROP FUNCTION order_status (INTEGER, INTEGER, INTEGER, TEXT);
++CREATE OR REPLACE FUNCTION dbt2_legacy_045_new_order (
++    w_id INTEGER,
++    d_id INTEGER,
++    c_id INTEGER,
++    o_all_local INTEGER,
++    o_ol_cnt INTEGER,
++    order_line_1 new_order_info,
++    order_line_2 new_order_info,
++    order_line_3 new_order_info,
++    order_line_4 new_order_info,
++    order_line_5 new_order_info,
++    order_line_6 new_order_info,
++    order_line_7 new_order_info,
++    order_line_8 new_order_info,
++    order_line_9 new_order_info,
++    order_line_10 new_order_info,
++    order_line_11 new_order_info,
++    order_line_12 new_order_info,
++    order_line_13 new_order_info,
++    order_line_14 new_order_info,
++    order_line_15 new_order_info
++) RETURNS TABLE (
++    ol_supply_w_id INTEGER,
++    ol_i_id INTEGER,
++    i_name TEXT,
++    ol_quantity INTEGER,
++    s_quantity INTEGER,
++    i_price REAL,
++    ol_amount REAL,
++    brand_generic CHAR
++) LANGUAGE SQL VOLATILE
++BEGIN ATOMIC
++    SELECT n.ol_supply_w_id, n.ol_i_id, n.i_name, n.ol_quantity,
++           n.s_quantity, n.i_price, n.ol_amount, n.brand_generic
++      FROM new_order($1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
++                     $11, $12, $13, $14, $15, $16, $17, $18, $19,
++                     $20) AS n;
++END;
+ 
++ALTER FUNCTION order_status (INTEGER, INTEGER, INTEGER, TEXT)
++    RENAME TO dbt2_legacy_045_order_status;
++
+ CREATE FUNCTION order_status (
+     c_id INTEGER,
+     c_w_id INTEGER,
+@@ -82,9 +170,27 @@
+ ) AS 'MODULE_PATHNAME', 'order_status'
+ LANGUAGE C VOLATILE;
+ 
+-DROP FUNCTION payment (INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, TEXT,
+-    REAL);
++CREATE OR REPLACE FUNCTION dbt2_legacy_045_order_status (
++    c_id INTEGER,
++    c_w_id INTEGER,
++    c_d_id INTEGER,
++    c_last TEXT
++) RETURNS TABLE (
++    ol_i_id INTEGER,
++    ol_supply_w_id INTEGER,
++    ol_quantity REAL,
++    ol_amount REAL,
++    ol_delivery_d TIMESTAMP
++) LANGUAGE SQL VOLATILE
++BEGIN ATOMIC
++    SELECT o.ol_i_id, o.ol_supply_w_id, o.ol_quantity, o.ol_amount,
++           o.ol_delivery_d::TIMESTAMP
++      FROM order_status($1, $2, $3, $4) AS o;
++END;
+ 
++ALTER FUNCTION payment (INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, TEXT,
++    REAL) RENAME TO dbt2_legacy_045_payment;
++
+ CREATE FUNCTION payment (
+     w_id INTEGER,
+     d_id INTEGER,
+@@ -125,3 +231,225 @@
+     d_name TEXT
+ ) AS 'MODULE_PATHNAME', 'payment'
+ LANGUAGE C VOLATILE;
++
++CREATE OR REPLACE FUNCTION dbt2_legacy_045_payment (
++    w_id INTEGER,
++    d_id INTEGER,
++    c_id INTEGER,
++    c_w_id INTEGER,
++    c_d_id INTEGER,
++    c_last TEXT,
++    h_amount REAL
++) RETURNS TABLE (
++    w_street_1 TEXT,
++    w_street_2 TEXT,
++    w_city TEXT,
++    w_state TEXT,
++    w_zip TEXT,
++    d_street_1 TEXT,
++    d_street_2 TEXT,
++    d_city TEXT,
++    d_state TEXT,
++    d_zip TEXT,
++    c_first TEXT,
++    c_middle TEXT,
++    c_last TEXT,
++    c_street_1 TEXT,
++    c_street_2 TEXT,
++    c_city TEXT,
++    c_state TEXT,
++    c_zip TEXT,
++    c_phone TEXT,
++    c_since TIMESTAMP,
++    c_credit TEXT,
++    c_credit_lim NUMERIC,
++    c_discount REAL,
++    c_balance NUMERIC,
++    c_data TEXT,
++    h_date TIMESTAMP
++) LANGUAGE SQL VOLATILE
++BEGIN ATOMIC
++    SELECT p.w_street_1, p.w_street_2, p.w_city, p.w_state, p.w_zip,
++           p.d_street_1, p.d_street_2, p.d_city, p.d_state, p.d_zip,
++           p.c_first, p.c_middle, p.c_last, p.c_street_1, p.c_street_2,
++           p.c_city, p.c_state, p.c_zip, p.c_phone,
++           p.c_since::TIMESTAMP, p.c_credit, p.c_credit_lim::NUMERIC,
++           p.c_discount, p.c_balance::NUMERIC, p.c_data,
++           p.h_date::TIMESTAMP
++      FROM payment($1, $2, $3, $4, $5, $6, $7) AS p;
++END;
++
++/*
++ * Copy the owner, strictness, execution attributes, configuration and comment
++ * from each legacy OID to the expanded public function.  CREATE OR REPLACE
++ * leaves the legacy OID's raw ACL, including its grantor graph, untouched.
++ * The new expanded function receives the same non-owner effective EXECUTE
++ * grantees and grant options; because that function did not exist before the
++ * migration, those grants are normalized as direct owner grants.  A
++ * SECURITY DEFINER compatibility wrapper also needs bridge EXECUTE for its
++ * owner even when that owner had explicitly revoked direct execution on the
++ * old function.
++ *
++ * Security labels are provider-specific and cannot be cloned generically;
++ * abort atomically rather than silently losing one.
++ */
++DO $dbt2_metadata$
++DECLARE
++    pair RECORD;
++    legacy_oid OID;
++    target_oid OID;
++    apply_oid OID;
++    source_meta RECORD;
++    acl_entry RECORD;
++    grantee_sql TEXT;
++    setting TEXT;
++    setting_name TEXT;
++    setting_value TEXT;
++    previous_setting TEXT;
++    source_comment TEXT;
++    target_identity TEXT;
++BEGIN
++    FOR pair IN
++        SELECT *
++          FROM (VALUES
++            ('dbt2_legacy_045_new_order(integer,integer,integer,integer,integer,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info)',
++             'new_order(integer,integer,integer,integer,integer,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info,new_order_info)'),
++            ('dbt2_legacy_045_order_status(integer,integer,integer,text)',
++             'order_status(integer,integer,integer,text)'),
++            ('dbt2_legacy_045_payment(integer,integer,integer,integer,integer,text,real)',
++             'payment(integer,integer,integer,integer,integer,text,real)')
++          ) AS functions(source_name, target_name)
++    LOOP
++        legacy_oid := to_regprocedure(pair.source_name);
++        target_oid := to_regprocedure(pair.target_name);
++        IF legacy_oid IS NULL OR target_oid IS NULL THEN
++            RAISE EXCEPTION 'dbt2 migration metadata target missing: % -> %',
++                pair.source_name, pair.target_name;
++        END IF;
++
++        SELECT metadata.*, owner_role.rolname AS owner_name
++          INTO source_meta
++          FROM dbt2_internal_045_to_046_function_metadata AS metadata
++          JOIN pg_roles AS owner_role ON owner_role.oid = metadata.proowner
++         WHERE metadata.source_oid = legacy_oid;
++
++        /* Restore the snapshot onto both the compatibility OID and new API. */
++        FOREACH apply_oid IN ARRAY ARRAY[legacy_oid, target_oid] LOOP
++            target_identity := apply_oid::regprocedure::TEXT;
++
++            EXECUTE format('ALTER FUNCTION %s OWNER TO %I',
++                           target_identity, source_meta.owner_name);
++            EXECUTE format('ALTER FUNCTION %s %s', target_identity,
++                           CASE WHEN source_meta.prosecdef
++                                THEN 'SECURITY DEFINER'
++                                ELSE 'SECURITY INVOKER' END);
++            EXECUTE format('ALTER FUNCTION %s %s', target_identity,
++                           CASE WHEN source_meta.proisstrict
++                                THEN 'RETURNS NULL ON NULL INPUT'
++                                ELSE 'CALLED ON NULL INPUT' END);
++            EXECUTE format('ALTER FUNCTION %s %s', target_identity,
++                           CASE source_meta.provolatile
++                                WHEN 'i' THEN 'IMMUTABLE'
++                                WHEN 's' THEN 'STABLE'
++                                ELSE 'VOLATILE' END);
++            EXECUTE format('ALTER FUNCTION %s PARALLEL %s', target_identity,
++                           CASE source_meta.proparallel
++                                WHEN 's' THEN 'SAFE'
++                                WHEN 'r' THEN 'RESTRICTED'
++                                ELSE 'UNSAFE' END);
++            IF source_meta.proleakproof THEN
++                EXECUTE format('ALTER FUNCTION %s LEAKPROOF', target_identity);
++            END IF;
++            EXECUTE format('ALTER FUNCTION %s COST %s',
++                           target_identity, source_meta.procost);
++            EXECUTE format('ALTER FUNCTION %s ROWS %s',
++                           target_identity, source_meta.prorows);
++            IF source_meta.prosupport <> 0 THEN
++                EXECUTE format('ALTER FUNCTION %s SUPPORT %s',
++                               target_identity,
++                               source_meta.prosupport::regprocedure);
++            END IF;
++
++            EXECUTE format('ALTER FUNCTION %s RESET ALL', target_identity);
++            IF source_meta.proconfig IS NOT NULL THEN
++                FOREACH setting IN ARRAY source_meta.proconfig LOOP
++                    setting_name := split_part(setting, '=', 1);
++                    setting_value := substr(setting, length(setting_name) + 2);
++                    previous_setting := current_setting(setting_name, true);
++                    PERFORM set_config(setting_name, setting_value, true);
++                    EXECUTE format('ALTER FUNCTION %s SET %I FROM CURRENT',
++                                   target_identity, setting_name);
++                    IF previous_setting IS NULL THEN
++                        EXECUTE format('SET LOCAL %I TO DEFAULT', setting_name);
++                    ELSE
++                        PERFORM set_config(setting_name, previous_setting, true);
++                    END IF;
++                END LOOP;
++            END IF;
++
++            IF apply_oid = target_oid THEN
++                /*
++                 * The legacy ACL is already preserved by CREATE OR REPLACE.
++                 * Reset only the newly-created API, using CASCADE so an
++                 * inherited default ACL cannot create a dependency-order
++                 * failure, then reproduce every effective source grant.
++                 */
++                FOR acl_entry IN
++                    SELECT DISTINCT acl.grantee
++                      FROM pg_proc AS p
++                      CROSS JOIN LATERAL
++                           aclexplode(COALESCE(p.proacl,
++                                               acldefault('f', p.proowner))) AS acl
++                     WHERE p.oid = apply_oid
++                LOOP
++                    IF acl_entry.grantee = 0 THEN
++                        grantee_sql := 'PUBLIC';
++                    ELSE
++                        SELECT quote_ident(rolname) INTO grantee_sql
++                          FROM pg_roles WHERE oid = acl_entry.grantee;
++                    END IF;
++                    EXECUTE format(
++                        'REVOKE ALL PRIVILEGES ON FUNCTION %s FROM %s CASCADE',
++                        target_identity, grantee_sql);
++                END LOOP;
++
++                FOR acl_entry IN
++                    SELECT acl.grantee, acl.is_grantable
++                      FROM aclexplode(COALESCE(source_meta.proacl,
++                                               acldefault('f',
++                                                          source_meta.proowner)))
++                           AS acl
++                     WHERE acl.privilege_type = 'EXECUTE'
++                LOOP
++                    IF acl_entry.grantee = 0 THEN
++                        grantee_sql := 'PUBLIC';
++                    ELSE
++                        SELECT quote_ident(rolname) INTO grantee_sql
++                          FROM pg_roles WHERE oid = acl_entry.grantee;
++                    END IF;
++                    EXECUTE format('GRANT EXECUTE ON FUNCTION %s TO %s%s',
++                                   target_identity, grantee_sql,
++                                   CASE WHEN acl_entry.is_grantable
++                                        THEN ' WITH GRANT OPTION' ELSE '' END);
++                END LOOP;
++
++                IF source_meta.prosecdef THEN
++                    EXECUTE format('GRANT EXECUTE ON FUNCTION %s TO %I',
++                                   target_identity, source_meta.owner_name);
++                END IF;
++            END IF;
++
++            source_comment := source_meta.comment;
++            IF source_comment IS NOT NULL THEN
++                EXECUTE format('COMMENT ON FUNCTION %s IS %L',
++                               target_identity, source_comment);
++            END IF;
++        END LOOP;
++    END LOOP;
++END
++$dbt2_metadata$;
++
++/* Temporary objects are auto-attached while an extension script is active. */
++ALTER EXTENSION dbt2
++    DROP TABLE dbt2_internal_045_to_046_function_metadata;
++DROP TABLE dbt2_internal_045_to_046_function_metadata;
+--- a/order_status.c
++++ b/order_status.c
+@@ -101,7 +101,8 @@
+ 		int32 c_id = PG_GETARG_INT32(0);
+ 		int32 c_w_id = PG_GETARG_INT32(1);
+ 		int32 c_d_id = PG_GETARG_INT32(2);
+-		text *c_last = PG_GETARG_TEXT_P(3);
++		text *c_last = PG_ARGISNULL(3) ? cstring_to_text("")
++										: PG_GETARG_TEXT_P(3);
+ 
+ 		/* temp variables */
+ 		int ret;
+--- a/payment.c
++++ b/payment.c
+@@ -165,7 +165,8 @@
+ 		int32 c_id = PG_GETARG_INT32(2);
+ 		int32 c_w_id = PG_GETARG_INT32(3);
+ 		int32 c_d_id = PG_GETARG_INT32(4);
+-		text *c_last = PG_GETARG_TEXT_P(5);
++		text *c_last = PG_ARGISNULL(5) ? cstring_to_text("")
++										: PG_GETARG_TEXT_P(5);
+ 		float4 h_amount = PG_GETARG_FLOAT4(6);
+ 
+ 		TupleDesc tupdesc;
