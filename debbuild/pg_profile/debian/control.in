@@ -10,7 +10,7 @@ Homepage: https://github.com/zubkov-andrei/pg_profile
 Package: postgresql-PGVERSION-pg-profile
 Architecture: any
 Provides: postgresql-pg-profile
-Depends: ${postgresql:Depends}, ${misc:Depends}
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-contrib-PGVERSION
 Description: Postgres historic workload reports
   This extension for PostgreSQL helps you to find out most resource intensive activities in your PostgreSQL databases.
   

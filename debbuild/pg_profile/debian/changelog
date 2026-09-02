@@ -1,3 +1,10 @@
+pg-profile (4.15-1PGSTY) unstable; urgency=medium
+
+  * Update to the signed upstream pg_profile 4.15 release.
+  * Preserve the official 4.11 to 4.14 and 4.14 to 4.15 SQL migration chain.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 18:45:00 +0800
+
 pg-profile (4.11-1PGSTY) unstable; urgency=medium
 
   * https://github.com/zubkov-andrei/pg_profile/releases/tag/4.11
