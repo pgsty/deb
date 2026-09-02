@@ -1,3 +1,11 @@
+pgroonga (4.0.8-1PGSTY) unstable; urgency=low
+
+  * https://github.com/pgroonga/pgroonga/releases/tag/4.0.8
+  * Build PG14-18 packages with the upstream Meson build system.
+  * Preserve the matching postgresql-major runtime dependency per package.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 19:10:00 +0800
+
 pgroonga (4.0.4-1PGSTY) unstable; urgency=low
 
   * https://github.com/pgroonga/pgroonga/releases/tag/4.0.4

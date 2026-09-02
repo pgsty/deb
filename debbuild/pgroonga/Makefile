@@ -1,11 +1,15 @@
-all: setup build move
+all: check-src setup build move
 
-TARBALL := pgroonga-4.0.4.tar.gz
+TARBALL := pgroonga-4.0.8.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get pgroonga first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 # prepare directory
 setup:
 	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	tar -C build --strip-components=1 -xf $(SOURCE_TARBALL)
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
@@ -27,5 +31,4 @@ move:
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
-
+.PHONY: all check-src setup update build move clean ls
