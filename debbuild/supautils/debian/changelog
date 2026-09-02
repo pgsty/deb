@@ -1,3 +1,13 @@
+supautils (3.4.2-1PGSTY) unstable; urgency=medium
+
+  * Bump to 3.4.2.
+  * Generate PostgreSQL dependency substitutions for every binary package.
+  * Remove the unused ICU build dependency.
+  * Document the licenses of vendored timezone headers.
+  * Remove the empty extension directory from the module-only payload.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 11:02:06 +0800
+
 supautils (3.2.1-1PGSTY) unstable; urgency=medium
 
   * https://github.com/supabase/supautils/releases/tag/v3.2.1
