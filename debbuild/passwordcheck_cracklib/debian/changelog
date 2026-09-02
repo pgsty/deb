@@ -1,3 +1,10 @@
+passwordcheck-cracklib (3.2.0-1PGSTY) unstable; urgency=medium
+
+  * Bump to 3.2.0.
+  * Use the Debian CrackLib dictionary path and require cracklib-runtime.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 12:30:41 +0800
+
 passwordcheck-cracklib (3.1.0-1PGSTY) unstable; urgency=low
 
   * https://github.com/dverite/postgres-password-check/releases/tag/3.1.0

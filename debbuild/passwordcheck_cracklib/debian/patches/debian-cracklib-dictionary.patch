@@ -1,0 +1,17 @@
+Description: Use the Debian CrackLib dictionary location
+ Debian and Ubuntu generate cracklib_dict.{hwm,pwd,pwi} under
+ /var/cache/cracklib, while the upstream Makefile hard-codes the EL-style
+ /usr/lib64 path. Point FascistCheck at the installed Debian dictionary.
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-needed
+
+--- a/Makefile
++++ b/Makefile
+@@ -8,6 +8,6 @@ PGFILEDESC = "passwordcheck_cracklib - strengthen user password checks"
+ 
+ # uncomment the following two lines to enable cracklib support
+-PG_CPPFLAGS = -DUSE_CRACKLIB '-DCRACKLIB_DICTPATH="/usr/lib64/cracklib_dict"'
++PG_CPPFLAGS = -DUSE_CRACKLIB '-DCRACKLIB_DICTPATH="/var/cache/cracklib/cracklib_dict"'
+ SHLIB_LINK = -lcrack
+ 
+ REGRESS = passwordcheck_cracklib
