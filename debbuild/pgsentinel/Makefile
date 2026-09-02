@@ -1,6 +1,6 @@
 all: check-src setup build move
 
-TARBALL := pgsentinel-1.4.2.tar.gz
+TARBALL := pgsentinel-1.5.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SOURCE_DIR := source
 BUILD_DIR := build
