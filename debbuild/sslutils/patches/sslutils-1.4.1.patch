@@ -1,0 +1,315 @@
+diff --git a/sslutils--1.3--1.4.sql b/sslutils--1.3--1.4.sql
+index 614d62e..6243b20 100644
+--- a/sslutils--1.3--1.4.sql
++++ b/sslutils--1.3--1.4.sql
+@@ -1,6 +1,6 @@
+-DROP FUNCTION openssl_csr_to_crt(text, text, text);
+-DROP FUNCTION openssl_rsa_generate_crl(text, text);
+-DROP FUNCTION openssl_revoke_certificate(text, text);
++-- Keep the 1.3 signatures as extension members so user ACLs, comments,
++-- attributes, OIDs, and dependent objects survive the upgrade.  The shared
++-- C entry points accept both the legacy and current arities.
+ 
+ CREATE OR REPLACE FUNCTION openssl_csr_to_crt(text, text, text, integer DEFAULT NULL)
+ RETURNS text
+diff --git a/sslutils--1.4.1.sql b/sslutils--1.4.1.sql
+index 50b12a9..38d2a57 100644
+--- a/sslutils--1.4.1.sql
++++ b/sslutils--1.4.1.sql
+@@ -37,6 +37,16 @@ COMMENT ON FUNCTION openssl_csr_to_crt(text, text, text, integer) IS 'Generates
+ -- param3 : Path to CA private key OR Path to self private key, If param2 is NULL.
+ -- param4 : The validity (in days) for the generated certificate.';
+ 
++CREATE OR REPLACE FUNCTION openssl_csr_to_crt(text, text, text)
++RETURNS text
++AS 'MODULE_PATHNAME', 'openssl_csr_to_crt'
++LANGUAGE C IMMUTABLE;
++COMMENT ON FUNCTION openssl_csr_to_crt(text, text, text) IS 'Generates the CA/self signed certificate.
++-- Parameters:
++-- param1 : csr or certificate signing request
++-- param2 : Path to CA certificate OR NULL If CA self signed certificate is required.
++-- param3 : Path to CA private key OR Path to self private key, If param2 is NULL.';
++
+ CREATE OR REPLACE FUNCTION openssl_rsa_generate_crl(text, text, integer DEFAULT NULL)
+ RETURNS text
+ AS 'MODULE_PATHNAME', 'openssl_rsa_generate_crl'
+@@ -47,6 +57,15 @@ COMMENT ON FUNCTION openssl_rsa_generate_crl(text, text, integer) IS 'Generates
+ -- param2 : Path to CA private key.
+ -- param3 : The validity (in days) for the generated CRL.';
+ 
++CREATE OR REPLACE FUNCTION openssl_rsa_generate_crl(text, text)
++RETURNS text
++AS 'MODULE_PATHNAME', 'openssl_rsa_generate_crl'
++LANGUAGE C IMMUTABLE;
++COMMENT ON FUNCTION openssl_rsa_generate_crl(text, text) IS 'Generates the Certificate Revocation List (CRL).
++-- Parameters:
++-- param1 : Path to CA certificate.
++-- param2 : Path to CA private key.';
++
+ CREATE OR REPLACE FUNCTION openssl_is_crt_expire_on(text, timestamptz)
+ RETURNS integer
+ AS 'MODULE_PATHNAME', 'openssl_is_crt_expire_on'
+@@ -66,6 +85,15 @@ COMMENT ON FUNCTION openssl_revoke_certificate(text, text, integer) IS 'Revoke C
+ -- param2 : CRL file name specified in postgres config file.
+ -- param3 : The validity (in days) for the revoked certificate.';
+ 
++CREATE OR REPLACE FUNCTION openssl_revoke_certificate(text, text)
++RETURNS text
++AS 'MODULE_PATHNAME', 'openssl_revoke_certificate'
++LANGUAGE C IMMUTABLE;
++COMMENT ON FUNCTION openssl_revoke_certificate(text, text) IS 'Revoke Certificate and add to Certificate Revocation List (CRL).
++-- Parameters:
++-- param1 : Path to client certificate to be revoked.
++-- param2 : CRL file name specified in postgres config file.';
++
+ CREATE OR REPLACE FUNCTION openssl_get_crt_expiry_date(text)
+ RETURNS timestamptz
+ AS 'MODULE_PATHNAME', 'openssl_get_crt_expiry_date'
+diff --git a/sslutils--1.4.sql b/sslutils--1.4.sql
+index 50b12a9..38d2a57 100644
+--- a/sslutils--1.4.sql
++++ b/sslutils--1.4.sql
+@@ -37,6 +37,16 @@ COMMENT ON FUNCTION openssl_csr_to_crt(text, text, text, integer) IS 'Generates
+ -- param3 : Path to CA private key OR Path to self private key, If param2 is NULL.
+ -- param4 : The validity (in days) for the generated certificate.';
+ 
++CREATE OR REPLACE FUNCTION openssl_csr_to_crt(text, text, text)
++RETURNS text
++AS 'MODULE_PATHNAME', 'openssl_csr_to_crt'
++LANGUAGE C IMMUTABLE;
++COMMENT ON FUNCTION openssl_csr_to_crt(text, text, text) IS 'Generates the CA/self signed certificate.
++-- Parameters:
++-- param1 : csr or certificate signing request
++-- param2 : Path to CA certificate OR NULL If CA self signed certificate is required.
++-- param3 : Path to CA private key OR Path to self private key, If param2 is NULL.';
++
+ CREATE OR REPLACE FUNCTION openssl_rsa_generate_crl(text, text, integer DEFAULT NULL)
+ RETURNS text
+ AS 'MODULE_PATHNAME', 'openssl_rsa_generate_crl'
+@@ -47,6 +57,15 @@ COMMENT ON FUNCTION openssl_rsa_generate_crl(text, text, integer) IS 'Generates
+ -- param2 : Path to CA private key.
+ -- param3 : The validity (in days) for the generated CRL.';
+ 
++CREATE OR REPLACE FUNCTION openssl_rsa_generate_crl(text, text)
++RETURNS text
++AS 'MODULE_PATHNAME', 'openssl_rsa_generate_crl'
++LANGUAGE C IMMUTABLE;
++COMMENT ON FUNCTION openssl_rsa_generate_crl(text, text) IS 'Generates the Certificate Revocation List (CRL).
++-- Parameters:
++-- param1 : Path to CA certificate.
++-- param2 : Path to CA private key.';
++
+ CREATE OR REPLACE FUNCTION openssl_is_crt_expire_on(text, timestamptz)
+ RETURNS integer
+ AS 'MODULE_PATHNAME', 'openssl_is_crt_expire_on'
+@@ -66,6 +85,15 @@ COMMENT ON FUNCTION openssl_revoke_certificate(text, text, integer) IS 'Revoke C
+ -- param2 : CRL file name specified in postgres config file.
+ -- param3 : The validity (in days) for the revoked certificate.';
+ 
++CREATE OR REPLACE FUNCTION openssl_revoke_certificate(text, text)
++RETURNS text
++AS 'MODULE_PATHNAME', 'openssl_revoke_certificate'
++LANGUAGE C IMMUTABLE;
++COMMENT ON FUNCTION openssl_revoke_certificate(text, text) IS 'Revoke Certificate and add to Certificate Revocation List (CRL).
++-- Parameters:
++-- param1 : Path to client certificate to be revoked.
++-- param2 : CRL file name specified in postgres config file.';
++
+ CREATE OR REPLACE FUNCTION openssl_get_crt_expiry_date(text)
+ RETURNS timestamptz
+ AS 'MODULE_PATHNAME', 'openssl_get_crt_expiry_date'
+diff --git a/sslutils--unpackaged--1.4.1.sql b/sslutils--unpackaged--1.4.1.sql
+index 7996dca..fd9aa42 100644
+--- a/sslutils--unpackaged--1.4.1.sql
++++ b/sslutils--unpackaged--1.4.1.sql
+@@ -2,6 +2,7 @@ ALTER EXTENSION sslutils ADD function openssl_rsa_generate_key(integer);
+ ALTER EXTENSION sslutils ADD function openssl_rsa_key_to_csr(text, text, text, text, text, text, text);
+ ALTER EXTENSION sslutils ADD function openssl_csr_to_crt(text, text, text);
+ ALTER EXTENSION sslutils ADD function openssl_rsa_generate_crl(text, text);
++ALTER EXTENSION sslutils ADD function openssl_revoke_certificate(text, text);
+ 
+ CREATE OR REPLACE FUNCTION sslutils_version()
+ RETURNS text
+@@ -27,9 +28,6 @@ COMMENT ON FUNCTION openssl_get_crt_expiry_date(text) IS 'Return the expiry date
+ -- param1 : Path to certificate.';
+ 
+ 
+-DROP FUNCTION openssl_csr_to_crt(text, text, text);
+-DROP FUNCTION openssl_rsa_generate_crl(text, text);
+-
+ CREATE OR REPLACE FUNCTION openssl_csr_to_crt(text, text, text, integer DEFAULT NULL)
+ RETURNS text
+ AS '$libdir/sslutils', 'openssl_csr_to_crt'
+diff --git a/sslutils-pemagent.sql.in b/sslutils-pemagent.sql.in
+index be28c9c..e2d9258 100644
+--- a/sslutils-pemagent.sql.in
++++ b/sslutils-pemagent.sql.in
+@@ -1,8 +1,11 @@
+ GRANT EXECUTE ON FUNCTION openssl_rsa_generate_key(integer) TO GROUP pem_agent;
+ GRANT EXECUTE ON FUNCTION openssl_rsa_key_to_csr(text, text, text, text, text, text, text) TO GROUP pem_agent;
+ GRANT EXECUTE ON FUNCTION openssl_csr_to_crt(text, text, text, integer) TO GROUP pem_agent;
++GRANT EXECUTE ON FUNCTION openssl_csr_to_crt(text, text, text) TO GROUP pem_agent;
+ GRANT EXECUTE ON FUNCTION openssl_rsa_generate_crl(text, text, integer) TO GROUP pem_agent;
++GRANT EXECUTE ON FUNCTION openssl_rsa_generate_crl(text, text) TO GROUP pem_agent;
+ GRANT EXECUTE ON FUNCTION sslutils_version() TO GROUP pem_agent;
+ GRANT EXECUTE ON FUNCTION openssl_is_crt_expire_on(text, timestamptz) TO GROUP pem_agent;
+ GRANT EXECUTE ON FUNCTION openssl_revoke_certificate(text, text, integer) TO GROUP pem_agent;
++GRANT EXECUTE ON FUNCTION openssl_revoke_certificate(text, text) TO GROUP pem_agent;
+ GRANT EXECUTE ON FUNCTION openssl_get_crt_expiry_date(text) TO GROUP pem_agent;
+diff --git a/sslutils.c b/sslutils.c
+index 60c493d..bc91259 100644
+--- a/sslutils.c
++++ b/sslutils.c
+@@ -219,10 +219,17 @@ static bool validate_path_within_dedicated_dir(const char *path, char *dedicated
+ 	return _strnicmp(resolved, datadir_resolved, dir_len) == 0;
+ #else
+ 	char resolved[PATH_MAX], datadir_resolved[PATH_MAX];
++	size_t dir_len;
++
+ 	if (!realpath(path, resolved) || !realpath(dedicated_dir, datadir_resolved))
+ 		return false;
+ 
+-	return strncmp(resolved, datadir_resolved, strlen(datadir_resolved)) == 0;
++	dir_len = strlen(datadir_resolved);
++	if (dir_len == 1 && datadir_resolved[0] == '/')
++		return true;
++
++	return strncmp(resolved, datadir_resolved, dir_len) == 0 &&
++		(resolved[dir_len] == '/' || resolved[dir_len] == '\0');
+ #endif
+ }
+ 
+@@ -920,6 +927,8 @@ openssl_csr_to_crt(PG_FUNCTION_ARGS)
+ 		goto out;
+ 	}
+ 
++	check_read_server_file_permission();
++
+ 	/* Get the CA private key */
+ 	bio_key = BIO_new_file(text_to_cstring(ca_key_file_path), "r");
+ 	if (!bio_key)
+@@ -979,7 +988,8 @@ openssl_csr_to_crt(PG_FUNCTION_ARGS)
+ 		goto out;
+ 	}
+ 
+-	if (!PG_ARGISNULL(3))
++	/* The Pigsty upgrade retains the pre-1.4 three-argument SQL overload. */
++	if (PG_NARGS() > 3 && !PG_ARGISNULL(3))
+ 	{
+ 		validity_days = PG_GETARG_INT32(3);
+ 		if (validity_days <= 0)
+@@ -1186,6 +1196,8 @@ openssl_rsa_generate_crl(PG_FUNCTION_ARGS)
+ 		goto out;
+ 	}
+ 
++	check_read_server_file_permission();
++
+ 	/* Get the CA private key */
+ 	bio_key = BIO_new_file(text_to_cstring(ca_key_file_path), "r");
+ 	if (!bio_key)
+@@ -1225,7 +1237,8 @@ openssl_rsa_generate_crl(PG_FUNCTION_ARGS)
+ 	X509_gmtime_adj(tmptm,0);
+ 	X509_CRL_set1_lastUpdate(crl, tmptm);
+ 
+-	if (!PG_ARGISNULL(2))
++	/* The Pigsty upgrade retains the pre-1.4 two-argument SQL overload. */
++	if (PG_NARGS() > 2 && !PG_ARGISNULL(2))
+ 	{
+ 		validity_days = PG_GETARG_INT32(2);
+ 		if (validity_days <= 0)
+@@ -1396,11 +1409,7 @@ static bool validate_path_within_allowed_guc(char* guc_string, const char* targe
+ 	foreach(l, elemlist)
+ 	{
+ 		char* dir = (char*) lfirst(l);
+-#ifdef WIN32
+-		if (_strnicmp(target, dir, strlen(dir)) == 0)
+-#else
+-		if (strncmp(target, dir, strlen(dir)) == 0)
+-#endif
++		if (validate_path_within_dedicated_dir(target, dir))
+ 		{
+ 			pfree(rawstring);
+ 			list_free(elemlist);
+@@ -1592,7 +1601,8 @@ openssl_revoke_certificate(PG_FUNCTION_ARGS)
+ 	X509_gmtime_adj(tmptm, 0);
+ 	X509_CRL_set1_lastUpdate(crl, tmptm);
+ 
+-	if (!PG_ARGISNULL(2))
++	/* The Pigsty upgrade retains the pre-1.4 two-argument SQL overload. */
++	if (PG_NARGS() > 2 && !PG_ARGISNULL(2))
+ 	{
+ 		validity_days = PG_GETARG_INT32(2);
+ 		if (validity_days <= 0)
+@@ -1865,4 +1875,3 @@ out:
+ 
+ 	PG_RETURN_TIMESTAMPTZ(timeTZ);
+ }
+-
+diff --git a/sslutils.sql.in b/sslutils.sql.in
+index 186ebae..e9cb2b1 100644
+--- a/sslutils.sql.in
++++ b/sslutils.sql.in
+@@ -37,6 +37,16 @@ COMMENT ON FUNCTION openssl_csr_to_crt(text, text, text, integer) IS 'Generates
+ -- param3 : Path to CA private key OR Path to self private key, If param2 is NULL.
+ -- param4 : The validity (in days) for the generated certificate.';
+ 
++CREATE OR REPLACE FUNCTION openssl_csr_to_crt(text, text, text)
++RETURNS text
++AS '$libdir/sslutils', 'openssl_csr_to_crt'
++LANGUAGE C IMMUTABLE;
++COMMENT ON FUNCTION openssl_csr_to_crt(text, text, text) IS 'Generates the CA/self signed certificate.
++-- Parameters:
++-- param1 : csr or certificate signing request
++-- param2 : Path to CA certificate OR NULL If CA self signed certificate is required.
++-- param3 : Path to CA private key OR Path to self private key, If param2 is NULL.';
++
+ CREATE OR REPLACE FUNCTION openssl_rsa_generate_crl(text, text, integer DEFAULT NULL)
+ RETURNS text
+ AS '$libdir/sslutils', 'openssl_rsa_generate_crl'
+@@ -47,6 +57,15 @@ COMMENT ON FUNCTION openssl_rsa_generate_crl(text, text, integer) IS 'Generates
+ -- param2 : Path to CA private key.
+ -- param3 : The validity (in days) for the generated CRL.';
+ 
++CREATE OR REPLACE FUNCTION openssl_rsa_generate_crl(text, text)
++RETURNS text
++AS '$libdir/sslutils', 'openssl_rsa_generate_crl'
++LANGUAGE C IMMUTABLE;
++COMMENT ON FUNCTION openssl_rsa_generate_crl(text, text) IS 'Generates the Certificate Revocation List (CRL).
++-- Parameters:
++-- param1 : Path to CA certificate.
++-- param2 : Path to CA private key.';
++
+ CREATE OR REPLACE FUNCTION openssl_is_crt_expire_on(text, timestamptz)
+ RETURNS integer
+ AS '$libdir/sslutils', 'openssl_is_crt_expire_on'
+@@ -66,6 +85,15 @@ COMMENT ON FUNCTION openssl_revoke_certificate(text, text, integer) IS 'Revoke C
+ -- param2 : CRL file name specified in postgres config file.
+ -- param3 : The validity (in days) for the revoked certificate.';
+ 
++CREATE OR REPLACE FUNCTION openssl_revoke_certificate(text, text)
++RETURNS text
++AS '$libdir/sslutils', 'openssl_revoke_certificate'
++LANGUAGE C IMMUTABLE;
++COMMENT ON FUNCTION openssl_revoke_certificate(text, text) IS 'Revoke Certificate and add to Certificate Revocation List (CRL).
++-- Parameters:
++-- param1 : Path to client certificate to be revoked.
++-- param2 : CRL file name specified in postgres config file.';
++
+ CREATE OR REPLACE FUNCTION openssl_get_crt_expiry_date(text)
+ RETURNS timestamptz
+ AS '$libdir/sslutils', 'openssl_get_crt_expiry_date'
+diff --git a/uninstall_sslutils.sql.in b/uninstall_sslutils.sql.in
+index 0ee93b1..8c49e08 100644
+--- a/uninstall_sslutils.sql.in
++++ b/uninstall_sslutils.sql.in
+@@ -2,7 +2,10 @@ DROP FUNCTION sslutils_version();
+ DROP FUNCTION openssl_rsa_generate_key(integer);
+ DROP FUNCTION openssl_rsa_key_to_csr(text, text, text, text, text, text, text);
+ DROP FUNCTION openssl_csr_to_crt(text, text, text, integer);
++DROP FUNCTION openssl_csr_to_crt(text, text, text);
+ DROP FUNCTION openssl_rsa_generate_crl(text, text, integer);
++DROP FUNCTION openssl_rsa_generate_crl(text, text);
+ DROP FUNCTION openssl_is_crt_expire_on(text, timestamptz);
+ DROP FUNCTION openssl_revoke_certificate(text, text, integer);
++DROP FUNCTION openssl_revoke_certificate(text, text);
+ DROP FUNCTION openssl_get_crt_expiry_date(text);
