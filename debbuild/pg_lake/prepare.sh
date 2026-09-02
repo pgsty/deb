@@ -4,9 +4,9 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
-VERSION="${VERSION:-3.4.3}"
+VERSION="${VERSION:-3.4.4}"
 UPSTREAM_REPO="${UPSTREAM_REPO:-https://github.com/Snowflake-Labs/pg_lake.git}"
-EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-1ac40b5a90252422a29f9a8a8d3e568619fa27e6}"
+EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-451383dee9b2fa120eb523c2da73172c1e6447fa}"
 EXPECTED_AVRO_COMMIT="${EXPECTED_AVRO_COMMIT:-2b11dba4fb28c7bb6ff08b40509a6a71fcaf4c21}"
 EXPECTED_DUCKDB_COMMIT="${EXPECTED_DUCKDB_COMMIT:-6ddac802ffa9bcfbcc3f5f0d71de5dff9b0bc250}"
 EXPECTED_DUCKDB_POSTGRES_COMMIT="${EXPECTED_DUCKDB_POSTGRES_COMMIT:-b63ef4b1eb007320840b6d1760f3c9b139bb3b49}"
@@ -106,6 +106,5 @@ fi
 cat "${SOURCE_DIR}/SOURCE_MANIFEST"
 cat <<EOF
 This is a candidate maintainer snapshot; it does not replace the authoritative
-Source0 automatically.  After review, copy it into the shared source store and
-update SOURCE_SHA256 in the DEB Makefile plus source_sha256 in the RPM spec.
+Source0 automatically. After review, copy it into the shared source store.
 EOF

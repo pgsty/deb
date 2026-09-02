@@ -1,6 +1,6 @@
 all: move
 
-VERSION := 3.4.3
+VERSION := 3.4.4
 TARBALL := pg_lake-$(VERSION).tar.gz
 BUILD_DIR := build
 PG_VERSIONS := 16 17 18
@@ -17,7 +17,7 @@ PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 VCPKG_ROOT ?= $(HOME)/.cache/pg_lake/vcpkg-$(VCPKG_VERSION)
 VCPKG_TOOLCHAIN_PATH := $(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
 SOURCE_CANDIDATE_DIR ?= $(CURDIR)/candidate
-SOURCE_PATCHES := patches/pg_lake-3.4.3.patch
+SOURCE_PATCHES := patches/pg_lake-3.4.4.patch
 TAR_BIN := $(shell command -v gtar 2>/dev/null || command -v tar)
 
 check-src:

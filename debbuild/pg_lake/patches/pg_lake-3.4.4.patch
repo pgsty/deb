@@ -1,0 +1,177 @@
+diff --git a/Makefile b/Makefile
+index 61da44f5a4fc2b0e35cac4df3222297ae3fac2e5..90661fd891edad04967c729cbb3d0ff3d72a0d24 100644
+--- a/Makefile
++++ b/Makefile
+@@ -86,8 +86,9 @@ reindent: typedefs
+ 	pipenv run black $(INDENT_TARGETS)
+ 
+ submodules:
+-	git submodule init
+-	git submodule update
++	test -f avro/lang/c/CMakeLists.txt
++	test -f duckdb_pglake/duckdb/CMakeLists.txt
++	test -f duckdb_pglake/duckdb-postgres/CMakeLists.txt
+ 
+ ## module declarations; each extension should have its dependencies spelled out here
+ pg_map:
+@@ -193,16 +194,20 @@ check-duckdb_pglake:
+ # other avro stuff managed here
+ avro:
+ ifeq ("$(wildcard avro/lang/c/build)","")
+-	$(MAKE) submodules
+-	cd avro && git checkout -f . && git apply --ignore-whitespace ../avro.patch
++	test -f avro/lang/c/CMakeLists.txt
++	cd avro && \
++	if patch -p1 --reverse --forward --dry-run --batch --fuzz=0 < ../avro.patch >/dev/null 2>&1; then \
++		echo "already applied: avro.patch"; \
++	elif patch -p1 --forward --batch --fuzz=0 < ../avro.patch; then :; \
++	else echo "failed to apply avro.patch" >&2; exit 1; fi
+ 	mkdir -p avro/lang/c/build
+ 	# builds and installs into local avrolib directory 
+ 	cd avro/lang/c/build && \
+-	cmake .. $(CMAKE_AVRO_ARGS) && cmake --build . && cmake --build . --target install
++	cmake .. $(CMAKE_AVRO_ARGS) && cmake --build . && MAKEFLAGS= DESTDIR= cmake --build . --target install
+ endif
+ 
+ install-avro: avro
+-	install avro/lang/c/build/avrolib/lib*/libavro.* $(DESTDIR)$(PG_LIBDIR)
++	cp -a avro/lang/c/build/avrolib/lib*/libavro.so* $(DESTDIR)$(PG_LIBDIR)/
+ 	install -d $(DESTDIR)$(PG_INCLUDEDIR)/avro
+ 	install avro/lang/c/build/avrolib/include/avro/* $(DESTDIR)$(PG_INCLUDEDIR)/avro
+ 	install avro/lang/c/build/avrolib/include/avro.h $(DESTDIR)$(PG_INCLUDEDIR)
+@@ -215,7 +220,7 @@ ifneq ("$(wildcard avro/lang/c/build)","")
+ 	$(MAKE) -C avro/lang/c/build clean
+ 	rm -r avro/lang/c/build
+ 	# clean patches 	
+-	cd avro && git checkout -f .
++	@:
+ endif
+ 
+ uninstall-avro:
+diff --git a/duckdb_pglake/CMakeLists.txt b/duckdb_pglake/CMakeLists.txt
+index d66c763b8339b6938aa90d976df7e1d90449b8dc..9de45506f81bfaa21d666fd128337e067a01f933 100644
+--- a/duckdb_pglake/CMakeLists.txt
++++ b/duckdb_pglake/CMakeLists.txt
+@@ -7,7 +7,7 @@ set(EXTENSION_NAME ${TARGET_NAME}_extension)
+ set(LOADABLE_EXTENSION_NAME ${TARGET_NAME}_loadable_extension)
+ 
+ find_package(OpenSSL 3 REQUIRED)
+-find_library(PG_LIBDIR pq REQUIRED)
++find_library(PG_LIBPQ NAMES pq HINTS "${PG_LIBDIR}" REQUIRED)
+ find_path(PG_INCLUDEDIR libpq-fe.h REQUIRED)
+ 
+ find_package(azure-identity-cpp CONFIG)
+@@ -49,14 +49,8 @@ set(EXTENSION_SOURCES
+ 
+ build_static_extension(${TARGET_NAME} ${EXTENSION_SOURCES})
+ 
+-if(APPLE)
+-  set(LIBPQ_NAME "libpq.dylib")
+-else()
+-  set(LIBPQ_NAME "libpq.so")
+-endif()
+-
+ target_link_libraries(${EXTENSION_NAME}
+-                      ${PG_LIBDIR}/${LIBPQ_NAME}
++                      ${PG_LIBPQ}
+                       Azure::azure-identity Azure::azure-storage-blobs Azure::azure-storage-files-datalake)
+ target_include_directories(
+   ${EXTENSION_NAME} PRIVATE Azure::azure-identity Azure::azure-storage-blobs
+diff --git a/duckdb_pglake/Makefile b/duckdb_pglake/Makefile
+index b868affad266bcc28d30fc693439d8959b2f9739..d7c6a134fa22dab1da68977d97ceeb57e6c7b788 100644
+--- a/duckdb_pglake/Makefile
++++ b/duckdb_pglake/Makefile
+@@ -67,7 +67,7 @@ endif
+ #### Configuration for this extension
+ EXTENSION_FLAGS=-DDUCKDB_EXTENSION_CONFIGS='${EXT_CONFIG}' -DPG_INCLUDEDIR='${PG_INCLUDEDIR}' -DPG_LIBDIR='${PG_LIBDIR}'
+ 
+-BUILD_FLAGS=-DEXTENSION_STATIC_BUILD=1 $(EXTENSION_FLAGS) ${EXT_FLAGS} $(CORE_EXTENSION_VAR) $(OSX_BUILD_FLAG) $(RUST_FLAGS) $(TOOLCHAIN_FLAGS) -DDUCKDB_EXPLICIT_PLATFORM='${DUCKDB_PLATFORM}' -DCUSTOM_LINKER=${CUSTOM_LINKER}
++BUILD_FLAGS=-DEXTENSION_STATIC_BUILD=1 $(EXTENSION_FLAGS) ${EXT_FLAGS} $(CORE_EXTENSION_VAR) $(OSX_BUILD_FLAG) $(RUST_FLAGS) $(TOOLCHAIN_FLAGS) -DOVERRIDE_GIT_DESCRIBE='v$(DUCKDB_VERSION)' -DDUCKDB_EXPLICIT_PLATFORM='${DUCKDB_PLATFORM}' -DCUSTOM_LINKER=${CUSTOM_LINKER}
+ 
+ # Detect operating system
+ UNAME_S := $(shell uname -s)
+@@ -126,21 +126,23 @@ debug: patch_duckdb
+ 
+ release: patch_duckdb
+ 	mkdir -p build/release
+-	cmake $(GENERATOR) $(BUILD_FLAGS) $(EXT_RELEASE_FLAGS) -DCMAKE_BUILD_TYPE=$(DEBUG_INFO_CONFIG_OPTION) -S $(DUCKDB_SRCDIR) -B build/release
+-	cmake --build build/release -j $(NCORES)
++	MAKEFLAGS= DESTDIR= cmake $(GENERATOR) $(BUILD_FLAGS) $(EXT_RELEASE_FLAGS) -DCMAKE_BUILD_TYPE=$(DEBUG_INFO_CONFIG_OPTION) -S $(DUCKDB_SRCDIR) -B build/release
++	MAKEFLAGS= DESTDIR= cmake --build build/release --target duckdb -j $(NCORES)
+ 	cp build/release/src/$(LIB_NAME) .
+ 
+ #### Misc
+ 
+ patch_duckdb: $(shell find patches -type f -name '*.patch')
+-	for patchdir in duckdb duckdb-postgres ; do \
+-		(cd $$patchdir && \
+-		git checkout -f . && \
+-		find ../patches/$$patchdir -type f -name '*.patch' -print | sort | xargs -0 printf '%s ' | \
+-		while read -r patch; do \
+-			echo "applying $$patch to $$patchdir" ; \
+-			git apply --ignore-whitespace "$$patch"; \
+-		done;) \
++	@set -e; for patchdir in duckdb duckdb-postgres; do \
++		cd "$$patchdir"; \
++		for patch in $$(find "../patches/$$patchdir" -type f -name '*.patch' | sort); do \
++			echo "applying $$patch to $$patchdir"; \
++			if patch -p1 --reverse --forward --dry-run --batch --fuzz=0 < "$$patch" >/dev/null 2>&1; then \
++				echo "already applied: $$patch"; \
++			elif patch -p1 --forward --batch --fuzz=0 < "$$patch"; then :; \
++			else echo "failed to apply $$patch" >&2; exit 1; fi; \
++		done; \
++		cd ..; \
+ 	done
+ 	# Out-of-tree extensions are fetched by CMake, which applies the patches it
+ 	# finds in the DuckDB source tree, so copy ours there before building.
+@@ -153,10 +155,7 @@ patch_duckdb: $(shell find patches -type f -name '*.patch')
+ 	done
+ 
+ clean_patches:
+-	for patchdir in duckdb duckdb-postgres ; do \
+-		(cd $$patchdir && \
+-		git checkout -f . ); \
+-	done
++	@:
+ 	for extdir in patches/extensions/*/ ; do \
+ 		[ -d "$$extdir" ] || continue ; \
+ 		rm -rf duckdb/.github/patches/extensions/$$(basename $$extdir) ; \
+diff --git a/pg_lake/Makefile b/pg_lake/Makefile
+index eae52d8c865ced7b8929f51181279eac314d93c7..8afd3f9508c1911d76b79a46c435b20f24628559 100644
+--- a/pg_lake/Makefile
++++ b/pg_lake/Makefile
+@@ -7,7 +7,7 @@ SOURCES := $(wildcard src/*.c) $(wildcard src/*/*.c)
+ OBJS := $(patsubst %.c,%.o,$(sort $(SOURCES)))
+ 
+ # Use the tag name
+-PG_LAKE_GIT_VERSION := $(shell git describe --tags --exact-match --abbrev=0 2>/dev/null)
++PG_LAKE_GIT_VERSION ?= $(shell git describe --tags --exact-match --abbrev=0 2>/dev/null)
+ ifeq ($(PG_LAKE_GIT_VERSION),)
+     # Otherwise, use the branch name and commit hash
+     PG_LAKE_GIT_VERSION := "$(shell git rev-parse --abbrev-ref HEAD) ($(shell git rev-parse --short HEAD))"
+diff --git a/pg_lake_iceberg/Makefile b/pg_lake_iceberg/Makefile
+index 9ecd68836bede58ccb245816d6e0bbb312f61c85..5d09990d911227626552ff168376be7a471c3707 100644
+--- a/pg_lake_iceberg/Makefile
++++ b/pg_lake_iceberg/Makefile
+@@ -9,7 +9,7 @@ PG_LIBDIR := $(shell $(PG_CONFIG) --libdir)
+ 
+ PG_CPPFLAGS = -I$(libpq_srcdir) -Iinclude -std=gnu99 -g -I../pg_lake_engine/include -I../pg_extension_base/include
+ SHLIB_LINK_INTERNAL = $(libpq)
+-PG_LDFLAGS  = -L$(PG_LIBDIR) -Wl,-rpath,$(PG_LIBDIR) -lavro -lcurl
++PG_LDFLAGS  = -L$(DESTDIR)$(PG_LIBDIR) -Wl,-rpath,'$$ORIGIN/pg_lake' -lavro -lcurl
+ 
+ UNAME_S := $(shell uname -s)
+ ifeq ($(UNAME_S),Darwin)
+diff --git a/pgduck_server/Makefile b/pgduck_server/Makefile
+index 5f6c956aaf071742ad26830179d556896c0267e2..4ddc941e1981db52801b7a9bf20388c6e90ac199 100644
+--- a/pgduck_server/Makefile
++++ b/pgduck_server/Makefile
+@@ -19,7 +19,7 @@ PG_CPPFLAGS = -std=c11 -I$(PG_INCLUDEDIR) -Iinclude -DPG_LAKE_DELTA_SUPPORT=$(PG
+ # Add dependencies
+ SHLIB_LINK_INTERNAL = $(libpq)
+ 
+-PG_LDFLAGS  = -lduckdb -L$(PG_LIBDIR) -Wl,-rpath,$(PG_LIBDIR)
++PG_LDFLAGS  = -L$(DESTDIR)$(PG_LIBDIR) -lduckdb -Wl,-rpath,'$$ORIGIN/../lib/pg_lake'
+ 
+ # capture all objects in the current directory and in subdirectories
+ OBJS = $(patsubst %.c,%.o,$(wildcard src/*.c)) $(patsubst %.c,%.o,$(wildcard src/*/*.c))

@@ -1,3 +1,10 @@
+pg-lake (3.4.4-1PGSTY) unstable; urgency=medium
+
+  * Package the upstream v3.4.4 bugfix release.
+  * Keep the pinned Avro, DuckDB, and duckdb-postgres source revisions unchanged.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 03 Sep 2026 06:00:00 +0800
+
 pg-lake (3.4.3-1PGSTY) unstable; urgency=medium
 
   * Package upstream v3.4.3.
