@@ -1,3 +1,11 @@
+datasketches (1.7.0-2PGSTY) unstable; urgency=medium
+
+  * Rebuild Apache DataSketches PostgreSQL 1.7.0 with C++ core 5.2.0.
+  * Keep the PostgreSQL extension and SQL version at upstream 1.7.0.
+  * Include cstdint explicitly for PGXS C++ LLVM bitcode builds.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 18:18:00 +0800
+
 datasketches (1.7.0-1PGSTY) unstable; urgency=medium
 
   * Package Apache DataSketches PostgreSQL 1.7.0

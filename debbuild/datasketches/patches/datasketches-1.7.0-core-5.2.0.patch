@@ -1,0 +1,12 @@
+Description: Include fixed-width integer declarations in C++ LLVM builds
+ DataSketches headers use uint*_t types through transitive includes in normal
+ g++ builds. PGXS invokes clang directly for C++ bitcode, where those types
+ are not declared. Pre-include <cstdint> only in the C++ bitcode rule.
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-yet
+
+--- a/Makefile
++++ b/Makefile
+@@ -79 +79 @@
+-	COMPILE.cxx.bc = $(CLANG) -xc++ -Wno-ignored-attributes $(BITCODE_CXXFLAGS) $(CPPFLAGS) -emit-llvm -c
++	COMPILE.cxx.bc = $(CLANG) -xc++ -Wno-ignored-attributes $(BITCODE_CXXFLAGS) $(CPPFLAGS) -include cstdint -emit-llvm -c
