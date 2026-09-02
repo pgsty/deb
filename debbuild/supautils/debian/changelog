@@ -1,3 +1,9 @@
+supautils (3.4.3-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream supautils 3.4.3.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 03 Sep 2026 06:00:00 +0800
+
 supautils (3.4.2-1PGSTY) unstable; urgency=medium
 
   * Bump to 3.4.2.
