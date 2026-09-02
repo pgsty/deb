@@ -1,3 +1,12 @@
+pgdog (0.1.56-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the official upstream 0.1.56 release.
+  * Freeze pg_raw_parse, libpg_query, and scram in a deterministic vendor tar.
+  * Preserve tokio_unstable and ARM64 LSE without requiring the mold linker.
+  * Record the plugin ABI 0.4 and removed manual-query/fingerprint migration.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 02 Sep 2026 07:30:00 +0800
+
 pgdog (0.1.32-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>

@@ -22,9 +22,10 @@ Homepage: https://github.com/pgdogdev/pgdog
 Package: pgdog
 Architecture: any
 Depends: adduser, ca-certificates, postgresql-client-18, ${shlibs:Depends}, ${misc:Depends}
-Description: Modern PostgreSQL proxy, pooler, load balancer and query router
- PgDog is a modern PostgreSQL proxy, pooler, load balancer and query router
- written in Rust.
+Description: PostgreSQL proxy, pooler, load balancer, sharder and query router
+ PgDog is a PostgreSQL proxy, pooler, load balancer, sharder and query router
+ written in Rust. Version 0.1.56 uses the new parser and plugin ABI 0.4;
+ custom 0.1.32 plugins must be rebuilt and manual query fingerprints retired.
  .
  This package ships the PgDog daemon, a systemd service unit, and default
  configuration templates.
