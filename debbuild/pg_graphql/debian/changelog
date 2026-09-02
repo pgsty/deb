@@ -1,3 +1,12 @@
+pg-graphql (1.6.2-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 1.6.2 with its query-depth security limit.
+  * Build PostgreSQL 14 through 18 with pgrx and cargo-pgrx 0.19.2.
+  * Add the catalog-neutral 1.6.1 to 1.6.2 extension update edge.
+  * Require reconnect or restart before relying on the new depth limit.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 02 Sep 2026 04:00:00 +0800
+
 pg-graphql (1.6.1-1PGSTY) unstable; urgency=medium
 
   * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.
