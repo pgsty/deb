@@ -28,4 +28,13 @@ override_dh_auto_install:
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
 	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
 	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    test "$$(find $$EXT_DIR -maxdepth 1 -type f -name 'pglite_fusion*.sql' | wc -l)" -eq 2; \
+	    test -f $$EXT_DIR/pglite_fusion--0.0.6--0.0.7.sql; \
+	    test -f $$EXT_DIR/pglite_fusion--0.0.7.sql; \
+	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
+	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
 	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md

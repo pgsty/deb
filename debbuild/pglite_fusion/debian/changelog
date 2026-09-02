@@ -1,3 +1,11 @@
+pglite-fusion (0.0.7-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.0.7 and its rusqlite 0.40 runtime.
+  * Build PostgreSQL 14 through 18 with pgrx and cargo-pgrx 0.19.2.
+  * Add the catalog-neutral 0.0.6 to 0.0.7 extension update edge.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 02 Sep 2026 04:00:00 +0800
+
 pglite-fusion (0.0.6-1PGSTY) unstable; urgency=medium
 
   * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.
