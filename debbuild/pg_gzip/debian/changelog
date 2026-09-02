@@ -1,3 +1,9 @@
+pgsql-gzip (1.1.1-1PGSTY) unstable; urgency=medium
+
+  * Bump to 1.1.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:46:24 +0800
+
 pgsql-gzip (1.1.0-1PGSTY) unstable; urgency=medium
 
   * https://github.com/pramsey/pgsql-gzip/releases/tag/v1.1.0
