@@ -1,3 +1,12 @@
+pg-flight-recorder (2.32.1-1PGSTY) unstable; urgency=medium
+
+  * Update pgfr_record and pgfr_analyze to 2.32.1.
+  * Keep fresh installation outside transaction-sensitive snapshot and cron
+    work; do not invent a destructive downstream upgrade edge.
+  * Keep PostgreSQL support aligned with upstream at versions 15 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 15:20:00 +0800
+
 pg-flight-recorder (2.29.2-1PGSTY) unstable; urgency=medium
 
   * Package pgfr_record and pgfr_analyze for PostgreSQL 15 through 18.
