@@ -1,16 +1,18 @@
 all: setup build move
 
-TARBALL := pdu-3.0.25.12.tar.gz
+TARBALL := pdu-3.0.25.12+git20260822.345422f.tar.gz
 SOURCE_DIR ?= ../SOURCES
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+PATCHES := patches/pdu-3.0.25.12.patch
 
 check-src:
 	@test -f "$(SOURCE_DIR)/$(TARBALL)" || (echo "missing $(SOURCE_DIR)/$(TARBALL), run: pig build get -m $(TARBALL)"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
-	tar -C $(BUILD_DIR) --strip-components=1 -xf $(SOURCE_DIR)/$(TARBALL)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_DIR)/$(TARBALL)"
+	for patch in $(PATCHES); do patch -d $(BUILD_DIR) -p1 --fuzz=0 < "$$patch"; done
 	pg_buildext updatecontrol
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \

@@ -1,3 +1,11 @@
+pdu (3.0.25.12+git20260822.345422f-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream main snapshot 345422f without changing PDUVERSION.
+  * Include recovery, boundary-check, and legacy metadata terminator fixes.
+  * Bound metadata serialization to the actual stack buffer size.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 19:05:00 +0800
+
 pdu (3.0.25.12-1PGSTY) unstable; urgency=medium
 
   * Build version-bound PDU binaries for PostgreSQL 14 through 18.

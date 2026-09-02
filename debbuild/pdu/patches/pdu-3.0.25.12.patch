@@ -1,0 +1,27 @@
+--- a/tools.c
++++ b/tools.c
+@@ -2877 +2877 @@
+-        snprintf(ret, 10240,  "%s\t%s\t%s\t%s\n",databaseoid[i].oid,databaseoid[i].database,databaseoid[i].tbloid,databaseoid[i].dbpath);        fputs(ret,file);
++        snprintf(ret, sizeof(ret),  "%s\t%s\t%s\t%s\n",databaseoid[i].oid,databaseoid[i].database,databaseoid[i].tbloid,databaseoid[i].dbpath);        fputs(ret,file);
+--- a/read.c
++++ b/read.c
+@@ -1460 +1460 @@
+-                snprintf(sourceFile, 1024,  "%s", pgSchemaFile);            }
++                snprintf(sourceFile, strlen(pgSchemaFile) + 1,  "%s", pgSchemaFile);            }
+@@ -1465 +1465 @@
+-                snprintf(sourceFile, 1024,  "%s", pgClassFile);            }
++                snprintf(sourceFile, strlen(pgClassFile) + 1,  "%s", pgClassFile);            }
+@@ -1470 +1470 @@
+-                snprintf(sourceFile, 1024,  "%s", pgAttrFile);            }
++                snprintf(sourceFile, strlen(pgAttrFile) + 1,  "%s", pgAttrFile);            }
+@@ -1475 +1475 @@
+-                snprintf(sourceFile, 1024,  "%s", pgTypeFile);            }
++                snprintf(sourceFile, strlen(pgTypeFile) + 1,  "%s", pgTypeFile);            }
+@@ -1529 +1529 @@
+-    snprintf(filename, 256,  "%s/%s/%s_%s", CUR_DB,"meta",CUR_SCH,TABLE_BOOT);    FILE *fp = pdu_fopen(filename,"w");
++    snprintf(filename, sizeof(filename),  "%s/%s/%s_%s", CUR_DB,"meta",CUR_SCH,TABLE_BOOT);    FILE *fp = pdu_fopen(filename,"w");
+--- a/tools.c
++++ b/tools.c
+@@ -1250 +1250 @@
+-                            snprintf(typnameret, 100,  "%s", typoid[x].typname);
++                            snprintf(typnameret, sizeof(typoid[x].typname),  "%s", typoid[x].typname);
