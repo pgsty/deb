@@ -1,3 +1,9 @@
+pgsql-http (1.7.2-1PGSTY) unstable; urgency=medium
+
+  * Bump to 1.7.2.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:46:24 +0800
+
 pgsql-http (1.7.1-1PGSTY) unstable; urgency=medium
 
   * https://github.com/pramsey/pgsql-http/releases/tag/v1.7.1
