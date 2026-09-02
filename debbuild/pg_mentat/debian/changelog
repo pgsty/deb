@@ -1,3 +1,12 @@
+pg-mentat (1.6.0-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the upstream 1.6.0 annotated tag.
+  * Build PostgreSQL 14 through 18 with pgrx and cargo-pgrx 0.19.2.
+  * Keep the optional script feature disabled, matching upstream binaries.
+  * Pin the optional mino-rs source to its resolved v0.1.0 commit.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 02 Sep 2026 08:00:00 +0800
+
 pg-mentat (1.5.7-1PGSTY) unstable; urgency=medium
 
   * Initial release for pg_mentat 1.5.7 and PostgreSQL 14 through 18.
