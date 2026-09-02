@@ -1,3 +1,11 @@
+pg-pinyin (0.0.6-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.0.6 with native pgrx 0.19.2 and PostgreSQL 14-18 support.
+  * Keep the locked dependency graph and declare the pgrx 0.19.2 Rust 1.96 MSRV.
+  * Generate PG14-18 controls explicitly and ship the complete upgrade SQL chain.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 17:30:00 +0800
+
 pg-pinyin (0.0.5-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.0.5 and build the locked graph with pgrx 0.19.1.
