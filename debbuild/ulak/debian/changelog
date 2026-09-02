@@ -1,3 +1,10 @@
+ulak (0.0.3-1PGSTY) unstable; urgency=medium
+
+  * Bump to 0.0.3.
+  * Rebase the hiredis and libcurl compatibility patch.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 09:24:27 +0800
+
 ulak (0.0.2-1PGSTY) unstable; urgency=medium
 
   * Align the DEB compatibility patch with RPM.
