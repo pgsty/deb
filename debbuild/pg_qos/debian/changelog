@@ -1,3 +1,9 @@
+qos (1.1.0-1PGSTY) unstable; urgency=medium
+
+  * Bump to 1.1.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 09:06:25 +0800
+
 qos (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
