@@ -1,3 +1,10 @@
+topn (2.7.1-1PGSTY) unstable; urgency=medium
+
+  * Bump to 2.7.1.
+  * Remove the unused libxml2 build dependency.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 10:00:09 +0800
+
 topn (2.7.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
