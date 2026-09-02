@@ -1,3 +1,14 @@
+pg-trickle (0.92.0-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the signed upstream v0.92.0 tag archive.
+  * Keep PostgreSQL 18 on cargo-pgrx and pgrx 0.19.2 with a locked dependency
+    graph.
+  * Ship all 29 update edges from 0.81.0 through 0.92.0 and the upstream
+    capture-identity recovery safeguards.
+  * Refresh the downstream migration guide for the 0.92.0 boundary.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 03 Sep 2026 06:00:00 +0800
+
 pg-trickle (0.90.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to the signed upstream v0.90.0 tag archive.
