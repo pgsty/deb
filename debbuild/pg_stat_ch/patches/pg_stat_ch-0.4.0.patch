@@ -1,0 +1,21 @@
+Subject: Allow package builds to provide the release version
+
+PGXN source archives do not retain the Git metadata that upstream's version
+helper uses.  Preserve the upstream fallback for ad-hoc builds while allowing
+the DEB/RPM recipes to compile the verified package release version into the
+extension and exported telemetry resource attributes.
+
+--- a/cmake/GitVersion.cmake
++++ b/cmake/GitVersion.cmake
+@@ -5,6 +5,11 @@
+ #   GIT_VERSION - Version string from git describe, or fallback
+ 
+ function(get_git_version output_var)
++  if(DEFINED PG_STAT_CH_PACKAGE_VERSION)
++    set(${output_var} "${PG_STAT_CH_PACKAGE_VERSION}" PARENT_SCOPE)
++    return()
++  endif()
++
+   set(fallback_version "0.1")
+ 
+   find_package(Git QUIET)
