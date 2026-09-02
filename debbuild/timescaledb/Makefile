@@ -1,6 +1,6 @@
 all: pre build
 
-VERSION := 2.29.1
+VERSION := 2.29.2
 TARBALL := timescaledb-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 
