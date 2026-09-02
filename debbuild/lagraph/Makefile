@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := lagraph-1.2.1.tar.gz
+TARBALL := lagraph-1.2.2.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
