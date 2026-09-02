@@ -11,7 +11,7 @@ Package: postgresql-PGVERSION-pg-accumulator
 Architecture: any
 Provides: postgresql-pg-accumulator
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Accumulation registers for PostgreSQL
+Description: Balance, turnover and ledger registers for PostgreSQL
   pg_accumulator is a data accounting engine for PostgreSQL. It provides
-  declarative accumulation registers for balance and turnover tracking across
+  declarative balance, turnover and double-entry ledger registers across
   arbitrary dimensions, with transactional consistency and optimized reads.
