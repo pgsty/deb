@@ -5,7 +5,9 @@
 
 SRC_DIR := timescaledb-toolkit
 PKG_NAME := timescaledb-toolkit
+EXT_VERSION := 1.26.0
 PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+UPGRADE_FROM := 1.6.0 1.7.0 1.8.0 1.10.0-dev 1.10.1 1.11.0 1.12.0 1.12.1 1.13.0 1.13.1 1.14.0 1.15.0 1.16.0 1.17.0 1.18.0 1.19.0 1.21.0 1.22.0 1.23.0 1.24.0 1.25.0
 
 %:
 	dh $@
@@ -22,12 +24,32 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	for PG_VERSION in $(PG_VERSIONS); do \
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
 	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
 	    dh_installdirs -p$$FULL_NAME; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-	    cp target/release/timescaledb_toolkit-pg$$PG_VERSION/usr/lib/postgresql/$$PG_VERSION/lib/*.so      $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
-	    cp target/release/timescaledb_toolkit-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    SRC_ROOT=target/release/timescaledb_toolkit-pg$$PG_VERSION; \
+	    LIB_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
+	    EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    install -m 0755 $$SRC_ROOT/usr/lib/postgresql/$$PG_VERSION/lib/timescaledb_toolkit-$(EXT_VERSION).so $$LIB_DIR/; \
+	    install -m 0644 $$SRC_ROOT/usr/share/postgresql/$$PG_VERSION/extension/timescaledb_toolkit.control $$EXT_DIR/; \
+	    install -m 0644 $$SRC_ROOT/usr/share/postgresql/$$PG_VERSION/extension/timescaledb_toolkit--*.sql $$EXT_DIR/; \
+	    test ! -e $$LIB_DIR/timescaledb_toolkit.so; \
+	    test "$$(find $$EXT_DIR -maxdepth 1 -type f -name 'timescaledb_toolkit--*.sql' | wc -l)" -eq 22; \
+	    for FROM_VERSION in $(UPGRADE_FROM); do \
+	      test -f $$EXT_DIR/timescaledb_toolkit--$$FROM_VERSION--$(EXT_VERSION).sql; \
+	    done; \
+	    ! grep -q '^module_pathname' $$EXT_DIR/timescaledb_toolkit.control; \
+	    ! grep -R -Fq 'MODULE_PATHNAME' $$EXT_DIR; \
+	    grep -R -Fq '$$libdir/timescaledb_toolkit-$(EXT_VERSION)' $$EXT_DIR; \
+	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
+	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
 	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md LICENSE NOTICE
+
+override_dh_installchangelogs:
+	dh_installchangelogs CHANGELOG.md
