@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/evokoa/pgcontext
+Homepage: https://github.com/Evokoa/pgContext
 
 Package: postgresql-PGVERSION-pgcontext
 Architecture: any
@@ -14,5 +14,7 @@ Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Recommends: postgresql-PGVERSION-pgvector
 Description: hybrid vector and full-text retrieval engine for PostgreSQL
  pgcontext provides dense vector search, metadata-filtered approximate search,
- and hybrid dense plus full-text retrieval inside PostgreSQL. The package also
- includes an optional pgcontext_pgvector compatibility bridge.
+ and hybrid dense plus full-text retrieval inside PostgreSQL. Version 0.3 is a
+ clean-install-only release for PostgreSQL 17 and 18; the retired
+ pgcontext_pgvector companion is replaced by an optional binding API in the
+ main extension.

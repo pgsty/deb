@@ -19,7 +19,7 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	for PG_VERSION in $(PG_VERSIONS); do \
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 	    DIR_NAME=$(EXT_NAME)-pg$$PG_VERSION; \
 	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
 	    dh_installdirs -p$$FULL_NAME; \
@@ -28,12 +28,12 @@ override_dh_auto_install:
 	    install -m 0755 target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/$(EXT_NAME).so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
 	    install -m 0644 target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME).control $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	    install -m 0644 target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)*.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
-	    install -m 0644 sql/$(EXT_NAME)--0.1.0--0.2.0.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
-	    install -m 0644 $(EXT_NAME)_pgvector.control $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
-	    install -m 0644 sql/$(EXT_NAME)_pgvector--0.2.0.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    test -f $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)--0.3.0.sql; \
+	    test "$$(find $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension -maxdepth 1 -type f -name '$(EXT_NAME)*.sql' | wc -l)" -eq 1; \
+	    test ! -e $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)_pgvector.control; \
 	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
 	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
 	done
 
 override_dh_installdocs:
-	dh_installdocs --all README.md NOTICE
+	dh_installdocs --all README.md NOTICE docs/user_guide/release_notes.md docs/user_guide/pgvector_migration.md
