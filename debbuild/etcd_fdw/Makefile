@@ -2,16 +2,15 @@ all: setup build move
 
 TARBALL := etcd_fdw-0.0.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-WRAPPERS_TARBALL := wrappers-0.6.1.tar.gz
+WRAPPERS_TARBALL := wrappers-0.6.2.tar.gz
 WRAPPERS_SOURCE_TARBALL ?= ../SOURCES/$(WRAPPERS_TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 18
-PGRX_VERSION := 0.19.1
+PG_VERSIONS ?= 14 15 16 17 18
+PGRX_VERSION := 0.19.2
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 SOURCE_PATCH := patches/etcd-fdw-0.0.1.patch
-CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SNAPSHOT := /tmp/pgrx0191-etcd-fdw-cargo-locks.before
+LOCK_SNAPSHOT := $(CURDIR)/$(BUILD_DIR)/.pgrx-locks.before
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -43,13 +42,12 @@ building: check-pgrx
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init $(PGRX_INIT_ARGS) --no-run
 	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT)
 	@test -s $(LOCK_SNAPSHOT)
-	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	cd $(BUILD_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    CARGO_NET_OFFLINE=true \
-	    CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
 	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
 	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT).after
@@ -64,7 +62,7 @@ check-pgrx:
 	fi
 
 packaging:
-	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
 	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
 	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
