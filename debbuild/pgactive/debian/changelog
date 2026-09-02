@@ -1,3 +1,10 @@
+pgactive (2.1.9-1PGSTY) unstable; urgency=medium
+
+  * New upstream release.
+  * Carry the upstream control-file default-version correction.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 12:00:00 +0800
+
 pgactive (2.1.7-1PGSTY) unstable; urgency=medium
 
   * Resolve LIBRARY_PATH from the active PostgreSQL pg_config.
