@@ -29,6 +29,11 @@ override_dh_auto_install:
 	    cp $(SRC_DIR)/target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/$(EXT_NAME).so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
 	    cp $(SRC_DIR)/target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME).control $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	    cp $(SRC_DIR)/target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)*.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    test "$$(find $$EXT_DIR -maxdepth 1 -type f -name 'graph*.sql' | wc -l)" -eq 3; \
+	    test -f $$EXT_DIR/graph--1.0.0--1.1.0.sql; \
+	    test -f $$EXT_DIR/graph--1.1.0--1.2.0.sql; \
+	    test -f $$EXT_DIR/graph--1.2.0.sql; \
 	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
 	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
 	done

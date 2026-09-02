@@ -1,0 +1,139 @@
+diff --git a/graph/Cargo.lock b/graph/Cargo.lock
+index 4755f74..522e96d 100644
+--- a/graph/Cargo.lock
++++ b/graph/Cargo.lock
+@@ -1215 +1215 @@ name = "pgrx"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -1217 +1217 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "da2d9afc1c8dc8885d777a173755dedd6c0345bfa84fae307a735511bd96b9cc"
++checksum = "8d7e6f85d841cd9c01092ad3b9d60fc778bf54dc6174bbd24126250659af7d91"
+@@ -1236 +1236 @@ name = "pgrx-bindgen"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -1238 +1238 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b42d171ae578765094d8597ef04f593f4de7b8694c78a64e23bd69d304251504"
++checksum = "81cd392ab2e05995ebecf15bd562d7eb666a1ced11b3e39ef910212d6b67f2a9"
+@@ -1255 +1255 @@ name = "pgrx-macros"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -1257 +1257 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7039b2a78ed764daced91b20907841ffe4a9b3d0f795ea7e9d37973d1e1509ec"
++checksum = "aefe3297831869ac1e3fc62045a0181cd9f3ba3e3ad3ed56b9d89ae899170581"
+@@ -1267 +1267 @@ name = "pgrx-pg-config"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -1269 +1269 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7ed293ffce438bacdff7e00b76c6a891083a8bbf3670bcfdb6f8125498284816"
++checksum = "41dd7c6196fcd41f76240f721b6373dc9c080489c87194e3ffb8f924a8fef4e0"
+@@ -1287 +1287 @@ name = "pgrx-pg-sys"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -1289 +1289 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8b0e16aa08b282f278414081a1c082755def583b4ecfba53114f62e42f8bd06a"
++checksum = "e8f2ee0cc6c14ebd3b91aa7d4576b45dc87945e905a53343ef50e2509e928c94"
+@@ -1301 +1301 @@ name = "pgrx-sql-entity-graph"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -1303 +1303 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c92b0093b2077b9854f35d5d54d4e281dcb9b4e6a10a5a1fed310e58ab84b1e7"
++checksum = "48447cd6f7e60929d14ca24d3507c357d16a531dff896f9be921b59c03022759"
+@@ -1317 +1317 @@ name = "pgrx-tests"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -1319 +1319 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6d39ff1aef126fe3e10c193aa358009476beaf35b9ae80c8ed86334e9a6c40c6"
++checksum = "bf2bd839c188294cff06e8f0e4267f2d6e9fbdce634c05bffb970b55e6682f58"
+@@ -1904 +1904 @@ dependencies = [
+- "getrandom 0.3.4",
++ "getrandom 0.4.2",
+diff --git a/graph/Cargo.toml b/graph/Cargo.toml
+index 93ec690..2f90d89 100644
+--- a/graph/Cargo.toml
++++ b/graph/Cargo.toml
+@@ -14,3 +14,2 @@ crate-type = ["cdylib", "rlib"]
+-# Official support follows PostgreSQL majors that still receive upstream fixes:
+-# pg14 through pg18. The pg13 feature remains available as legacy best-effort
+-# because pgrx still exposes it, but release gates do not cover PG13.
++# PGSTY packages the active PostgreSQL 14 through 19 matrix. PostgreSQL 13 is
++# EOL and intentionally omitted from downstream package targets.
+@@ -20 +18,0 @@ default = ["pg17"]
+-pg13 = ["pgrx/pg13", "pgrx-tests/pg13"]
+@@ -25,0 +24 @@ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
++pg19 = ["pgrx/pg19", "pgrx-tests/pg19"]
+@@ -32 +31 @@ benchmarks = []
+-pgrx = "=0.19.1"
++pgrx = "=0.19.2"
+@@ -69 +68 @@ unwrap_used = "allow"
+-pgrx-tests = "=0.19.1"
++pgrx-tests = "=0.19.2"
+diff --git a/graph/fuzz/Cargo.lock b/graph/fuzz/Cargo.lock
+index 3a52480..0898009 100644
+--- a/graph/fuzz/Cargo.lock
++++ b/graph/fuzz/Cargo.lock
+@@ -677 +677 @@ name = "pgrx"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -679 +679 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "da2d9afc1c8dc8885d777a173755dedd6c0345bfa84fae307a735511bd96b9cc"
++checksum = "8d7e6f85d841cd9c01092ad3b9d60fc778bf54dc6174bbd24126250659af7d91"
+@@ -698 +698 @@ name = "pgrx-bindgen"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -700 +700 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b42d171ae578765094d8597ef04f593f4de7b8694c78a64e23bd69d304251504"
++checksum = "81cd392ab2e05995ebecf15bd562d7eb666a1ced11b3e39ef910212d6b67f2a9"
+@@ -717 +717 @@ name = "pgrx-macros"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -719 +719 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7039b2a78ed764daced91b20907841ffe4a9b3d0f795ea7e9d37973d1e1509ec"
++checksum = "aefe3297831869ac1e3fc62045a0181cd9f3ba3e3ad3ed56b9d89ae899170581"
+@@ -729 +729 @@ name = "pgrx-pg-config"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -731 +731 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7ed293ffce438bacdff7e00b76c6a891083a8bbf3670bcfdb6f8125498284816"
++checksum = "41dd7c6196fcd41f76240f721b6373dc9c080489c87194e3ffb8f924a8fef4e0"
+@@ -749 +749 @@ name = "pgrx-pg-sys"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -751 +751 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8b0e16aa08b282f278414081a1c082755def583b4ecfba53114f62e42f8bd06a"
++checksum = "e8f2ee0cc6c14ebd3b91aa7d4576b45dc87945e905a53343ef50e2509e928c94"
+@@ -763 +763 @@ name = "pgrx-sql-entity-graph"
+-version = "0.19.1"
++version = "0.19.2"
+@@ -765 +765 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c92b0093b2077b9854f35d5d54d4e281dcb9b4e6a10a5a1fed310e58ab84b1e7"
++checksum = "48447cd6f7e60929d14ca24d3507c357d16a531dff896f9be921b59c03022759"
+diff --git a/graph/fuzz/Cargo.toml b/graph/fuzz/Cargo.toml
+index 9290f73..2217e20 100644
+--- a/graph/fuzz/Cargo.toml
++++ b/graph/fuzz/Cargo.toml
+@@ -18 +18 @@ path = ".."
+-# supports pg14 through pg18; pg13 remains legacy best-effort only.
++# supports PostgreSQL 14 through 19.
+diff --git a/graph/rust-toolchain.toml b/graph/rust-toolchain.toml
+index 4f0430e..73cb934 100644
+--- a/graph/rust-toolchain.toml
++++ b/graph/rust-toolchain.toml
+@@ -2 +2 @@
+-channel = "1.96.0"
++channel = "stable"
+diff --git a/graph/src/acl.rs b/graph/src/acl.rs
+index 9554bbb..1620e06 100644
+--- a/graph/src/acl.rs
++++ b/graph/src/acl.rs
+@@ -136 +136,7 @@ pub(crate) fn require_rls_bypass_privilege() -> GraphResult<()> {
+-        #[cfg(any(feature = "pg15", feature = "pg16", feature = "pg17", feature = "pg18"))]
++        #[cfg(any(
++            feature = "pg15",
++            feature = "pg16",
++            feature = "pg17",
++            feature = "pg18",
++            feature = "pg19"
++        ))]
+@@ -149 +155 @@ pub(crate) fn require_rls_bypass_privilege() -> GraphResult<()> {
+-        #[cfg(any(feature = "pg13", feature = "pg14"))]
++        #[cfg(feature = "pg14")]
