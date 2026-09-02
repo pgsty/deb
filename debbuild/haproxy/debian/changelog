@@ -1,3 +1,12 @@
+haproxy (3.4.4-1PGSTY) unstable; urgency=medium
+
+  * New upstream release 3.4.4.
+  * Refresh the single reproducibility patch without fuzz or offset.
+  * Regenerate haproxy-utils-3.4.4.tar.gz deterministically. The upstream
+    systemd template and all shared downstream assets remain byte-identical.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 14:30:00 +0800
+
 haproxy (3.4.3-1PGSTY) unstable; urgency=medium
 
   * Consume the shared haproxy-utils archive instead of keeping downstream
