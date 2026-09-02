@@ -1,5 +1,5 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293ad9fff19b 100644
+index 612d9a9dc9029f80243ed940e058d4d9c0624177..16ec16a3dae3aa9b2f5746133753be63ff996d98 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
 @@ -44,16 +44,6 @@ dependencies = [
@@ -289,7 +289,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "pathsearch"
  version = "0.2.0"
-@@ -1931,9 +1942,9 @@ dependencies = [
+@@ -1932,9 +1943,9 @@ dependencies = [
  
  [[package]]
  name = "pgrx"
@@ -301,7 +301,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  dependencies = [
   "bitflags",
   "bitvec",
-@@ -1946,15 +1957,15 @@ dependencies = [
+@@ -1947,15 +1958,15 @@ dependencies = [
   "serde",
   "serde_cbor",
   "serde_json",
@@ -320,7 +320,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  dependencies = [
   "bindgen",
   "cc",
-@@ -1964,16 +1975,16 @@ dependencies = [
+@@ -1965,16 +1976,16 @@ dependencies = [
   "proc-macro2",
   "quote",
   "regex",
@@ -340,7 +340,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  dependencies = [
   "pgrx-sql-entity-graph",
   "proc-macro2",
-@@ -1983,9 +1994,9 @@ dependencies = [
+@@ -1984,9 +1995,9 @@ dependencies = [
  
  [[package]]
  name = "pgrx-pg-config"
@@ -352,7 +352,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  dependencies = [
   "cargo_toml",
   "codepage",
-@@ -1995,17 +2006,17 @@ dependencies = [
+@@ -1996,17 +2007,17 @@ dependencies = [
   "pathsearch",
   "serde",
   "serde_json",
@@ -374,7 +374,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  dependencies = [
   "cee-scape",
   "libc",
-@@ -2017,9 +2028,9 @@ dependencies = [
+@@ -2018,9 +2029,9 @@ dependencies = [
  
  [[package]]
  name = "pgrx-sql-entity-graph"
@@ -386,7 +386,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  dependencies = [
   "convert_case",
   "eyre",
-@@ -2027,34 +2038,30 @@ dependencies = [
+@@ -2028,34 +2039,30 @@ dependencies = [
   "proc-macro2",
   "quote",
   "syn",
@@ -427,7 +427,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
   "winapi",
  ]
  
-@@ -2228,31 +2235,6 @@ dependencies = [
+@@ -2229,31 +2236,6 @@ dependencies = [
   "unicode-ident",
  ]
  
@@ -459,7 +459,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "quote"
  version = "1.0.45"
-@@ -2262,12 +2244,6 @@ dependencies = [
+@@ -2263,12 +2245,6 @@ dependencies = [
   "proc-macro2",
  ]
  
@@ -472,7 +472,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "r-efi"
  version = "6.0.0"
-@@ -2287,20 +2263,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -2288,20 +2264,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "5ca0ecfa931c29007047d1bc58e623ab12e5590e8c7cc53200d5202b69266d8a"
  dependencies = [
   "libc",
@@ -494,7 +494,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "rand"
  version = "0.10.1"
-@@ -2322,16 +2288,6 @@ dependencies = [
+@@ -2323,16 +2289,6 @@ dependencies = [
   "rand_core 0.6.4",
  ]
  
@@ -511,7 +511,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "rand_core"
  version = "0.6.4"
-@@ -2341,30 +2297,12 @@ dependencies = [
+@@ -2342,30 +2298,12 @@ dependencies = [
   "getrandom 0.2.17",
  ]
  
@@ -542,7 +542,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "redox_syscall"
  version = "0.5.18"
-@@ -2514,18 +2452,6 @@ version = "1.0.22"
+@@ -2515,18 +2453,6 @@ version = "1.0.22"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "b39cdef0fa800fc44525c84ccb54a029961a8215f9619753635a9c0d2538d46d"
  
@@ -561,7 +561,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "ryu"
  version = "1.0.23"
-@@ -2718,6 +2644,12 @@ version = "1.3.0"
+@@ -2719,6 +2645,12 @@ version = "1.3.0"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
  
@@ -574,7 +574,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "signal-hook-registry"
  version = "1.4.8"
-@@ -2837,7 +2769,7 @@ dependencies = [
+@@ -2838,7 +2770,7 @@ dependencies = [
   "serde_json",
   "sha2 0.10.9",
   "smallvec",
@@ -583,7 +583,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
   "tokio",
   "tokio-stream",
   "tracing",
-@@ -2922,7 +2854,7 @@ dependencies = [
+@@ -2923,7 +2855,7 @@ dependencies = [
   "smallvec",
   "sqlx-core",
   "stringprep",
@@ -592,7 +592,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
   "tracing",
   "uuid",
   "whoami 1.6.1",
-@@ -2963,7 +2895,7 @@ dependencies = [
+@@ -2964,7 +2896,7 @@ dependencies = [
   "smallvec",
   "sqlx-core",
   "stringprep",
@@ -601,7 +601,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
   "tracing",
   "uuid",
   "whoami 1.6.1",
-@@ -2989,7 +2921,7 @@ dependencies = [
+@@ -2990,7 +2922,7 @@ dependencies = [
   "serde",
   "serde_urlencoded",
   "sqlx-core",
@@ -610,7 +610,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
   "tracing",
   "url",
   "uuid",
-@@ -3060,14 +2992,16 @@ dependencies = [
+@@ -3061,14 +2993,16 @@ dependencies = [
  
  [[package]]
  name = "sysinfo"
@@ -629,7 +629,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
   "windows",
  ]
  
-@@ -3090,33 +3024,13 @@ dependencies = [
+@@ -3091,33 +3025,13 @@ dependencies = [
   "windows-sys 0.61.2",
  ]
  
@@ -664,7 +664,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  ]
  
  [[package]]
-@@ -3292,12 +3206,27 @@ dependencies = [
+@@ -3293,12 +3207,27 @@ dependencies = [
   "indexmap",
   "serde_core",
   "serde_spanned",
@@ -693,7 +693,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "toml_datetime"
  version = "0.7.5+spec-1.1.0"
-@@ -3307,6 +3236,15 @@ dependencies = [
+@@ -3308,6 +3237,15 @@ dependencies = [
   "serde_core",
  ]
  
@@ -709,7 +709,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "toml_parser"
  version = "1.1.2+spec-1.1.0"
-@@ -3510,12 +3448,6 @@ dependencies = [
+@@ -3511,12 +3449,6 @@ dependencies = [
   "syn",
  ]
  
@@ -722,7 +722,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "unescape"
  version = "0.1.0"
-@@ -3561,12 +3493,6 @@ version = "1.13.2"
+@@ -3562,12 +3494,6 @@ version = "1.13.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "9629274872b2bfaf8d66f5f15725007f635594914870f65218920345aa11aa8c"
  
@@ -735,7 +735,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "unicode-xid"
  version = "0.2.6"
-@@ -3621,15 +3547,6 @@ version = "0.9.5"
+@@ -3622,15 +3548,6 @@ version = "0.9.5"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
  
@@ -751,7 +751,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "walkdir"
  version = "2.5.0"
-@@ -3854,7 +3771,7 @@ version = "0.1.11"
+@@ -3855,7 +3772,7 @@ version = "0.1.11"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
  dependencies = [
@@ -760,7 +760,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  ]
  
  [[package]]
-@@ -3865,12 +3782,23 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
+@@ -3866,12 +3783,23 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
  
  [[package]]
  name = "windows"
@@ -788,7 +788,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  ]
  
  [[package]]
-@@ -3879,12 +3807,36 @@ version = "0.57.0"
+@@ -3880,12 +3808,36 @@ version = "0.57.0"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "d2ed2439a290666cd67ecce2b0ffaad89c2a56b976b736e6ece670297897832d"
  dependencies = [
@@ -828,7 +828,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "windows-implement"
  version = "0.57.0"
-@@ -3896,6 +3848,17 @@ dependencies = [
+@@ -3897,6 +3849,17 @@ dependencies = [
   "syn",
  ]
  
@@ -846,7 +846,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "windows-interface"
  version = "0.57.0"
-@@ -3907,12 +3870,33 @@ dependencies = [
+@@ -3908,12 +3871,33 @@ dependencies = [
   "syn",
  ]
  
@@ -880,7 +880,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "windows-result"
  version = "0.1.2"
-@@ -3922,6 +3906,24 @@ dependencies = [
+@@ -3923,6 +3907,24 @@ dependencies = [
   "windows-targets 0.52.6",
  ]
  
@@ -905,7 +905,7 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  [[package]]
  name = "windows-sys"
  version = "0.48.0"
-@@ -3971,6 +3973,15 @@ dependencies = [
+@@ -3972,6 +3974,15 @@ dependencies = [
   "windows_x86_64_msvc 0.52.6",
  ]
  
@@ -922,12 +922,12 @@ index a6ed0123db367f74a05a85a2ce198f9a0671f1e5..59ec9800927e1ee736fabbed7af0293a
  name = "windows_aarch64_gnullvm"
  version = "0.48.5"
 diff --git a/Cargo.toml b/Cargo.toml
-index 599be32ccf0b540431bb1635b2c8ac9b724e1c91..adb8cbae37b9773535916ea1365a281ba5b08b3c 100644
+index 25b48861f9d82cffb8b724ed8de2e72aee880222..4e6beb019fa31f121b82a6664e29e66fcafd2200 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
 @@ -2,6 +2,7 @@
  name = "pg_durable"
- version = "0.2.6"
+ version = "0.2.7"
  edition = "2021"
 +rust-version = "1.96"
  license = "PostgreSQL"
@@ -964,7 +964,7 @@ index 599be32ccf0b540431bb1635b2c8ac9b724e1c91..adb8cbae37b9773535916ea1365a281b
  serde = { version = "1.0", features = ["derive"] }
  serde_json = { version = "1.0", features = ["preserve_order", "raw_value"] }
  uuid = { version = "1.0", features = ["v4", "serde"] }
-@@ -67,7 +64,7 @@ base64 = "0.22"
+@@ -72,7 +69,7 @@ base64 = "0.22"
  tracing-subscriber = { version = "0.3", features = ["env-filter"] }
  
  [dev-dependencies]
