@@ -1,3 +1,9 @@
+pg-currency (0.0.4-1PGSTY) unstable; urgency=medium
+
+  * Bump to PGXN stable 0.0.4.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:35:43 +0800
+
 pg-currency (0.0.3-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
