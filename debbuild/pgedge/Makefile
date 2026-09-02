@@ -6,6 +6,7 @@ PG_TARBALL := postgresql-$(PG_VERSION).tar.gz
 SPOCK_TARBALL := spock-$(SPOCK_VERSION).tar.gz
 LOLOR_TARBALL := lolor-$(LOLOR_VERSION).tar.gz
 SNOWFLAKE_TARBALL := snowflake-$(SNOWFLAKE_VERSION).tar.gz
+SPOCK_PATCHSET_REBASE := patches/pgedge-spock-5.0.11-pg17-pg18.patch
 BUILD_DIR := build
 
 check-src:
@@ -21,6 +22,8 @@ setup: check-src
 	tar -C $(BUILD_DIR)/.spock --strip-components=1 -xf $(SOURCE_DIR)/$(SPOCK_TARBALL)
 	tar -C $(BUILD_DIR)/.lolor --strip-components=1 -xf $(SOURCE_DIR)/$(LOLOR_TARBALL)
 	tar -C $(BUILD_DIR)/.snowflake --strip-components=1 -xf $(SOURCE_DIR)/$(SNOWFLAKE_TARBALL)
+	@test "$(SPOCK_VERSION)" = "5.0.11" || (echo "rebase $(SPOCK_PATCHSET_REBASE) is specific to Spock 5.0.11"; exit 1)
+	patch -d $(BUILD_DIR)/.spock -p1 --fuzz=0 < $(SPOCK_PATCHSET_REBASE)
 	cd $(BUILD_DIR) && \
 		PATCH_DIR=""; \
 		if [ -d .spock/patches/pg$(PG_MAJOR) ]; then PATCH_DIR=.spock/patches/pg$(PG_MAJOR); \
@@ -28,7 +31,7 @@ setup: check-src
 		else echo "unable to find pg$(PG_MAJOR) patch directory in spock source"; exit 1; fi; \
 		for p in $$(find "$$PATCH_DIR" -maxdepth 1 -type f -name '*.diff' | sort); do \
 			echo "apply $$p"; \
-			patch -p1 < "$$p"; \
+			patch -p1 --fuzz=0 < "$$p"; \
 		done
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	find $(BUILD_DIR)/debian -type f -exec sed -i \

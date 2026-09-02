@@ -1,0 +1,16 @@
+--- a/patches/17/pg17-015-attoptions.diff
++++ b/patches/17/pg17-015-attoptions.diff
+@@ -117 +117 @@
+-@@ -4005,6 +4015,7 @@ l2:
++@@ -4175,6 +4185,7 @@ l2:
+@@ -124 +124 @@
+- 	/* NO EREPORT(ERROR) from here till changes are logged */
++ 	clear_all_visible = PageIsAllVisible(page);
+--- a/patches/18/pg18-015-attoptions.diff
++++ b/patches/18/pg18-015-attoptions.diff
+@@ -118 +118 @@
+-@@ -4041,6 +4052,7 @@ l2:
++@@ -4151,6 +4162,7 @@ l2:
+@@ -125 +125 @@
+- 	/* NO EREPORT(ERROR) from here till changes are logged */
++ 	clear_all_visible = PageIsAllVisible(page);
