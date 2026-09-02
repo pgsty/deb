@@ -1,3 +1,9 @@
+pguint (1.20260630-1PGSTY) unstable; urgency=medium
+
+  * Bump to 1.20260630.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:57:58 +0800
+
 pguint (1.20250815-1PGSTY) unstable; urgency=medium
 
   * bump to 1.20250815
