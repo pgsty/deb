@@ -1,12 +1,13 @@
 all: setup build move
 
 TARBALL := apache-datasketches-postgresql-1.7.0-src.tar.gz
-CORE_TARBALL := apache-datasketches-cpp-5.0.0-src.tar.gz
-CORE_SOURCE_DIR := apache-datasketches-cpp-5.0.0-src
+CORE_TARBALL := apache-datasketches-cpp-5.2.0-src.tar.gz
+CORE_SOURCE_DIR := apache-datasketches-cpp-5.2.0-src
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 CORE_SOURCE_TARBALL ?= ../SOURCES/$(CORE_TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+PATCHES := $(sort $(wildcard patches/*.patch))
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -19,9 +20,17 @@ setup: check-src
 	ln -sfn $(CORE_SOURCE_DIR) $(BUILD_DIR)/datasketches-cpp
 	ln -sfn /usr/include $(BUILD_DIR)/boost
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	@$(MAKE) apply-patches
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+
+apply-patches:
+	@set -e; \
+	for p in $(PATCHES); do \
+		echo "apply $$p"; \
+		(cd $(BUILD_DIR) && patch -p1 < "../$$p"); \
+	done
 
 build:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
@@ -33,4 +42,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup build move clean
+.PHONY: all check-src setup apply-patches build move clean
