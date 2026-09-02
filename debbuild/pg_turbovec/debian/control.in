@@ -2,7 +2,7 @@ Source: pg-turbovec
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, git, libopenblas-dev
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, git, rustc
 Standards-Version: 4.7.2
 Rules-Requires-Root: no
 Homepage: https://codeberg.org/gregburd/pg_turbovec

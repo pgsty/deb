@@ -1,23 +1,34 @@
 all: setup build move
 
-TARBALL := pg_turbovec-1.29.0.tar.gz
+# Official Codeberg tag v2.0.0 peels to de35e27e4540a4ec7e7a2d24f60b5317a2091032.
+TARBALL := pg_turbovec-2.0.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.1
+PGRX_VERSION := 0.19.2
+SOURCE_PATCH := patches/pg-turbovec-2.0.0.patch
+CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-setup: check-src
+check-patches:
+	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
+
+setup: check-src check-patches
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
+	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})); \
 	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+
+apply-patches:
+	@echo "apply $(SOURCE_PATCH)"
+	@(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
@@ -30,23 +41,22 @@ building: check-pgrx
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
-	cd $(BUILD_DIR) && grep -Fq 'rust-version = "1.96.0"' Cargo.toml
-	cd $(BUILD_DIR) && grep -Fq 'pgrx = "=0.19.1"' Cargo.toml
-	cd $(BUILD_DIR) && grep -Fq 'pgrx-tests = "=0.19.1"' Cargo.toml
 	cd $(BUILD_DIR) && sha256sum Cargo.lock > .pgrx-cargo-lock.before
 	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" \
-		CARGO_HTTP_TIMEOUT=600 CARGO_NET_RETRY=10 CARGO_NET_GIT_FETCH_WITH_CLI=true \
+		CARGO_HTTP_TIMEOUT=600 CARGO_NET_RETRY=10 CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
 		cargo fetch --locked
 	cd $(BUILD_DIR) && \
-	MULTIARCH=$$(dpkg-architecture -qDEB_HOST_MULTIARCH); \
-	export RUSTFLAGS="$${RUSTFLAGS:-} -L /usr/lib/$$MULTIARCH -C link-arg=-Wl,--no-gc-sections"; \
+	set -eu; \
+	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    RUSTUP_TOOLCHAIN=stable CARGO_BUILD_JOBS="$${CARGO_BUILD_JOBS:-2}" \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=true \
-	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION \
-	        --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config || exit 1; \
-	done
+		    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
+		    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION \
+		        --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+		    EXT_DIR=target/release/pg_turbovec-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
+		    cp -f sql/pg_turbovec--*--*.sql "$$EXT_DIR/"; \
+		done
 	cd $(BUILD_DIR) && sha256sum Cargo.lock > .pgrx-cargo-lock.after
 	cmp $(BUILD_DIR)/.pgrx-cargo-lock.before $(BUILD_DIR)/.pgrx-cargo-lock.after && \
 		rm -f $(BUILD_DIR)/.pgrx-cargo-lock.before $(BUILD_DIR)/.pgrx-cargo-lock.after
@@ -57,19 +67,12 @@ check-pgrx:
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
 	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
 	    exit 1; \
-	fi; \
-	RUSTC_VERSION=$$(RUSTUP_TOOLCHAIN=stable rustc --version 2>/dev/null | awk '{print $$2}'); \
-	RUSTC_MAJOR=$$(echo "$$RUSTC_VERSION" | cut -d. -f1); \
-	RUSTC_MINOR=$$(echo "$$RUSTC_VERSION" | cut -d. -f2); \
-	if [ -z "$$RUSTC_VERSION" ] || [ "$$RUSTC_MAJOR" -lt 1 ] || { [ "$$RUSTC_MAJOR" -eq 1 ] && [ "$$RUSTC_MINOR" -lt 96 ]; }; then \
-	    echo "rustc 1.96.0 or newer is required" >&2; \
-	    exit 1; \
 	fi
 
 packaging:
-	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
 	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
@@ -77,4 +80,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup build building check-pgrx packaging move clean
+.PHONY: all check-src check-patches setup apply-patches build building check-pgrx packaging move clean
