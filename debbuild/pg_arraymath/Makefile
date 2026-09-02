@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgsql-arraymath-1.1.tar.gz
+TARBALL := pgsql-arraymath-1.1+git20260702.4822319.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 
