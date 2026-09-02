@@ -1,3 +1,10 @@
+timescaledb-tsl (2.29.2-1PGSTY) unstable; urgency=medium
+
+  * https://github.com/timescale/timescaledb/releases/tag/2.29.2
+  * Retain PostgreSQL 16 through 18, per upstream 2.29 release support policy.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 18:30:00 +0800
+
 timescaledb-tsl (2.29.1-1PGSTY) unstable; urgency=medium
 
   * https://github.com/timescale/timescaledb/releases/tag/2.29.1
