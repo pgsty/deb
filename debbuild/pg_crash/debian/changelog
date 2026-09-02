@@ -1,3 +1,11 @@
+pg-crash (1:0.3-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the official upstream 0.3 release.
+  * Preserve the historical empty extension catalog through a 1.0 to 0.3
+    compatibility edge.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 08:00:00 +0800
+
 pg-crash (1.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
