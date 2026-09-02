@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := graphblas-10.2.0.tar.gz
+TARBALL := graphblas-10.5.0.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

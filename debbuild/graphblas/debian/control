@@ -2,7 +2,7 @@ Source: graphblas
 Section: libs
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: cmake, debhelper-compat (= 13), pkgconf
+Build-Depends: cmake (>= 3.23), debhelper-compat (= 13), pkgconf
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/DrTimothyAldenDavis/GraphBLAS
@@ -19,4 +19,4 @@ Architecture: any
 Depends: ${misc:Depends}, libgraphblas10 (= ${binary:Version})
 Description: SuiteSparse GraphBLAS development files
  Headers, pkg-config metadata, CMake config, and linker symlink for
- SuiteSparse:GraphBLAS 10.2.0.
+ SuiteSparse:GraphBLAS 10.5.0.
