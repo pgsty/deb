@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := decoder_raw-1.0.tar.gz
+TARBALL := decoder_raw-1.0+git20260728.2271b0d.tar.gz
 
 # prepare directory
 setup:
