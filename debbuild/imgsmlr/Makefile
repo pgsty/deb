@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := imgsmlr-1.0.tar.gz
+TARBALL := imgsmlr-1.0+git20180223.c484a15.tar.gz
 
 # prepare directory
 setup:

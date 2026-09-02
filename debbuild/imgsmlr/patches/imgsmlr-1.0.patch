@@ -1,15 +1,34 @@
-diff --git a/imgsmlr_idx.c b/imgsmlr_idx.c
-index 492945f..54f951d 100644
---- a/imgsmlr_idx.c
-+++ b/imgsmlr_idx.c
-@@ -78,8 +78,8 @@ signature_decompress(PG_FUNCTION_ARGS)
- {
- 	GISTENTRY  *entry = (GISTENTRY *) PG_GETARG_POINTER(0);
--	bytea	   *key = (bytea *) pg_detoast_datum(DatumGetPointer(entry->key));
+Description: Restore modern PostgreSQL and detoast compatibility
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-yet
+
+diff -rN -U 0 a/imgsmlr.h b/imgsmlr.h
+--- a/imgsmlr.h	2018-02-24 05:08:51
++++ b/imgsmlr.h	2026-08-31 18:57:44
+@@ -20,0 +21,17 @@
++#ifdef PG_VERSION_NUM
++#if PG_VERSION_NUM >= 160000
++#include <varatt.h>
++#ifndef Abs
++#define Abs(x)  ((x) >= 0 ? (x) : -(x))
++#endif
++#endif
++#endif
++
++#ifndef FALSE
++#define FALSE ((bool) 0)
++#endif
++
++#ifndef TRUE
++#define TRUE ((bool) 1)
++#endif
++
+diff -rN -U 0 a/imgsmlr_idx.c b/imgsmlr_idx.c
+--- a/imgsmlr_idx.c	2018-02-24 05:08:51
++++ b/imgsmlr_idx.c	2026-08-31 18:57:44
+@@ -81 +81 @@
+-	bytea	   *key = DatumGetByteaP(PG_DETOAST_DATUM(entry->key));
 +	bytea	   *key = DatumGetByteaP(entry->key);
- 
+@@ -83 +83 @@
 -	if (key != DatumGetByteaP(entry->key))
 +	if (PointerGetDatum(key) != entry->key)
- 	{
- 		GISTENTRY  *retval = (GISTENTRY *) palloc(sizeof(GISTENTRY));
- 

@@ -1,3 +1,10 @@
+imgsmlr (1.0+git20180223.c484a15-1PGSTY) unstable; urgency=medium
+
+  * Pin the clean upstream master snapshot c484a15.
+  * Preserve PostgreSQL 14-18 and varlena compatibility in the local patch.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 14:00:00 +0800
+
 imgsmlr (1.0-1PGSTY) unstable; urgency=medium
 
   * Fix varlena detoasting with newer toolchains
