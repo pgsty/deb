@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends:
  debhelper-compat (= 13),
- golang | golang-go,
+ golang-go,
  libsqlite3-dev,
  make,
  pkg-config
@@ -14,9 +14,10 @@ Homepage: https://cloudberry.apache.org
 
 Package: cloudberry-backup
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, cloudberry (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, cloudberry (>= 2.1.0), openssh-client, rsync
 Description: Backup and restore utilities for Apache Cloudberry
  Cloudberry Backup packages the gpbackup, gprestore, gpbackup_helper,
- and gpbackup_s3_plugin utilities for Apache Cloudberry.
+ gpbackup_s3_plugin, gpbackman, and gpbackup_exporter utilities for Apache
+ Cloudberry.
  .
  This package installs the backup tools into /usr/cloudberry/bin.

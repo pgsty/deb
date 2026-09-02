@@ -3,7 +3,9 @@
 export DH_VERBOSE=1
 export GOPATH := $(CURDIR)/.gopath
 export GOBIN := $(GOPATH)/bin
-export GOPROXY ?= https://goproxy.cn,direct
+export GOPROXY ?= https://proxy.golang.org,direct
+export GOTOOLCHAIN ?= auto
+export SOURCE_DATE_EPOCH ?= 1786614056
 export PATH := $(GOBIN):/usr/local/go/bin:$(PATH)
 
 OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
@@ -17,13 +19,15 @@ override_dh_auto_clean:
 override_dh_auto_build:
 	mkdir -p $(GOPATH)
 	$(MAKE) depend
-	$(MAKE) build
+	$(MAKE) build BUILD_DATE=$$(date -u -d @$(SOURCE_DATE_EPOCH) '+%Y%m%d-%H:%M:%S')
 
 override_dh_auto_install:
 	install -Dpm 0755 $(GOBIN)/gpbackup $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackup
 	install -Dpm 0755 $(GOBIN)/gprestore $(CURDIR)/debian/tmp/usr/cloudberry/bin/gprestore
 	install -Dpm 0755 $(GOBIN)/gpbackup_helper $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackup_helper
 	install -Dpm 0755 $(GOBIN)/gpbackup_s3_plugin $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackup_s3_plugin
+	install -Dpm 0755 $(GOBIN)/gpbackman $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackman
+	install -Dpm 0755 $(GOBIN)/gpbackup_exporter $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackup_exporter
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
