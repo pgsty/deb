@@ -5,7 +5,7 @@ export CXX = g++
 export VCPKG_DISABLE_METRICS = 1
 
 VERSIONS := $(shell cat debian/pgversions)
-PG_LAKE_GIT_VERSION ?= v3.4.0
+PG_LAKE_GIT_VERSION ?= v3.4.3
 PG_LAKE_DELTA_SUPPORT ?= 0
 PGCOMPAT_BUILD_CONFIG ?= Release
 PG_LAKE_CLEAN ?= 1
