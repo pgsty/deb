@@ -2,7 +2,7 @@ Source: pgsodium
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libsodium-dev (>= 1.0.18), libsodium23 (>= 1.0.18)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), pgsodium-libsodium-dev (>= 1.0.22)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/michelp/pgsodium
@@ -12,6 +12,6 @@ Architecture: any
 Provides: postgresql-pgsodium
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: Modern cryptography for PostgreSQL using libsodium.
-  pgsodium is an encryption library extension for PostgreSQL using the libsodium library for high level cryptographic algorithms.
-  pgsodium can be used a straight interface to libsodium, but it can also use a powerful feature called Server Key Management where pgsodium loads an external secret key into memory that is never accessible to SQL. This inaccessible root key can then be used to derive sub-keys and keypairs by key id. This id (type bigint) can then be stored instead of the derived key.
-  Another advanced feature of pgsodium is Transparent Column Encryption which can automatically encrypt and decrypt one or more columns of data in a table.
+ pgsodium is an encryption extension for PostgreSQL using high-level
+ cryptographic algorithms from a private, symbol-isolated libsodium build.
+ It also provides Server Key Management and Transparent Column Encryption.
