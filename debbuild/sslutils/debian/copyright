@@ -1,19 +1,36 @@
-SPDX-License-Identifier: PostgreSQL
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: sslutils
+Source: https://github.com/EnterpriseDB/sslutils
+Comment:
+ The upstream repository root LICENSE and README.sslutils identify this work as
+ PostgreSQL-licensed, and that root license is the packaging license authority
+ selected by the Pigsty maintainer on 2026-09-01.
+ .
+ The unmodified sslutils.c file also contains an inconsistent source header
+ referring to the EnterpriseDB Limited Use License and prohibiting
+ redistribution. That upstream notice is deliberately preserved verbatim in
+ the packaged source. This metadata records the conflict; it does not remove,
+ rewrite, or conceal the notice.
 
-Copyright (c) 2010 - 2020, EnterpriseDB Corporation
+Files: *
+Copyright: 2010-2026 EnterpriseDB Corporation
+License: PostgreSQL
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose, without fee, and without a written agreement is
+ hereby granted, provided that the above copyright notice and this paragraph and
+ the following two paragraphs appear in all copies.
+ .
+ IN NO EVENT SHALL ENTERPRISEDB BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT,
+ SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING
+ OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF ENTERPRISEDB HAS
+ BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ .
+ ENTERPRISEDB SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED
+ TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND
+ ENTERPRISEDB HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
+ ENHANCEMENTS, OR MODIFICATIONS.
 
-Permission to use, copy, modify, and distribute this software and its
-documentation for any purpose, without fee, and without a written agreement is
-hereby granted, provided that the above copyright notice and this paragraph and
-the following two paragraphs appear in all copies.
-
-IN NO EVENT SHALL ENTERPRISEDB BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT,
-SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING
-OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF ENTERPRISEDB HAS
-BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-ENTERPRISEDB SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED
-TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-PURPOSE. THE SOFTWARE PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND
-ENTERPRISEDB HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
-ENHANCEMENTS, OR MODIFICATIONS.
+Files: debian/*
+Copyright: 2024-2026 Ruohang Feng <rh@vonng.com>
+License: PostgreSQL
