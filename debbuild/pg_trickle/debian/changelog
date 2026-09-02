@@ -1,3 +1,19 @@
+pg-trickle (0.90.0-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the signed upstream v0.90.0 tag archive.
+  * Rebase the package on cargo-pgrx/pgrx 0.19.2 and a fixed 450-package
+    Cargo.lock without git dependencies.
+  * Keep PostgreSQL 18 as the only supported major, carry every migration SQL
+    file including all 27 edges from 0.81.0, and install pg_trickle_dump.
+  * Repair the 0.82 RETURNS TABLE/view descriptors and ACLs, defer all dynamic
+    CDC rebuilds through the continuous write outage, and preserve fresh-install
+    function, view, constraint, comment, and privilege parity; recognize the
+    two lifecycle functions' existing pinned search_path in the metadata gate.
+  * Document the mandatory V1-to-V2 DAG recreation, terminal consumer
+    acknowledgment, guarded stale-buffer cleanup, and resnapshot boundary.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 02 Sep 2026 09:00:00 +0800
+
 pg-trickle (0.81.0-1PGSTY) unstable; urgency=medium
 
   * Rebuild with cargo-pgrx/pgrx 0.19.1 using the RPM-verified patch.

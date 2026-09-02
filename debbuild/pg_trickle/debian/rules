@@ -24,8 +24,10 @@ override_dh_auto_install:
 	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
 	    dh_installdirs -p$$FULL_NAME; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
+	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/bin; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
 	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp target/release/pg_trickle_dump $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/bin/; \
 	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
 	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \

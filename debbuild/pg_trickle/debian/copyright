@@ -1,7 +1,9 @@
-SPDX-License-Identifier: Apache-2.0
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pg_trickle
+Source: https://github.com/trickle-labs/pg-trickle
 
-Apache License 2.0
-
-Copyright (c) pg_trickle contributors
-
-https://github.com/trickle-labs/pg-trickle/blob/main/LICENSE
+Files: *
+Copyright: pg_trickle contributors
+License: Apache-2.0
+ On Debian systems, the complete text of the Apache License, Version 2.0,
+ can be found in /usr/share/common-licenses/Apache-2.0.
