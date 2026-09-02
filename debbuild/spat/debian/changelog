@@ -1,3 +1,10 @@
+spat (0.1.0a5+git20250512.fccb581-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream commit fccb581 (0.1.0a5).
+  * Add the missing metadata-only 0.1.0a4 to 0.1.0a5 transition.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 13:39:34 +0800
+
 spat (0.1.0a4-1PGSTY) unstable; urgency=low
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
