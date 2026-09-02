@@ -1,3 +1,9 @@
+redis-fdw (2.0+git20260808.ff37a7c8-1PGSTY) unstable; urgency=medium
+
+  * Package upstream master snapshot ff37a7c82f3f.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 00:00:00 +0000
+
 redis-fdw (1.0-1PGSTY) unstable; urgency=medium
 
   * Add PG 18 support

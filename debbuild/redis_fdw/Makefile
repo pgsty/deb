@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := redis_fdw-1.0.tar.gz
+TARBALL := redis_fdw-2.0+git20260808.ff37a7c8.tar.gz
 
 # prepare directory
 setup:
@@ -10,10 +10,6 @@ setup:
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
-	chown -R $(whoami):$(whoami) ~/debbuild/redis_fdw
-	git config --global --add safe.directory ~/debbuild/redis_fdw/build
-
-
 # building deb
 build:
 	cd build && pg_buildext updatecontrol
@@ -28,5 +24,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 
