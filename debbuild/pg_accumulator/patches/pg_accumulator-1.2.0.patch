@@ -1,0 +1,1426 @@
+--- a/Makefile
++++ b/Makefile
+@@ -42,7 +42,8 @@ OBJS = src/core/pg_accumulator.o \\
+ 
+ PG_CPPFLAGS = -I$(srcdir)/src
+ 
+-DATA = sql/pg_accumulator--$(EXTVERSION).sql
++DATA = sql/pg_accumulator--$(EXTVERSION).sql \
++       sql/pg_accumulator--1.1.3--1.2.0.sql
+ DOCS = $(wildcard doc/*.md)
+ EXTRA_CLEAN = sql/pg_accumulator--$(EXTVERSION).sql
+ 
+--- /dev/null
++++ b/sql/pg_accumulator--1.1.3--1.2.0.sql
+@@ -0,0 +1,1411 @@
++-- pg_accumulator 1.1.3 -> 1.2.0
++--
++-- 1.2.0 adds the ledger register kind. Existing 1.1.3 balance and turnover
++-- register storage is unchanged; replace only the extension-owned generator
++-- functions and widen the registry check constraint. CREATE OR REPLACE keeps
++-- function OIDs, owners, ACLs, comments, and dependent objects intact.
++
++DO $pgacc_upgrade$
++DECLARE
++    old_comment text;
++BEGIN
++    SELECT obj_description(c.oid, 'pg_constraint')
++      INTO old_comment
++      FROM pg_constraint c
++     WHERE c.conrelid = '@extschema@._registers'::regclass
++       AND c.conname = '_registers_kind_check'
++       AND c.contype = 'c';
++
++    IF NOT FOUND THEN
++        RAISE EXCEPTION 'expected constraint %.% was not found',
++            '@extschema@._registers', '_registers_kind_check';
++    END IF;
++
++    ALTER TABLE @extschema@._registers
++        ADD CONSTRAINT _registers_kind_check_120
++        CHECK (kind IN ('balance', 'turnover', 'ledger')) NOT VALID;
++    ALTER TABLE @extschema@._registers
++        VALIDATE CONSTRAINT _registers_kind_check_120;
++    ALTER TABLE @extschema@._registers
++        DROP CONSTRAINT _registers_kind_check;
++    ALTER TABLE @extschema@._registers
++        RENAME CONSTRAINT _registers_kind_check_120 TO _registers_kind_check;
++
++    IF old_comment IS NOT NULL THEN
++        EXECUTE format(
++            'COMMENT ON CONSTRAINT _registers_kind_check ON @extschema@._registers IS %L',
++            old_comment
++        );
++    END IF;
++END;
++$pgacc_upgrade$;
++-- BEGIN _build_ledger_res_columns
++CREATE OR REPLACE FUNCTION @extschema@._build_ledger_res_columns(p_resources jsonb)
++ RETURNS text
++ LANGUAGE plpgsql
++ IMMUTABLE
++AS $function$
++DECLARE
++    res_key  text;
++    res_type text;
++    result   text := '';
++BEGIN
++    FOR res_key, res_type IN SELECT * FROM jsonb_each_text(p_resources) ORDER BY key
++    LOOP
++        result := result || format(', %I_dr %s NOT NULL DEFAULT 0', res_key, res_type);
++        result := result || format(', %I_cr %s NOT NULL DEFAULT 0', res_key, res_type);
++    END LOOP;
++    RETURN result;
++END;
++$function$;
++
++-- END _build_ledger_res_columns
++-- BEGIN _ddl_create_balance_cache
++CREATE OR REPLACE FUNCTION @extschema@._ddl_create_balance_cache(p_name text, p_dimensions jsonb, p_resources jsonb)
++ RETURNS void
++ LANGUAGE plpgsql
++AS $function$
++DECLARE
++    col_defs text;
++    res_defs text;
++    v_kind   text;
++BEGIN
++    SELECT kind INTO v_kind FROM @extschema@._registers WHERE name = p_name;
++    col_defs := @extschema@._build_dim_columns(p_dimensions);
++
++    IF v_kind = 'ledger' THEN
++        res_defs := @extschema@._build_ledger_res_columns(p_resources);
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                account          text            NOT NULL,
++                dim_hash         bigint          NOT NULL,
++                subconto         jsonb           NOT NULL DEFAULT ''{}''::jsonb
++                %s
++                %s,
++                last_movement_at timestamptz     NOT NULL DEFAULT now(),
++                last_movement_id uuid,
++                version          bigint          NOT NULL DEFAULT 0,
++                PRIMARY KEY (account, dim_hash)
++            )',
++            p_name || '_balance_cache',
++            col_defs,
++            res_defs
++        );
++    ELSE
++        res_defs := @extschema@._build_res_columns(p_resources);
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                dim_hash         bigint          NOT NULL PRIMARY KEY
++                %s
++                %s,
++                last_movement_at timestamptz     NOT NULL DEFAULT now(),
++                last_movement_id uuid,
++                version          bigint          NOT NULL DEFAULT 0
++            )',
++            p_name || '_balance_cache',
++            col_defs,
++            res_defs
++        );
++    END IF;
++END;
++$function$;
++
++-- END _ddl_create_balance_cache
++-- BEGIN _ddl_create_indexes
++CREATE OR REPLACE FUNCTION @extschema@._ddl_create_indexes(p_name text, p_kind text, p_dimensions jsonb, p_high_write boolean)
++ RETURNS void
++ LANGUAGE plpgsql
++AS $function$
++DECLARE
++    dim_key text;
++BEGIN
++    -- Movements indexes
++    IF p_kind = 'ledger' THEN
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (dim_hash_dr, period)',
++            p_name || '_movements');
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (dim_hash_cr, period)',
++            p_name || '_movements');
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (account_dr)',
++            p_name || '_movements');
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (account_cr)',
++            p_name || '_movements');
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (recorder)',
++            p_name || '_movements');
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (period)',
++            p_name || '_movements');
++    ELSE
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (dim_hash, period)',
++            p_name || '_movements');
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (recorder)',
++            p_name || '_movements');
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (period)',
++            p_name || '_movements');
++    END IF;
++
++    -- Balance cache indexes: per-dimension for filtered queries
++    IF p_kind = 'balance' OR p_kind = 'ledger' THEN
++        FOR dim_key IN SELECT * FROM jsonb_object_keys(p_dimensions)
++        LOOP
++            EXECUTE format('CREATE INDEX ON @extschema@.%I (%I)',
++                p_name || '_balance_cache', dim_key);
++        END LOOP;
++    END IF;
++
++    -- Delta buffer indexes
++    IF p_high_write THEN
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (dim_hash)',
++            p_name || '_balance_cache_delta');
++        EXECUTE format('CREATE INDEX ON @extschema@.%I (created_at)',
++            p_name || '_balance_cache_delta');
++    END IF;
++END;
++$function$;
++
++-- END _ddl_create_indexes
++-- BEGIN _ddl_create_movements_table
++CREATE OR REPLACE FUNCTION @extschema@._ddl_create_movements_table(p_name text, p_recorder_type text, p_dimensions jsonb, p_resources jsonb)
++ RETURNS void
++ LANGUAGE plpgsql
++AS $function$
++DECLARE
++    col_defs text;
++    res_defs text;
++    v_kind   text;
++BEGIN
++    SELECT kind INTO v_kind FROM @extschema@._registers WHERE name = p_name;
++    col_defs := @extschema@._build_dim_columns(p_dimensions);
++
++    IF v_kind = 'ledger' THEN
++        res_defs := @extschema@._build_res_columns(p_resources);
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                id             uuid          DEFAULT gen_random_uuid(),
++                recorded_at    timestamptz   DEFAULT now() NOT NULL,
++                recorder       %s            NOT NULL,
++                period         timestamptz   NOT NULL,
++                movement_type  text          DEFAULT ''regular'' NOT NULL,
++                account_dr     text          NOT NULL,
++                subconto_dr    jsonb         NOT NULL DEFAULT ''{}''::jsonb,
++                account_cr     text          NOT NULL,
++                subconto_cr    jsonb         NOT NULL DEFAULT ''{}''::jsonb,
++                dim_hash_dr    bigint        NOT NULL,
++                dim_hash_cr    bigint        NOT NULL
++                %s
++                %s,
++                PRIMARY KEY (id, period)
++            ) PARTITION BY RANGE (period)',
++            p_name || '_movements',
++            p_recorder_type,
++            col_defs,
++            res_defs
++        );
++    ELSE
++        res_defs := @extschema@._build_res_columns(p_resources);
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                id             uuid          DEFAULT gen_random_uuid(),
++                recorded_at    timestamptz   DEFAULT now() NOT NULL,
++                recorder       %s            NOT NULL,
++                period         timestamptz   NOT NULL,
++                movement_type  text          DEFAULT ''regular'' NOT NULL,
++                dim_hash       bigint        NOT NULL
++                %s
++                %s,
++                PRIMARY KEY (id, period)
++            ) PARTITION BY RANGE (period)',
++            p_name || '_movements',
++            p_recorder_type,
++            col_defs,
++            res_defs
++        );
++    END IF;
++
++    -- Default partition (catches periods without a specific partition)
++    EXECUTE format(
++        'CREATE TABLE @extschema@.%I PARTITION OF @extschema@.%I DEFAULT',
++        p_name || '_movements_default',
++        p_name || '_movements'
++    );
++END;
++$function$;
++
++-- END _ddl_create_movements_table
++-- BEGIN _ddl_create_totals_tables
++CREATE OR REPLACE FUNCTION @extschema@._ddl_create_totals_tables(p_name text, p_dimensions jsonb, p_resources jsonb)
++ RETURNS void
++ LANGUAGE plpgsql
++AS $function$
++DECLARE
++    col_defs text;
++    res_defs text;
++    v_kind   text;
++BEGIN
++    SELECT kind INTO v_kind FROM @extschema@._registers WHERE name = p_name;
++    col_defs := @extschema@._build_dim_columns(p_dimensions);
++
++    IF v_kind = 'ledger' THEN
++        res_defs := @extschema@._build_ledger_res_columns(p_resources);
++        -- totals_day: daily turnover aggregation
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                account        text          NOT NULL,
++                dim_hash       bigint        NOT NULL,
++                subconto       jsonb         NOT NULL DEFAULT ''{}''::jsonb,
++                period         date          NOT NULL
++                %s
++                %s,
++                PRIMARY KEY (account, dim_hash, period)
++            )',
++            p_name || '_totals_day',
++            col_defs,
++            res_defs
++        );
++
++        -- totals_month: monthly turnover aggregation
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                account        text          NOT NULL,
++                dim_hash       bigint        NOT NULL,
++                subconto       jsonb         NOT NULL DEFAULT ''{}''::jsonb,
++                period         date          NOT NULL
++                %s
++                %s,
++                PRIMARY KEY (account, dim_hash, period)
++            )',
++            p_name || '_totals_month',
++            col_defs,
++            res_defs
++        );
++
++        -- totals_year: yearly turnover aggregation
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                account        text          NOT NULL,
++                dim_hash       bigint        NOT NULL,
++                subconto       jsonb         NOT NULL DEFAULT ''{}''::jsonb,
++                period         date          NOT NULL
++                %s
++                %s,
++                PRIMARY KEY (account, dim_hash, period)
++            )',
++            p_name || '_totals_year',
++            col_defs,
++            res_defs
++        );
++    ELSE
++        res_defs := @extschema@._build_res_columns(p_resources);
++
++        -- totals_day: daily turnover aggregation
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                dim_hash       bigint        NOT NULL,
++                period         date          NOT NULL
++                %s
++                %s,
++                PRIMARY KEY (dim_hash, period)
++            )',
++            p_name || '_totals_day',
++            col_defs,
++            res_defs
++        );
++
++        -- totals_month: monthly turnover aggregation
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                dim_hash       bigint        NOT NULL,
++                period         date          NOT NULL
++                %s
++                %s,
++                PRIMARY KEY (dim_hash, period)
++            )',
++            p_name || '_totals_month',
++            col_defs,
++            res_defs
++        );
++
++        -- totals_year: yearly turnover aggregation
++        EXECUTE format(
++            'CREATE TABLE @extschema@.%I (
++                dim_hash       bigint        NOT NULL,
++                period         date          NOT NULL
++                %s
++                %s,
++                PRIMARY KEY (dim_hash, period)
++            )',
++            p_name || '_totals_year',
++            col_defs,
++            res_defs
++        );
++    END IF;
++END;
++$function$;
++
++-- END _ddl_create_totals_tables
++-- BEGIN _drop_read_functions
++CREATE OR REPLACE FUNCTION @extschema@._drop_read_functions(p_name text)
++ RETURNS void
++ LANGUAGE plpgsql
++AS $function$
++BEGIN
++    EXECUTE format('DROP FUNCTION IF EXISTS @extschema@.%I(jsonb, timestamptz) CASCADE',
++        p_name || '_balance');
++    EXECUTE format('DROP FUNCTION IF EXISTS @extschema@.%I(timestamptz, timestamptz, jsonb, jsonb) CASCADE',
++        p_name || '_turnover');
++    EXECUTE format('DROP FUNCTION IF EXISTS @extschema@.%I(text, timestamptz, timestamptz, jsonb) CASCADE',
++        p_name || '_movements');
++    BEGIN
++        EXECUTE format('DROP FUNCTION IF EXISTS @extschema@.%I CASCADE', p_name || '_get_balance');
++    EXCEPTION WHEN OTHERS THEN
++        NULL;
++    END;
++END;
++$function$;
++
++-- END _drop_read_functions
++-- BEGIN _generate_hash_function
++CREATE OR REPLACE FUNCTION @extschema@._generate_hash_function(p_name text, p_dimensions jsonb)
++ RETURNS void
++ LANGUAGE plpgsql
++AS $function$
++DECLARE
++    dim_key   text;
++    dim_type  text;
++    hash_args text := '';
++    hash_body text := '';
++    arg_idx   int  := 0;
++    v_kind    text;
++BEGIN
++    -- Validate inputs
++    PERFORM @extschema@._validate_name(p_name);
++    PERFORM @extschema@._validate_dimensions(p_dimensions);
++
++    SELECT kind INTO v_kind FROM @extschema@._registers WHERE name = p_name;
++
++    IF v_kind = 'ledger' THEN
++        hash_args := 'p_subconto jsonb';
++        hash_body := 'coalesce(p_subconto::text, ''{}'')';
++        arg_idx := 1;
++    END IF;
++
++    -- Build function signature and body
++    FOR dim_key, dim_type IN SELECT * FROM jsonb_each_text(p_dimensions) ORDER BY key
++    LOOP
++        IF arg_idx > 0 THEN
++            hash_args := hash_args || ', ';
++            hash_body := hash_body || ' || ''|'' || ';
++        END IF;
++        hash_args := hash_args || format('%I %s', 'p_' || dim_key, dim_type);
++        hash_body := hash_body || format('coalesce(%I::text, ''__NULL__'')', 'p_' || dim_key);
++        arg_idx := arg_idx + 1;
++    END LOOP;
++
++    -- Create the hash function
++    EXECUTE format(
++        'CREATE OR REPLACE FUNCTION @extschema@.%I(%s) RETURNS bigint
++         LANGUAGE sql IMMUTABLE AS $fn$
++             SELECT hashtextextended(%s, 0)
++         $fn$',
++        '_hash_' || p_name,
++        hash_args,
++        hash_body
++    );
++END;
++$function$;
++
++-- END _generate_hash_function
++-- BEGIN _generate_read_functions
++CREATE OR REPLACE FUNCTION @extschema@._generate_read_functions(p_name text, p_kind text, p_dimensions jsonb, p_resources jsonb, p_high_write boolean)
++ RETURNS void
++ LANGUAGE plpgsql
++AS $function$
++DECLARE
++    param_defs text := '';
++    dim_key    text;
++    dim_type   text;
++    v_where    text := 'c.account = p_account';
++BEGIN
++    -- Generate _balance() only for balance-kind registers
++    IF p_kind = 'balance' THEN
++        EXECUTE format(
++            'CREATE OR REPLACE FUNCTION @extschema@.%I(
++                dimensions jsonb DEFAULT NULL,
++                at_date    timestamptz DEFAULT NULL
++            ) RETURNS jsonb
++            LANGUAGE sql STABLE AS $fn$
++                SELECT @extschema@._balance_internal(%L, dimensions, at_date);
++            $fn$',
++            p_name || '_balance',
++            p_name
++        );
++    ELSIF p_kind = 'ledger' THEN
++        param_defs := 'p_account text, p_subconto jsonb DEFAULT NULL';
++        FOR dim_key, dim_type IN SELECT * FROM jsonb_each_text(p_dimensions) ORDER BY key
++        LOOP
++            param_defs := param_defs || format(', p_%I %s DEFAULT NULL', dim_key, dim_type);
++            v_where := v_where || format(' AND (p_%I IS NULL OR c.%I = p_%I)', dim_key, dim_key, dim_key);
++        END LOOP;
++        v_where := v_where || ' AND (p_subconto IS NULL OR c.subconto = p_subconto)';
++
++        EXECUTE format(
++            'CREATE OR REPLACE FUNCTION @extschema@.%I(%s)
++            RETURNS TABLE (
++                account text,
++                subconto jsonb,
++                turnover_dr numeric,
++                amount_cr numeric,
++                balance numeric
++            )
++            LANGUAGE plpgsql STABLE AS $fn$
++            DECLARE
++                v_acc_type text;
++            BEGIN
++                v_acc_type := CASE 
++                    WHEN p_account ~ ''^(1|2|9)'' THEN ''A''
++                    WHEN p_account ~ ''^(4|5|7)'' THEN ''P''
++                    ELSE ''AP''
++                END;
++
++                RETURN QUERY
++                SELECT 
++                    c.account,
++                    c.subconto,
++                    c.amount_dr,
++                    c.amount_cr,
++                    CASE 
++                        WHEN v_acc_type = ''A'' THEN c.amount_dr - c.amount_cr
++                        WHEN v_acc_type = ''P'' THEN c.amount_cr - c.amount_dr
++                        ELSE c.amount_dr - c.amount_cr
++                    END AS balance
++                FROM @extschema@.%I c
++                WHERE %s;
++            END;
++            $fn$',
++            p_name || '_get_balance',
++            param_defs,
++            p_name || '_balance_cache',
++            v_where
++        );
++    END IF;
++
++    -- Generate _turnover()
++    EXECUTE format(
++        'CREATE OR REPLACE FUNCTION @extschema@.%I(
++            from_date  timestamptz DEFAULT NULL,
++            to_date    timestamptz DEFAULT NULL,
++            dimensions jsonb DEFAULT NULL,
++            group_by   jsonb DEFAULT NULL
++        ) RETURNS SETOF jsonb
++        LANGUAGE sql STABLE AS $fn$
++            SELECT @extschema@._turnover_internal(%L, from_date, to_date, dimensions, group_by);
++        $fn$',
++        p_name || '_turnover',
++        p_name
++    );
++
++    -- Generate _movements()
++    EXECUTE format(
++        'CREATE OR REPLACE FUNCTION @extschema@.%I(
++            p_recorder text DEFAULT NULL,
++            from_date  timestamptz DEFAULT NULL,
++            to_date    timestamptz DEFAULT NULL,
++            dimensions jsonb DEFAULT NULL
++        ) RETURNS SETOF jsonb
++        LANGUAGE sql STABLE AS $fn$
++            SELECT @extschema@._movements_internal(%L, p_recorder, from_date, to_date, dimensions);
++        $fn$',
++        p_name || '_movements',
++        p_name
++    );
++END;
++$function$;
++
++-- END _generate_read_functions
++-- BEGIN _generate_triggers
++CREATE OR REPLACE FUNCTION @extschema@._generate_triggers(p_name text, p_kind text, p_dimensions jsonb, p_resources jsonb, p_high_write boolean)
++ RETURNS void
++ LANGUAGE plpgsql
++AS $function$
++DECLARE
++    dim_key          text;
++    res_key          text;
++    -- Column reference fragments
++    hash_call_args   text := '';
++    dim_cols         text := '';
++    res_cols         text := '';
++    res_sum_cols     text := '';
++    -- UPSERT SET clauses for INSERT triggers
++    res_update_d     text := '';
++    res_update_m     text := '';
++    res_update_y     text := '';
++    res_update_c     text := '';
++    -- UPDATE SET clauses for DELETE triggers
++    res_sub_d        text := '';
++    res_sub_m        text := '';
++    res_sub_y        text := '';
++    res_sub_c        text := '';
++
++    -- Ledger-specific variables
++    ledger_res_cols      text := '';
++    ledger_res_sum_cols  text := '';
++    ledger_res_dr_select text := '';
++    ledger_res_cr_select text := '';
++    res_ledger_update_d  text := '';
++    res_ledger_update_m  text := '';
++    res_ledger_update_y  text := '';
++    res_ledger_update_c  text := '';
++    res_ledger_sub_d     text := '';
++    res_ledger_sub_m     text := '';
++    res_ledger_sub_y     text := '';
++    res_ledger_sub_c     text := '';
++
++    -- Assembled SQL statements
++    totals_upsert_d  text;
++    totals_upsert_m  text;
++    totals_upsert_y  text;
++    cache_upsert     text := '';
++    del_totals_d     text;
++    del_totals_m     text;
++    del_totals_y     text;
++    del_cache        text := '';
++    trg_body_insert  text;
++    first_dim        boolean := true;
++    first_res        boolean := true;
++BEGIN
++    -- --------------------------------------------------------
++    -- Build dimension column references (ORDER BY key for determinism)
++    -- --------------------------------------------------------
++    FOR dim_key IN SELECT key FROM jsonb_each_text(p_dimensions) ORDER BY key
++    LOOP
++        IF NOT first_dim THEN
++            hash_call_args := hash_call_args || ', ';
++            dim_cols       := dim_cols       || ', ';
++        END IF;
++        hash_call_args := hash_call_args || format('NEW.%I', dim_key);
++        dim_cols       := dim_cols       || format('%I', dim_key);
++        first_dim := false;
++    END LOOP;
++
++    -- --------------------------------------------------------
++    -- Build resource column references + update clauses (ORDER BY key)
++    -- --------------------------------------------------------
++    FOR res_key IN SELECT key FROM jsonb_each_text(p_resources) ORDER BY key
++    LOOP
++        IF NOT first_res THEN
++            res_cols     := res_cols     || ', ';
++            res_sum_cols := res_sum_cols || ', ';
++            res_update_d := res_update_d || ', ';
++            res_update_m := res_update_m || ', ';
++            res_update_y := res_update_y || ', ';
++            res_update_c := res_update_c || ', ';
++            res_sub_d    := res_sub_d    || ', ';
++            res_sub_m    := res_sub_m    || ', ';
++            res_sub_y    := res_sub_y    || ', ';
++            res_sub_c    := res_sub_c    || ', ';
++
++            ledger_res_cols      := ledger_res_cols || ', ';
++            ledger_res_sum_cols  := ledger_res_sum_cols || ', ';
++            ledger_res_dr_select := ledger_res_dr_select || ', ';
++            ledger_res_cr_select := ledger_res_cr_select || ', ';
++            res_ledger_update_d  := res_ledger_update_d || ', ';
++            res_ledger_update_m  := res_ledger_update_m || ', ';
++            res_ledger_update_y  := res_ledger_update_y || ', ';
++            res_ledger_update_c  := res_ledger_update_c || ', ';
++            res_ledger_sub_d     := res_ledger_sub_d || ', ';
++            res_ledger_sub_m     := res_ledger_sub_m || ', ';
++            res_ledger_sub_y     := res_ledger_sub_y || ', ';
++            res_ledger_sub_c     := res_ledger_sub_c || ', ';
++        END IF;
++
++        res_cols     := res_cols     || format('%I', res_key);
++        res_sum_cols := res_sum_cols || format('SUM(%I) AS %I', res_key, res_key);
++        -- UPSERT: add incoming value to existing
++        res_update_d := res_update_d || format('%I = @extschema@.%I.%I + EXCLUDED.%I',
++            res_key, p_name || '_totals_day', res_key, res_key);
++        res_update_m := res_update_m || format('%I = @extschema@.%I.%I + EXCLUDED.%I',
++            res_key, p_name || '_totals_month', res_key, res_key);
++        res_update_y := res_update_y || format('%I = @extschema@.%I.%I + EXCLUDED.%I',
++            res_key, p_name || '_totals_year', res_key, res_key);
++        res_update_c := res_update_c || format('%I = @extschema@.%I.%I + EXCLUDED.%I',
++            res_key, p_name || '_balance_cache', res_key, res_key);
++        -- DELETE: subtract aggregated value
++        res_sub_d := res_sub_d || format('%I = t.%I - agg.%I', res_key, res_key, res_key);
++        res_sub_m := res_sub_m || format('%I = t.%I - agg.%I', res_key, res_key, res_key);
++        res_sub_y := res_sub_y || format('%I = t.%I - agg.%I', res_key, res_key, res_key);
++        res_sub_c := res_sub_c || format('%I = c.%I - agg.%I', res_key, res_key, res_key);
++
++        -- Ledger specific formulas
++        ledger_res_cols := ledger_res_cols || format('%I_dr, %I_cr', res_key, res_key);
++        ledger_res_sum_cols := ledger_res_sum_cols || format('SUM(%I_dr) AS %I_dr, SUM(%I_cr) AS %I_cr', res_key, res_key, res_key, res_key);
++        
++        ledger_res_dr_select := ledger_res_dr_select || format('%I AS %I_dr, 0::numeric AS %I_cr', res_key, res_key, res_key);
++        ledger_res_cr_select := ledger_res_cr_select || format('0::numeric AS %I_dr, %I AS %I_cr', res_key, res_key, res_key);
++
++        res_ledger_update_d := res_ledger_update_d || format(
++            '%I_dr = @extschema@.%I.%I_dr + EXCLUDED.%I_dr, %I_cr = @extschema@.%I.%I_cr + EXCLUDED.%I_cr',
++            res_key, p_name || '_totals_day', res_key, res_key, res_key, p_name || '_totals_day', res_key, res_key
++        );
++        res_ledger_update_m := res_ledger_update_m || format(
++            '%I_dr = @extschema@.%I.%I_dr + EXCLUDED.%I_dr, %I_cr = @extschema@.%I.%I_cr + EXCLUDED.%I_cr',
++            res_key, p_name || '_totals_month', res_key, res_key, res_key, p_name || '_totals_month', res_key, res_key
++        );
++        res_ledger_update_y := res_ledger_update_y || format(
++            '%I_dr = @extschema@.%I.%I_dr + EXCLUDED.%I_dr, %I_cr = @extschema@.%I.%I_cr + EXCLUDED.%I_cr',
++            res_key, p_name || '_totals_year', res_key, res_key, res_key, p_name || '_totals_year', res_key, res_key
++        );
++        res_ledger_update_c := res_ledger_update_c || format(
++            '%I_dr = @extschema@.%I.%I_dr + EXCLUDED.%I_dr, %I_cr = @extschema@.%I.%I_cr + EXCLUDED.%I_cr',
++            res_key, p_name || '_balance_cache', res_key, res_key, res_key, p_name || '_balance_cache', res_key, res_key
++        );
++
++        res_ledger_sub_d := res_ledger_sub_d || format(
++            '%I_dr = t.%I_dr - agg.%I_dr, %I_cr = t.%I_cr - agg.%I_cr',
++            res_key, res_key, res_key, res_key, res_key, res_key
++        );
++        res_ledger_sub_m := res_ledger_sub_m || format(
++            '%I_dr = t.%I_dr - agg.%I_dr, %I_cr = t.%I_cr - agg.%I_cr',
++            res_key, res_key, res_key, res_key, res_key, res_key
++        );
++        res_ledger_sub_y := res_ledger_sub_y || format(
++            '%I_dr = t.%I_dr - agg.%I_dr, %I_cr = t.%I_cr - agg.%I_cr',
++            res_key, res_key, res_key, res_key, res_key, res_key
++        );
++        res_ledger_sub_c := res_ledger_sub_c || format(
++            '%I_dr = c.%I_dr - agg.%I_dr, %I_cr = c.%I_cr - agg.%I_cr',
++            res_key, res_key, res_key, res_key, res_key, res_key
++        );
++
++        first_res := false;
++    END LOOP;
++
++    -- ============================================================
++    -- 1. BEFORE INSERT trigger (FOR EACH ROW): compute dim_hash
++    -- ============================================================
++    IF p_kind = 'ledger' THEN
++        DECLARE
++            hash_call_args_dr text;
++            hash_call_args_cr text;
++        BEGIN
++            hash_call_args_dr := 'NEW.subconto_dr' || CASE WHEN hash_call_args != '' THEN ', ' || hash_call_args ELSE '' END;
++            hash_call_args_cr := 'NEW.subconto_cr' || CASE WHEN hash_call_args != '' THEN ', ' || hash_call_args ELSE '' END;
++            EXECUTE format(
++                'CREATE OR REPLACE FUNCTION @extschema@.%I() RETURNS trigger
++                 LANGUAGE plpgsql AS $trg$
++                 BEGIN
++                     NEW.dim_hash_dr := @extschema@.%I(%s);
++                     NEW.dim_hash_cr := @extschema@.%I(%s);
++                     IF NEW.period < now() - interval ''1 day'' THEN
++                         NEW.movement_type := ''adjustment'';
++                     END IF;
++                     RETURN NEW;
++                 END;
++                 $trg$',
++                '_trg_' || p_name || '_before_insert',
++                '_hash_' || p_name,
++                hash_call_args_dr,
++                '_hash_' || p_name,
++                hash_call_args_cr
++            );
++        END;
++    ELSE
++        EXECUTE format(
++            'CREATE OR REPLACE FUNCTION @extschema@.%I() RETURNS trigger
++             LANGUAGE plpgsql AS $trg$
++             BEGIN
++                 NEW.dim_hash := @extschema@.%I(%s);
++                 IF NEW.period < now() - interval ''1 day'' THEN
++                     NEW.movement_type := ''adjustment'';
++                 END IF;
++                 RETURN NEW;
++             END;
++             $trg$',
++            '_trg_' || p_name || '_before_insert',
++            '_hash_' || p_name,
++            hash_call_args
++        );
++    END IF;
++
++    EXECUTE format(
++        'CREATE TRIGGER trg_%s_before_insert
++         BEFORE INSERT ON @extschema@.%I
++         FOR EACH ROW EXECUTE FUNCTION @extschema@.%I()',
++        p_name,
++        p_name || '_movements',
++        '_trg_' || p_name || '_before_insert'
++    );
++
++    -- ============================================================
++    -- 2. AFTER INSERT trigger (FOR EACH STATEMENT): batch aggregation
++    --    Uses REFERENCING NEW TABLE AS new_rows for efficient batch processing
++    -- ============================================================
++
++    IF p_kind = 'ledger' THEN
++        -- totals_day UPSERT with aggregation
++        totals_upsert_d := format(
++            'WITH splits AS (
++                 SELECT account_dr AS account, dim_hash_dr AS dim_hash, subconto_dr AS subconto, period::date AS period, %s, %s FROM new_rows
++                 UNION ALL
++                 SELECT account_cr AS account, dim_hash_cr AS dim_hash, subconto_cr AS subconto, period::date AS period, %s, %s FROM new_rows
++             )
++             INSERT INTO @extschema@.%I (account, dim_hash, subconto, period, %s, %s)
++             SELECT account, dim_hash, subconto, period, %s, %s
++             FROM splits
++             GROUP BY account, dim_hash, subconto, period, %s
++             ON CONFLICT (account, dim_hash, period) DO UPDATE SET %s',
++            dim_cols, ledger_res_dr_select,
++            dim_cols, ledger_res_cr_select,
++            p_name || '_totals_day',
++            dim_cols, ledger_res_cols,
++            dim_cols, ledger_res_sum_cols,
++            dim_cols,
++            res_ledger_update_d
++        );
++
++        -- totals_month UPSERT with aggregation
++        totals_upsert_m := format(
++            'WITH splits AS (
++                 SELECT account_dr AS account, dim_hash_dr AS dim_hash, subconto_dr AS subconto, date_trunc(''month'', period)::date AS period, %s, %s FROM new_rows
++                 UNION ALL
++                 SELECT account_cr AS account, dim_hash_cr AS dim_hash, subconto_cr AS subconto, date_trunc(''month'', period)::date AS period, %s, %s FROM new_rows
++             )
++             INSERT INTO @extschema@.%I (account, dim_hash, subconto, period, %s, %s)
++             SELECT account, dim_hash, subconto, period, %s, %s
++             FROM splits
++             GROUP BY account, dim_hash, subconto, period, %s
++             ON CONFLICT (account, dim_hash, period) DO UPDATE SET %s',
++            dim_cols, ledger_res_dr_select,
++            dim_cols, ledger_res_cr_select,
++            p_name || '_totals_month',
++            dim_cols, ledger_res_cols,
++            dim_cols, ledger_res_sum_cols,
++            dim_cols,
++            res_ledger_update_m
++        );
++
++        -- totals_year UPSERT with aggregation
++        totals_upsert_y := format(
++            'WITH splits AS (
++                 SELECT account_dr AS account, dim_hash_dr AS dim_hash, subconto_dr AS subconto, date_trunc(''year'', period)::date AS period, %s, %s FROM new_rows
++                 UNION ALL
++                 SELECT account_cr AS account, dim_hash_cr AS dim_hash, subconto_cr AS subconto, date_trunc(''year'', period)::date AS period, %s, %s FROM new_rows
++             )
++             INSERT INTO @extschema@.%I (account, dim_hash, subconto, period, %s, %s)
++             SELECT account, dim_hash, subconto, period, %s, %s
++             FROM splits
++             GROUP BY account, dim_hash, subconto, period, %s
++             ON CONFLICT (account, dim_hash, period) DO UPDATE SET %s',
++            dim_cols, ledger_res_dr_select,
++            dim_cols, ledger_res_cr_select,
++            p_name || '_totals_year',
++            dim_cols, ledger_res_cols,
++            dim_cols, ledger_res_sum_cols,
++            dim_cols,
++            res_ledger_update_y
++        );
++
++        -- balance_cache UPSERT
++        cache_upsert := format(
++            'WITH splits AS (
++                 SELECT account_dr AS account, dim_hash_dr AS dim_hash, subconto_dr AS subconto, %s, %s FROM new_rows
++                 UNION ALL
++                 SELECT account_cr AS account, dim_hash_cr AS dim_hash, subconto_cr AS subconto, %s, %s FROM new_rows
++             )
++             INSERT INTO @extschema@.%I (account, dim_hash, subconto, %s, %s, last_movement_at, last_movement_id, version)
++             SELECT account, dim_hash, subconto, %s, %s, now(), NULL, 1
++             FROM splits
++             GROUP BY account, dim_hash, subconto, %s
++             ON CONFLICT (account, dim_hash) DO UPDATE SET %s,
++                 last_movement_at = EXCLUDED.last_movement_at,
++                 version = @extschema@.%I.version + 1',
++            dim_cols, ledger_res_dr_select,
++            dim_cols, ledger_res_cr_select,
++            p_name || '_balance_cache',
++            dim_cols, ledger_res_cols,
++            dim_cols, ledger_res_sum_cols,
++            dim_cols,
++            res_ledger_update_c,
++            p_name || '_balance_cache'
++        );
++    ELSE
++        -- totals_day UPSERT with aggregation (standard)
++        totals_upsert_d := format(
++            'INSERT INTO @extschema@.%I (dim_hash, period, %s, %s)
++             SELECT dim_hash, period::date, %s, %s
++             FROM new_rows
++             GROUP BY dim_hash, period::date, %s
++             ON CONFLICT (dim_hash, period) DO UPDATE SET %s',
++            p_name || '_totals_day',
++            dim_cols, res_cols,
++            dim_cols, res_sum_cols,
++            dim_cols,
++            res_update_d
++        );
++
++        -- totals_month UPSERT with aggregation (standard)
++        totals_upsert_m := format(
++            'INSERT INTO @extschema@.%I (dim_hash, period, %s, %s)
++             SELECT dim_hash, date_trunc(''month'', period)::date, %s, %s
++             FROM new_rows
++             GROUP BY dim_hash, date_trunc(''month'', period)::date, %s
++             ON CONFLICT (dim_hash, period) DO UPDATE SET %s',
++            p_name || '_totals_month',
++            dim_cols, res_cols,
++            dim_cols, res_sum_cols,
++            dim_cols,
++            res_update_m
++        );
++
++        -- totals_year UPSERT with aggregation (standard)
++        totals_upsert_y := format(
++            'INSERT INTO @extschema@.%I (dim_hash, period, %s, %s)
++             SELECT dim_hash, date_trunc(''year'', period)::date, %s, %s
++             FROM new_rows
++             GROUP BY dim_hash, date_trunc(''year'', period)::date, %s
++             ON CONFLICT (dim_hash, period) DO UPDATE SET %s',
++            p_name || '_totals_year',
++            dim_cols, res_cols,
++            dim_cols, res_sum_cols,
++            dim_cols,
++            res_update_y
++        );
++
++        -- balance_cache UPSERT (only for balance kind)
++        IF p_kind = 'balance' THEN
++            IF NOT p_high_write THEN
++                cache_upsert := format(
++                    'INSERT INTO @extschema@.%I (dim_hash, %s, %s, last_movement_at, last_movement_id, version)
++                     SELECT dim_hash, %s, %s, now(), (array_agg(id))[1], 1
++                     FROM new_rows
++                     GROUP BY dim_hash, %s
++                     ON CONFLICT (dim_hash) DO UPDATE SET %s,
++                         last_movement_at = EXCLUDED.last_movement_at,
++                         last_movement_id = EXCLUDED.last_movement_id,
++                         version = @extschema@.%I.version + 1',
++                    p_name || '_balance_cache',
++                    dim_cols, res_cols,
++                    dim_cols, res_sum_cols,
++                    dim_cols,
++                    res_update_c,
++                    p_name || '_balance_cache'
++                );
++            ELSE
++                -- High-write: seed balance_cache rows (zeroed resources) then append to delta buffer
++                cache_upsert := format(
++                    'INSERT INTO @extschema@.%I (dim_hash, %s, last_movement_at, last_movement_id, version)
++                     SELECT DISTINCT ON (dim_hash) dim_hash, %s, now(), id, 0
++                     FROM new_rows
++                     ON CONFLICT (dim_hash) DO NOTHING;
++                     INSERT INTO @extschema@.%I (dim_hash, %s)
++                     SELECT dim_hash, %s
++                     FROM new_rows',
++                    p_name || '_balance_cache',
++                    dim_cols,
++                    dim_cols,
++                    p_name || '_balance_cache_delta',
++                    res_cols,
++                    res_cols
++                );
++            END IF;
++        END IF;
++    END IF;
++
++    -- Assemble AFTER INSERT trigger body
++    trg_body_insert := totals_upsert_d || '; ' || totals_upsert_m || '; ' || totals_upsert_y || ';';
++    IF cache_upsert != '' THEN
++        trg_body_insert := trg_body_insert || ' ' || cache_upsert || ';';
++    END IF;
++
++    EXECUTE format(
++        'CREATE OR REPLACE FUNCTION @extschema@.%I() RETURNS trigger
++         LANGUAGE plpgsql AS $trg$
++         BEGIN
++             %s
++             RETURN NULL;
++         END;
++         $trg$',
++        '_trg_' || p_name || '_after_insert',
++        trg_body_insert
++    );
++
++    EXECUTE format(
++        'CREATE TRIGGER trg_%s_after_insert
++         AFTER INSERT ON @extschema@.%I
++         REFERENCING NEW TABLE AS new_rows
++         FOR EACH STATEMENT EXECUTE FUNCTION @extschema@.%I()',
++        p_name,
++        p_name || '_movements',
++        '_trg_' || p_name || '_after_insert'
++    );
++
++    -- ============================================================
++    -- 3. AFTER DELETE trigger (FOR EACH STATEMENT): batch subtraction
++    --    Uses REFERENCING OLD TABLE AS old_rows
++    -- ============================================================
++
++    IF p_kind = 'ledger' THEN
++        -- Subtract aggregated resources from totals_day
++        del_totals_d := format(
++            'WITH splits_old AS (
++                 SELECT account_dr AS account, dim_hash_dr AS dim_hash, period::date AS period, %s, %s FROM old_rows
++                 UNION ALL
++                 SELECT account_cr AS account, dim_hash_cr AS dim_hash, period::date AS period, %s, %s FROM old_rows
++             ),
++             agg AS (
++                 SELECT account, dim_hash, period, %s
++                 FROM splits_old
++                 GROUP BY account, dim_hash, period
++             )
++             UPDATE @extschema@.%I t SET %s
++             FROM agg
++             WHERE t.account = agg.account AND t.dim_hash = agg.dim_hash AND t.period = agg.period',
++            dim_cols, ledger_res_dr_select,
++            dim_cols, ledger_res_cr_select,
++            ledger_res_sum_cols,
++            p_name || '_totals_day',
++            res_ledger_sub_d
++        );
++
++        -- Subtract aggregated resources from totals_month
++        del_totals_m := format(
++            'WITH splits_old AS (
++                 SELECT account_dr AS account, dim_hash_dr AS dim_hash, date_trunc(''month'', period)::date AS period, %s, %s FROM old_rows
++                 UNION ALL
++                 SELECT account_cr AS account, dim_hash_cr AS dim_hash, date_trunc(''month'', period)::date AS period, %s, %s FROM old_rows
++             ),
++             agg AS (
++                 SELECT account, dim_hash, period, %s
++                 FROM splits_old
++                 GROUP BY account, dim_hash, period
++             )
++             UPDATE @extschema@.%I t SET %s
++             FROM agg
++             WHERE t.account = agg.account AND t.dim_hash = agg.dim_hash AND t.period = agg.period',
++            dim_cols, ledger_res_dr_select,
++            dim_cols, ledger_res_cr_select,
++            ledger_res_sum_cols,
++            p_name || '_totals_month',
++            res_ledger_sub_m
++        );
++
++        -- Subtract aggregated resources from totals_year
++        del_totals_y := format(
++            'WITH splits_old AS (
++                 SELECT account_dr AS account, dim_hash_dr AS dim_hash, date_trunc(''year'', period)::date AS period, %s, %s FROM old_rows
++                 UNION ALL
++                 SELECT account_cr AS account, dim_hash_cr AS dim_hash, date_trunc(''year'', period)::date AS period, %s, %s FROM old_rows
++             ),
++             agg AS (
++                 SELECT account, dim_hash, period, %s
++                 FROM splits_old
++                 GROUP BY account, dim_hash, period
++             )
++             UPDATE @extschema@.%I t SET %s
++             FROM agg
++             WHERE t.account = agg.account AND t.dim_hash = agg.dim_hash AND t.period = agg.period',
++            dim_cols, ledger_res_dr_select,
++            dim_cols, ledger_res_cr_select,
++            ledger_res_sum_cols,
++            p_name || '_totals_year',
++            res_ledger_sub_y
++        );
++
++        -- Subtract aggregated resources from balance_cache
++        del_cache := format(
++            'WITH splits_old AS (
++                 SELECT account_dr AS account, dim_hash_dr AS dim_hash, %s, %s FROM old_rows
++                 UNION ALL
++                 SELECT account_cr AS account, dim_hash_cr AS dim_hash, %s, %s FROM old_rows
++             ),
++             agg AS (
++                 SELECT account, dim_hash, %s
++                 FROM splits_old
++                 GROUP BY account, dim_hash
++             )
++             UPDATE @extschema@.%I c SET %s, version = c.version + 1
++             FROM agg
++             WHERE c.account = agg.account AND c.dim_hash = agg.dim_hash',
++            dim_cols, ledger_res_dr_select,
++            dim_cols, ledger_res_cr_select,
++            ledger_res_sum_cols,
++            p_name || '_balance_cache',
++            res_ledger_sub_c
++        );
++    ELSE
++        -- Subtract aggregated resources from totals_day (standard)
++        del_totals_d := format(
++            'UPDATE @extschema@.%I t SET %s
++             FROM (SELECT dim_hash, period::date AS period, %s
++                   FROM old_rows GROUP BY dim_hash, period::date) agg
++             WHERE t.dim_hash = agg.dim_hash AND t.period = agg.period',
++            p_name || '_totals_day', res_sub_d, res_sum_cols);
++
++        -- Subtract aggregated resources from totals_month (standard)
++        del_totals_m := format(
++            'UPDATE @extschema@.%I t SET %s
++             FROM (SELECT dim_hash, date_trunc(''month'', period)::date AS period, %s
++                   FROM old_rows GROUP BY dim_hash, date_trunc(''month'', period)::date) agg
++             WHERE t.dim_hash = agg.dim_hash AND t.period = agg.period',
++            p_name || '_totals_month', res_sub_m, res_sum_cols);
++
++        -- Subtract aggregated resources from totals_year (standard)
++        del_totals_y := format(
++            'UPDATE @extschema@.%I t SET %s
++             FROM (SELECT dim_hash, date_trunc(''year'', period)::date AS period, %s
++                   FROM old_rows GROUP BY dim_hash, date_trunc(''year'', period)::date) agg
++             WHERE t.dim_hash = agg.dim_hash AND t.period = agg.period',
++            p_name || '_totals_year', res_sub_y, res_sum_cols);
++
++        -- Subtract aggregated resources from balance_cache (standard)
++        IF p_kind = 'balance' THEN
++            del_cache := format(
++                'UPDATE @extschema@.%I c SET %s, version = c.version + 1
++                 FROM (SELECT dim_hash, %s FROM old_rows GROUP BY dim_hash) agg
++                 WHERE c.dim_hash = agg.dim_hash',
++                p_name || '_balance_cache', res_sub_c, res_sum_cols);
++        END IF;
++    END IF;
++
++    EXECUTE format(
++        'CREATE OR REPLACE FUNCTION @extschema@.%I() RETURNS trigger
++         LANGUAGE plpgsql AS $trg$
++         BEGIN
++             %s;
++             %s;
++             %s;
++             %s
++             RETURN NULL;
++         END;
++         $trg$',
++        '_trg_' || p_name || '_after_delete',
++        del_totals_d,
++        del_totals_m,
++        del_totals_y,
++        CASE WHEN del_cache != '' THEN del_cache || ';' ELSE '' END
++    );
++
++    EXECUTE format(
++        'CREATE TRIGGER trg_%s_after_delete
++         AFTER DELETE ON @extschema@.%I
++         REFERENCING OLD TABLE AS old_rows
++         FOR EACH STATEMENT EXECUTE FUNCTION @extschema@.%I()',
++        p_name,
++        p_name || '_movements',
++        '_trg_' || p_name || '_after_delete'
++    );
++
++    -- ============================================================
++    -- 4. Protection triggers: prevent direct UPDATE on movements
++    --    and direct modification of derived tables outside trigger context
++    -- ============================================================
++
++    -- Block UPDATE on movements (must use register_repost)
++    EXECUTE format(
++        'CREATE OR REPLACE FUNCTION @extschema@.%I() RETURNS trigger
++         LANGUAGE plpgsql AS $trg$
++         BEGIN
++             IF current_setting(''pg_accumulator.allow_internal'', true) = ''on'' THEN
++                 RETURN NEW;
++             END IF;
++             RAISE EXCEPTION ''Direct UPDATE on movements is not allowed. Use register_repost() instead.'';
++         END;
++         $trg$',
++        '_trg_' || p_name || '_block_update'
++    );
++
++    EXECUTE format(
++        'CREATE TRIGGER trg_%s_block_update
++         BEFORE UPDATE ON @extschema@.%I
++         FOR EACH ROW EXECUTE FUNCTION @extschema@.%I()',
++        p_name,
++        p_name || '_movements',
++        '_trg_' || p_name || '_block_update'
++    );
++
++    -- Block direct modification of derived tables (totals + cache)
++    -- pg_trigger_depth() > 0 means we are inside a trigger chain (legitimate)
++    -- pg_accumulator.allow_internal = 'on' means maintenance function is running
++    EXECUTE format(
++        'CREATE OR REPLACE FUNCTION @extschema@.%I() RETURNS trigger
++         LANGUAGE plpgsql AS $trg$
++         BEGIN
++             IF pg_trigger_depth() > 1 THEN
++                 RETURN COALESCE(NEW, OLD);
++             END IF;
++             IF current_setting(''pg_accumulator.allow_internal'', true) = ''on'' THEN
++                 RETURN COALESCE(NEW, OLD);
++             END IF;
++             RAISE EXCEPTION ''Direct modification of derived table is not allowed. Use register_rebuild_totals() / register_rebuild_cache() for corrections.'';
++         END;
++         $trg$',
++        '_trg_' || p_name || '_protect_derived'
++    );
++
++    -- Protect totals_day
++    EXECUTE format(
++        'CREATE TRIGGER trg_%s_protect_totals_day
++         BEFORE INSERT OR UPDATE OR DELETE ON @extschema@.%I
++         FOR EACH ROW EXECUTE FUNCTION @extschema@.%I()',
++        p_name,
++        p_name || '_totals_day',
++        '_trg_' || p_name || '_protect_derived'
++    );
++
++    -- Protect totals_month
++    EXECUTE format(
++        'CREATE TRIGGER trg_%s_protect_totals_month
++         BEFORE INSERT OR UPDATE OR DELETE ON @extschema@.%I
++         FOR EACH ROW EXECUTE FUNCTION @extschema@.%I()',
++        p_name,
++        p_name || '_totals_month',
++        '_trg_' || p_name || '_protect_derived'
++    );
++
++    -- Protect totals_year
++    EXECUTE format(
++        'CREATE TRIGGER trg_%s_protect_totals_year
++         BEFORE INSERT OR UPDATE OR DELETE ON @extschema@.%I
++         FOR EACH ROW EXECUTE FUNCTION @extschema@.%I()',
++        p_name,
++        p_name || '_totals_year',
++        '_trg_' || p_name || '_protect_derived'
++    );
++
++    -- Protect balance_cache (if applicable)
++    IF p_kind = 'balance' OR p_kind = 'ledger' THEN
++        EXECUTE format(
++            'CREATE TRIGGER trg_%s_protect_balance_cache
++             BEFORE INSERT OR UPDATE OR DELETE ON @extschema@.%I
++             FOR EACH ROW EXECUTE FUNCTION @extschema@.%I()',
++            p_name,
++            p_name || '_balance_cache',
++            '_trg_' || p_name || '_protect_derived'
++        );
++    END IF;
++END;
++$function$;
++
++-- END _generate_triggers
++-- BEGIN register_create
++CREATE OR REPLACE FUNCTION @extschema@.register_create(name text, dimensions jsonb, resources jsonb, kind text DEFAULT 'balance'::text, totals_period text DEFAULT 'day'::text, partition_by text DEFAULT 'month'::text, high_write boolean DEFAULT false, recorder_type text DEFAULT 'text'::text)
++ RETURNS void
++ LANGUAGE plpgsql
++AS $function$
++BEGIN
++    -- 1. Validate inputs
++    PERFORM @extschema@._validate_name(name);
++    PERFORM @extschema@._validate_dimensions(dimensions);
++    PERFORM @extschema@._validate_resources(resources);
++
++    IF kind NOT IN ('balance', 'turnover', 'ledger') THEN
++        RAISE EXCEPTION 'Invalid kind: %. Must be balance, turnover or ledger', kind;
++    END IF;
++
++    IF totals_period NOT IN ('day', 'month', 'year') THEN
++        RAISE EXCEPTION 'Invalid totals_period: %', totals_period;
++    END IF;
++
++    IF partition_by NOT IN ('day', 'month', 'quarter', 'year') THEN
++        RAISE EXCEPTION 'Invalid partition_by: %', partition_by;
++    END IF;
++
++    -- Check for duplicates
++    IF @extschema@._register_exists(name) THEN
++        RAISE EXCEPTION 'Register "%" already exists', name;
++    END IF;
++
++    -- 2. Save metadata to registry
++    PERFORM @extschema@._register_put(
++        name, kind, dimensions, resources,
++        totals_period, partition_by, high_write, recorder_type
++    );
++
++    -- 3. Generate storage infrastructure (DDL)
++    PERFORM @extschema@._ddl_create_movements_table(name, recorder_type, dimensions, resources);
++    PERFORM @extschema@._ddl_create_totals_tables(name, dimensions, resources);
++
++    IF kind = 'balance' OR kind = 'ledger' THEN
++        PERFORM @extschema@._ddl_create_balance_cache(name, dimensions, resources);
++    END IF;
++
++    IF high_write THEN
++        PERFORM @extschema@._ddl_create_delta_buffer(name, resources);
++    END IF;
++
++    -- 4. Create indexes
++    PERFORM @extschema@._ddl_create_indexes(name, kind, dimensions, high_write);
++
++    -- 5. Generate hash function
++    PERFORM @extschema@._generate_hash_function(name, dimensions);
++
++    -- 6. Generate triggers (movement→totals→cache chain)
++    PERFORM @extschema@._generate_triggers(name, kind, dimensions, resources, high_write);
++
++    -- 7. Generate read functions (balance/turnover/movements)
++    PERFORM @extschema@._generate_read_functions(name, kind, dimensions, resources, high_write);
++
++    -- 8. Create initial partitions
++    PERFORM @extschema@._create_initial_partitions(name, partition_by, 3);
++END;
++$function$;
++
++-- END register_create
++-- BEGIN register_ledger_verify
++CREATE OR REPLACE FUNCTION @extschema@.register_ledger_verify(p_name text)
++ RETURNS boolean
++ LANGUAGE plpgsql
++ STABLE
++AS $function$
++DECLARE
++    reg          record;
++    res_key      text;
++    v_sql        text;
++    v_dr_total   numeric;
++    v_cr_total   numeric;
++    v_sound      boolean := true;
++BEGIN
++    SELECT * INTO reg FROM @extschema@._registers r WHERE r.name = p_name;
++    IF NOT FOUND THEN
++        RAISE EXCEPTION 'Register "%" does not exist', p_name;
++    END IF;
++
++    IF reg.kind <> 'ledger' THEN
++        RAISE EXCEPTION 'Register "%" is not of kind "ledger"', p_name;
++    END IF;
++
++    FOR res_key IN SELECT key FROM jsonb_each_text(reg.resources) ORDER BY key
++    LOOP
++        v_sql := format(
++            'SELECT COALESCE(SUM(%I), 0), COALESCE(SUM(%I), 0) FROM @extschema@.%I',
++            res_key || '_dr',
++            res_key || '_cr',
++            p_name || '_balance_cache'
++        );
++        EXECUTE v_sql INTO v_dr_total, v_cr_total;
++
++        IF v_dr_total <> v_cr_total THEN
++            v_sound := false;
++        END IF;
++    END LOOP;
++
++    RETURN v_sound;
++END;
++$function$;
++
++-- END register_ledger_verify
++-- BEGIN register_post
++CREATE OR REPLACE FUNCTION @extschema@.register_post(p_register text, p_data jsonb)
++ RETURNS integer
++ LANGUAGE plpgsql
++AS $function$
++DECLARE
++    reg          record;
++    movements    jsonb;
++    mov          jsonb;
++    dim_key      text;
++    dim_type     text;
++    res_key      text;
++    res_type     text;
++    col_list     text := 'recorder, period';
++    tuple        text;
++    values_str   text := '';
++    total_count  int := 0;
++BEGIN
++    -- 1. Lookup register metadata
++    SELECT * INTO reg FROM @extschema@._registers r WHERE r.name = p_register;
++    IF NOT FOUND THEN
++        RAISE EXCEPTION 'Register "%" does not exist', p_register;
++    END IF;
++
++    -- 2. Normalize input: single object → array of one
++    IF jsonb_typeof(p_data) = 'object' THEN
++        movements := jsonb_build_array(p_data);
++    ELSIF jsonb_typeof(p_data) = 'array' THEN
++        movements := p_data;
++    ELSE
++        RAISE EXCEPTION 'Data must be a JSON object or array';
++    END IF;
++
++    -- 3. Build column list from register metadata (deterministic order)
++    IF reg.kind = 'ledger' THEN
++        col_list := col_list || ', account_dr, subconto_dr, account_cr, subconto_cr';
++    END IF;
++
++    FOR dim_key IN SELECT key FROM jsonb_each_text(reg.dimensions) ORDER BY key
++    LOOP
++        col_list := col_list || ', ' || quote_ident(dim_key);
++    END LOOP;
++
++    FOR res_key IN SELECT key FROM jsonb_each_text(reg.resources) ORDER BY key
++    LOOP
++        col_list := col_list || ', ' || quote_ident(res_key);
++    END LOOP;
++
++    -- 4. Build VALUES tuples with validation and type casting
++    FOR mov IN SELECT * FROM jsonb_array_elements(movements)
++    LOOP
++        -- Validate required fields
++        IF mov->>'recorder' IS NULL THEN
++            RAISE EXCEPTION 'recorder is required';
++        END IF;
++        IF mov->>'period' IS NULL THEN
++            RAISE EXCEPTION 'period is required';
++        END IF;
++
++        tuple := format('%L, %L::timestamptz', mov->>'recorder', mov->>'period');
++
++        IF reg.kind = 'ledger' THEN
++            IF mov->>'account_dr' IS NULL THEN
++                RAISE EXCEPTION 'account_dr is required for ledger registers';
++            END IF;
++            IF mov->>'account_cr' IS NULL THEN
++                RAISE EXCEPTION 'account_cr is required for ledger registers';
++            END IF;
++            tuple := tuple || ', ' || format('%L, %L::jsonb, %L, %L::jsonb', 
++                mov->>'account_dr', 
++                coalesce(mov->>'subconto_dr', '{}'), 
++                mov->>'account_cr', 
++                coalesce(mov->>'subconto_cr', '{}')
++            );
++        END IF;
++
++        -- Dimensions: all required
++        FOR dim_key, dim_type IN SELECT key, value FROM jsonb_each_text(reg.dimensions) ORDER BY key
++        LOOP
++            IF mov->>dim_key IS NULL THEN
++                RAISE EXCEPTION 'dimension "%" is required', dim_key;
++            END IF;
++            tuple := tuple || ', ' || format('%L::%s', mov->>dim_key, dim_type);
++        END LOOP;
++
++        -- Resources: default to 0 if absent
++        FOR res_key, res_type IN SELECT key, value FROM jsonb_each_text(reg.resources) ORDER BY key
++        LOOP
++            tuple := tuple || ', ' || format('coalesce(%L, ''0'')::%s', mov->>res_key, res_type);
++        END LOOP;
++
++        IF values_str != '' THEN
++            values_str := values_str || ', ';
++        END IF;
++        values_str := values_str || '(' || tuple || ')';
++        total_count := total_count + 1;
++    END LOOP;
++
++    -- 5. Ensure partitions exist for all periods (before INSERT to avoid DDL-during-DML)
++    FOR mov IN SELECT * FROM jsonb_array_elements(movements)
++    LOOP
++        PERFORM @extschema@._ensure_partition(p_register, (mov->>'period')::timestamptz);
++    END LOOP;
++
++    -- 6. Single batch INSERT (triggers fire once per statement)
++    IF total_count > 0 THEN
++        EXECUTE format('INSERT INTO @extschema@.%I (%s) VALUES %s',
++            p_register || '_movements', col_list, values_str);
++    END IF;
++
++    RETURN total_count;
++END;
++$function$;
++
++-- END register_post
++
++COMMENT ON FUNCTION @extschema@.register_ledger_verify(text) IS
++    'Verify double-entry soundness for a ledger register: checks that total debits match total credits for all resource fields';
