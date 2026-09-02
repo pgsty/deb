@@ -1,13 +1,13 @@
 all: setup build move
 
-TARBALL := typeid-postgres-0.3.0.tar.gz
+TARBALL := typeid-postgres-0.4.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.1
+PGRX_VERSION := 0.19.2
 CRATE_DIR := .
-SOURCE_PATCH := patches/pg-typeid-0.3.0.patch
+SOURCE_PATCH := patches/pg-typeid-0.4.1.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -27,7 +27,7 @@ setup: check-src check-patches
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
-	@(cd $(BUILD_DIR) && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
+	@(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
@@ -40,9 +40,10 @@ building: check-pgrx
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.before
-	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=true cargo fetch --locked
+	cd $(BUILD_DIR) && sha256sum Cargo.lock > .pgrx-lock.before
+	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
+	set -eu; \
 	case "$$(uname -m)" in \
 	    x86_64) export RUSTFLAGS="$${RUSTFLAGS:-} -C target-feature=+aes,+sse2 -C link-arg=-Wl,--no-gc-sections" ;; \
 	    aarch64|arm64) export RUSTFLAGS="$${RUSTFLAGS:-} -C target-feature=+aes,+neon -C link-arg=-Wl,--no-gc-sections" ;; \
@@ -50,10 +51,14 @@ building: check-pgrx
 	esac; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
-	done
+		    CARGO_NET_OFFLINE=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+		    EXT_DIR=target/release/typeid-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
+		    cp -f sql/typeid--*.sql "$$EXT_DIR/"; \
+		done
 
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.after && cmp .pgrx-locks.before .pgrx-locks.after && rm -f .pgrx-locks.before .pgrx-locks.after
+	cd $(BUILD_DIR) && sha256sum Cargo.lock > .pgrx-lock.after
+	cmp $(BUILD_DIR)/.pgrx-lock.before $(BUILD_DIR)/.pgrx-lock.after && \
+		rm -f $(BUILD_DIR)/.pgrx-lock.before $(BUILD_DIR)/.pgrx-lock.after
 
 check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
@@ -63,9 +68,9 @@ check-pgrx:
 	fi
 
 packaging:
-	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
 	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
