@@ -1,93 +1,93 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index 089af98..8e6ed67 100644
+index c688e48f..caf62842 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -5767,9 +5767,9 @@ dependencies = [
-
+@@ -5725,9 +5725,9 @@ dependencies = [
+ 
  [[package]]
  name = "pgrx"
 -version = "0.19.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "c3a83847efc71051a6dc93846e5c6dea5cbdac92b6fcff9a62b4ffcad487c396"
-+checksum = "da2d9afc1c8dc8885d777a173755dedd6c0345bfa84fae307a735511bd96b9cc"
++checksum = "8d7e6f85d841cd9c01092ad3b9d60fc778bf54dc6174bbd24126250659af7d91"
  dependencies = [
   "bitflags 2.13.0",
   "bitvec",
-@@ -5788,9 +5788,9 @@ dependencies = [
-
+@@ -5746,9 +5746,9 @@ dependencies = [
+ 
  [[package]]
  name = "pgrx-bindgen"
 -version = "0.19.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "5f2f7026019bc1b69b9fd9c272dcc67c4c4873385eee19a2b16de0f5f1fd0cc8"
-+checksum = "b42d171ae578765094d8597ef04f593f4de7b8694c78a64e23bd69d304251504"
++checksum = "81cd392ab2e05995ebecf15bd562d7eb666a1ced11b3e39ef910212d6b67f2a9"
  dependencies = [
   "bindgen",
   "cc",
-@@ -5807,9 +5807,9 @@ dependencies = [
-
+@@ -5765,9 +5765,9 @@ dependencies = [
+ 
  [[package]]
  name = "pgrx-macros"
 -version = "0.19.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "c548a0ead422dbcf430e222a5ad58a4d7646cc37dd122ec6ae0f090c90719dac"
-+checksum = "7039b2a78ed764daced91b20907841ffe4a9b3d0f795ea7e9d37973d1e1509ec"
++checksum = "aefe3297831869ac1e3fc62045a0181cd9f3ba3e3ad3ed56b9d89ae899170581"
  dependencies = [
   "pgrx-sql-entity-graph",
   "proc-macro2",
-@@ -5819,9 +5819,9 @@ dependencies = [
-
+@@ -5777,9 +5777,9 @@ dependencies = [
+ 
  [[package]]
  name = "pgrx-pg-config"
 -version = "0.19.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "6cca92965c1dc76b2a2083afb7dadcf2601d1f04d174311914b6faa49e728fea"
-+checksum = "7ed293ffce438bacdff7e00b76c6a891083a8bbf3670bcfdb6f8125498284816"
++checksum = "41dd7c6196fcd41f76240f721b6373dc9c080489c87194e3ffb8f924a8fef4e0"
  dependencies = [
   "cargo_toml",
   "codepage",
-@@ -5839,9 +5839,9 @@ dependencies = [
-
+@@ -5797,9 +5797,9 @@ dependencies = [
+ 
  [[package]]
  name = "pgrx-pg-sys"
 -version = "0.19.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "e78e46545f1d6d0c9fd8d73099aa0bc9390dddc8fd6d7aabd98ad08e9086db52"
-+checksum = "8b0e16aa08b282f278414081a1c082755def583b4ecfba53114f62e42f8bd06a"
++checksum = "e8f2ee0cc6c14ebd3b91aa7d4576b45dc87945e905a53343ef50e2509e928c94"
  dependencies = [
   "cee-scape",
   "libc",
-@@ -5853,9 +5853,9 @@ dependencies = [
-
+@@ -5811,9 +5811,9 @@ dependencies = [
+ 
  [[package]]
  name = "pgrx-sql-entity-graph"
 -version = "0.19.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "5d6888b62533c49fda36ab44a82abb96d62e1eba522556244f8a76783097b3b5"
-+checksum = "c92b0093b2077b9854f35d5d54d4e281dcb9b4e6a10a5a1fed310e58ab84b1e7"
++checksum = "48447cd6f7e60929d14ca24d3507c357d16a531dff896f9be921b59c03022759"
  dependencies = [
   "convert_case",
   "eyre",
-@@ -5869,9 +5869,9 @@ dependencies = [
-
+@@ -5827,9 +5827,9 @@ dependencies = [
+ 
  [[package]]
  name = "pgrx-tests"
 -version = "0.19.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "fc0bbad9d4a83d86413c97bc0f7f02e201a36d6e96dc0f615030b5e4b503315f"
-+checksum = "6d39ff1aef126fe3e10c193aa358009476beaf35b9ae80c8ed86334e9a6c40c6"
++checksum = "bf2bd839c188294cff06e8f0e4267f2d6e9fbdce634c05bffb970b55e6682f58"
  dependencies = [
   "clap-cargo",
   "eyre",
 diff --git a/Cargo.toml b/Cargo.toml
-index 55d32f7..d2ca778 100644
+index 269258f9..ea4b6813 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
 @@ -66,8 +66,8 @@ tantivy = { git = "https://github.com/paradedb/tantivy.git", package = "tantivy"
@@ -96,22 +96,13 @@ index 55d32f7..d2ca778 100644
  ], default-features = false }
 -pgrx = "=0.19.0"
 -pgrx-tests = "=0.19.0"
-+pgrx = "=0.19.1"
-+pgrx-tests = "=0.19.1"
++pgrx = "=0.19.2"
++pgrx-tests = "=0.19.2"
  tantivy-jieba = "0.20.0"
-
+ 
  [patch.crates-io]
-diff --git a/rust-toolchain.toml b/rust-toolchain.toml
-deleted file mode 100644
-index 01e3564..0000000
---- a/rust-toolchain.toml
-+++ /dev/null
-@@ -1,3 +0,0 @@
--[toolchain]
--channel = "1.97.1"
--components = ["rustfmt", "clippy", "rust-analyzer"]
 diff --git a/stressgres/Cargo.toml b/stressgres/Cargo.toml
-index dd4deb6..428111b 100644
+index dd4deb6e..3cdd7b15 100644
 --- a/stressgres/Cargo.toml
 +++ b/stressgres/Cargo.toml
 @@ -24,7 +24,7 @@ humantime = "2.3.0"
@@ -119,7 +110,7 @@ index dd4deb6..428111b 100644
  libc = "0.2.186"
  parking_lot = "0.12.5"
 -pgrx-pg-config = "=0.19.0"
-+pgrx-pg-config = "=0.19.1"
++pgrx-pg-config = "=0.19.2"
  plotters = "0.3.7"
  postgres = "0.19.13"
  rust_decimal = { version = "1.41.0", features = ["db-postgres"] }
