@@ -1,5 +1,5 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index 0b23673..7a567e3 100644
+index 574670a7647d72e61ad74910c2de546582fbb256..76dc6841fb125fc29dcf5b9e885ec3f8823ea257 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
 @@ -32,16 +32,6 @@ version = "0.1.6"
@@ -19,7 +19,7 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "anstyle"
  version = "1.0.14"
-@@ -172,7 +162,6 @@ version = "0.72.1"
+@@ -172,16 +162,15 @@ version = "0.72.1"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "993776b509cfb49c750f11b8f07a46fa23e0a1386ffc01fb1e7d343efc387895"
  dependencies = [
@@ -27,30 +27,19 @@ index 0b23673..7a567e3 100644
   "bitflags",
   "cexpr",
   "clang-sys",
-@@ -181,30 +170,15 @@ dependencies = [
+- "itertools 0.13.0",
++ "itertools 0.10.5",
+  "proc-macro2",
   "quote",
   "regex",
   "rustc-hash",
 - "shlex",
 + "shlex 1.3.0",
-  "syn",
+  "syn 2.0.117",
  ]
  
--[[package]]
--name = "bit-set"
--version = "0.8.0"
--source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "08807e080ed7f9d5433fa9b275196cfc35414f66a0c79d864dc51a0d825231a3"
--dependencies = [
-- "bit-vec",
--]
--
--[[package]]
--name = "bit-vec"
--version = "0.8.0"
--source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "5e764a1d40d510daf35e07be9eb06e75770908c27d411ee6c92109c9840eaaf7"
--
+@@ -202,9 +191,9 @@ checksum = "5e764a1d40d510daf35e07be9eb06e75770908c27d411ee6c92109c9840eaaf7"
+ 
  [[package]]
  name = "bitflags"
 -version = "2.11.1"
@@ -61,7 +50,7 @@ index 0b23673..7a567e3 100644
  
  [[package]]
  name = "bitvec"
-@@ -268,25 +242,26 @@ dependencies = [
+@@ -268,25 +257,26 @@ dependencies = [
  
  [[package]]
  name = "cargo-platform"
@@ -93,7 +82,7 @@ index 0b23673..7a567e3 100644
  ]
  
  [[package]]
-@@ -312,7 +287,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -312,7 +302,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "d16d90359e986641506914ba71350897565610e87ce0ad9e6f28569db3dd5c6d"
  dependencies = [
   "find-msvc-tools",
@@ -102,7 +91,7 @@ index 0b23673..7a567e3 100644
  ]
  
  [[package]]
-@@ -415,13 +390,15 @@ dependencies = [
+@@ -415,13 +405,15 @@ dependencies = [
  
  [[package]]
  name = "clap-cargo"
@@ -120,7 +109,7 @@ index 0b23673..7a567e3 100644
  ]
  
  [[package]]
-@@ -475,9 +452,9 @@ checksum = "a6ef517f0926dd24a1582492c791b6a4818a4d94e789a334894aa15b0d12f55c"
+@@ -475,9 +467,9 @@ checksum = "a6ef517f0926dd24a1582492c791b6a4818a4d94e789a334894aa15b0d12f55c"
  
  [[package]]
  name = "convert_case"
@@ -132,7 +121,7 @@ index 0b23673..7a567e3 100644
  dependencies = [
   "unicode-segmentation",
  ]
-@@ -734,6 +711,16 @@ dependencies = [
+@@ -734,6 +726,16 @@ dependencies = [
   "ctutils",
  ]
  
@@ -149,16 +138,16 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "displaydoc"
  version = "0.2.5"
-@@ -833,7 +820,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -833,7 +835,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
  dependencies = [
   "libc",
-- "windows-sys 0.52.0",
-+ "windows-sys 0.61.2",
+- "windows-sys 0.61.2",
++ "windows-sys 0.52.0",
  ]
  
  [[package]]
-@@ -1244,7 +1231,7 @@ dependencies = [
+@@ -1276,7 +1278,7 @@ dependencies = [
   "js-sys",
   "log",
   "wasm-bindgen",
@@ -167,16 +156,41 @@ index 0b23673..7a567e3 100644
  ]
  
  [[package]]
-@@ -1403,7 +1390,7 @@ checksum = "3640c1c38b8e4e43584d8df18be5fc6b0aa314ce6ebf51b53313d4306cca8e46"
+@@ -1435,7 +1437,7 @@ checksum = "3640c1c38b8e4e43584d8df18be5fc6b0aa314ce6ebf51b53313d4306cca8e46"
  dependencies = [
   "hermit-abi",
   "libc",
-- "windows-sys 0.52.0",
-+ "windows-sys 0.61.2",
+- "windows-sys 0.61.2",
++ "windows-sys 0.52.0",
  ]
  
  [[package]]
-@@ -1760,6 +1747,15 @@ dependencies = [
+@@ -1453,15 +1455,6 @@ dependencies = [
+  "either",
+ ]
+ 
+-[[package]]
+-name = "itertools"
+-version = "0.13.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
+-dependencies = [
+- "either",
+-]
+-
+ [[package]]
+ name = "itertools"
+ version = "0.14.0"
+@@ -1656,7 +1649,7 @@ checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
+ [[package]]
+ name = "mino-rs"
+ version = "0.1.0"
+-source = "git+https://codeberg.org/gregburd/mino-rs?tag=v0.1.0#9f104d263713d4b529046af8bb7191d98e826306"
++source = "git+https://codeberg.org/gregburd/mino-rs?rev=9f104d263713d4b529046af8bb7191d98e826306#9f104d263713d4b529046af8bb7191d98e826306"
+ dependencies = [
+  "fancy-regex",
+  "gc",
+@@ -1805,6 +1798,15 @@ dependencies = [
   "libc",
  ]
  
@@ -192,7 +206,7 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "objc2-core-foundation"
  version = "0.3.2"
-@@ -1767,6 +1763,45 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -1812,6 +1814,45 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "2a180dd8642fa45cdb7dd721cd4c11b1cadd4929ce112ebd8b9f5803cc79d536"
  dependencies = [
   "bitflags",
@@ -238,7 +252,7 @@ index 0b23673..7a567e3 100644
  ]
  
  [[package]]
-@@ -1876,12 +1911,6 @@ dependencies = [
+@@ -1921,12 +1962,6 @@ dependencies = [
   "windows-link",
  ]
  
@@ -251,63 +265,63 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "pathsearch"
  version = "0.2.0"
-@@ -1960,9 +1989,9 @@ dependencies = [
+@@ -2006,9 +2041,9 @@ dependencies = [
  
  [[package]]
  name = "pgrx"
 -version = "0.17.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "dd42eed31a68e3e6d7cec284cdaacd8ffa9b2b3ebb3f1df9ec2fd3558834c6e7"
-+checksum = "da2d9afc1c8dc8885d777a173755dedd6c0345bfa84fae307a735511bd96b9cc"
++checksum = "8d7e6f85d841cd9c01092ad3b9d60fc778bf54dc6174bbd24126250659af7d91"
  dependencies = [
   "bitflags",
   "bitvec",
-@@ -1981,9 +2010,9 @@ dependencies = [
+@@ -2027,9 +2062,9 @@ dependencies = [
  
  [[package]]
  name = "pgrx-bindgen"
 -version = "0.17.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "d30fa3688ab1cb6429ca46725eb32d5d9f186806c0f0aa6419f86e418b8a81ab"
-+checksum = "b42d171ae578765094d8597ef04f593f4de7b8694c78a64e23bd69d304251504"
++checksum = "81cd392ab2e05995ebecf15bd562d7eb666a1ced11b3e39ef910212d6b67f2a9"
  dependencies = [
   "bindgen",
   "cc",
-@@ -1993,16 +2022,16 @@ dependencies = [
+@@ -2039,16 +2074,16 @@ dependencies = [
   "proc-macro2",
   "quote",
   "regex",
 - "shlex",
 + "shlex 2.0.1",
-  "syn",
+  "syn 2.0.117",
   "walkdir",
  ]
  
  [[package]]
  name = "pgrx-macros"
 -version = "0.17.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "1ca7cc537daa4cc004f12ad1d31756b506358aa900251a82c3280e719da88fa4"
-+checksum = "7039b2a78ed764daced91b20907841ffe4a9b3d0f795ea7e9d37973d1e1509ec"
++checksum = "aefe3297831869ac1e3fc62045a0181cd9f3ba3e3ad3ed56b9d89ae899170581"
  dependencies = [
   "pgrx-sql-entity-graph",
   "proc-macro2",
-@@ -2012,9 +2041,9 @@ dependencies = [
+@@ -2058,9 +2093,9 @@ dependencies = [
  
  [[package]]
  name = "pgrx-pg-config"
 -version = "0.17.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "1cd8670ad408093a83615fc68071929d7677b40021a475649a626319c464f0a3"
-+checksum = "7ed293ffce438bacdff7e00b76c6a891083a8bbf3670bcfdb6f8125498284816"
++checksum = "41dd7c6196fcd41f76240f721b6373dc9c080489c87194e3ffb8f924a8fef4e0"
  dependencies = [
   "cargo_toml",
   "codepage",
-@@ -2025,16 +2054,16 @@ dependencies = [
+@@ -2071,16 +2106,16 @@ dependencies = [
   "serde",
   "serde_json",
   "thiserror 2.0.18",
@@ -320,34 +334,34 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "pgrx-pg-sys"
 -version = "0.17.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "d9f81faae87d533b573156261b17521c0c7f66f5ca5dab2b9e6ddbf5a63dbd14"
-+checksum = "8b0e16aa08b282f278414081a1c082755def583b4ecfba53114f62e42f8bd06a"
++checksum = "e8f2ee0cc6c14ebd3b91aa7d4576b45dc87945e905a53343ef50e2509e928c94"
  dependencies = [
   "cee-scape",
   "libc",
-@@ -2046,9 +2075,9 @@ dependencies = [
+@@ -2092,9 +2127,9 @@ dependencies = [
  
  [[package]]
  name = "pgrx-sql-entity-graph"
 -version = "0.17.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "4800fa91a481a83d3c1aaffd1324fcd2e587df0ed342c71d6a66d0899027e505"
-+checksum = "c92b0093b2077b9854f35d5d54d4e281dcb9b4e6a10a5a1fed310e58ab84b1e7"
++checksum = "48447cd6f7e60929d14ca24d3507c357d16a531dff896f9be921b59c03022759"
  dependencies = [
   "convert_case",
   "eyre",
-@@ -2062,25 +2091,21 @@ dependencies = [
+@@ -2108,25 +2143,21 @@ dependencies = [
  
  [[package]]
  name = "pgrx-tests"
 -version = "0.17.0"
-+version = "0.19.1"
++version = "0.19.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "3d8026b55f3782cc227b32dcd1de61163b50175c98705d888f03e7095d371c41"
-+checksum = "6d39ff1aef126fe3e10c193aa358009476beaf35b9ae80c8ed86334e9a6c40c6"
++checksum = "bf2bd839c188294cff06e8f0e4267f2d6e9fbdce634c05bffb970b55e6682f58"
  dependencies = [
   "clap-cargo",
   "eyre",
@@ -369,7 +383,7 @@ index 0b23673..7a567e3 100644
   "sysinfo",
   "tempfile",
   "thiserror 2.0.18",
-@@ -2254,37 +2279,12 @@ dependencies = [
+@@ -2300,37 +2331,12 @@ dependencies = [
   "thiserror 1.0.69",
  ]
  
@@ -407,7 +421,7 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "quote"
  version = "1.0.45"
-@@ -2377,15 +2377,6 @@ version = "0.10.1"
+@@ -2423,15 +2429,6 @@ version = "0.10.1"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "63b8176103e19a2643978565ca18b50549f6101881c443590420e4dc998a3c69"
  
@@ -423,16 +437,16 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "rayon"
  version = "1.12.0"
-@@ -2514,7 +2505,7 @@ dependencies = [
+@@ -2560,7 +2557,7 @@ dependencies = [
   "errno",
   "libc",
   "linux-raw-sys",
-- "windows-sys 0.52.0",
-+ "windows-sys 0.61.2",
+- "windows-sys 0.61.2",
++ "windows-sys 0.52.0",
  ]
  
  [[package]]
-@@ -2556,18 +2547,6 @@ version = "1.0.22"
+@@ -2602,18 +2599,6 @@ version = "1.0.22"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "b39cdef0fa800fc44525c84ccb54a029961a8215f9619753635a9c0d2538d46d"
  
@@ -451,7 +465,7 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "ryu"
  version = "1.0.23"
-@@ -2777,6 +2756,12 @@ version = "1.3.0"
+@@ -2823,6 +2808,12 @@ version = "1.3.0"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
  
@@ -464,7 +478,7 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "signal-hook-registry"
  version = "1.4.8"
-@@ -2880,14 +2865,16 @@ dependencies = [
+@@ -2949,14 +2940,16 @@ dependencies = [
  
  [[package]]
  name = "sysinfo"
@@ -483,20 +497,20 @@ index 0b23673..7a567e3 100644
   "windows",
  ]
  
-@@ -2925,10 +2912,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -2994,10 +2987,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "32497e9a4c7b38532efcdebeef879707aa9f794296a4f0244f6f69e9bc8574bd"
  dependencies = [
   "fastrand",
-- "getrandom 0.3.4",
-+ "getrandom 0.4.2",
+- "getrandom 0.4.2",
++ "getrandom 0.3.4",
   "once_cell",
   "rustix",
-- "windows-sys 0.52.0",
-+ "windows-sys 0.61.2",
+- "windows-sys 0.61.2",
++ "windows-sys 0.52.0",
  ]
  
  [[package]]
-@@ -3163,6 +3150,21 @@ dependencies = [
+@@ -3232,6 +3225,21 @@ dependencies = [
   "winnow 0.7.15",
  ]
  
@@ -518,7 +532,7 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "toml_datetime"
  version = "0.6.11"
-@@ -3181,6 +3183,15 @@ dependencies = [
+@@ -3250,6 +3258,15 @@ dependencies = [
   "serde_core",
  ]
  
@@ -534,7 +548,7 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "toml_edit"
  version = "0.22.27"
-@@ -3373,12 +3384,6 @@ version = "1.20.0"
+@@ -3442,12 +3459,6 @@ version = "1.20.0"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "40ce102ab67701b8526c123c1bab5cbe42d7040ccfd0f64af1a385808d2f43de"
  
@@ -547,19 +561,19 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "unescape"
  version = "0.1.0"
-@@ -3456,9 +3461,9 @@ checksum = "b6c140620e7ffbb22c2dee59cafe6084a59b5ffc27a8859a5f0d494b5d52b6be"
+@@ -3525,9 +3536,9 @@ checksum = "b6c140620e7ffbb22c2dee59cafe6084a59b5ffc27a8859a5f0d494b5d52b6be"
  
  [[package]]
  name = "uuid"
 -version = "1.23.1"
-+version = "1.24.0"
++version = "1.26.0"
  source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "ddd74a9687298c6858e9b88ec8935ec45d22e8fd5e6394fa1bd4e99a87789c76"
-+checksum = "bf3923a6f5c4c6382e0b653c4117f48d631ea17f38ed86e2a828e6f7412f5239"
++checksum = "b5772d71c9be8a8a6ac2117d949c5b224c1b72241bb611d9a3012edcf8af7812"
  dependencies = [
   "getrandom 0.4.2",
   "js-sys",
-@@ -3484,15 +3489,6 @@ version = "0.9.5"
+@@ -3553,15 +3564,6 @@ version = "0.9.5"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
  
@@ -575,16 +589,16 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "walkdir"
  version = "2.5.0"
-@@ -3688,7 +3684,7 @@ version = "0.1.11"
+@@ -3757,7 +3759,7 @@ version = "0.1.11"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
  dependencies = [
-- "windows-sys 0.52.0",
-+ "windows-sys 0.61.2",
+- "windows-sys 0.61.2",
++ "windows-sys 0.52.0",
  ]
  
  [[package]]
-@@ -3699,24 +3695,23 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
+@@ -3768,24 +3770,23 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
  
  [[package]]
  name = "windows"
@@ -619,7 +633,7 @@ index 0b23673..7a567e3 100644
  ]
  
  [[package]]
-@@ -3725,22 +3720,22 @@ version = "0.62.2"
+@@ -3794,22 +3795,22 @@ version = "0.62.2"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "b8e83a14d34d0623b51dce9581199302a221863196a1dde71a7663a4c2be9deb"
  dependencies = [
@@ -644,15 +658,15 @@ index 0b23673..7a567e3 100644
  dependencies = [
 - "proc-macro2",
 - "quote",
-- "syn",
+- "syn 2.0.117",
 + "windows-core",
 + "windows-link",
 + "windows-threading",
  ]
  
  [[package]]
-@@ -3754,17 +3749,6 @@ dependencies = [
-  "syn",
+@@ -3823,17 +3824,6 @@ dependencies = [
+  "syn 2.0.117",
  ]
  
 -[[package]]
@@ -663,13 +677,13 @@ index 0b23673..7a567e3 100644
 -dependencies = [
 - "proc-macro2",
 - "quote",
-- "syn",
+- "syn 2.0.117",
 -]
 -
  [[package]]
  name = "windows-interface"
  version = "0.59.3"
-@@ -3783,23 +3767,24 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -3852,23 +3842,24 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "f0805222e57f7521d6a62e36fa9163bc891acd422f971defe97d64e70d0a4fe5"
  
  [[package]]
@@ -703,7 +717,7 @@ index 0b23673..7a567e3 100644
  ]
  
  [[package]]
-@@ -3854,6 +3839,15 @@ dependencies = [
+@@ -3923,6 +3914,15 @@ dependencies = [
   "windows_x86_64_msvc",
  ]
  
@@ -719,38 +733,101 @@ index 0b23673..7a567e3 100644
  [[package]]
  name = "windows_aarch64_gnullvm"
  version = "0.52.6"
-diff --git a/Trunk.toml b/Trunk.toml
-index 80c8db6..41b6507 100644
---- a/Trunk.toml
-+++ b/Trunk.toml
-@@ -10,7 +10,7 @@ categories = ["data-transforms", "search"]
- 
- [build]
- postgres_version = "16"
--pgrx_version = "0.17.0"
-+pgrx_version = "0.19.1"
- rust_version = "1.88.0"
- 
- # Extension installs a shared library + SQL scripts
+diff --git a/Cargo.toml b/Cargo.toml
+index 06a823eb7797f30b14464b419504876828542643..6b197cdaa79bc098fcc77ec5c6ac4b00082c4fc1 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -11,7 +11,7 @@ members = [
+ [workspace.package]
+ version = "1.6.0"
+ edition = "2021"
+-rust-version = "1.88"
++rust-version = "1.96"
+ license = "Apache-2.0"
+ repository = "https://github.com/gburd/pg_mentat"
+ authors = [
 diff --git a/pg_mentat/Cargo.toml b/pg_mentat/Cargo.toml
-index 5edfa21..203003f 100644
+index d0b700ef9d66458e3586ddfbb0ec5ae77a6cf296..8cbbbd18902d9813b2bda3181d5e1d9fdcc8892e 100644
 --- a/pg_mentat/Cargo.toml
 +++ b/pg_mentat/Cargo.toml
-@@ -26,7 +26,7 @@ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
+@@ -11,26 +11,22 @@ description = "Datomic-compatible Datalog query engine for PostgreSQL"
+ [lib]
+ crate-type = ["cdylib", "lib"]
+ 
+-[[bin]]
+-name = "pgrx_embed_pg_mentat"
+-path = "./src/bin/pgrx_embed.rs"
+-
+ [features]
+ default = ["pg16"]
+ # Optional Datomic-in-Clojure scripting surface (the `mentat.store/*` language),
+ # embedding the pure-Rust mino-rs interpreter. Default off; a build without it
+ # pulls nothing and pays nothing.
+ script = ["dep:mino-rs"]
+-pg13 = ["pgrx/pg13", "pgrx-tests/pg13"]
+ pg14 = ["pgrx/pg14", "pgrx-tests/pg14"]
+ pg15 = ["pgrx/pg15", "pgrx-tests/pg15"]
+ pg16 = ["pgrx/pg16", "pgrx-tests/pg16"]
+ pg17 = ["pgrx/pg17", "pgrx-tests/pg17"]
+ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
++pg19 = ["pgrx/pg19", "pgrx-tests/pg19"]
  pg_test = []
  
  [dependencies]
 -pgrx = "0.17.0"
-+pgrx = "=0.19.1"
++pgrx = "=0.19.2"
  serde = { version = "1.0", features = ["derive"] }
  serde_json = "1.0"
  ciborium = "0.2"
-@@ -45,7 +45,7 @@ core_traits = { path = "../core-traits" }
+@@ -46,7 +42,7 @@ parking_lot = "0.12"
+ # Optional: the mino Clojure-dialect interpreter, behind the `script` feature.
+ # Pure-Rust, single-threaded, no FFI/threads/global state -- safe to embed in
+ # a Postgres backend (build -> eval -> drop within one function call).
+-mino-rs = { git = "https://codeberg.org/gregburd/mino-rs", tag = "v0.1.0", optional = true }
++mino-rs = { git = "https://codeberg.org/gregburd/mino-rs", rev = "9f104d263713d4b529046af8bb7191d98e826306", optional = true }
+ 
+ # Mentat dependencies
+ edn = { path = "../edn", features = ["serde_support"] }
+@@ -54,7 +50,7 @@ core_traits = { path = "../core-traits" }
  mentat_core = { path = "../core" }
  
  [dev-dependencies]
 -pgrx-tests = "0.17.0"
-+pgrx-tests = "=0.19.1"
++pgrx-tests = "=0.19.2"
  
  # Release profile is specified at workspace root (Cargo.toml).
  
+diff --git a/pg_mentat/src/functions/query.rs b/pg_mentat/src/functions/query.rs
+index 06185d389bf2a65c81dded3b96063b225df928e1..b82f1042117294cb0a03edede2ebb615d6fd50e4 100644
+--- a/pg_mentat/src/functions/query.rs
++++ b/pg_mentat/src/functions/query.rs
+@@ -717,6 +717,20 @@ fn set_local_guc(name: &str, value: &str) {
+     let Ok(c_value) = std::ffi::CString::new(value) else {
+         return;
+     };
++    // temp_file_limit is PGC_SUSET. Passing PGC_USERSET makes PostgreSQL reject
++    // it even for a superuser; passing PGC_SUSET for an ordinary caller would
++    // bypass the SQL privilege boundary. Apply that limit only for an actual
++    // superuser and leave ordinary roles on their administrator-defined limit.
++    let context = if name == "temp_file_limit" {
++        // SAFETY: superuser() only inspects the current backend's user identity.
++        if !unsafe { pgrx::pg_sys::superuser() } {
++            return;
++        }
++        pgrx::pg_sys::GucContext::PGC_SUSET
++    } else {
++        pgrx::pg_sys::GucContext::PGC_USERSET
++    };
++
+     // SAFETY: name/value are valid NUL-terminated C strings for the duration
+     // of the call. set_config_option with GUC_ACTION_LOCAL is the C-level
+     // equivalent of `SET LOCAL` and is safe in a read-only / recovery
+@@ -726,7 +740,7 @@ fn set_local_guc(name: &str, value: &str) {
+         pgrx::pg_sys::set_config_option(
+             c_name.as_ptr(),
+             c_value.as_ptr(),
+-            pgrx::pg_sys::GucContext::PGC_USERSET,
++            context,
+             pgrx::pg_sys::GucSource::PGC_S_SESSION,
+             pgrx::pg_sys::GucAction::GUC_ACTION_LOCAL,
+             true,
