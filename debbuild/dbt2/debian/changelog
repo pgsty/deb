@@ -1,3 +1,15 @@
+dbt2-extensions (0.62.0-1PGSTY) unstable; urgency=medium
+
+  * Bump DBT-2 kit to 0.62.0 and extension SQL to 0.46.0.
+  * Rebase the PG_CONFIG and reproducible-path patch.
+  * Preserve legacy function OIDs, dependencies, ACLs and comments while
+    exposing the expanded 0.46 result rows through compatibility wrappers.
+  * Preserve function strictness and bind compatibility calls independently
+    of the caller search path while retaining extension relocatability.
+  * Update the copyright year.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 11:02:06 +0800
+
 dbt2-extensions (0.61.7-1PGSTY) unstable; urgency=medium
 
   * Initial package for the DBT-2 PostgreSQL C stored functions.

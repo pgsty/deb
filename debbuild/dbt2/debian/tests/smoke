@@ -4,12 +4,95 @@ set -eu
 for version in $(cat debian/pgversions); do
 	pg_virtualenv -v "$version" -t psql -X -v ON_ERROR_STOP=1 <<'SQL'
 CREATE EXTENSION dbt2;
+DO $dbt2_smoke$
+BEGIN
+	IF (SELECT extversion FROM pg_extension WHERE extname = 'dbt2') <> '0.46.0' THEN
+		RAISE EXCEPTION 'unexpected dbt2 extension version';
+	END IF;
+	IF (SELECT count(*)
+	    FROM pg_proc AS p
+	    JOIN pg_depend AS d ON d.classid = 'pg_proc'::regclass
+	                           AND d.objid = p.oid
+	                           AND d.deptype = 'e'
+	    WHERE d.refobjid = (SELECT oid FROM pg_extension WHERE extname = 'dbt2')
+	      AND p.proname LIKE 'dbt2_legacy_045_%') <> 3 THEN
+		RAISE EXCEPTION 'missing dbt2 0.45 compatibility functions';
+	END IF;
+	IF pg_get_function_result('order_status(integer,integer,integer,text)'::regprocedure)
+	   NOT LIKE '%out_o_entry_d text%' THEN
+		RAISE EXCEPTION 'expanded order_status row is missing';
+	END IF;
+	IF pg_get_function_result('dbt2_legacy_045_order_status(integer,integer,integer,text)'::regprocedure)
+	   NOT LIKE '%timestamp without time zone%' THEN
+		RAISE EXCEPTION 'legacy order_status row is missing';
+	END IF;
+	IF (SELECT count(DISTINCT legacy.oid)
+	      FROM pg_proc AS legacy
+	      JOIN pg_depend AS dependency
+	        ON dependency.classid = 'pg_proc'::regclass
+	       AND dependency.objid = legacy.oid
+	       AND dependency.refclassid = 'pg_proc'::regclass
+	       AND dependency.deptype = 'n'
+	      JOIN pg_proc AS expanded ON expanded.oid = dependency.refobjid
+	     WHERE legacy.pronamespace =
+	           (SELECT extnamespace FROM pg_extension WHERE extname = 'dbt2')
+	       AND expanded.pronamespace = legacy.pronamespace
+	       AND legacy.proname LIKE 'dbt2_legacy_045_%'
+	       AND expanded.proname =
+	           substr(legacy.proname, length('dbt2_legacy_045_') + 1)
+	       AND legacy.prosqlbody IS NOT NULL) <> 3 THEN
+		RAISE EXCEPTION 'compatibility wrappers are not parse-bound to expanded functions';
+	END IF;
+END
+$dbt2_smoke$;
 CREATE TABLE district (d_w_id integer, d_id integer, d_next_o_id integer);
 CREATE TABLE order_line (ol_w_id integer, ol_d_id integer, ol_o_id integer, ol_i_id integer);
 CREATE TABLE stock (s_w_id integer, s_i_id integer, s_quantity integer);
-INSERT INTO district VALUES (1, 1, 21);
-INSERT INTO order_line VALUES (1, 1, 1, 10);
-INSERT INTO stock VALUES (1, 10, 5);
-SELECT stock_level(1, 1, 10) = 1;
+INSERT INTO district VALUES (7, 3, 101);
+INSERT INTO order_line VALUES
+	(7, 3, 100, 10),
+	(7, 3, 99, 10),
+	(7, 3, 98, 11),
+	(7, 3, 80, 12),
+	(3, 7, 100, 99);
+INSERT INTO stock VALUES
+	(7, 10, 5),
+	(7, 11, 9),
+	(7, 12, 1),
+	(3, 99, 1);
+DO $dbt2_smoke$
+BEGIN
+	IF stock_level(7, 3, 10) <> 2 THEN
+		RAISE EXCEPTION 'unexpected stock_level result';
+	END IF;
+END
+$dbt2_smoke$;
+CREATE SCHEMA dbt2_moved;
+ALTER EXTENSION dbt2 SET SCHEMA dbt2_moved;
+DO $dbt2_smoke$
+BEGIN
+	IF (SELECT extnamespace FROM pg_extension WHERE extname = 'dbt2') <>
+	   'dbt2_moved'::regnamespace THEN
+		RAISE EXCEPTION 'dbt2 extension did not relocate';
+	END IF;
+	IF (SELECT count(DISTINCT legacy.oid)
+	      FROM pg_proc AS legacy
+	      JOIN pg_depend AS dependency
+	        ON dependency.classid = 'pg_proc'::regclass
+	       AND dependency.objid = legacy.oid
+	       AND dependency.refclassid = 'pg_proc'::regclass
+	       AND dependency.deptype = 'n'
+	      JOIN pg_proc AS expanded ON expanded.oid = dependency.refobjid
+	     WHERE legacy.pronamespace = 'dbt2_moved'::regnamespace
+	       AND expanded.pronamespace = legacy.pronamespace
+	       AND legacy.proname LIKE 'dbt2_legacy_045_%'
+	       AND expanded.proname =
+	           substr(legacy.proname, length('dbt2_legacy_045_') + 1)) <> 3 THEN
+		RAISE EXCEPTION 'compatibility bindings did not survive relocation';
+	END IF;
+END
+$dbt2_smoke$;
+ALTER EXTENSION dbt2 SET SCHEMA public;
+DROP SCHEMA dbt2_moved;
 SQL
 done
