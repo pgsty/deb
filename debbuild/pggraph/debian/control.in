@@ -15,4 +15,4 @@ Description: Graph database extension for PostgreSQL
  pggraph adds graph traversal and query capabilities to PostgreSQL using pgrx.
  The Debian package follows the Pigsty distribution name pggraph, while the
  installed SQL extension, shared library, control file, and SQL payload are
- named graph.
+ named graph. This package builds PostgreSQL 14 through 18.
