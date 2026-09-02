@@ -1,4 +1,8 @@
-SPDX-License-Identifier: AGPL-3.0-only
+SPDX-License-Identifier: AGPL-3.0-or-later
+
+The binary package also installs a machine-generated manifest and the license,
+notice, copyright, and copying files from the complete resolved normal Rust
+dependency closure under its private third-party documentation directory.
 
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007

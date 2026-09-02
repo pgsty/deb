@@ -1,3 +1,14 @@
+pg-search (0.25.6-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream PGXN 0.25.6.
+  * Build the fixed Cargo graph with Rust 1.97.1 and cargo-pgrx 0.19.2.
+  * Pin all five Git sources and enforce source, patch, and Cargo.lock hashes.
+  * Keep the upstream PostgreSQL 15 through 18 support matrix.
+  * Align package metadata with upstream's AGPL-3.0-or-later source headers.
+  * Ship license and notice files for the resolved static Rust dependency closure.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 02 Sep 2026 09:00:00 +0800
+
 pg-search (0.25.2-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 0.25.2.

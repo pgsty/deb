@@ -2,10 +2,10 @@ Source: pg-search
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, git, libssl-dev, libopenblas-dev, pkg-config
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, git, libssl-dev, libopenblas-dev, pkg-config, python3
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/paradedb/paradedb/tree/dev/pg_search
+Homepage: https://github.com/paradedb/paradedb/tree/main/pg_search
 
 Package: postgresql-PGVERSION-pg-search
 Architecture: any
