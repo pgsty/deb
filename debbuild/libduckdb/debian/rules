@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 
-ARCH := $(shell uname -m)
+DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 override_dh_auto_build:
 
@@ -11,8 +11,8 @@ override_dh_strip:
 
 override_dh_auto_install:
 
-	mkdir -p $(CURDIR)/debian/libduckdb/usr/lib/$(ARCH)-linux-gnu; \
-	cp $(CURDIR)/libduckdb.so $(CURDIR)/debian/libduckdb/usr/lib/$(ARCH)-linux-gnu/;
+	mkdir -p $(CURDIR)/debian/libduckdb/usr/lib/$(DEB_HOST_MULTIARCH); \
+	cp $(CURDIR)/libduckdb.so $(CURDIR)/debian/libduckdb/usr/lib/$(DEB_HOST_MULTIARCH)/;
 
 %:
 	dh $@
