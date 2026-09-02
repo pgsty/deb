@@ -2,10 +2,23 @@
 
 export CC = gcc
 export CXX = g++
-export DEB_BUILD_OPTIONS = parallel=1
-export CMAKE_BUILD_PARALLEL_LEVEL = 1
+export DEB_BUILD_OPTIONS = parallel=2
+export CMAKE_BUILD_PARALLEL_LEVEL = 2
+export VCPKG_DISABLE_METRICS = 1
 
 PG_VERSIONS := 16 17 18
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+VCPKG_ROOT ?= $(HOME)/.cache/pg_stat_ch/vcpkg-cd61e1e26a038e82d6550a3ebbe0fbbfe7da78e3
+VCPKG_TOOLCHAIN_PATH := $(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
+VCPKG_BINARY_CACHE ?= $(HOME)/.cache/pg_stat_ch/vcpkg-archives
+
+ifeq ($(DEB_HOST_ARCH),amd64)
+VCPKG_TRIPLET := x64-linux-pic
+else ifeq ($(DEB_HOST_ARCH),arm64)
+VCPKG_TRIPLET := arm64-linux-pic
+else
+$(error unsupported DEB_HOST_ARCH $(DEB_HOST_ARCH))
+endif
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
@@ -20,32 +33,42 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 
 override_dh_auto_build:
+	test -f "$(VCPKG_TOOLCHAIN_PATH)"
+	mkdir -p "$(VCPKG_BINARY_CACHE)"
 	set -e; \
 	for v in $(PG_VERSIONS); do \
 		rm -rf build-pg$$v; \
-		PATH="/usr/lib/postgresql/$$v/bin:$$PATH" \
+		VCPKG_ROOT="$(VCPKG_ROOT)" \
+		VCPKG_DEFAULT_BINARY_CACHE="$(VCPKG_BINARY_CACHE)" \
 		cmake -B build-pg$$v -S . -G "Unix Makefiles" \
 			-DPG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config \
-			-DOTELCPP_PROTO_PATH=$(CURDIR)/third_party/opentelemetry-cpp/third_party/opentelemetry-proto \
+			-DCMAKE_TOOLCHAIN_FILE=$(VCPKG_TOOLCHAIN_PATH) \
+			-DVCPKG_TARGET_TRIPLET=$(VCPKG_TRIPLET) \
+			-DVCPKG_OVERLAY_TRIPLETS=$(CURDIR)/triplets \
+			-DPG_STAT_CH_PACKAGE_VERSION=0.4.0 \
 			-DCMAKE_BUILD_TYPE=Release; \
-		$(MAKE) -C build-pg$$v -j1; \
+		$(MAKE) -C build-pg$$v -j2; \
 	done
 
 override_dh_auto_install:
 	set -e; \
 	for v in $(PG_VERSIONS); do \
 		pkg=postgresql-$$v-pg-stat-ch; \
-		install -d debian/$$pkg/usr/lib/postgresql/$$v/lib; \
-		install -d debian/$$pkg/usr/share/postgresql/$$v/extension; \
-		install -m 0644 build-pg$$v/pg_stat_ch.so debian/$$pkg/usr/lib/postgresql/$$v/lib/pg_stat_ch.so; \
-		install -m 0644 pg_stat_ch.control debian/$$pkg/usr/share/postgresql/$$v/extension/pg_stat_ch.control; \
-		install -m 0644 sql/pg_stat_ch--0.1.sql debian/$$pkg/usr/share/postgresql/$$v/extension/pg_stat_ch--0.1.sql; \
+		DESTDIR=$(CURDIR)/debian/$$pkg cmake --install build-pg$$v; \
+		printf 'postgresql:Depends=postgresql-%s\n' "$$v" > "debian/$$pkg.substvars"; \
 	done
 
 override_dh_installdocs:
 	set -e; \
 	for v in $(PG_VERSIONS); do \
-		dh_installdocs -ppostgresql-$$v-pg-stat-ch README.md INSTALL.md; \
+		pkg=postgresql-$$v-pg-stat-ch; \
+		docdir=$(CURDIR)/debian/$$pkg/usr/share/doc/$$pkg/vcpkg; \
+		dh_installdocs -p$$pkg README.md INSTALL.md docs/; \
+		find build-pg$$v/vcpkg_installed -path '*/share/*/copyright' -type f -print | LC_ALL=C sort | \
+		while IFS= read -r license; do \
+			component=$$(basename "$$(dirname "$$license")"); \
+			install -D -m 0644 "$$license" "$$docdir/$$component-copyright"; \
+		done; \
 	done
 
 override_dh_strip:
