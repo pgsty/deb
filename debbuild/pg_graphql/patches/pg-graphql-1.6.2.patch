@@ -1,0 +1,20 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 802ebde..f361791 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -4,0 +5 @@ edition = "2024"
++rust-version = "1.96"
+@@ -15,0 +17 @@ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
++pg19 = ["pgrx/pg19", "pgrx-tests/pg19"]
+diff --git a/sql/pg_graphql--1.6.1--1.6.2.sql b/sql/pg_graphql--1.6.1--1.6.2.sql
+new file mode 100644
+index 0000000..bbff352
+--- /dev/null
++++ b/sql/pg_graphql--1.6.1--1.6.2.sql
+@@ -0,0 +1,6 @@
++-- pg_graphql 1.6.1 -> 1.6.2
++--
++-- Version 1.6.2 adds a runtime query-depth limit, updates dependencies and
++-- moves to pgrx 0.19.2. It does not change extension-owned SQL objects, so
++-- this edge deliberately preserves the existing catalog in place.
++SELECT 1;
