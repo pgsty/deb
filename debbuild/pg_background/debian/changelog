@@ -1,3 +1,17 @@
+pg-background (2.0.3-2PGSTY) unstable; urgency=medium
+
+  * Add downstream extension version 2.0.3 and a 2.0 to 2.0.3 security
+    upgrade edge without changing the already-published 2.0 SQL scripts.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 20:00:00 +0800
+
+pg-background (2.0.3-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 2.0.3 with search-path, catalog qualification,
+    background-worker lifecycle, cancellation, and result safety fixes.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:46:24 +0800
+
 pg-background (2.0.2-1PGSTY) unstable; urgency=medium
 
   * https://github.com/vibhorkum/pg_background/releases/tag/v2.0.2
