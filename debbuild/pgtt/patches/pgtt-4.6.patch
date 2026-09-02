@@ -1,0 +1,305 @@
+--- a/pgtt.c
++++ b/pgtt.c
+@@ -225,6 +225,7 @@
+ int strpos(char *hay, char *needle, int offset);
+ static Oid gtt_create_table_statement(Gtt gtt);
+ static void gtt_create_table_as(Gtt gtt, bool skipdata);
++static void gtt_set_public_template_acl(const char *relname);
+ static void gtt_unregister_global_temporary_table(const char *relname);
+ void GttHashTableDeleteAll(void);
+ bool EnableGttManager(void);
+@@ -1289,6 +1290,37 @@
+ }
+ 
+ /*
++ * Apply pgtt's public template policy after every template creation path.
++ *
++ * REVOKE must precede GRANT because ALTER DEFAULT PRIVILEGES can otherwise
++ * give a newly created unlogged table more PUBLIC privileges than pgtt
++ * intends. Named-role ACLs and ownership are deliberately left untouched.
++ * The caller must already be connected to SPI.
++ */
++static void
++gtt_set_public_template_acl(const char *relname)
++{
++	char   *newQueryString;
++	int		result;
++
++	newQueryString = psprintf("REVOKE ALL PRIVILEGES ON TABLE %s.%s FROM public",
++			quote_identifier(pgtt_namespace_name),
++			quote_identifier(relname));
++	result = SPI_exec(newQueryString, 0);
++	if (result < 0)
++		ereport(ERROR, (errmsg("execution failure on query: \"%s\"", newQueryString)));
++	pfree(newQueryString);
++
++	newQueryString = psprintf("GRANT SELECT ON TABLE %s.%s TO public",
++			quote_identifier(pgtt_namespace_name),
++			quote_identifier(relname));
++	result = SPI_exec(newQueryString, 0);
++	if (result < 0)
++		ereport(ERROR, (errmsg("execution failure on query: \"%s\"", newQueryString)));
++	pfree(newQueryString);
++}
++
++/*
+  * Create the Global Temporary Table with all associated objects
+  * by creating the template table and register the GTT in the
+  * pg_global_temp_tables table.
+@@ -1352,21 +1384,8 @@
+ 	if (result < 0)
+ 		ereport(ERROR, (errmsg("can not registrer new global temporary table")));
+ 
+-	/*
+-	 * Set privilege on the unlogged table. Only SELECT is granted to
+-	 * PUBLIC here (previously ALL was granted, which let any role
+-	 * INSERT/UPDATE/DELETE/TRUNCATE data in this table, and attach
+-	 * triggers to it, regardless of ownership). SELECT is kept so the
+-	 * documented "SET pgtt.enabled TO off; SELECT * FROM <schema>.<t>"
+-	 * diagnostic pattern keeps working for any role.
+-	 */
+-	newQueryString = psprintf("GRANT SELECT ON TABLE %s.%s TO public",
+-			quote_identifier(pgtt_namespace_name),
+-			quote_identifier(gtt.relname));
+-	result = SPI_exec(newQueryString, 0);
+-	if (result < 0)
+-		ereport(ERROR, (errmsg("execution failure on query: \"%s\"", newQueryString)));
+-
++	/* Restrict PUBLIC to the documented read-only template access. */
++	gtt_set_public_template_acl(gtt.relname);
+ 
+ 	/* Mark the GTT as been created before register the table in the cache */
+ 	gtt.created = true;
+@@ -2612,6 +2631,9 @@
+ 	if (result < 0)
+ 		ereport(ERROR, (errmsg("can not registrer new global temporary table")));
+ 
++	/* CREATE TABLE AS uses a separate path and needs the same ACL policy. */
++	gtt_set_public_template_acl(gtt.relname);
++
+ 	finished = SPI_finish();
+ 	if (finished != SPI_OK_FINISH)
+ 		ereport(ERROR, (errmsg("could not disconnect from SPI manager")));
+@@ -2638,4 +2660,3 @@
+ 	}
+ 	return 0;
+ }
+-
+--- a/Makefile
++++ b/Makefile
+@@ -15,7 +15,8 @@
+ DOCS = pgtt.md
+ MODULES = pgtt
+ 
+-DATA = $(wildcard updates/*--*.sql) $(wildcard sql/*.sql)
++DATA = $(wildcard updates/*--*.sql) $(wildcard sql/*.sql) \
++	pgtt-repair-public-acl.sql
+ 
+ TESTS        = 00_init 01_oncommitdelete 02_oncommitpreserve \
+ 	       03_createontruncate 04_rename 05_useindex \
+--- a/updates/pgtt--4.5.0--4.6.0.sql
++++ b/updates/pgtt--4.5.0--4.6.0.sql
+@@ -25,5 +25,98 @@
+ --   GRANT SELECT, INSERT, UPDATE, DELETE
+ --     ON @extschema@.pg_global_temp_tables TO <role>;
+ ----
++LOCK TABLE @extschema@.pg_global_temp_tables IN SHARE ROW EXCLUSIVE MODE;
+ REVOKE ALL ON TABLE @extschema@.pg_global_temp_tables FROM PUBLIC;
+ GRANT SELECT ON TABLE @extschema@.pg_global_temp_tables TO PUBLIC;
++
++----
++-- Repair every registered template created by a pre-4.6 release.
++--
++-- All released pgtt catalogs from 2.0.0 through 4.5.0 have the same
++-- (relid, nspname, relname, preserved, code) shape. The relid value is a
++-- historical relfilenode and can legitimately be stale after rewrite or
++-- dump/restore, so the authoritative identity is the registered relation
++-- name in pgtt's fixed extension schema, exactly as pgtt 4.6 loads it.
++--
++-- A registered object that is absent, outside the extension schema, or no
++-- longer an ordinary unlogged table is not safe to classify automatically.
++-- Abort the whole ALTER EXTENSION transaction in that case instead of
++-- silently claiming that the security migration completed.
++--
++-- REVOKE FROM PUBLIC changes no owner or named-role ACL. Column-level PUBLIC
++-- write grants are removed too; otherwise a historical custom column grant
++-- could bypass the table-level hardening. PUBLIC SELECT is then restored.
++----
++DO $pgtt_acl_migration$
++DECLARE
++	gtt_template record;
++	gtt_column record;
++	repaired integer := 0;
++BEGIN
++	FOR gtt_template IN
++		SELECT g.nspname AS registered_nspname,
++			   g.relname,
++			   c.oid AS template_oid,
++			   c.relkind,
++			   c.relpersistence
++		  FROM @extschema@.pg_global_temp_tables AS g
++		  LEFT JOIN pg_catalog.pg_namespace AS n
++			ON n.nspname = g.nspname
++		  LEFT JOIN pg_catalog.pg_class AS c
++			ON c.relnamespace = n.oid
++		   AND c.relname = g.relname
++		 ORDER BY g.nspname, g.relname
++	LOOP
++		IF gtt_template.registered_nspname <> '@extschema@'::name THEN
++			RAISE EXCEPTION
++				'pgtt ACL migration cannot classify registered template %.% outside extension schema @extschema@',
++				gtt_template.registered_nspname, gtt_template.relname
++				USING ERRCODE = '55000',
++					  HINT = 'Repair or remove the stale pg_global_temp_tables row, then retry ALTER EXTENSION.';
++		END IF;
++
++		IF gtt_template.template_oid IS NULL THEN
++			RAISE EXCEPTION
++				'pgtt ACL migration cannot find registered template %.%',
++				gtt_template.registered_nspname, gtt_template.relname
++				USING ERRCODE = '55000',
++					  HINT = 'Repair or remove the stale pg_global_temp_tables row, then retry ALTER EXTENSION.';
++		END IF;
++
++		IF gtt_template.relkind <> 'r' OR gtt_template.relpersistence <> 'u' THEN
++			RAISE EXCEPTION
++				'pgtt ACL migration expected %.% to be an ordinary unlogged template, found relkind % persistence %',
++				gtt_template.registered_nspname, gtt_template.relname,
++				gtt_template.relkind, gtt_template.relpersistence
++				USING ERRCODE = '55000',
++					  HINT = 'Review the registered object manually before retrying ALTER EXTENSION.';
++		END IF;
++
++		EXECUTE pg_catalog.format(
++			'REVOKE ALL PRIVILEGES ON TABLE %I.%I FROM PUBLIC',
++			gtt_template.registered_nspname, gtt_template.relname);
++		EXECUTE pg_catalog.format(
++			'GRANT SELECT ON TABLE %I.%I TO PUBLIC',
++			gtt_template.registered_nspname, gtt_template.relname);
++
++		FOR gtt_column IN
++			SELECT a.attname
++			  FROM pg_catalog.pg_attribute AS a
++			 WHERE a.attrelid = gtt_template.template_oid
++			   AND a.attnum > 0
++			   AND NOT a.attisdropped
++			 ORDER BY a.attnum
++		LOOP
++			EXECUTE pg_catalog.format(
++				'REVOKE INSERT (%1$I), UPDATE (%1$I), REFERENCES (%1$I) ON TABLE %2$I.%3$I FROM PUBLIC',
++				gtt_column.attname,
++				gtt_template.registered_nspname,
++				gtt_template.relname);
++		END LOOP;
++
++		repaired := repaired + 1;
++	END LOOP;
++
++	RAISE NOTICE 'pgtt ACL migration repaired % registered template(s)', repaired;
++END
++$pgtt_acl_migration$;
+--- /dev/null
++++ b/pgtt-repair-public-acl.sql
+@@ -0,0 +1,102 @@
++-- Idempotent operator repair for databases that already report pgtt 4.6.0
++-- or whose extension upgrade must be audited independently.
++-- Run with: psql -X -v ON_ERROR_STOP=1 -d DATABASE -f pgtt-repair-public-acl.sql
++\set ON_ERROR_STOP 1
++
++BEGIN;
++
++DO $pgtt_acl_repair$
++DECLARE
++	extension_schema name;
++	gtt_template record;
++	gtt_column record;
++	repaired integer := 0;
++BEGIN
++	SELECT n.nspname
++	  INTO extension_schema
++	  FROM pg_catalog.pg_extension AS e
++	  JOIN pg_catalog.pg_namespace AS n ON n.oid = e.extnamespace
++	 WHERE e.extname = 'pgtt';
++
++	IF extension_schema IS NULL THEN
++		RAISE EXCEPTION 'pgtt ACL repair requires the pgtt extension in this database'
++			USING ERRCODE = '55000';
++	END IF;
++
++	EXECUTE pg_catalog.format(
++		'LOCK TABLE %I.pg_global_temp_tables IN SHARE ROW EXCLUSIVE MODE',
++		extension_schema);
++	EXECUTE pg_catalog.format(
++		'REVOKE ALL PRIVILEGES ON TABLE %I.pg_global_temp_tables FROM PUBLIC',
++		extension_schema);
++	EXECUTE pg_catalog.format(
++		'GRANT SELECT ON TABLE %I.pg_global_temp_tables TO PUBLIC',
++		extension_schema);
++
++	FOR gtt_template IN EXECUTE pg_catalog.format(
++		'SELECT g.nspname AS registered_nspname,
++				g.relname,
++				c.oid AS template_oid,
++				c.relkind,
++				c.relpersistence
++		   FROM %1$I.pg_global_temp_tables AS g
++		   LEFT JOIN pg_catalog.pg_namespace AS n ON n.nspname = g.nspname
++		   LEFT JOIN pg_catalog.pg_class AS c
++			 ON c.relnamespace = n.oid AND c.relname = g.relname
++		  ORDER BY g.nspname, g.relname',
++		extension_schema)
++	LOOP
++		IF gtt_template.registered_nspname <> extension_schema THEN
++			RAISE EXCEPTION
++				'pgtt ACL repair cannot classify registered template %.% outside extension schema %',
++				gtt_template.registered_nspname, gtt_template.relname, extension_schema
++				USING ERRCODE = '55000',
++					  HINT = 'Repair or remove the stale pg_global_temp_tables row, then rerun this script.';
++		END IF;
++
++		IF gtt_template.template_oid IS NULL THEN
++			RAISE EXCEPTION 'pgtt ACL repair cannot find registered template %.%',
++				gtt_template.registered_nspname, gtt_template.relname
++				USING ERRCODE = '55000',
++					  HINT = 'Repair or remove the stale pg_global_temp_tables row, then rerun this script.';
++		END IF;
++
++		IF gtt_template.relkind <> 'r' OR gtt_template.relpersistence <> 'u' THEN
++			RAISE EXCEPTION
++				'pgtt ACL repair expected %.% to be an ordinary unlogged template, found relkind % persistence %',
++				gtt_template.registered_nspname, gtt_template.relname,
++				gtt_template.relkind, gtt_template.relpersistence
++				USING ERRCODE = '55000',
++					  HINT = 'Review the registered object manually before rerunning this script.';
++		END IF;
++
++		EXECUTE pg_catalog.format(
++			'REVOKE ALL PRIVILEGES ON TABLE %I.%I FROM PUBLIC',
++			gtt_template.registered_nspname, gtt_template.relname);
++		EXECUTE pg_catalog.format(
++			'GRANT SELECT ON TABLE %I.%I TO PUBLIC',
++			gtt_template.registered_nspname, gtt_template.relname);
++
++		FOR gtt_column IN
++			SELECT a.attname
++			  FROM pg_catalog.pg_attribute AS a
++			 WHERE a.attrelid = gtt_template.template_oid
++			   AND a.attnum > 0
++			   AND NOT a.attisdropped
++			 ORDER BY a.attnum
++		LOOP
++			EXECUTE pg_catalog.format(
++				'REVOKE INSERT (%1$I), UPDATE (%1$I), REFERENCES (%1$I) ON TABLE %2$I.%3$I FROM PUBLIC',
++				gtt_column.attname,
++				gtt_template.registered_nspname,
++				gtt_template.relname);
++		END LOOP;
++
++		repaired := repaired + 1;
++	END LOOP;
++
++	RAISE NOTICE 'pgtt ACL repair repaired % registered template(s)', repaired;
++END
++$pgtt_acl_repair$;
++
++COMMIT;
