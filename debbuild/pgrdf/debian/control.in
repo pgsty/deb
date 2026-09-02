@@ -15,3 +15,5 @@ Description: RDF, SPARQL, SHACL, and OWL reasoning for PostgreSQL
  pgRDF is a Rust-native PostgreSQL extension for RDF storage, SPARQL 1.1 query
  and update, SHACL validation, and OWL 2 RL or RDFS materialization inside
  PostgreSQL. This package builds the extension for PostgreSQL 14 through 18.
+ Production use of its shared-memory cache and hooks requires loading pgrdf
+ through shared_preload_libraries before PostgreSQL starts.
