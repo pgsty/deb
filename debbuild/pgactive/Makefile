@@ -2,9 +2,9 @@
 
 all: setup build move
 
-TARBALL := pgactive-2.1.7.tar.gz
+TARBALL := pgactive-2.1.9.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/pgactive-2.1.7.patch
+SOURCE_PATCH := patches/pgactive-2.1.9.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
