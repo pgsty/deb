@@ -1,0 +1,156 @@
+Description: retain the pg_local_cache 1.x single-key get API
+ Upstream 2.0 drops both local_cache.get overloads and their C symbols even
+ though the 2.x mget implementation retains the typed single-key machinery.
+ Restore small C compatibility entry points backed by that path, keep the
+ versioned upgrade edge non-destructive, and expose the same functions on
+ fresh 2.0 installations.  Existing function OIDs, ACLs, comments, execution
+ attributes and dependencies remain untouched across 1.3.0 to 2.0.1.
+Author: Pigsty Packaging Team <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-09-01
+
+--- a/sql/pg_local_cache--1.3.0--2.0.0.sql
++++ b/sql/pg_local_cache--1.3.0--2.0.0.sql
+@@ -1,4 +1,5 @@
+ \echo Use "ALTER EXTENSION pg_local_cache UPDATE TO '2.0.0'" to load this file. \quit
+ 
+-DROP FUNCTION local_cache.get(regclass, text[]);
+-DROP FUNCTION local_cache.get(regclass, anyelement);
++-- Pigsty retains the 1.x get API as C compatibility entry points backed by
++-- the 2.x typed single-key path.  Leaving these same-signature functions in
++-- place preserves their OIDs, ACLs, comments, attributes and dependencies.
+--- a/sql/pg_local_cache--2.0.0.sql
++++ b/sql/pg_local_cache--2.0.0.sql
+@@ -275,6 +275,18 @@
+ LANGUAGE C STRICT VOLATILE PARALLEL UNSAFE
+ SECURITY INVOKER;
+ 
++CREATE FUNCTION get(relation regclass, key_values text[])
++RETURNS text
++AS 'MODULE_PATHNAME', 'pg_local_cache_sql_get'
++LANGUAGE C STRICT VOLATILE PARALLEL UNSAFE
++SECURITY INVOKER;
++
++CREATE FUNCTION get(relation regclass, key_value anyelement)
++RETURNS text
++AS 'MODULE_PATHNAME', 'pg_local_cache_sql_get_scalar'
++LANGUAGE C STRICT VOLATILE PARALLEL UNSAFE
++SECURITY INVOKER;
++
+ CREATE FUNCTION stats()
+ RETURNS jsonb
+ AS 'MODULE_PATHNAME', 'pg_local_cache_stats'
+--- a/sql/pg_local_cache--2.0.1.sql
++++ b/sql/pg_local_cache--2.0.1.sql
+@@ -275,6 +275,18 @@
+ LANGUAGE C STRICT VOLATILE PARALLEL UNSAFE
+ SECURITY INVOKER;
+ 
++CREATE FUNCTION get(relation regclass, key_values text[])
++RETURNS text
++AS 'MODULE_PATHNAME', 'pg_local_cache_sql_get'
++LANGUAGE C STRICT VOLATILE PARALLEL UNSAFE
++SECURITY INVOKER;
++
++CREATE FUNCTION get(relation regclass, key_value anyelement)
++RETURNS text
++AS 'MODULE_PATHNAME', 'pg_local_cache_sql_get_scalar'
++LANGUAGE C STRICT VOLATILE PARALLEL UNSAFE
++SECURITY INVOKER;
++
+ CREATE FUNCTION stats()
+ RETURNS jsonb
+ AS 'MODULE_PATHNAME', 'pg_local_cache_stats'
+--- a/src/pg_local_cache_sql.c
++++ b/src/pg_local_cache_sql.c
+@@ -38,6 +38,8 @@
+ #include "row_payload.h"
+ 
+ PG_FUNCTION_INFO_V1(pg_local_cache_sql_mget);
++PG_FUNCTION_INFO_V1(pg_local_cache_sql_get);
++PG_FUNCTION_INFO_V1(pg_local_cache_sql_get_scalar);
+ 
+ #define PGLC_SQL_ARRAY_MAX_KEYS 1024
+ 
+@@ -1110,4 +1112,81 @@
+ 	PgLocalCacheSqlMgetState *state = pglc_sql_mget_state(fcinfo, relation_oid);
+ 
+ 	return pglc_sql_mget_common(fcinfo, state);
++}
++
++/*
++ * Compatibility entry points for the 1.x single-key SQL API.
++ *
++ * Version 2 uses mget as its public interface, but its internal single-key
++ * path still provides the exact typed lookup needed by get.  Keep these
++ * symbols so an installed 1.3.0 catalog remains callable immediately after
++ * the required server restart and so the versioned SQL edge can preserve the
++ * original function OIDs, ACLs, comments and dependent objects.
++ */
++Datum
++pg_local_cache_sql_get(PG_FUNCTION_ARGS)
++{
++	Oid			relation_oid = PG_GETARG_OID(0);
++	PgLocalCacheSqlMgetState *state = pglc_sql_mget_state(fcinfo, relation_oid);
++	ArrayType  *key_array;
++	Datum	   *elements;
++	bool	   *nulls;
++	int			count;
++	Datum		values[PGLC_MAX_KEY_COLUMNS];
++	char		canonical[PGLC_KEY_MAX];
++	Size		canonical_len;
++
++	if (PG_ARGISNULL(1))
++		PG_RETURN_NULL();
++	key_array = PG_GETARG_ARRAYTYPE_P(1);
++	pglc_sql_mget_acl_check(state);
++	deconstruct_array(key_array, TEXTOID, -1, false, TYPALIGN_INT,
++					  &elements, &nulls, &count);
++	if (count != state->mapping.key_count)
++		ereport(ERROR,
++				(errcode(ERRCODE_INVALID_PARAMETER_VALUE),
++				 errmsg("expected %d primary-key values, got %d",
++						state->mapping.key_count, count)));
++	if (!pglc_sql_mget_values(state, elements, nulls, count, values,
++							  canonical, &canonical_len) || canonical_len == 0)
++		ereport(ERROR,
++				(errcode(ERRCODE_PROGRAM_LIMIT_EXCEEDED),
++				 errmsg("canonical primary key exceeds %d bytes",
++						PGLC_KEY_MAX - 1)));
++	return pglc_sql_mget_canonical(
++		fcinfo, state, values, canonical, canonical_len);
++}
++
++Datum
++pg_local_cache_sql_get_scalar(PG_FUNCTION_ARGS)
++{
++	Oid			relation_oid = PG_GETARG_OID(0);
++	PgLocalCacheSqlMgetState *state = pglc_sql_mget_state(fcinfo, relation_oid);
++	Oid			key_type;
++	Datum		key_value;
++	bool		key_null = false;
++	char		canonical[PGLC_KEY_MAX];
++	Size		canonical_len;
++
++	if (PG_ARGISNULL(1))
++		PG_RETURN_NULL();
++	key_type = get_fn_expr_argtype(fcinfo->flinfo, 1);
++	key_value = PG_GETARG_DATUM(1);
++	pglc_sql_mget_acl_check(state);
++	if (state->mapping.key_count != 1 ||
++		key_type != state->mapping.key_types[0])
++		ereport(ERROR,
++				(errcode(ERRCODE_DATATYPE_MISMATCH),
++				 errmsg("SQL scalar get requires one primary-key column of type %s",
++						format_type_be(state->mapping.key_types[0]))));
++	if (!pglc_canonical_key_typed(
++			&key_value, &key_null, 1, state->mapping.key_types,
++			state->mapping.key_outputs, canonical, sizeof(canonical),
++			&canonical_len) || canonical_len == 0)
++		ereport(ERROR,
++				(errcode(ERRCODE_PROGRAM_LIMIT_EXCEEDED),
++				 errmsg("canonical primary key exceeds %d bytes",
++						PGLC_KEY_MAX - 1)));
++	return pglc_sql_mget_canonical(
++		fcinfo, state, &key_value, canonical, canonical_len);
+ }
