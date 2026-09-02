@@ -1,29 +1,34 @@
 all: setup build move
 
-TARBALL := pg_sqlog-1.6.tar.gz
+TARBALL := pg_sqlog-1.7+git20241118.b016539.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+SOURCE_COMMIT := b016539f6448c2d01a3aec5067b4f1fc2bebb9be
+BUILD_DIR := build
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 # prepare directory
-setup:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	pg_buildext updatecontrol
-	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
+setup: check-src
+	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 # building deb
 build:
-	cd build && pg_buildext updatecontrol
-	cd build && dpkg-buildpackage -b -us -uc
+	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
 
 # remove building craps
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
-
-
+.PHONY: all check-src setup update build move clean ls
