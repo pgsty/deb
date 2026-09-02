@@ -1,3 +1,11 @@
+pg-auditor (0.3+git20250228.7c2edff-1PGSTY) unstable; urgency=medium
+
+  * Pin upstream master snapshot 7c2edff (pg_auditor 0.3).
+  * Package the upstream 0.2 to 0.3 SQL upgrade path.
+  * Keep hstore covered by the PostgreSQL runtime package dependency.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 18:00:00 +0000
+
 pg-auditor (0.2-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
