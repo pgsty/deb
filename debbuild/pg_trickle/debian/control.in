@@ -2,7 +2,7 @@ Source: pg-trickle
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, libssl-dev, pkg-config
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, libpq-dev, libssl-dev, pkg-config
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/trickle-labs/pg-trickle
@@ -17,3 +17,5 @@ Description: Streaming tables with differential view maintenance for PostgreSQL 
   Rust and pgrx extension.
   Full background scheduler and shared-memory functionality require loading
   pg_trickle through shared_preload_libraries.
+  This package also installs pg_trickle_dump in the PostgreSQL 18 binary
+  directory for definition export and migration backups.
