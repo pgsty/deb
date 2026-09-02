@@ -1,3 +1,10 @@
+lagraph (1.2.2-1PGSTY) unstable; urgency=medium
+
+  * Update LAGraph and LAGraphX to 1.2.2.
+  * Keep the liblagraph.so.1 and liblagraphx.so.1 ABI package names.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 14:15:00 +0800
+
 lagraph (1.2.1-1PGSTY) unstable; urgency=medium
 
   * Package LAGraph 1.2.1 and LAGraphX 1.2.1 as runtime and development libraries.

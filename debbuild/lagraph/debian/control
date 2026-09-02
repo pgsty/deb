@@ -2,7 +2,7 @@ Source: lagraph
 Section: libs
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: cmake, debhelper-compat (= 13), libgraphblas-dev, pkgconf
+Build-Depends: cmake (>= 3.23), debhelper-compat (= 13), libgraphblas-dev (>= 10.5.0), pkgconf
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/GraphBLAS/LAGraph
@@ -21,7 +21,7 @@ Description: LAGraph experimental runtime library
 
 Package: liblagraph-dev
 Architecture: any
-Depends: ${misc:Depends}, libgraphblas-dev, liblagraph1 (= ${binary:Version}), liblagraphx1 (= ${binary:Version})
+Depends: ${misc:Depends}, libgraphblas-dev (>= 10.5.0), liblagraph1 (= ${binary:Version}), liblagraphx1 (= ${binary:Version})
 Description: LAGraph development files
  Headers, pkg-config metadata, CMake config, and linker symlinks for
- LAGraph 1.2.1 and LAGraphX 1.2.1.
+ LAGraph 1.2.2 and LAGraphX 1.2.2.
