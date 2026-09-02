@@ -13,7 +13,7 @@ setup: check-src
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
-	patch -d $(BUILD_DIR) -p1 --forward -f < debian/patches/0001-use-system-suitesparse-packages.patch
+	patch -d $(BUILD_DIR) -p1 --forward -f < debian/patches/onesparse-1.0.0.patch
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i.bak "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog && rm -f $(BUILD_DIR)/debian/changelog.bak
 
