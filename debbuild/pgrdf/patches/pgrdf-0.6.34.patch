@@ -1,0 +1,33 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index eb9b5d3..c220f90 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -2256 +2256 @@ version = "0.4.1"
+-source = "git+https://github.com/styk-tv/reasonable?branch=rdf12-passthrough#8974c110a31a06f3f6ca712791c16b5ebb3f73db"
++source = "git+https://github.com/styk-tv/reasonable?rev=8974c110a31a06f3f6ca712791c16b5ebb3f73db#8974c110a31a06f3f6ca712791c16b5ebb3f73db"
+diff --git a/Cargo.toml b/Cargo.toml
+index 1c5158e..c3addb7 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -50,0 +51 @@ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
++pg19 = ["pgrx/pg19", "pgrx-tests/pg19"]
+@@ -62 +63 @@ unexpected_cfgs = { level = "warn", check-cfg = [
+-    'cfg(feature, values("pg13", "pg19"))',
++    'cfg(feature, values("pg13"))',
+@@ -154 +155 @@ codegen-units = 1
+-reasonable = { git = "https://github.com/styk-tv/reasonable", branch = "rdf12-passthrough" }
++reasonable = { git = "https://github.com/styk-tv/reasonable", rev = "8974c110a31a06f3f6ca712791c16b5ebb3f73db" }
+diff --git a/sql/pgrdf--0.6.20--0.6.22.sql b/sql/pgrdf--0.6.20--0.6.22.sql
+new file mode 100644
+index 0000000..67aa39f
+--- /dev/null
++++ b/sql/pgrdf--0.6.20--0.6.22.sql
+@@ -0,0 +1,8 @@
++-- pgRDF 0.6.20 -> 0.6.22
++--
++-- Releases 0.6.21 and 0.6.22 changed only release/build packaging and did not
++-- alter the extension catalog. Upstream 0.6.22 retained the cumulative
++-- 0.5.1--0.6.20 script but did not ship this bridge, leaving PostgreSQL no
++-- path from Pigsty's published 0.6.20 package to the later 0.6.22--0.6.25
++-- migration. Keep the bridge deliberately catalog-neutral.
++SELECT 1;

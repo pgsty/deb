@@ -1,12 +1,12 @@
 all: setup build move
 
-TARBALL := pgrdf-0.6.20.tar.gz
+TARBALL := pgrdf-0.6.34.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.1
-SOURCE_PATCH := patches/pgrdf-0.6.20.patch
+PGRX_VERSION := 0.19.2
+SOURCE_PATCH := patches/pgrdf-0.6.34.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_HTTP_TIMEOUT ?= 600
 CARGO_NET_RETRY ?= 10
@@ -29,43 +29,45 @@ setup: check-src check-patches
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
-	@(cd $(BUILD_DIR) && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
+	@(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
 building: check-pgrx
 	cd $(BUILD_DIR) && \
-	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
+	RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
 	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
 	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0191-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0191-cargo-locks.before
-	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) CARGO_HTTP_TIMEOUT=$(CARGO_HTTP_TIMEOUT) CARGO_NET_RETRY=$(CARGO_NET_RETRY) cargo fetch --locked
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.before
+	@test -s $(BUILD_DIR)/.pgrx0192-cargo-locks.before
+	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) CARGO_HTTP_TIMEOUT=$(CARGO_HTTP_TIMEOUT) CARGO_NET_RETRY=$(CARGO_NET_RETRY) cargo fetch --locked
 	cd $(BUILD_DIR) && \
-	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
+	set -eu; export RUSTUP_TOOLCHAIN=stable; export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) CARGO_HTTP_TIMEOUT=$(CARGO_HTTP_TIMEOUT) CARGO_NET_RETRY=$(CARGO_NET_RETRY) \
-	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
-	done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0191-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0191-cargo-locks.before $(BUILD_DIR)/.pgrx0191-cargo-locks.after
+		    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) CARGO_HTTP_TIMEOUT=$(CARGO_HTTP_TIMEOUT) CARGO_NET_RETRY=$(CARGO_NET_RETRY) \
+		    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+		    EXT_DIR=target/release/pgrdf-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
+		    cp -f sql/pgrdf--*--*.sql "$$EXT_DIR/"; \
+		done
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.after
+	cmp $(BUILD_DIR)/.pgrx0192-cargo-locks.before $(BUILD_DIR)/.pgrx0192-cargo-locks.after
 
 check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
 	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
-	    exit 1; \
+		exit 1; \
 	fi
 
 packaging:
-	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
 	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
