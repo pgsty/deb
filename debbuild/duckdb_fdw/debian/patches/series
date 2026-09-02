@@ -1,1 +1,3 @@
-duckdb_fdw-1.4.3.patch
+duckdb_fdw-2.0.1.patch
+duckdb_fdw-2.0.1-types.patch
+duckdb_fdw-2.0.1-tests.patch

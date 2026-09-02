@@ -1,0 +1,168 @@
+--- a/Makefile
++++ b/Makefile
+@@ -35,8 +35,6 @@
+ ifeq ($(detected_OS),Linux)
+     DLSUFFIX = .so
+     PG_CXXFLAGS = -std=c++11
+-    # 针对现代环境的 ABI 兼容性设置
+-    PG_CPPFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
+     SHLIB_LINK += -ldl
+ endif
+ 
+@@ -61,14 +59,9 @@
+     include $(top_srcdir)/contrib/contrib-global.mk
+ endif
+ 
+-# 设置 RPATH，确保运行时能找到同目录下的 libduckdb.so
+-ifneq ($(detected_OS),Windows)
+-SHLIB_LINK += -Wl,-rpath,'$$ORIGIN' -Wl,-rpath,$(PG_LIB)
+-endif
+-
+ # 安装钩子
+ install-duckdb:
+-	$(install_bin) -m 755 libduckdb$(DLSUFFIX) $(DESTDIR)$(PG_LIB)
++	@:
+ 
+ install: install-duckdb
+ 
+--- a/duckdb_fdw--1.4.1--2.0.0.sql
++++ b/duckdb_fdw--1.4.1--2.0.0.sql
+@@ -11,7 +11,8 @@
+   RETURNS void STRICT
+   AS 'MODULE_PATHNAME' LANGUAGE C;
+ 
+-CREATE FUNCTION IF NOT EXISTS duckdb_create_s3_secret(server name, secret_name text, key_id text, secret text, region text DEFAULT NULL)
++DROP FUNCTION IF EXISTS duckdb_create_s3_secret(name, text, text, text, text);
++CREATE FUNCTION duckdb_create_s3_secret(server name, secret_name text, key_id text, secret text, region text DEFAULT NULL)
+   RETURNS void
+   AS 'MODULE_PATHNAME' LANGUAGE C;
+ 
+--- a/duckdb_fdw.c
++++ b/duckdb_fdw.c
+@@ -26,6 +26,10 @@
+ #include "miscadmin.h"
+ #include "executor/executor.h"
+ #include "commands/explain.h"
++#if PG_VERSION_NUM >= 180000
++#include "commands/explain_state.h"
++#include "commands/explain_format.h"
++#endif
+ #include "nodes/nodeFuncs.h"
+ 
+ PG_MODULE_MAGIC;
+@@ -472,12 +476,17 @@
+                  create_foreignscan_path(root, joinrel,
+                                           joinrel->reltarget,
+                                           rows,
++#if PG_VERSION_NUM >= 180000
++                                          0, /* disabled_nodes */
++#endif
+                                           startup_cost,
+                                           total_cost,
+                                           NIL,
+                                           joinrel->lateral_relids,
+                                           NULL,
++#if PG_VERSION_NUM >= 170000
+                                           NIL,
++#endif
+                                           NIL));
+     }
+ }
+@@ -568,12 +577,17 @@
+              create_foreignscan_path(root, baserel,
+                                      baserel->reltarget,
+                                      rows,
++#if PG_VERSION_NUM >= 180000
++                                     0,     /* disabled_nodes */
++#endif
+                                      startup_cost,
+                                      total_cost,
+                                      NIL,   /* no pathkeys */
+                                      NULL,  /* no required_outer */
+                                      NULL,  /* no fdw_outerpath */
++#if PG_VERSION_NUM >= 170000
+                                      NIL,   /* no fdw_restrictinfo */
++#endif
+                                      NIL)); /* no fdw_private */
+ }
+ 
+@@ -898,12 +912,17 @@
+                  create_foreignscan_path(root, output_rel,
+                                           output_rel->reltarget,
+                                           rows,
++#if PG_VERSION_NUM >= 180000
++                                          0, /* disabled_nodes */
++#endif
+                                           startup_cost,
+                                           total_cost,
+                                           NIL,
+                                           NULL,
+                                           NULL,
++#if PG_VERSION_NUM >= 170000
+                                           NIL,
++#endif
+                                           NIL));
+     }
+ }
+--- a/connection.c
++++ b/connection.c
+@@ -5,6 +5,7 @@
+ #include "utils/hsearch.h"
+ #include "utils/memutils.h"
+ #include "catalog/pg_foreign_server.h"
++#include "catalog/pg_user_mapping.h"
+ #include "utils/syscache.h"
+ #include "commands/defrem.h"
+ #include "lib/stringinfo.h"
+@@ -20,6 +21,20 @@
+ 
+ static HTAB *ConnectionHash = NULL;
+ static bool ConnectionXactCallbackRegistered = false;
++
++static UserMapping *
++duckdb_get_user_mapping_if_exists(Oid userid, Oid serverid)
++{
++	if (!SearchSysCacheExists2(USERMAPPINGUSERSERVER,
++								 ObjectIdGetDatum(userid),
++								 ObjectIdGetDatum(serverid)) &&
++		!SearchSysCacheExists2(USERMAPPINGUSERSERVER,
++								 ObjectIdGetDatum(InvalidOid),
++								 ObjectIdGetDatum(serverid)))
++		return NULL;
++
++	return GetUserMapping(userid, serverid);
++}
+ 
+ static void
+ duckdb_cleanup_connection_cache(void)
+@@ -140,7 +155,7 @@
+      * S3 credentials in user_mapping are only visible to the mapped user
+      * and superusers, unlike pg_foreign_server which is public-readable. */
+     {
+-        UserMapping *um = GetUserMapping(userid, server->serverid);
++        UserMapping *um = duckdb_get_user_mapping_if_exists(userid, server->serverid);
+         if (um && um->options)
+         {
+             foreach(lc, um->options)
+@@ -427,6 +442,11 @@
+ 
+ 	key = server->serverid;
+ 	entry = hash_search(ConnectionHash, &key, HASH_ENTER, &found);
++	if (!found)
++	{
++		entry->db = NULL;
++		entry->conn = NULL;
++	}
+ 
+ 	if (!found || entry->conn == NULL)
+ 	{
+@@ -438,7 +458,7 @@
+ 
+         /* Check user mapping for quack_token first (secure path) */
+         {
+-            UserMapping *um = GetUserMapping(userid, server->serverid);
++            UserMapping *um = duckdb_get_user_mapping_if_exists(userid, server->serverid);
+             if (um && um->options)
+             {
+                 ListCell *umlc;
+

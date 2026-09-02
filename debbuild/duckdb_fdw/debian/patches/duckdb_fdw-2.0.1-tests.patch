@@ -1,0 +1,14 @@
+--- a/expected/duckdb_fdw.out
++++ b/expected/duckdb_fdw.out
+@@ -196,9 +196,9 @@ DROP FOREIGN TABLE switch_test_ft;
+ DROP SERVER duckdb_switch CASCADE;
+ -- Unsupported write paths remain explicit
+ UPDATE test_types SET s = 'changed' WHERE i = 1;
+-ERROR:  UPDATE not supported
++ERROR:  foreign table "test_types" does not allow updates
+ DELETE FROM test_types WHERE i = 1;
+-ERROR:  DELETE not supported
++ERROR:  foreign table "test_types" does not allow deletes
+ -- Cleanup
+ DROP FOREIGN TABLE test_types;
+ DROP ROLE duckdb_fdw_unprivileged;
