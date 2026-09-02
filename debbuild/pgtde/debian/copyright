@@ -1,6 +1,11 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Percona Distribution for PostgreSQL 18 with pg_tde
-Source: https://repo.percona.com/ppg-18.4/yum/release/9/SRPMS/
+Source: https://repo.percona.com/ppg-18.6/yum/release/9/SRPMS/
+
+Files: .pg_tde-src/subprojects/libkmip/*
+Copyright: 2019 The Johns Hopkins University/Applied Physics Laboratory
+           2025 Percona LLC and/or its affiliates
+License: Apache-2.0 or BSD-3-Clause
 
 Files: .postgis-src/*
 Copyright: 2001-2026 PostGIS contributors
@@ -90,3 +95,10 @@ License: BSD-3-Clause
  AND ANY EXPRESS OR IMPLIED WARRANTIES ARE DISCLAIMED. IN NO EVENT SHALL THE
  COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES.
+
+License: Apache-2.0
+ Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ use this file except in compliance with the License.
+ .
+ On Debian systems, the complete text of the Apache License version 2.0 can
+ be found in /usr/share/common-licenses/Apache-2.0.
