@@ -1,3 +1,10 @@
+pgcopydb (0.18-1PGSTY) unstable; urgency=medium
+
+  * Update to the official pgcopydb 0.18 release.
+  * Restore the upstream build, install, manpage, and clone smoke-test flow.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 14:22:00 +0800
+
 pgcopydb (0.16-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
