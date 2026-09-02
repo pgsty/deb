@@ -19,9 +19,26 @@ override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
 override_dh_auto_install:
-	set -e; for PG_VERSION in $(PG_VERSIONS); do \
+	set -eu; for PG_VERSION in $(PG_VERSIONS); do \
 		DIR_NAME=$(EXT_NAME)-pg$$PG_VERSION; \
 		FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+		SRC_ROOT=target/release/$$DIR_NAME/usr; \
+		test -f $$SRC_ROOT/lib/postgresql/$$PG_VERSION/lib/$(EXT_NAME).so; \
+		test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME).control; \
+		test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)--2.0.0.sql; \
+		for SQL_FILE in \
+			$(EXT_NAME)--1.28.3--1.28.4.sql \
+			$(EXT_NAME)--1.28.4--1.29.0.sql \
+			$(EXT_NAME)--1.29.0--1.29.1.sql \
+			$(EXT_NAME)--1.29.1--1.29.2.sql \
+			$(EXT_NAME)--1.29.2--1.29.3.sql \
+			$(EXT_NAME)--1.29.3--1.29.4.sql \
+			$(EXT_NAME)--1.29.4--1.29.5.sql \
+			$(EXT_NAME)--1.29.5--1.29.6.sql \
+			$(EXT_NAME)--1.29.6--1.29.7.sql \
+			$(EXT_NAME)--1.29.7--2.0.0.sql; do \
+			test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$$SQL_FILE; \
+		done; \
 		dh_installdirs -p$$FULL_NAME; \
 		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
 		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
@@ -36,4 +53,4 @@ override_dh_auto_install:
 	done
 
 override_dh_installdocs:
-	dh_installdocs --all README.md
+	dh_installdocs --all README.md debian/UPGRADE.md
