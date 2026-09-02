@@ -1,3 +1,12 @@
+pgmqtt (0.4.2-1PGSTY) unstable; urgency=medium
+
+  * Upgrade the source package to upstream release 0.4.2.
+  * Build PostgreSQL 14 through 18 with pgrx and cargo-pgrx 0.19.2.
+  * Retain the upstream SQL extension version 0.4.1; no ALTER is required.
+  * Keep logical-decoding tuple access compatible with PostgreSQL 14 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 02 Sep 2026 06:00:00 +0800
+
 pgmqtt (0.4.1-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.4.1 and build the locked graph with pgrx 0.19.1.
