@@ -13,8 +13,7 @@ Homepage: https://github.com/joke2k/faker
 Package: python3-fake-factory
 Architecture: all
 Depends: ${misc:Depends},
-         ${python3:Depends},
-         python3-dateutil
+         ${python3:Depends}
 Description: Faker is a Python library that generates fake data (Python 3)
  The fake data can be used to bootstrap a database, create XML documents, or
  anonymize data taken from a production service.

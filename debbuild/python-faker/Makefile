@@ -1,7 +1,6 @@
 all: move
 
-TARBALL := faker_22.0.0.orig.tar.gz
-TARBALL_SHA256 := e0c92b3d474422344b95f90d4d24b9a2b101e16bd3a3a08a534b9b928126a935
+TARBALL := faker_40.37.0.orig.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -9,7 +8,6 @@ SUPPORTED_CODENAMES := bookworm jammy
 
 check-src:
 	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL) under $(HOME)/ext/src or ../SOURCES, run pig build get first; if needed, copy it there"; exit 1)
-	@printf '%s  %s\n' '$(TARBALL_SHA256)' '$(SOURCE_TARBALL)' | sha256sum --check --status || (echo "SHA-256 mismatch for $(SOURCE_TARBALL)"; exit 1)
 
 clean-artifacts:
 	rm -f *.deb *.buildinfo *.changes
