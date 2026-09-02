@@ -2,7 +2,7 @@ Source: etcd-fdw
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), protobuf-compiler
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc, rustfmt, pkg-config, protobuf-compiler
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/cybertec-postgresql/etcd_fdw
@@ -10,7 +10,7 @@ Homepage: https://github.com/cybertec-postgresql/etcd_fdw
 Package: postgresql-PGVERSION-etcd-fdw
 Architecture: any
 Provides: postgresql-etcd-fdw
-Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: Foreign data wrapper for etcd distributed key-value store for PostgreSQL PGVERSION
   etcd_fdw is a PostgreSQL extension that provides a foreign data wrapper for etcd,
   the distributed key-value store. It allows you to query and interact with etcd
