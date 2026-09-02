@@ -1,3 +1,12 @@
+pg-tiktoken (0.0.1+git20260825.99cb61d-1PGSTY) unstable; urgency=medium
+
+  * Package upstream main snapshot 99cb61d with native PostgreSQL 14-18 support.
+  * Build PG14-18 with cargo-pgrx/pgrx 0.19.2 and Rust 1.96 or newer.
+  * Lock tiktoken-rs at 90e77bdd and reject dependency lock rewrites.
+  * Keep extension catalog version 0.0.1; no ALTER EXTENSION edge is required.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 00:00:00 +0000
+
 pg-tiktoken (0.0.1-1PGSTY) unstable; urgency=medium
 
   * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.
