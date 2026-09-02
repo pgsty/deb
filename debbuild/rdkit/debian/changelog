@@ -1,3 +1,13 @@
+rdkit (202603.6-1PGSTY~resolute) resolute; urgency=medium
+
+  * Update the full RDKit suite to upstream 2026.03.6.
+  * Build runtime, development, data, Python, and PostgreSQL 14-17 packages.
+  * Enable system InChI 1.07.5 and keep all external fetches disabled.
+  * Fix the upstream 4.7.0 to 4.8.0 extension upgrade script.
+  * Preserve the 2026.03.6 toolkit version in every PG-major cartridge.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 00:42:00 +0800
+
 rdkit (202503.6-1PGSTY~resolute) resolute; urgency=medium
 
   * Build cartridge-only PostgreSQL 14-17 gap packages for Ubuntu 26.04.

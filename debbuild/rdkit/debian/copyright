@@ -3,7 +3,7 @@ Upstream-Name: RDKit
 Source: https://github.com/rdkit/rdkit
 
 Files: *
-Copyright: 2001-2025, the RDKit contributors
+Copyright: 2001-2026, the RDKit contributors
 License: BSD-3-Clause
 
 Files: debian/*

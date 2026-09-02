@@ -2,6 +2,7 @@ all: check-suite check-src setup build move
 
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+ENABLE_INCHI ?= 0
 SUITE ?= $(shell (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}))
 
 ifeq ($(SUITE),bookworm)
@@ -15,9 +16,9 @@ ORIG_FILE := rdkit_202303.3.orig.tar.xz
 DEBIAN_FILE := rdkit_202303.3-3.pgdg22.04+1.debian.tar.xz
 PACKAGING_DIR := debian-legacy
 else ifeq ($(SUITE),resolute)
-DSC_FILE := rdkit_202503.6-4.dsc
-ORIG_FILE := rdkit_202503.6.orig.tar.xz
-DEBIAN_FILE := rdkit_202503.6-4.debian.tar.xz
+DSC_FILE := rdkit_202603.6-1PGSTY~resolute.dsc
+ORIG_FILE := rdkit_202603.6.orig.tar.xz
+DEBIAN_FILE := rdkit_202603.6-1PGSTY~resolute.debian.tar.xz
 PACKAGING_DIR := debian
 else
 DSC_FILE := unsupported
@@ -46,18 +47,22 @@ setup: check-src
 	rm -rf $(BUILD_DIR)
 	dpkg-source -x "$(SOURCE_DSC)" $(BUILD_DIR)
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	if [ "$(SUITE)" = "resolute" ]; then \
+		patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/rdkit-202603.6-offline.patch; \
+		patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/rdkit-202603.6-extension-upgrade.patch; \
+	fi
 	rm -rf $(BUILD_DIR)/debian
 	cp -r $(PACKAGING_DIR) $(BUILD_DIR)/debian
 	if [ "$(PACKAGING_DIR)" = "debian-legacy" ]; then \
 		for patch in patches/rdkit-202303.3-toolkit-version.patch patches/rdkit-202303.3-cartridge-makefile.patch patches/rdkit-202303.3-pg17-operators.patch; do \
-			patch -d $(BUILD_DIR) -p1 < "$$patch"; \
+			patch -d $(BUILD_DIR) -p1 --fuzz=0 < "$$patch"; \
 		done; \
 		sed -i "1s/~SUITE)/~$(SUITE))/" $(BUILD_DIR)/debian/changelog; \
 	fi
 	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS=installed pg_buildext updatecontrol
 
 build:
-	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
+	cd $(BUILD_DIR) && ENABLE_INCHI=$(ENABLE_INCHI) dpkg-buildpackage -b -us -uc
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/

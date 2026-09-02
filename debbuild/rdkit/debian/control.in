@@ -2,31 +2,65 @@ Source: rdkit
 Section: science
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: architecture-is-64-bit,
-               architecture-is-little-endian,
-               bison,
-               catch2,
+Build-Depends: bison,
                cmake,
                debhelper-compat (= 13),
+               dh-python,
                flex,
                libboost-dev,
                libboost-iostreams-dev,
-               libboost-program-options-dev,
-               libboost-regex-dev,
-               libboost-thread-dev,
+               libboost-numpy-dev,
+               libboost-python-dev,
+               libboost-serialization-dev,
                libcairo2-dev,
                libeigen3-dev,
                libfreetype-dev,
-               libinchi-dev (>= 1.07.1+dfsg-2),
-               librdkit-dev (>= 202503.6),
-               librdkit-dev (<< 202503.7~),
+               libinchi-dev (>= 1.07.5+dfsg),
                libsqlite3-dev,
                postgresql-server-dev-all,
-               rapidjson-dev,
+               python3-dev,
+               python3-numpy-dev,
+               python3-pil,
                zlib1g-dev
 Standards-Version: 4.7.2
 Rules-Requires-Root: no
 Homepage: https://github.com/rdkit/rdkit
+
+Package: python3-rdkit
+Section: python
+Architecture: any
+Depends: ${misc:Depends},
+         ${python3:Depends},
+         ${shlibs:Depends},
+         python3-numpy,
+         python3-pil,
+         rdkit-data
+Description: RDKit Python 3 cheminformatics toolkit
+ Python bindings for RDKit molecule parsing, descriptors, fingerprints,
+ reactions, depictions, and InChI support.
+
+Package: rdkit-data
+Architecture: all
+Depends: ${misc:Depends}
+Description: RDKit shared chemistry data
+ Runtime datasets, contrib modules, and project files used by RDKit.
+
+Package: librdkit1t64
+Section: libs
+Architecture: any
+Provides: ${t64:Provides}
+Replaces: librdkit1
+Breaks: librdkit1 (<< ${source:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: RDKit cheminformatics shared libraries
+ Shared C++ libraries for RDKit with system InChI support enabled.
+
+Package: librdkit-dev
+Section: libdevel
+Architecture: any
+Depends: librdkit1t64 (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: RDKit cheminformatics development files
+ Headers, linker symlinks, and CMake metadata for RDKit development.
 
 Package: postgresql-PGVERSION-rdkit
 Section: database
@@ -38,5 +72,5 @@ Description: RDKit cartridge for PostgreSQL PGVERSION
  RDKit adds cheminformatics data types, operators, and functions to
  PostgreSQL.
  .
- This Pigsty package fills PostgreSQL 14-17 gaps on Ubuntu 26.04 while using
- the RDKit runtime supplied by Ubuntu.
+ This Pigsty package is built together with the matching RDKit 2026.03.6
+ runtime, Python bindings, data, and development files for Ubuntu 26.04.
