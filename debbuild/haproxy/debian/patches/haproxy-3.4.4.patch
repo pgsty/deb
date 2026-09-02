@@ -1,6 +1,7 @@
 Description: omit build path remapping flags from the embedded build metadata
- dpkg passes -ffile-prefix-map to make the build reproducible. HAProxy embeds
- the verbose CFLAGS string into its version banner, so without this change the
+ dpkg passes the -ffile-prefix-map, -fdebug-prefix-map, and sometimes
+ -fmacro-prefix-map flags to make the build reproducible. HAProxy embeds the
+ verbose CFLAGS string into its version banner, so without this change the
  build machine's directory layout would leak into `haproxy -vv` output and the
  banner would differ between otherwise identical builds.
  .
@@ -11,7 +12,7 @@ Description: omit build path remapping flags from the embedded build metadata
 Author: Debian HAProxy Maintainers <pkg-haproxy-maintainers@lists.alioth.debian.org>,
  Ruohang Feng <rh@vonng.com>
 Forwarded: not-needed
-Last-Update: 2026-08-01
+Last-Update: 2026-08-31
 ---
  Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -21,4 +22,4 @@ diff --git a/Makefile b/Makefile
 +++ b/Makefile
 @@ -1076 +1076 @@ src/version.o:	src/version.c $(DEP)
 -	      -DBUILD_CFLAGS='"$(strip $(VERBOSE_CFLAGS))"' \
-+	      -DBUILD_CFLAGS='"$(filter-out -ffile-prefix-map=%,$(strip $(VERBOSE_CFLAGS)))"' \
++	      -DBUILD_CFLAGS='"$(filter-out -ffile-prefix-map=% -fdebug-prefix-map=% -fmacro-prefix-map=%,$(strip $(VERBOSE_CFLAGS)))"' \
