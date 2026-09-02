@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/NikolayS/pg_ash
 
 Package: postgresql-PGVERSION-pg-ash
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-ash
 Depends: ${misc:Depends}, postgresql-PGVERSION, postgresql-PGVERSION-cron
 Description: Active Session History for PostgreSQL implemented in SQL
