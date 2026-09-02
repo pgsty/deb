@@ -1,34 +1,39 @@
 all: setup build move
 
-TARBALL := duckdb_fdw-1.4.3.tar.gz
-PG_DUCKDB_TARBALL := pg_duckdb-1.1.1.tar.gz
+VERSION := 2.0.1
+DUCKDB_VERSION := 1.5.5
+TARBALL := duckdb_fdw-$(VERSION)+git20260529.9354241.tar.gz
+DUCKDB_HEADERS_TARBALL := duckdb-$(DUCKDB_VERSION)-headers.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+DUCKDB_HEADERS_SOURCE ?= ../SOURCES/$(DUCKDB_HEADERS_TARBALL)
+BUILD_DIR := build
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
+	@test -f "$(DUCKDB_HEADERS_SOURCE)" || (echo "missing $(DUCKDB_HEADERS_SOURCE), copy only $(DUCKDB_HEADERS_TARBALL) into ../SOURCES"; exit 1)
 
 # prepare directory
-setup:
-	rm -rf build; mkdir -p build build/duckdb-headers
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	tar -C build/duckdb-headers --strip-components=5 -xf ../SOURCES/$(PG_DUCKDB_TARBALL) \
-		pg_duckdb-1.1.1/third_party/duckdb/src/include/duckdb.h \
-		pg_duckdb-1.1.1/third_party/duckdb/src/include/duckdb.hpp \
-		pg_duckdb-1.1.1/third_party/duckdb/src/include/duckdb
-	test -f build/duckdb-headers/duckdb.h
-	test -f build/duckdb-headers/duckdb.hpp
-	pg_buildext updatecontrol
-	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
+setup: check-src
+	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(DUCKDB_HEADERS_SOURCE)"
+	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 # building deb
 build:
-	cd build && pg_buildext updatecontrol
-	cd build && dpkg-buildpackage -b -us -uc
+	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
 
 # remove building craps
 clean:
-	rm -rf *.buildinfo *.changes *.ddeb *.deb
+	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
+.PHONY: all check-src setup build move clean

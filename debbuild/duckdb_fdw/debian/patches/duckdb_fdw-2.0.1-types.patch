@@ -1,0 +1,22 @@
+--- a/deparse.c
++++ b/deparse.c
+@@ -1474,12 +1474,17 @@
+          * Safety: For complex types (Arrays, Vectors), we must force DuckDB 
+          * to serialize them to text.
+          */
+-        if (expr_type == INT4OID || 
++        if (expr_type == INT2OID ||
++            expr_type == INT4OID || 
+             expr_type == INT8OID || 
++            expr_type == FLOAT4OID ||
+             expr_type == FLOAT8OID || 
+             expr_type == BOOLOID ||
+             expr_type == TEXTOID ||
+-            expr_type == VARCHAROID)
++            expr_type == VARCHAROID ||
++            expr_type == DATEOID ||
++            expr_type == TIMESTAMPOID ||
++            expr_type == TIMESTAMPTZOID)
+         {
+             duckdb_deparse_expr((Expr *) tle->expr, context);
+         }

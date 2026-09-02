@@ -1,3 +1,18 @@
+duckdb-fdw (2.0.1+git20260529.9354241-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the duckdb_fdw 2.0.1 main snapshot at 9354241
+  * Switch from the SQLite compatibility layer to the native DuckDB C API
+  * Build and run against the standalone libduckdb 1.5.5 package
+  * Preserve the upstream 1.4.1 to 2.0.1 extension migration chain
+  * Fix the 1.4.1 to 2.0.0 migration for supported PostgreSQL syntax
+  * Do not install a private libduckdb.so into PostgreSQL's library directory
+  * Remove the private-library RPATH so the standalone runtime is authoritative
+  * Preserve legacy servers without user mappings and harden error cleanup
+  * Keep scalar aggregate results in native DuckDB types for safe conversion
+  * Align regression expectations with the current insert-only FDW callback policy
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 21:30:00 +0800
+
 duckdb-fdw (1.4.3-1PGSTY) unstable; urgency=medium
 
   * Rebase to duckdb_fdw main at 870bc43
