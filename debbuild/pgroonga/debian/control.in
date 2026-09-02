@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://pgroonga.github.io/
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libgroonga-dev, libmsgpack-dev, pkg-config
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libgroonga-dev, libmsgpack-dev, libxxhash-dev, meson, ninja-build, pkg-config
 
 Package: postgresql-PGVERSION-pgroonga
 Architecture: any

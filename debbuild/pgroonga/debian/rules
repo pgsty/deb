@@ -1,25 +1,29 @@
 #!/usr/bin/make -f
 
-# Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
-export CC = gcc
-
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
-OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
-PGROONGA_BUILD_FLAGS := HAVE_MSGPACK=1
-ifeq ($(OS_CODENAME),resolute)
-PGROONGA_BUILD_FLAGS += MSGPACK_PACKAGE_NAME=msgpack-c
-endif
+# PGroonga 4.0.8 removed the legacy top-level Makefile in favor of Meson.
+# Build each active PostgreSQL ABI independently rather than installing a
+# module compiled against whichever pg_config is first on PATH.
+override_dh_auto_configure:
+	:
 
 override_dh_auto_build:
-	if pkg-config --exists "libxxhash >= 0.8.0"; then	\
-		dh_auto_build -- $(PGROONGA_BUILD_FLAGS) HAVE_XXHASH=1;	\
-	else							\
-		dh_auto_build -- $(PGROONGA_BUILD_FLAGS);	\
-	fi
+	:
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-pgroonga
+	set -e; \
+	for version in $$(cat debian/pgversions); do \
+		meson setup --wipe build-$$version \
+			-Dinstall_to_postgresql=true \
+			-Dmessage_pack=enabled \
+			-Dtest=false \
+			-Dxxhash=enabled \
+			-Dpg_config=/usr/lib/postgresql/$$version/bin/pg_config; \
+		meson compile -C build-$$version; \
+		DESTDIR=$(CURDIR)/debian/postgresql-$$version-pgroonga meson install -C build-$$version; \
+		printf 'postgresql:Depends=postgresql-%s\n' $$version > debian/postgresql-$$version-pgroonga.substvars; \
+	done
 
 override_dh_installdocs:
 
