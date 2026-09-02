@@ -868,6 +868,9 @@ pg_vault_tde:
 supautils:
 	cd supautils && make
 
+pgsodium-libsodium:
+	cd pgsodium-libsodium && make
+
 pgsodium:
 	cd pgsodium && make
 
@@ -1048,6 +1051,9 @@ pgcalendar:
 pgclone:
 	cd pgclone && make
 
+pgcopydb:
+	cd pgcopydb && make
+
 pgelog:
 	cd pgelog && make
 
@@ -1136,9 +1142,9 @@ antlr4:
 
 babelfish: babelfish-17
 babelfish-18:
-	cd babelfish && make PG_MAJOR=18 PG_VERSION=18.3 BBF_VERSION=6.0.0
+	cd babelfish && make PG_MAJOR=18 PG_VERSION=18.4 BBF_VERSION=6.2.0
 babelfish-17:
-	cd babelfish && make PG_MAJOR=17 PG_VERSION=17.7 BBF_VERSION=5.4.0
+	cd babelfish && make PG_MAJOR=17 PG_VERSION=17.10 BBF_VERSION=5.7.0
 cloudberry:
 	cd cloudberry && make
 cloudberry-backup:
@@ -1195,7 +1201,7 @@ collect:
 	pg_uuidv7 pg_uuid_v8 permuteseq pg_hashids sequential_uuids topn quantile lower_quantile count_distinct omnisketch ddsketch vasco pgxicor pg_weighted_statistics floatvec aggs_for_vecs aggs_for_arrays parray_gin pg_accumulator pg_arraymath pg_math pg_random pg_base36 pg_base62 pg_financial argm faker faker-runtime dbt2 \
 	pg_rewrite pg_query_rewrite pg_column_tetris online_advisor pgmemento pg_roast pgdisablelogerror pg_cooldown pg_ddlx pg_readonly pg_permissions pg_upless pgcozy pg_orphaned pg_crash pg_cheat_funcs pg_fio pg_qos pg_savior pg_policy safeupdate pg_drop_events pg_dbms_lock pg_dbms_errlog pg_dbms_metadata pg_dbms_job \
 	pg_profile pg_flight_recorder pgmonitor pg_tracing pg_stat_monitor pg_store_plans pg_datasentinel pgsentinel pg_ash pgfincore system_stats pg_meta pg_mockable pgsqlmock pgnodemx pg_sqlog pgmeminfo pg_stat_backtrace plpgsql_check pg_relusage pg_track_optimizer pg_pathcheck pg_disorder pg_describe pagevis pg_isok \
-	passwordcheck_cracklib passwordpolicy supautils pgsodium pg_vault pg_vault_tde pg_auth_mon pgcryptokey column_encrypt pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
+	passwordcheck_cracklib passwordpolicy supautils pgsodium-libsodium pgsodium pg_vault pg_vault_tde pg_auth_mon pgcryptokey column_encrypt pg_jobmon logerrors login_hook pg_auditor sslutils pg_noset pg_strict \
 	redis valkey \
 	multicorn pgspider_ext sqlite_fdw pgbouncer_fdw odbc_fdw hdfs_fdw jdbc_fdw redis_fdw mongo_fdw pg_redis_pubsub kafka_fdw libfq zlog polarstore graphblas lagraph onesparse pdu pgdog firebird_fdw aws_s3 log_fdw etcd_fdw nominatim_fdw \
 	documentdb postgresbson pgtt session_variable pg_variables pg_statement_rollback plpgsql_wrap spat pg_trickle pg_stat_ch fsm_core pg_command_fw pg_dispatch pg_fsql pg_liquid pg_regresql pg_slug_gen pgcalendar pgclone pgelog pglock pgproto re2 rdf_fdw ulak \
