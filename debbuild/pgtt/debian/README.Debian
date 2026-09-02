@@ -1,0 +1,37 @@
+pgtt for Debian
+===============
+
+Load pgtt with session_preload_libraries or LOAD.  Upstream deliberately
+rejects shared_preload_libraries and PostgreSQL will not start if pgtt is put
+there.
+
+The 4.6-2PGSTY package extends the upstream 4.5.0 to 4.6.0 transition.  It
+revokes PUBLIC write privileges from pgtt_schema.pg_global_temp_tables and
+from every registered GTT template, while restoring PUBLIC SELECT.  Template
+ownership and grants to named roles are not changed.  Roles that create,
+rename, or drop global temporary tables need an explicit catalog grant such
+as:
+
+  GRANT SELECT, INSERT, UPDATE, DELETE
+    ON pgtt_schema.pg_global_temp_tables TO role_name;
+
+The migration identifies templates by the registered relation name in pgtt's
+fixed extension schema.  The historical relid column is deliberately ignored:
+older releases stored a relfilenode there, which can be stale after rewrite or
+dump/restore.  ALTER EXTENSION aborts atomically if a registered object is
+missing, outside pgtt_schema, or is not an ordinary unlogged table.  Review or
+remove that stale catalog row before retrying; the migration will not guess.
+
+Databases already reporting extension version 4.6.0 cannot rerun the versioned
+4.5.0-to-4.6.0 transition.  For those databases, quiesce GTT DDL and run the
+package-private idempotent script with a superuser:
+
+  major=18
+  psql -X -v ON_ERROR_STOP=1 -d DATABASE \
+    -f "/usr/share/postgresql/${major}/extension/pgtt-repair-public-acl.sql"
+
+Set major to the installed PostgreSQL major (14 through 18).
+
+Run the repair once in every database that has pgtt installed.  It applies the
+same validation and ACL policy as the versioned migration and rolls back the
+entire transaction on an unclassifiable catalog entry.

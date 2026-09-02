@@ -1,3 +1,20 @@
+pgtt (4.6-2PGSTY) unstable; urgency=medium
+
+  * Repair PUBLIC write ACLs on every registered pre-4.6 GTT template.
+  * Preserve template ownership and named-role grants during the migration.
+  * Harden both CREATE TABLE and CREATE TABLE AS against default ACL writes.
+  * Ship an idempotent operator repair script for databases already at 4.6.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 04:30:00 +0800
+
+pgtt (4.6-1PGSTY) unstable; urgency=medium
+
+  * Bump to 4.6.
+  * Install package-private pgtt documentation and upgrade ACL guidance.
+  * Update the copyright year.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 10:00:09 +0800
+
 pgtt (4.4-1PGSTY) unstable; urgency=medium
 
   * https://github.com/darold/pgtt/releases/tag/v4.4
