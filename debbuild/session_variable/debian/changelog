@@ -1,3 +1,9 @@
+session-variable (3.5-1PGSTY) unstable; urgency=medium
+
+  * Bump to 3.5.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:57:58 +0800
+
 session-variable (3.4-1PGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 17 support: https://github.com/splendiddata/session_variable/releases/tag/3.4
