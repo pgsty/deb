@@ -2,7 +2,7 @@ Source: pg-vectorize
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/ChuckHend/pg_vectorize
@@ -14,4 +14,5 @@ Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PG
 Description: The simplest way to build AI workloads on Postgres
   A Postgres extension that automates the transformation and orchestration of text to embeddings
   and provides hooks into the most popular LLMs. This allows you to do vector search and
-  build LLM applications on existing data with as little as two function calls.
+  build LLM applications on existing data with as little as two function calls. Source package
+  0.27.0 deliberately retains SQL extension version 0.23.0.
