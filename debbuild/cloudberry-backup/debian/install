@@ -2,3 +2,5 @@ usr/cloudberry/bin/gpbackup
 usr/cloudberry/bin/gprestore
 usr/cloudberry/bin/gpbackup_helper
 usr/cloudberry/bin/gpbackup_s3_plugin
+usr/cloudberry/bin/gpbackman
+usr/cloudberry/bin/gpbackup_exporter
