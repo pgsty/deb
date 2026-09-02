@@ -1,3 +1,9 @@
+pgmeminfo (1.0.1-1PGSTY) unstable; urgency=medium
+
+  * Bump to VERSION_1_0_1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:46:24 +0800
+
 pgmeminfo (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
