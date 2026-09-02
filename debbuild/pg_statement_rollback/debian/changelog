@@ -1,3 +1,18 @@
+pg-statement-rollback (1.6-2PGSTY) unstable; urgency=medium
+
+  * Backport upstream PR 8 resource-owner and memory-context fixes.
+  * Release the automatic savepoint before portal creation for SET
+    TRANSACTION, fixing PostgreSQL 18 read-only sessions and pg_dump.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 08:00:00 +0800
+
+pg-statement-rollback (1.6-1PGSTY) unstable; urgency=medium
+
+  * Bump to 1.6.
+  * Use the canonical upstream homepage.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 11:02:06 +0800
+
 pg-statement-rollback (1.5-1PGSTY) unstable; urgency=medium
 
   * Remove PGXS-installed docs to fix file conflict with other extensions
