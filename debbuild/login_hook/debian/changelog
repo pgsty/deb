@@ -1,3 +1,9 @@
+login-hook (1.8-1PGSTY) unstable; urgency=medium
+
+  * Bump to Version_1.8.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 09:06:25 +0800
+
 login-hook (1.7-1PGSTY) unstable; urgency=low
 
   * https://github.com/splendiddata/login_hook/releases/tag/Version_1.7
