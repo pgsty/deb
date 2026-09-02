@@ -1,4 +1,13 @@
-tzf (0.3.0-1PGSTY) unstable; urgency=medium
+tzf (0.3.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream v0.3.1 (31db850) with pgrx 0.19.2 and tzf-rs 1.3.7.
+  * Build PostgreSQL 14 through 18 with the stable Rust 1.96 toolchain.
+  * Add the catalog-preserving 0.3.0 to 0.3.1 extension update edge.
+  * Declare the Rust and libclang build dependencies used by pgrx.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 02 Sep 2026 00:00:00 +0800
+
+tzf (0.3.0-2PIGSTY) unstable; urgency=medium
 
   * Build the locked dependency graph with cargo-pgrx/pgrx 0.19.1.
 

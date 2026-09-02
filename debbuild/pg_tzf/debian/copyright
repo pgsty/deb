@@ -1,4 +1,9 @@
-SPDX-License-Identifier: MIT
+SPDX-License-Identifier: MIT AND ODbL-1.0
+
+The extension code is distributed under MIT. The embedded timezone boundary
+database is distributed under ODbL 1.0. The complete ODbL text is provided by
+upstream as LICENSE_DATA and is installed in every binary package alongside
+the README.
 
 MIT License
 

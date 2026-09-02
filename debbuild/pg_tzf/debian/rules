@@ -22,13 +22,23 @@ override_dh_auto_test:
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym
 
+override_dh_installdocs:
+	dh_installdocs --all README.md LICENSE_DATA
+
 override_dh_auto_install:
-	for PG_VERSION in $(PG_VERSIONS); do \
+	set -eu; for PG_VERSION in $(PG_VERSIONS); do \
 	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
 	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+	    SRC_ROOT=target/release/$$DIR_NAME/usr; \
+	    test -f $$SRC_ROOT/lib/postgresql/$$PG_VERSION/lib/$(SRC_DIR).so; \
+	    test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR).control; \
+	    test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR)--0.3.1.sql; \
+	    test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR)--0.3.0--0.3.1.sql; \
+	    test "$$(find $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension -maxdepth 1 -type f -name '$(SRC_DIR)*.sql' | wc -l)" -eq 2; \
 	    dh_installdirs -p$$FULL_NAME; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so      $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
-	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    cp $$SRC_ROOT/lib/postgresql/$$PG_VERSION/lib/$(SRC_DIR).so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR).control $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    cp $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR)*.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	done
