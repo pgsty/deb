@@ -1,6 +1,6 @@
 # polardb debbuild
 
-This recipe rebuilds PolarDB for PostgreSQL from the `v17.10.1.0` source
+This recipe rebuilds PolarDB for PostgreSQL from the `v17.11.1.0` source
 tarball using the official Debian package workflow, with Pigsty-specific
 package naming and filesystem layout.
 
@@ -14,7 +14,7 @@ cd package/debian
 
 The local recipe keeps that build flow intact. Because Pigsty recipes use
 source tarballs instead of git checkouts, the Makefile injects the upstream tag
-commit `accf02e2` so the PolarDB version string does not fall back to
+commit `ff510dfc` so the PolarDB version string does not fall back to
 `build unknown`.
 
 Pigsty packages this kernel as a versioned PostgreSQL-compatible kernel:
@@ -29,7 +29,7 @@ release defaults to `1PGSTY`, and the build script appends the detected distro
 codename:
 
 ```text
-polardb-17_17.10.1.0-1PGSTY~bookworm_<arch>.deb
+polardb-17_17.11.1.0-1PGSTY~bookworm_<arch>.deb
 ```
 
 The source commit remains available as the `X-Pigsty-Source-Commit` binary
@@ -109,16 +109,16 @@ apt-get install -y \
   libzstd-dev libunwind-dev gettext pkg-config clang llvm-dev
 ```
 
-Some Pigsty U26 builders provide versioned LLVM commands such as `clang-21` and
-`llvm-config-21`; the Makefile detects those before falling back to unversioned
-`clang` and `llvm-config`.
+Some Pigsty builders provide only versioned LLVM packages and commands, such as
+`clang-19`/`llvm-config-19` on U24 or `clang-21`/`llvm-config-21` on U26. The
+Debian build dependencies accept those versioned packages, and the Makefile
+detects the matching commands before falling back to unversioned names.
 
-Ubuntu 26 ships ICU 78, while the upstream `v17.10.1.0` Debian control file
-only lists ICU through `libicu76`. The recipe patches the runtime dependency
-alternative to include `libicu78`.
+The upstream `v17.11.1.0` Debian control already covers ICU 66 through ICU 78,
+so no suite-specific ICU dependency rewrite is required.
 
 Required local tarball:
 
 ```text
-~/pgsty/repo/ext/src/polardb-for-postgresql-17.10.1.0.tar.gz
+~/pgsty/repo/ext/src/polardb-for-postgresql-17.11.1.0.tar.gz
 ```
