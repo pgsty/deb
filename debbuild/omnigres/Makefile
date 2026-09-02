@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := omnigres-20251108.tar.gz
+TARBALL := omnigres-20260212.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -8,7 +8,7 @@ PG_VERSIONS ?= 14 15 16 17 18
 CMAKE ?= cmake
 CMAKE_MIN_VERSION := 3.25.1
 DPKG_BUILDPACKAGE_FLAGS ?=
-SOURCE_PATCHES := patches/omnigres-20251108.patch
+SOURCE_PATCHES := patches/omnigres-20260212.patch
 
 pre:
 	apt install -y flex bison netcat-traditional python3-dev python3-venv
@@ -41,7 +41,7 @@ apply-patches:
 	for p in $(SOURCE_PATCHES); do \
 		test -f "$$p" || (echo "missing source patch $$p"; exit 1); \
 		echo "apply $$p"; \
-		patch -d $(BUILD_DIR) -p1 < "$$p"; \
+		patch --fuzz=0 -d $(BUILD_DIR) -p1 < "$$p"; \
 	done
 
 build: pre-resolute building packaging
