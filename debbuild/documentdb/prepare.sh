@@ -1,7 +1,9 @@
 # get documentdb source tarball
 # pig build get documentdb
 
-TARBALL=${1-'documentdb-0.114-0.tar.gz'}
+set -euo pipefail
+
+TARBALL=${1-'documentdb-0.116-0.tar.gz'}
 SOURCE=${SOURCE:-}
 
 if [ -z "${SOURCE}" ]; then
