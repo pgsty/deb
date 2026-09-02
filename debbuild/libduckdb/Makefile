@@ -1,40 +1,38 @@
 all: setup build move
 
+VERSION := 1.5.5
 ARCH := $(shell uname -m)
 ifeq ($(ARCH),aarch64)
-TARBALL := libduckdb-1.1.3-arm64.tar.gz
+TARBALL := libduckdb-$(VERSION)-arm64.tar.gz
 else
-TARBALL := libduckdb-1.1.3-amd64.tar.gz
+TARBALL := libduckdb-$(VERSION)-amd64.tar.gz
 endif
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+BUILD_DIR := build
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
-# wget https://github.com/duckdb/duckdb/releases/download/v1.1.3/libduckdb-linux-aarch64.zip
-# unzip libduckdb-linux-aarch64.zip
-# tar -zcvf libduckdb-1.1.3-arm64.tar.gz libduckdb.so
-
-# wget https://github.com/duckdb/duckdb/releases/download/v1.1.3/libduckdb-linux-amd64.zip
-# unzip libduckdb-linux-amd64.zip
-# tar -zcvf libduckdb-1.1.3-amd64.tar.gz libduckdb.so
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 # prepare directory
-setup:
-	rm -rf build; mkdir -p build
-	tar -C build/ -xf ../SOURCES/$(TARBALL)
-	rm -rf build/debian; cp -r debian build/debian
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+setup: check-src
+	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
+	tar -C $(BUILD_DIR)/ -xf "$(SOURCE_TARBALL)"
+	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 # building deb
 build:
-	cd build && dpkg-buildpackage -b -us -uc
+	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
 
 # remove building craps
 clean:
-	rm -rf *.buildinfo *.changes *.ddeb *.deb
+	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update build move clean ls
-
-
+.PHONY: all check-src setup build move clean
