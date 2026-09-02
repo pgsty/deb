@@ -1,0 +1,17 @@
+Source: pgsodium-libsodium
+Section: libdevel
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), binutils, gcc, make
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jedisct1/libsodium
+
+Package: pgsodium-libsodium-dev
+Architecture: any
+Depends: ${misc:Depends}
+Description: private symbol-prefixed libsodium for building pgsodium
+ This package contains a PIC static libsodium 1.0.22 archive and private
+ headers for pgsodium. Every defined symbol is renamed with a
+ pgsodium_private_ prefix, preventing ELF interposition with the operating
+ system libsodium used by other PostgreSQL extensions such as pg_vault.
