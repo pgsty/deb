@@ -1,3 +1,10 @@
+pg-orphaned (1.0+git20260427-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream snapshot 4e23c9c (2026-04-27).
+  * Keep extension SQL version 1.0; this snapshot only changes native code.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 13:39:34 +0800
+
 pg-orphaned (1.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
