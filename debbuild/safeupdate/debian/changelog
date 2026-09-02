@@ -1,3 +1,9 @@
+pg-safeupdate (1.7-1PGSTY) unstable; urgency=medium
+
+  * Bump to 1.7.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 10:00:09 +0800
+
 pg-safeupdate (1.5-1PGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 18 support
