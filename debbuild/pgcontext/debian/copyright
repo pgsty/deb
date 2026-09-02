@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: pgcontext
-Source: https://github.com/evokoa/pgcontext
+Source: https://github.com/Evokoa/pgContext
 
 Files: *
 Copyright: 2026 Evokoa

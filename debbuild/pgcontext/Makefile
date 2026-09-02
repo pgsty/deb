@@ -1,12 +1,13 @@
 all: setup build move
 
-TARBALL := pgcontext-0.2.0.tar.gz
+TARBALL := pgcontext-0.3.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 17 18
-PGRX_VERSION := 0.19.1
-SOURCE_PATCH := patches/pgcontext-0.2.0.patch
+PGRX_VERSION := 0.19.2
+SOURCE_PATCH := patches/pgcontext-0.3.0.patch
+LOCK_SNAPSHOT := $(CURDIR)/$(BUILD_DIR)/.pgrx-locks.before
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -26,29 +27,29 @@ setup: check-src check-patches
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
-	@(cd $(BUILD_DIR) && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
+	@(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
 building: check-pgrx
 	cd $(BUILD_DIR) && \
-	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
+	RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
-	grep -Fq 'pgrx = "=0.19.1"' $(BUILD_DIR)/Cargo.toml
-	grep -Fq 'pgrx-tests = "=0.19.1"' $(BUILD_DIR)/Cargo.toml
-	cd $(BUILD_DIR) && sha256sum Cargo.lock > .pgrx0191-cargo-lock.before
-	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
+	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT)
+	@test -s $(LOCK_SNAPSHOT)
+	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	cd $(BUILD_DIR) && \
-	export RUSTUP_TOOLCHAIN=stable; \
+	set -eu; export RUSTUP_TOOLCHAIN=stable; \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
-	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    CARGO_NET_OFFLINE=true cargo pgrx package -v -p context-pg --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
-	done
-	cd $(BUILD_DIR) && sha256sum Cargo.lock > .pgrx0191-cargo-lock.after
-	cmp $(BUILD_DIR)/.pgrx0191-cargo-lock.before $(BUILD_DIR)/.pgrx0191-cargo-lock.after
+		    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+		    CARGO_NET_OFFLINE=true cargo pgrx package -v -p context-pg --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+		done
+	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT).after
+	cmp $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
+	rm -f $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
 
 check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
@@ -58,9 +59,9 @@ check-pgrx:
 	fi
 
 packaging:
-	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
 	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/

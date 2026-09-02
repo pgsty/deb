@@ -1,3 +1,12 @@
+pgcontext (0.3.0-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the official upstream 0.3.0 clean-install release.
+  * Build PostgreSQL 17 and 18 with pgrx and cargo-pgrx 0.19.2.
+  * Retire the pgcontext_pgvector companion and historical 0.1/0.2 SQL.
+  * Require an explicit export/drop/create/rebuild migration from 0.2.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 02 Sep 2026 07:00:00 +0800
+
 pgcontext (0.2.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for PostgreSQL 17 and 18.
