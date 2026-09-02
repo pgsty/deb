@@ -1,0 +1,125 @@
+diff --git a/extensions/omni_shmem/deps/oink.hpp b/extensions/omni_shmem/deps/oink.hpp
+index 594152f..509ec71 100644
+--- a/extensions/omni_shmem/deps/oink.hpp
++++ b/extensions/omni_shmem/deps/oink.hpp
+@@ -5,6 +5,7 @@
+ #include <atomic>
+ #include <chrono>
+ #include <map>
++#include <optional>
+ #include <typeindex>
+ 
+ #include <boost/interprocess/allocators/allocator.hpp>
+diff --git a/extensions/omni_csv/omni_csv.cpp b/extensions/omni_csv/omni_csv.cpp
+index 49deebd..a7d207e 100644
+--- a/extensions/omni_csv/omni_csv.cpp
++++ b/extensions/omni_csv/omni_csv.cpp
+@@ -7,7 +7,7 @@ PG_MODULE_MAGIC;
+ #include <csv.hpp>
+ #include <ranges>
+ 
+-constexpr auto default_format() {
++auto default_format() {
+   csv::CSVFormat format;
+   format.delimiter({'|', ',', '\t'});
+   return format;
+diff --git a/extensions/omni_httpc/CMakeLists.txt b/extensions/omni_httpc/CMakeLists.txt
+index 637b85f..b131719 100644
+--- a/extensions/omni_httpc/CMakeLists.txt
++++ b/extensions/omni_httpc/CMakeLists.txt
+@@ -25,6 +25,26 @@ add_postgresql_extension(
+         REQUIRES omni_http omni_types
+         TESTS_REQUIRE omni_httpd)
+ 
++# Preserve the only published predecessor across package replacement.  Omnigres
++# uses versioned module paths, and the omni upgrade hook needs the predecessor's
++# auxiliary control file to discover and rewrite those paths during ALTER
++# EXTENSION.  The 0.1.10 and 0.1.11 SQL ABIs are identical, so the current
++# bug-fixed module is also a safe compatibility implementation before ALTER.
++add_custom_command(
++        TARGET package_omni_httpc_migrations POST_BUILD
++        COMMAND ${CMAKE_COMMAND} -E copy_if_different
++                ${CMAKE_CURRENT_SOURCE_DIR}/omni_httpc--0.1.10.control
++                ${CMAKE_BINARY_DIR}/packaged/extension/omni_httpc--0.1.10.control
++        COMMAND ${CMAKE_COMMAND} -E copy_if_different
++                ${CMAKE_CURRENT_SOURCE_DIR}/omni_httpc--0.1.10--0.1.11.sql
++                ${CMAKE_BINARY_DIR}/packaged/extension/omni_httpc--0.1.10--0.1.11.sql
++        COMMAND ${CMAKE_COMMAND} -E rm -f
++                ${CMAKE_BINARY_DIR}/packaged/omni_httpc--0.1.10.so
++        COMMAND ${CMAKE_COMMAND} -E create_symlink
++                $<TARGET_FILE_NAME:omni_httpc>
++                ${CMAKE_BINARY_DIR}/packaged/omni_httpc--0.1.10.so
++        DEPENDS omni_httpc)
++
+ # Raw string literal in ca-bundle.cc
+ set_property(TARGET omni_httpc PROPERTY CXX_STANDARD 11)
+ 
+diff --git a/extensions/omni_httpc/omni_httpc--0.1.10.control b/extensions/omni_httpc/omni_httpc--0.1.10.control
+new file mode 100644
+index 0000000..e51cbad
+--- /dev/null
++++ b/extensions/omni_httpc/omni_httpc--0.1.10.control
+@@ -0,0 +1,6 @@
++module_pathname = '$libdir/omni_httpc--0.1.10.so'
++comment = 'HTTP client'
++requires = 'omni_http,omni_types'
++schema = omni_httpc
++relocatable = false
++superuser = true
+diff --git a/extensions/omni_httpc/omni_httpc--0.1.10--0.1.11.sql b/extensions/omni_httpc/omni_httpc--0.1.10--0.1.11.sql
+new file mode 100644
+index 0000000..16995cd
+--- /dev/null
++++ b/extensions/omni_httpc/omni_httpc--0.1.10--0.1.11.sql
+@@ -0,0 +1,32 @@
++-- The SQL ABI is unchanged.  Rewrite only C functions that are members of
++-- this extension and still use the predecessor module path.  Updating probin
++-- in place preserves OIDs, owners, ACLs, comments, dependencies, and all
++-- execution attributes.  The retained 0.1.10 compatibility module keeps the
++-- package-replacement window safe before this script is run.
++do $$
++declare
++    rewritten integer;
++begin
++    update pg_catalog.pg_proc p
++       set probin = '$libdir/omni_httpc--0.1.11.so'
++      from pg_catalog.pg_depend d,
++           pg_catalog.pg_extension e,
++           pg_catalog.pg_language l
++     where d.classid = 'pg_catalog.pg_proc'::pg_catalog.regclass
++       and d.objid = p.oid
++       and d.objsubid = 0
++       and d.refclassid = 'pg_catalog.pg_extension'::pg_catalog.regclass
++       and d.refobjid = e.oid
++       and d.refobjsubid = 0
++       and d.deptype = 'e'
++       and e.extname = 'omni_httpc'
++       and p.prolang = l.oid
++       and l.lanname = 'c'
++       and p.probin = '$libdir/omni_httpc--0.1.10.so';
++
++    get diagnostics rewritten = row_count;
++    if rewritten < 2 then
++        raise exception 'expected to rewrite at least two omni_httpc C functions, rewrote %', rewritten;
++    end if;
++end
++$$;
+diff --git a/extensions/omni_httpc/omni_httpc.c b/extensions/omni_httpc/omni_httpc.c
+index 951ad4c..df7210d 100644
+--- a/extensions/omni_httpc/omni_httpc.c
++++ b/extensions/omni_httpc/omni_httpc.c
+@@ -531,6 +531,14 @@
+     if (http3_ratio < 0 || http3_ratio > 100) {
+       ereport(ERROR, errmsg("invalid option"), errdetail("http3_ratio"),
+               errhint("must be within 0..100"));
++    }
++
++    if (http3_ratio > 0) {
++      ereport(ERROR,
++              (errcode(ERRCODE_FEATURE_NOT_SUPPORTED),
++               errmsg("HTTP/3 is temporarily disabled"),
++               errdetail("The bundled H2O/QUIC cleanup path can abort the PostgreSQL backend."),
++               errhint("Use HTTP/1.1 or HTTP/2 until the upstream cleanup defect is fixed.")));
+     }
+ 
+     if (http2_ratio + http3_ratio > 100) {
