@@ -3,6 +3,7 @@ include versions.mk
 all: setup build move
 
 BUILD_DIR := build
+SOURCE_MANIFEST := sources.sha256
 
 check-src:
 	@test -f "$(CORE_SOURCE)" || (echo "missing $(CORE_SOURCE), run: pig build get $(CORE_TARBALL); if needed, copy only $(CORE_TARBALL) into $(SOURCE_DIR)"; exit 1)
@@ -17,6 +18,7 @@ check-src:
 	@test -f "$(SET_USER_SOURCE)" || (echo "missing $(SET_USER_SOURCE), copy only $(SET_USER_TARBALL) into $(SOURCE_DIR)"; exit 1)
 	@test -f "$(PG_STAT_MONITOR_SOURCE)" || (echo "missing $(PG_STAT_MONITOR_SOURCE), copy only $(PG_STAT_MONITOR_TARBALL) into $(SOURCE_DIR)"; exit 1)
 	@test -f "$(PG_GATHER_SOURCE)" || (echo "missing $(PG_GATHER_SOURCE), copy only $(PG_GATHER_TARBALL) into $(SOURCE_DIR)"; exit 1)
+	@cd "$(SOURCE_DIR)" && sha256sum --check "$(abspath $(SOURCE_MANIFEST))"
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)

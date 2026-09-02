@@ -6,6 +6,7 @@ Build-Depends:
  autoconf,
  automake,
  bison,
+ cmake,
  debhelper-compat (= 13),
  dpkg-dev (>= 1.16~),
  flex,
