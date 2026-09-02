@@ -1,3 +1,9 @@
+kafka-fdw (0.0.3+git20251030.8615082-1PGSTY) unstable; urgency=medium
+
+  * Package upstream master snapshot 8615082d986b.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 00:00:00 +0000
+
 kafka-fdw (0.0.3-1PGSTY) unstable; urgency=low
 
   * https://github.com/adjust/kafka_fdw/releases/tag/0.0.3

@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := kafka_fdw-0.0.3.tar.gz
+TARBALL := kafka_fdw-0.0.3+git20251030.8615082.tar.gz
 
 # prepare directory
 setup:
@@ -25,5 +25,4 @@ clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-
 
