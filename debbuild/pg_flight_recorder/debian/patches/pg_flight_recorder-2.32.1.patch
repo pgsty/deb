@@ -1,0 +1,59 @@
+Description: make fresh extension installation safe and portable
+ Suppress transaction-sensitive collection during CREATE EXTENSION, guard the
+ optional pg_stat_statements_info relation, and avoid a PostgreSQL-version
+ parse-time column reference.
+Forwarded: not-needed
+Author: Ruohang Feng <rh@vonng.com>
+--- a/pgfr_record/install.sql
++++ b/pgfr_record/install.sql
+@@ -45,12 +45,8 @@
+ -- Idempotent; safe on fresh install (keys won't exist yet) and upgrades.
+ select old_key, new_key, action from pgfr_record.migrate_config_keys();
+
+--- One-shot snapshot to seed the durable tables and the v2 partitions.
+--- Lives here (rather than at the end of 06_partition_infra.sql) so every
+--- collector defined in 07/08/09 is in place before snapshot() runs.
+-select pgfr_record.snapshot();
++-- Run pgfr_record.snapshot() after CREATE EXTENSION has committed. Calling it
++-- here can create transaction-scoped helper objects as extension members.
+
+--- Schedule all pg_cron jobs via the single source of truth (enable()).
+--- pg_cron's cron.schedule() replaces same-named jobs, so this is idempotent
+--- across re-runs.
+-select pgfr_record.enable();
++-- Run pgfr_record.enable() after CREATE EXTENSION has committed. Calling it
++-- here can create transaction-scoped helper objects as extension members.
+--- a/pgfr_record/sql/07_sparse_collectors.sql
++++ b/pgfr_record/sql/07_sparse_collectors.sql
+@@ -366,10 +366,16 @@ comment on function pgfr_record._collect_statement_snapshot_sparse(bigint) is
+ -- Register config keys for sparse collector observability
+ -- Initialize pgss_last_dealloc to current dealloc value to avoid false-positive
+ -- dealloc warnings on first run (pre-existing evictions are not our fault).
+-insert into pgfr_record.config (key, value, updated_at)
+-select 'pgss_last_dealloc', dealloc::text, now()
+-from pg_stat_statements_info
+-on conflict (key) do nothing;
++do $$
++begin
++    if exists (select 1 from pg_extension where extname = 'pg_stat_statements') then
++        insert into pgfr_record.config (key, value, updated_at)
++        select 'pgss_last_dealloc', dealloc::text, now()
++        from pg_stat_statements_info
++        on conflict (key) do nothing;
++    end if;
++end;
++$$;
+
+ insert into pgfr_record.config (key, value) values
+     ('pgss_rebuild_skip_count', '0')
+--- a/pgfr_record/sql/04b_functions_snapshot.sql
++++ b/pgfr_record/sql/04b_functions_snapshot.sql
+@@ -759,7 +759,7 @@ CREATE OR REPLACE FUNCTION pgfr_record.snapshot()
+                        'restart_lsn', s.restart_lsn::text,
+                        'wal_status', s.wal_status,
+                        'invalidation_reason',
+-                           CASE WHEN v_pg >= 17 THEN s.invalidation_reason::text END
++                           CASE WHEN v_pg >= 17 THEN to_jsonb(s)->>'invalidation_reason' END
+                    )
+               INTO v_slot_xmin, v_slot_age, v_slot_detail
+             FROM pg_replication_slots s

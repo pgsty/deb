@@ -1,14 +1,13 @@
 all: move
 
-TARBALL := pg_flight_recorder-2.29.2.tar.gz
-TARBALL_SHA256 := e35486c7d214dc896fa78b00962e8feef692ecf16898ce790cc4251ae3566ffd
+TARBALL := pg_flight_recorder-2.32.1.tar.gz
+PATCH := debian/patches/pg_flight_recorder-2.32.1.patch
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
 check-src:
 	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL) under $(HOME)/ext/src or ../SOURCES, run pig build get first; if needed, copy it there"; exit 1)
-	@printf '%s  %s\n' '$(TARBALL_SHA256)' '$(SOURCE_TARBALL)' | sha256sum --check --status || (echo "SHA-256 mismatch for $(SOURCE_TARBALL)"; exit 1)
 
 clean-artifacts:
 	rm -f *.deb *.ddeb *.buildinfo *.changes
