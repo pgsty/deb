@@ -15,3 +15,4 @@ Description: A lightweight message queue. Like AWS SQS and RSMQ but on Postgres.
   Postgres Message Queue (PGMQ) is a lightweight message queue extension for PostgreSQL.
   It provides guaranteed "exactly once" delivery of messages within a visibility timeout,
   with API parity with AWS SQS and RSMQ. No background worker or external dependencies required.
+  This package builds PostgreSQL 14 through 18.
