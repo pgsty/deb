@@ -1,3 +1,11 @@
+pg-ducklake (1.0.2-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the upstream 1.0.2 bug-fix release.
+  * Add the complete multi-repository source manifest and checksum gates.
+  * Retain CRoaring 4.7.1 after validating the 5.1.1 API and serialization.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 01:00:00 +0800
+
 pg-ducklake (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Align the package revision with the RPM platform and PostgreSQL guards.
