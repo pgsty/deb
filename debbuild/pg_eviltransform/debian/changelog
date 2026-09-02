@@ -1,3 +1,11 @@
+pg-eviltransform (0.0.5-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.0.5 with native pgrx 0.19.2 and PostgreSQL 14-18 support.
+  * Generate PG14-18 controls explicitly and ship the complete upgrade SQL chain.
+  * Declare the Rust compiler build dependency explicitly.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 17:30:00 +0800
+
 pg-eviltransform (0.0.4-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.0.4 and build the locked graph with pgrx 0.19.1.
