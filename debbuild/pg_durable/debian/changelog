@@ -1,3 +1,11 @@
+pg-durable (0.2.7-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the official upstream 0.2.7 source release.
+  * Keep PostgreSQL 14 through 18 on cargo-pgrx and pgrx 0.19.2.
+  * Ship the 0.2.6 to 0.2.7 update edge and preserve the complete upgrade chain.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 03 Sep 2026 06:00:00 +0800
+
 pg-durable (0.2.6-1PGSTY) unstable; urgency=medium
 
   * Upgrade to the official upstream 0.2.6 source release.

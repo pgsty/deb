@@ -1,12 +1,12 @@
 all: setup build move
 
-TARBALL := pg_durable-0.2.6.tar.gz
+TARBALL := pg_durable-0.2.7.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.2
-SOURCE_PATCH := patches/pg-durable-0.2.6.patch
+SOURCE_PATCH := patches/pg-durable-0.2.7.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 
 check-src:
