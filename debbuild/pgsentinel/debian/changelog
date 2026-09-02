@@ -1,3 +1,10 @@
+pgsentinel (1.5.0-1PGSTY) unstable; urgency=medium
+
+  * Bump to pgsentinel 1.5.0.
+  * https://github.com/pgsentinel/pgsentinel/releases/tag/v1.5.0
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 09:06:25 +0800
+
 pgsentinel (1.4.2-1PGSTY) unstable; urgency=low
 
   * Update to pgsentinel 1.4.2.
