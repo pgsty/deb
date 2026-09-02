@@ -1,3 +1,11 @@
+pg-readonly (1.0.6-1PGSTY) unstable; urgency=medium
+
+  * Bump to 1.0.6.
+  * Set extension default_version to 1.0.6 during build.
+  * Add the missing metadata-only 1.0.5 to 1.0.6 transition.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 10:00:09 +0800
+
 pg-readonly (1.0.5-1PGSTY) unstable; urgency=medium
 
   * Bump to 1.0.5.

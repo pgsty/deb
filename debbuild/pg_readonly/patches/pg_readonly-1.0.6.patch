@@ -1,0 +1,23 @@
+Description: Add the missing 1.0.5 to 1.0.6 metadata transition
+ Upstream 1.0.6 only corrects version metadata. Its C source and the 1.0.5
+ and 1.0.6 base SQL files are identical, so an empty transition safely lets
+ existing installations advance their catalog version.
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-yet
+
+--- a/Makefile
++++ b/Makefile
+@@ -4,6 +4,7 @@
+ MODULES = pg_readonly
+ EXTENSION = pg_readonly  # the extension's name
+ DATA = pg_readonly--1.0.0.sql pg_readonly--1.0.4.sql pg_readonly--1.0.5.sql  pg_readonly--1.0.6.sql
++DATA += pg_readonly--1.0.5--1.0.6.sql
+ 
+ ifdef USE_PGXS
+ REGRESS_OPTS = --temp-instance=/tmp/5555 --port=5555 --temp-config pg_readonly.conf
+--- /dev/null
++++ b/pg_readonly--1.0.5--1.0.6.sql
+@@ -0,0 +1,3 @@
++-- pg_readonly 1.0.6 is a metadata-only release.
++-- The 1.0.5 and 1.0.6 base SQL files define identical objects, so no
++-- catalog changes are required for this transition.
