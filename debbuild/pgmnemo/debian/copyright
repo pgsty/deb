@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: pgmnemo
-Source: https://github.com/pgmnemo/pgmnemo
+Source: https://pgxn.org/dist/pgmnemo/
 
 Files: *
 Copyright: 2026 Alex Gaydabura and pgmnemo contributors
