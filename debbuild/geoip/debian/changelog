@@ -1,3 +1,10 @@
+geoip (0.4.0+git20250804.fcad7f1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream snapshot fcad7f1 with extension version 0.4.0.
+  * Include the contiguous 0.3.0 to 0.4.0 catalog transition.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 17:05:00 +0800
+
 geoip (0.3.0-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
