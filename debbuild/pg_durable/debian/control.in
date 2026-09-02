@@ -2,7 +2,7 @@ Source: pg-durable
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, libssl-dev, pkg-config
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc, libssl-dev, pkg-config
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/microsoft/pg_durable
@@ -16,3 +16,5 @@ Description: Durable SQL functions for PostgreSQL
  fault-tolerant functions to be defined in SQL and checkpointed inside the
  database. It is implemented as a Rust/pgrx extension with a background
  worker and requires loading pg_durable through shared_preload_libraries.
+ This downstream package builds PostgreSQL 14 through 18; upstream officially
+ publishes binaries only for PostgreSQL 17 and 18.
