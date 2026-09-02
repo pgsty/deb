@@ -1,6 +1,6 @@
 all: pre setup build move
 
-TARBALL := documentdb-0.114-0.tar.gz
+TARBALL := documentdb-0.116-0.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 
 check-src:
@@ -15,20 +15,7 @@ pre:
 setup: check-src
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	sed -i 's/char \*substring = memchr(/const char *substring = memchr(/' build/pg_documentdb_core/src/types/string_view.c
-	sed -i "s/char \\*dotPosition = strchr(currentNameSpace, '\\.');/const char *dotPosition = strchr(currentNameSpace, '.');/" build/pg_documentdb/src/aggregation/bson_aggregation_output_pipeline.c
-	sed -i "s/char \\*leftSubstring = memchr(path, '\\.', pathLength);/const char *leftSubstring = memchr(path, '.', pathLength);/" build/pg_documentdb/src/aggregation/bson_project.c
-	sed -i "s/char \\*arrayIndexSubstring = memchr(path, '\\.', pathLength);/const char *arrayIndexSubstring = memchr(path, '.', pathLength);/" build/pg_documentdb/src/aggregation/bson_project.c
-	sed -i 's/DateFormatMap \*result = bsearch(/const DateFormatMap *result = bsearch(/' build/pg_documentdb/src/operators/bson_expression_date_operators.c
-	sed -i 's/TimezoneMap \*result = bsearch(/const TimezoneMap *result = bsearch(/' build/pg_documentdb/src/operators/bson_expression_date_operators.c
-	grep -q "^requires = 'documentdb'" build/pg_documentdb_extended_rum/documentdb_extended_rum.control || sed -i "/^relocatable = true/a requires = 'documentdb'" build/pg_documentdb_extended_rum/documentdb_extended_rum.control
-	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	if [ "$${OS_CODENAME}" = "resolute" ]; then \
-		sed -i 's/char \*dot = NULL;/const char *dot = NULL;/' build/pg_documentdb/src/sharding/sharding.c; \
-		sed -i 's/char \*usingPos = strstr(createIndexCmd, " USING ");/const char *usingPos = strstr(createIndexCmd, " USING ");/' build/pg_documentdb/src/sharding/sharding.c; \
-		sed -i 's/char \*amNameStart = usingPos + 7;/const char *amNameStart = usingPos + 7;/' build/pg_documentdb/src/sharding/sharding.c; \
-		sed -i 's/char \*amNameEnd = amNameStart;/const char *amNameEnd = amNameStart;/' build/pg_documentdb/src/sharding/sharding.c; \
-	fi
+	sed -i '/internal\/pg_documentdb_distributed/d' build/Makefile
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
@@ -40,9 +27,12 @@ build: build18 build17 build16 build15
 
 build18: setup
 	echo '18' > build/debian/pgversions
-	sed -i 's/, postgresql-PGVERSION-rum//g' build/debian/control.in
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	cd build/ && set -e; \
+		cp debian/control.in debian/control.in.with-rum; \
+		trap 'mv -f debian/control.in.with-rum debian/control.in' EXIT; \
+		sed -i 's/, postgresql-PGVERSION-rum//g' debian/control.in; \
+		pg_buildext updatecontrol; \
+		PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
 
 build17: setup
 	echo '17' > build/debian/pgversions

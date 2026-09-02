@@ -1,3 +1,12 @@
+documentdb (0.116-1PGSTY) unstable; urgency=medium
+
+  * Switch to upstream documentdb v0.116-0.
+  * Keep PG18 on the bundled documentdb_extended_rum implementation.
+  * Exclude the internal distributed-only extension from the OSS package.
+  * Preserve the external RUM dependency for PG15-17 multi-major builds.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 22:55:00 +0800
+
 documentdb (0.114-1PGSTY) unstable; urgency=medium
 
   * Switch to upstream documentdb v0.114-0
