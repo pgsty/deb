@@ -1,0 +1,247 @@
+Description: Bridge the historical 0.2 release and fix trigger membership
+ Upstream reset its version sequence after 0.2 and only ships transitions from
+ 0.0.4 onward. Add the catalog-compatible bridge and install the complete
+ upstream transition graph. PostgreSQL also rejects upstream log_ddl_stop()
+ because it drops extension-member event triggers directly; detach before
+ dropping and reattach triggers recreated by log_ddl_start().
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-yet
+diff -ruN a/Makefile b/Makefile
+--- a/Makefile	2024-12-05 21:36:14
++++ b/Makefile	2026-08-31 18:02:18
+@@ -7,7 +7,7 @@
+ EXTVERSION   = $(shell grep -m 1 '[[:space:]]\{3\}"version":' META.json | \
+ 	       sed -e 's/[[:space:]]*"version":[[:space:]]*"\([^"]*\)",\{0,1\}/\1/')
+ 
+-DATA = dist/ddl_historization--$(EXTVERSION).sql dist/ddl_historization--*--$(EXTVERSION).sql
++DATA = $(wildcard dist/ddl_historization--*.sql)
+ 
+ PGTLEOUT = dist/pgtle.$(EXTENSION)-$(EXTVERSION).sql
+ 
+@@ -32,6 +32,7 @@
+ dist/$(EXTENSION)--$(EXTVERSION).sql: $(FILES)
+ 	cat sql/table.sql > $@
+ 	cat sql/function.sql >> $@
++	cat sql/pgsty_trigger_membership.sql >> $@
+ 	cat sql/event_trigger.sql >> $@
+ 	cat $@ > dist/ddl_historization.sql
+ 
+diff -ruN a/dist/ddl_historization--0.0.10--1.0.0.sql b/dist/ddl_historization--0.0.10--1.0.0.sql
+--- a/dist/ddl_historization--0.0.10--1.0.0.sql	2024-12-05 21:36:14
++++ b/dist/ddl_historization--0.0.10--1.0.0.sql	2026-08-31 18:02:18
+@@ -1 +1,90 @@
+ --
++
++-- Replace the trigger-management functions at the end of every historical
++-- upgrade path. See sql/pgsty_trigger_membership.sql for the rationale.
++
++CREATE OR REPLACE FUNCTION log_ddl_start()
++RETURNS void AS $pgsty$
++BEGIN
++  IF NOT EXISTS (
++       SELECT 1 FROM pg_catalog.pg_event_trigger
++        WHERE evtname = 'log_ddl_info') THEN
++    EXECUTE format('
++          CREATE EVENT TRIGGER log_ddl_info
++          ON ddl_command_end
++          EXECUTE FUNCTION @extschema@.log_ddl()');
++  END IF;
++
++  IF NOT EXISTS (
++       SELECT 1
++         FROM pg_catalog.pg_depend AS d
++         JOIN pg_catalog.pg_event_trigger AS t ON t.oid = d.objid
++         JOIN pg_catalog.pg_extension AS e ON e.oid = d.refobjid
++        WHERE d.classid = 'pg_catalog.pg_event_trigger'::regclass
++          AND d.refclassid = 'pg_catalog.pg_extension'::regclass
++          AND d.deptype = 'e'
++          AND e.extname = 'ddl_historization'
++          AND t.evtname = 'log_ddl_info') THEN
++    EXECUTE format(
++      'ALTER EXTENSION ddl_historization ADD EVENT TRIGGER log_ddl_info');
++  END IF;
++
++  IF NOT EXISTS (
++       SELECT 1 FROM pg_catalog.pg_event_trigger
++        WHERE evtname = 'log_ddl_drop_info') THEN
++    EXECUTE format('
++          CREATE EVENT TRIGGER log_ddl_drop_info
++          ON sql_drop
++          EXECUTE FUNCTION @extschema@.log_ddl_drop()');
++  END IF;
++
++  IF NOT EXISTS (
++       SELECT 1
++         FROM pg_catalog.pg_depend AS d
++         JOIN pg_catalog.pg_event_trigger AS t ON t.oid = d.objid
++         JOIN pg_catalog.pg_extension AS e ON e.oid = d.refobjid
++        WHERE d.classid = 'pg_catalog.pg_event_trigger'::regclass
++          AND d.refclassid = 'pg_catalog.pg_extension'::regclass
++          AND d.deptype = 'e'
++          AND e.extname = 'ddl_historization'
++          AND t.evtname = 'log_ddl_drop_info') THEN
++    EXECUTE format(
++      'ALTER EXTENSION ddl_historization ADD EVENT TRIGGER log_ddl_drop_info');
++  END IF;
++END;
++$pgsty$ LANGUAGE plpgsql;
++
++CREATE OR REPLACE FUNCTION log_ddl_stop()
++RETURNS void AS $pgsty$
++BEGIN
++  IF EXISTS (
++       SELECT 1
++         FROM pg_catalog.pg_depend AS d
++         JOIN pg_catalog.pg_event_trigger AS t ON t.oid = d.objid
++         JOIN pg_catalog.pg_extension AS e ON e.oid = d.refobjid
++        WHERE d.classid = 'pg_catalog.pg_event_trigger'::regclass
++          AND d.refclassid = 'pg_catalog.pg_extension'::regclass
++          AND d.deptype = 'e'
++          AND e.extname = 'ddl_historization'
++          AND t.evtname = 'log_ddl_info') THEN
++    EXECUTE format(
++      'ALTER EXTENSION ddl_historization DROP EVENT TRIGGER log_ddl_info');
++  END IF;
++  EXECUTE format('DROP EVENT TRIGGER IF EXISTS log_ddl_info');
++
++  IF EXISTS (
++       SELECT 1
++         FROM pg_catalog.pg_depend AS d
++         JOIN pg_catalog.pg_event_trigger AS t ON t.oid = d.objid
++         JOIN pg_catalog.pg_extension AS e ON e.oid = d.refobjid
++        WHERE d.classid = 'pg_catalog.pg_event_trigger'::regclass
++          AND d.refclassid = 'pg_catalog.pg_extension'::regclass
++          AND d.deptype = 'e'
++          AND e.extname = 'ddl_historization'
++          AND t.evtname = 'log_ddl_drop_info') THEN
++    EXECUTE format(
++      'ALTER EXTENSION ddl_historization DROP EVENT TRIGGER log_ddl_drop_info');
++  END IF;
++  EXECUTE format('DROP EVENT TRIGGER IF EXISTS log_ddl_drop_info');
++END;
++$pgsty$ LANGUAGE plpgsql;
+diff -ruN a/dist/ddl_historization--0.2--0.0.4.sql b/dist/ddl_historization--0.2--0.0.4.sql
+--- a/dist/ddl_historization--0.2--0.0.4.sql	1970-01-01 08:00:00
++++ b/dist/ddl_historization--0.2--0.0.4.sql	2026-08-31 18:02:18
+@@ -0,0 +1,27 @@
++-- Bridge the pre-reset 0.2 release into upstream's 0.0.4+ update graph.
++-- 0.2 already owns ddl_history, log_ddl(), log_ddl_drop(), and both event
++-- triggers. The 0.0.4 base adds these trigger-management functions; the next
++-- upstream transition replaces the logging functions and adds objsubid.
++
++CREATE OR REPLACE FUNCTION log_ddl_start()
++RETURNS void AS $bridge$
++BEGIN
++  EXECUTE format('
++        CREATE EVENT TRIGGER log_ddl_info
++        ON ddl_command_end
++        EXECUTE FUNCTION @extschema@.log_ddl()');
++
++  EXECUTE format('
++        CREATE EVENT TRIGGER log_ddl_drop_info
++        ON sql_drop
++        EXECUTE FUNCTION @extschema@.log_ddl_drop()');
++END;
++$bridge$ LANGUAGE plpgsql;
++
++CREATE OR REPLACE FUNCTION log_ddl_stop()
++RETURNS void AS $bridge$
++BEGIN
++  EXECUTE format('DROP EVENT TRIGGER IF EXISTS log_ddl_info');
++  EXECUTE format('DROP EVENT TRIGGER IF EXISTS log_ddl_drop_info');
++END;
++$bridge$ LANGUAGE plpgsql;
+diff -ruN a/sql/pgsty_trigger_membership.sql b/sql/pgsty_trigger_membership.sql
+--- a/sql/pgsty_trigger_membership.sql	1970-01-01 08:00:00
++++ b/sql/pgsty_trigger_membership.sql	2026-08-31 18:02:18
+@@ -0,0 +1,90 @@
++-- Keep dynamically managed event triggers attached to the extension.
++-- Upstream's stop function attempts to drop extension-member triggers
++-- directly, which PostgreSQL rejects. Start must also reattach triggers that
++-- are recreated outside CREATE/ALTER EXTENSION script execution.
++
++CREATE OR REPLACE FUNCTION log_ddl_start()
++RETURNS void AS $pgsty$
++BEGIN
++  IF NOT EXISTS (
++       SELECT 1 FROM pg_catalog.pg_event_trigger
++        WHERE evtname = 'log_ddl_info') THEN
++    EXECUTE format('
++          CREATE EVENT TRIGGER log_ddl_info
++          ON ddl_command_end
++          EXECUTE FUNCTION @extschema@.log_ddl()');
++  END IF;
++
++  IF NOT EXISTS (
++       SELECT 1
++         FROM pg_catalog.pg_depend AS d
++         JOIN pg_catalog.pg_event_trigger AS t ON t.oid = d.objid
++         JOIN pg_catalog.pg_extension AS e ON e.oid = d.refobjid
++        WHERE d.classid = 'pg_catalog.pg_event_trigger'::regclass
++          AND d.refclassid = 'pg_catalog.pg_extension'::regclass
++          AND d.deptype = 'e'
++          AND e.extname = 'ddl_historization'
++          AND t.evtname = 'log_ddl_info') THEN
++    EXECUTE format(
++      'ALTER EXTENSION ddl_historization ADD EVENT TRIGGER log_ddl_info');
++  END IF;
++
++  IF NOT EXISTS (
++       SELECT 1 FROM pg_catalog.pg_event_trigger
++        WHERE evtname = 'log_ddl_drop_info') THEN
++    EXECUTE format('
++          CREATE EVENT TRIGGER log_ddl_drop_info
++          ON sql_drop
++          EXECUTE FUNCTION @extschema@.log_ddl_drop()');
++  END IF;
++
++  IF NOT EXISTS (
++       SELECT 1
++         FROM pg_catalog.pg_depend AS d
++         JOIN pg_catalog.pg_event_trigger AS t ON t.oid = d.objid
++         JOIN pg_catalog.pg_extension AS e ON e.oid = d.refobjid
++        WHERE d.classid = 'pg_catalog.pg_event_trigger'::regclass
++          AND d.refclassid = 'pg_catalog.pg_extension'::regclass
++          AND d.deptype = 'e'
++          AND e.extname = 'ddl_historization'
++          AND t.evtname = 'log_ddl_drop_info') THEN
++    EXECUTE format(
++      'ALTER EXTENSION ddl_historization ADD EVENT TRIGGER log_ddl_drop_info');
++  END IF;
++END;
++$pgsty$ LANGUAGE plpgsql;
++
++CREATE OR REPLACE FUNCTION log_ddl_stop()
++RETURNS void AS $pgsty$
++BEGIN
++  IF EXISTS (
++       SELECT 1
++         FROM pg_catalog.pg_depend AS d
++         JOIN pg_catalog.pg_event_trigger AS t ON t.oid = d.objid
++         JOIN pg_catalog.pg_extension AS e ON e.oid = d.refobjid
++        WHERE d.classid = 'pg_catalog.pg_event_trigger'::regclass
++          AND d.refclassid = 'pg_catalog.pg_extension'::regclass
++          AND d.deptype = 'e'
++          AND e.extname = 'ddl_historization'
++          AND t.evtname = 'log_ddl_info') THEN
++    EXECUTE format(
++      'ALTER EXTENSION ddl_historization DROP EVENT TRIGGER log_ddl_info');
++  END IF;
++  EXECUTE format('DROP EVENT TRIGGER IF EXISTS log_ddl_info');
++
++  IF EXISTS (
++       SELECT 1
++         FROM pg_catalog.pg_depend AS d
++         JOIN pg_catalog.pg_event_trigger AS t ON t.oid = d.objid
++         JOIN pg_catalog.pg_extension AS e ON e.oid = d.refobjid
++        WHERE d.classid = 'pg_catalog.pg_event_trigger'::regclass
++          AND d.refclassid = 'pg_catalog.pg_extension'::regclass
++          AND d.deptype = 'e'
++          AND e.extname = 'ddl_historization'
++          AND t.evtname = 'log_ddl_drop_info') THEN
++    EXECUTE format(
++      'ALTER EXTENSION ddl_historization DROP EVENT TRIGGER log_ddl_drop_info');
++  END IF;
++  EXECUTE format('DROP EVENT TRIGGER IF EXISTS log_ddl_drop_info');
++END;
++$pgsty$ LANGUAGE plpgsql;

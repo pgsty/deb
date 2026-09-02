@@ -1,9 +1,10 @@
 all: setup build move
 
-TARBALL := pg_ddl_historization-0.2.tar.gz
+TARBALL := pg_ddl_historization-1.0.0+git20241205.18eb9a4.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+PATCHES := $(sort $(wildcard patches/*.patch))
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -12,9 +13,17 @@ setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	@$(MAKE) apply-patches
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+
+apply-patches:
+	@set -e; \
+	for p in $(PATCHES); do \
+		echo "apply $$p"; \
+		(cd $(BUILD_DIR) && patch -p1 < "../$$p"); \
+	done
 
 build:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
@@ -26,5 +35,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup build move clean
-
+.PHONY: all check-src setup apply-patches build move clean

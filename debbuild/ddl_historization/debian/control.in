@@ -8,8 +8,8 @@ Rules-Requires-Root: no
 Homepage: https://github.com/rodo/pg_ddl_historization
 
 Package: postgresql-PGVERSION-ddl-historization
-Architecture: any
+Architecture: all
 Provides: postgresql-ddl-historization
 Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: Historize the ddl changes inside PostgreSQL database
-  PostgreSQL Extension to historize in a table all DDL changes made on a database
+ PostgreSQL extension to historize in a table all DDL changes made on a database.
