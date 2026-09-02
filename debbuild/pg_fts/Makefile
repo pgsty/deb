@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_fts-0.2.0.tar.gz
+TARBALL := pg_fts-1.5.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
