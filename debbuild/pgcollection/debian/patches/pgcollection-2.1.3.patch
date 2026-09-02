@@ -11,7 +11,7 @@ Add an explicit dependency for src/collection.bc.
 
 --- a/Makefile
 +++ b/Makefile
-@@ -36,6 +36,7 @@ $(EXTENSION).control: $(EXTENSION).control.in
+@@ -52,6 +52,7 @@ $(EXTENSION).control: $(EXTENSION).control.in
  	sed 's,EXTVERSION,$(EXTVERSION),g; s,EXTNAME,$(EXTENSION),g' $< > $@;
  
  src/collection.o: include/$(EXTENSION)_config.h

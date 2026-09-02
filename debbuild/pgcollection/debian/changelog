@@ -1,3 +1,9 @@
+collection (2.1.3-1PGSTY) unstable; urgency=medium
+
+  * Bump to 2.1.3.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 09:24:27 +0800
+
 collection (2.0.0-1PGSTY) unstable; urgency=low
 
   * https://github.com/aws/pgcollection/releases/tag/v2.0.0
