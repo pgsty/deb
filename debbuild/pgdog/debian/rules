@@ -6,10 +6,15 @@ export DH_VERBOSE=1
 	dh $@
 
 override_dh_auto_build:
-	@if [ "$$(dpkg --print-architecture)" = "arm64" ]; then \
-		export RUSTFLAGS="$${RUSTFLAGS:+$$RUSTFLAGS }-Ctarget-feature=+lse"; \
+	@set -eu; export RUSTUP_TOOLCHAIN=1.96.1; export PGDOG_GIT_HASH=5d81522; \
+	export RUSTFLAGS="--cfg tokio_unstable"; \
+	if [ "$$(dpkg --print-architecture)" = "arm64" ]; then \
+		export RUSTFLAGS="$$RUSTFLAGS -C target-feature=+lse"; \
 	fi; \
-	PATH=$$HOME/.cargo/bin:$$PATH cargo build --release --locked -p pgdog
+	PATH=$$HOME/.cargo/bin:$$PATH CARGO_NET_OFFLINE=true cargo build --release --locked -p pgdog; \
+	test "$$(sha256sum Cargo.lock | awk '{print $$1}')" = 25b34dbe251c413e311fd3268f5f9bc3a545c5e7efd5938a1adfa909e20a4848; \
+	target/release/pgdog --version | grep -Fq 'PgDog v0.1.56 (5d81522)'; \
+	target/release/pgdog -c debian/pgdog.toml -u debian/users.toml configcheck
 
 override_dh_auto_clean:
 	rm -rf target
@@ -22,6 +27,14 @@ override_dh_auto_install:
 
 override_dh_installsystemd:
 	dh_installsystemd --no-start
+
+override_dh_installdocs:
+	dh_installdocs
+	install -D -m 0644 vendor/pg_raw_parse/LICENSE-APACHE debian/pgdog/usr/share/doc/pgdog/third-party/pg_raw_parse-LICENSE-APACHE
+	install -D -m 0644 vendor/pg_raw_parse/LICENSE-MIT debian/pgdog/usr/share/doc/pgdog/third-party/pg_raw_parse-LICENSE-MIT
+	install -D -m 0644 vendor/pg_raw_parse/libpg_query/LICENSE debian/pgdog/usr/share/doc/pgdog/third-party/libpg_query-LICENSE
+	install -D -m 0644 vendor/pg_raw_parse/libpg_query/src/postgres/COPYRIGHT debian/pgdog/usr/share/doc/pgdog/third-party/PostgreSQL-COPYRIGHT
+	install -D -m 0644 vendor/scram/LICENSE debian/pgdog/usr/share/doc/pgdog/third-party/scram-LICENSE
 
 override_dh_strip:
 	dh_strip --no-automatic-dbgsym

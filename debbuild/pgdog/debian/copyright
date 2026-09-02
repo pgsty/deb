@@ -13,3 +13,21 @@ License: AGPL-3.0-only
  .
  On Debian systems, the complete text of the GNU Affero General Public License
  version 3 can be found in /usr/share/common-licenses/AGPL-3.
+
+Files: vendor/pg_raw_parse/*
+Copyright: pg_raw_parse contributors
+License: MIT or Apache-2.0
+ The complete upstream license choices are installed as
+ pg_raw_parse-LICENSE-MIT and pg_raw_parse-LICENSE-APACHE.
+
+Files: vendor/pg_raw_parse/libpg_query/*
+Copyright: 2015 Lukas Fittl
+           2016-2023 Duboce Labs, Inc. (pganalyze)
+License: BSD-3-Clause and PostgreSQL
+ The complete libpg_query license and embedded PostgreSQL COPYRIGHT are
+ installed in the package's third-party documentation directory.
+
+Files: vendor/scram/*
+Copyright: 2016 Thomas Bahn
+License: MIT
+ The complete upstream license is installed as scram-LICENSE.

@@ -1,0 +1,198 @@
+diff --git a/.cargo/config.toml b/.cargo/config.toml
+index 6d1d6f8..9bdaebc 100644
+--- a/.cargo/config.toml
++++ b/.cargo/config.toml
+@@ -1,18 +1,6 @@
+-[target.'cfg(all())']
+-rustflags = ["--cfg", "tokio_unstable"]
+-
+-[target.x86_64-unknown-linux-gnu]
+-linker = "/usr/bin/clang"
+-rustflags = ["-C", "link-arg=--ld-path=/usr/bin/mold"]
+-
+-[target.aarch64-unknown-linux-gnu]
+-linker = "/usr/bin/clang"
+-rustflags = [
+-    "-C",
+-    "link-arg=--ld-path=/usr/bin/mold",
+-    "-C",
+-    "target-feature=+lse",
+-]
++# Linux distribution packaging supplies `--cfg tokio_unstable` and the
++# architecture-specific `+lse` flag explicitly through RUSTFLAGS.  Do not
++# impose the upstream CI-only clang+mold linker choice on Debian or EL.
+ 
+ # Bump reserved stack size size to 2 MB (from default 1 MB) on
+ # Windows to buid pg_query. This setting applies to all binaries,
+diff --git a/Cargo.lock b/Cargo.lock
+index f7a9655..a54d00e 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -3080,7 +3080,6 @@ checksum = "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220"
+ [[package]]
+ name = "pg_raw_parse"
+ version = "0.1.0"
+-source = "git+https://github.com/pgdogdev/pg_raw_parse.git?rev=c5b3b75#c5b3b75345881621e889fc9c9b0b9f47d53f8e8f"
+ dependencies = [
+  "bindgen 0.72.1",
+  "cc",
+@@ -4098,7 +4097,6 @@ checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
+ [[package]]
+ name = "scram"
+ version = "0.6.0"
+-source = "git+https://github.com/pgdogdev/scram.git?rev=053e108210a35232efe60023ec43288fd601d8c4#053e108210a35232efe60023ec43288fd601d8c4"
+ dependencies = [
+  "aws-lc-rs",
+  "base64 0.13.1",
+diff --git a/Cargo.toml b/Cargo.toml
+index 749bf1a..003799d 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -41,6 +41,12 @@ futures-util = "0.3.32"
+ # [patch."https://github.com/pgdogdev/pg_raw_parse.git"]
+ # pg_raw_parse = { path = "../pg_raw_parse" }
+ 
++[patch."https://github.com/pgdogdev/pg_raw_parse.git"]
++pg_raw_parse = { path = "vendor/pg_raw_parse" }
++
++[patch."https://github.com/pgdogdev/scram.git"]
++scram = { path = "vendor/scram" }
++
+ [profile.release]
+ lto = true
+ codegen-units = 1
+diff --git a/packaging/rpm/pgdog.service b/packaging/rpm/pgdog.service
+new file mode 100644
+index 0000000..0c24b7b
+--- /dev/null
++++ b/packaging/rpm/pgdog.service
+@@ -0,0 +1,22 @@
++[Unit]
++Description=PgDog PostgreSQL proxy and pooler
++After=network-online.target
++Wants=network-online.target
++
++[Service]
++Type=simple
++User=postgres
++Group=postgres
++WorkingDirectory=/var/lib/pgsql/pgdog
++Environment=LD_LIBRARY_PATH=/usr/lib64/pgdog/plugins
++ExecStartPre=/usr/bin/pgdog -c /etc/pgdog/pgdog.toml -u /etc/pgdog/users.toml configcheck
++ExecStart=/usr/bin/pgdog -c /etc/pgdog/pgdog.toml -u /etc/pgdog/users.toml run
++ExecReload=/bin/kill -HUP $MAINPID
++KillSignal=SIGINT
++Restart=on-failure
++RestartSec=3s
++LimitNOFILE=1048576
++TimeoutStopSec=75s
++
++[Install]
++WantedBy=multi-user.target
+diff --git a/packaging/rpm/pgdog.toml b/packaging/rpm/pgdog.toml
+new file mode 100644
+index 0000000..c1fcffd
+--- /dev/null
++++ b/packaging/rpm/pgdog.toml
+@@ -0,0 +1,27 @@
++# Default PgDog configuration installed by the PGSTY RPM.
++# Edit this file before starting the service in production.
++
++[general]
++host = "0.0.0.0"
++port = 6432
++workers = 2
++default_pool_size = 10
++min_pool_size = 1
++pooler_mode = "transaction"
++shutdown_timeout = 60_000
++log_format = "text"
++log_level = "info"
++
++[admin]
++name = "admin"
++user = "admin"
++password = "change-me"
++
++[replication]
++pg_dump_path = "/usr/pgsql-18/bin/pg_dump"
++
++[[databases]]
++name = "pgdog"
++host = "127.0.0.1"
++port = 5432
++role = "primary"
+diff --git a/packaging/rpm/users.toml b/packaging/rpm/users.toml
+new file mode 100644
+index 0000000..e5d5806
+--- /dev/null
++++ b/packaging/rpm/users.toml
+@@ -0,0 +1,7 @@
++# Default PgDog user configuration installed by the PGSTY RPM.
++# Edit this file before starting the service in production.
++
++[[users]]
++name = "pgdog"
++database = "pgdog"
++password = "change-me"
+diff --git a/pgdog/build.rs b/pgdog/build.rs
+index 20ecbdf..99059a3 100644
+--- a/pgdog/build.rs
++++ b/pgdog/build.rs
+@@ -1,4 +1,4 @@
+-use std::process::Command;
++use std::{env, process::Command};
+ 
+ // Compile time checks.
+ fn main() {
+@@ -8,14 +8,24 @@ fn main() {
+         .file("src/frontend/router/sharding/hashfn.c")
+         .compile("postgres_hash");
+ 
+-    let output = Command::new("git").args(["rev-parse", "HEAD"]).output();
+-    if let Ok(output) = output {
+-        let git_hash = String::from_utf8(output.stdout).unwrap_or_default();
+-        println!(
+-            "cargo:rustc-env=GIT_HASH={}",
+-            git_hash.chars().take(7).collect::<String>()
+-        );
+-    } else {
+-        println!("cargo:rustc-env=GIT_HASH={}", env!("CARGO_PKG_VERSION"));
+-    }
++    println!("cargo:rerun-if-env-changed=PGDOG_GIT_HASH");
++    let packaged_hash = env::var("PGDOG_GIT_HASH")
++        .ok()
++        .map(|value| value.trim().to_owned())
++        .filter(|value| !value.is_empty());
++    let checkout_hash = Command::new("git")
++        .args(["rev-parse", "HEAD"])
++        .output()
++        .ok()
++        .filter(|output| output.status.success())
++        .and_then(|output| String::from_utf8(output.stdout).ok())
++        .map(|value| value.trim().to_owned())
++        .filter(|value| !value.is_empty());
++    let git_hash = packaged_hash
++        .or(checkout_hash)
++        .unwrap_or_else(|| env!("CARGO_PKG_VERSION").to_owned());
++    println!(
++        "cargo:rustc-env=GIT_HASH={}",
++        git_hash.chars().take(7).collect::<String>()
++    );
+ }
+diff --git a/pgdog/src/cli.rs b/pgdog/src/cli.rs
+index 98d368b..149f1a6 100644
+--- a/pgdog/src/cli.rs
++++ b/pgdog/src/cli.rs
+@@ -16,7 +16,10 @@ use crate::frontend::router::cli::RouterCli;
+ 
+ /// PgDog is a PostgreSQL pooler, proxy, load balancer and query router.
+ #[derive(Parser, Debug)]
+-#[command(name = "", version = concat!("PgDog v", env!("GIT_HASH")))]
++#[command(
++    name = "",
++    version = concat!("PgDog v", env!("CARGO_PKG_VERSION"), " (", env!("GIT_HASH"), ")")
++)]
+ pub(crate) struct Cli {
+     /// Path to the configuration file. Default: "pgdog.toml"
+     #[arg(short, long, default_value = "pgdog.toml")]
