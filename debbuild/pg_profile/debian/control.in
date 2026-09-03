@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/zubkov-andrei/pg_profile
 
 Package: postgresql-PGVERSION-pg-profile
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-profile
 Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-contrib-PGVERSION
 Description: Postgres historic workload reports
