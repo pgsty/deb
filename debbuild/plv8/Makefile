@@ -7,7 +7,7 @@ SRC_DIR := ~/plv8
 PKG_NAME := plv8
 
 TARBALL := plv8-3.2.4.tar.gz
-SOURCE_PATCH := patches/plv8-3.2.4.patch
+SOURCE_PATCH := patches/plv8-3.2.4-gcc15-algorithm.patch
 PLV8_BUILD_JOBS ?= 4
 
 pre:
