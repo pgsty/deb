@@ -10,7 +10,7 @@ Vcs-Git: git://github.com/linz/postgresql-tableversion.git
 Vcs-Browser: https://github.com/linz/postgresql-tableversion
 
 Package: postgresql-PGVERSION-table-version
-Architecture: any
+Architecture: all
 Provides: postgresql-table-version
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: PostgreSQL table versioning extension, recording row modifications
