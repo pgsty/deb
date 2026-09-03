@@ -1,8 +1,15 @@
 pgml (2.10.0-1PGSTY) unstable; urgency=low
 
-  * PostgreSQL 17 support with pgrx 0.12.9
+  * Build the checked-in Cargo.lock without cargo update.
+  * Pin Rust 1.84.0 and cargo-pgrx 0.12.9 for PostgreSQL 14-17.
+  * Use a SHA1 GNU build ID compatible with Debian debug splitting.
+  * Fail fast and verify each PostgreSQL package payload.
+  * Support Python 3.14 and CMake 4 dependency builds on Resolute.
+  * Backport LightGBM's GCC 15 cstdint include fix with locked source guards.
+  * Fix cold-cache project mapping and model hyperparameter restoration.
+  * Keep PostgreSQL 17 support on cargo-pgrx 0.12.9.
 
- -- Ruohang Feng <rh@vonng.com>  Thu, 23 Jan 2025 18:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Fri, 04 Sep 2026 01:10:00 +0800
 
 pgml (2.9.2-1PIGSTY) unstable; urgency=medium
 

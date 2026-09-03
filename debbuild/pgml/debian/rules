@@ -5,6 +5,7 @@
 
 SRC_DIR := pgml
 PKG_NAME := pgml
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
 
 %:
 	dh $@
@@ -16,7 +17,7 @@ override_dh_auto_clean:
 	# Disable the clean step to avoid cleaning up pre-built binaries
 
 override_dh_auto_install:
-	for PG_VERSION in 14 15 16 17 18; do \
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
 	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
 	    dh_installdirs -p$$FULL_NAME; \
@@ -24,4 +25,7 @@ override_dh_auto_install:
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
 	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
 	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    test -s "$(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/pgml.so"; \
+	    test -s "$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/pgml.control"; \
+	    test -n "$$(find "$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension" -maxdepth 1 -name 'pgml--*.sql' -type f -size +0c -print -quit)"; \
 	done

@@ -1,0 +1,17 @@
+diff --git a/.cargo/config.toml b/.cargo/config.toml
+--- a/.cargo/config.toml
++++ b/.cargo/config.toml
+@@ -1,11 +1,11 @@
+ [build]
+ rustflags = ["-C", "link-args=-Wl,-undefined,dynamic_lookup"]
+ 
+ [target.x86_64-unknown-linux-gnu]
+-rustflags = ["-C", "link-args=-Wl,-undefined,dynamic_lookup,-fuse-ld=lld"]
++rustflags = ["-C", "link-args=-Wl,-undefined,dynamic_lookup,-fuse-ld=lld", "-C", "link-arg=-Wl,--build-id=sha1"]
+ 
+ [target.aarch64-unknown-linux-gnu]
+-rustflags = ["-C", "link-args=-Wl,-undefined,dynamic_lookup,-fuse-ld=lld"]
++rustflags = ["-C", "link-args=-Wl,-undefined,dynamic_lookup,-fuse-ld=lld", "-C", "link-arg=-Wl,--build-id=sha1"]
+ 
+ [target.aarch64-apple-darwin]
+ rustflags = ["-C", "link-args=-WL,-undefined,dynamic_lookup"]
