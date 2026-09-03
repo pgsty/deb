@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: psql_bm25s
+Source: https://github.com/Intelligent-Internet/psql_bm25s
+
+Files: *
+Copyright: 2026 Intelligent Internet
+License: Apache-2.0
+
+License: Apache-2.0
+ On Debian systems, the full text of the Apache License, Version 2.0 can be
+ found in /usr/share/common-licenses/Apache-2.0.
