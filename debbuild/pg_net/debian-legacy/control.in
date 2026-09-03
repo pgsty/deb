@@ -1,0 +1,17 @@
+Source: pg-net
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev, libicu-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/supabase/pg_net
+
+Package: postgresql-PGVERSION-pg-net
+Architecture: any
+Provides: postgresql-pg-net
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Asynchronous HTTP requests from PostgreSQL PGVERSION
+ pg_net lets PostgreSQL issue asynchronous HTTP and HTTPS requests from SQL.
+ This compatibility package keeps Ubuntu 22.04 on upstream 0.9.2 because its
+ libcurl 7.81 predates the API required by newer pg_net releases.
