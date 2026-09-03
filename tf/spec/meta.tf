@@ -1,12 +1,12 @@
 #==============================================================#
-# File      :   meta.yml
-# Desc      :   1-node env for x86_64/aarch64
+# File      :   meta.tf
+# Desc      :   1-node DEB building env for x86_64/aarch64
 # Ctime     :   2020-05-12
-# Mtime     :   2026-01-16
-# Path      :   terraform/spec/aliyun-meta.yml
-# Docs      :   https://doc.pgsty.com/prepare/terraform
-# License   :   AGPLv3 @ https://doc.pgsty.com/about/license
-# Copyright :   2018-2025  Ruohang Feng / Vonng (rh@vonng.com)
+# Mtime     :   2026-09-03
+# Path      :   tf/spec/meta.tf
+# Docs      :   https://pigsty.io/docs/deploy/terraform
+# License   :   Apache-2.0 @ https://pigsty.io/docs/about/license/
+# Copyright :   2018-2026  Ruohang Feng / Vonng (rh@vonng.com)
 #==============================================================#
 
 
@@ -16,54 +16,87 @@
 variable "architecture" {
   description = "The architecture type (amd64 or arm64), choose one from them"
   type        = string
-  default     = "amd64"    # comment this to use arm64
+  default     = "amd64" # comment this to use arm64
   #default     = "arm64"   # uncomment this to use arm64
 }
 
 variable "distro" {
-  description = "The distro code (el8,el9,u22,u24,d12)"
+  description = "The distro code (el8,el9,el10,d12,d13,u22,u24,u26)"
   type        = string
-  default     = "el9"       # el7/el8/el9/el10/d11/d12/u20/u22/an8
+  default     = "u26" # el7/el8/el9/el10/d11/d12/d13/u20/u22/u24/u26/an8/al3
+}
+
+variable "region" {
+  description = "Aliyun region (e.g., cn-shanghai)"
+  type        = string
+  default     = "cn-shanghai"
+}
+
+variable "zone" {
+  description = "Aliyun availability zone for VSwitch (e.g., cn-shanghai-l)"
+  type        = string
+  default     = "cn-shanghai-l"
 }
 
 locals {
-  bandwidth = 100                       # internet bandwidth in Mbps (100Mbps)
-  disk_size = 40                        # system disk size in GB (40GB)
-  spot_policy = "SpotWithPriceLimit"    # NoSpot, SpotWithPriceLimit, SpotAsPriceGo
-  spot_price_limit = 5                  # only valid when spot_policy is SpotWithPriceLimit
+  bandwidth        = 100                  # internet bandwidth in Mbps (100Mbps)
+  disk_size        = 40                   # system disk size in GB (40GB)
+  spot_policy      = "SpotWithPriceLimit" # NoSpot, SpotWithPriceLimit, SpotAsPriceGo
+  spot_price_limit = 5                    # only valid when spot_policy is SpotWithPriceLimit
   instance_type_map = {
     amd64 = "ecs.c9i.xlarge"
     arm64 = "ecs.c8y.xlarge"
   }
   image_regex_map = {
     amd64 = {
-      el7   = "^centos_7_9_x64"
-      el8   = "^rockylinux_8_10_x64"
-      el9   = "^rockylinux_9_7_x64"
-      el10  = "^rockylinux_10_1_x64"
-      d11   = "^debian_11_11_x64"
-      d12   = "^debian_12_13_x64"
-      u20   = "^ubuntu_20_04_x64"
-      u22   = "^ubuntu_22_04_x64_20G"
-      u24   = "^ubuntu_24_04_x64_20G"
-      an8   = "^anolisos_8_9_x64"
+      el7  = "^centos_7_9_x64"
+      el8  = "^rockylinux_8_10_x64"
+      el9  = "^rockylinux_9_8_x64"
+      el10 = "^rockylinux_10_2_x64"
+      d11  = "^debian_11_11_x64"
+      d12  = "^debian_12_15_x64"
+      d13  = "^debian_13_6_x64"
+      u20  = "^ubuntu_20_04_x64"
+      u22  = "^ubuntu_22_04_x64_20G"
+      u24  = "^ubuntu_24_04_x64_20G"
+      u26  = "^ubuntu_26_04_x64_20G"
+      an8  = "^anolisos_8_10_x64"
+      al3  = "^aliyun_3_x64_20G_alibase_[0-9]+\\.vhd$"
     }
     arm64 = {
-      el8   = "^rockylinux_8_10_arm64"
-      el9   = "^rockylinux_9_7_arm64"
-      el10   = "^rockylinux_10_1_arm64"
-      d12   = "^debian_12_13_arm64"
-      u22   = "^ubuntu_22_04_arm64_20G"
-      u24   = "^ubuntu_24_04_arm64_20G"
+      el8  = "^rockylinux_8_10_arm64"
+      el9  = "^rockylinux_9_8_arm64"
+      el10 = "^rockylinux_10_2_arm64"
+      d12  = "^debian_12_15_arm64"
+      d13  = "^debian_13_6_arm64"
+      u22  = "^ubuntu_22_04_arm64_20G"
+      u24  = "^ubuntu_24_04_arm64_20G"
+      u26  = "^ubuntu_26_04_arm64_20G"
+      an8  = "^anolisos_8_10_arm64"
+      al3  = "^aliyun_3_arm64_20G_alibase_[0-9]+\\.vhd$"
     }
   }
-  selected_images = local.image_regex_map[var.architecture]
+  selected_images  = local.image_regex_map[var.architecture]
   selected_instype = local.instance_type_map[var.architecture]
 }
 
+#===========================================================#
+# Provider Requirements
+#===========================================================#
+terraform {
+  required_version = ">= 1.0"
+  required_providers {
+    alicloud = {
+      source  = "aliyun/alicloud"
+      version = "~> 1.250.0"
+    }
+  }
+}
+
 data "alicloud_images" "pigsty_img" {
-  owners     = "system"
-  name_regex = local.selected_images[var.distro]
+  owners      = "system"
+  name_regex  = local.selected_images[var.distro]
+  most_recent = true
 }
 
 #===========================================================#
@@ -76,7 +109,7 @@ data "alicloud_images" "pigsty_img" {
 provider "alicloud" {
   # access_key = "????????????????????"
   # secret_key = "????????????????????"
-  region = "cn-shanghai"  # change to your region
+  region = var.region
 }
 
 
@@ -91,15 +124,15 @@ resource "alicloud_vpc" "vpc" {
 
 # add virtual switch for pigsty demo network
 resource "alicloud_vswitch" "vsw" {
-  vpc_id     = "${alicloud_vpc.vpc.id}"
+  vpc_id     = alicloud_vpc.vpc.id
   cidr_block = "10.10.10.0/24"
-  zone_id    = "cn-shanghai-l"
+  zone_id    = var.zone
 }
 
 # add default security group and allow all tcp traffic
 resource "alicloud_security_group" "default" {
   security_group_name = "default"
-  vpc_id = "${alicloud_vpc.vpc.id}"
+  vpc_id              = alicloud_vpc.vpc.id
 }
 resource "alicloud_security_group_rule" "allow_all_tcp" {
   ip_protocol       = "tcp"
@@ -108,7 +141,7 @@ resource "alicloud_security_group_rule" "allow_all_tcp" {
   policy            = "accept"
   port_range        = "1/65535"
   priority          = 1
-  security_group_id = "${alicloud_security_group.default.id}"
+  security_group_id = alicloud_security_group.default.id
   cidr_ip           = "0.0.0.0/0"
 }
 
@@ -121,9 +154,9 @@ resource "alicloud_instance" "pg-meta" {
   host_name                     = "pg-meta"
   private_ip                    = "10.10.10.10"
   instance_type                 = local.selected_instype
-  image_id                      = "${data.alicloud_images.pigsty_img.images.0.id}"
-  vswitch_id                    = "${alicloud_vswitch.vsw.id}"
-  security_groups               = ["${alicloud_security_group.default.id}"]
+  image_id                      = data.alicloud_images.pigsty_img.images.0.id
+  vswitch_id                    = alicloud_vswitch.vsw.id
+  security_groups               = [alicloud_security_group.default.id]
   password                      = "PigstyDemo4"
   instance_charge_type          = "PostPaid"
   internet_charge_type          = "PayByTraffic"
@@ -137,5 +170,5 @@ resource "alicloud_instance" "pg-meta" {
 
 # print the meta IP address after provisioning
 output "meta_ip" {
-  value = "${alicloud_instance.pg-meta.public_ip}"
+  value = alicloud_instance.pg-meta.public_ip
 }
