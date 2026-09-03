@@ -23,6 +23,19 @@ pig build pkg timescaledb
 pig build pkg pg_search
 ```
 
+## Debug packages
+
+Native builds use debhelper's automatic `-dbgsym` packages by default, and
+recipe collection keeps both `.deb` and `.ddeb` artifacts. Rust extensions
+remain optimized release builds while setting Cargo's release debug level to
+`2` and leaving stripping to `dh_strip`. Debian/Ubuntu has no separate RPM-like
+`-debugsource` binary package; pure SQL/data/script `Architecture: all` packages
+do not generate empty dbgsym packages. Native recipes that bypass debhelper must
+split and validate an equivalent `-dbgsym` `.ddeb` explicitly; `polardb` uses
+`split-dbgsym.sh` for that custom path. Recipes that invoke CMake, Meson,
+Autoconf, or compilers outside the normal debhelper steps must export
+`dpkg-buildflags` so the automatic split has real DWARF to package.
+
 
 ## Signature
 

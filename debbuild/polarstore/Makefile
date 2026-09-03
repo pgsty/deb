@@ -61,7 +61,7 @@ verify:
 	@dpkg-deb -c "$(DEB_FILE)" | awk '$$NF == "./usr/local/polarstore/pfsd/lib/libpfsd.a" { found=1 } END { exit !found }'
 
 move: verify
-	mkdir -p $(PKG_OUTPUT_DIR) && cp "$(DEB_FILE)" $(PKG_OUTPUT_DIR)/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp "$(DEB_FILE)" $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name '*.ddeb' -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb

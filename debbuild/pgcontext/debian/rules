@@ -15,9 +15,6 @@ override_dh_auto_build:
 override_dh_auto_clean:
 	# Keep pre-built artifacts for packaging.
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_auto_install:
 	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 	    DIR_NAME=$(EXT_NAME)-pg$$PG_VERSION; \

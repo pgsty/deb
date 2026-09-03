@@ -2,7 +2,7 @@
 # File      :   Makefile
 # Desc      :   pgsty/deb repo shortcuts
 # Ctime     :   2024-07-28
-# Mtime     :   2026-07-28
+# Mtime     :   2026-09-03
 # Path      :   Makefile
 # Author    :   Ruohang Feng (rh@vonng.com)
 # License   :   Apache-2.0
@@ -11,8 +11,11 @@
 ###############################################################
 #                      1. Environment                         #
 ###############################################################
+PIG_VERSION ?= v1.8.0
+PUSH_RSYNC_ARGS := -avc --exclude=/apt/ --exclude=/tf/ --exclude=/tmp/
+
 setup:
-	@echo "curl https://repo.pigsty.cc/pig | bash -s 0.7.0"
+	@echo "curl -fsSL https://repo.pigsty.cc/pig | bash -s $(PIG_VERSION)"
 	@echo "pig build spec"
 	@echo "pig build repo"
 	@echo "pig build tool"
@@ -24,7 +27,7 @@ ivorysql-contrib:
 	$(MAKE) -C debbuild/ivorysql-contrib
 
 ###############################################################
-#                        1. Building                          #
+#                        2. Building                          #
 ###############################################################
 # noext install
 deps:
@@ -35,7 +38,7 @@ deps:
 
 collect:
 	mkdir -p /tmp/deb
-	cp -r ~/*.deb /tmp/deb/
+	cp -r ~/*.deb /tmp/deb/ && find ~ -maxdepth 1 -type f -name '*.ddeb' -exec cp {} /tmp/deb/ \;
 
 
 
@@ -43,40 +46,49 @@ collect:
 # push to building machines
 #---------------------------------------------#
 push:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u22:~/deb/
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ d12:~/deb/
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u24:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ d12:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ d13:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ u22:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ u24:~/deb/
 pushd:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ d12:~/deb/
-	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ u22:~/deb/
-	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ u24:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) --delete ./ d12:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) --delete ./ d13:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) --delete ./ u22:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) --delete ./ u24:~/deb/
 push12:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp  ./ d12:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ d12:~/deb/
+push13:
+	rsync $(PUSH_RSYNC_ARGS) ./ d13:~/deb/
 push22:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u22:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ u22:~/deb/
 push24:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u24:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ u24:~/deb/
 pushd12:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ d12:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) --delete ./ d12:~/deb/
+pushd13:
+	rsync $(PUSH_RSYNC_ARGS) --delete ./ d13:~/deb/
 pushd22:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ u22:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) --delete ./ u22:~/deb/
 pushd24:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp --delete ./ u24:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) --delete ./ u24:~/deb/
 push12a:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ d12a:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ d12a:~/deb/
+push13a:
+	rsync $(PUSH_RSYNC_ARGS) ./ d13a:~/deb/
 push22a:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u22a:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ u22a:~/deb/
 push24a:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ u24a:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ u24a:~/deb/
 pushm:
-	rsync -avc --exclude deb  --exclude tf --exclude tmp ./ meta:~/deb/
+	rsync $(PUSH_RSYNC_ARGS) ./ meta:~/deb/
 
 #---------------------------------------------#
-# pull rpm from building machines
+# pull DEB packages from remote builders
 #---------------------------------------------#
 pull-new: pull-clean pull-init
 pull-init:
-	mkdir -p apt/bookworm apt/trixie apt/jammy apt/noble
+	mkdir -p apt/bookworm apt/trixie apt/jammy apt/noble apt/resolute apt/meta
+# resolute is collected from Docker and intentionally survives pull-new.
 pull-clean:
 	rm -rf   apt/bookworm apt/trixie apt/jammy apt/noble
 
@@ -111,16 +123,7 @@ pullj:
 upload:
 	bin/upload.sh
 
-
-#---------------------------------------------#
-# publish
-#---------------------------------------------#
-sync: release
-pub: release
-release: clean
-	coscmd upload --recursive -s -f -y --delete --ignore .idea . yum
-gen:
-	cd deb && ./summary.py
+# APT repository import and CDN publication live in ~/pgsty/repo/apt/Makefile.
 
 
 ###############################################################
@@ -153,7 +156,7 @@ spec24a:
 #                      Push SRC to Remote                     #
 ###############################################################
 # Update remote source tarball
-src: src12 src22 src24 src12a src22a src24a
+src: src12 src13 src22 src24 src12a src13a src22a src24a
 srcm:
 	rsync -avz src/ meta:~/ext/src/
 src12:
@@ -167,6 +170,8 @@ src24:
 
 src12a:
 	rsync -avz src/ d12a:~/ext/src/
+src13a:
+	rsync -avz src/ d13a:~/ext/src/
 src22a:
 	rsync -avz src/ u22a:~/ext/src/
 src24a:
@@ -202,17 +207,11 @@ r:
 	git restore tf/terraform.tf
 
 
-.PHONY: rust deps batch1 batch2 deb-collect ivorysql-contrib \
-	pg_graphql pg_jsonschema wrappers pg_idkit pgsmcrypto pg_tiktoken pg_tiktoken_c pg_summarize pg_polyline pg_tzf pg_explain_ui pg_cardano pg_base58 pg_parquet pg_vectorize pgvectorscale timescaledb_toolkit pg_session_jwt pgml plprql pg_later pg_anon pg_smtp_client vchord pg_bestmatch pglite_fusion age \
- 	pgdd convert pg_tokenizer pg_render pgx_ulid \
-	pg_net pgjwt pg_gzip pg_bzip vault pgsodium supautils pg_tle plv8 omnigres permuteseq postgres_shacrypt pg_hashids pg_sqlog md5hash hunspell zhparser duckdb_fdw pg_duckdb pg_mooncake hydra citus timescaledb pgroonga \
- 	pg_timeseries pgmq pgmb pg_plan_filter pg_relusage pg_track_optimizer pg_uint128 \
- 	imgsmlr pg_bigm pg_ivm pg_uuidv7 sqlite_fdw wal2mongo pg_readonly pguint pg_permissions ddlx pg_safeupdate pg_stat_monitor passwordcheck_cracklib pg_profile pg_store_plan system_stats \
-	pg_fkpart pg_kpart pgmeminfo postgresql_anonymizer pgcryptokey pg_background count_distinct pg_extra_time pgsql_tweaks pgtt temporal_tables emaj table_version pg_statement_rollback \
- 	pg_auth_mon login_hook logerrors pg_jobmon geoip timestamp9 \
- 	pg_orphaned pgcozy decoder_raw pg_failover_slot log_fdw redis_fdw index_advisor pg_financial pg_savior aggs_for_vecs base36 base62 pg_envvar pg_html5_email_address pg_timeit quantile lower_quantile sequential_uuids ddsketch omnisketch pg_random \
- 	smlar sslutils pg_mon chkpass pg_currency pg_emailaddr pg_uri cryptint floatvec floatfile pg_auditor noset pg_strict \
- 	aggs_for_arrays pgqr pg_zstd url_encode pg_geohash pg_meta pg_redis_pubsub pg_arraymath pagevis pg_ecdsa pg_cheat_funcs acl pg_crash pg_math firebird_fdw  kafka_fdw pgnodemx pg_hashlib pg_protobuf pg_country pg_fio aws_s3 \
- 	scws libfq libduckdb pgcopydb pg_bulkload libfq pg4ml pgpdf topn pg_upless pg_task pg_readme vasco pg_xxhash pg_duration ddl_historization data_historization pg_schedoc pg_xenophile pg_incremental pg_drop_envents \
-	documentdb pg_tracing pg_curl pgxicor pgsparql pgjq hashtypes db_migrator pg_cooldown pgcollection pgspider_ext pgsentinel spat pgactive openhalodb ivorysql ivorysql-18 oriole oriole_16 oriole_17 oriole_18 oriole_all orioledb orioledb-16 orioledb-17 orioledb-18 orioledb-all antlr4_runtime413 babelfish babelfish-17 babelfish-18 pgedge-15 pgedge-16 pgedge-17 pgedge-18 \
- 	push-sv pushd-sv pull-sv pulld-sv ps pd pushsd pushss push pushd push12 push22 push24 pushd12 pushd22 pushd24 pull purge dirs pull22 pull12 sync pub release
+.PHONY: setup ivorysql-contrib deps collect \
+	push pushd push12 push13 push22 push24 pushd12 pushd13 pushd22 pushd24 \
+	push12a push13a push22a push24a pushm \
+	pull-new pull-init pull-clean pull pullx pulla pullm \
+	pull12 pull13 pull22 pull24 pull12a pull13a pull22a pull24a pullj upload \
+	spec specm spec12 spec13 spec22 spec24 spec12a spec13a spec22a spec24a \
+	src srcm src12 src13 src22 src24 src12a src13a src22a src24a \
+	j srcj specj u a d destroy out ssh r

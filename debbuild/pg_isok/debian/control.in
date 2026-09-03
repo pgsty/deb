@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://codeberg.org/kop/pg_isok
 
 Package: postgresql-PGVERSION-pg-isok
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-isok
 Depends: ${misc:Depends}, postgresql-PGVERSION
 Description: Query-based data integrity management and soft-alerting for PostgreSQL

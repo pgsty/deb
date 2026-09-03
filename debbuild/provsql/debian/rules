@@ -14,9 +14,6 @@ override_dh_auto_test:
 
 override_dh_auto_clean:
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-provsql
 	rm -rf debian/postgresql-*-provsql/usr/share/doc/postgresql-doc-*/

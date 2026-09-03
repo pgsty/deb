@@ -8,9 +8,9 @@ Rules-Requires-Root: no
 Homepage: https://github.com/cybertec-postgresql/db_migrator
 
 Package: postgresql-PGVERSION-db-migrator
-Architecture: any
+Architecture: all
 Provides: postgresql-db-migrator
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: Functions for migrating databases from other data sources to PostgreSQL
   db_migrator is a PostgreSQL extension that provides functions for migrating databases from other data sources to PostgreSQL.
   This requires a foreign data wrapper for the data source you want to migrate.

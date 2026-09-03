@@ -7,6 +7,9 @@ export PATH := /usr/lib/postgresql/$(PG_VERSION)/bin:$(PATH)
 export PG_CONFIG
 export CMAKE_PREFIX_PATH := $(CURDIR)/.croaring
 export CMAKE_BUILD_PARALLEL_LEVEL ?= 1
+export DPKG_EXPORT_BUILDFLAGS = 1
+
+include /usr/share/dpkg/buildflags.mk
 
 %:
 	dh $@
@@ -18,9 +21,6 @@ override_dh_autoreconf:
 override_dh_auto_test:
 
 override_dh_auto_clean:
-
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
 
 override_dh_dwz:
 

@@ -1187,7 +1187,7 @@ deps:
 
 collect:
 	mkdir -p /tmp/deb
-	cp -r ~/*.deb /tmp/deb/
+	cp -r ~/*.deb /tmp/deb/ && find ~ -maxdepth 1 -type f -name '*.ddeb' -exec cp {} /tmp/deb/ \;
 
 
 .PHONY: deps collect haproxy \

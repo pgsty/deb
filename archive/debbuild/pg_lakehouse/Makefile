@@ -1,3 +1,7 @@
+CARGO_PROFILE_RELEASE_DEBUG ?= 2
+CARGO_PROFILE_RELEASE_STRIP ?= none
+export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
+
 all: setup build move
 
 SRC_DIR := ~/paradedb/pg_lakehouse
@@ -17,7 +21,7 @@ build:
 
 # collect deb
 move:
-	cp -rf ~/paradedb/*lakehouse*.deb ~/
+	cp -rf ~/paradedb/*lakehouse*.deb ~/ && find ~/paradedb -maxdepth 1 -type f -name '*lakehouse*.ddeb' -exec cp {} ~/ \;
 
 # remove building craps
 clean:

@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/lemoineat/pg_fkpart
 
 Package: postgresql-PGVERSION-pg-fkpart
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-fkpart
 Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: PostgreSQL extension to partition tables following a foreign key

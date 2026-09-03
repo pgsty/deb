@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/arkhipov/aws-s3
 
 Package: postgresql-PGVERSION-aws-s3
-Architecture: any
+Architecture: all
 Provides: postgresql-aws-s3
 Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: aws_s3 postgres extension to import/export data from/to s3

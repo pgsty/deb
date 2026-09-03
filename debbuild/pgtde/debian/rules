@@ -182,9 +182,6 @@ override_dh_shlibdeps:
 override_dh_makeshlibs:
 	dh_makeshlibs --no-scripts
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_dwz:
 	:
 

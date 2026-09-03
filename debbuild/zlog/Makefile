@@ -53,7 +53,7 @@ verify:
 	@dpkg-deb -c "$(DEB_FILE)" | awk '$$NF == "./usr/include/zlog.h" { header=1 } $$NF ~ "/libzlog[.]a$$" { static_lib=1 } $$NF ~ "/libzlog[.]so[.]1[.]2$$" { shared_lib=1 } END { exit !(header && static_lib && shared_lib) }'
 
 move: verify
-	mkdir -p $(PKG_OUTPUT_DIR) && cp "$(DEB_FILE)" $(PKG_OUTPUT_DIR)/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp "$(DEB_FILE)" $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name '*.ddeb' -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb

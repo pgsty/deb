@@ -18,9 +18,6 @@ override_dh_auto_build:
 override_dh_auto_clean:
 	# The outer recipe recreates the source tree for every build.
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_auto_install:
 	+set -e; for PG_VERSION in $(PG_VERSIONS); do \
 		FULL_NAME=postgresql-$$PG_VERSION-plruby; \

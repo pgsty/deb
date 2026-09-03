@@ -27,7 +27,7 @@ build: setup
 
 move: build
 	mkdir -p $(PKG_OUTPUT_DIR)
-	@set -e; files=$$(find . -maxdepth 1 -type f -name '*.deb'); test -n "$$files"; cp $$files $(PKG_OUTPUT_DIR)/
+	@set -e; files=$$(find . -maxdepth 1 -type f \( -name '*.deb' -o -name '*.ddeb' \)); test -n "$$files"; cp $$files $(PKG_OUTPUT_DIR)/
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb

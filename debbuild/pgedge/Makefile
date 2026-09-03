@@ -48,7 +48,7 @@ build:
 	cd $(BUILD_DIR) && SPOCK_VERSION=$(SPOCK_VERSION) dpkg-buildpackage -b -us -uc
 
 move:
-	mkdir -p $(PKG_OUTPUT_DIR) && cp pgedge-$(PG_MAJOR)_*.deb $(PKG_OUTPUT_DIR)/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp pgedge-$(PG_MAJOR)_*.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name '*.ddeb' -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb

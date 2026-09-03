@@ -8,8 +8,8 @@ Rules-Requires-Root: no
 Homepage: https://github.com/bigsmoke/pg_extra_time
 
 Package: postgresql-PGVERSION-pg-extra-time
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-extra-time
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: Extra time functions for PostgreSQL PGVERSION
   Some date time functions and operators that, in the opinion of the extension author, ought to be part of the PostgreSQL standard distribution.

@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/rodo/pg_upless
 
 Package: postgresql-PGVERSION-pg-upless
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-upless
 Depends: ${misc:Depends}, ${postgresql:Depends}
 Description: PostgreSQL Extension to Detect Useless UPDATE

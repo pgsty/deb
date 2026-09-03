@@ -28,8 +28,5 @@ override_dh_auto_install:
 override_dh_installdocs:
 	dh_installdocs --all README.md CHANGELOG.md OPERATIONS.md docs/*.md
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 %:
 	dh $@

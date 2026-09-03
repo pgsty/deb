@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/fraruiz/pglock
 
 Package: postgresql-PGVERSION-pglock
-Architecture: any
+Architecture: all
 Provides: postgresql-pglock
 Depends: ${misc:Depends}, ${postgresql:Depends}, postgresql-PGVERSION-cron
 Description: Lightweight distributed lock service inside PostgreSQL

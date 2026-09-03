@@ -8,9 +8,6 @@ include /usr/share/postgresql-common/pgxs_debian_control.mk
 
 override_dh_auto_test:
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_auto_build:
 	+pg_buildext loop postgresql-%v-pgactive
 

@@ -6,6 +6,8 @@ export HTTP_PROXY=${PROXY}
 export HTTPS_PROXY=${PROXY}
 export ALL_PROXY=${PROXY}
 export NO_PROXY="localhost,127.0.0.1,10.0.0.0/8,192.168.0.0/16,*.pigsty,*.aliyun.com,mirrors.*,*.myqcloud.com,*.tsinghua.edu.cn"
+export CARGO_PROFILE_RELEASE_DEBUG=2
+export CARGO_PROFILE_RELEASE_STRIP=none
 alias build="HTTPS_PROXY=${PROXY} cargo pgrx package -v"
 . ~/.cargo/env
 cd ~/deb
@@ -18,6 +20,11 @@ alias pg13="export PATH=/usr/lib/postgresql/13/bin:~/.cargo/bin:/usr/local/sbin:
 alias pg12="export PATH=/usr/lib/postgresql/12/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;"
 
 ```
+
+Rust release builds must keep full DWARF (`CARGO_PROFILE_RELEASE_DEBUG=2`) and
+must not let Cargo strip it (`CARGO_PROFILE_RELEASE_STRIP=none`). The packaging
+step then moves the symbols into automatic `-dbgsym` packages; `cargo pgrx
+package` itself only prepares the unstripped release artifact.
 
 
 ```bash
