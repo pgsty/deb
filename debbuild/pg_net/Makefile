@@ -1,17 +1,25 @@
 all: setup build move
 
-VERSION := 0.20.5
-TARBALL := pg_net-$(VERSION).tar.gz
-SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 SUITE ?= $(shell (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}))
-SUPPORTED_SUITES := bookworm trixie noble resolute
+
+ifeq ($(SUITE),jammy)
+VERSION := 0.9.2
+PACKAGING_OVERLAY := debian-legacy
+else
+VERSION := 0.20.5
+PACKAGING_OVERLAY :=
+endif
+
+TARBALL := pg_net-$(VERSION).tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+SUPPORTED_SUITES := bookworm trixie jammy noble resolute
 
 check-suite:
 	@case "$(SUITE)" in \
-	  bookworm|trixie|noble|resolute) ;; \
-	  *) echo "unsupported pg_net build suite: $(SUITE); pg_net $(VERSION) requires libcurl >= 7.83; supported suites: $(SUPPORTED_SUITES)" >&2; exit 1 ;; \
+	  bookworm|trixie|jammy|noble|resolute) ;; \
+	  *) echo "unsupported pg_net build suite: $(SUITE); supported suites: $(SUPPORTED_SUITES)" >&2; exit 1 ;; \
 	esac
 
 check-src:
@@ -21,6 +29,10 @@ setup: check-suite check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	if [ -n "$(PACKAGING_OVERLAY)" ]; then \
+		cp $(PACKAGING_OVERLAY)/changelog $(BUILD_DIR)/debian/changelog; \
+		cp $(PACKAGING_OVERLAY)/control.in $(BUILD_DIR)/debian/control.in; \
+	fi
 	sed -i "1s/PGSTY)/PGSTY~$(SUITE))/" $(BUILD_DIR)/debian/changelog
 
 build:
