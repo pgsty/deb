@@ -3,5 +3,6 @@ pgedge-@PG_MAJOR@ (@PG_VERSION@-@PKG_REV@) unstable; urgency=medium
   * Bundle pgEdge PostgreSQL @PG_VERSION@ with Spock @SPOCK_VERSION@,
     LOLOR @LOLOR_VERSION@, and Snowflake @SNOWFLAKE_VERSION@.
   * Replace the previous split pgEdge extension packages.
+  * Add exact PostgreSQL-major build targets for manifest jobs.
 
- -- Ruohang Feng <rh@vonng.com>  Mon, 06 Jul 2026 12:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Fri, 04 Sep 2026 06:40:00 +0800

@@ -53,4 +53,16 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup build move clean
+pgedge-15:
+	$(MAKE) PG_MAJOR=15 clean setup build move
+
+pgedge-16:
+	$(MAKE) PG_MAJOR=16 clean setup build move
+
+pgedge-17:
+	$(MAKE) PG_MAJOR=17 clean setup build move
+
+pgedge-18:
+	$(MAKE) PG_MAJOR=18 clean setup build move
+
+.PHONY: all check-src setup build move clean pgedge-15 pgedge-16 pgedge-17 pgedge-18
