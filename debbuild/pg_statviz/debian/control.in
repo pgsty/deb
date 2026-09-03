@@ -1,0 +1,17 @@
+Source: pg-statviz
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/vyruss/pg_statviz
+
+Package: postgresql-PGVERSION-statviz
+Architecture: all
+Provides: postgresql-statviz
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: PostgreSQL statistics snapshots for visualization
+ pg_statviz captures PostgreSQL statistics snapshots in a fixed schema for
+ time-series analysis and visualization. This package contains only the SQL
+ extension and does not include the optional Python command-line client.
