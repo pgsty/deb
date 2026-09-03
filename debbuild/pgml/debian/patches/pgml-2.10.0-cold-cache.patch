@@ -1,0 +1,24 @@
+diff --git a/src/orm/project.rs b/src/orm/project.rs
+--- a/src/orm/project.rs
++++ b/src/orm/project.rs
+@@ -142,7 +142,7 @@ impl Project {
+                     warning!("Active projects have exceeded capacity map, clearing caches.");
+                     projects.clear();
+                 }
+-                projects.insert(project_id, model_id).unwrap();
++                projects.insert(project_id, model_id);
+                 project_id
+             }
+         };
+diff --git a/src/orm/model.rs b/src/orm/model.rs
+--- a/src/orm/model.rs
++++ b/src/orm/model.rs
+@@ -360,7 +360,7 @@ impl Model {
+                 )
+                 .unwrap()
+                 .unwrap();
+-                let hyperparams = result.get(11).unwrap().unwrap();
++                let hyperparams = result.get(6).unwrap().unwrap();
+ 
+                 let bindings: Box<dyn Bindings> = match runtime {
+                     Runtime::openai => {

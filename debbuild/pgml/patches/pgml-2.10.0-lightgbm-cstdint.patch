@@ -1,0 +1,11 @@
+diff --git a/lightgbm/src/io/json11.cpp b/lightgbm/src/io/json11.cpp
+--- a/lightgbm/src/io/json11.cpp
++++ b/lightgbm/src/io/json11.cpp
+@@ -23,6 +23,7 @@
+ #include <LightGBM/utils/log.h>
+ 
+ #include <cmath>
++#include <cstdint>
+ #include <cstdio>
+ #include <cstdlib>
+ #include <limits>
