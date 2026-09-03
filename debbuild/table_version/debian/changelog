@@ -1,8 +1,10 @@
 table-version (1.11.1-1PGSTY) unstable; urgency=medium
 
+  * Mark the pure SQL extension package Architecture: all.
+
   * https://github.com/linz/postgresql-tableversion/releases/tag/1.11.1
 
- -- Ruohang Feng <rh@vonng.com>  Sat, 06 Sep 2025 18:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Fri, 04 Sep 2026 06:05:00 +0800
 
 table-version (1.11.0-1PIGSTY) unstable; urgency=medium
 
