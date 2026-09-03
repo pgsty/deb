@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/hexacluster/pg_utl_smtp
 
 Package: postgresql-PGVERSION-utl-smtp
-Architecture: any
+Architecture: all
 Provides: postgresql-utl-smtp
 Depends: ${postgresql:Depends}, postgresql-plperl-PGVERSION, libnet-smtp-ssl-perl, ${misc:Depends}
 Description: Oracle UTL_SMTP compatibility extension for PostgreSQL
