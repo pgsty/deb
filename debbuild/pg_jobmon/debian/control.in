@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/omniti-labs/pg_jobmon
 
 Package: postgresql-PGVERSION-pg-jobmon
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-jobmon
 Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: PostgreSQL extension which provides persistent logging within transactions and functions.
