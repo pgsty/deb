@@ -1,0 +1,7 @@
+pgs3 (0.1.1-1PGSTY) unstable; urgency=medium
+
+  * Initial release for PostgreSQL 17 through 18.
+  * Package the canonical upstream v0.1.1 source release.
+  * Build with cargo-pgrx and pgrx 0.19.2 using the locked dependency graph.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 03 Sep 2026 16:00:00 +0800

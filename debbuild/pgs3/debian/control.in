@@ -1,0 +1,17 @@
+Source: pgs3
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc (>= 1.85)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgsty/pgs3
+
+Package: postgresql-PGVERSION-pgs3
+Architecture: any
+Provides: postgresql-pgs3
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: S3-compatible object storage inside PostgreSQL PGVERSION
+ pgs3 serves a path-style S3-compatible endpoint from PostgreSQL background
+ workers, with SigV4 authentication and SQL-backed object storage. Full endpoint
+ functionality requires pgs3 in shared_preload_libraries.
