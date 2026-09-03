@@ -83,9 +83,6 @@ override_dh_auto_install:
 	fi; \
 	rm -f "$$bad_runpath"
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_shlibdeps:
 	dh_shlibdeps -l$(CURDIR)/debian/openhalodb-14$(PGBASEINSTDIR)/lib
 

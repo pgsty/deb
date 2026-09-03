@@ -18,9 +18,6 @@ override_dh_auto_build:
 override_dh_auto_clean:
 	# Disable the clean step to avoid cleaning up pre-built binaries
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_auto_install:
 	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \

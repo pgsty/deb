@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/fraruiz/pgmb
 
 Package: postgresql-PGVERSION-pgmb
-Architecture: any
+Architecture: all
 Provides: postgresql-pgmb
 Depends: ${misc:Depends}, ${postgresql:Depends}, postgresql-PGVERSION-cron, postgresql-PGVERSION-http
 Description: A simple PostgreSQL Message Broker system

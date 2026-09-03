@@ -1,5 +1,8 @@
 all: pre build
 
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
 VERSION := 2.29.2
 TARBALL := timescaledb-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
@@ -26,7 +29,7 @@ define build_one
 	echo '$(1)' > build-$(1)/build/debian/pgversions
 	cd build-$(1)/build && pg_buildext updatecontrol
 	cd build-$(1)/build && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/$(1)/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp build-$(1)/*.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg && cp build-$(1)/*.deb ~/ext/pkg/ && find build-$(1) -maxdepth 1 -type f -name '*.ddeb' -exec cp {} ~/ext/pkg/ \;
 endef
 
 build18:

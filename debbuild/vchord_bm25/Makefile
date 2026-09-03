@@ -1,3 +1,7 @@
+CARGO_PROFILE_RELEASE_DEBUG ?= 2
+CARGO_PROFILE_RELEASE_STRIP ?= none
+export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
+
 all: setup build move
 
 TARBALL := VectorChord-bm25-0.3.0.tar.gz
@@ -54,7 +58,7 @@ packaging:
 
 # collect deb
 move:
-	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 # remove building craps
 clean:

@@ -15,9 +15,6 @@ override_dh_auto_clean:
 override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-plv8
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_installdocs:
 	dh_installdocs --all README.*
 

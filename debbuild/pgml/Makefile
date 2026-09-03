@@ -1,3 +1,7 @@
+CARGO_PROFILE_RELEASE_DEBUG ?= 2
+CARGO_PROFILE_RELEASE_STRIP ?= none
+export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
+
 all: setup build move
 
 TARBALL := pgml-2.10.0.tar.gz
@@ -25,7 +29,7 @@ packaging:
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
 
 # remove building craps
 clean:

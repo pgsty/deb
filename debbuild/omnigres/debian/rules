@@ -16,9 +16,6 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 	# Disable the clean step to avoid cleaning up pre-built binaries
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_dwz:
 	# External Clang may emit DWARF newer than the distribution dwz supports.
 

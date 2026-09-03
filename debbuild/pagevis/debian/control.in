@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/hollobon/pagevis
 
 Package: postgresql-PGVERSION-pagevis
-Architecture: any
+Architecture: all
 Provides: postgresql-pagevis
 Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: PostgreSQL data page visualisation

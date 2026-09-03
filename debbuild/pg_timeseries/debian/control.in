@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/ChuckHend/pg_timeseries
 
 Package: postgresql-PGVERSION-pg-timeseries
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-timeseries
 Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-partman, postgresql-PGVERSION-cron
 Description: Simple and focused time-series tables for PostgreSQL

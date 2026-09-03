@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/bolajiwahab/pg_drop_events
 
 Package: postgresql-PGVERSION-pg-drop-events
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-drop-events
 Depends: ${misc:Depends}, ${postgresql:Depends}
 Description: logs transaction ids of drop table, drop column, drop materialized view statements to aid point in time recovery

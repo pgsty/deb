@@ -20,6 +20,8 @@ DETECTED_ARCH := $(shell dpkg --print-architecture 2>/dev/null)
 DISTRO_CODENAME ?= $(DETECTED_CODENAME)
 DEB_ARCH ?= $(DETECTED_ARCH)
 DEB_FILE = $(DEB_PACKAGE)_$(POLAR_VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)_$(DEB_ARCH).deb
+DBGSYM_FILE = $(DEB_PACKAGE)-dbgsym_$(POLAR_VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)_$(DEB_ARCH).ddeb
+PACKAGE_ROOT = $(BUILD_DIR)/package/debian/$(basename $(DEB_FILE))
 CLANG ?= $(shell command -v clang-21 || command -v clang-20 || command -v clang-19 || command -v clang-18 || command -v clang-17 || command -v clang)
 LLVM_CONFIG ?= $(shell command -v llvm-config-21 || command -v llvm-config-20 || command -v llvm-config-19 || command -v llvm-config-18 || command -v llvm-config-17 || command -v llvm-config)
 
@@ -116,9 +118,11 @@ setup: check-src check-release check-platform
 # building deb with upstream Debian package workflow
 build: check-pfsd-sdk check-build-deps
 	cd $(BUILD_DIR)/package/debian && PGSTY_RELEASE="$(DEB_RELEASE)" DISTRO_CODENAME="$(DISTRO_CODENAME)" CLANG="$(CLANG)" LLVM_CONFIG="$(LLVM_CONFIG)" bash -e ./build-deb.sh
+	bash split-dbgsym.sh "$(PACKAGE_ROOT)" "$(BUILD_DIR)/package/debian/$(DEB_FILE)" "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)"
 
 verify:
 	@test -f "$(BUILD_DIR)/package/debian/$(DEB_FILE)" || (echo "missing expected package $(DEB_FILE)"; exit 1)
+	@test -f "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" || (echo "missing expected package $(DBGSYM_FILE)"; exit 1)
 	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DEB_FILE)" Package)" = "$(DEB_PACKAGE)"
 	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DEB_FILE)" Version)" = "$(POLAR_VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)"
 	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DEB_FILE)" Architecture)" = "$(DEB_ARCH)"
@@ -127,10 +131,14 @@ verify:
 	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | grep -q './usr/share/doc/polardb-17/copyright'
 	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | grep -q './usr/share/doc/polardb-17/COPYRIGHT'
 	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | grep -q './usr/share/doc/polardb-17/LICENSE'
+	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" Package)" = "$(DEB_PACKAGE)-dbgsym"
+	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" Version)" = "$(POLAR_VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)"
+	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" Architecture)" = "$(DEB_ARCH)"
+	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" | grep -q './usr/lib/debug/'
 
 # collect deb
 move: verify
-	mkdir -p $(PKG_OUTPUT_DIR) && cp "$(BUILD_DIR)/package/debian/$(DEB_FILE)" $(PKG_OUTPUT_DIR)/
+	mkdir -p $(PKG_OUTPUT_DIR) && cp "$(BUILD_DIR)/package/debian/$(DEB_FILE)" "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" $(PKG_OUTPUT_DIR)/
 
 # remove building artifacts
 clean:

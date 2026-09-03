@@ -1,5 +1,8 @@
 all: pre setup build
 
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
 SRC_DIR := ~/plv8
 PKG_NAME := plv8
 
@@ -13,7 +16,7 @@ pre:
 	mkdir -p ~/plv8
 	tar -C ~/plv8 --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	patch -d ~/plv8 -p1 --forward -f < $(SOURCE_PATCH)
-	cd ~/plv8 && $(MAKE) NUMPROC=$(PLV8_BUILD_JOBS)
+	cd ~/plv8 && $(MAKE) NUMPROC=$(PLV8_BUILD_JOBS) OPTFLAGS="-std=c++17 -fno-rtti $(CXXFLAGS)"
 
 # prepare directory
 setup:
@@ -29,7 +32,7 @@ build:
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg; cp -f ~/*plv8*.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg; cp -f ~/*plv8*.deb ~/ext/pkg/ && find ~ -maxdepth 1 -type f -name '*plv8*.ddeb' -exec cp {} ~/ext/pkg/ \;
 
 # remove building craps
 clean:

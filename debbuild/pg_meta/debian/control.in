@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/aquameta/meta
 
 Package: postgresql-PGVERSION-pg-meta
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-meta
 Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: PostgreSQL Extension: More friendly system catalog for PostgreSQL

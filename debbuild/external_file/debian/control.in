@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/darold/external_file
 
 Package: postgresql-PGVERSION-external-file
-Architecture: any
+Architecture: all
 Provides: postgresql-external-file
 Depends: ${misc:Depends}, postgresql-PGVERSION
 Description: Access external server-side files through PostgreSQL functions

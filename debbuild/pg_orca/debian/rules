@@ -4,6 +4,9 @@ export CC = gcc
 export CXX = g++
 export DEB_BUILD_OPTIONS = parallel=1
 export CMAKE_BUILD_PARALLEL_LEVEL = 1
+export DPKG_EXPORT_BUILDFLAGS = 1
+
+include /usr/share/dpkg/buildflags.mk
 
 PG_VERSIONS := $(shell cat debian/pgversions)
 
@@ -38,9 +41,6 @@ override_dh_auto_install:
 
 override_dh_installdocs:
 	dh_installdocs --all README.md NOTICE
-
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
 
 %:
 	dh $@

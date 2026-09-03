@@ -10,7 +10,7 @@ check-src:
 	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL) under $(HOME)/ext/src or ../SOURCES, run pig build get first; if needed, copy it there"; exit 1)
 
 clean-artifacts:
-	rm -f *.deb *.buildinfo *.changes
+	rm -f *.deb *.ddeb *.buildinfo *.changes
 
 setup: clean-artifacts check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
@@ -26,9 +26,9 @@ build: setup
 
 move: build
 	mkdir -p $(PKG_OUTPUT_DIR)
-	@set -e; files=$$(find . -maxdepth 1 -type f -name 'python3-fake-factory_*.deb'); test -n "$$files"; cp $$files $(PKG_OUTPUT_DIR)/
+	@set -e; files=$$(find . -maxdepth 1 -type f \( -name 'python3-fake-factory_*.deb' -o -name '*.ddeb' \)); test -n "$$files"; cp $$files $(PKG_OUTPUT_DIR)/
 
 clean:
-	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.deb
+	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all check-src clean-artifacts setup build move clean

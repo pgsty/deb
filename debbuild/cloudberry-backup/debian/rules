@@ -29,9 +29,6 @@ override_dh_auto_install:
 	install -Dpm 0755 $(GOBIN)/gpbackman $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackman
 	install -Dpm 0755 $(GOBIN)/gpbackup_exporter $(CURDIR)/debian/tmp/usr/cloudberry/bin/gpbackup_exporter
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_dwz:
 	:
 

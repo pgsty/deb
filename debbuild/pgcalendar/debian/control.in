@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/h4kbas/pgcalendar
 
 Package: postgresql-PGVERSION-pgcalendar
-Architecture: any
+Architecture: all
 Provides: postgresql-pgcalendar
 Depends: ${misc:Depends}, postgresql-PGVERSION
 Description: Infinite calendar and recurring schedule extension for PostgreSQL

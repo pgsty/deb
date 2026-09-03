@@ -1,5 +1,8 @@
 all: setup build move
 
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
 TARBALL := hydra-1.1.2.tar.gz
 
 # prepare directory
@@ -34,11 +37,10 @@ build14:
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg && cp build/*.deb ~/ext/pkg/ && find build -maxdepth 1 -type f -name '*.ddeb' -exec cp {} ~/ext/pkg/ \;
 
 # remove building craps
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
 .PHONY: all setup update build move clean ls
-

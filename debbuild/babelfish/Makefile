@@ -57,7 +57,7 @@ build:
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp $(BUILD_DIR)/*.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg && cp $(BUILD_DIR)/*.deb ~/ext/pkg/ && find $(BUILD_DIR) -maxdepth 1 -type f -name '*.ddeb' -exec cp {} ~/ext/pkg/ \;
 
 # remove building artifacts
 clean:

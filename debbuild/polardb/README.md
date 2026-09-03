@@ -30,7 +30,13 @@ codename:
 
 ```text
 polardb-17_17.11.1.0-1PGSTY~bookworm_<arch>.deb
+polardb-17-dbgsym_17.11.1.0-1PGSTY~bookworm_<arch>.ddeb
 ```
+
+The upstream workflow calls `dpkg-deb` directly and therefore does not run
+debhelper's automatic symbol split. After the upstream package tree is built,
+`split-dbgsym.sh` detaches DWARF into standard build-id paths, strips the main
+ELFs, rebuilds the main package, and creates the matching `-dbgsym` `.ddeb`.
 
 The source commit remains available as the `X-Pigsty-Source-Commit` binary
 control field instead of occupying the Debian revision. `DEB_RELEASE` can be
@@ -45,7 +51,8 @@ must not expose both revisions at the same time.
 The default build validates `DEB_RELEASE`, distro codename, and architecture
 before setup. After packaging, `make verify` checks the exact filename and the
 binary control fields for package name, version, architecture, and upstream
-source commit before `make move` collects the artifact.
+source commit. It also requires a non-empty build-id debug payload before
+`make move` collects both artifacts.
 
 The upstream release packages use `/u01/polardb_pg_17` and
 `polardb-for-postgresql`. Pigsty intentionally does not preserve that layout.

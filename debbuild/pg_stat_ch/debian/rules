@@ -5,6 +5,9 @@ export CXX = g++
 export DEB_BUILD_OPTIONS = parallel=2
 export CMAKE_BUILD_PARALLEL_LEVEL = 2
 export VCPKG_DISABLE_METRICS = 1
+export DPKG_EXPORT_BUILDFLAGS = 1
+
+include /usr/share/dpkg/buildflags.mk
 
 PG_VERSIONS := 16 17 18
 DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
@@ -70,6 +73,3 @@ override_dh_installdocs:
 			install -D -m 0644 "$$license" "$$docdir/$$component-copyright"; \
 		done; \
 	done
-
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym

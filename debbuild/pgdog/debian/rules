@@ -1,6 +1,9 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE=1
+CARGO_PROFILE_RELEASE_DEBUG ?= 2
+CARGO_PROFILE_RELEASE_STRIP ?= none
+export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 %:
 	dh $@
@@ -35,6 +38,3 @@ override_dh_installdocs:
 	install -D -m 0644 vendor/pg_raw_parse/libpg_query/LICENSE debian/pgdog/usr/share/doc/pgdog/third-party/libpg_query-LICENSE
 	install -D -m 0644 vendor/pg_raw_parse/libpg_query/src/postgres/COPYRIGHT debian/pgdog/usr/share/doc/pgdog/third-party/PostgreSQL-COPYRIGHT
 	install -D -m 0644 vendor/scram/LICENSE debian/pgdog/usr/share/doc/pgdog/third-party/scram-LICENSE
-
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym

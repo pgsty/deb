@@ -8,7 +8,7 @@ Rules-Requires-Root: no
 Homepage: https://github.com/bigsmoke/pg_xenophile
 
 Package: postgresql-PGVERSION-pg-xenophile
-Architecture: any
+Architecture: all
 Provides: postgresql-pg-xenophile
 Depends: ${misc:Depends}, ${postgresql:Depends}
 Description: More than the bare necessities for PostgreSQL i18n and l10n.

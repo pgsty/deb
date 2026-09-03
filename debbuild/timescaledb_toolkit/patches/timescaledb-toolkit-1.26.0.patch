@@ -433,7 +433,7 @@ index 681b22585d053813e1b329ff42c219cfc8371368..32c8133bfa6ff82bc96801adcd1b286f
  [profile.release]
  lto = "fat"
 -debug = true
-+debug = false
++debug = 2
  codegen-units = 1
 diff --git a/README.md b/README.md
 index ade2d544fe2f4e2d2ed4a3eeca83b5ccee92781f..fd1bad0d49e2bf2c35bbd17118bf31d0947d6e36 100644

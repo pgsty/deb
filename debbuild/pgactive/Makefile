@@ -2,6 +2,9 @@
 
 all: setup build move
 
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
 TARBALL := pgactive-2.1.9.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SOURCE_PATCH := patches/pgactive-2.1.9.patch
@@ -60,7 +63,7 @@ build14:
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/
+	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
 
 # remove building craps
 clean:

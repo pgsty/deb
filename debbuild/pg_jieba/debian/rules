@@ -2,6 +2,8 @@
 
 export CC = gcc
 export CXX = g++
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
 
 PG_VERSIONS = 14 15 16 17 18
 PG_JIEBA_BUILD_JOBS ?= 2
@@ -34,9 +36,6 @@ override_dh_auto_install:
 
 override_dh_installdocs:
 	dh_installdocs --all README.md HISTORY LICENSE
-
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
 
 %:
 	dh $@

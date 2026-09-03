@@ -19,9 +19,6 @@ override_dh_auto_clean:
 override_dh_auto_test:
 	# Disable the test step since we don't have tests
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_auto_install:
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \

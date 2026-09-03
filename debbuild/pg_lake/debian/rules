@@ -3,6 +3,9 @@
 export CC = gcc
 export CXX = g++
 export VCPKG_DISABLE_METRICS = 1
+export DPKG_EXPORT_BUILDFLAGS = 1
+
+include /usr/share/dpkg/buildflags.mk
 
 VERSIONS := $(shell cat debian/pgversions)
 PG_LAKE_GIT_VERSION ?= v3.4.4
@@ -58,12 +61,9 @@ override_dh_auto_install:
 		printf 'postgresql:Depends=postgresql-%s\n' "$$v" > "debian/$$pkg.substvars"; \
 	done
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_dwz:
-	# Debug symbols are intentionally not shipped; a DWZ aggregate would become
-	# an orphaned debug file in the main runtime package.
+	# The bundled Rust/C++ dependency graph can exceed dwz's practical limits.
+	# Skip DWZ only; dh_strip still emits the automatic dbgsym package.
 
 override_dh_compress:
 	# Keep third-party license and notice texts directly readable, including the

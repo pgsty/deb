@@ -158,9 +158,6 @@ override_dh_auto_install:
 override_dh_shlibdeps:
 	dh_shlibdeps -l$(PREFIX)/lib -l$(PREFIX)/lib/postgresql
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
-
 override_dh_auto_test:
 	:
 
