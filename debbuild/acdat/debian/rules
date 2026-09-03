@@ -17,10 +17,10 @@ override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-acdat
 
 override_dh_installdocs:
-	dh_installdocs --all README.md BENCHMARK.md docs/usage.md
+	dh_installdocs --all README.md docs/BENCHMARK.md docs/PERFORMANCE.md docs/USAGE.md
 
 override_dh_installchangelogs:
-	dh_installchangelogs CHANGELOG.md
+	dh_installchangelogs docs/CHANGELOG.md
 
 %:
 	dh $@

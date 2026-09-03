@@ -1,7 +1,7 @@
 all: move
 
-TARBALL := acdat-0.1.0.tar.gz
-TARBALL_SHA256 := 50ab0f1f3c0cb49b3e034c1da1052e312f55463df427725710c26eef5873738a
+TARBALL := acdat-0.1.1.tar.gz
+TARBALL_SHA256 := 00dfb61c4c36862dd99e2f3a621179c9ca9d31d980cae59fdce1a57fdc6a7548
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
