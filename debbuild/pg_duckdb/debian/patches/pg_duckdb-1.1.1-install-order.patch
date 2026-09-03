@@ -1,0 +1,12 @@
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -144,6 +144,8 @@ install-duckdb: $(FULL_DUCKDB_LIB) $(shlib)
+ 	$(install_bin) -m 755 $(FULL_DUCKDB_LIB) $(DESTDIR)$(PG_LIB)
+ endif
+ 
++install-duckdb: | installdirs-lib
++
+ clean-duckdb:
+ 	rm -rf third_party/duckdb/build
+ 

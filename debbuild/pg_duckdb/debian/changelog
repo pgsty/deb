@@ -1,9 +1,10 @@
 pg-duckdb (1.1.1-1PGSTY) unstable; urgency=medium
 
   * Align the package revision with the RPM cross-PG-major co-installation fix.
-  * Debian payload layout is unchanged.
+  * Order the bundled DuckDB install after the PGXS library directory exists.
+  * Build PGXS and bundled DuckDB with Debian debug and hardening flags.
 
- -- Ruohang Feng <rh@vonng.com>  Sat, 11 Jul 2026 00:00:00 +0800
+ -- Ruohang Feng <rh@vonng.com>  Fri, 04 Sep 2026 07:00:00 +0800
 
 pg-duckdb (1.1.1-1PIGSTY) unstable; urgency=low
 
