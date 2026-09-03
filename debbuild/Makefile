@@ -279,6 +279,9 @@ pg_textsearch:
 pg_fts:
 	cd pg_fts && make
 
+psql_bm25s:
+	cd psql_bm25s && make
+
 acdat:
 	cd acdat && make
 
@@ -1195,7 +1198,7 @@ collect:
 	timescaledb pg_timeseries pg_bikram_sambat cron_utils temporal_tables emaj table_version pg_task pg_background pg_partman \
 	geoip q3c qdgc pg_geohash pghydro mobilitydb \
 	smlar pg4ml rdkit \
-	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_cjk_parser pg_jieba pg_textsearch pg_fts acdat \
+	hunspell pgroonga pg_bigm pg_biscuit scws zhparser pg_cjk_parser pg_jieba pg_textsearch pg_fts psql_bm25s acdat \
 	citus hydra storage_engine datasketches pg_duckdb pg_ducklake pg_lake duckdb_fdw pg_fkpart pg_kpart pg_clickhouse pg_orca \
 	age pg_ttl_index index_advisor pg_plan_filter imgsmlr pg_ivm provsql fbsql pg_durable pgmnemo pgzint pg_projection pg_stl pg_sorted_heap pg_incremental pg_local_cache pgmq pgmb omnigres pg_ai_query \
 	plxslt pg_tle plv8 plruby pljs plx plproxy \
