@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+
+SRC_DIR := pgs3
+PKG_NAME := pgs3
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	# Disable the build step since binaries are pre-built by the outer recipe.
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+	# Keep the pre-built pgrx package trees until dh_auto_install has copied them.
+
+override_dh_auto_install:
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
+		DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
+		FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
+		SRC_ROOT=target/release/$$DIR_NAME/usr; \
+		test -f $$SRC_ROOT/lib/postgresql/$$PG_VERSION/lib/$(SRC_DIR).so; \
+		test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR).control; \
+		test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR)--0.1.1.sql; \
+		test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR)--0.1.0--0.1.1.sql; \
+		test "$$(find $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension -maxdepth 1 -type f -name '$(SRC_DIR)*.sql' | wc -l)" -eq 2; \
+		dh_installdirs -p$$FULL_NAME; \
+		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
+		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+		cp $$SRC_ROOT/lib/postgresql/$$PG_VERSION/lib/$(SRC_DIR).so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+		cp $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR).control $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+		cp $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR)--*.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md docs/guc.md docs/known-limitations.md docs/operations.md
