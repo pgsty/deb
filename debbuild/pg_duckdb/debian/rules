@@ -3,10 +3,28 @@
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
 
+# Keep the distribution debug, hardening, and reproducibility flags.  PGXS
+# retains its configured LTO; the bundled DuckDB build gets the same flags
+# through its CMake interface with only GCC LTO removed.
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+DUCKDB_CFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CFLAGS))
+DUCKDB_CXXFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CXXFLAGS))
+DUCKDB_LDFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(LDFLAGS))
+
+DUCKDB_CMAKE_FLAGS := \
+	-DCMAKE_C_FLAGS:STRING="$(DUCKDB_CFLAGS)" \
+	-DCMAKE_CXX_FLAGS:STRING="$(DUCKDB_CXXFLAGS)" \
+	-DCMAKE_EXE_LINKER_FLAGS:STRING="$(DUCKDB_LDFLAGS)" \
+	-DCMAKE_SHARED_LINKER_FLAGS:STRING="$(DUCKDB_LDFLAGS)" \
+	-DCMAKE_MODULE_LINKER_FLAGS:STRING="$(DUCKDB_LDFLAGS)"
+
 # Allow constrained builders to override parallelism.
 export MAKEFLAGS ?= -j20
 
 override_dh_auto_build:
+	+$(MAKE) EXTRA_CMAKE_VARIABLES='$(DUCKDB_CMAKE_FLAGS)'
 
 override_dh_auto_test:
 
