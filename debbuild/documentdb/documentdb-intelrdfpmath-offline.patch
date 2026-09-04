@@ -1,0 +1,20 @@
+--- install_setup_intel_decimal_math_lib.sh.orig
++++ install_setup_intel_decimal_math_lib.sh
+@@ -60,6 +60,8 @@
+-git init
+-# This repo is based on Intel Decimal Floating-Point Math Library, with patches applied to support more architecture types
+-git remote add origin https://git.launchpad.net/ubuntu/+source/intelrdfpmath
+-
+-git fetch --depth 1 origin "$MATH_LIB_VERSION"
+-git checkout FETCH_HEAD
++if [ -z "${INTELRDFPMATH_SOURCE:-}" ] || [ ! -f "$INTELRDFPMATH_SOURCE" ] || [ -L "$INTELRDFPMATH_SOURCE" ]; then
++    echo "INTELRDFPMATH_SOURCE must name a regular local archive" >&2
++    exit 1
++fi
++test -z "$(find . -mindepth 1 -print -quit)"
++tar -xf "$INTELRDFPMATH_SOURCE"
++test -s LIBRARY/makefile
++test -s LIBRARY/src/bid_functions.h
+@@ -80 +82 @@
+-echo 'Version: 2.0 Update 2' >> intelmathlib.pc
++echo 'Version: 2.0 Update 3' >> intelmathlib.pc
