@@ -2,12 +2,15 @@ all: pre setup build move
 
 TARBALL := documentdb-0.116-0.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
+INTEL_TARBALL := intelrdfpmath-applied-2.0u3-1.tar.gz
+INTEL_SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(INTEL_TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(INTEL_TARBALL)),$(wildcard ../SOURCES/$(INTEL_TARBALL)))
 
 check-src:
 	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing $(TARBALL) under $(HOME)/ext/src, $(HOME)/pgsty/repo/ext/src, or ../SOURCES; run pig build get first if needed"; exit 1)
+	@test -n "$(INTEL_SOURCE_TARBALL)" -a -f "$(INTEL_SOURCE_TARBALL)" || (echo "missing $(INTEL_TARBALL) under $(HOME)/ext/src, $(HOME)/pgsty/repo/ext/src, or ../SOURCES; copy the exact archived dependency first"; exit 1)
 
-pre:
-	bash prepare.sh $(TARBALL)
+pre: check-src
+	SOURCE="$(SOURCE_TARBALL)" INTELRDFPMATH_SOURCE="$(INTEL_SOURCE_TARBALL)" bash prepare.sh "$(TARBALL)" "$(INTEL_TARBALL)"
 	apt-get update -qq
 	apt install -y systemtap-sdt-dev libicu-dev pkg-config
 
