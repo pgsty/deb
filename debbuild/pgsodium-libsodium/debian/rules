@@ -18,7 +18,7 @@ override_dh_auto_build:
 	mkdir -p $(PRIVATE_DIR)
 	LC_ALL=C nm -g --defined-only -P $(STATIC_LIB) | \
 		awk '$$1 ~ /^[A-Za-z_][A-Za-z0-9_]*$$/ { print $$1 }' | \
-		sort -u > $(PRIVATE_DIR)/symbols.txt
+		LC_ALL=C sort -u > $(PRIVATE_DIR)/symbols.txt
 	test "$$(wc -l < $(PRIVATE_DIR)/symbols.txt)" -gt 700
 	awk '{ print $$1, "$(PRIVATE_PREFIX)" $$1 }' \
 		$(PRIVATE_DIR)/symbols.txt > $(PRIVATE_DIR)/redefine.syms
@@ -33,6 +33,10 @@ override_dh_auto_build:
 	LC_ALL=C nm -g --defined-only -P $(PRIVATE_DIR)/libsodium-pgsodium.a | \
 		awk '$$1 ~ /^[A-Za-z_][A-Za-z0-9_]*$$/ { print $$1 }' | \
 		awk '!/^$(PRIVATE_PREFIX)/ { bad = 1; print > "/dev/stderr" } END { exit bad }'
+	# No original private symbol may remain as an undefined archive reference.
+	LC_ALL=C nm -g --undefined-only -P $(PRIVATE_DIR)/libsodium-pgsodium.a | \
+		awk 'NR == FNR { symbols[$$1] = 1; next } $$1 in symbols { bad = 1; print > "/dev/stderr" } END { exit bad }' \
+		$(PRIVATE_DIR)/symbols.txt -
 
 override_dh_auto_test:
 	dh_auto_test
@@ -48,3 +52,8 @@ override_dh_auto_install:
 		$(PACKAGE_DIR)/usr/include/pgsodium-libsodium/
 	install -m 0644 $(PRIVATE_DIR)/libsodium-pgsodium.a \
 		$(PACKAGE_DIR)/usr/lib/pgsodium-libsodium/
+
+override_dh_strip:
+	# Static archives have no automatic dbgsym package. Preserve their DWARF
+	# until pgsodium.so is linked and dh_strip creates its normal dbgsym.
+	dh_strip -Xlibsodium-pgsodium.a
