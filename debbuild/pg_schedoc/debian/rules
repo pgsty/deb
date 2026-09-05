@@ -7,7 +7,7 @@ override_dh_auto_build:
 override_dh_auto_test:
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-pg-schedoc
+	+LC_ALL=C pg_buildext loop postgresql-%v-pg-schedoc
 	rm -rf debian/postgresql-*-pg-schedoc/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:

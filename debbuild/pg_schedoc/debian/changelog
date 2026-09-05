@@ -1,3 +1,10 @@
+pg-schedoc (0.0.2+git20260430.9f135c3-2PGSTY) unstable; urgency=medium
+
+  * Generate installation SQL with a deterministic exclusion-template order.
+  * Rebuild generated SQL in the C locale while preserving the upgrade script.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 05 Sep 2026 08:40:00 +0800
+
 pg-schedoc (0.0.2+git20260430.9f135c3-1PGSTY) unstable; urgency=medium
 
   * Pin upstream develop snapshot 9f135c3 (schedoc 0.0.2).
