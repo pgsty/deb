@@ -1,6 +1,9 @@
 diff -ruN a/Makefile b/Makefile
 --- a/Makefile	2026-09-01 06:34:52
 +++ b/Makefile	2026-09-01 06:34:52
+@@ -10 +10 @@
+-TOOLSEXC = $(wildcard tools_exclusion/*.sql)
++TOOLSEXC = $(sort $(wildcard tools_exclusion/*.sql))
 @@ -12,7 +12,7 @@
  EXTVERSION   = $(shell grep -m 1 '[[:space:]]\{3\}"version":' META.json | \
  	       sed -e 's/[[:space:]]*"version":[[:space:]]*"\([^"]*\)",\{0,1\}/\1/')
