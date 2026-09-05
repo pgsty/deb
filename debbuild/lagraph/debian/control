@@ -2,7 +2,7 @@ Source: lagraph
 Section: libs
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: cmake (>= 3.23), debhelper-compat (= 13), libgraphblas-dev (>= 10.5.0), pkgconf
+Build-Depends: cmake (>= 3.23), debhelper-compat (= 13), libgraphblas-dev (>= 10.5.0), pkg-config
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/GraphBLAS/LAGraph

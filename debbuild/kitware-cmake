@@ -1,0 +1,61 @@
+#!/bin/sh
+
+set -eu
+
+version=3.31.12
+prefix=${1:-"${HOME}/.cache/pgsty/cmake-${version}"}
+
+case "$(uname -m)" in
+    x86_64|amd64)
+        platform=linux-x86_64
+        sha256=0dc2e9a6860f06bf10bd8fadc03e35d9eeb4df46e33763a7e480e987758f385c
+        ;;
+    aarch64|arm64)
+        platform=linux-aarch64
+        sha256=83f8fd91d2038a56556e1400390fcfe42f79602940c494f6c6f1cdae7f9e7f40
+        ;;
+    *)
+        echo "unsupported architecture for private CMake: $(uname -m)" >&2
+        exit 1
+        ;;
+esac
+
+cmake_bin=${prefix}/bin/cmake
+if [ -x "${cmake_bin}" ] && [ "$("${cmake_bin}" --version | awk 'NR == 1 { print $3 }')" = "${version}" ]; then
+    printf '%s\n' "${cmake_bin}"
+    exit 0
+fi
+
+archive=cmake-${version}-${platform}.tar.gz
+url=https://cmake.org/files/v3.31/${archive}
+tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/pgsty-cmake.XXXXXX")
+trap 'rm -rf "${tmpdir}"' EXIT HUP INT TERM
+
+echo "fetching Kitware CMake ${version} for ${platform}" >&2
+if command -v curl >/dev/null 2>&1; then
+    curl --fail --location --retry 3 --output "${tmpdir}/${archive}" "${url}"
+elif command -v wget >/dev/null 2>&1; then
+    wget --tries=3 --output-document="${tmpdir}/${archive}" "${url}"
+else
+    echo "curl or wget is required to fetch ${url}" >&2
+    exit 1
+fi
+
+printf '%s  %s\n' "${sha256}" "${tmpdir}/${archive}" | sha256sum --check - >&2
+tar -C "${tmpdir}" -xzf "${tmpdir}/${archive}"
+extracted=${tmpdir}/cmake-${version}-${platform}
+test -x "${extracted}/bin/cmake"
+test "$("${extracted}/bin/cmake" --version | awk 'NR == 1 { print $3 }')" = "${version}"
+
+mkdir -p "$(dirname "${prefix}")"
+if [ -x "${cmake_bin}" ] && [ "$("${cmake_bin}" --version | awk 'NR == 1 { print $3 }')" = "${version}" ]; then
+    printf '%s\n' "${cmake_bin}"
+    exit 0
+fi
+if [ -e "${prefix}" ]; then
+    backup=${prefix}.invalid.$(date -u +%Y%m%dT%H%M%SZ)
+    echo "moving invalid private CMake aside to ${backup}" >&2
+    mv "${prefix}" "${backup}"
+fi
+mv "${extracted}" "${prefix}"
+printf '%s\n' "${cmake_bin}"

@@ -3,6 +3,7 @@
 export DH_VERBOSE=1
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 export DPKG_EXPORT_BUILDFLAGS = 1
+CMAKE ?= cmake
 
 include /usr/share/dpkg/buildflags.mk
 
@@ -10,7 +11,7 @@ include /usr/share/dpkg/buildflags.mk
 	dh $@
 
 override_dh_auto_configure:
-	cmake -S $(CURDIR) -B $(CURDIR)/build \
+	$(CMAKE) -S $(CURDIR) -B $(CURDIR)/build \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DBUILD_TESTING=OFF \
@@ -22,10 +23,10 @@ override_dh_auto_configure:
 		-DSUITESPARSE_PKGFILEDIR=lib/$(DEB_HOST_MULTIARCH)
 
 override_dh_auto_build:
-	cmake --build $(CURDIR)/build -j$(shell nproc)
+	$(CMAKE) --build $(CURDIR)/build -j$(shell nproc)
 
 override_dh_auto_install:
-	DESTDIR=$(CURDIR)/debian/tmp cmake --install $(CURDIR)/build
+	DESTDIR=$(CURDIR)/debian/tmp $(CMAKE) --install $(CURDIR)/build
 	rm -f $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/liblagraph.a
 	rm -f $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/liblagraphx.a
 
