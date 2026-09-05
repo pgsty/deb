@@ -1,3 +1,12 @@
+pgsodium-libsodium (1.0.22-2PGSTY) unstable; urgency=medium
+
+  * Deduplicate private symbols in the C locale, preserving distinct
+    underscore aliases under Ubuntu Resolute's locale collation.
+  * Reject any unprefixed private references after archive rewriting.
+  * Keep private static archive DWARF for the consumer's automatic dbgsym.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 05 Sep 2026 11:00:00 +0800
+
 pgsodium-libsodium (1.0.22-1PGSTY) unstable; urgency=medium
 
   * Package libsodium 1.0.22 as a private, symbol-prefixed PIC static archive
