@@ -3,8 +3,9 @@
 all: setup build verify move
 
 VERSION := 1.2.42
-DEB_RELEASE ?= 1PGSTY
+DEB_RELEASE ?= 2PGSTY
 ZLOG_VERSION := 1.2.18
+ZLOG_DEB_RELEASE ?= 2PGSTY
 PFS_COMMIT := d0c5dc6
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -46,8 +47,8 @@ setup: check-src check-release check-platform
 	grep -Fq "($(VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME))" $(BUILD_DIR)/debian/changelog
 
 check-zlog:
-	@test "$$(dpkg-query -W -f='$${Version}' zlog 2>/dev/null)" = "$(ZLOG_VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)" || \
-		(echo "installed zlog is not $(ZLOG_VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)"; exit 1)
+	@test "$$(dpkg-query -W -f='$${Version}' zlog 2>/dev/null)" = "$(ZLOG_VERSION)-$(ZLOG_DEB_RELEASE)~$(DISTRO_CODENAME)" || \
+		(echo "installed zlog is not $(ZLOG_VERSION)-$(ZLOG_DEB_RELEASE)~$(DISTRO_CODENAME)"; exit 1)
 
 build: check-zlog
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc

@@ -24,4 +24,7 @@ override_dh_auto_install:
 
 override_dh_auto_test:
 
+override_dh_strip:
+	dh_strip -Xlibpfsd.a
+
 override_dh_usrlocal:
