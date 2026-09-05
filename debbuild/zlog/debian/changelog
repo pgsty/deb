@@ -1,3 +1,10 @@
+zlog (1.2.18-2PGSTY) unstable; urgency=medium
+
+  * Verify and collect matching automatic debug packages on Debian and Ubuntu.
+  * Pass Debian build flags to the upstream make build.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 05 Sep 2026 12:00:00 +0000
+
 zlog (1.2.18-1PGSTY) unstable; urgency=medium
 
   * Rebuild zlog with the PGSTY package release brand.

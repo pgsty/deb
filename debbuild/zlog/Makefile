@@ -3,7 +3,7 @@
 all: setup build verify move
 
 VERSION := 1.2.18
-DEB_RELEASE ?= 1PGSTY
+DEB_RELEASE ?= 2PGSTY
 TARBALL := zlog-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
@@ -13,6 +13,8 @@ DETECTED_ARCH := $(shell dpkg --print-architecture 2>/dev/null)
 DISTRO_CODENAME ?= $(DETECTED_CODENAME)
 DEB_ARCH ?= $(DETECTED_ARCH)
 DEB_FILE = zlog_$(VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)_$(DEB_ARCH).deb
+DEBUG_STEM = zlog-dbgsym_$(VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)_$(DEB_ARCH)
+DEBUG_FILES = $(wildcard $(DEBUG_STEM).deb $(DEBUG_STEM).ddeb)
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -51,9 +53,14 @@ verify:
 	@test "$$(dpkg-deb -f "$(DEB_FILE)" Version)" = "$(VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)"
 	@test "$$(dpkg-deb -f "$(DEB_FILE)" Architecture)" = "$(DEB_ARCH)"
 	@dpkg-deb -c "$(DEB_FILE)" | awk '$$NF == "./usr/include/zlog.h" { header=1 } $$NF ~ "/libzlog[.]a$$" { static_lib=1 } $$NF ~ "/libzlog[.]so[.]1[.]2$$" { shared_lib=1 } END { exit !(header && static_lib && shared_lib) }'
+	@test "$(words $(DEBUG_FILES))" = 1 || (echo "expected exactly one $(DEBUG_STEM).deb or .ddeb"; exit 1)
+	@test "$$(dpkg-deb -f "$(DEBUG_FILES)" Package)" = "zlog-dbgsym"
+	@test "$$(dpkg-deb -f "$(DEBUG_FILES)" Version)" = "$(VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)"
+	@test "$$(dpkg-deb -f "$(DEBUG_FILES)" Architecture)" = "$(DEB_ARCH)"
+	@dpkg-deb -c "$(DEBUG_FILES)" | awk '$$1 ~ /^-/ && $$3 > 0 && $$NF ~ "/usr/lib/debug/.+[.]debug$$" { found=1 } END { exit !found }'
 
 move: verify
-	mkdir -p $(PKG_OUTPUT_DIR) && cp "$(DEB_FILE)" $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name '*.ddeb' -exec cp {} $(PKG_OUTPUT_DIR)/ \;
+	mkdir -p $(PKG_OUTPUT_DIR) && cp "$(DEB_FILE)" "$(DEBUG_FILES)" $(PKG_OUTPUT_DIR)/
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
