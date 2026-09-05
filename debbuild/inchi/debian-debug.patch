@@ -1,0 +1,19 @@
+--- a/debian/rules
++++ b/debian/rules
+@@ -21,2 +21,2 @@
+-	dh_auto_build -- -C INCHI-1-SRC/INCHI_API/demos/inchi_main/gcc SHARED_LINK_PARM="$(SHARED_LINK_PARM)" MAIN_VERSION=.1 VERSION=$(INCHI_SO_VERSION)
+-	dh_auto_build -- -C INCHI-1-SRC/INCHI_EXE/inchi-1/gcc SHARED_LINK_PARM="$(SHARED_LINK_PARM)" MAIN_VERSION=.1 VERSION=$(INCHI_SO_VERSION) C_COMPILER='$(CC)' CPP_COMPILER='$(CXX)' LINKER='$(CXX) -s'
++	dh_auto_build -- -C INCHI-1-SRC/INCHI_API/demos/inchi_main/gcc SHARED_LINK_PARM="$(SHARED_LINK_PARM)" MAIN_VERSION=.1 VERSION=$(INCHI_SO_VERSION) LINKER='$(CC)'
++	dh_auto_build -- -C INCHI-1-SRC/INCHI_EXE/inchi-1/gcc SHARED_LINK_PARM="$(SHARED_LINK_PARM)" MAIN_VERSION=.1 VERSION=$(INCHI_SO_VERSION) C_COMPILER='$(CC)' CPP_COMPILER='$(CXX)' LINKER='$(CXX)'
+--- a/debian/changelog
++++ b/debian/changelog
+@@ -1 +1,9 @@
++inchi (1.07.5+dfsg-2PGSTY) unstable; urgency=medium
++
++  * Preserve Debian compiler and linker flags for all native binaries.
++  * Remove linker stripping from both command-line programs so dh_strip
++    generates libinchi-bin-dbgsym with complete debugging information.
++
++ -- Ruohang Feng <rh@vonng.com>  Sat, 05 Sep 2026 09:53:35 +0800
++
+ inchi (1.07.5+dfsg-1) unstable; urgency=medium
