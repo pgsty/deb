@@ -1,3 +1,9 @@
+pgroonga (4.0.8-2PGSTY) unstable; urgency=low
+
+  * Allow first-time Meson configuration on Debian bookworm.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 05 Sep 2026 07:16:00 +0800
+
 pgroonga (4.0.8-1PGSTY) unstable; urgency=low
 
   * https://github.com/pgroonga/pgroonga/releases/tag/4.0.8
