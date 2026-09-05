@@ -1,6 +1,8 @@
 #!/usr/bin/make -f
 
 include /usr/share/dpkg/architecture.mk
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
 
 %:
 	dh $@
@@ -18,4 +20,3 @@ override_dh_auto_install:
 	ln -s libzlog.so.1.2 debian/zlog/usr/lib/$(DEB_HOST_MULTIARCH)/libzlog.so
 
 override_dh_auto_test:
-
