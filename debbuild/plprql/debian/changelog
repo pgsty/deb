@@ -1,5 +1,11 @@
 plprql (18.0.1-1PGSTY) unstable; urgency=medium
 
+  * Build with pgrx 0.19.2 from the updated source archive and locked dependencies.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 06 Sep 2026 09:00:00 +0800
+
+plprql (18.0.1-1PGSTY) unstable; urgency=medium
+
   * Coerce numeric table-return values to declared float4/float8 types before
     forming PostgreSQL tuples.
 
