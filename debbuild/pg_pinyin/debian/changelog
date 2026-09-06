@@ -1,5 +1,6 @@
 pg-pinyin (0.0.6-1PGSTY) unstable; urgency=medium
 
+  * Stop the PostgreSQL build loop immediately on failure.
   * Upgrade to upstream 0.0.6 with native pgrx 0.19.2 and PostgreSQL 14-18 support.
   * Keep the locked dependency graph and declare the pgrx 0.19.2 Rust 1.96 MSRV.
   * Generate PG14-18 controls explicitly and ship the complete upgrade SQL chain.
