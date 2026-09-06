@@ -4,30 +4,26 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
+# Source archive includes the shared compatibility fixes and pgrx 0.19.2 lockfile.
 TARBALL := pgwasm-0.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_SHA256 := 9a1dbfa6b34c182542de79e20f415a5049f118a92e64423aa105ab781ed5e327
+SOURCE_SHA256 := f397e539fb0aa1da79d266665052610829429abad70c6df07fe4431ed179736b
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.1
+PGRX_VERSION := 0.19.2
 CRATE_DIR := .
-SOURCE_PATCH := patches/pgwasm-0.1.0.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL); fetch upstream snapshot 535b53363f8208af139e757e508e66c46309ee29 and save it as $(TARBALL)"; exit 1)
 	@echo "$(SOURCE_SHA256)  $(SOURCE_TARBALL)" | sha256sum -c -
 
-check-patch:
-	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH)"; exit 1)
-
-setup: check-src check-patch
+setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	patch -d $(BUILD_DIR) -p1 --forward -f < $(SOURCE_PATCH)
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release && echo $${VERSION_CODENAME:-unknown})); \
 	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
@@ -49,14 +45,14 @@ building: check-pgrx
 	for manifest in pgwasm/tests/guests/*/Cargo.toml; do \
 	    PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=true cargo fetch --locked --manifest-path "$$manifest"; \
 	done
-	cd $(BUILD_DIR)/$(CRATE_DIR) && \
+	set -e; cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.after
 	cd $(BUILD_DIR) && cmp .pgrx-locks.before .pgrx-locks.after && rm -f .pgrx-locks.before .pgrx-locks.after
-	cd $(BUILD_DIR) && for PG_VERSION in $(PG_VERSIONS); do readelf -Ws target/release/pgwasm-pg$$PG_VERSION/usr/lib/postgresql/$$PG_VERSION/lib/pgwasm.so | grep -q _PG_init; done
+	set -e; cd $(BUILD_DIR) && for PG_VERSION in $(PG_VERSIONS); do readelf -Ws target/release/pgwasm-pg$$PG_VERSION/usr/lib/postgresql/$$PG_VERSION/lib/pgwasm.so | grep -q _PG_init; done
 
 check-pgrx:
 	@CURRENT=$$(PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
@@ -76,4 +72,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-patch setup build building check-pgrx packaging move clean
+.PHONY: all check-src setup build building check-pgrx packaging move clean
