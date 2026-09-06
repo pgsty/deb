@@ -4,26 +4,24 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
+# Source archive includes the shared compatibility fixes and pgrx 0.19.2 lockfile.
 TARBALL := VectorChord-1.1.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SEMVER := $(shell echo $(TARBALL) | sed -E 's/^VectorChord-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
-PATCH := patches/vchord-1.1.1.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PGRX_VERSION := 0.19.1
+PGRX_VERSION := 0.19.2
 PG_VERSIONS ?= 18
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SNAPSHOT := /tmp/pgrx0191-vchord-cargo-locks.before
+LOCK_SNAPSHOT := /tmp/pgrx0192-vchord-cargo-locks.before
 
 # prepare directory
 setup:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL)"; exit 1)
-	@test -f "$(PATCH)" || (echo "missing $(PATCH)"; exit 1)
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
-	patch -d $(BUILD_DIR) -p1 < $(PATCH)
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	sed -i -E "/^\[workspace.package\]/,/^\[/{s/^version = \".*\"/version = \"$(SEMVER)\"/}" $(BUILD_DIR)/Cargo.toml
@@ -39,7 +37,7 @@ building:
 	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT)
 	@test -s $(LOCK_SNAPSHOT)
 	cd $(BUILD_DIR) && CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
-	cd $(BUILD_DIR) && CC_BIN=$$(command -v clang-19 || command -v clang-18 || command -v clang-17 || command -v clang-16 || command -v clang || true) && \
+	set -e; cd $(BUILD_DIR) && CC_BIN=$$(command -v clang-19 || command -v clang-18 || command -v clang-17 || command -v clang-16 || command -v clang || true) && \
 	CXX_BIN=$$(command -v clang++-19 || command -v clang++-18 || command -v clang++-17 || command -v clang++-16 || command -v clang++ || true) && \
 	if [ -z "$$CC_BIN" ]; then echo "No clang compiler found (need clang >= 16)." >&2; exit 1; fi && \
 	if [ -z "$$CXX_BIN" ]; then CXX_BIN=$$CC_BIN; fi && \
@@ -47,12 +45,12 @@ building:
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    CC=$$CC_BIN CXX=$$CXX_BIN RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections" \
 	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
-	    cargo pgrx package -v --no-default-features --features "pg$$PG_VERSION,simd/init" --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config && \
-	    EXT_DIR=target/release/vchord-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension && \
-	    cp -f sql/upgrade/vchord--*.sql $$EXT_DIR/ && \
-	    cp -f sql/install/vchord--$(SEMVER).sql $$EXT_DIR/vchord--$(SEMVER).sql && \
-	    grep -q "default_version = '$(SEMVER)'" $$EXT_DIR/vchord.control && \
-	    test $$(ls -1 $$EXT_DIR/vchord--*.sql | wc -l) -gt 1 && \
+	    cargo pgrx package -v --no-default-features --features "pg$$PG_VERSION,simd/init" --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+	    EXT_DIR=target/release/vchord-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
+	    cp -f sql/upgrade/vchord--*.sql $$EXT_DIR/; \
+	    cp -f sql/install/vchord--$(SEMVER).sql $$EXT_DIR/vchord--$(SEMVER).sql; \
+	    grep -q "default_version = '$(SEMVER)'" $$EXT_DIR/vchord.control; \
+	    test $$(ls -1 $$EXT_DIR/vchord--*.sql | wc -l) -gt 1; \
 	    test -f $$EXT_DIR/vchord--$(SEMVER).sql; \
 	done
 	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT).after
