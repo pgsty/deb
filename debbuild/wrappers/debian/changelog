@@ -1,5 +1,11 @@
 wrappers (0.6.2-1PGSTY) unstable; urgency=medium
 
+  * Build with pgrx 0.19.2 from the updated source archive and locked dependencies.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 06 Sep 2026 09:00:00 +0800
+
+wrappers (0.6.2-1PGSTY) unstable; urgency=medium
+
   * Upgrade to upstream 0.6.2 and build the locked graph with pgrx 0.19.1.
 
  -- Ruohang Feng <rh@vonng.com>  Fri, 17 Jul 2026 13:30:00 +0800
