@@ -1,3 +1,11 @@
+pgmqtt (0.5.0-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream release and SQL extension version 0.5.0.
+  * Build PostgreSQL 14 through 18 from the locked pgrx 0.19.2 source archive.
+  * Document preload, logical decoding, and output plugin configuration.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 06 Sep 2026 18:00:00 +0800
+
 pgmqtt (0.4.2-1PGSTY) unstable; urgency=medium
 
   * Upgrade the source package to upstream release 0.4.2.

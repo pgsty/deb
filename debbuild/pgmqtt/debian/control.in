@@ -14,5 +14,6 @@ Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Description: Embedded MQTT broker powered by PostgreSQL CDC
  pgmqtt embeds an MQTT broker inside PostgreSQL and publishes change data
  capture events through a pgrx extension. This package builds the extension
- for PostgreSQL 14 through 18. Package 0.4.2 deliberately retains upstream's
- SQL extension version 0.4.1 and is activated by a full server restart.
+ for PostgreSQL 14 through 18, with SQL extension version 0.5.0. Enable
+ shared_preload_libraries, logical decoding, and output_plugin_libraries
+ for pgmqtt as described in the upstream README, then restart PostgreSQL.
