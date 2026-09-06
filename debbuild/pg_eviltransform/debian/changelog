@@ -1,5 +1,6 @@
 pg-eviltransform (0.0.5-1PGSTY) unstable; urgency=medium
 
+  * Stop the PostgreSQL build loop immediately on failure.
   * Upgrade to upstream 0.0.5 with native pgrx 0.19.2 and PostgreSQL 14-18 support.
   * Generate PG14-18 controls explicitly and ship the complete upgrade SQL chain.
   * Declare the Rust compiler build dependency explicitly.
