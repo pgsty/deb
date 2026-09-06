@@ -4,13 +4,13 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
+# Source archive includes the shared compatibility fixes and pgrx 0.19.2 lockfile.
 TARBALL := pg_strict-1.0.5.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.1
-SOURCE_PATCHES := patches/pg-strict-1.0.5.patch
+PGRX_VERSION := 0.19.2
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -21,17 +21,8 @@ setup: check-src
 	find $(BUILD_DIR) -name '._*' -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	@$(MAKE) apply-patches
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-
-apply-patches:
-	@set -e; \
-	for p in $(SOURCE_PATCHES); do \
-		test -f "$$p" || (echo "missing source patch $$p"; exit 1); \
-		echo "apply $$p"; \
-		patch -d $(BUILD_DIR) -p1 < "$$p"; \
-	done
 
 build: building packaging
 
@@ -46,7 +37,7 @@ building: check-pgrx
 	    --no-run
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.before
 	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=true cargo fetch --locked
-	cd $(BUILD_DIR) && \
+	set -e; cd $(BUILD_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
@@ -73,4 +64,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup apply-patches build building check-pgrx packaging move clean
+.PHONY: all check-src setup build building check-pgrx packaging move clean
