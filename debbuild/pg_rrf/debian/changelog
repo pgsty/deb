@@ -1,5 +1,11 @@
 pg-rrf (0.0.3-1PGSTY) unstable; urgency=medium
 
+  * Build with pgrx 0.19.2 from the updated source archive and locked dependencies.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 06 Sep 2026 09:00:00 +0800
+
+pg-rrf (0.0.3-1PGSTY) unstable; urgency=medium
+
   * Build with cargo-pgrx/pgrx 0.19.1 and the direct-on-pristine locked source patch.
   * Fetch with --locked and verify cargo pgrx package does not rewrite Cargo.lock.
   * Build version-specific packages for PostgreSQL 14 through 18.
