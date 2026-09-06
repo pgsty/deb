@@ -1,9 +1,8 @@
 pg-base58 (0.0.1-2PGSTY) unstable; urgency=medium
 
-  * Build with packaged rust-toolchain and cargo-pgrx-0191.
-  * Isolate PGRX_HOME from rustup and other cargo-pgrx slots.
+  * Build repacked source and locked dependencies with pgrx 0.19.2.
 
- -- Ruohang Feng <rh@vonng.com>  Thu, 20 Aug 2026 00:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Sun, 06 Sep 2026 00:00:00 +0800
 
 pg-base58 (0.0.1-1PGSTY) unstable; urgency=medium
 
