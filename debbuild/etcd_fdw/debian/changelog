@@ -1,5 +1,6 @@
 etcd-fdw (0.0.1-3PGSTY) unstable; urgency=medium
 
+  * Stop the PostgreSQL build loop immediately on failure.
   * Vendor the formal Supabase Wrappers 0.6.2 source release.
   * Rebase the Cybertec cached-plan lifetime fix for Wrappers 0.6.2.
   * Build PostgreSQL 14 through 18 with pgrx and cargo-pgrx 0.19.2.
