@@ -4,37 +4,29 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
+# Source archive includes the shared compatibility fixes and pgrx 0.19.2 lockfile.
 TARBALL := pg_tokenizer.rs-0.1.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS ?= 18
-PGRX_VERSION := 0.19.1
+PGRX_VERSION := 0.19.2
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CRATE_DIR := .
-SOURCE_PATCH := patches/pg-tokenizer-0.1.1.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SNAPSHOT := /tmp/pgrx0191-pg-tokenizer-cargo-locks.before
+LOCK_SNAPSHOT := /tmp/pgrx0192-pg-tokenizer-cargo-locks.before
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-check-patches:
-	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
-
-setup: check-src check-patches
+setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-
-apply-patches:
-	@echo "apply $(SOURCE_PATCH)"
-	@(cd $(BUILD_DIR) && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
@@ -44,7 +36,7 @@ building: check-pgrx
 	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT)
 	@test -s $(LOCK_SNAPSHOT)
 	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
-	cd $(BUILD_DIR)/$(CRATE_DIR) && \
+	set -e; cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
@@ -73,4 +65,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-patches setup apply-patches build building check-pgrx packaging move clean
+.PHONY: all check-src setup build building check-pgrx packaging move clean
