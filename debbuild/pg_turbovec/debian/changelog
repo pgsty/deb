@@ -1,3 +1,11 @@
+pg-turbovec (2.2.2-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to official tag 2.2.2 with the locked pgrx 0.19.2 dependency graph.
+  * Ship the SQL upgrade chain through 2.2.2 for PostgreSQL 14 through 18.
+  * Retain wire v8; upgrades from 2.x do not require REINDEX.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 06 Sep 2026 18:00:00 +0800
+
 pg-turbovec (2.0.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream pg_turbovec 2.0.0 and pgrx 0.19.2.

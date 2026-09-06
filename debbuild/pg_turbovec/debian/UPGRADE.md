@@ -1,4 +1,12 @@
-# pg_turbovec 1.28.3 or 1.29.x to 2.0.0
+# pg_turbovec 2.x to 2.2.2
+
+Version 2.2.2 retains wire v8. Install the new package, restart PostgreSQL
+to load the new shared library, then run
+`ALTER EXTENSION pg_turbovec UPDATE TO '2.2.2';` in each database.
+Upgrading an intact 2.x index does not require REINDEX. An index that is already
+damaged still needs the recovery reported by `turbovec_check()`.
+
+## pg_turbovec 1.28.3 or 1.29.x to 2.2.2
 
 Version 2.0.0 changes the on-disk turbovec index format from wire v7 to
 wire v8. Installing or successfully building the package does not migrate any
@@ -7,9 +15,9 @@ database containing the extension:
 
 1. Record every index using the `turbovec` access method and stop application
    writes that can change the indexed tables.
-2. Install the 2.0.0 package, then restart PostgreSQL so no backend retains the
+2. Install the 2.2.2 package, then restart PostgreSQL so no backend retains the
    1.28.3/1.29.x shared library.
-3. Reconnect and run `ALTER EXTENSION pg_turbovec UPDATE TO '2.0.0';`.
+3. Reconnect and run `ALTER EXTENSION pg_turbovec UPDATE TO '2.2.2';`.
 4. Run `REINDEX INDEX schema.index_name;` once for every turbovec index. Do not
    resume indexed queries until all indexes are rebuilt from their heap data.
 
@@ -39,6 +47,6 @@ on-disk candidate representation, approximate index candidate sets are not
 required to be byte-for-byte identical to v7; instead, record their overlap and
 gate top-1 correctness plus recall against the exact result set at a declared
 `turbovec.search_k`.
-Also verify `pg_extension.extversion = '2.0.0'`, dump/restore the upgraded
-database, inspect the complete 1.29.0-to-2.0.0 SQL payload, and prove the final
+Also verify `pg_extension.extversion = '2.2.2'`, dump/restore the upgraded
+database, inspect the complete 1.29.0-to-2.2.2 SQL payload, and prove the final
 shared object has no OpenBLAS `NEEDED` entry or unresolved `cblas_*` symbol.
