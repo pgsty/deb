@@ -9,7 +9,7 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 18
-PGRX_VERSION := 0.19.1
+PGRX_VERSION := 0.19.2
 SOURCE_PATCH := patches/pg-oidc-validator-rust-0.1.0.patch
 
 check-src:
@@ -24,7 +24,7 @@ setup: check-src check-patch
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	patch -d $(BUILD_DIR) -p1 --forward -f < $(SOURCE_PATCH)
+	# The source archive includes the pgrx 0.19.2 dependency update.
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release && echo $${VERSION_CODENAME:-unknown})); \
 	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
