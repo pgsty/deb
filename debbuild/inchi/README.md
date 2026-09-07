@@ -6,7 +6,7 @@ on amd64 and arm64; the existing Noble compatibility workaround is retained.
 
 It produces:
 
-- Version `1.07.5+dfsg-2PGSTY~<codename>`
+- Version `1.07.5+dfsg-1PGSTY~<codename>`
 - `libinchi1.07`
 - `libinchi-dev`
 - `libinchi-bin`
