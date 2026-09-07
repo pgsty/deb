@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 """Collect license/notice files for pg_search's resolved normal-dependency closure."""
 
-from __future__ import annotations
-
 import hashlib
 import json
 import re
 import shutil
 import sys
 from pathlib import Path
+from typing import Dict, List, Set
 
 EXPECTED_GIT_SOURCES = {
     "git+https://github.com/paradedb/datafusion-distributed?tag=snapshot-main-2026-08-20-204632#4d870ae1a5abb23618eac0b1844c265ffa2991d8",
@@ -22,12 +21,12 @@ NOTICE_NAME = re.compile(
 )
 
 
-def normal_closure(metadata: dict) -> set[str]:
+def normal_closure(metadata: dict) -> Set[str]:
     resolve = metadata.get("resolve")
     if not resolve or not resolve.get("root"):
         raise SystemExit("cargo metadata did not return a resolved root")
     nodes = {node["id"]: node for node in resolve["nodes"]}
-    closure: set[str] = set()
+    closure: Set[str] = set()
     pending = [resolve["root"]]
     while pending:
         package_id = pending.pop()
@@ -44,10 +43,10 @@ def normal_closure(metadata: dict) -> set[str]:
     return closure
 
 
-def notice_candidates(package: dict) -> list[Path]:
+def notice_candidates(package: dict) -> List[Path]:
     manifest = Path(package["manifest_path"])
     root = manifest.parent
-    candidates: list[Path] = []
+    candidates: List[Path] = []
 
     license_file = package.get("license_file")
     if license_file:
@@ -80,7 +79,7 @@ def notice_candidates(package: dict) -> list[Path]:
                 break
             current = current.parent
 
-    unique: dict[Path, None] = {}
+    unique: Dict[Path, None] = {}
     for path in candidates:
         unique[path.resolve()] = None
     return list(unique)
