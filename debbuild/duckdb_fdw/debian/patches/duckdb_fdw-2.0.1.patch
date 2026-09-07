@@ -25,6 +25,104 @@
  
  install: install-duckdb
  
+--- a/README.md
++++ b/README.md
+@@ -84,9 +84,9 @@
+ `duckdb_fdw` v2.0.1 enables a strict runtime coexistence guard by default:
+ 
+ - Linux-first detection checks whether the current backend has already loaded `pg_duckdb`
+-- If peer-loaded `pg_duckdb` is detected in the same backend, DuckDB runtime execution is blocked by default
+-- `duckdb_fdw` no longer exposes the v1 public success path for peer-loaded coexistence
+-- Only one explicit unsupported override remains, and it must be enabled with a session-level `SET` after the extension is loaded
++- Coexistence is enabled when `pg_duckdb` and `duckdb_fdw` resolve `duckdb_library_version` to the exact same loaded `libduckdb` object
++- A second loaded DuckDB library, a static peer runtime, or an unproven symbol source remains blocked
++- One explicit unsupported override remains for diagnostics and must be enabled with a session-level `SET` after the extension is loaded
+ 
+ Diagnostics:
+ 
+--- a/connection.c
++++ b/connection.c
+@@ -5,6 +5,7 @@
+ #include "utils/hsearch.h"
+ #include "utils/memutils.h"
+ #include "catalog/pg_foreign_server.h"
++#include "catalog/pg_user_mapping.h"
+ #include "utils/syscache.h"
+ #include "commands/defrem.h"
+ #include "lib/stringinfo.h"
+@@ -21,6 +22,20 @@
+ static HTAB *ConnectionHash = NULL;
+ static bool ConnectionXactCallbackRegistered = false;
+ 
++static UserMapping *
++duckdb_get_user_mapping_if_exists(Oid userid, Oid serverid)
++{
++	if (!SearchSysCacheExists2(USERMAPPINGUSERSERVER,
++								 ObjectIdGetDatum(userid),
++								 ObjectIdGetDatum(serverid)) &&
++		!SearchSysCacheExists2(USERMAPPINGUSERSERVER,
++								 ObjectIdGetDatum(InvalidOid),
++								 ObjectIdGetDatum(serverid)))
++		return NULL;
++
++	return GetUserMapping(userid, serverid);
++}
++
+ static void
+ duckdb_cleanup_connection_cache(void)
+ {
+@@ -140,7 +155,7 @@
+      * S3 credentials in user_mapping are only visible to the mapped user
+      * and superusers, unlike pg_foreign_server which is public-readable. */
+     {
+-        UserMapping *um = GetUserMapping(userid, server->serverid);
++        UserMapping *um = duckdb_get_user_mapping_if_exists(userid, server->serverid);
+         if (um && um->options)
+         {
+             foreach(lc, um->options)
+@@ -427,6 +442,11 @@
+ 
+ 	key = server->serverid;
+ 	entry = hash_search(ConnectionHash, &key, HASH_ENTER, &found);
++	if (!found)
++	{
++		entry->db = NULL;
++		entry->conn = NULL;
++	}
+ 
+ 	if (!found || entry->conn == NULL)
+ 	{
+@@ -438,7 +458,7 @@
+ 
+         /* Check user mapping for quack_token first (secure path) */
+         {
+-            UserMapping *um = GetUserMapping(userid, server->serverid);
++            UserMapping *um = duckdb_get_user_mapping_if_exists(userid, server->serverid);
+             if (um && um->options)
+             {
+                 ListCell *umlc;
+--- a/deparse.c
++++ b/deparse.c
+@@ -1474,12 +1474,17 @@
+          * Safety: For complex types (Arrays, Vectors), we must force DuckDB 
+          * to serialize them to text.
+          */
+-        if (expr_type == INT4OID || 
++        if (expr_type == INT2OID ||
++            expr_type == INT4OID || 
+             expr_type == INT8OID || 
++            expr_type == FLOAT4OID ||
+             expr_type == FLOAT8OID || 
+             expr_type == BOOLOID ||
+             expr_type == TEXTOID ||
+-            expr_type == VARCHAROID)
++            expr_type == VARCHAROID ||
++            expr_type == DATEOID ||
++            expr_type == TIMESTAMPOID ||
++            expr_type == TIMESTAMPTZOID)
+         {
+             duckdb_deparse_expr((Expr *) tle->expr, context);
+         }
 --- a/duckdb_fdw--1.4.1--2.0.0.sql
 +++ b/duckdb_fdw--1.4.1--2.0.0.sql
 @@ -11,7 +11,8 @@
@@ -86,7 +184,22 @@
                                       NIL)); /* no fdw_private */
  }
  
-@@ -898,12 +912,17 @@
+@@ -741,6 +755,14 @@
+ 	    int         i;
+ 
+     ExecClearTuple(slot);
++    /*
++     * A projected or aggregate scan can omit physical table attributes.
++     * Virtual slots retain their arrays across ExecClearTuple(), so mark every
++     * attribute NULL before filling the retrieved subset.  Otherwise PG17 can
++     * materialize a stale varlena Datum and crash in heap_compute_data_size().
++     */
++    MemSet(slot->tts_values, 0, slot->tts_tupleDescriptor->natts * sizeof(Datum));
++    MemSet(slot->tts_isnull, true, slot->tts_tupleDescriptor->natts * sizeof(bool));
+ 
+ 	    if (festate->use_chunk_scan)
+ 		{
+@@ -898,12 +920,17 @@
                   create_foreignscan_path(root, output_rel,
                                            output_rel->reltarget,
                                            rows,
@@ -104,65 +217,58 @@
                                            NIL));
      }
  }
---- a/connection.c
-+++ b/connection.c
-@@ -5,6 +5,7 @@
- #include "utils/hsearch.h"
- #include "utils/memutils.h"
- #include "catalog/pg_foreign_server.h"
-+#include "catalog/pg_user_mapping.h"
- #include "utils/syscache.h"
- #include "commands/defrem.h"
- #include "lib/stringinfo.h"
-@@ -20,6 +21,20 @@
+--- a/expected/duckdb_fdw.out
++++ b/expected/duckdb_fdw.out
+@@ -196,9 +196,9 @@
+ DROP SERVER duckdb_switch CASCADE;
+ -- Unsupported write paths remain explicit
+ UPDATE test_types SET s = 'changed' WHERE i = 1;
+-ERROR:  UPDATE not supported
++ERROR:  foreign table "test_types" does not allow updates
+ DELETE FROM test_types WHERE i = 1;
+-ERROR:  DELETE not supported
++ERROR:  foreign table "test_types" does not allow deletes
+ -- Cleanup
+ DROP FOREIGN TABLE test_types;
+ DROP ROLE duckdb_fdw_unprivileged;
+--- a/runtime_guard.c
++++ b/runtime_guard.c
+@@ -100,7 +100,38 @@
+ 	dl_iterate_phdr(duckdb_runtime_scan_loaded_object, &context);
  
- static HTAB *ConnectionHash = NULL;
- static bool ConnectionXactCallbackRegistered = false;
-+
-+static UserMapping *
-+duckdb_get_user_mapping_if_exists(Oid userid, Oid serverid)
-+{
-+	if (!SearchSysCacheExists2(USERMAPPINGUSERSERVER,
-+								 ObjectIdGetDatum(userid),
-+								 ObjectIdGetDatum(serverid)) &&
-+		!SearchSysCacheExists2(USERMAPPINGUSERSERVER,
-+								 ObjectIdGetDatum(InvalidOid),
-+								 ObjectIdGetDatum(serverid)))
-+		return NULL;
-+
-+	return GetUserMapping(userid, serverid);
-+}
- 
- static void
- duckdb_cleanup_connection_cache(void)
-@@ -140,7 +155,7 @@
-      * S3 credentials in user_mapping are only visible to the mapped user
-      * and superusers, unlike pg_foreign_server which is public-readable. */
-     {
--        UserMapping *um = GetUserMapping(userid, server->serverid);
-+        UserMapping *um = duckdb_get_user_mapping_if_exists(userid, server->serverid);
-         if (um && um->options)
-         {
-             foreach(lc, um->options)
-@@ -427,6 +442,11 @@
- 
- 	key = server->serverid;
- 	entry = hash_search(ConnectionHash, &key, HASH_ENTER, &found);
-+	if (!found)
+ 	if (context.pg_duckdb_module_count > 0)
 +	{
-+		entry->db = NULL;
-+		entry->conn = NULL;
++		void   *peer_handle;
++		void   *peer_duckdb_symbol = NULL;
++		Dl_info peer_info;
++
++		/* A second loaded libduckdb object is never a supported combination. */
++		if (context.fingerprint.peer_runtime_path != NULL)
++			return DUCKDB_RUNTIME_INCOMPATIBLE;
++
++		memset(&peer_info, 0, sizeof(peer_info));
++		peer_handle = dlopen(context.fingerprint.peer_module_path,
++						 RTLD_LAZY | RTLD_NOLOAD);
++		if (peer_handle != NULL)
++		{
++			peer_duckdb_symbol = dlsym(peer_handle, "duckdb_library_version");
++			dlclose(peer_handle);
++		}
++
++		/*
++		 * pg_duckdb and duckdb_fdw are compatible when dependency lookup from
++		 * the already-loaded peer resolves the DuckDB API to this exact shared
++		 * object.  A static or differently loaded runtime cannot satisfy both
++		 * the symbol-address and object-path checks.
++		 */
++		if (peer_duckdb_symbol == (void *) duckdb_library_version &&
++			dladdr(peer_duckdb_symbol, &peer_info) != 0 &&
++			peer_info.dli_fname != NULL &&
++			strcmp(peer_info.dli_fname, self_info.dli_fname) == 0)
++			return DUCKDB_RUNTIME_COMPATIBLE_PROVEN;
++
+ 		return DUCKDB_RUNTIME_PEER_LOADED_NEED_VALIDATION;
 +	}
  
- 	if (!found || entry->conn == NULL)
- 	{
-@@ -438,7 +458,7 @@
- 
-         /* Check user mapping for quack_token first (secure path) */
-         {
--            UserMapping *um = GetUserMapping(userid, server->serverid);
-+            UserMapping *um = duckdb_get_user_mapping_if_exists(userid, server->serverid);
-             if (um && um->options)
-             {
-                 ListCell *umlc;
-
+ 	if (context.fingerprint.module_path == NULL)
+ 		return DUCKDB_RUNTIME_COMPATIBLE_UNPROVEN;

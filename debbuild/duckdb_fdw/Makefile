@@ -1,9 +1,10 @@
 all: setup build move
 
 VERSION := 2.0.1
-DUCKDB_VERSION := 1.5.5
+PG_DUCKDB_VERSION := 1.1.1
+DUCKDB_VERSION := 1.4.3
 TARBALL := duckdb_fdw-$(VERSION)+git20260529.9354241.tar.gz
-DUCKDB_HEADERS_TARBALL := duckdb-$(DUCKDB_VERSION)-headers.tar.gz
+DUCKDB_HEADERS_TARBALL := pg_duckdb-$(PG_DUCKDB_VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 DUCKDB_HEADERS_SOURCE ?= ../SOURCES/$(DUCKDB_HEADERS_TARBALL)
 BUILD_DIR := build
@@ -17,7 +18,11 @@ check-src:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(DUCKDB_HEADERS_SOURCE)"
+	mkdir -p $(BUILD_DIR)/duckdb-headers
+	tar -C $(BUILD_DIR)/duckdb-headers --strip-components=5 -xf "$(DUCKDB_HEADERS_SOURCE)" \
+		pg_duckdb-$(PG_DUCKDB_VERSION)/third_party/duckdb/src/include/duckdb.h \
+		pg_duckdb-$(PG_DUCKDB_VERSION)/third_party/duckdb/src/include/duckdb.hpp \
+		pg_duckdb-$(PG_DUCKDB_VERSION)/third_party/duckdb/src/include/duckdb
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
