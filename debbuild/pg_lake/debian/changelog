@@ -2,8 +2,20 @@ pg-lake (3.4.4-1PGSTY) unstable; urgency=medium
 
   * Package the upstream v3.4.4 bugfix release.
   * Keep the pinned Avro, DuckDB, and duckdb-postgres source revisions unchanged.
+  * Propagate Debian debug and hardening flags into vcpkg dependencies.
+  * Bound vcpkg dependency parallelism to two memory-safe jobs by default.
+  * Use matching target and host release-only vcpkg triplets.
+  * Support an enforced no-download build after the dependency cache gate.
+  * Limit the outer extension build to two jobs as well.
+  * Pass that limit through the nested DuckDB install rebuild.
+  * Collect generated dbgsym .deb files alongside the main packages.
+  * Cache nested DuckDB compilation with full command and compiler-content keys.
+  * Keep PostgreSQL bridge, LLVM bitcode, private-runtime linking, and debug maps per major.
+  * Build vcpkg dependencies and the bundled DuckDB with line-table debug information only (-g1).
+  * Key the vcpkg binary cache by the Debian build flags.
+  * Keep PGXS modules on their pg_config flags instead of overriding CFLAGS.
 
- -- Ruohang Feng <rh@vonng.com>  Thu, 03 Sep 2026 06:00:00 +0800
+ -- Ruohang Feng <rh@vonng.com>  Sun, 06 Sep 2026 17:20:00 +0800
 
 pg-lake (3.4.3-1PGSTY) unstable; urgency=medium
 

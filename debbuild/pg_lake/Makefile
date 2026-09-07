@@ -6,6 +6,20 @@ BUILD_DIR := build
 PG_VERSIONS := 16 17 18
 VCPKG_VERSION := 2025.10.17
 VCPKG_COMMIT := 74e6536215718009aae747d86d84b78376bf9e09
+VCPKG_MAX_CONCURRENCY ?= 2
+PG_LAKE_BUILD_JOBS ?= 2
+PG_LAKE_LTO_JOBS ?= 1
+VCPKG_DEB_ARCH := $(shell dpkg --print-architecture)
+VCPKG_RELEASE_ARCH := $(if $(filter arm64,$(VCPKG_DEB_ARCH)),arm64,x64)
+VCPKG_TARGET_TRIPLET ?= $(VCPKG_RELEASE_ARCH)-linux-release
+VCPKG_HOST_TRIPLET ?= $(VCPKG_RELEASE_ARCH)-linux-release
+VCPKG_INSTALL_FLAGS ?=
+# vcpkg dependencies keep function and line-table DWARF only (-g1).  Key the
+# binary cache by these flags so a flag change never reuses older archives.
+VCPKG_CFLAGS := $(shell dpkg-buildflags --get CFLAGS | sed 's/-flto=auto/-flto=$(PG_LAKE_LTO_JOBS)/g') -g1
+VCPKG_CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS | sed 's/-flto=auto/-flto=$(PG_LAKE_LTO_JOBS)/g') -g1
+VCPKG_LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS | sed 's/-flto=auto/-flto=$(PG_LAKE_LTO_JOBS)/g')
+VCPKG_DEFAULT_BINARY_CACHE ?= $(HOME)/.cache/pg_lake/vcpkg-archives-$(shell printf '%s\n' '$(VCPKG_CFLAGS)' '$(VCPKG_CXXFLAGS)' '$(VCPKG_LDFLAGS)' | sha256sum | cut -c1-12)
 
 SOURCE_TARBALL ?= $(firstword $(wildcard \
 	$(HOME)/ext/src/$(TARBALL) \
@@ -50,12 +64,29 @@ vcpkg: setup
 	@test "$$(git -C "$(VCPKG_ROOT)" rev-parse HEAD)" = "$(VCPKG_COMMIT)"
 	@test -z "$$(git -C "$(VCPKG_ROOT)" status --porcelain --untracked-files=all --ignore-submodules=dirty)"
 	@if [ ! -x "$(VCPKG_ROOT)/vcpkg" ]; then cd "$(VCPKG_ROOT)" && ./bootstrap-vcpkg.sh -disableMetrics; fi
-	cd $(BUILD_DIR)/duckdb_pglake && VCPKG_DISABLE_METRICS=1 "$(VCPKG_ROOT)/vcpkg" install
+	mkdir -p "$(VCPKG_DEFAULT_BINARY_CACHE)"
+	cd $(BUILD_DIR)/duckdb_pglake && \
+		VCPKG_DISABLE_METRICS=1 \
+		VCPKG_MAX_CONCURRENCY="$(VCPKG_MAX_CONCURRENCY)" \
+		VCPKG_DEFAULT_BINARY_CACHE="$(VCPKG_DEFAULT_BINARY_CACHE)" \
+		VCPKG_KEEP_ENV_VARS='CPPFLAGS;CFLAGS;CXXFLAGS;LDFLAGS' \
+		CPPFLAGS="$$(dpkg-buildflags --get CPPFLAGS)" \
+		CFLAGS="$(VCPKG_CFLAGS)" \
+		CXXFLAGS="$(VCPKG_CXXFLAGS)" \
+		LDFLAGS="$(VCPKG_LDFLAGS)" \
+		"$(VCPKG_ROOT)/vcpkg" install \
+			--triplet "$(VCPKG_TARGET_TRIPLET)" \
+			--host-triplet "$(VCPKG_HOST_TRIPLET)" \
+			$(VCPKG_INSTALL_FLAGS)
 
 build: vcpkg
 	cd $(BUILD_DIR) && \
 		VCPKG_TOOLCHAIN_PATH="$(VCPKG_TOOLCHAIN_PATH)" \
 		VCPKG_DISABLE_METRICS=1 \
+		VCPKG_DEFAULT_BINARY_CACHE="$(VCPKG_DEFAULT_BINARY_CACHE)" \
+		VCPKG_MAX_CONCURRENCY="$(VCPKG_MAX_CONCURRENCY)" \
+		VCPKG_TARGET_TRIPLET="$(VCPKG_TARGET_TRIPLET)" \
+		VCPKG_HOST_TRIPLET="$(VCPKG_HOST_TRIPLET)" \
 		dpkg-buildpackage -b -us -uc
 
 move: build
@@ -64,8 +95,10 @@ move: build
 		set -- postgresql-$$v-pg-lake_$(VERSION)-*.deb; \
 		test "$$#" -eq 1 -a -f "$$1" || (echo "expected exactly one PG $$v package"; exit 1); \
 		cp "$$1" $(PKG_OUTPUT_DIR)/; \
+		dbg=$$(find . -maxdepth 1 -type f \( -name "postgresql-$$v-pg-lake-dbgsym_$(VERSION)-*.deb" -o -name "postgresql-$$v-pg-lake-dbgsym_$(VERSION)-*.ddeb" \) -print); \
+		test "$$(printf '%s\n' "$$dbg" | sed '/^$$/d' | wc -l)" -eq 1 || (echo "expected exactly one PG $$v dbgsym package"; exit 1); \
+		cp "$$dbg" $(PKG_OUTPUT_DIR)/; \
 	done
-	find . -maxdepth 1 -type f -name '*.ddeb' -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb

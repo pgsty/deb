@@ -4,6 +4,9 @@ export CC = gcc
 export CXX = g++
 export VCPKG_DISABLE_METRICS = 1
 export DPKG_EXPORT_BUILDFLAGS = 1
+export CCACHE_DIR := $(HOME)/.cache/pg_lake/ccache
+export CCACHE_COMPILERCHECK := content
+export CCACHE_MAXSIZE := 16G
 
 include /usr/share/dpkg/buildflags.mk
 
@@ -12,9 +15,26 @@ PG_LAKE_GIT_VERSION ?= v3.4.4
 PG_LAKE_DELTA_SUPPORT ?= 0
 PGCOMPAT_BUILD_CONFIG ?= Release
 PG_LAKE_CLEAN ?= 1
+VCPKG_MAX_CONCURRENCY ?= 2
+PG_LAKE_BUILD_JOBS ?= 2
+PG_LAKE_LTO_JOBS ?= 1
+# Keep distribution LTO enabled while preventing GCC's `auto` mode from
+# escaping the package-local build concurrency during large DuckDB links.
+# Two independent Ninja link edges may run together, so each link gets one
+# LTO worker and the aggregate remains inside the two-job task boundary.
+# The exported flags reach the bundled DuckDB and vcpkg CMake builds, which keep
+# function and line-table DWARF only (-g1); PGXS modules ignore the environment
+# and keep their pg_config flags.
+CFLAGS := $(subst -flto=auto,-flto=$(PG_LAKE_LTO_JOBS),$(CFLAGS)) -g1
+CXXFLAGS := $(subst -flto=auto,-flto=$(PG_LAKE_LTO_JOBS),$(CXXFLAGS)) -g1
+LDFLAGS := $(subst -flto=auto,-flto=$(PG_LAKE_LTO_JOBS),$(LDFLAGS))
+VCPKG_DEB_ARCH := $(shell dpkg --print-architecture)
+VCPKG_RELEASE_ARCH := $(if $(filter arm64,$(VCPKG_DEB_ARCH)),arm64,x64)
+VCPKG_TARGET_TRIPLET ?= $(VCPKG_RELEASE_ARCH)-linux-release
+VCPKG_HOST_TRIPLET ?= $(VCPKG_RELEASE_ARCH)-linux-release
 # PGDG-style non-system libpq prefixes otherwise become build-tree RUNPATHs;
 # the packaged libraries resolve libpq through the platform loader config.
-DUCKDB_RELEASE_FLAGS ?= -DBUILD_UNITTESTS=OFF -DBUILD_SHELL=OFF -DCMAKE_SKIP_BUILD_RPATH=ON
+DUCKDB_RELEASE_FLAGS ?= -DBUILD_UNITTESTS=OFF -DBUILD_SHELL=OFF -DCMAKE_SKIP_BUILD_RPATH=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DVCPKG_TARGET_TRIPLET=$(VCPKG_TARGET_TRIPLET) -DVCPKG_HOST_TRIPLET=$(VCPKG_HOST_TRIPLET)
 VCPKG_TOOLCHAIN_PATH ?= $(HOME)/.cache/pg_lake/vcpkg-2025.10.17/scripts/buildsystems/vcpkg.cmake
 
 export PG_LAKE_DELTA_SUPPORT
@@ -50,9 +70,14 @@ override_dh_auto_install:
 		CPATH="$$stage$$pg_includedir$${CPATH:+:$$CPATH}" \
 		LIBRARY_PATH="$$stage$$pg_libdir:$$pg_libdir$${LIBRARY_PATH:+:$$LIBRARY_PATH}" \
 		VCPKG_TOOLCHAIN_PATH="$(VCPKG_TOOLCHAIN_PATH)" \
+		VCPKG_MAX_CONCURRENCY="$(VCPKG_MAX_CONCURRENCY)" \
+		VCPKG_TARGET_TRIPLET="$(VCPKG_TARGET_TRIPLET)" \
+		VCPKG_HOST_TRIPLET="$(VCPKG_HOST_TRIPLET)" \
 		PG_LAKE_GIT_VERSION="$(PG_LAKE_GIT_VERSION)" \
 		DUCKDB_BUILD_USE_CACHE=0 \
-		$(MAKE) PG_CONFIG="$$pg_config" PG_LIBDIR="$$pg_libdir" EXT_RELEASE_FLAGS="$(DUCKDB_RELEASE_FLAGS)" DESTDIR="$$stage" install; \
+		CMAKE_BUILD_PARALLEL_LEVEL="$(PG_LAKE_BUILD_JOBS)" \
+		$(MAKE) -j$(PG_LAKE_BUILD_JOBS) NCORES="$(PG_LAKE_BUILD_JOBS)" \
+			PG_CONFIG="$$pg_config" PG_LIBDIR="$$pg_libdir" EXT_RELEASE_FLAGS="$(DUCKDB_RELEASE_FLAGS)" DESTDIR="$$stage" install; \
 		rm -rf "$$stage/usr/include"; \
 		private_libdir="$$stage$$pg_libdir/pg_lake"; \
 		install -d "$$private_libdir"; \
