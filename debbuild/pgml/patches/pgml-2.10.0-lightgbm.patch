@@ -1,0 +1,24 @@
+--- a/build.rs
++++ b/build.rs
+@@ -36,6 +36,11 @@
+     }
+ 
+     let mut dst = Config::new(&lgbm_root);
++    // cmake-rs filters optimization and debug flags from CXXFLAGS by default.
++    // Preserve the distribution flags, including -g, for the static LightGBM code.
++    if let Ok(cxxflags) = env::var("CXXFLAGS") {
++        dst.define("CMAKE_CXX_FLAGS", cxxflags);
++    }
+ 
+     // CMake
+     #[cfg(feature = "cuda")]
+--- a/lightgbm/src/io/json11.cpp
++++ b/lightgbm/src/io/json11.cpp
+@@ -23,6 +23,7 @@
+ #include <LightGBM/utils/log.h>
+ 
+ #include <cmath>
++#include <cstdint>
+ #include <cstdio>
+ #include <cstdlib>
+ #include <limits>

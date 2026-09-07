@@ -1,6 +1,13 @@
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
+DEB_BUILD_MAINT_OPTIONS ?= hardening=+all
+export DEB_BUILD_MAINT_OPTIONS
+CFLAGS := $(shell dpkg-buildflags --get CFLAGS)
+CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS)
+CPPFLAGS := $(shell dpkg-buildflags --get CPPFLAGS)
+LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
+export CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
 all: setup build move
 
@@ -17,7 +24,10 @@ LIGHTGBM_RS_REV := 978dd69f6c7aafb8500ecb255f2248fde80ebc97
 LIGHTGBM_REV := dce7e58b020bc14b69eefc31546c366971ecb2d9
 LIGHTGBM_JSON11_SHA256 := 50721d4783935d481779f137c5459668c872ec02826193333d1ac1b2122770b2
 LIGHTGBM_JSON11_PATCHED_SHA256 := 326748d9e9b14ed90638bd95cff58435d51a5008ea350aa86796dca4d5cc5ba2
-LIGHTGBM_PATCH := patches/pgml-2.10.0-lightgbm-cstdint.patch
+LIGHTGBM_BUILD_RS_SHA256 := c2e2a0a7ef566c82422086e32a30c698c4ffeb86ec22e7a3656ce9eee24c6d46
+LIGHTGBM_BUILD_RS_PATCHED_SHA256 := 29a19b32d598d10c70bd6785878c4b5862b1dfa266442b448d40d241832de675
+# Applied to the locked lightgbm-rs checkout inside the Cargo git cache.
+LIGHTGBM_PATCH := patches/pgml-2.10.0-lightgbm.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -36,6 +46,8 @@ setup: check-src
 build: building packaging
 
 building: check-toolchain
+	@case " $(CXXFLAGS) " in *" -g "*) : ;; *) echo "distribution CXXFLAGS must contain -g: $(CXXFLAGS)" >&2; exit 1 ;; esac
+	@case " $(CXXFLAGS) " in *" -O"*) : ;; *) echo "distribution CXXFLAGS must retain optimization: $(CXXFLAGS)" >&2; exit 1 ;; esac
 	cd $(BUILD_DIR) && sha256sum Cargo.lock > .pgml-cargo-lock.before
 	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	$(MAKE) patch-lightgbm
@@ -73,13 +85,31 @@ patch-lightgbm:
 	SUBMODULE="$$CHECKOUT/lightgbm-sys/lightgbm"; \
 	test "$$(git -c safe.directory="$$CHECKOUT" -C "$$CHECKOUT" rev-parse HEAD)" = "$(LIGHTGBM_RS_REV)" || (echo "lightgbm-rs checkout revision mismatch" >&2; exit 1); \
 	test "$$(git -c safe.directory="$$SUBMODULE" -C "$$SUBMODULE" rev-parse HEAD)" = "$(LIGHTGBM_REV)" || (echo "LightGBM submodule revision mismatch" >&2; exit 1); \
-	JSON11_HASH=$$(sha256sum "$$JSON11" | awk '{print $$1}'); \
-	case "$$JSON11_HASH" in \
-	    $(LIGHTGBM_JSON11_SHA256)) patch --fuzz=0 --batch --forward -d "$$CHECKOUT/lightgbm-sys" -p1 < "$(abspath $(LIGHTGBM_PATCH))" ;; \
-	    $(LIGHTGBM_JSON11_PATCHED_SHA256)) : ;; \
-	    *) echo "unexpected LightGBM json11.cpp sha256: $$JSON11_HASH" >&2; exit 1 ;; \
-	esac; \
-	test "$$(sha256sum "$$JSON11" | awk '{print $$1}')" = "$(LIGHTGBM_JSON11_PATCHED_SHA256)"
+	BUILD_RS="$$CHECKOUT/lightgbm-sys/build.rs"; \
+	git -c safe.directory="$$CHECKOUT" -C "$$CHECKOUT" checkout -- lightgbm-sys/build.rs; \
+	git -c safe.directory="$$SUBMODULE" -C "$$SUBMODULE" checkout -- src/io/json11.cpp; \
+	test "$$(sha256sum "$$JSON11" | awk '{print $$1}')" = "$(LIGHTGBM_JSON11_SHA256)"; \
+	test "$$(sha256sum "$$BUILD_RS" | awk '{print $$1}')" = "$(LIGHTGBM_BUILD_RS_SHA256)"; \
+	patch --fuzz=0 --batch -d "$$CHECKOUT/lightgbm-sys" -p1 < "$(abspath $(LIGHTGBM_PATCH))"; \
+	test "$$(sha256sum "$$JSON11" | awk '{print $$1}')" = "$(LIGHTGBM_JSON11_PATCHED_SHA256)"; \
+	test "$$(sha256sum "$$BUILD_RS" | awk '{print $$1}')" = "$(LIGHTGBM_BUILD_RS_PATCHED_SHA256)"; \
+	cd "$(BUILD_DIR)" && CARGO_NET_OFFLINE=true cargo clean -p lightgbm-sys; \
+	TARGET_DIR=$${CARGO_TARGET_DIR:-target}; \
+	case "$$TARGET_DIR" in /*) : ;; *) TARGET_DIR="$$PWD/$$TARGET_DIR" ;; esac; \
+	for PROFILE in release debug; do \
+	    if [ -d "$$TARGET_DIR/$$PROFILE/build" ]; then \
+	        find "$$TARGET_DIR/$$PROFILE/build" -mindepth 1 -maxdepth 1 -type d -name 'lightgbm-sys-*' -exec rm -rf {} +; \
+	        test -z "$$(find "$$TARGET_DIR/$$PROFILE/build" -mindepth 1 -maxdepth 1 -type d -name 'lightgbm-sys-*' -print -quit)"; \
+	    fi; \
+	    if [ -d "$$TARGET_DIR/$$PROFILE/.fingerprint" ]; then \
+	        find "$$TARGET_DIR/$$PROFILE/.fingerprint" -mindepth 1 -maxdepth 1 -type d -name 'lightgbm-sys-*' -exec rm -rf {} +; \
+	        test -z "$$(find "$$TARGET_DIR/$$PROFILE/.fingerprint" -mindepth 1 -maxdepth 1 -type d -name 'lightgbm-sys-*' -print -quit)"; \
+	    fi; \
+	    if [ -d "$$TARGET_DIR/$$PROFILE/deps" ]; then \
+	        find "$$TARGET_DIR/$$PROFILE/deps" -mindepth 1 -maxdepth 1 -type f \( -name 'liblightgbm_sys-*' -o -name 'lightgbm_sys-*' \) -delete; \
+	        test -z "$$(find "$$TARGET_DIR/$$PROFILE/deps" -mindepth 1 -maxdepth 1 -type f \( -name 'liblightgbm_sys-*' -o -name 'lightgbm_sys-*' \) -print -quit)"; \
+	    fi; \
+	done
 
 check-toolchain:
 	@CURRENT=$$(cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" rustc --version 2>/dev/null | awk '{print $$2}'); \

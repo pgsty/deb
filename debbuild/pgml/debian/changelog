@@ -6,6 +6,8 @@ pgml (2.10.0-1PGSTY) unstable; urgency=low
   * Fail fast and verify each PostgreSQL package payload.
   * Support Python 3.14 and CMake 4 dependency builds on Resolute.
   * Backport LightGBM's GCC 15 cstdint include fix with locked source guards.
+  * Preserve distribution C++ flags so statically linked LightGBM retains DWARF.
+  * Consolidate the source and LightGBM patches into pgml-2.10.0.patch and pgml-2.10.0-lightgbm.patch.
   * Fix cold-cache project mapping and model hyperparameter restoration.
   * Keep PostgreSQL 17 support on cargo-pgrx 0.12.9.
 
