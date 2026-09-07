@@ -3,6 +3,12 @@ pg-ducklake (1.0.2-1PGSTY) unstable; urgency=medium
   * Upgrade to the upstream 1.0.2 bug-fix release.
   * Add the complete multi-repository source manifest and checksum gates.
   * Retain CRoaring 4.7.1 after validating the 5.1.1 API and serialization.
+  * Limit both the outer and nested DuckDB build to two jobs.
+  * Pass Debian debug flags into the nested DuckDB CMake build.
+  * Cache nested DuckDB compilation using full command and compiler-content keys.
+  * Ignore only PostgreSQL's unrelated package-build debug map in that cache key.
+  * Build the bundled DuckDB core with line-table debug information only (-g1).
+  * Merge the DuckDB flag plumbing into pg_ducklake-1.0.2.patch.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 01 Sep 2026 01:00:00 +0800
 

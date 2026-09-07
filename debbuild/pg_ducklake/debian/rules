@@ -2,14 +2,33 @@
 
 PG_VERSION := $(shell sed -n 's/^Package: postgresql-\([0-9][0-9]*\)-pg-ducklake/\1/p' debian/control | head -1)
 PG_CONFIG := /usr/lib/postgresql/$(PG_VERSION)/bin/pg_config
+BUILD_JOBS ?= 2
 
 export PATH := /usr/lib/postgresql/$(PG_VERSION)/bin:$(PATH)
 export PG_CONFIG
 export CMAKE_PREFIX_PATH := $(CURDIR)/.croaring
-export CMAKE_BUILD_PARALLEL_LEVEL ?= 1
+export CMAKE_BUILD_PARALLEL_LEVEL := $(BUILD_JOBS)
+export CCACHE_DIR := $(HOME)/.cache/pg_ducklake/ccache
+export CCACHE_COMPILERCHECK := content
+export CCACHE_MAXSIZE := 16G
 export DPKG_EXPORT_BUILDFLAGS = 1
 
 include /usr/share/dpkg/buildflags.mk
+
+# Ubuntu's default -flto=auto may use every CPU visible to GCC during the
+# expensive DuckDB link even when Ninja itself is limited.  Keep LTO enabled,
+# but bind its worker count to the same package-local build limit.  PGXS also
+# feeds its flags to Clang for LLVM bitcode, where GCC's numeric -flto form is
+# invalid, so keep generic -flto for the PostgreSQL bridge and pass numeric LTO
+# flags only to the bundled DuckDB CMake build.  The bundled DuckDB keeps
+# function and line-table DWARF only (-g1); the PGXS bridge keeps the full
+# distribution -g so the dbgsym package stays tractable.
+DUCKDB_CFLAGS := $(subst -flto=auto,-flto=$(BUILD_JOBS),$(CFLAGS)) -g1
+DUCKDB_CXXFLAGS := $(subst -flto=auto,-flto=$(BUILD_JOBS),$(CXXFLAGS)) -g1
+DUCKDB_LDFLAGS := $(subst -flto=auto,-flto=$(BUILD_JOBS),$(LDFLAGS))
+CFLAGS := $(subst -flto=auto,-flto,$(CFLAGS))
+CXXFLAGS := $(subst -flto=auto,-flto,$(CXXFLAGS))
+LDFLAGS := $(subst -flto=auto,-flto,$(LDFLAGS))
 
 %:
 	dh $@
@@ -28,7 +47,7 @@ override_dh_auto_build:
 	mkdir -p "$(CURDIR)/.croaring/include/roaring" "$(CURDIR)/.croaring/lib/cmake/roaring" "$(CURDIR)/CRoaring-4.7.1/build"
 	cp -a "$(CURDIR)/CRoaring-4.7.1/include/roaring/." "$(CURDIR)/.croaring/include/roaring/"
 	cp -a "$(CURDIR)/CRoaring-4.7.1/cpp/roaring/." "$(CURDIR)/.croaring/include/roaring/"
-	for src in $$(find "$(CURDIR)/CRoaring-4.7.1/src" -name '*.c' | sort); do \
+	set -e; for src in $$(find "$(CURDIR)/CRoaring-4.7.1/src" -name '*.c' | sort); do \
 		obj=$$(echo "$${src#$(CURDIR)/CRoaring-4.7.1/}" | tr '/.' '__').o; \
 		$(CC) $(CPPFLAGS) $(CFLAGS) -fPIC -I"$(CURDIR)/CRoaring-4.7.1/include" -c "$$src" -o "$(CURDIR)/CRoaring-4.7.1/build/$$obj"; \
 	done
@@ -47,8 +66,11 @@ override_dh_auto_build:
 		'  INTERFACE_INCLUDE_DIRECTORIES "$${_roaring_prefix}/include")' \
 		> "$(CURDIR)/.croaring/lib/cmake/roaring/roaringConfig.cmake"
 	cp "$(CURDIR)/.croaring/lib/cmake/roaring/roaringConfig.cmake" "$(CURDIR)/.croaring/lib/cmake/roaring/roaring-config.cmake"
-	$(MAKE) ROARING_LIB_DIR="$(CURDIR)/.croaring/lib" with_llvm=no -j2
+	$(MAKE) COMPILER_LAUNCHER=ccache ROARING_LIB_DIR="$(CURDIR)/.croaring/lib" \
+		DUCKDB_C_FLAGS="$(DUCKDB_CFLAGS)" DUCKDB_CXX_FLAGS="$(DUCKDB_CXXFLAGS)" DUCKDB_LD_FLAGS="$(DUCKDB_LDFLAGS)" -j$(BUILD_JOBS)
 
 override_dh_auto_install:
-	$(MAKE) ROARING_LIB_DIR="$(CURDIR)/.croaring/lib" with_llvm=no install DESTDIR="$(CURDIR)/debian/postgresql-$(PG_VERSION)-pg-ducklake"
+	$(MAKE) COMPILER_LAUNCHER=ccache ROARING_LIB_DIR="$(CURDIR)/.croaring/lib" \
+		DUCKDB_C_FLAGS="$(DUCKDB_CFLAGS)" DUCKDB_CXX_FLAGS="$(DUCKDB_CXXFLAGS)" DUCKDB_LD_FLAGS="$(DUCKDB_LDFLAGS)" \
+		-j$(BUILD_JOBS) install DESTDIR="$(CURDIR)/debian/postgresql-$(PG_VERSION)-pg-ducklake"
 	rm -rf "$(CURDIR)"/debian/postgresql-$(PG_VERSION)-pg-ducklake/usr/share/doc/postgresql-doc-*
