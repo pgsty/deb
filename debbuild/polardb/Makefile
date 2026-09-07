@@ -14,7 +14,9 @@ PG_PORT := 5432
 POLAR_COMMIT := ff510dfc
 POLAR_BRANCH := POLARDB_17_STABLE
 POLARSTORE_VERSION := 1.2.42
+POLARSTORE_DEB_RELEASE ?= 1PGSTY
 DEB_RELEASE ?= 1PGSTY
+NUMJOBS ?= $(shell nproc)
 DETECTED_CODENAME := $(shell (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-}}))
 DETECTED_ARCH := $(shell dpkg --print-architecture 2>/dev/null)
 DISTRO_CODENAME ?= $(DETECTED_CODENAME)
@@ -48,8 +50,8 @@ print-package-name: check-release check-platform
 check-pfsd-sdk:
 	@test -f /usr/local/polarstore/pfsd/include/pfsd_sdk.h -a -f /usr/local/polarstore/pfsd/lib/libpfsd.a || \
 		(echo "missing PFSD SDK at /usr/local/polarstore/pfsd; install polarstore before building"; exit 1)
-	@test "$$(dpkg-query -W -f='$${Version}' polarstore 2>/dev/null)" = "$(POLARSTORE_VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)" || \
-		(echo "installed polarstore is not $(POLARSTORE_VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)"; exit 1)
+	@test "$$(dpkg-query -W -f='$${Version}' polarstore 2>/dev/null)" = "$(POLARSTORE_VERSION)-$(POLARSTORE_DEB_RELEASE)~$(DISTRO_CODENAME)" || \
+		(echo "installed polarstore is not $(POLARSTORE_VERSION)-$(POLARSTORE_DEB_RELEASE)~$(DISTRO_CODENAME)"; exit 1)
 
 check-build-deps:
 	@dpkg-checkbuilddeps debian/control
@@ -78,6 +80,8 @@ setup: check-src check-release check-platform
 	rm -f $(BUILD_DIR)/configure.bak $(BUILD_DIR)/configure.ac.bak
 	sed -i.bak -e 's|^port=$$(random_unused_port)|port=$(PG_PORT)|' $(BUILD_DIR)/build.sh
 	rm -f $(BUILD_DIR)/build.sh.bak
+	sed -i.bak -e 's|--debug=off --ni|--debug=off --jobs=$(NUMJOBS) --ni|' $(BUILD_DIR)/package/debian/build-deb.sh
+	rm -f $(BUILD_DIR)/package/debian/build-deb.sh.bak
 	sed -i.bak -e 's|^Package: .*|Package: $(DEB_PACKAGE)|' $(BUILD_DIR)/package/debian/control
 	sed -i.bak -e 's|^Depends: |Depends: adduser, tzdata, |' $(BUILD_DIR)/package/debian/control
 	rm -f $(BUILD_DIR)/package/debian/control.bak
@@ -107,6 +111,7 @@ setup: check-src check-release check-platform
 	grep -q '^Depends: adduser, tzdata,' $(BUILD_DIR)/package/debian/control || (echo "control adduser/tzdata injection FAILED"; exit 1)
 	grep -Fq 'pgsty_release=$${PGSTY_RELEASE:-' $(BUILD_DIR)/package/debian/build-deb.sh || (echo "PGSTY release injection FAILED"; exit 1)
 	grep -q 'package_release=$${pgsty_release}~$${distcodename}' $(BUILD_DIR)/package/debian/build-deb.sh || (echo "PGSTY package release injection FAILED"; exit 1)
+	grep -q -- '--debug=off --jobs=$(NUMJOBS) --ni' $(BUILD_DIR)/package/debian/build-deb.sh || (echo "NUMJOBS injection FAILED"; exit 1)
 	awk '/^dpkg-deb --build --root-owner-group/ { print "mkdir -p $${pkgname}/usr/share/doc/$${debpkgname}"; print "cp ./copyright $${pkgname}/usr/share/doc/$${debpkgname}/copyright"; print "cp ../../COPYRIGHT ../../LICENSE $${pkgname}/usr/share/doc/$${debpkgname}/" } 1' \
 		$(BUILD_DIR)/package/debian/build-deb.sh > $(BUILD_DIR)/package/debian/build-deb.sh.new
 	mv $(BUILD_DIR)/package/debian/build-deb.sh.new $(BUILD_DIR)/package/debian/build-deb.sh
