@@ -1,6 +1,11 @@
 plv8 (3.2.4-1PGSTY) unstable; urgency=medium
 
   * https://github.com/plv8/plv8/releases/tag/v3.2.4
+  * Consolidate the build fixes into a single plv8-3.2.4.patch
+  * Preserve distribution C++ flags when building the bundled V8 engine
+  * Build the bundled V8 engine with line-table debug information only (-g1)
+  * Link the architecture stack scanner into mksnapshot and the final module
+  * Build only the bundled V8 libraries required by the extension
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 17 Jul 2024 18:00:00 +0000
 

@@ -7,16 +7,18 @@ SRC_DIR := ~/plv8
 PKG_NAME := plv8
 
 TARBALL := plv8-3.2.4.tar.gz
-SOURCE_PATCH := patches/plv8-3.2.4-gcc15-algorithm.patch
+SOURCE_PATCH := patches/plv8-3.2.4.patch
 PLV8_BUILD_JOBS ?= 4
 
+# The bundled V8 keeps function and line-table DWARF only (-g1); plv8's own
+# objects keep the full distribution -g so the dbgsym package stays tractable.
 pre:
 	apt install -y build-essential pkg-config libstdc++-12-dev cmake git #libtinfo5
 	rm -rf ~/plv8
 	mkdir -p ~/plv8
 	tar -C ~/plv8 --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	patch -d ~/plv8 -p1 --forward -f < $(SOURCE_PATCH)
-	cd ~/plv8 && $(MAKE) NUMPROC=$(PLV8_BUILD_JOBS) OPTFLAGS="-std=c++17 -fno-rtti $(CXXFLAGS)"
+	cd ~/plv8 && $(MAKE) NUMPROC=$(PLV8_BUILD_JOBS) V8_CXXFLAGS="$(CXXFLAGS) -g1" OPTFLAGS="-std=c++17 -fno-rtti $(CXXFLAGS)"
 
 # prepare directory
 setup:
