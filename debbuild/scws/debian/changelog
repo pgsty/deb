@@ -1,11 +1,6 @@
-scws (1.2.3-2PGSTY) unstable; urgency=medium
-
-  * Rebuild with automatic debug packages enabled.
-
- -- Ruohang Feng <rh@vonng.com>  Sat, 05 Sep 2026 12:00:00 +0000
-
 scws (1.2.3-1PGSTY) unstable; urgency=medium
 
+  * Rebuild with automatic debug packages enabled.
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
- -- Ruohang Feng <rh@vonng.com>  Wed, 17 Jul 2024 18:00:00 +0000
+ -- Ruohang Feng <rh@vonng.com>  Sat, 05 Sep 2026 12:00:00 +0000
