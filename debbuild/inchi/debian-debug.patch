@@ -8,7 +8,7 @@
 --- a/debian/changelog
 +++ b/debian/changelog
 @@ -1 +1,9 @@
-+inchi (1.07.5+dfsg-2PGSTY) unstable; urgency=medium
++inchi (1.07.5+dfsg-1PGSTY) unstable; urgency=medium
 +
 +  * Preserve Debian compiler and linker flags for all native binaries.
 +  * Remove linker stripping from both command-line programs so dh_strip
