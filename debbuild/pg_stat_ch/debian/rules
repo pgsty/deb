@@ -5,6 +5,8 @@ export CXX = g++
 export DEB_BUILD_OPTIONS = parallel=2
 export CMAKE_BUILD_PARALLEL_LEVEL = 2
 export VCPKG_DISABLE_METRICS = 1
+VCPKG_MAX_CONCURRENCY ?= 4
+export VCPKG_MAX_CONCURRENCY
 export DPKG_EXPORT_BUILDFLAGS = 1
 
 include /usr/share/dpkg/buildflags.mk
@@ -17,8 +19,10 @@ VCPKG_BINARY_CACHE ?= $(HOME)/.cache/pg_stat_ch/vcpkg-archives
 
 ifeq ($(DEB_HOST_ARCH),amd64)
 VCPKG_TRIPLET := x64-linux-pic
+VCPKG_HOST_TRIPLET := x64-linux-release
 else ifeq ($(DEB_HOST_ARCH),arm64)
 VCPKG_TRIPLET := arm64-linux-pic
+VCPKG_HOST_TRIPLET := arm64-linux-release
 else
 $(error unsupported DEB_HOST_ARCH $(DEB_HOST_ARCH))
 endif
@@ -47,6 +51,7 @@ override_dh_auto_build:
 			-DPG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config \
 			-DCMAKE_TOOLCHAIN_FILE=$(VCPKG_TOOLCHAIN_PATH) \
 			-DVCPKG_TARGET_TRIPLET=$(VCPKG_TRIPLET) \
+			-DVCPKG_HOST_TRIPLET=$(VCPKG_HOST_TRIPLET) \
 			-DVCPKG_OVERLAY_TRIPLETS=$(CURDIR)/triplets \
 			-DPG_STAT_CH_PACKAGE_VERSION=0.4.0 \
 			-DCMAKE_BUILD_TYPE=Release; \
