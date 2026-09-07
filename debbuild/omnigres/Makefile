@@ -5,6 +5,9 @@ include /usr/share/dpkg/buildflags.mk
 
 TARBALL := omnigres-20260212.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+PYTHON_WHEEL := wheel-0.45.1-py3-none-any.whl
+PYTHON_WHEEL_SOURCE ?= ../SOURCES/$(PYTHON_WHEEL)
+PYTHON_WHEEL_SHA256 := 708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS ?= 14 15 16 17 18
@@ -18,6 +21,8 @@ pre:
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
+	@test -f "$(PYTHON_WHEEL_SOURCE)" || (echo "missing isolated Python build input $(PYTHON_WHEEL_SOURCE)"; exit 1)
+	@printf '%s  %s\n' "$(PYTHON_WHEEL_SHA256)" "$(PYTHON_WHEEL_SOURCE)" | sha256sum -c -
 
 check-tools:
 	@set -e; \
@@ -30,6 +35,7 @@ check-tools:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	install -m 0644 "$(PYTHON_WHEEL_SOURCE)" "$(BUILD_DIR)/deps/python/$(PYTHON_WHEEL)"
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	@$(MAKE) apply-patches
@@ -75,15 +81,19 @@ building: check-tools
 	    test -n "$$CC_BIN" || (echo "GCC 13.1+ or Clang 19+ is required"; exit 1); \
 	fi; \
 	echo "building with $$CC_BIN / $$CXX_BIN and $(CMAKE)"; \
+	PYTHON_BIN=$$(command -v python3); \
+	test -n "$$PYTHON_BIN" && test -x "$$PYTHON_BIN"; \
+	PARALLEL_JOBS="$${CMAKE_BUILD_PARALLEL_LEVEL:-$$(nproc)}"; \
+	case "$$PARALLEL_JOBS" in ''|*[!0-9]*|0) echo "invalid CMake parallel job count: $$PARALLEL_JOBS" >&2; exit 1 ;; esac; \
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	CMAKE_U26_ARGS=""; \
 	if [ "$$OS_CODENAME" = "resolute" ]; then \
 	    CMAKE_U26_ARGS="-DCMAKE_POLICY_VERSION_MINIMUM=3.5"; \
 	fi; \
 	for PG_VERSION in $(PG_VERSIONS); do \
-	    CC="$$CC_BIN" CXX="$$CXX_BIN" "$(CMAKE)" -S . -B pg$$PG_VERSION -DCMAKE_BUILD_TYPE=Release -DOPENSSL_CONFIGURED=1 -DPG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config $$CMAKE_U26_ARGS; \
-	    "$(CMAKE)" --build pg$$PG_VERSION --parallel; \
-	    "$(CMAKE)" --build pg$$PG_VERSION --parallel --target package_extensions; \
+	    CC="$$CC_BIN" CXX="$$CXX_BIN" "$(CMAKE)" -S . -B pg$$PG_VERSION -DCMAKE_BUILD_TYPE=Release -DOPENSSL_CONFIGURED=1 -DPython3_EXECUTABLE="$$PYTHON_BIN" -DPG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config $$CMAKE_U26_ARGS; \
+	    "$(CMAKE)" --build pg$$PG_VERSION --parallel "$$PARALLEL_JOBS"; \
+	    "$(CMAKE)" --build pg$$PG_VERSION --parallel "$$PARALLEL_JOBS" --target package_extensions; \
 	done
 
 packaging:
