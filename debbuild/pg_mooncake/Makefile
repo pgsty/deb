@@ -2,6 +2,10 @@ CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
+# setup, cargo build, and Debian packaging share one build directory and must
+# complete in order even when a builder exports a parallel MAKEFLAGS value.
+.NOTPARALLEL:
+
 all: setup build move
 
 TARBALL := pg_mooncake-0.2.0.tar.gz
@@ -37,9 +41,8 @@ building:
 	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT)
 	@test -s $(LOCK_SNAPSHOT)
 	cd $(BUILD_DIR) && CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
-	cd $(BUILD_DIR) && for PG_VERSION in $(PG_VERSIONS); do \
-	    export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
-	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+	set -e; cd $(BUILD_DIR); export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; for PG_VERSION in $(PG_VERSIONS); do \
+	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$PATH \
 	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
 	    cargo pgrx package -v --no-default-features --features "pg$$PG_VERSION,bgworker" --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
