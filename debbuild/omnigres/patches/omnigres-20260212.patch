@@ -123,3 +123,37 @@ index 951ad4c..df7210d 100644
      }
  
      if (http2_ratio + http3_ratio > 100) {
+--- a/extensions/omni_sql/lib.c
++++ b/extensions/omni_sql/lib.c
+@@ -114,13 +114,19 @@
+   return stmts;
+ }
+ 
++#if PG_VERSION_NUM < 160000
++#define OMNI_SQL_RAW_WALKER_CALLBACK(callback) ((bool (*)())(callback))
++#else
++#define OMNI_SQL_RAW_WALKER_CALLBACK(callback) (callback)
++#endif
++
+ static bool contains_param_walker(Node *node, bool *contains) {
+   if (node != NULL) {
+     if (nodeTag(node) == T_ParamRef) {
+       *contains = true;
+       return true;
+     } else {
+-      return raw_expression_tree_walker(node, contains_param_walker, contains);
++      return raw_expression_tree_walker(node, OMNI_SQL_RAW_WALKER_CALLBACK(contains_param_walker), contains);
+     }
+   }
+   return false;
+@@ -131,8 +137,8 @@
+   ListCell *stmt;
+   foreach (stmt, stmts) {
+     bool contains = false;
+-    raw_expression_tree_walker(castNode(RawStmt, lfirst(stmt))->stmt, contains_param_walker,
+-                               &contains);
++    raw_expression_tree_walker(castNode(RawStmt, lfirst(stmt))->stmt,
++                               OMNI_SQL_RAW_WALKER_CALLBACK(contains_param_walker), &contains);
+     if (contains) {
+       return true;
+     }
