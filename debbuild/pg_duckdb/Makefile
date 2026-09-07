@@ -1,6 +1,12 @@
 all: build move
 
+# Every PG-major target reuses the same build directory.  Keep the outer
+# recipe serial even when the builder exports a parallel MAKEFLAGS value;
+# DuckDB's inner CMake/Ninja build remains parallel.
+.NOTPARALLEL:
+
 TARBALL := pg_duckdb-1.1.1.tar.gz
+SOURCE_SHA256 := $(shell sha256sum ../SOURCES/$(TARBALL) | awk '{print $$1}')
 
 
 #==============================================================#
@@ -12,6 +18,7 @@ build18:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
+	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/18/" build/debian/control
@@ -23,6 +30,7 @@ build17:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
+	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/17/" build/debian/control
@@ -34,6 +42,7 @@ build16:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
+	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/16/" build/debian/control
@@ -45,6 +54,7 @@ build15:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
+	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/15/" build/debian/control
@@ -56,6 +66,7 @@ build14:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
+	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/14/" build/debian/control

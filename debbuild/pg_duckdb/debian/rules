@@ -9,8 +9,17 @@ export CC = gcc
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
-DUCKDB_CFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CFLAGS))
-DUCKDB_CXXFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CXXFLAGS))
+# Preserve PGXS LTO while limiting its link workers to the same two-job build
+# boundary.  DuckDB core still filters LTO below because its cache is reused
+# across PostgreSQL majors.
+CFLAGS := $(subst -flto=auto,-flto=2,$(CFLAGS))
+CXXFLAGS := $(subst -flto=auto,-flto=2,$(CXXFLAGS))
+LDFLAGS := $(subst -flto=auto,-flto=2,$(LDFLAGS))
+
+# The bundled DuckDB keeps function and line-table DWARF only (-g1); the PGXS
+# bridge keeps the full distribution -g so the dbgsym package stays tractable.
+DUCKDB_CFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CFLAGS)) -g1
+DUCKDB_CXXFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CXXFLAGS)) -g1
 DUCKDB_LDFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(LDFLAGS))
 
 DUCKDB_CMAKE_FLAGS := \
@@ -20,11 +29,38 @@ DUCKDB_CMAKE_FLAGS := \
 	-DCMAKE_SHARED_LINKER_FLAGS:STRING="$(DUCKDB_LDFLAGS)" \
 	-DCMAKE_MODULE_LINKER_FLAGS:STRING="$(DUCKDB_LDFLAGS)"
 
-# Allow constrained builders to override parallelism.
-export MAKEFLAGS ?= -j20
+# DuckDB has no PostgreSQL-major input.  Its build tree is safe to reuse in
+# this platform-local recipe directory when source, compiler, flags, and build
+# controls match.  Copy it into the real source tree because DuckDB resolves
+# its CMake source as ../.. from that build directory.  The PGXS bridge stays
+# outside the cached tree and is rebuilt for every PostgreSQL major.
+DUCKDB_CACHE_KEY := $(shell { \
+	cat debian/duckdb-source-sha256; \
+	$(CXX) --version | head -1; \
+	printf '%s\n' '$(DUCKDB_CFLAGS)' '$(DUCKDB_CXXFLAGS)' '$(DUCKDB_LDFLAGS)' '$(DUCKDB_CMAKE_FLAGS)' "$${DUCKDB_BUILD:-Release}" "$${DUCKDB_DISABLE_ASSERTIONS:-0}"; \
+} | sha256sum | awk '{print $$1}')
+DUCKDB_CACHE_DIR := $(HOME)/.cache/pg_duckdb/$(DUCKDB_CACHE_KEY)
+
+# DuckDB unity objects can exceed the 20 GiB builder limit at eight-way
+# concurrency.  Keep its core and the PG bridge inside a four-job token pool;
+# callers may lower this further for smaller builders.
+DUCKDB_MAX_JOBS ?= 2
+export CMAKE_BUILD_PARALLEL_LEVEL := $(DUCKDB_MAX_JOBS)
 
 override_dh_auto_build:
-	+$(MAKE) EXTRA_CMAKE_VARIABLES='$(DUCKDB_CMAKE_FLAGS)'
+	if test -f '$(DUCKDB_CACHE_DIR)/.complete' && test -f '$(DUCKDB_CACHE_DIR)/release/src/libduckdb.so'; then \
+		mkdir -p third_party/duckdb/build; \
+		cp -a '$(DUCKDB_CACHE_DIR)/.' third_party/duckdb/build/; \
+	fi
+	+$(MAKE) -j$(DUCKDB_MAX_JOBS) \
+		PG_CFLAGS='$(CFLAGS)' PG_CXXFLAGS='$(CXXFLAGS)' LDFLAGS='$(LDFLAGS)' \
+		EXTRA_CMAKE_VARIABLES='$(DUCKDB_CMAKE_FLAGS)'
+	rm -rf '$(DUCKDB_CACHE_DIR).tmp'
+	mkdir -p '$(DUCKDB_CACHE_DIR).tmp'
+	cp -a third_party/duckdb/build/. '$(DUCKDB_CACHE_DIR).tmp/'
+	touch '$(DUCKDB_CACHE_DIR).tmp/.complete'
+	rm -rf '$(DUCKDB_CACHE_DIR)'
+	mv '$(DUCKDB_CACHE_DIR).tmp' '$(DUCKDB_CACHE_DIR)'
 
 override_dh_auto_test:
 

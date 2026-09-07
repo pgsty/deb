@@ -3,6 +3,9 @@ pg-duckdb (1.1.1-1PGSTY) unstable; urgency=medium
   * Align the package revision with the RPM cross-PG-major co-installation fix.
   * Order the bundled DuckDB install after the PGXS library directory exists.
   * Build PGXS and bundled DuckDB with Debian debug and hardening flags.
+  * Limit the nested DuckDB build to two memory-safe jobs.
+  * Build the bundled DuckDB core with line-table debug information only (-g1).
+  * Feed Debian flags to the PGXS bridge through PG_CFLAGS and PG_CXXFLAGS.
 
  -- Ruohang Feng <rh@vonng.com>  Fri, 04 Sep 2026 07:00:00 +0800
 
