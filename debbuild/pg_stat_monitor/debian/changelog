@@ -1,3 +1,9 @@
+pg-stat-monitor (2.4.0-1PGSTY) unstable; urgency=medium
+
+  * Update to 2.4.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
 pg-stat-monitor (2.3.2-1PGSTY) unstable; urgency=medium
 
   * https://github.com/percona/pg_stat_monitor/releases/tag/2.3.2/
