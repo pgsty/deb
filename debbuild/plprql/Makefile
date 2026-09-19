@@ -4,8 +4,8 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-# Source archive includes the shared compatibility fixes and pgrx 0.19.2 lockfile.
-TARBALL := plprql-18.0.1.tar.gz
+# Official upstream release includes pgrx 0.19.2 and its lockfile.
+TARBALL := plprql-18.0.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
