@@ -52,6 +52,10 @@
  
  v8: deps/v8-cmake/build/libv8_libbase.a
  
+@@ -81,2 +97,2 @@
+-OPTFLAGS = -std=c++17 -fno-rtti -O2
++OPTFLAGS ?= -std=c++17 -fno-rtti -O2
+ CCFLAGS += -Wall $(OPTFLAGS)
 --- a/deps/v8-cmake/CMakeLists.txt
 +++ b/deps/v8-cmake/CMakeLists.txt
 @@ -1026,6 +1026,13 @@
