@@ -1229,3 +1229,6 @@ macavity:
 
 pg_living_assertions:
 	cd pg_living_assertions && $(MAKE)
+
+pg_grammar_guard:
+	cd pg_grammar_guard && $(MAKE)
