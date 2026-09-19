@@ -1,3 +1,9 @@
+psql-bm25s (0.4.14-1PGSTY) unstable; urgency=medium
+
+  * Update to 0.4.14.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
 psql-bm25s (0.4.13-1PGSTY) unstable; urgency=medium
 
   * Package upstream 0.4.13 for PostgreSQL 17 and 18.
