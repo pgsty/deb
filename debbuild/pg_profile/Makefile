@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_profile-4.15.tar.gz
+TARBALL := pg_profile-4.16.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 
 # prepare directory
