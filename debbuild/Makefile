@@ -1223,3 +1223,6 @@ collect:
 
 pg_circuit:
 	cd pg_circuit && $(MAKE)
+
+macavity:
+	cd macavity && $(MAKE)
