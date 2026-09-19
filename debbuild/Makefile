@@ -1226,3 +1226,6 @@ pg_circuit:
 
 macavity:
 	cd macavity && $(MAKE)
+
+pg_living_assertions:
+	cd pg_living_assertions && $(MAKE)

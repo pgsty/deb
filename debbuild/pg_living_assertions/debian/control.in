@@ -1,0 +1,17 @@
+Source: pg-living-assertions
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Manuelreyesbravo/pg_living_assertions
+
+Package: postgresql-PGVERSION-pg-living-assertions
+Architecture: all
+Depends: ${postgresql:Depends}, ${misc:Depends}
+Description: Executable SQL assertions with recorded verification history
+ pg_living_assertions stores SQL checks, their results, verification times
+ and assertion replacement history. Checks run on demand in a read-only
+ STABLE context. This is not a per-write SQL ASSERTION constraint.
+ The distribution version is 0.4.2; the SQL extension version is 0.4.1.
