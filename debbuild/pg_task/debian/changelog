@@ -4,6 +4,7 @@ pg-task (3.0.0-1PGSTY) unstable; urgency=medium
 
   * Use portable curl flags and bounded downloads for PostgreSQL source.
   * Install the upstream copyright and license in every binary package.
+  * Keep downloaded PostgreSQL source within the target major version.
 
  -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
 
