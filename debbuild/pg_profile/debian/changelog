@@ -1,3 +1,9 @@
+pg-profile (4.16-1PGSTY) unstable; urgency=medium
+
+  * Update to 4.16.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
 pg-profile (4.15-1PGSTY) unstable; urgency=medium
 
   * Mark the pure SQL extension package Architecture: all.
