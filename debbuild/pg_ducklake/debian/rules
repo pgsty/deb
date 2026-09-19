@@ -8,6 +8,7 @@ export PATH := /usr/lib/postgresql/$(PG_VERSION)/bin:$(PATH)
 export PG_CONFIG
 export CMAKE_PREFIX_PATH := $(CURDIR)/.croaring
 export CMAKE_BUILD_PARALLEL_LEVEL := $(BUILD_JOBS)
+export DUCKDB_EXTRA_CMAKE_VARS := -DDUCKDB_RELEASE_LINK_JOBS:STRING=1
 export CCACHE_DIR := $(HOME)/.cache/pg_ducklake/ccache
 export CCACHE_COMPILERCHECK := content
 export CCACHE_MAXSIZE := 16G
@@ -17,15 +18,16 @@ include /usr/share/dpkg/buildflags.mk
 
 # Ubuntu's default -flto=auto may use every CPU visible to GCC during the
 # expensive DuckDB link even when Ninja itself is limited.  Keep LTO enabled,
-# but bind its worker count to the same package-local build limit.  PGXS also
+# serialize Ninja link jobs and give each link one LTO worker, while unrelated
+# compilation may still use the second package-local slot.  PGXS also
 # feeds its flags to Clang for LLVM bitcode, where GCC's numeric -flto form is
 # invalid, so keep generic -flto for the PostgreSQL bridge and pass numeric LTO
 # flags only to the bundled DuckDB CMake build.  The bundled DuckDB keeps
 # function and line-table DWARF only (-g1); the PGXS bridge keeps the full
 # distribution -g so the dbgsym package stays tractable.
-DUCKDB_CFLAGS := $(subst -flto=auto,-flto=$(BUILD_JOBS),$(CFLAGS)) -g1
-DUCKDB_CXXFLAGS := $(subst -flto=auto,-flto=$(BUILD_JOBS),$(CXXFLAGS)) -g1
-DUCKDB_LDFLAGS := $(subst -flto=auto,-flto=$(BUILD_JOBS),$(LDFLAGS))
+DUCKDB_CFLAGS := $(subst -flto=auto,-flto=1,$(CFLAGS)) -g1
+DUCKDB_CXXFLAGS := $(subst -flto=auto,-flto=1,$(CXXFLAGS)) -g1
+DUCKDB_LDFLAGS := $(subst -flto=auto,-flto=1,$(LDFLAGS))
 CFLAGS := $(subst -flto=auto,-flto,$(CFLAGS))
 CXXFLAGS := $(subst -flto=auto,-flto,$(CXXFLAGS))
 LDFLAGS := $(subst -flto=auto,-flto,$(LDFLAGS))
