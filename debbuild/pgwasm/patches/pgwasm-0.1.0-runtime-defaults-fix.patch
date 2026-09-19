@@ -1,0 +1,432 @@
+--- a/pgwasm/src/hooks.rs
++++ b/pgwasm/src/hooks.rs
+@@ -353,7 +353,8 @@
+     };
+ 
+     let mut out = Limits::default();
+-    for (key, field_value) in obj {
++    // Optional limits serialize as null when the module inherits its GUC ceiling.
++    for (key, field_value) in obj.iter().filter(|(_, value)| !value.is_null()) {
+         match key.as_str() {
+             "fuel_per_invocation" => {
+                 out.fuel_per_invocation = Some(json_i32(field_value, "fuel_per_invocation")?);
+@@ -440,9 +441,35 @@
+     use wit_parser::Resolve;
+ 
+     use super::*;
+-    use crate::policy::GucSnapshot;
++    use crate::{config::Limits, policy::GucSnapshot};
+ 
+     static HOOK_TEST_LOCK: std::sync::OnceLock<std::sync::Mutex<()>> = std::sync::OnceLock::new();
++
++    #[test]
++    fn catalog_limits_accept_serialized_defaults_and_partial_overrides() {
++        let defaults = serde_json::to_value(Limits::default()).unwrap();
++        let parsed = limits_from_module_json(&defaults).unwrap();
++        assert!(parsed.fuel_per_invocation.is_none());
++        assert!(parsed.instances_per_module.is_none());
++        assert!(parsed.invocation_deadline_ms.is_none());
++        assert!(parsed.max_memory_pages.is_none());
++
++        let partial = serde_json::json!({
++            "fuel_per_invocation": null,
++            "instances_per_module": null,
++            "invocation_deadline_ms": null,
++            "max_memory_pages": 512,
++        });
++        let parsed = limits_from_module_json(&partial).unwrap();
++        assert!(parsed.fuel_per_invocation.is_none());
++        assert_eq!(parsed.max_memory_pages, Some(512));
++        let error =
++            limits_from_module_json(&serde_json::json!({"max_memory_pages": "512"})).unwrap_err();
++        assert_eq!(
++            error.to_string(),
++            "invalid configuration: `max_memory_pages` must be a JSON integer"
++        );
++    }
+ 
+     fn lock_hook_tests() -> std::sync::MutexGuard<'static, ()> {
+         match HOOK_TEST_LOCK
+--- a/pgwasm/src/lifecycle/reconfigure.rs
++++ b/pgwasm/src/lifecycle/reconfigure.rs
+@@ -179,7 +179,8 @@
+     };
+ 
+     let mut out = Limits::default();
+-    for (key, field_value) in obj {
++    // Optional limits serialize as null when the module inherits its GUC ceiling.
++    for (key, field_value) in obj.iter().filter(|(_, value)| !value.is_null()) {
+         match key.as_str() {
+             "fuel_per_invocation" => {
+                 out.fuel_per_invocation = Some(json_i32(field_value, "fuel_per_invocation")?);
+--- a/pgwasm/src/lifecycle/reload.rs
++++ b/pgwasm/src/lifecycle/reload.rs
+@@ -1198,8 +1198,8 @@
+     Ok(())
+ }
+ 
+-/// Catalog JSON can contain explicit `null` for optional serde fields; `reconfigure::limits_from_value`
+-/// / `policy_overrides_from_value` expect absent keys or concrete scalars.
++/// Normalize optional catalog fields before merging; policy parsing expects absent keys or
++/// concrete scalars rather than explicit `null` values.
+ fn json_without_null_entries(value: &Value) -> Result<Value> {
+     let Some(obj) = value.as_object() else {
+         return Ok(value.clone());
+--- a/pgwasm/src/proc_reg.rs
++++ b/pgwasm/src/proc_reg.rs
+@@ -159,6 +159,8 @@
+             &extension_object,
+             pg_sys::DependencyType::DEPENDENCY_EXTENSION,
+         );
++        // An immediate unregister must see the extension dependency written above.
++        pg_sys::CommandCounterIncrement();
+     }
+ 
+     Ok(procedure_address.objectId)
+@@ -189,53 +191,6 @@
+         );
+     }
+     Ok(())
+-}
+-
+-#[cfg(feature = "pg13")]
+-#[allow(clippy::too_many_arguments)]
+-unsafe fn procedure_create(
+-    spec: &ProcSpec,
+-    schema_oid: pg_sys::Oid,
+-    replace_exports: bool,
+-    c_language_oid: pg_sys::Oid,
+-    arg_type_vector: *mut pg_sys::oidvector,
+-    all_arg_types: Datum,
+-    arg_modes: Datum,
+-    arg_names: Datum,
+-    procost: f32,
+-    prorows: f32,
+-) -> pg_sys::ObjectAddress {
+-    unsafe {
+-        // SAFETY: caller validates arguments and pointer lifetimes for ProcedureCreate.
+-        pg_sys::ProcedureCreate(
+-            spec.name.as_pg_cstr(),
+-            schema_oid,
+-            replace_exports,
+-            spec.returns_set,
+-            spec.ret_type,
+-            pg_sys::GetUserId(),
+-            c_language_oid,
+-            pg_sys::Oid::from(pg_sys::F_FMGR_C_VALIDATOR),
+-            TRAMPOLINE_SYMBOL.as_pg_cstr(),
+-            EXTENSION_LIBRARY_PATH.as_pg_cstr(),
+-            pg_sys::PROKIND_FUNCTION as c_char,
+-            false,
+-            false,
+-            spec.strict,
+-            spec.volatility.to_pg_char(),
+-            spec.parallel.to_pg_char(),
+-            arg_type_vector,
+-            all_arg_types,
+-            arg_modes,
+-            arg_names,
+-            std::ptr::null_mut(),
+-            Datum::null(),
+-            Datum::null(),
+-            pg_sys::InvalidOid,
+-            procost,
+-            prorows,
+-        )
+-    }
+ }
+ 
+ #[cfg(any(feature = "pg14", feature = "pg15", feature = "pg16", feature = "pg17"))]
+@@ -452,7 +407,7 @@
+         .arg_modes
+         .iter()
+         .copied()
+-        .map(|mode| Datum::from(mode.to_pg_char() as u8))
++        .map(|mode| Datum::from(mode.to_pg_char()))
+         .collect();
+ 
+     unsafe { construct_array_datum(&mut datums, pg_sys::CHAROID) }
+--- a/pgwasm/src/runtime/core.rs
++++ b/pgwasm/src/runtime/core.rs
+@@ -78,11 +78,11 @@
+     store.epoch_deadline_trap();
+     store.set_epoch_deadline(epoch_deadline_ticks(policy));
+ 
+-    if let Some(fuel) = fuel_units(policy) {
+-        store.set_fuel(fuel).map_err(|error| {
+-            PgWasmError::Internal(format!("failed to configure fuel for core invoke: {error}"))
+-        })?;
+-    }
++    // The shared engine always meters fuel, including when the invocation budget is disabled.
++    let fuel = fuel_units(policy).unwrap_or(u64::MAX);
++    store.set_fuel(fuel).map_err(|error| {
++        PgWasmError::Internal(format!("failed to configure fuel for core invoke: {error}"))
++    })?;
+ 
+     let instance = loaded
+         .linker
+--- a/pgwasm/src/shmem.rs
++++ b/pgwasm/src/shmem.rs
+@@ -37,7 +37,7 @@
+ /// Called once from `_PG_init`.
+ pub(crate) fn init() {
+     unsafe {
+-        #[cfg(any(feature = "pg13", feature = "pg14"))]
++        #[cfg(feature = "pg14")]
+         request_shmem_resources();
+ 
+         #[cfg(any(feature = "pg15", feature = "pg16", feature = "pg17", feature = "pg18"))]
+--- a/pgwasm/src/trampoline.rs
++++ b/pgwasm/src/trampoline.rs
+@@ -540,7 +540,8 @@
+         };
+ 
+         let mut out = Limits::default();
+-        for (key, field_value) in obj {
++        // Optional limits serialize as null when the module inherits its GUC ceiling.
++        for (key, field_value) in obj.iter().filter(|(_, value)| !value.is_null()) {
+             match key.as_str() {
+                 "fuel_per_invocation" => {
+                     out.fuel_per_invocation = Some(json_i32(field_value, "fuel_per_invocation")?);
+--- a/pgwasm/tests/pg_regress/expected/core_scalar.out
++++ b/pgwasm/tests/pg_regress/expected/core_scalar.out
+@@ -20,4 +20,7 @@
+     ARRAY[40, 2]::int[]
+ ) AS add_result
+ ORDER BY 1;
+-ERROR:  resource limit exceeded: fuel exhausted
++ add_result 
++------------
++         42
++(1 row)
+--- a/pgwasm/tests/pg_regress/expected/runtime_defaults.out
++++ b/pgwasm/tests/pg_regress/expected/runtime_defaults.out
+@@ -0,0 +1,113 @@
++-- Exercise ordinary scalar and lifecycle APIs using the upstream add_i32 fixture.
++DO $test$
++DECLARE
++    wasm_hex text := '0061736d0100000001070160027f7f017f030201000707010361646400000a09010700200020016a0b000d046e616d650106010003616464';
++    options_list json[] := ARRAY[
++        NULL::json,
++        '{}'::json,
++        '{"limits":{}}'::json,
++        '{"limits":{"max_memory_pages":512}}'::json,
++        '{"limits":{"fuel_per_invocation":null,"max_memory_pages":512}}'::json,
++        '{"limits":{"fuel_per_invocation":100000,"instances_per_module":1,"invocation_deadline_ms":2000,"max_memory_pages":512}}'::json
++    ];
++    options json;
++    v_module_name text;
++    i integer := 0;
++    answer integer;
++    rejected boolean;
++BEGIN
++    RESET pgwasm.fuel_enabled;
++    IF current_setting('pgwasm.fuel_enabled') <> 'off' THEN
++        RAISE EXCEPTION 'regression requires the default fuel-disabled configuration';
++    END IF;
++    IF pgwasm.pgwasm_core_invoke_scalar(decode(wasm_hex, 'hex'), 'add', ARRAY[40,2]) IS DISTINCT FROM 42 THEN
++        RAISE EXCEPTION 'default scalar invocation failed';
++    END IF;
++
++    PERFORM set_config('pgwasm.fuel_enabled', 'on', true);
++    PERFORM set_config('pgwasm.fuel_per_invocation', '100000', true);
++    IF pgwasm.pgwasm_core_invoke_scalar(decode(wasm_hex, 'hex'), 'add', ARRAY[-7,7]) IS DISTINCT FROM 0 THEN
++        RAISE EXCEPTION 'finite-fuel scalar invocation failed';
++    END IF;
++    PERFORM set_config('pgwasm.fuel_per_invocation', '1', true);
++    rejected := false;
++    BEGIN
++        PERFORM pgwasm.pgwasm_core_invoke_scalar(decode(wasm_hex, 'hex'), 'add', ARRAY[40,2]);
++    EXCEPTION WHEN program_limit_exceeded THEN
++        IF position('fuel exhausted' in SQLERRM) = 0 THEN
++            RAISE;
++        END IF;
++        rejected := true;
++    END;
++    IF NOT rejected THEN
++        RAISE EXCEPTION 'finite fuel budget was not enforced';
++    END IF;
++    PERFORM set_config('pgwasm.fuel_per_invocation', '100000000', true);
++
++    FOREACH options IN ARRAY options_list LOOP
++        i := i + 1;
++        v_module_name := 'runtime_defaults_' || i;
++        PERFORM set_config('pgwasm.fuel_enabled', CASE WHEN i <= 3 THEN 'off' ELSE 'on' END, true);
++        IF pgwasm.pgwasm_load(v_module_name, json_build_object('bytes', wasm_hex), options) IS DISTINCT FROM true THEN
++            RAISE EXCEPTION 'load failed for options %', options;
++        END IF;
++        IF NOT EXISTS (SELECT 1 FROM pgwasm.pgwasm_modules() m WHERE m.name = v_module_name) THEN
++            RAISE EXCEPTION 'loaded module is absent from catalog';
++        END IF;
++        EXECUTE 'SELECT pgwasm.core__add(20,22)' INTO answer;
++        IF answer IS DISTINCT FROM 42 THEN
++            RAISE EXCEPTION 'registered invocation failed for options %', options;
++        END IF;
++        SELECT (p.limits_json->>'max_memory_pages')::integer INTO answer
++        FROM pgwasm.pgwasm_policy_effective() p WHERE p.module_name = v_module_name;
++        IF answer IS DISTINCT FROM (CASE WHEN i <= 3 THEN 1024 ELSE 512 END) THEN
++            RAISE EXCEPTION 'optional limits did not inherit or override the GUC ceiling';
++        END IF;
++
++        rejected := false;
++        BEGIN
++            PERFORM pgwasm.pgwasm_load(v_module_name, json_build_object('bytes', wasm_hex), options);
++        EXCEPTION WHEN invalid_parameter_value THEN
++            IF position('already exists in catalog' in SQLERRM) = 0 THEN
++                RAISE;
++            END IF;
++            rejected := true;
++        END;
++        IF NOT rejected THEN
++            RAISE EXCEPTION 'duplicate module load was accepted';
++        END IF;
++        IF pgwasm.pgwasm_reconfigure(v_module_name, NULL, '{"max_memory_pages":256}'::json) IS DISTINCT FROM true THEN
++            RAISE EXCEPTION 'partial reconfiguration failed';
++        END IF;
++        SELECT (p.limits_json->>'max_memory_pages')::integer INTO answer
++        FROM pgwasm.pgwasm_policy_effective() p WHERE p.module_name = v_module_name;
++        IF answer IS DISTINCT FROM 256 THEN
++            RAISE EXCEPTION 'reconfiguration did not apply the memory-page limit';
++        END IF;
++        EXECUTE 'SELECT pgwasm.core__add(40,2)' INTO answer;
++        IF answer IS DISTINCT FROM 42 THEN
++            RAISE EXCEPTION 'invocation after reconfiguration failed';
++        END IF;
++        IF pgwasm.pgwasm_reload(v_module_name, json_build_object('bytes', wasm_hex)) IS DISTINCT FROM true THEN
++            RAISE EXCEPTION 'reload with inherited options failed';
++        END IF;
++        SELECT (p.limits_json->>'max_memory_pages')::integer INTO answer
++        FROM pgwasm.pgwasm_policy_effective() p WHERE p.module_name = v_module_name;
++        IF answer IS DISTINCT FROM 256 THEN
++            RAISE EXCEPTION 'reload did not preserve the memory-page limit';
++        END IF;
++        EXECUTE 'SELECT pgwasm.core__add(42,0)' INTO answer;
++        IF answer IS DISTINCT FROM 42 THEN
++            RAISE EXCEPTION 'invocation after reload failed';
++        END IF;
++        IF pgwasm.pgwasm_unload(v_module_name, false) IS DISTINCT FROM true THEN
++            RAISE EXCEPTION 'unload failed';
++        END IF;
++        IF EXISTS (SELECT 1 FROM pgwasm.pgwasm_modules() m WHERE m.name = v_module_name)
++           OR to_regprocedure('pgwasm.core__add(integer,integer)') IS NOT NULL THEN
++            RAISE EXCEPTION 'unload left a catalog row or registered function';
++        END IF;
++    END LOOP;
++END
++$test$;
++DO
+--- a/pgwasm/tests/pg_regress/sql/runtime_defaults.sql
++++ b/pgwasm/tests/pg_regress/sql/runtime_defaults.sql
+@@ -0,0 +1,112 @@
++-- Exercise ordinary scalar and lifecycle APIs using the upstream add_i32 fixture.
++DO $test$
++DECLARE
++    wasm_hex text := '0061736d0100000001070160027f7f017f030201000707010361646400000a09010700200020016a0b000d046e616d650106010003616464';
++    options_list json[] := ARRAY[
++        NULL::json,
++        '{}'::json,
++        '{"limits":{}}'::json,
++        '{"limits":{"max_memory_pages":512}}'::json,
++        '{"limits":{"fuel_per_invocation":null,"max_memory_pages":512}}'::json,
++        '{"limits":{"fuel_per_invocation":100000,"instances_per_module":1,"invocation_deadline_ms":2000,"max_memory_pages":512}}'::json
++    ];
++    options json;
++    v_module_name text;
++    i integer := 0;
++    answer integer;
++    rejected boolean;
++BEGIN
++    RESET pgwasm.fuel_enabled;
++    IF current_setting('pgwasm.fuel_enabled') <> 'off' THEN
++        RAISE EXCEPTION 'regression requires the default fuel-disabled configuration';
++    END IF;
++    IF pgwasm.pgwasm_core_invoke_scalar(decode(wasm_hex, 'hex'), 'add', ARRAY[40,2]) IS DISTINCT FROM 42 THEN
++        RAISE EXCEPTION 'default scalar invocation failed';
++    END IF;
++
++    PERFORM set_config('pgwasm.fuel_enabled', 'on', true);
++    PERFORM set_config('pgwasm.fuel_per_invocation', '100000', true);
++    IF pgwasm.pgwasm_core_invoke_scalar(decode(wasm_hex, 'hex'), 'add', ARRAY[-7,7]) IS DISTINCT FROM 0 THEN
++        RAISE EXCEPTION 'finite-fuel scalar invocation failed';
++    END IF;
++    PERFORM set_config('pgwasm.fuel_per_invocation', '1', true);
++    rejected := false;
++    BEGIN
++        PERFORM pgwasm.pgwasm_core_invoke_scalar(decode(wasm_hex, 'hex'), 'add', ARRAY[40,2]);
++    EXCEPTION WHEN program_limit_exceeded THEN
++        IF position('fuel exhausted' in SQLERRM) = 0 THEN
++            RAISE;
++        END IF;
++        rejected := true;
++    END;
++    IF NOT rejected THEN
++        RAISE EXCEPTION 'finite fuel budget was not enforced';
++    END IF;
++    PERFORM set_config('pgwasm.fuel_per_invocation', '100000000', true);
++
++    FOREACH options IN ARRAY options_list LOOP
++        i := i + 1;
++        v_module_name := 'runtime_defaults_' || i;
++        PERFORM set_config('pgwasm.fuel_enabled', CASE WHEN i <= 3 THEN 'off' ELSE 'on' END, true);
++        IF pgwasm.pgwasm_load(v_module_name, json_build_object('bytes', wasm_hex), options) IS DISTINCT FROM true THEN
++            RAISE EXCEPTION 'load failed for options %', options;
++        END IF;
++        IF NOT EXISTS (SELECT 1 FROM pgwasm.pgwasm_modules() m WHERE m.name = v_module_name) THEN
++            RAISE EXCEPTION 'loaded module is absent from catalog';
++        END IF;
++        EXECUTE 'SELECT pgwasm.core__add(20,22)' INTO answer;
++        IF answer IS DISTINCT FROM 42 THEN
++            RAISE EXCEPTION 'registered invocation failed for options %', options;
++        END IF;
++        SELECT (p.limits_json->>'max_memory_pages')::integer INTO answer
++        FROM pgwasm.pgwasm_policy_effective() p WHERE p.module_name = v_module_name;
++        IF answer IS DISTINCT FROM (CASE WHEN i <= 3 THEN 1024 ELSE 512 END) THEN
++            RAISE EXCEPTION 'optional limits did not inherit or override the GUC ceiling';
++        END IF;
++
++        rejected := false;
++        BEGIN
++            PERFORM pgwasm.pgwasm_load(v_module_name, json_build_object('bytes', wasm_hex), options);
++        EXCEPTION WHEN invalid_parameter_value THEN
++            IF position('already exists in catalog' in SQLERRM) = 0 THEN
++                RAISE;
++            END IF;
++            rejected := true;
++        END;
++        IF NOT rejected THEN
++            RAISE EXCEPTION 'duplicate module load was accepted';
++        END IF;
++        IF pgwasm.pgwasm_reconfigure(v_module_name, NULL, '{"max_memory_pages":256}'::json) IS DISTINCT FROM true THEN
++            RAISE EXCEPTION 'partial reconfiguration failed';
++        END IF;
++        SELECT (p.limits_json->>'max_memory_pages')::integer INTO answer
++        FROM pgwasm.pgwasm_policy_effective() p WHERE p.module_name = v_module_name;
++        IF answer IS DISTINCT FROM 256 THEN
++            RAISE EXCEPTION 'reconfiguration did not apply the memory-page limit';
++        END IF;
++        EXECUTE 'SELECT pgwasm.core__add(40,2)' INTO answer;
++        IF answer IS DISTINCT FROM 42 THEN
++            RAISE EXCEPTION 'invocation after reconfiguration failed';
++        END IF;
++        IF pgwasm.pgwasm_reload(v_module_name, json_build_object('bytes', wasm_hex)) IS DISTINCT FROM true THEN
++            RAISE EXCEPTION 'reload with inherited options failed';
++        END IF;
++        SELECT (p.limits_json->>'max_memory_pages')::integer INTO answer
++        FROM pgwasm.pgwasm_policy_effective() p WHERE p.module_name = v_module_name;
++        IF answer IS DISTINCT FROM 256 THEN
++            RAISE EXCEPTION 'reload did not preserve the memory-page limit';
++        END IF;
++        EXECUTE 'SELECT pgwasm.core__add(42,0)' INTO answer;
++        IF answer IS DISTINCT FROM 42 THEN
++            RAISE EXCEPTION 'invocation after reload failed';
++        END IF;
++        IF pgwasm.pgwasm_unload(v_module_name, false) IS DISTINCT FROM true THEN
++            RAISE EXCEPTION 'unload failed';
++        END IF;
++        IF EXISTS (SELECT 1 FROM pgwasm.pgwasm_modules() m WHERE m.name = v_module_name)
++           OR to_regprocedure('pgwasm.core__add(integer,integer)') IS NOT NULL THEN
++            RAISE EXCEPTION 'unload left a catalog row or registered function';
++        END IF;
++    END LOOP;
++END
++$test$;
