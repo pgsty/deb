@@ -9,14 +9,15 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 	dh $@
 
 override_dh_auto_build:
-	@set -eu; export RUSTUP_TOOLCHAIN=1.96.1; export PGDOG_GIT_HASH=5d81522; \
+	@set -eu; export RUSTUP_TOOLCHAIN=1.96.1; export PGDOG_GIT_HASH=8897e56; \
 	export RUSTFLAGS="--cfg tokio_unstable"; \
 	if [ "$$(dpkg --print-architecture)" = "arm64" ]; then \
 		export RUSTFLAGS="$$RUSTFLAGS -C target-feature=+lse"; \
 	fi; \
+	unset MAKEFLAGS MFLAGS; \
 	PATH=$$HOME/.cargo/bin:$$PATH CARGO_NET_OFFLINE=true cargo build --release --locked -p pgdog; \
-	test "$$(sha256sum Cargo.lock | awk '{print $$1}')" = 25b34dbe251c413e311fd3268f5f9bc3a545c5e7efd5938a1adfa909e20a4848; \
-	target/release/pgdog --version | grep -Fq 'PgDog v0.1.56 (5d81522)'; \
+	test "$$(sha256sum Cargo.lock | awk '{print $$1}')" = 9a9d053c666a80dafac4d7d121a016e671f0e84d7e79e88d00f1d7ffcd3e9336; \
+	target/release/pgdog --version | grep -Fq 'PgDog v0.1.57 (8897e56)'; \
 	target/release/pgdog -c debian/pgdog.toml -u debian/users.toml configcheck
 
 override_dh_auto_clean:

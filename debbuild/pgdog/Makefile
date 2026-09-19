@@ -4,13 +4,13 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pgdog-0.1.56.tar.gz
-VENDOR_TARBALL := pgdog-0.1.56-vendor.tar.gz
+TARBALL := pgdog-0.1.57.tar.gz
+VENDOR_TARBALL := pgdog-0.1.57-vendor.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 VENDOR_SOURCE_TARBALL ?= ../SOURCES/$(VENDOR_TARBALL)
-SOURCE_PATCH := patches/pgdog-0.1.56.patch
+SOURCE_PATCH := patches/pgdog-0.1.57.patch
 RUST_TOOLCHAIN := 1.96.1
-PGDOG_GIT_HASH := 5d81522
+PGDOG_GIT_HASH := 8897e56
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
