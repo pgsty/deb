@@ -35,3 +35,24 @@
                  project_id
              }
          };
+--- a/src/bindings/sklearn/sklearn.py
++++ b/src/bindings/sklearn/sklearn.py
+@@ -157,0 +158,12 @@
++def estimator_num_features(estimator):
++    """Return a usable feature count after estimator deserialization."""
++    num_features = getattr(estimator, "n_features_in_", 0)
++    if not num_features:
++        # CatBoost 1.2.x resets n_features_in_ to zero after pickle.loads(),
++        # while retaining one entry per input feature in feature_names_.
++        num_features = len(getattr(estimator, "feature_names_", []))
++    if not num_features:
++        raise ValueError("estimator does not expose a positive feature count")
++    return num_features
++
++
+@@ -168 +180 @@
+-        X = np.asarray(X).reshape((-1, estimator.n_features_in_))
++        X = np.asarray(X).reshape((-1, estimator_num_features(estimator)))
+@@ -185 +197 @@
+-        X = np.asarray(X).reshape((-1, estimator.n_features_in_))
++        X = np.asarray(X).reshape((-1, estimator_num_features(estimator)))
