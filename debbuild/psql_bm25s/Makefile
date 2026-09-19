@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := psql_bm25s-0.4.13.tar.gz
+TARBALL := psql_bm25s-0.4.14.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
