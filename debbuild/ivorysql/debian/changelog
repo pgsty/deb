@@ -1,5 +1,12 @@
 ivorysql-@PG_MAJOR@ (@IVORY_VERSION@-@PKG_REV@) unstable; urgency=medium
 
+  * Update to IvorySQL 5.6 based on PostgreSQL 18.6.
+  * Preserve the Oracle sequence parser compatibility fix.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
+ivorysql-@PG_MAJOR@ (@IVORY_VERSION@-@PKG_REV@) unstable; urgency=medium
+
   * Restrict Oracle sequence syntax to the Oracle parser mode.
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 09 Sep 2026 10:30:00 +0800
