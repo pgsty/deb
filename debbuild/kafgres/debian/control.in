@@ -1,0 +1,18 @@
+Source: kafgres
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/RayElg/kafgres
+
+Package: postgresql-PGVERSION-kafgres
+Architecture: any
+Depends: postgresql-PGVERSION, ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Kafka protocol broker embedded in PostgreSQL
+ kafgres embeds a Kafka protocol broker in PostgreSQL, with SQL-managed
+ topics, partitions and message production. It requires shared_preload_libraries
+ and a server restart. The default segment engine stores its message log in
+ separate files and needs its own replication and archive configuration.
+ The table engine stores the message log in PostgreSQL tables.

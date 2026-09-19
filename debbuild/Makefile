@@ -1235,3 +1235,6 @@ pg_grammar_guard:
 
 jev:
 	cd jev && $(MAKE)
+
+kafgres:
+	cd kafgres && $(MAKE)
