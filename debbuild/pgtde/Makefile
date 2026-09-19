@@ -61,7 +61,8 @@ build:
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR)
-	cp $(PACKAGE)_*.deb $(PACKAGE)-contrib_*.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name '*.ddeb' -exec cp {} $(PKG_OUTPUT_DIR)/ \;
+	cp $(PACKAGE)_*.deb $(PACKAGE)-contrib_*.deb $(PKG_OUTPUT_DIR)/
+	find . -maxdepth 1 -type f \( -name '$(PACKAGE)*-dbgsym_*.deb' -o -name '$(PACKAGE)*-dbgsym_*.ddeb' \) -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
