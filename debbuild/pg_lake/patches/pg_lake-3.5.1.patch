@@ -1,0 +1,135 @@
+--- a/Makefile
++++ b/Makefile
+@@ -89,6 +89,4 @@
+-	git submodule init
+-	git submodule update
+-	# duckdb-postgres needs its own header-only database-connector submodule;
+-	# init it explicitly rather than recursively, so we do not clone the nested
+-	# duckdb/extension-ci-tools copies we never build.
+-	git -C duckdb_pglake/duckdb-postgres submodule update --init database-connector
++	test -f avro/lang/c/CMakeLists.txt
++	test -f duckdb_pglake/duckdb/CMakeLists.txt
++	test -f duckdb_pglake/duckdb-postgres/CMakeLists.txt
++	test -f duckdb_pglake/duckdb-postgres/database-connector/src/include/dbconnector/pool.hpp
+@@ -200,2 +198,6 @@
+-	$(MAKE) submodules
+-	cd avro && git checkout -f . && git apply --ignore-whitespace ../avro.patch
++	test -f avro/lang/c/CMakeLists.txt
++	cd avro && \
++	if patch -p1 --reverse --forward --dry-run --batch --fuzz=0 < ../avro.patch >/dev/null 2>&1; then \
++		echo "already applied: avro.patch"; \
++	elif patch -p1 --forward --batch --fuzz=0 < ../avro.patch; then :; \
++	else echo "failed to apply avro.patch" >&2; exit 1; fi
+@@ -205 +207 @@
+-	cmake .. $(CMAKE_AVRO_ARGS) && cmake --build . && cmake --build . --target install
++	cmake .. $(CMAKE_AVRO_ARGS) && cmake --build . && MAKEFLAGS= DESTDIR= cmake --build . --target install
+@@ -209 +211 @@
+-	install avro/lang/c/build/avrolib/lib*/libavro.* $(DESTDIR)$(PG_LIBDIR)
++	cp -a avro/lang/c/build/avrolib/lib*/libavro.so* $(DESTDIR)$(PG_LIBDIR)/
+@@ -222 +224 @@
+-	cd avro && git checkout -f .
++	@:
+--- a/duckdb_pglake/CMakeLists.txt
++++ b/duckdb_pglake/CMakeLists.txt
+@@ -10 +10 @@
+-find_library(PG_LIBDIR pq REQUIRED)
++find_library(PG_LIBPQ NAMES pq HINTS "${PG_LIBDIR}" REQUIRED)
+@@ -53,6 +52,0 @@
+-if(APPLE)
+-  set(LIBPQ_NAME "libpq.dylib")
+-else()
+-  set(LIBPQ_NAME "libpq.so")
+-endif()
+-
+@@ -60 +54 @@
+-                      ${PG_LIBDIR}/${LIBPQ_NAME}
++                      ${PG_LIBPQ}
+--- a/duckdb_pglake/Makefile
++++ b/duckdb_pglake/Makefile
+@@ -70 +70 @@
+-BUILD_FLAGS=-DEXTENSION_STATIC_BUILD=1 $(EXTENSION_FLAGS) ${EXT_FLAGS} $(CORE_EXTENSION_VAR) $(OSX_BUILD_FLAG) $(RUST_FLAGS) $(TOOLCHAIN_FLAGS) -DDUCKDB_EXPLICIT_PLATFORM='${DUCKDB_PLATFORM}' -DCUSTOM_LINKER=${CUSTOM_LINKER}
++BUILD_FLAGS=-DEXTENSION_STATIC_BUILD=1 $(EXTENSION_FLAGS) ${EXT_FLAGS} $(CORE_EXTENSION_VAR) $(OSX_BUILD_FLAG) $(RUST_FLAGS) $(TOOLCHAIN_FLAGS) -DOVERRIDE_GIT_DESCRIBE='v$(DUCKDB_VERSION)' -DDUCKDB_EXPLICIT_PLATFORM='${DUCKDB_PLATFORM}' -DCUSTOM_LINKER=${CUSTOM_LINKER}
+@@ -129,2 +129,2 @@
+-	cmake $(GENERATOR) $(BUILD_FLAGS) $(EXT_RELEASE_FLAGS) -DCMAKE_BUILD_TYPE=$(DEBUG_INFO_CONFIG_OPTION) -S $(DUCKDB_SRCDIR) -B build/release
+-	cmake --build build/release -j $(NCORES)
++	MAKEFLAGS= DESTDIR= cmake $(GENERATOR) $(BUILD_FLAGS) $(EXT_RELEASE_FLAGS) -DCMAKE_BUILD_TYPE=$(DEBUG_INFO_CONFIG_OPTION) -S $(DUCKDB_SRCDIR) -B build/release
++	MAKEFLAGS= DESTDIR= cmake --build build/release --target duckdb -j $(NCORES)
+@@ -136,8 +136,10 @@
+-	for patchdir in duckdb duckdb-postgres ; do \
+-		(cd $$patchdir && \
+-		git checkout -f . && \
+-		find ../patches/$$patchdir -type f -name '*.patch' -print | sort | xargs -0 printf '%s ' | \
+-		while read -r patch; do \
+-			echo "applying $$patch to $$patchdir" ; \
+-			git apply --ignore-whitespace "$$patch"; \
+-		done;) \
++	@set -e; for patchdir in duckdb duckdb-postgres; do \
++		cd "$$patchdir"; \
++		for patch in $$(find "../patches/$$patchdir" -type f -name '*.patch' | sort); do \
++			echo "applying $$patch to $$patchdir"; \
++			if patch -p1 --reverse --forward --dry-run --batch --fuzz=0 < "$$patch" >/dev/null 2>&1; then \
++				echo "already applied: $$patch"; \
++			elif patch -p1 --forward --batch --fuzz=0 < "$$patch"; then :; \
++			else echo "failed to apply $$patch" >&2; exit 1; fi; \
++		done; \
++		cd ..; \
+@@ -157,4 +159 @@
+-	for patchdir in duckdb duckdb-postgres ; do \
+-		(cd $$patchdir && \
+-		git checkout -f . ); \
+-	done
++	@:
+--- a/pg_lake/Makefile
++++ b/pg_lake/Makefile
+@@ -10 +10 @@
+-PG_LAKE_GIT_VERSION := $(shell git describe --tags --exact-match --abbrev=0 2>/dev/null)
++PG_LAKE_GIT_VERSION ?= $(shell git describe --tags --exact-match --abbrev=0 2>/dev/null)
+--- a/pg_lake_iceberg/Makefile
++++ b/pg_lake_iceberg/Makefile
+@@ -12 +12 @@
+-PG_LDFLAGS  = -L$(PG_LIBDIR) -Wl,-rpath,$(PG_LIBDIR) -lavro -lcurl
++PG_LDFLAGS  = -L$(DESTDIR)$(PG_LIBDIR) -Wl,-rpath,'$$ORIGIN/pg_lake' -lavro -lcurl
+--- a/pgduck_server/Makefile
++++ b/pgduck_server/Makefile
+@@ -22 +22 @@
+-PG_LDFLAGS  = -lduckdb -L$(PG_LIBDIR) -Wl,-rpath,$(PG_LIBDIR)
++PG_LDFLAGS  = -L$(DESTDIR)$(PG_LIBDIR) -lduckdb -Wl,-rpath,'$$ORIGIN/../lib/pg_lake'
+--- a/duckdb_pglake/patches/duckdb-postgres/postgis-geometry-wkb.patch
++++ b/duckdb_pglake/patches/duckdb-postgres/postgis-geometry-wkb.patch
+@@ -21 +20,0 @@
+-diff --git a/src/include/postgres_utils.hpp b/src/include/postgres_utils.hpp
+@@ -24 +23 @@
+-@@ -37,7 +37,8 @@ enum class PostgresTypeAnnotation {
++@@ -37,7 +37,8 @@
+@@ -32 +31 @@
+-
++ 
+@@ -34 +32,0 @@
+-diff --git a/src/postgres_utils.cpp b/src/postgres_utils.cpp
+@@ -37 +35 @@
+-@@ -52,12 +52,21 @@ string PostgresUtils::TypeToString(const LogicalType &input) {
++@@ -52,12 +52,21 @@
+@@ -40 +38 @@
+-
++ 
+@@ -53 +51 @@
+- 	}
+++	}
+@@ -56 +54 @@
+-+	}
++ 	}
+@@ -59,2 +57 @@
+-@@ -256,7 +265,8 @@ LogicalType PostgresUtils::TypeToLogicalType(optional_ptr<PostgresTransaction> t
+- 	} else if (pgtypename == "jsonb") {
++@@ -257,7 +266,8 @@
+@@ -69 +66 @@
+-diff --git a/src/postgres_scanner.cpp b/src/postgres_scanner.cpp
++ 	} else if (pgtypename == "bytea") {
+@@ -72 +69 @@
+-@@ -243,7 +243,15 @@ static void PostgresInitInternal(ClientContext &context, const PostgresBindData
++@@ -243,7 +243,13 @@
+@@ -79,3 +76 @@
+-+				// PostGIS emits EWKB by default (with SRID prefix when set), but DuckDB
+-+				// spatial expects standard WKB. Use ST_AsBinary() server-side to get
+-+				// canonical WKB and avoid "invalid WKB format" downstream.
+++				// Convert PostGIS EWKB to canonical WKB before scanning.

@@ -4,15 +4,16 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
-VERSION="${VERSION:-3.4.4}"
+VERSION="${VERSION:-3.5.1}"
 UPSTREAM_REPO="${UPSTREAM_REPO:-https://github.com/Snowflake-Labs/pg_lake.git}"
-EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-451383dee9b2fa120eb523c2da73172c1e6447fa}"
+EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-2dfa035011b041ffcf2e31ba82d5c20ded3c9196}"
 EXPECTED_AVRO_COMMIT="${EXPECTED_AVRO_COMMIT:-2b11dba4fb28c7bb6ff08b40509a6a71fcaf4c21}"
-EXPECTED_DUCKDB_COMMIT="${EXPECTED_DUCKDB_COMMIT:-6ddac802ffa9bcfbcc3f5f0d71de5dff9b0bc250}"
-EXPECTED_DUCKDB_POSTGRES_COMMIT="${EXPECTED_DUCKDB_POSTGRES_COMMIT:-b63ef4b1eb007320840b6d1760f3c9b139bb3b49}"
-EXPECTED_DUCKDB_HTTPFS_COMMIT="${EXPECTED_DUCKDB_HTTPFS_COMMIT:-13f8a814d41a978c3f19eb1dc76069489652ea6f}"
-EXPECTED_DUCKDB_AWS_COMMIT="${EXPECTED_DUCKDB_AWS_COMMIT:-bc15d211f282d1d78fc0d9fda3d09957ba776423}"
-EXPECTED_DUCKDB_AZURE_COMMIT="${EXPECTED_DUCKDB_AZURE_COMMIT:-7e1ac3333d946a6bf5b4552722743e03f30a47cd}"
+EXPECTED_DUCKDB_COMMIT="${EXPECTED_DUCKDB_COMMIT:-d8cdaa33fda8df955cc76ef58a280f68f4cd43fa}"
+EXPECTED_DUCKDB_POSTGRES_COMMIT="${EXPECTED_DUCKDB_POSTGRES_COMMIT:-41223e51559cd581f1c06e170b71c71df25bbaac}"
+EXPECTED_DUCKDB_HTTPFS_COMMIT="${EXPECTED_DUCKDB_HTTPFS_COMMIT:-827222fb45a043a7a852d1f7aae46901492a3cda}"
+EXPECTED_DUCKDB_AWS_COMMIT="${EXPECTED_DUCKDB_AWS_COMMIT:-b2649e68341a9ee717588dd23f277904727ce793}"
+EXPECTED_DUCKDB_AZURE_COMMIT="${EXPECTED_DUCKDB_AZURE_COMMIT:-003214c96d0caa39d5c3e27a9e1976a0692c7d37}"
+EXPECTED_DATABASE_CONNECTOR_COMMIT="${EXPECTED_DATABASE_CONNECTOR_COMMIT:-43e79061e5d00411612fee98482586a0e7a756cd}"
 WORK_DIR="${WORK_DIR:-${REPO_ROOT}/tmp/pg_lake-src}"
 # This is a maintainer refresh helper.  Write a candidate archive by default;
 # promotion and SHA updates are an explicit review step.
@@ -37,6 +38,8 @@ git -C "${SOURCE_DIR}" submodule update --init --depth 1 --filter=blob:none \
     duckdb_pglake/duckdb \
     duckdb_pglake/duckdb-postgres
 
+git -C "${SOURCE_DIR}/duckdb_pglake/duckdb-postgres" submodule update --init --depth 1 --filter=blob:none database-connector
+
 # Polaris is only needed by the REST-catalog test suite.  Keep the stock
 # `make submodules` target from fetching it during a package build.
 git -C "${SOURCE_DIR}" config submodule.test_common/rest_catalog/polaris.update none
@@ -45,6 +48,7 @@ UPSTREAM_COMMIT="$(git -C "${SOURCE_DIR}" rev-parse HEAD)"
 AVRO_COMMIT="$(git -C "${SOURCE_DIR}/avro" rev-parse HEAD)"
 DUCKDB_COMMIT="$(git -C "${SOURCE_DIR}/duckdb_pglake/duckdb" rev-parse HEAD)"
 DUCKDB_POSTGRES_COMMIT="$(git -C "${SOURCE_DIR}/duckdb_pglake/duckdb-postgres" rev-parse HEAD)"
+DATABASE_CONNECTOR_COMMIT="$(git -C "${SOURCE_DIR}/duckdb_pglake/duckdb-postgres/database-connector" rev-parse HEAD)"
 SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-$(git -C "${SOURCE_DIR}" show -s --format=%ct HEAD)}"
 BUILD_DATE_UTC="${BUILD_DATE_UTC:-$(python3 -c 'import datetime, sys; print(datetime.datetime.fromtimestamp(int(sys.argv[1]), datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))' "${SOURCE_DATE_EPOCH}")}"
 
@@ -52,6 +56,7 @@ test "${UPSTREAM_COMMIT}" = "${EXPECTED_UPSTREAM_COMMIT}"
 test "${AVRO_COMMIT}" = "${EXPECTED_AVRO_COMMIT}"
 test "${DUCKDB_COMMIT}" = "${EXPECTED_DUCKDB_COMMIT}"
 test "${DUCKDB_POSTGRES_COMMIT}" = "${EXPECTED_DUCKDB_POSTGRES_COMMIT}"
+test "${DATABASE_CONNECTOR_COMMIT}" = "${EXPECTED_DATABASE_CONNECTOR_COMMIT}"
 grep -q "GIT_TAG ${EXPECTED_DUCKDB_HTTPFS_COMMIT}" "${SOURCE_DIR}/duckdb_pglake/extension_config.cmake"
 grep -q "GIT_TAG ${EXPECTED_DUCKDB_AWS_COMMIT}" "${SOURCE_DIR}/duckdb_pglake/extension_config.cmake"
 grep -q "GIT_TAG ${EXPECTED_DUCKDB_AZURE_COMMIT}" "${SOURCE_DIR}/duckdb_pglake/extension_config.cmake"
@@ -61,7 +66,8 @@ test -z "$(git -C "${SOURCE_DIR}" status --porcelain --untracked-files=all --ign
 for repo in \
     "${SOURCE_DIR}/avro" \
     "${SOURCE_DIR}/duckdb_pglake/duckdb" \
-    "${SOURCE_DIR}/duckdb_pglake/duckdb-postgres"; do
+    "${SOURCE_DIR}/duckdb_pglake/duckdb-postgres" \
+    "${SOURCE_DIR}/duckdb_pglake/duckdb-postgres/database-connector"; do
     test -z "$(git -C "${repo}" status --porcelain --untracked-files=all --ignore-submodules=dirty)"
 done
 
@@ -75,6 +81,7 @@ upstream_commit=${UPSTREAM_COMMIT}
 avro_commit=${AVRO_COMMIT}
 duckdb_commit=${DUCKDB_COMMIT}
 duckdb_postgres_commit=${DUCKDB_POSTGRES_COMMIT}
+database_connector_commit=${DATABASE_CONNECTOR_COMMIT}
 duckdb_httpfs_commit=${EXPECTED_DUCKDB_HTTPFS_COMMIT}
 duckdb_aws_commit=${EXPECTED_DUCKDB_AWS_COMMIT}
 duckdb_azure_commit=${EXPECTED_DUCKDB_AZURE_COMMIT}
