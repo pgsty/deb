@@ -13,6 +13,7 @@ PGRX_VERSION := 0.19.2
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CRATE_DIR := extension
 SOURCE_PATCH := patches/pg-vectorize-0.27.0.patch
+FIX_PATCH := patches/pg-vectorize-0.27.0-chunk-table-fix.patch
 LOCK_SNAPSHOT := $(CURDIR)/$(BUILD_DIR)/.pgrx-locks.before
 
 check-src:
@@ -20,6 +21,7 @@ check-src:
 
 check-patches:
 	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
+	@test -f "$(FIX_PATCH)" || (echo "missing $(FIX_PATCH)"; exit 1)
 
 setup: check-src check-patches
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
@@ -34,6 +36,8 @@ setup: check-src check-patches
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
 	@(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
+	@echo "apply $(FIX_PATCH)"
+	@(cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < "../$(FIX_PATCH)")
 
 build: building packaging
 
