@@ -4,9 +4,9 @@ export DH_VERBOSE=1
 PG_MAJOR ?= 18
 PGBASEINSTDIR := /usr/oriole-$(PG_MAJOR)
 DEB_PACKAGE := orioledb-$(PG_MAJOR)
-ORIOLEDB_PATCHSET_VERSION ?= 1
-ORIOLEDB_VERSION ?= 1.8
-ORIOLEDB_BETA ?= beta16
+ORIOLEDB_PATCHSET_VERSION ?= 2
+ORIOLEDB_VERSION ?= 1.9
+ORIOLEDB_BETA ?= beta17
 
 # Filter out -ffast-math which is known to cause precision issues
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
@@ -31,7 +31,7 @@ override_dh_auto_configure:
 		--with-extra-version=" (OrioleDB $(ORIOLEDB_VERSION)-$(ORIOLEDB_BETA))" \
 			--with-lz4 --with-zstd \
 			--with-uuid=e2fs --with-libxml --with-libxslt \
-			--with-icu --without-llvm \
+			--with-icu --with-llvm \
 			--with-python --with-tcl \
 			--with-openssl --with-pam --with-ldap \
 			--with-selinux --with-systemd \
@@ -47,7 +47,7 @@ override_dh_auto_build:
 override_dh_auto_install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/$(DEB_PACKAGE) install-world-bin
 	for library in $(CURDIR)/debian/$(DEB_PACKAGE)$(PGBASEINSTDIR)/lib/postgresql/*plpython3*.so; do \
-		[ -e "$$library" ] && chrpath -d "$$library" || :; \
+		[ -e "$$library" ] || continue; chrpath -d "$$library"; \
 	done
 
 override_dh_shlibdeps:

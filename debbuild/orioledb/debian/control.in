@@ -6,6 +6,8 @@ Build-Depends:
  autoconf,
  bison,
  chrpath,
+ clang,
+ llvm-dev,
  debhelper-compat (= 13),
  docbook-xml,
  docbook-xsl (>= 1.77),
