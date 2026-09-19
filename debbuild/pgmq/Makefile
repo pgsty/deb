@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgmq-1.12.0.tar.gz
+TARBALL := pgmq-1.13.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
