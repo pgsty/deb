@@ -14,6 +14,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) -xf "$(SOURCE_TARBALL)"
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/pg_circuit-0.1.0-pg18.patch
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); test -n "$$OS_CODENAME"; \
