@@ -1,9 +1,9 @@
 PG_MAJOR ?= 18
 
 ifeq ($(PG_MAJOR),18)
-PG_VERSION ?= 18.4
+PG_VERSION ?= 18.6
 IVORY_MAJOR ?= 5
-IVORY_VERSION ?= 5.4
+IVORY_VERSION ?= 5.6
 else
 $(error ivorysql supports PG_MAJOR=18 for now)
 endif
