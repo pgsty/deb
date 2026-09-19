@@ -1,12 +1,21 @@
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
+DEB_BUILD_MAINT_OPTIONS ?= hardening=+all
+export DEB_BUILD_MAINT_OPTIONS
+CFLAGS := $(shell dpkg-buildflags --get CFLAGS)
+CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS)
+CPPFLAGS := $(shell dpkg-buildflags --get CPPFLAGS)
+LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS)
+export CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
 all: setup build move
 
 # Source archive includes the shared compatibility fixes and pgrx 0.19.2 lockfile.
 TARBALL := wrappers-0.6.2-pgrx0.19.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+ETHNUM_PATCH := patches/wrappers-0.6.2-ethnum-1.5.3.patch
+S3VEC_PATCH := patches/wrappers-0.6.2-pgrx0.19.2-s3vec.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
@@ -15,10 +24,14 @@ CRATE_DIR := wrappers
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
+	@test -f "$(ETHNUM_PATCH)" || (echo "missing $(ETHNUM_PATCH)"; exit 1)
+	@test -f "$(S3VEC_PATCH)" || (echo "missing $(S3VEC_PATCH)"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(ETHNUM_PATCH)
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(S3VEC_PATCH)
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
@@ -28,6 +41,8 @@ setup: check-src
 build: building packaging
 
 building: check-pgrx
+	@case " $(CXXFLAGS) " in *" -g "*) : ;; *) echo "distribution CXXFLAGS must contain -g: $(CXXFLAGS)" >&2; exit 1 ;; esac
+	@case " $(CXXFLAGS) " in *" -O"*) : ;; *) echo "distribution CXXFLAGS must retain optimization: $(CXXFLAGS)" >&2; exit 1 ;; esac
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
@@ -43,7 +58,7 @@ building: check-pgrx
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    CARGO_NET_OFFLINE=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+	    CARGO_NET_OFFLINE=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION,all_fdws --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.after
 	cmp $(BUILD_DIR)/.pgrx0192-cargo-locks.before $(BUILD_DIR)/.pgrx0192-cargo-locks.after

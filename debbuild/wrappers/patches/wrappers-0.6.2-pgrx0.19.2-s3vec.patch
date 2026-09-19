@@ -1,0 +1,25 @@
+diff -urN a/wrappers/build.rs b/wrappers/build.rs
+--- a/wrappers/build.rs
++++ b/wrappers/build.rs
+@@ -111,7 +111,8 @@
+ $s3vec_upgrade$;
+ "#,
+     name = "s3vec_type",
+-    creates = [Type(S3Vec), Function(s3vec_knn), Function(metadata_filter)],
++    requires = ["bootstrap"],
++    creates = [Function(s3vec_knn), Function(metadata_filter)],
+ );
+ "##
+     );
+diff -urN a/wrappers/src/fdw/s3vectors_fdw/s3vec.rs b/wrappers/src/fdw/s3vectors_fdw/s3vec.rs
+--- a/wrappers/src/fdw/s3vectors_fdw/s3vec.rs
++++ b/wrappers/src/fdw/s3vectors_fdw/s3vec.rs
+@@ -133,7 +133,7 @@
+     true
+ }
+ 
+-#[pg_extern(create_or_replace)]
++#[pg_extern(create_or_replace, requires = ["s3vec_type"])]
+ fn s3vec_distance(s3vec: S3Vec) -> f32 {
+     s3vec.distance
+ }
