@@ -1,3 +1,9 @@
+timescaledb-tsl (2.30.1-1PGSTY) unstable; urgency=medium
+
+  * Update to 2.30.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
 timescaledb-tsl (2.29.2-1PGSTY) unstable; urgency=medium
 
   * https://github.com/timescale/timescaledb/releases/tag/2.29.2
