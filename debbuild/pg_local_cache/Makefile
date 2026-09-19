@@ -1,6 +1,6 @@
 all: setup build move
 
-VERSION := 2.0.1
+VERSION := 2.0.4
 TARBALL := pg_local_cache-$(VERSION).tar.gz
 PATCH := patches/pg_local_cache-$(VERSION).patch
 SOURCE_TARBALL ?= $(firstword $(wildcard \
