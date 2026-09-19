@@ -1232,3 +1232,6 @@ pg_living_assertions:
 
 pg_grammar_guard:
 	cd pg_grammar_guard && $(MAKE)
+
+jev:
+	cd jev && $(MAKE)
