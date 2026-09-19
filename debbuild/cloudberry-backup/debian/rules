@@ -3,7 +3,7 @@
 export DH_VERBOSE=1
 export GOPATH := $(CURDIR)/.gopath
 export GOBIN := $(GOPATH)/bin
-export GOPROXY ?= https://proxy.golang.org,direct
+export GOPROXY ?= https://goproxy.cn,direct
 export GOTOOLCHAIN ?= auto
 export SOURCE_DATE_EPOCH ?= 1786614056
 export PATH := $(GOBIN):/usr/local/go/bin:$(PATH)
