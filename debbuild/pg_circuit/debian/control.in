@@ -1,0 +1,17 @@
+Source: pg-circuit
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/PG-Circuit/pg-circuit
+
+Package: postgresql-PGVERSION-pg-circuit
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Runtime protection against dangerous PostgreSQL statements
+ PG Circuit Community inspects SQL statements and can observe, warn or
+ block risky DML and DDL operations. Enable pg_circuit in
+ shared_preload_libraries and restart PostgreSQL before use.
+ Community reports runtime pressure but does not automatically change modes.
