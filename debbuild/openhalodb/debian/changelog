@@ -1,5 +1,11 @@
 openhalodb (1.0-1PGSTY) unstable; urgency=medium
 
+  * Guard absent GSS state when an ordinary MySQL connection closes.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 09 Sep 2026 08:40:00 +0800
+
+openhalodb (1.0-1PGSTY) unstable; urgency=medium
+
   * Promote openhalodb to the formal 1.0 release packaging.
   * Accept the resolute libselinux-dev build dependency name.
   * Disable LLVM/JIT to match RPM packaging.
