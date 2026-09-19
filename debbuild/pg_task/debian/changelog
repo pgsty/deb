@@ -1,3 +1,9 @@
+pg-task (3.0.0-1PGSTY) unstable; urgency=medium
+
+  * Update to 3.0.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
 pg-task (2.1.29-1PGSTY) unstable; urgency=medium
 
   * Build postgres.c with pcre2grep on builders without pcregrep.
