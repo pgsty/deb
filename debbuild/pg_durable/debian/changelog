@@ -1,3 +1,9 @@
+pg-durable (0.2.8-1PGSTY) unstable; urgency=medium
+
+  * Update to 0.2.8.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
 pg-durable (0.2.7-1PGSTY) unstable; urgency=medium
 
   * Upgrade to the official upstream 0.2.7 source release.
