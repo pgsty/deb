@@ -1,3 +1,11 @@
+orioledb-18 (1.9~beta17-1PGSTY) unstable; urgency=medium
+
+  * Update to beta17 and PostgreSQL 16.15, 17.11, and 18.6 patchsets.
+  * Enable LLVM for the bundled PostgreSQL kernel.
+  * Collect dbgsym packages with either .deb or .ddeb filenames.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 08 Sep 2026 22:30:00 +0800
+
 orioledb-18 (1.8~beta16-1PGSTY) unstable; urgency=medium
 
   * Merge the OriolePG kernel and OrioleDB extension into bundled packages.
