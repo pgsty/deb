@@ -1,6 +1,6 @@
 all: move
 
-TARBALL := pg_curl-2.4.5+git20260815.f7a70f3.tar.gz
+TARBALL := pg_curl-2.4.6.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -15,7 +15,7 @@ setup: clean-artifacts check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' -o -name '.git' \) -delete
-	# Preserve the master-tag base SQL as the downstream 2.4.1 fresh-install script.
+	# Preserve the upstream base SQL as the downstream 2.4.1 fresh-install script.
 	cp $(BUILD_DIR)/pg_curl--2.4.sql $(BUILD_DIR)/pg_curl--2.4.1.sql
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
