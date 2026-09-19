@@ -1,0 +1,24 @@
+--- a/include/policy.h
++++ b/include/policy.h
+@@ -9,6 +9,7 @@
+ #define PG_CIRCUIT_POLICY_H
+ 
+ #include "pg_circuit.h"
++#include "datatype/timestamp.h"
+ #include "risk_engine.h"
+ #include "runtime_state.h"
+ 
+--- a/src/wal.c
++++ b/src/wal.c
+@@ -61,7 +61,11 @@
+ 	if (ws == NULL)
+ 		return;
+ 
++#if PG_VERSION_NUM >= 180000
++	pg_circuit_wal_sample_update(ws->wal_counters.wal_bytes, GetCurrentTimestamp(),
++#else
+ 	pg_circuit_wal_sample_update(ws->wal_bytes, GetCurrentTimestamp(),
++#endif
+ 								 &bps, &level);
+ 	state->wal_bytes_per_sec = bps;
+ 	state->wal_pressure_level = level;
