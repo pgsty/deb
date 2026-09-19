@@ -1,3 +1,9 @@
+pg-vectorize (0.27.1-1PGSTY) unstable; urgency=medium
+
+  * Update to 0.27.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
 pg-vectorize (0.27.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade the source package to upstream release 0.27.0.

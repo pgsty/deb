@@ -4,7 +4,7 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pg_vectorize-0.27.0.tar.gz
+TARBALL := pg_vectorize-0.27.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -12,32 +12,19 @@ PG_VERSIONS ?= 14 15 16 17 18
 PGRX_VERSION := 0.19.2
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CRATE_DIR := extension
-SOURCE_PATCH := patches/pg-vectorize-0.27.0.patch
-FIX_PATCH := patches/pg-vectorize-0.27.0-chunk-table-fix.patch
 LOCK_SNAPSHOT := $(CURDIR)/$(BUILD_DIR)/.pgrx-locks.before
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-check-patches:
-	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
-	@test -f "$(FIX_PATCH)" || (echo "missing $(FIX_PATCH)"; exit 1)
-
-setup: check-src check-patches
+setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-
-apply-patches:
-	@echo "apply $(SOURCE_PATCH)"
-	@(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
-	@echo "apply $(FIX_PATCH)"
-	@(cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < "../$(FIX_PATCH)")
 
 build: building packaging
 
@@ -76,4 +63,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-patches setup apply-patches build building check-pgrx packaging move clean
+.PHONY: all check-src setup build building check-pgrx packaging move clean
