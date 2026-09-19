@@ -1,19 +1,21 @@
 # pg_curl composite source
 
-The packaged snapshot is the deterministic composite of:
+The packaged 2.4.6 release is the deterministic composite of:
 
-- `RekGRpth/pg_curl` commit `f7a70f37d469e783d8268cb91af445145cbe005d`
+- the official PGXN 2.4.6 archive, corresponding to
+  `RekGRpth/pg_curl` commit `35481dc401864f7cfaf75be7e87d002780b1906f`
 - its `pg_whitelist` gitlink commit
   `fbca6aef6962b20126714eaaa3f55c77f65bb5c3`
 
-GitHub's automatic parent archive contains only the gitlink directory, so it
-cannot build by itself. `repack.sh` downloads both fixed commit archives,
+The official PGXN archive contains only the gitlink directory, so it
+cannot build by itself. `repack.sh` downloads the fixed PGXN release and
+pinned submodule archive,
 verifies their hashes, fills the gitlink, records `SOURCE-MANIFEST.pgsty`, and
 uses GNU tar plus `gzip -n` with fixed ownership, order and mtime. Two runs
 must produce:
 
 ```text
-4ef70d518b5b52399aa2df17dd50821f83763bb1213c2cab1ffa498e7a9c968d  pg_curl-2.4.5+git20260815.f7a70f3.tar.gz
+61bd578ecfe0369af783bf422e26710e861f6996e264093ea4dda7578bfd2244  pg_curl-2.4.6.tar.gz
 ```
 
 Before applying the shared DEB/RPM patch, both recipes copy the new upstream

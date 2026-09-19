@@ -1,3 +1,9 @@
+pg-curl (2.4.6-1PGSTY) unstable; urgency=medium
+
+  * Update to 2.4.6.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
 pg-curl (2.4.5+git20260815.f7a70f3-1PGSTY) unstable; urgency=medium
 
   * Package the deterministic master-tag and pg_whitelist composite source.
