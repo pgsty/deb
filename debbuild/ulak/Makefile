@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := ulak-0.0.3.tar.gz
+TARBALL := ulak-0.2.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -22,7 +22,7 @@ apply-patches:
 	@set -e; \
 	for p in $(PATCHES); do \
 		echo "apply $$p"; \
-		(cd $(BUILD_DIR) && patch -p1 < "../$$p"); \
+		(cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < "../$$p"); \
 	done
 
 build:
