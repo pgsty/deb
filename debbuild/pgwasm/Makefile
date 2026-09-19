@@ -8,6 +8,7 @@ all: setup build move
 TARBALL := pgwasm-0.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SOURCE_SHA256 := f397e539fb0aa1da79d266665052610829429abad70c6df07fe4431ed179736b
+FIX_PATCH := patches/pgwasm-0.1.0-runtime-defaults-fix.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
@@ -17,10 +18,12 @@ CRATE_DIR := .
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL); fetch upstream snapshot 535b53363f8208af139e757e508e66c46309ee29 and save it as $(TARBALL)"; exit 1)
 	@echo "$(SOURCE_SHA256)  $(SOURCE_TARBALL)" | sha256sum -c -
+	@test -f "$(FIX_PATCH)" || (echo "missing $(FIX_PATCH)"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < ../$(FIX_PATCH)
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
