@@ -1,0 +1,6 @@
+kafgres (0.1.0-1PGSTY) UNRELEASED; urgency=medium
+
+  * Package upstream 0.1.0 with the original pgrx 0.16.1 lockfile.
+  * Retain full Rust DWARF for automatic dbgsym packages.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 21:00:00 +0800
