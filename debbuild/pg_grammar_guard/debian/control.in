@@ -1,0 +1,17 @@
+Source: pg-grammar-guard
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Manuelreyesbravo/pg_grammar_guard
+
+Package: postgresql-PGVERSION-pg-grammar-guard
+Architecture: all
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-pg-living-assertions (>= 0.4.2)
+Description: Catalog-derived grammars and schema drift checks
+ pg_grammar_guard builds GBNF grammars and JSON Schema from PostgreSQL
+ catalog identifiers and detects changes to approved grammar definitions.
+ It uses pg_living_assertions to store and check approved baselines.
+ Constraining identifiers does not establish query semantic correctness.
