@@ -1,0 +1,32 @@
+--- a/src/backend/parser/parse_expr.c
++++ b/src/backend/parser/parse_expr.c
+@@ -725,7 +725,8 @@
+ 											  &levels_up);
+ 				if (nsitem == NULL)
+ 				{
+-					if(IsA(field2, String) && (!pg_strcasecmp(strVal(field2), "nextval") ||
++					if (compatible_db == ORA_PARSER &&
++						IsA(field2, String) && (!pg_strcasecmp(strVal(field2), "nextval") ||
+ 							!pg_strcasecmp(strVal(field2), "currval")))
+ 					{
+ 						TypeCast *castnode = NULL;
+@@ -793,7 +794,8 @@
+ 											  &levels_up);
+ 				if (nsitem == NULL)
+ 				{
+-					if(IsA(field3, String) && (!pg_strcasecmp(strVal(field3), "nextval") ||
++					if (compatible_db == ORA_PARSER &&
++						IsA(field3, String) && (!pg_strcasecmp(strVal(field3), "nextval") ||
+ 							!pg_strcasecmp(strVal(field3), "currval")))
+ 					{
+ 						TypeCast *castnode = NULL;
+@@ -873,7 +875,8 @@
+ 											  &levels_up);
+ 				if (nsitem == NULL)
+ 				{
+-					if(IsA(field4, String) && (!pg_strcasecmp(strVal(field4), "nextval") ||
++					if (compatible_db == ORA_PARSER &&
++						IsA(field4, String) && (!pg_strcasecmp(strVal(field4), "nextval") ||
+ 							!pg_strcasecmp(strVal(field4), "currval")))
+ 					{
+ 						TypeCast *castnode = NULL;
