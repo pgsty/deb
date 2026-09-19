@@ -1,6 +1,8 @@
 --- a/postgres.sh
 +++ b/postgres.sh
-@@ -3,2 +3,5 @@
+@@ -1,19 +1,22 @@
+ #!/bin/sh -ex
+ 
 -GREEN="$(postgres --version | grep -Ei "Green(plum|gage)" >/dev/null && echo yes || echo no)"
 -PG_MAJOR="$(pg_config --version | cut -f 2 -d ' ' | grep -E -o "[[:digit:]]+" | head -1)"
 +PG_CONFIG_BIN="${PG_CONFIG:-pg_config}"
@@ -8,15 +10,30 @@
 +
 +GREEN="$("$POSTGRES_BIN" --version | grep -Ei "Green(plum|gage)" >/dev/null && echo yes || echo no)"
 +PG_MAJOR="$("$PG_CONFIG_BIN" --version | cut -f 2 -d ' ' | grep -E -o "[[:digit:]]+" | head -1)"
-@@ -8 +11 @@
+ if [ "$GREEN" = "yes" ]; then
+ 	REPO=GreengageDB/greengage
+ 	MAIN=7.x
 -	REL="$(pg_config --gp_version | cut -f 2 -d ' ' | cut -f 1 -d '+')"
 +	REL="$("$PG_CONFIG_BIN" --gp_version | cut -f 2 -d ' ' | cut -f 1 -d '+')"
-@@ -12 +15 @@
+ else
+ 	MAIN=master
+ 	REPO=postgres/postgres
 -	PG_VERSION="$(pg_config --version | cut -f 2 -d ' ' | tr '.' '_' | sed 's/rc/_RC/' | sed 's/beta/_BETA/')"
 +	PG_VERSION="$("$PG_CONFIG_BIN" --version | cut -f 2 -d ' ' | tr '.' '_' | sed 's/rc/_RC/' | sed 's/beta/_BETA/')"
+ 	REL="$(test "$PG_MAJOR" -lt 10 && echo "REL$PG_VERSION" || echo "REL_$PG_VERSION")"
+ 	STABLE="$(test "$PG_MAJOR" -lt 10 && echo "REL9_${PG_MAJOR}_STABLE" || echo "REL_${PG_MAJOR}_STABLE")"
+ fi
+ for TAG in "$REL" "$STABLE" "$MAIN"; do
+ 	[ -n "$TAG" ] || continue
+-	curl --no-progress-meter -fL "https://raw.githubusercontent.com/$REPO/$TAG/src/backend/tcop/postgres.c" && break
++	curl --silent --show-error -fL --connect-timeout 10 --max-time 120 "https://raw.githubusercontent.com/$REPO/$TAG/src/backend/tcop/postgres.c" && break
+ done
 --- a/exec.sh
 +++ b/exec.sh
-@@ -40 +40,6 @@
+@@ -37,7 +37,12 @@
+ static bool xact_started = false;
+ static CachedPlanSource *unnamed_stmt_psrc = NULL;
+ EOF
 -cat postgres.c | pcregrep -M \
 +if command -v pcre2grep >/dev/null 2>&1; then
 +    PCREGREP=pcre2grep
@@ -24,3 +41,6 @@
 +    PCREGREP=pcregrep
 +fi
 +cat postgres.c | "$PCREGREP" -M \
+ -e '(?s)^static bool CheckDebugDtmActionSqlCommandTag\(.*?\);' \
+ -e '(?s)^static void enable_statement_timeout\(.*?\);' \
+ -e '(?s)^static void start_xact_command\(.*?\);' \
