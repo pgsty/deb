@@ -1,6 +1,6 @@
 all: move
 
-VERSION := 3.4.4
+VERSION := 3.5.1
 TARBALL := pg_lake-$(VERSION).tar.gz
 BUILD_DIR := build
 PG_VERSIONS := 16 17 18
@@ -31,7 +31,7 @@ PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 VCPKG_ROOT ?= $(HOME)/.cache/pg_lake/vcpkg-$(VCPKG_VERSION)
 VCPKG_TOOLCHAIN_PATH := $(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
 SOURCE_CANDIDATE_DIR ?= $(CURDIR)/candidate
-SOURCE_PATCHES := patches/pg_lake-3.4.4.patch
+SOURCE_PATCHES := patches/pg_lake-3.5.1.patch
 TAR_BIN := $(shell command -v gtar 2>/dev/null || command -v tar)
 
 check-src:
@@ -50,6 +50,7 @@ setup: check-src
 	$(TAR_BIN) --no-same-owner -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	@set -e; for p in $(SOURCE_PATCHES); do echo "apply $$p"; patch -d $(BUILD_DIR) -p1 --fuzz=0 < "$$p"; done
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 	cd $(BUILD_DIR) && pg_buildext updatecontrol

@@ -11,7 +11,7 @@ export CCACHE_MAXSIZE := 16G
 include /usr/share/dpkg/buildflags.mk
 
 VERSIONS := $(shell cat debian/pgversions)
-PG_LAKE_GIT_VERSION ?= v3.4.4
+PG_LAKE_GIT_VERSION ?= v3.5.1
 PG_LAKE_DELTA_SUPPORT ?= 0
 PGCOMPAT_BUILD_CONFIG ?= Release
 PG_LAKE_CLEAN ?= 1
