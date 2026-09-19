@@ -1,6 +1,8 @@
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
-export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
+# Keep all FDWs and full DWARF without the memory cost of monolithic fat LTO.
+CARGO_PROFILE_RELEASE_LTO ?= thin
+export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP CARGO_PROFILE_RELEASE_LTO
 DEB_BUILD_MAINT_OPTIONS ?= hardening=+all
 export DEB_BUILD_MAINT_OPTIONS
 CFLAGS := $(shell dpkg-buildflags --get CFLAGS)
@@ -11,11 +13,10 @@ export CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
 all: setup build move
 
-# Source archive includes the shared compatibility fixes and pgrx 0.19.2 lockfile.
-TARBALL := wrappers-0.6.2-pgrx0.19.2.tar.gz
+# Official upstream source includes the pgrx 0.19.2 lockfile.
+TARBALL := wrappers-0.6.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-ETHNUM_PATCH := patches/wrappers-0.6.2-ethnum-1.5.3.patch
-S3VEC_PATCH := patches/wrappers-0.6.2-pgrx0.19.2-s3vec.patch
+SOURCE_PATCH := patches/wrappers-0.6.3.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
@@ -24,14 +25,12 @@ CRATE_DIR := wrappers
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
-	@test -f "$(ETHNUM_PATCH)" || (echo "missing $(ETHNUM_PATCH)"; exit 1)
-	@test -f "$(S3VEC_PATCH)" || (echo "missing $(S3VEC_PATCH)"; exit 1)
+	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH)"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(ETHNUM_PATCH)
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(S3VEC_PATCH)
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(SOURCE_PATCH)
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions

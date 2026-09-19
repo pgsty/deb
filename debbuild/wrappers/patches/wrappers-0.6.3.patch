@@ -1,0 +1,5 @@
+--- a/wrappers/src/fdw/s3vectors_fdw/s3vec.rs
++++ b/wrappers/src/fdw/s3vectors_fdw/s3vec.rs
+@@ -136 +136 @@
+-#[pg_extern(create_or_replace)]
++#[pg_extern(create_or_replace, requires = ["s3vec_type"])]
