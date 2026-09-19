@@ -83,7 +83,8 @@ setup: check-src check-release check-platform
 	sed -i.bak -e 's|--debug=off --ni|--debug=off --jobs=$(NUMJOBS) --ni|' $(BUILD_DIR)/package/debian/build-deb.sh
 	rm -f $(BUILD_DIR)/package/debian/build-deb.sh.bak
 	sed -i.bak -e 's|^Package: .*|Package: $(DEB_PACKAGE)|' $(BUILD_DIR)/package/debian/control
-	sed -i.bak -e 's|^Depends: |Depends: adduser, tzdata, |' $(BUILD_DIR)/package/debian/control
+	# DT_RUNPATH is not transitive; PL/Python also needs the matching system stdlib.
+	sed -i.bak -e 's|^Depends: |Depends: adduser, tzdata, libbsd0, libexpat1, python3, |' $(BUILD_DIR)/package/debian/control
 	rm -f $(BUILD_DIR)/package/debian/control.bak
 	cp debian/copyright $(BUILD_DIR)/package/debian/copyright
 	awk '{ print; if ($$0 == "mkdir -p $${pkgname}/DEBIAN") { \
