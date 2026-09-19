@@ -1,10 +1,10 @@
 all: setup build move
 
-TARBALL := pg_task-2.1.29.tar.gz
+TARBALL := pg_task-3.0.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-SOURCE_PATCH := patches/pg_task-2.1.29.patch
+SOURCE_PATCH := patches/pg_task-3.0.0.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -17,6 +17,7 @@ setup: check-src check-patches
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	chmod 0755 $(BUILD_DIR)/postgres.sh $(BUILD_DIR)/exec.sh $(BUILD_DIR)/latch.sh
 	@$(MAKE) apply-patches
 	pg_buildext updatecontrol
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
@@ -25,7 +26,7 @@ setup: check-src check-patches
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
-	@(cd $(BUILD_DIR) && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
+	@(cd $(BUILD_DIR) && patch -p1 --forward --batch --fuzz=0 < "../$(SOURCE_PATCH)")
 
 # building deb
 build:

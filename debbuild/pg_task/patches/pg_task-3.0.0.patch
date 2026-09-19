@@ -1,0 +1,26 @@
+--- a/postgres.sh
++++ b/postgres.sh
+@@ -3,5 +3,2 @@
+-PG_CONFIG_BIN="${PG_CONFIG:-pg_config}"
+-POSTGRES_BIN="$("$PG_CONFIG_BIN" --bindir)/postgres"
+-
+-GREEN="$("$POSTGRES_BIN" --version | grep -Ei "Green(plum|gage)" >/dev/null && echo yes || echo no)"
+-PG_MAJOR="$("$PG_CONFIG_BIN" --version | cut -f 2 -d ' ' | grep -E -o "[[:digit:]]+" | head -1)"
++GREEN="$(postgres --version | grep -Ei "Green(plum|gage)" >/dev/null && echo yes || echo no)"
++PG_MAJOR="$(pg_config --version | cut -f 2 -d ' ' | grep -E -o "[[:digit:]]+" | head -1)"
+@@ -11 +8 @@
+-	REL="$("$PG_CONFIG_BIN" --gp_version | cut -f 2 -d ' ' | cut -f 1 -d '+')"
++	REL="$(pg_config --gp_version | cut -f 2 -d ' ' | cut -f 1 -d '+')"
+@@ -15 +12 @@
+-	PG_VERSION="$("$PG_CONFIG_BIN" --version | cut -f 2 -d ' ' | tr '.' '_' | sed 's/rc/_RC/' | sed 's/beta/_BETA/')"
++	PG_VERSION="$(pg_config --version | cut -f 2 -d ' ' | tr '.' '_' | sed 's/rc/_RC/' | sed 's/beta/_BETA/')"
+--- a/exec.sh
++++ b/exec.sh
+@@ -40 +40,6 @@
+-cat postgres.c | pcregrep -M \
++if command -v pcre2grep >/dev/null 2>&1; then
++    PCREGREP=pcre2grep
++else
++    PCREGREP=pcregrep
++fi
++cat postgres.c | "$PCREGREP" -M \
