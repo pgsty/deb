@@ -1,6 +1,6 @@
 --- a/postgres.sh
 +++ b/postgres.sh
-@@ -1,19 +1,22 @@
+@@ -1,19 +1,31 @@
  #!/bin/sh -ex
  
 -GREEN="$(postgres --version | grep -Ei "Green(plum|gage)" >/dev/null && echo yes || echo no)"
@@ -16,18 +16,28 @@
 -	REL="$(pg_config --gp_version | cut -f 2 -d ' ' | cut -f 1 -d '+')"
 +	REL="$("$PG_CONFIG_BIN" --gp_version | cut -f 2 -d ' ' | cut -f 1 -d '+')"
  else
- 	MAIN=master
+-	MAIN=master
++	# Never fetch code from a different PostgreSQL major version.
++	MAIN=
  	REPO=postgres/postgres
 -	PG_VERSION="$(pg_config --version | cut -f 2 -d ' ' | tr '.' '_' | sed 's/rc/_RC/' | sed 's/beta/_BETA/')"
 +	PG_VERSION="$("$PG_CONFIG_BIN" --version | cut -f 2 -d ' ' | tr '.' '_' | sed 's/rc/_RC/' | sed 's/beta/_BETA/')"
  	REL="$(test "$PG_MAJOR" -lt 10 && echo "REL$PG_VERSION" || echo "REL_$PG_VERSION")"
  	STABLE="$(test "$PG_MAJOR" -lt 10 && echo "REL9_${PG_MAJOR}_STABLE" || echo "REL_${PG_MAJOR}_STABLE")"
  fi
++PG_SOURCE_TMP=$(mktemp)
++trap 'rm -f "$PG_SOURCE_TMP"' 0
++trap 'exit 1' 1 2 15
  for TAG in "$REL" "$STABLE" "$MAIN"; do
  	[ -n "$TAG" ] || continue
 -	curl --no-progress-meter -fL "https://raw.githubusercontent.com/$REPO/$TAG/src/backend/tcop/postgres.c" && break
-+	curl --silent --show-error -fL --connect-timeout 10 --max-time 120 "https://raw.githubusercontent.com/$REPO/$TAG/src/backend/tcop/postgres.c" && break
++	if curl --silent --show-error -fL --retry 2 --retry-delay 1 --connect-timeout 10 --max-time 120 -o "$PG_SOURCE_TMP" "https://raw.githubusercontent.com/$REPO/$TAG/src/backend/tcop/postgres.c"; then
++		cat "$PG_SOURCE_TMP"
++		exit 0
++	fi
  done
++printf 'could not download matching postgres.c for PostgreSQL %s from %s\n' "$PG_MAJOR" "$REPO" >&2
++exit 1
 --- a/exec.sh
 +++ b/exec.sh
 @@ -37,7 +37,12 @@
