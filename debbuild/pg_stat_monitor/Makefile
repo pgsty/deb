@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_stat_monitor-2.3.2.tar.gz
+TARBALL := pg_stat_monitor-2.4.0.tar.gz
 
 # prepare directory
 setup:
