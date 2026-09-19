@@ -1,3 +1,10 @@
+wrappers (0.6.3-1PGSTY) unstable; urgency=medium
+
+  * Update to 0.6.3.
+  * Use ThinLTO for all FDWs and skip DWZ optimization while retaining dbgsym.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 17:00:00 +0800
+
 wrappers (0.6.2-1PGSTY) unstable; urgency=medium
 
   * Build with pgrx 0.19.2 from the updated source archive and locked dependencies.
