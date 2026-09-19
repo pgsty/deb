@@ -1218,3 +1218,8 @@ collect:
 	pglinter pg_enigma pg_typeid pg_pinyin pg_eviltransform \
 	openhalodb ivorysql ivorysql-18 pgtde pgtde-18 oriole oriole_16 oriole_17 oriole_18 oriole_all orioledb orioledb-16 orioledb-17 orioledb-18 orioledb-all antlr4 babelfish babelfish-17 babelfish-18 cloudberry cloudberry-backup cloudberry-pxf polardb agensgraph inchi \
 	pgedge-15 pgedge-16 pgedge-17 pgedge-18
+
+# Extensions added from the September 2026 discovery batch.
+
+pg_circuit:
+	cd pg_circuit && $(MAKE)
