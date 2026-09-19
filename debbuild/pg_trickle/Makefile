@@ -4,14 +4,14 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-VERSION := 0.92.0
+VERSION := 0.107.0
 TARBALL := pg_trickle-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 18
 PGRX_VERSION := 0.19.2
-RUST_TOOLCHAIN := 1.96.1
+RUST_TOOLCHAIN := 1.98.0
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 SOURCE_PATCH := patches/pg-trickle-$(VERSION).patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
