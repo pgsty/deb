@@ -1,0 +1,89 @@
+--- a/gpMgmt/bin/Makefile
++++ b/gpMgmt/bin/Makefile
+@@ -87,32 +87,23 @@
+ PSUTIL_VERSION=5.7.0
+ PYYAML_VERSION=5.4.1
+ 
++# Bundled Python extensions do not use PostgreSQL project-wide -Werror.
++# Preserve distribution hardening, explicit diagnostic policies and DWARF.
++PYTHON_CFLAGS=$(filter-out -Werror,$(CFLAGS))
++# pg_config returns staged include paths while packaging. Keep useful DWARF
++# paths, without embedding the temporary package buildroot.
++ifneq ($(strip $(DESTDIR)),)
++PYTHON_CFLAGS += -ffile-prefix-map=$(DESTDIR)= -fdebug-prefix-map=$(DESTDIR)=
++endif
++
++# All inputs are pre-seeded by the package recipe; this target never downloads.
++# Cython's Python implementation is sufficient for setup.py build.  Avoid pip
++# installation into the builder's user/system environment.
+ download-python-deps:
+-	@echo "--- Downloading Python dependencies for gpMgmt modules"
+-	@mkdir -p $(PYLIB_SRC_EXT)
+-	# Download psutil using curl (only if not exists)
+-	@if [ ! -f $(PYLIB_SRC_EXT)/psutil-$(PSUTIL_VERSION).tar.gz ]; then \
+-		echo "Downloading psutil-$(PSUTIL_VERSION).tar.gz..."; \
+-		curl -sSL https://files.pythonhosted.org/packages/source/p/psutil/psutil-$(PSUTIL_VERSION).tar.gz -o $(PYLIB_SRC_EXT)/psutil-$(PSUTIL_VERSION).tar.gz; \
+-	else \
+-		echo "psutil-$(PSUTIL_VERSION).tar.gz already exists, skipping download"; \
+-	fi
+-	# Download PyYAML using curl (only if not exists)
+-	@if [ ! -f $(PYLIB_SRC_EXT)/PyYAML-$(PYYAML_VERSION).tar.gz ]; then \
+-		echo "Downloading PyYAML-$(PYYAML_VERSION).tar.gz..."; \
+-		curl -sSL https://files.pythonhosted.org/packages/source/P/PyYAML/PyYAML-$(PYYAML_VERSION).tar.gz -o $(PYLIB_SRC_EXT)/PyYAML-$(PYYAML_VERSION).tar.gz; \
+-	else \
+-		echo "PyYAML-$(PYYAML_VERSION).tar.gz already exists, skipping download"; \
+-	fi
+-	# Download PyGreSQL using curl (only if not exists)
+-	@if [ ! -f $(PYLIB_SRC_EXT)/PyGreSQL-$(PYGRESQL_VERSION).tar.gz ]; then \
+-		echo "Downloading PyGreSQL-$(PYGRESQL_VERSION).tar.gz..."; \
+-		curl -sSL https://files.pythonhosted.org/packages/source/P/PyGreSQL/PyGreSQL-$(PYGRESQL_VERSION).tar.gz -o $(PYLIB_SRC_EXT)/PyGreSQL-$(PYGRESQL_VERSION).tar.gz; \
+-	else \
+-		echo "PyGreSQL-$(PYGRESQL_VERSION).tar.gz already exists, skipping download"; \
+-	fi
+-	# Install wheel and cython for PyYAML building
+-	pip3 install --user wheel "cython<3.0.0"
++	@for archive in psutil-$(PSUTIL_VERSION).tar.gz PyYAML-$(PYYAML_VERSION).tar.gz PyGreSQL-$(PYGRESQL_VERSION).tar.gz Cython-0.29.37.tar.gz; do \
++		test -s "$(PYLIB_SRC_EXT)/$$archive" || { echo "Missing pinned Python source: $$archive" >&2; exit 1; }; \
++	done
++	cd $(PYLIB_SRC_EXT)/ && $(TAR) xzf Cython-0.29.37.tar.gz
+ 
+ #
+ # PyGreSQL
+@@ -121,7 +112,7 @@
+ pygresql: download-python-deps
+ 	@echo "--- PyGreSQL"
+ 	cd $(PYLIB_SRC_EXT)/ && $(TAR) xzf $(PYGRESQL_DIR).tar.gz
+-	cd $(PYLIB_SRC_EXT)/$(PYGRESQL_DIR)/ && PATH=$(DESTDIR)$(bindir):$$PATH LDFLAGS='$(LDFLAGS) $(PYGRESQL_LDFLAGS)' python3 setup.py build
++	cd $(PYLIB_SRC_EXT)/$(PYGRESQL_DIR)/ && PATH=$(DESTDIR)$(bindir):$$PATH CFLAGS="$(PYTHON_CFLAGS)" LDFLAGS='$(LDFLAGS) $(PYGRESQL_LDFLAGS)' python3 setup.py build
+ 	cp -r $(PYLIB_SRC_EXT)/$(PYGRESQL_DIR)/build/lib*-3*/* $(PYLIB_DIR)/
+ 
+ #
+@@ -132,7 +123,7 @@
+ 	@echo "--- psutil"
+ ifeq "$(findstring $(BLD_ARCH),aix7_ppc_64 )" ""
+ 	cd $(PYLIB_SRC_EXT)/ && $(TAR) xzf $(PSUTIL_DIR).tar.gz
+-	cd $(PYLIB_SRC_EXT)/$(PSUTIL_DIR)/ && env -u CC python3 setup.py build
++	cd $(PYLIB_SRC_EXT)/$(PSUTIL_DIR)/ && env -u CC CFLAGS="$(PYTHON_CFLAGS)" python3 setup.py build
+ 	cp -r $(PYLIB_SRC_EXT)/$(PSUTIL_DIR)/build/lib.*/psutil $(PYLIB_DIR)
+ endif
+ 
+@@ -144,7 +135,7 @@
+ pyyaml: download-python-deps
+ 	@echo "--- pyyaml"
+ 	cd $(PYLIB_SRC_EXT)/ && $(TAR) xzf $(PYYAML_DIR).tar.gz
+-	cd $(PYLIB_SRC_EXT)/$(PYYAML_DIR)/ && env -u CC CFLAGS="-w" python3 setup.py build
++	cd $(PYLIB_SRC_EXT)/$(PYYAML_DIR)/ && env -u CC PYTHONPATH="$(PYLIB_SRC_EXT)/Cython-0.29.37$${PYTHONPATH:+:$$PYTHONPATH}" CFLAGS="$(PYTHON_CFLAGS) -w" python3 setup.py build
+ 	cp -r $(PYLIB_SRC_EXT)/$(PYYAML_DIR)/build/lib*-3*/* $(PYLIB_DIR)/
+ 
+ #
+--- a/gpMgmt/bin/stream/Makefile
++++ b/gpMgmt/bin/stream/Makefile
+@@ -8,7 +8,7 @@
+ all: stream
+ 
+ stream: $(OBJS)
+-	$(CC) $(CFLAGS) $(OBJS) -o $@$(X)
++	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LDFLAGS_EX) -o $@$(X)
+ 
+ installdirs:
+ 	$(MKDIR_P) '$(DESTDIR)$(bindir)/lib'

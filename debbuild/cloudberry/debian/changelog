@@ -1,5 +1,24 @@
 cloudberry (2.1.0-1PGSTY) unstable; urgency=medium
 
+  * Use shlex quoting for Python 3.13 and require the gpMgmt pager.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 09 Sep 2026 10:25:00 +0800
+
+cloudberry (2.1.0-1PGSTY) unstable; urgency=medium
+
+  * Package the cluster management tools and private Python runtime modules.
+  * Build the pinned Python sources offline and retain their compiler flags.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 09 Sep 2026 08:15:00 +0800
+
+cloudberry (2.1.0-1PGSTY) unstable; urgency=medium
+
+  * Preserve compiler flags and DWARF in regression helper programs.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 08 Sep 2026 23:30:00 +0800
+
+cloudberry (2.1.0-1PGSTY) unstable; urgency=medium
+
   * Pre-create cdb_init.d before installing contrib scripts.
   * Filter LTO flags to match the RPM Cloudberry kernel build.
   * Disable dwz debug payload generation.

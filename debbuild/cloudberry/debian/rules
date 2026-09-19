@@ -60,6 +60,8 @@ override_dh_auto_install:
 	install -d -m 0755 $(CURDIR)/debian/tmp$(CB_PREFIX)/share/postgresql/cdb_init.d
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp install-world-bin
 	$(MAKE) DESTDIR=$(CURDIR)/debian/tmp -C contrib install
+	$(MAKE) -C gpMgmt all
+	$(MAKE) -j1 -C gpMgmt DESTDIR=$(CURDIR)/debian/tmp install
 
 override_dh_dwz:
 	:

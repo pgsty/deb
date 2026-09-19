@@ -1,2 +1,5 @@
 cloudberry-2.1.0.patch
 fix-initdb-cdb-initd-errno.patch
+cloudberry-2.1.0-regress-build-flags.patch
+cloudberry-2.1.0-gpmgmt-offline-python.patch
+cloudberry-2.1.0-python313-runtime.patch
