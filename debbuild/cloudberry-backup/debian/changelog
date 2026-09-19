@@ -1,5 +1,11 @@
 cloudberry-backup (2.2.0+git20260813.6d61e7e-1PGSTY) unstable; urgency=medium
 
+  * Use a reachable Go module proxy while respecting builder overrides.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 08 Sep 2026 00:00:00 +0000
+
+cloudberry-backup (2.2.0+git20260813.6d61e7e-1PGSTY) unstable; urgency=medium
+
   * Update to Apache Cloudberry Backup 2.2.0.
   * Package gpbackman and gpbackup_exporter with the backup utilities.
   * Build with the upstream-required Go 1.25 toolchain via the Go proxy.
