@@ -13,13 +13,16 @@ PGRX_VERSION := 0.19.2
 export RUSTUP_TOOLCHAIN := stable
 CRATE_DIR := .
 SOURCE_PATCH := patches/pg-idkit-0.4.0.patch
+FIX_PATCH := patches/pg-idkit-0.4.0-nanoid-fix.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
+	@test -f "$(FIX_PATCH)" || (echo "missing $(FIX_PATCH)"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < ../$(FIX_PATCH)
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
