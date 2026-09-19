@@ -52,11 +52,12 @@ building: check-pgrx
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.before
 	@test -s $(BUILD_DIR)/.pgrx0192-cargo-locks.before
 	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
-	cd $(BUILD_DIR)/pg_search && \
+	set -e; \
+	cd $(BUILD_DIR)/pg_search; \
 	export RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN); \
 	export CARGO_BUILD_JOBS="$(CARGO_BUILD_JOBS)"; \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
-	for PG_VERSION in $(PG_VERSIONS); do \
+		for PG_VERSION in $(PG_VERSIONS); do \
 		    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 			    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
 			    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
