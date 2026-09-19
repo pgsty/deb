@@ -35,8 +35,9 @@ endif
 
 OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
 ifeq ($(OS_CODENAME),resolute)
-export PG_CFLAGS += -Wno-error=discarded-qualifiers
-export CFLAGS += -Wno-error=discarded-qualifiers
+# Babelfish's legacy callback declarations require pre-C23 C semantics.
+export PG_CFLAGS += -std=gnu17 -Wno-error=discarded-qualifiers
+export CFLAGS += -std=gnu17 -Wno-error=discarded-qualifiers
 endif
 
 %:
