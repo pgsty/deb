@@ -1,0 +1,5 @@
+macavity (0.1.0-1PGSTY) UNRELEASED; urgency=medium
+
+  * Package upstream 0.1.0 for PostgreSQL 16 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 19 Sep 2026 21:00:00 +0800
