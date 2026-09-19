@@ -49,7 +49,7 @@ Homepage: https://cloudberry.apache.org
 
 Package: cloudberry
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, iproute2, iputils-ping, openssh-client, openssh-server, perl, python3, rsync, ssl-cert, tzdata
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, iproute2, iputils-ping, less, openssh-client, openssh-server, perl, python3, rsync, ssl-cert, tzdata
 Description: Apache Cloudberry MPP data warehouse
  Apache Cloudberry is an open-source massively parallel processing (MPP)
  data warehouse developed from PostgreSQL and Greenplum.
