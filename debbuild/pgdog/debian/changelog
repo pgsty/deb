@@ -1,3 +1,12 @@
+pgdog (0.1.57-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.1.57 and update the pinned SCRAM source.
+  * Preserve deterministic source identity and automatic debug symbols.
+  * Clear parent make arguments before Cargo starts jemalloc's nested make.
+  * Use vendored string helpers when glibc lacks strlcpy and strlcat.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 08 Sep 2026 22:30:00 +0800
+
 pgdog (0.1.56-1PGSTY) unstable; urgency=medium
 
   * Upgrade to the official upstream 0.1.56 release.
