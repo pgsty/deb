@@ -1,4 +1,4 @@
-all: pre setup build
+all: pre setup build move
 
 export DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
@@ -8,8 +8,11 @@ SRC_PARENT := $(patsubst %/,%,$(dir $(SRC_DIR)))
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PKG_NAME := plv8
 
-TARBALL := plv8-3.2.4.tar.gz
-SOURCE_PATCH := patches/plv8-3.2.4.patch
+# Source: https://github.com/plv8/plv8/archive/refs/tags/v3.2.5.tar.gz
+# Bundle v8-cmake at the upstream gitlink 90d6634d820af06f14c642a9ef3a7bfa7ab4667a.
+# The source bundle excludes .git and Apple metadata; patches are applied below.
+TARBALL := plv8-3.2.5.tar.gz
+SOURCE_PATCH := patches/plv8-3.2.5.patch
 PLV8_BUILD_JOBS ?= 4
 
 # Preserve the Debian debug flags in both the bundled V8 engine and plv8's own
@@ -19,7 +22,7 @@ pre:
 	rm -rf $(SRC_DIR)
 	mkdir -p $(SRC_DIR)
 	tar -C $(SRC_DIR) --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	patch -d $(SRC_DIR) -p1 --forward -f < $(SOURCE_PATCH)
+	patch -d $(SRC_DIR) -p1 --fuzz=0 < $(SOURCE_PATCH)
 	cd $(SRC_DIR) && $(MAKE) NUMPROC=$(PLV8_BUILD_JOBS) V8_CXXFLAGS="$(CXXFLAGS)" OPTFLAGS="-std=c++17 -fno-rtti $(CXXFLAGS)"
 	# The pre-build above uses the default pg_config (normally the newest PG).
 	# Remove only wrapper outputs so pg_buildext must compile PG14 afresh while

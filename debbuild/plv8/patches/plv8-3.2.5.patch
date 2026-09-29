@@ -1,61 +1,59 @@
 --- a/Makefile
 +++ b/Makefile
-@@ -14,11 +14,13 @@
- EXTENSION = plv8
- PLV8_DATA = plv8.control plv8--$(PLV8_VERSION).sql
- 
-+# Build the architecture-specific conservative stack scanner directly into the module.
- ifeq ($(OS),Windows_NT)
- 	# noop for now
- else
- 	SHLIB_LINK += -Ldeps/v8-cmake/build
- 	UNAME_S := $(shell uname -s)
-+	UNAME_M := $(shell uname -m)
- 	ifeq ($(UNAME_S),Darwin)
- 		CCFLAGS += -stdlib=libc++
- 		SHLIB_LINK += -stdlib=libc++ -std=c++17 -lc++
-@@ -28,6 +30,12 @@
+@@ -33,6 +33,12 @@
+ 	endif
  	ifeq ($(UNAME_S),Linux)
  		SHLIB_LINK += -lrt -std=c++17
- 		NUMPROC := $(shell grep -c ^processor /proc/cpuinfo)
-+		ifeq ($(UNAME_M),aarch64)
++		ifeq ($(shell uname -m),aarch64)
 +			V8_STACK_HELPER_SRC = deps/v8-cmake/v8/src/heap/base/asm/arm64/push_registers_asm.cc
 +		endif
-+		ifeq ($(UNAME_M),x86_64)
++		ifeq ($(shell uname -m),x86_64)
 +			V8_STACK_HELPER_SRC = deps/v8-cmake/v8/src/heap/base/asm/x64/push_registers_asm.cc
 +		endif
+ 		NUMPROC := $(shell grep -c ^processor /proc/cpuinfo)
  	endif
  endif
+@@ -43,6 +49,10 @@
  
-@@ -35,6 +43,10 @@
- 	NUMPROC = 1
- endif
+ SHLIB_LINK += -Ldeps/v8-cmake/build
  
 +ifneq ($(V8_STACK_HELPER_SRC),)
 +	OBJS += $(V8_STACK_HELPER_SRC:.cc=.o)
 +endif
 +
- SHLIB_LINK += -Ldeps/v8-cmake/build
- 
  all: v8 $(OBJS)
-@@ -46,8 +58,12 @@
- 	@git submodule update --init --recursive
- 	$(foreach patch,$(PATCH_V8),cd deps/v8-cmake && patch -p1 <../../$(patch);)
  
-+# C++ flags for the bundled V8 CMake build: the plv8 flags without -fno-rtti.
-+# Packagers may override this, e.g. to reduce V8 debug information.
+ # For some reason, this solves parallel make dependency.
+@@ -52,8 +62,10 @@
+ 	@git submodule update --init --recursive
+ 	cd deps/v8-cmake && $(foreach patch,$(PATCH_V8),patch -p1 <../../$(patch) &&) true
+ 
 +V8_CXXFLAGS ?= $(filter-out -fno-rtti,$(OPTFLAGS))
 +
  deps/v8-cmake/build/libv8_libbase.a: deps/v8-cmake/README.md
--	@cd deps/v8-cmake && mkdir -p build && cd build && cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Denable-fPIC=ON -DCMAKE_BUILD_TYPE=Release ../ && make -j $(NUMPROC)
-+	@cd deps/v8-cmake && mkdir -p build && cd build && cmake -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CXX_FLAGS="$(V8_CXXFLAGS)" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Denable-fPIC=ON -DCMAKE_BUILD_TYPE=Release ../ && make -j $(NUMPROC) v8_libbase v8_base_without_compiler v8_compiler v8_snapshot v8_inspector v8_libplatform v8_libsampler v8_torque_generated
+-	@cd deps/v8-cmake && mkdir -p build && cd build && cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Denable-fPIC=ON -DCMAKE_BUILD_TYPE=Release $(V8_CMAKE_ARGS) ../ && make -j $(NUMPROC)
++	@cd deps/v8-cmake && mkdir -p build && cd build && cmake -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CXX_FLAGS="$(V8_CXXFLAGS)" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Denable-fPIC=ON -DCMAKE_BUILD_TYPE=Release $(V8_CMAKE_ARGS) ../ && make -j $(NUMPROC) v8_libbase v8_base_without_compiler v8_compiler v8_snapshot v8_inspector v8_libplatform v8_libsampler v8_torque_generated
  
  v8: deps/v8-cmake/build/libv8_libbase.a
  
-@@ -81,2 +97,2 @@
+@@ -88,7 +100,7 @@
+ 
+ SHLIB_LINK += -lv8_base_without_compiler -lv8_compiler -lv8_snapshot -lv8_inspector -lv8_libplatform -lv8_base_without_compiler -lv8_libsampler -lv8_torque_generated -lv8_libbase
+ 
 -OPTFLAGS = -std=c++17 -fno-rtti -O2
 +OPTFLAGS ?= -std=c++17 -fno-rtti -O2
  CCFLAGS += -Wall $(OPTFLAGS)
+ 
+ generate_upgrades:
+@@ -106,7 +118,7 @@
+ 
+ COMPILE.cxx.bc = $(CLANG) -xc++ -Wno-ignored-attributes $(BITCODE_CXXFLAGS) $(CCFLAGS) $(CPPFLAGS) -emit-llvm -c
+ 
+-%.bc : %.cc
++%.bc : %.cc plv8_config.h plv8.h
+ 	$(COMPILE.cxx.bc) $(CCFLAGS) $(CPPFLAGS) -fPIC -c -o $@ $<
+ 	$(LLVM_BINPATH)/opt -module-summary -f $@ -o $@
+ 
 --- a/deps/v8-cmake/CMakeLists.txt
 +++ b/deps/v8-cmake/CMakeLists.txt
 @@ -1026,6 +1026,13 @@
