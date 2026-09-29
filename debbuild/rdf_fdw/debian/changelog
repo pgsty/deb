@@ -1,3 +1,10 @@
+rdf-fdw (3.0.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 3.0 and preserve the libcurl compatibility patch.
+  * Upgrades from 2.x require the upstream rdfnode migration procedure.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 29 Sep 2026 20:00:00 +0800
+
 rdf-fdw (2.7.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 2.7.0.
