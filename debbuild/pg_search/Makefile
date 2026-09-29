@@ -4,14 +4,14 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pg_search-0.25.9.tar.gz
+TARBALL := pg_search-0.25.10.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
 PGRX_VERSION := 0.19.2
-RUST_TOOLCHAIN := 1.97.1
-SOURCE_PATCH := patches/pg-search-0.25.9.patch
+RUST_TOOLCHAIN := stable
+SOURCE_PATCH := patches/pg-search-0.25.10.patch
 LICENSE_COLLECTOR := collect-third-party-licenses.py
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_BUILD_JOBS ?= 2
