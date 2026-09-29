@@ -4,13 +4,15 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := jsonschema-0.1.9.tar.gz
+# Source: https://github.com/theory/pg-jsonschema-boon/archive/refs/tags/v0.1.10.tar.gz
+# Normalize only the archive root; apply the pgrx 0.19.2 patch during setup.
+TARBALL := jsonschema-0.1.10.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.2
-SOURCE_PATCH := patches/jsonschema-0.1.9.patch
+SOURCE_PATCH := patches/jsonschema-0.1.10.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -21,7 +23,7 @@ setup: check-src
 	find $(BUILD_DIR) -name '._*' -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	# The source archive includes the pgrx 0.19.2 dependency update.
+	(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 

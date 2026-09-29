@@ -1,3 +1,10 @@
+jsonschema (0.1.10-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.1.10 and pin pgrx to 0.19.2.
+  * Apply the shared compatibility patch to pristine upstream sources.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 29 Sep 2026 20:00:00 +0800
+
 jsonschema (0.1.9-1PGSTY) unstable; urgency=medium
 
   * Build repacked source and locked dependencies with pgrx 0.19.2.
