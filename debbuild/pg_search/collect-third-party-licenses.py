@@ -14,7 +14,7 @@ EXPECTED_GIT_SOURCES = {
     "git+https://github.com/paradedb/fst.git#11e89334c578f26f9fbafbd1122ffb220ebbdbbf",
     "git+https://github.com/paradedb/opencc-jieba-rs?branch=paradedb.no-msrv#36bb03c052f087b603a483e01cdaac260e36898f",
     "git+https://github.com/paradedb/superkmeans-rs?rev=b89e83196143acd518f1d8212ec1f53474e936d4#b89e83196143acd518f1d8212ec1f53474e936d4",
-    "git+https://github.com/paradedb/tantivy.git?rev=de9405aaadcd9378bdeeea7a4247c7f72e25bbd5#de9405aaadcd9378bdeeea7a4247c7f72e25bbd5",
+    "git+https://github.com/paradedb/tantivy.git?rev=549273e3458ece1782aa459850bbde42c6cbc72f#549273e3458ece1782aa459850bbde42c6cbc72f",
 }
 NOTICE_NAME = re.compile(
     r"^(licen[cs]e|copying|notice|copyright|unlicense)([._-].*)?$", re.IGNORECASE

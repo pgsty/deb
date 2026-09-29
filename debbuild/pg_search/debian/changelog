@@ -1,3 +1,10 @@
+pg-search (0.25.10-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.25.10 with pgrx pinned to 0.19.2.
+  * Preserve the locked dependency graph and automatic debug packages.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 29 Sep 2026 20:00:00 +0800
+
 pg-search (0.25.9-1PGSTY) unstable; urgency=medium
 
   * Update to 0.25.9.
