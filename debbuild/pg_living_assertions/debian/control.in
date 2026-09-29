@@ -13,5 +13,4 @@ Depends: ${postgresql:Depends}, ${misc:Depends}
 Description: Executable SQL assertions with recorded verification history
  pg_living_assertions stores SQL checks, their results, verification times
  and assertion replacement history. Checks run on demand in a read-only
- STABLE context. This is not a per-write SQL ASSERTION constraint.
- The distribution version is 0.4.2; the SQL extension version is 0.4.1.
+ subtransaction that is always rolled back. This is not a per-write SQL ASSERTION constraint.
