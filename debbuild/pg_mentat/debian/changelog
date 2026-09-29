@@ -1,3 +1,10 @@
+pg-mentat (1.10.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.10.1 and the new Mentat workspace layout.
+  * Pin pgrx to 0.19.2 and remove the obsolete pgrx_embed binary.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 29 Sep 2026 20:00:00 +0800
+
 pg-mentat (1.6.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to the upstream 1.6.0 annotated tag.

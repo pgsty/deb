@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc, git
 Standards-Version: 4.7.2
 Rules-Requires-Root: no
-Homepage: https://github.com/gburd/pg_mentat
+Homepage: https://codeberg.org/gregburd/mentat
 
 Package: postgresql-PGVERSION-pg-mentat
 Architecture: any

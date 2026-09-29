@@ -24,7 +24,7 @@ override_dh_auto_install:
 		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
 		cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/$(EXT_NAME).so \
 			$(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
-		cp pg_mentat/sql/$(EXT_NAME)--*.sql \
+		cp crates/pg/pg_mentat/sql/$(EXT_NAME)--*.sql \
 			$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 		cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME).control \
 			$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
