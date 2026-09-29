@@ -4,14 +4,16 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pggraph-1.2.0.tar.gz
+# Source: https://github.com/evokoa/pggraph/archive/refs/tags/v1.2.1.tar.gz
+# Normalize the archive root to pggraph-1.2.1; the SQL extension is graph.
+TARBALL := pggraph-1.2.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.2
 CRATE_DIR := graph
-SOURCE_PATCH := patches/pggraph-1.2.0.patch
+SOURCE_PATCH := patches/pggraph-1.2.1.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
