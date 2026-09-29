@@ -2250,7 +2250,7 @@
 +
 +[[package]]
 +name = "pg_trickle"
-+version = "0.107.0"
++version = "0.108.0"
 +dependencies = [
 + "aho-corasick",
 + "chrono",
@@ -4557,13 +4557,28 @@
 +checksum = "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b"
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -34 +34 @@
+@@ -31,7 +31,7 @@
+ light-e2e = []
+ 
+ [dependencies]
 -pgrx = "=0.18.0"
 +pgrx = "=0.19.2"
-@@ -51 +51 @@
+ serde = { version = "1", features = ["derive"] }
+ serde_json = "1"
+ xxhash-rust = { version = "0.8", features = ["xxh64", "xxh3"] }
+@@ -48,7 +48,7 @@
+ 
+ 
+ [dev-dependencies]
 -pgrx-tests = "=0.18.0"
 +pgrx-tests = "=0.19.2"
-@@ -62,16 +61,0 @@
+ testcontainers = "0.27"
+ testcontainers-modules = { version = "0.15", features = ["postgres"] }
+ tokio = { version = "1", features = ["rt-multi-thread", "macros", "process"] }
+@@ -59,22 +59,6 @@
+ proptest = "1"
+ criterion = { version = "0.5", features = ["html_reports"] }
+ 
 -[[bench]]
 -name = "refresh_bench"
 -harness = false
@@ -4580,24 +4595,33 @@
 -name = "pgvector_bench"
 -harness = false
 -
+ [profile.dev]
+ panic = "unwind"
+ 
 --- /dev/null
 +++ b/PACKAGING-UPGRADE.md
-@@ -0,0 +1,126 @@
-+# pg_trickle 0.81.0 to 0.107.0
+@@ -0,0 +1,132 @@
++# pg_trickle 0.81.0 to 0.108.0
 +
 +The package carries the upstream adjacent extension-update edges from 0.81.0 to
-+0.107.0. Do not treat this as a single unattended `ALTER EXTENSION` operation.
++0.108.0. Do not treat this as a single unattended `ALTER EXTENSION` operation.
 +
-+## Upgrading the previous 0.92.0 package
++## Upgrading the previous 0.107.0 package
 +
-+This package preserves the adjacent SQL path from 0.92.0 to 0.107.0. Review
-+[the versioned upstream upgrade guide](https://github.com/trickle-labs/pg-trickle/blob/v0.107.0/docs/UPGRADING.md)
++This package preserves the adjacent SQL path from 0.107.0 to 0.108.0. Review
++[the versioned upstream upgrade guide](https://github.com/trickle-labs/pg-trickle/blob/v0.108.0/docs/UPGRADING.md)
 +and rehearse against a backup before applying it to an existing installation.
 +Run `preflight_upgrade()` and `validate_recovery()` on the installed version,
 +resolve blockers, stop application writes, and use `quiesce(60)` to drain work.
 +Keep that boundary closed while replacing the package, restarting PostgreSQL,
-+and running `ALTER EXTENSION pg_trickle UPDATE TO '0.107.0'`. Check recovery,
++and running `ALTER EXTENSION pg_trickle UPDATE TO '0.108.0'`. Check recovery,
 +stream-table contents, and consumer state before resuming.
++
++The 0.108.0 migration preserves output-delta consumers, cursors, batches and
++typed payload while adding resnapshot identity fences. Before resuming delivery,
++inspect `output_delta_consumer_status()` and run
++`validate_output_delta_consumer()` for each consumer. Follow the upstream public
++resnapshot workflow for `INVALIDATED` or `RESNAPSHOT_REQUIRED` results.
 +
 +The 0.105.3 release fixes differential results for filtered aggregate subqueries
 +and some EXISTS/NOT EXISTS delete cases. Upgrading the binary does not repair
@@ -4612,17 +4636,17 @@
 +
 +## Continuous write outage from 0.81.0 through V2 recreation
 +
-+The package contains one 0.107.0 shared library for every intermediate SQL
++The package contains one 0.108.0 shared library for every intermediate SQL
 +catalog. Stop application writes and scheduling before replacing the 0.81.0
-+package, and keep them stopped until the SQL catalog is 0.107.0, the V1 graph is
++package, and keep them stopped until the SQL catalog is 0.108.0, the V1 graph is
 +dropped, the V2 graph is recreated, and consumers are resnapshotted.
 +
 +In particular, the 0.82.0 to 0.83.0 edge cannot rebuild dynamic CDC functions
 +inside `ALTER EXTENSION` because they are intentionally not extension members.
-+Do not call `rebuild_cdc_triggers()` at 0.83.0: the 0.107.0 writer references V2
++Do not call `rebuild_cdc_triggers()` at 0.83.0: the 0.108.0 writer references V2
 +APIs and storage contracts that do not exist at that intermediate version.
 +Proceed through adjacent SQL edges under the same write outage. Final DAG
-+recreation at matching runtime/catalog 0.107.0 creates current V2 writers and
++recreation at matching runtime/catalog 0.108.0 creates current V2 writers and
 +fresh buffers. `rebuild_cdc_triggers()` itself is restricted to base-table
 +dependencies so it never mistakes `changes_pgt_<pgt_id>` propagation buffers
 +for OID-named base-table buffers.
@@ -4631,7 +4655,7 @@
 +`create_stream_table` and `create_stream_table_if_not_exists` `CALLED ON NULL
 +INPUT`, and keeps all three creation/alteration entry points `SECURITY DEFINER`,
 +pinned to `pgtrickle, pg_catalog, pg_temp`, and revoked from `PUBLIC`, matching
-+a fresh 0.107.0 install. These attributes are required because their optional
++a fresh 0.108.0 install. These attributes are required because their optional
 +defaults are NULL and the runtime validates the saved security-definer search
 +path.
 +
@@ -4640,7 +4664,7 @@
 +relations are deliberately not converted in place and are rejected by the V2
 +runtime.
 +
-+For this package, one 0.107.0 shared library accompanies every adjacent SQL
++For this package, one 0.108.0 shared library accompanies every adjacent SQL
 +edge. Rehearse this order before crossing the breaking boundary:
 +
 +1. Take a tested physical backup. Disable scheduling cluster-wide, drain
@@ -4661,7 +4685,7 @@
 +   `DROP ... RESTRICT`; non-default owner/config/comment/view metadata is a
 +   deliberate fail-closed condition. Resolve and explicitly restore such state
 +   rather than using `CASCADE`.
-+2. Install the 0.107.0 package, restart PostgreSQL, and run adjacent SQL edges
++2. Install the 0.108.0 package, restart PostgreSQL, and run adjacent SQL edges
 +   through 0.87.15 without executing intermediate DML or CDC writers.
 +3. Advance to 0.87.16 and verify that V1 state fails closed without changing
 +   source or stream data. Advance to 0.87.17, register every
@@ -4672,12 +4696,12 @@
 +   `pg_trickle_dump` and `pg_dump`. The recreation preflight must report both
 +   the still-present V1 graph and non-terminal consumers as incompatible.
 +4. Keep writes and scheduling paused and advance the SQL catalog through
-+   every adjacent SQL edge through 0.107.0 (inspect
++   every adjacent SQL edge through 0.108.0 (inspect
 +   `pg_extension_update_paths('pg_trickle')` for the full path). Do not call stream-table
-+   lifecycle APIs while the 0.107.0 runtime and an intermediate SQL catalog
-+   differ. The 0.107.0 runtime's drop path requires catalog objects introduced
++   lifecycle APIs while the 0.108.0 runtime and an intermediate SQL catalog
++   differ. The 0.108.0 runtime's drop path requires catalog objects introduced
 +   by 0.89.0.
-+5. With runtime and SQL catalog both at 0.107.0, detach exported external
++5. With runtime and SQL catalog both at 0.108.0, detach exported external
 +   dependents and drop V1 stream tables in reverse dependency order. Never
 +   rewrite or cast V1 identifiers, and never reuse old change buffers. Verify
 +   that source tables remain and the old graph is absent. The preflight is
@@ -4707,11 +4731,14 @@
 +
 +Writes made during DAG recreation are not replayed. Keep the scheduler disabled
 +until every affected stream table and external consumer has been recreated and
-+resnapshotted. Consult the v0.107.0 upstream `docs/UPGRADING.md` for the complete
++resnapshotted. Consult the v0.108.0 upstream `docs/UPGRADING.md` for the complete
 +preflight, inventory, rollback, and privacy requirements.
 --- a/build.rs
 +++ b/build.rs
-@@ -25,0 +26,11 @@
+@@ -23,6 +23,17 @@
+     let out_path = generated_dir.join("schema.rs");
+     let script = manifest_path.join("scripts").join("gen_test_schema.py");
+ 
 +    // GitHub and PGXN source archives honor export-ignore and omit scripts/.
 +    // The generated schema is only consumed by tests, so release packaging can
 +    // safely skip regeneration when the upstream helper is unavailable.
@@ -4723,9 +4750,15 @@
 +        return;
 +    }
 +
+     let status = Command::new("python3")
+         .arg(&script)
+         .current_dir(manifest_path)
 --- a/sql/pg_trickle--0.81.1--0.82.0.sql
 +++ b/sql/pg_trickle--0.81.1--0.82.0.sql
-@@ -5,2 +5,92 @@
+@@ -2,29 +2,102 @@
+ 
+ SELECT set_config('pg_trickle.enabled', 'off', true);
+ 
 --- The composite return type of this SQL-facing function gains rows_updated.
 --- Drop the old signature before recreating it with the v0.82.0 return shape.
 +-- All three same-input RETURNS TABLE functions gain rows_updated. Preserve
@@ -4820,7 +4853,7 @@
 +END
 +$pg_stat_stream_tables_metadata_gate$;
 +
-@@ -8,20 +98,3 @@
+ DROP FUNCTION IF EXISTS pgtrickle.get_refresh_history(text, integer);
 -
 -CREATE FUNCTION pgtrickle.get_refresh_history(
 -    name TEXT,
@@ -4844,7 +4877,13 @@
 +DROP FUNCTION IF EXISTS pgtrickle.refresh_timeline(integer);
 +DROP FUNCTION IF EXISTS pgtrickle.st_refresh_stats();
 +DROP VIEW IF EXISTS pgtrickle.pg_stat_stream_tables RESTRICT;
-@@ -42,0 +116,261 @@
+ 
+ ALTER TABLE pgtrickle.pgt_scheduler_jobs
+     ADD COLUMN IF NOT EXISTS dispatch_tick_id BIGINT,
+@@ -40,6 +113,267 @@
+ 
+ ALTER TABLE pgtrickle.pgt_refresh_summary
+     ADD COLUMN IF NOT EXISTS total_rows_updated BIGINT NOT NULL DEFAULT 0;
 +
 +CREATE FUNCTION pgtrickle.get_refresh_history(
 +    "name" TEXT,
@@ -5106,20 +5145,34 @@
 +    END LOOP;
 +END
 +$restore_view_acl$;
+ 
+ CREATE TABLE IF NOT EXISTS pgtrickle.pgt_change_buffers (
+     buffer_key       TEXT PRIMARY KEY,
 --- a/sql/pg_trickle--0.82.0--0.83.0.sql
 +++ b/sql/pg_trickle--0.82.0--0.83.0.sql
-@@ -4,2 +4,3 @@
+@@ -1,8 +1,9 @@
+ -- pg_trickle 0.82.0 -> 0.83.0 upgrade migration
+ --
+ -- Composite row identity is intentionally breaking for persisted rows.
 --- Source locks and buffer conversion happen in this transaction so a writer
 --- cannot commit version-1 hashes after version-2 capture is enabled.
 +-- Lock supported local relations and clear pending V1 buffers while the
 +-- package-wide maintenance procedure keeps every application writer,
 +-- foreign producer, materialized-view refresh, and scheduler stopped.
-@@ -17,4 +17,0 @@
+ 
+ SELECT set_config('pg_trickle.enabled', 'off', true);
+ 
+@@ -14,18 +15,13 @@
+ ALTER TABLE pgtrickle.pgt_stream_tables
+     ADD COLUMN IF NOT EXISTS row_identity_version SMALLINT;
+ 
 -COMMENT ON COLUMN pgtrickle.pgt_stream_tables.row_identity_version IS
 -    'Composite row-identity encoding version. NULL is unknown; existing '
 -    'objects are conservatively marked version 1 until protected rebuild.';
 -
-@@ -24,5 +21,4 @@
+ ALTER TABLE pgtrickle.pgt_change_buffers
+     ADD COLUMN IF NOT EXISTS row_identity_version SMALLINT;
+ 
 -COMMENT ON COLUMN pgtrickle.pgt_change_buffers.row_identity_version IS
 -    'Composite row-identity encoding used by buffer writers.';
 -
@@ -5129,16 +5182,34 @@
 +-- cleared. PostgreSQL does not support LOCK TABLE on materialized views or
 +-- foreign tables; PACKAGING-UPGRADE.md requires those producers/refreshes to
 +-- remain fenced for the whole cross-version migration.
-@@ -48 +44 @@
+ DO $$
+ DECLARE
+     source_oid oid;
+@@ -45,7 +41,7 @@
+             SELECT 1
+             FROM pg_catalog.pg_class
+             WHERE oid = source_oid
 -              AND relkind IN ('r', 'p', 'v', 'm', 'f')
 +              AND relkind IN ('r', 'p', 'v')
-@@ -80,2 +76,3 @@
+         ) THEN
+             EXECUTE format(
+                 'LOCK TABLE %s IN SHARE ROW EXCLUSIVE MODE',
+@@ -77,8 +73,9 @@
+     updated_at = now();
+ 
+ -- Drop all pending version-1 changes while retaining exactly the sentinel.
 --- The source lock above prevents new trigger rows from being inserted during
 --- this conversion. A missing registered relation aborts the whole upgrade.
 +-- The local source locks plus the external write fence prevent new trigger or
 +-- polling rows during this conversion. A missing registered relation aborts
 +-- the whole upgrade.
-@@ -128,4 +125,11 @@
+ DO $$
+ DECLARE
+     buffer_schema text := COALESCE(
+@@ -125,13 +122,20 @@
+ END
+ $$;
+ 
 --- Rebuild every existing CDC writer before buffers are marked version 2.
 --- The function aborts on any writer failure, preserving the migration
 --- transaction instead of allowing mixed identity encodings.
@@ -5154,20 +5225,34 @@
 +    RAISE NOTICE 'pg_trickle 0.83.0: writes and scheduling must remain paused through catalog 0.90.0 and V2 DAG recreation; do not execute intermediate CDC writers';
 +END
 +$deferred_cdc_rebuild$;
-@@ -134 +138 @@
+ 
+ UPDATE pgtrickle.pgt_change_buffers
 -SET row_identity_version = 2;
 +SET row_identity_version = 1;
+ 
+ INSERT INTO pgtrickle.pgt_schema_version (version, description)
+ VALUES (
 --- a/sql/pg_trickle--0.84.0--0.85.0.sql
 +++ b/sql/pg_trickle--0.84.0--0.85.0.sql
-@@ -58 +58 @@
+@@ -55,10 +55,10 @@
+     IF NOT EXISTS (
+         SELECT 1 FROM pg_catalog.pg_constraint
+         WHERE conrelid = 'pgtrickle.pgt_stream_tables'::regclass
 -          AND conname = 'pgt_stream_tables_self_heal_lock_backoff_check'
 +          AND conname = 'pgt_stream_tables_self_heal_lock_backoff_exponent_check'
-@@ -61 +61 @@
+     ) THEN
+         ALTER TABLE pgtrickle.pgt_stream_tables
 -            ADD CONSTRAINT pgt_stream_tables_self_heal_lock_backoff_check
 +            ADD CONSTRAINT pgt_stream_tables_self_heal_lock_backoff_exponent_check
+             CHECK (self_heal_lock_backoff_exponent BETWEEN 0 AND 6);
+     END IF;
+     IF NOT EXISTS (
 --- a/sql/pg_trickle--0.85.0--0.86.0.sql
 +++ b/sql/pg_trickle--0.85.0--0.86.0.sql
-@@ -74,0 +75,58 @@
+@@ -72,6 +72,64 @@
+ LEFT JOIN pgtrickle.pgt_cost_model_summary c ON c.pgt_id = st.pgt_id;
+ 
+ -- Replace C wrappers whose signatures gained the v0.86.0 freshness argument.
 +SELECT set_config(
 +    'pg_trickle._upgrade_086_saved_function_acl',
 +    COALESCE(jsonb_agg(jsonb_build_object(
@@ -5226,19 +5311,31 @@
 +END
 +$upgrade_086_function_metadata_gate$;
 +
-@@ -99 +157,4 @@
+ DROP FUNCTION IF EXISTS pgtrickle."create_stream_table"(
+     text, text, text, text, boolean, text, text, text, boolean, boolean,
+     text, integer, double precision, text, boolean, text, integer
+@@ -96,7 +154,10 @@
+     "fillfactor" integer DEFAULT NULL,
+     "target_freshness" TEXT DEFAULT NULL
+ ) RETURNS void
 -STRICT LANGUAGE c
 +CALLED ON NULL INPUT
 +SECURITY DEFINER
 +SET search_path TO pgtrickle, pg_catalog, pg_temp
 +LANGUAGE c
-@@ -126 +187,4 @@
+ AS 'MODULE_PATHNAME', 'create_stream_table_wrapper';
+ 
+ DROP FUNCTION IF EXISTS pgtrickle."create_stream_table_if_not_exists"(
+@@ -123,8 +184,20 @@
+     "fillfactor" integer DEFAULT NULL,
+     "target_freshness" TEXT DEFAULT NULL
+ ) RETURNS void
 -STRICT LANGUAGE c
 +CALLED ON NULL INPUT
 +SECURITY DEFINER
 +SET search_path TO pgtrickle, pg_catalog, pg_temp
 +LANGUAGE c
-@@ -127,0 +192,9 @@
+ AS 'MODULE_PATHNAME', 'create_stream_table_if_not_exists_wrapper';
 +
 +REVOKE EXECUTE ON FUNCTION pgtrickle.create_stream_table(
 +    text, text, text, text, boolean, text, text, text, boolean, boolean,
@@ -5248,10 +5345,22 @@
 +    text, text, text, text, boolean, text, text, text, boolean, boolean,
 +    text, integer, double precision, text, boolean, text, integer, text
 +) FROM PUBLIC;
-@@ -155,0 +229,2 @@
+ 
+ DROP FUNCTION IF EXISTS pgtrickle."alter_stream_table"(
+     text, text, text, text, text, text, text, text, boolean, boolean,
+@@ -153,6 +226,8 @@
+     "reindex_drift_threshold" double precision DEFAULT NULL,
+     "target_freshness" TEXT DEFAULT NULL
+ ) RETURNS void
 +SECURITY DEFINER
 +SET search_path TO pgtrickle, pg_catalog, pg_temp
-@@ -196,0 +272,99 @@
+ LANGUAGE c
+ AS 'MODULE_PATHNAME', 'alter_stream_table_wrapper';
+ 
+@@ -194,6 +269,105 @@
+ STRICT LANGUAGE c
+ AS 'MODULE_PATHNAME', 'get_refresh_history_wrapper';
+ 
 +REVOKE EXECUTE ON FUNCTION pgtrickle.create_stream_table(
 +    text, text, text, text, boolean, text, text, text, boolean, boolean,
 +    text, integer, double precision, text, boolean, text, integer, text
@@ -5351,21 +5460,36 @@
 +END
 +$restore_086_function_acl$;
 +
-@@ -221,2 +394,0 @@
+ CREATE OR REPLACE FUNCTION pgtrickle."explain"("name" TEXT)
+ RETURNS TEXT
+ STRICT LANGUAGE c
+@@ -218,5 +392,3 @@
+ REVOKE EXECUTE ON FUNCTION pgtrickle.stat_reset_all() FROM PUBLIC;
+ GRANT EXECUTE ON FUNCTION pgtrickle.explain(text) TO PUBLIC;
+ GRANT EXECUTE ON FUNCTION pgtrickle.explain_json(text) TO PUBLIC;
 -GRANT EXECUTE ON FUNCTION pgtrickle.get_refresh_history(text, integer) TO PUBLIC;
 -GRANT EXECUTE ON FUNCTION pgtrickle.preview_stream_table(text, text, text, text) TO PUBLIC;
 --- a/sql/pg_trickle--0.87.12--0.87.13.sql
 +++ b/sql/pg_trickle--0.87.12--0.87.13.sql
-@@ -50,0 +51,6 @@
+@@ -48,6 +48,12 @@
+     ALTER COLUMN pg_tide_version SET NOT NULL,
+     ALTER COLUMN tide_outbox_created_at SET NOT NULL;
+ 
 +COMMENT ON TABLE pgtrickle.pgt_outbox_config IS
 +    'v0.46.0: Catalog of stream tables with a pg_tide outbox attached via attach_outbox(). '
 +    'v0.48.0: embedding_vector_column set when attached via attach_embedding_outbox(). '
 +    'v0.87.13: pg_tide extension OID, version, and outbox creation time are '
 +    'stored to reject stale name reuse.';
 +
+ ALTER FUNCTION pgtrickle.attach_outbox(text, integer, integer)
+     SECURITY DEFINER; -- nosemgrep: sql.security-definer.present — external pg_tide calls run as the captured caller.
+ ALTER FUNCTION pgtrickle.attach_outbox(text, integer, integer)
 --- a/sql/pg_trickle--0.87.14--0.87.15.sql
 +++ b/sql/pg_trickle--0.87.14--0.87.15.sql
-@@ -17,0 +18,5 @@
+@@ -15,3 +15,8 @@
+ IMMUTABLE STRICT PARALLEL SAFE
+ LANGUAGE c
+ AS 'MODULE_PATHNAME', 'row_probe_v1_wrapper';
 +
 +-- Match a fresh 0.87.15 install. The following 0.87.16 edge deliberately
 +-- grants both foundation helpers to PUBLIC when V2 storage is activated.
@@ -5373,30 +5497,63 @@
 +REVOKE EXECUTE ON FUNCTION pgtrickle.row_probe_v1(bytea) FROM PUBLIC;
 --- a/sql/pg_trickle--0.87.16--0.87.17.sql
 +++ b/sql/pg_trickle--0.87.16--0.87.17.sql
-@@ -171 +171 @@
+@@ -168,7 +168,7 @@
+ 
+ CREATE OR REPLACE FUNCTION pgtrickle.row_identity_v2_acknowledge_consumer(
+     p_consumer_id BIGINT,
 -    p_resnapshot_status TEXT DEFAULT 'PENDING'
 +    p_resnapshot_status TEXT DEFAULT 'COMPLETE'
-@@ -184,2 +184,2 @@
+ )
+ RETURNS VOID
+ LANGUAGE plpgsql
+@@ -181,8 +181,8 @@
+         RAISE EXCEPTION 'pg_trickle: row-identity inventory requires the extension owner or superuser'
+             USING ERRCODE = '42501';
+     END IF;
 -    IF v_status NOT IN ('PENDING', 'IN_PROGRESS', 'COMPLETE', 'SKIPPED') THEN
 -        RAISE EXCEPTION 'pg_trickle: invalid resnapshot status %', p_resnapshot_status
 +    IF v_status NOT IN ('COMPLETE', 'SKIPPED') THEN
 +        RAISE EXCEPTION 'pg_trickle: consumer acknowledgment requires terminal resnapshot status COMPLETE or SKIPPED, not %', p_resnapshot_status
-@@ -254 +254 @@
+             USING ERRCODE = '22023';
+     END IF;
+     UPDATE pgtrickle.pgt_row_identity_v2_consumers
+@@ -251,7 +251,7 @@
+     v_max_index_bytes BIGINT;
+     v_scheduler_paused BOOLEAN;
+     v_inventory_ack BOOLEAN;
 -    v_unacknowledged_consumers BIGINT;
 +    v_incomplete_consumers BIGINT;
-@@ -368 +368 @@
+     v_change_schema TEXT := COALESCE(
+         current_setting('pg_trickle.change_buffer_schema', TRUE),
+         'pgtrickle_changes'
+@@ -365,9 +365,10 @@
+       INTO v_inventory_ack
+       FROM pgtrickle.pgt_row_identity_v2_inventory
+      WHERE inventory_id;
 -    SELECT count(*) INTO v_unacknowledged_consumers
 +    SELECT count(*) INTO v_incomplete_consumers
-@@ -370 +370,2 @@
+       FROM pgtrickle.pgt_row_identity_v2_consumers
 -     WHERE NOT acknowledged;
 +     WHERE NOT acknowledged
 +        OR resnapshot_status NOT IN ('COMPLETE', 'SKIPPED');
-@@ -410,2 +411,2 @@
+ 
+     v_check := jsonb_build_object(
+         'check', 'SUPPORTED_POSTGRESQL_MAJOR', 'ok', v_server_major = 18,
+@@ -407,8 +408,8 @@
+     ));
+     v_checks := array_append(v_checks, jsonb_build_object(
+         'check', 'EXTERNAL_CONSUMER_INVENTORY',
 -        'ok', v_inventory_ack AND v_unacknowledged_consumers = 0,
 -        'detail', format('inventory acknowledged=%s; unacknowledged consumers=%s', v_inventory_ack, v_unacknowledged_consumers)
 +        'ok', v_inventory_ack AND v_incomplete_consumers = 0,
 +        'detail', format('inventory acknowledged=%s; incomplete or unacknowledged consumers=%s', v_inventory_ack, v_incomplete_consumers)
-@@ -424,4 +425,4 @@
+     ));
+ 
+     SELECT jsonb_agg(value) INTO v_check_list FROM unnest(v_checks) AS checks(value);
+@@ -421,12 +422,12 @@
+         'release', '0.87.17',
+         'checks', COALESCE(v_check_list, '[]'::JSONB),
+         'instructions', jsonb_build_array(
 -            'Pause the scheduler and wait for in-flight refreshes to drain.',
 -            'Export stream-table definitions and metadata before dropping anything.',
 -            'Drop V1 stream tables in reverse dependency order and clean only unused V1 buffers.',
@@ -5405,12 +5562,18 @@
 +            'Register external consumers and export stream-table definitions while the V1 graph still exists.',
 +            'When one later package supplies every intermediate SQL edge, advance the SQL catalog to match the loaded binary before calling lifecycle APIs.',
 +            'Drop V1 stream tables in reverse dependency order and clean only proved-unused V1 buffers.',
-@@ -429 +430 @@
+             'Recreate stream tables in dependency order and perform fresh initial refreshes.',
 -            'Update every external consumer to BYTEA, resnapshot after refresh, and acknowledge completion.',
 +            'Update every external consumer to BYTEA, resnapshot after refresh, and acknowledge only COMPLETE or SKIPPED.',
+             'Writes made during the recreation window are not replayed; resume writes only after resnapshot.'
+         )
+     );
 --- a/sql/pg_trickle--0.87.6--0.87.7.sql
 +++ b/sql/pg_trickle--0.87.6--0.87.7.sql
-@@ -44,5 +43,0 @@
+@@ -41,8 +41,3 @@
+ 
+ ALTER TABLE pgtrickle.pgt_stream_tables
+     ALTER COLUMN defining_search_path SET NOT NULL;
 -
 -COMMENT ON COLUMN pgtrickle.pgt_stream_tables.defining_search_path IS
 -    'Exact search_path defining_query was resolved under (bare $user '
@@ -5418,7 +5581,8 @@
 -    'query; preserved by configuration-only ALTERs and ownership transfer.';
 --- a/sql/pg_trickle--0.89.0--0.90.0.sql
 +++ b/sql/pg_trickle--0.89.0--0.90.0.sql
-@@ -1,0 +2,84 @@
+@@ -1,4 +1,88 @@
+ -- pg_trickle 0.89.0 -> 0.90.0
 +
 +-- Later ALTER TABLE additions changed the expansion of st.*. Preserve custom
 +-- ACLs and use RESTRICT so user dependencies block before any catalog mutation.
@@ -5503,9 +5667,16 @@
 +$stream_tables_info_metadata_gate$;
 +
 +DROP VIEW pgtrickle.stream_tables_info RESTRICT;
-@@ -75,0 +160 @@
+ 
+ -- Exact freshness evidence is additive. Existing rows stay NULL and are not
+ -- treated as measurements because their provenance cannot be reconstructed.
+@@ -73,27 +157,231 @@
+ DO $$
+ DECLARE
+     buffer RECORD;
 +    column_spec RECORD;
-@@ -77,0 +163,13 @@
+     buffer_schema TEXT := current_setting('pg_trickle.change_buffer_schema', true);
+     qualified_name TEXT;
 +    buffer_relid OID;
 +    source_relid OID;
 +    source_has_original BOOLEAN;
@@ -5519,13 +5690,16 @@
 +    buffer_typmod INTEGER;
 +    buffer_collation OID;
 +    default_expression TEXT;
-@@ -81 +179,2 @@
+ BEGIN
+     buffer_schema := COALESCE(NULLIF(buffer_schema, ''), 'pgtrickle_changes');
+     FOR buffer IN
 -        SELECT buffer_key, source_kind
 +        SELECT buffer_key, source_kind, source_id,
 +               row_identity_version, row_probe_version
-@@ -82,0 +182 @@
+           FROM pgtrickle.pgt_change_buffers
 +         ORDER BY source_kind, source_id
-@@ -85 +185,31 @@
+     LOOP
+         qualified_name := format('%I.%I', buffer_schema, buffer.buffer_key);
 -        IF to_regclass(qualified_name) IS NULL THEN
 +        buffer_relid := to_regclass(qualified_name);
 +        IF buffer_relid IS NULL THEN
@@ -5558,7 +5732,7 @@
 +            -- The supported 0.81 package path deliberately leaves V1 buffers
 +            -- fail-closed. Do not reinterpret or alter their physical schema;
 +            -- the protected reverse-drop/recreate step replaces them.
-@@ -87,5 +217,139 @@
+             CONTINUE;
 -        END IF;
 -        -- Keep the dynamic DDL separate from the upgrade-completeness parser;
 -        -- the actual statement is still ALTER TABLE ... ADD COLUMN.
@@ -5703,7 +5877,11 @@
 +            END IF;
 +        END LOOP;
 +
-@@ -96,0 +361,24 @@
+         IF buffer.source_kind = 'BASE' THEN
+             EXECUTE format(
+                 'ALTER TABLE %s ALTER COLUMN source_xid SET DEFAULT pg_current_xact_id()::xid',
+                 qualified_name
+             );
 +        ELSE
 +            EXECUTE format(
 +                'ALTER TABLE %s ALTER COLUMN source_xid DROP DEFAULT',
@@ -5728,7 +5906,13 @@
 +            RAISE EXCEPTION
 +                'pg_trickle 0.90.0 upgrade: STREAM_TABLE buffer % unexpectedly has source_xid default %',
 +                qualified_name, default_expression;
-@@ -208 +496,53 @@
+         END IF;
+     END LOOP;
+ END
+@@ -205,7 +493,59 @@
+ STRICT LANGUAGE c
+ AS 'MODULE_PATHNAME', 'worker_pool_status_wrapper';
+ 
 -GRANT EXECUTE ON FUNCTION pgtrickle.worker_pool_status() TO PUBLIC;
 +REVOKE EXECUTE ON FUNCTION pgtrickle.worker_pool_status() FROM PUBLIC;
 +DO $clear_worker_pool_status_acl$
@@ -5783,7 +5967,13 @@
 +    END LOOP;
 +END
 +$restore_worker_pool_status_acl$;
-@@ -222 +562,147 @@
+ 
+ CREATE OR REPLACE FUNCTION pgtrickle."recommend_target_freshness"(name TEXT) RETURNS TABLE (
+     stream_table TEXT,
+@@ -219,7 +559,153 @@
+ STRICT STABLE PARALLEL SAFE LANGUAGE c
+ AS 'MODULE_PATHNAME', 'recommend_target_freshness_wrapper';
+ 
 -GRANT EXECUTE ON FUNCTION pgtrickle.recommend_target_freshness(text) TO PUBLIC;
 +REVOKE EXECUTE ON FUNCTION pgtrickle.recommend_target_freshness(text) FROM PUBLIC;
 +
@@ -5932,37 +6122,79 @@
 +    END LOOP;
 +END
 +$restore_stream_tables_info_acl$;
+ 
+ INSERT INTO pgtrickle.pgt_schema_version (version, description)
+ VALUES ('0.90.0',
 --- a/src/api/diagnostics.rs
 +++ b/src/api/diagnostics.rs
-@@ -338 +338 @@
+@@ -335,7 +335,7 @@
+             .select(
+                 "SELECT DISTINCT source_relid \
+                  FROM pgtrickle.pgt_dependencies \
 -                 WHERE source_type IN ('TABLE', 'STREAM_TABLE')",
 +                 WHERE source_type = 'TABLE'",
+                 None,
+                 &[],
+             )
 --- a/src/lib.rs
 +++ b/src/lib.rs
-@@ -1161 +1161 @@
+@@ -1161,7 +1161,7 @@
+ 
+ CREATE OR REPLACE FUNCTION pgtrickle.row_identity_v2_acknowledge_consumer(
+     p_consumer_id BIGINT,
 -    p_resnapshot_status TEXT DEFAULT 'PENDING'
 +    p_resnapshot_status TEXT DEFAULT 'COMPLETE'
-@@ -1174,2 +1174,2 @@
+ )
+ RETURNS VOID
+ LANGUAGE plpgsql
+@@ -1174,8 +1174,8 @@
+         RAISE EXCEPTION 'pg_trickle: row-identity inventory requires the extension owner or superuser'
+             USING ERRCODE = '42501';
+     END IF;
 -    IF v_status NOT IN ('PENDING', 'IN_PROGRESS', 'COMPLETE', 'SKIPPED') THEN
 -        RAISE EXCEPTION 'pg_trickle: invalid resnapshot status %', p_resnapshot_status
 +    IF v_status NOT IN ('COMPLETE', 'SKIPPED') THEN
 +        RAISE EXCEPTION 'pg_trickle: consumer acknowledgment requires terminal resnapshot status COMPLETE or SKIPPED, not %', p_resnapshot_status
-@@ -1244 +1244 @@
+             USING ERRCODE = '22023';
+     END IF;
+     UPDATE pgtrickle.pgt_row_identity_v2_consumers
+@@ -1244,7 +1244,7 @@
+     v_max_index_bytes BIGINT;
+     v_scheduler_paused BOOLEAN;
+     v_inventory_ack BOOLEAN;
 -    v_unacknowledged_consumers BIGINT;
 +    v_incomplete_consumers BIGINT;
-@@ -1358 +1358 @@
+     v_change_schema TEXT := COALESCE(
+         current_setting('pg_trickle.change_buffer_schema', TRUE),
+         'pgtrickle_changes'
+@@ -1358,9 +1358,10 @@
+       INTO v_inventory_ack
+       FROM pgtrickle.pgt_row_identity_v2_inventory
+      WHERE inventory_id;
 -    SELECT count(*) INTO v_unacknowledged_consumers
 +    SELECT count(*) INTO v_incomplete_consumers
-@@ -1360 +1360,2 @@
+       FROM pgtrickle.pgt_row_identity_v2_consumers
 -     WHERE NOT acknowledged;
 +     WHERE NOT acknowledged
 +        OR resnapshot_status NOT IN ('COMPLETE', 'SKIPPED');
-@@ -1400,2 +1401,2 @@
+ 
+     v_check := jsonb_build_object(
+         'check', 'SUPPORTED_POSTGRESQL_MAJOR', 'ok', v_server_major = 18,
+@@ -1400,8 +1401,8 @@
+     ));
+     v_checks := array_append(v_checks, jsonb_build_object(
+         'check', 'EXTERNAL_CONSUMER_INVENTORY',
 -        'ok', v_inventory_ack AND v_unacknowledged_consumers = 0,
 -        'detail', format('inventory acknowledged=%s; unacknowledged consumers=%s', v_inventory_ack, v_unacknowledged_consumers)
 +        'ok', v_inventory_ack AND v_incomplete_consumers = 0,
 +        'detail', format('inventory acknowledged=%s; incomplete or unacknowledged consumers=%s', v_inventory_ack, v_incomplete_consumers)
-@@ -1414,4 +1415,4 @@
+     ));
+ 
+     SELECT jsonb_agg(value) INTO v_check_list FROM unnest(v_checks) AS checks(value);
+@@ -1414,12 +1415,12 @@
+         'release', '0.87.17',
+         'checks', COALESCE(v_check_list, '[]'::JSONB),
+         'instructions', jsonb_build_array(
 -            'Pause the scheduler and wait for in-flight refreshes to drain.',
 -            'Export stream-table definitions and metadata before dropping anything.',
 -            'Drop V1 stream tables in reverse dependency order and clean only unused V1 buffers.',
@@ -5971,6 +6203,9 @@
 +            'Register external consumers and export stream-table definitions while the V1 graph still exists.',
 +            'When one later package supplies every intermediate SQL edge, advance the SQL catalog to match the loaded binary before calling lifecycle APIs.',
 +            'Drop V1 stream tables in reverse dependency order and clean only proved-unused V1 buffers.',
-@@ -1419 +1420 @@
+             'Recreate stream tables in dependency order and perform fresh initial refreshes.',
 -            'Update every external consumer to BYTEA, resnapshot after refresh, and acknowledge completion.',
 +            'Update every external consumer to BYTEA, resnapshot after refresh, and acknowledge only COMPLETE or SKIPPED.',
+             'Writes made during the recreation window are not replayed; resume writes only after resnapshot.'
+         )
+     );
