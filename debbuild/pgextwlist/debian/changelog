@@ -1,0 +1,7 @@
+pgextwlist (1.20-1PGSTY) unstable; urgency=medium
+
+  * Package upstream 1.20 for PostgreSQL 14 through 18.
+  * Retain LLVM bitcode and automatic dbgsym packages.
+  * Install a plugins symlink for local_preload_libraries.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 30 Sep 2026 16:30:00 +0800
