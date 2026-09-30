@@ -868,6 +868,9 @@ pg_isok:
 passwordcheck_cracklib:
 	cd passwordcheck_cracklib && make
 
+pgextwlist:
+	cd pgextwlist && make
+
 passwordpolicy:
 	cd passwordpolicy && make
 
