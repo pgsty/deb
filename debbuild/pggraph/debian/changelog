@@ -2,6 +2,7 @@ pggraph (1.2.1-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.2.1 with pgrx pinned to 0.19.2.
   * Preserve the locked dependency graph and automatic debug packages.
+  * Check the complete 1.2.1 SQL payload and fail on any installation error.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 29 Sep 2026 20:00:00 +0800
 
