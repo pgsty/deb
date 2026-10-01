@@ -16,7 +16,7 @@ OPENSSL_HAS_NATIVE_QUIC := $(shell $(PKG_CONFIG) --atleast-version=3.5.2 openssl
 # diverging from the shipped unit.
 SERVICE_IN_SHA256 := 937ff126740ce81e487929cb3c927c608de18b86396e0939bb5fd632897db783
 
-# halog, iprange, and ip6range are user commands and go to /usr/bin.
+# halog, haproxy-iprange, and ip6range are user commands and go to /usr/bin.
 # haproxy-reload and haproxy-dump-certs drive the master CLI socket and stay
 # in /usr/sbin, where upstream's install-admin target puts them.
 USER_TOOLS = admin/halog/halog admin/iprange/iprange admin/iprange/ip6range
@@ -88,7 +88,9 @@ override_dh_auto_install-arch:
 	# /usr/sbin; they are installed into /usr/bin right below.
 	make $(MAKEARGS) EXTRA= install
 	install -m 0755 -d debian/haproxy/usr/bin
-	install -m 0755 $(USER_TOOLS) debian/haproxy/usr/bin
+	install -m 0755 admin/halog/halog admin/iprange/ip6range debian/haproxy/usr/bin
+	# The unrelated iprange package owns /usr/bin/iprange.
+	install -m 0755 admin/iprange/iprange debian/haproxy/usr/bin/haproxy-iprange
 	install -m 0644 -D utils/haproxy.rsyslog debian/haproxy/etc/rsyslog.d/49-haproxy.conf
 	install -m 0644 -D utils/haproxy.logrotate debian/haproxy/etc/logrotate.d/haproxy
 

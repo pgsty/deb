@@ -1,6 +1,8 @@
 haproxy (3.4.4-1PGSTY) unstable; urgency=medium
 
   * New upstream release 3.4.4.
+  * Install the IPv4 range helper as haproxy-iprange to avoid colliding with
+    the unrelated iprange package.
   * Refresh the single reproducibility patch without fuzz or offset.
   * Regenerate haproxy-utils-3.4.4.tar.gz deterministically. The upstream
     systemd template and all shared downstream assets remain byte-identical.
