@@ -1,6 +1,8 @@
 redis (6:7.2.16-1PGSTY~@RELEASE@) @RELEASE@; urgency=high
 
   * Update to the Redis 7.2.16 security release.
+  * Restore versioned Provides, Replaces, and Conflicts for redis-server,
+    redis-sentinel, and redis-tools when installing the combined package.
   * Fix TLS pending-list and blocked-client use-after-free issues.
   * Fix ACL key validation and KEYNUM key-extraction bounds checks.
   * Keep Redis on the 7.2 LTS series; defer Redis 8.10.1 separately.
