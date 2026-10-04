@@ -1,3 +1,9 @@
+pg-background (2.0.4-1PGSTY) unstable; urgency=medium
+
+  * Update to 2.0.4.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 pg-background (2.0.3-2PGSTY) unstable; urgency=medium
 
   * Add downstream extension version 2.0.3 and a 2.0 to 2.0.3 security

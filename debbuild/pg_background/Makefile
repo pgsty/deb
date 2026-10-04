@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_background-2.0.3.tar.gz
+TARBALL := pg_background-2.0.4.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -13,7 +13,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
-	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/pg_background-2.0.3.patch
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/pg_background-2.0.4.patch
 	pg_buildext updatecontrol
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
