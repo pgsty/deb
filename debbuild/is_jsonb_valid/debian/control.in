@@ -1,0 +1,14 @@
+Source: is-jsonb-valid
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/furstenheim/is_jsonb_valid
+
+Package: postgresql-PGVERSION-is-jsonb-valid
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Native JSON Schema validation for PostgreSQL
+ Native JSON Schema validation for PostgreSQL.

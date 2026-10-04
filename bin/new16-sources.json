@@ -245,5 +245,28 @@
       }
     ],
     "kind": "pgxs"
+  },
+  {
+    "extension": "is_jsonb_valid",
+    "package": "is_jsonb_valid",
+    "deb_package": "is-jsonb-valid",
+    "version": "0.1.4",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "is_jsonb_valid-0.1.4-1f536758ae06.tar.gz",
+      "sha256": "55836219b52d6040d85e0fe36feba694b8e74e3ae85284dd35ecbdf0c8fc3878",
+      "url": "https://codeload.github.com/furstenheim/is_jsonb_valid/tar.gz/1f536758ae066a22378ecbbdb2ca3ba27a5ac6ce",
+      "ref": "1f536758ae066a22378ecbbdb2ca3ba27a5ac6ce",
+      "source_kind": "pinned-upstream-commit",
+      "repository": "furstenheim/is_jsonb_valid"
+    },
+    "patches": [],
+    "kind": "pgxs"
   }
 ]
