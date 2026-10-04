@@ -120,5 +120,33 @@
     },
     "patches": [],
     "kind": "pgxs"
+  },
+  {
+    "extension": "pg_json_diff",
+    "package": "pg_json_diff",
+    "deb_package": "pg-json-diff",
+    "version": "1.0",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "pg_json_diff-1.0-95cd668636ce.tar.gz",
+      "sha256": "925fed2c6471b35f8b04cabcdf516c3a9c1c3f052a8395401a95385c214b9db6",
+      "url": "https://codeload.github.com/KhaledSMQ/pg-jsondiff/tar.gz/95cd668636ce9c88d2f6ac57d92ac5301a81ed3c",
+      "ref": "95cd668636ce9c88d2f6ac57d92ac5301a81ed3c",
+      "source_kind": "pinned-upstream-commit",
+      "repository": "KhaledSMQ/pg-jsondiff"
+    },
+    "patches": [
+      {
+        "name": "pg-json-diff-1.0-control.patch",
+        "sha256": "c94ff50b5c522375a723649de50d9ea27875000cb22e3c963c31e82137f0e9b2"
+      }
+    ],
+    "kind": "pgxs"
   }
 ]

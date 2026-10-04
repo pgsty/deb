@@ -1,0 +1,14 @@
+Source: pg-json-diff
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/KhaledSMQ/pg-jsondiff
+
+Package: postgresql-PGVERSION-pg-json-diff
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: JSON diff, patch and merge functions for PostgreSQL
+ JSON diff, patch and merge functions for PostgreSQL.

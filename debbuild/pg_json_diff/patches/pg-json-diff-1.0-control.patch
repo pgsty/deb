@@ -1,0 +1,9 @@
+diff --git a/pg_json_diff.control b/pg_json_diff.control
+--- a/pg_json_diff.control
++++ b/pg_json_diff.control
+@@ -5,5 +5,4 @@ default_version = '1.0'
+ module_pathname = '$libdir/pg_json_diff'
+ relocatable = true
+ requires = ''
+-author = 'Khaled Sameer <khaled.smq@hotmail.com>'
+ 
