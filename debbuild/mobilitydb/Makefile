@@ -1,12 +1,12 @@
 all: setup build move
 
-VERSION := 1.3.0
+VERSION := 1.3.1
 TARBALL := mobilitydb-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_SHA256 := 2851c322a6250d7502d91817d9e4a4fb56715c403c1eeb5aa32990041b076dfe
+SOURCE_SHA256 := 6fad822e49c765e4c10307493d9b85d1a8a1faa1b124cce812bb3e8521bd383c
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 18
+PG_VERSIONS ?= 14 15 16 17 18
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -32,7 +32,7 @@ move:
 		test "$$#" -eq 1 -a -f "$$1" || (echo "expected exactly one PG $$v package"; exit 1); \
 		cp "$$1" $(PKG_OUTPUT_DIR)/; \
 	done
-	find . -maxdepth 1 -type f -name '*.ddeb' -exec cp {} $(PKG_OUTPUT_DIR)/ \;
+	find . -maxdepth 1 -type f \( -name '*.ddeb' -o -name '*-dbgsym_*.deb' \) -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
