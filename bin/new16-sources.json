@@ -21,5 +21,29 @@
     },
     "patches": [],
     "kind": "pgxs"
+  },
+  {
+    "extension": "pg_money",
+    "package": "pg_money",
+    "deb_package": "pg-money",
+    "version": "0.3.0",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "pg_money-0.3.0.tar.gz",
+      "sha256": "2b9c12ab9c17115685983548d211fa618143a70a1e01d08f91636848b5bf469b",
+      "url": "https://codeload.github.com/RustedBytes/pg-money/tar.gz/v0.3.0",
+      "ref": "v0.3.0",
+      "source_kind": "release-tag",
+      "repository": "RustedBytes/pg-money"
+    },
+    "patches": [],
+    "kind": "pgrx",
+    "pgrx": "0.19.2"
   }
 ]
