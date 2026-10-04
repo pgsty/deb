@@ -1,0 +1,16 @@
+Description: Configure the pinned xsimd 8.1 headers with CMake 4
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-needed
+
+--- a/cpp/cmake_modules/ThirdpartyToolchain.cmake
++++ b/cpp/cmake_modules/ThirdpartyToolchain.cmake
+@@ -2215,7 +2215,8 @@
+ macro(build_xsimd)
+   message(STATUS "Building xsimd from source")
+   set(XSIMD_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/xsimd_ep/src/xsimd_ep-install")
+-  set(XSIMD_CMAKE_ARGS ${EP_COMMON_CMAKE_ARGS} "-DCMAKE_INSTALL_PREFIX=${XSIMD_PREFIX}")
++  set(XSIMD_CMAKE_ARGS ${EP_COMMON_CMAKE_ARGS} "-DCMAKE_INSTALL_PREFIX=${XSIMD_PREFIX}"
++                      -DCMAKE_POLICY_VERSION_MINIMUM=3.5)
+ 
+   externalproject_add(xsimd_ep
+                       ${EP_LOG_OPTIONS}

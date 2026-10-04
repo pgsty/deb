@@ -163,7 +163,21 @@
       "adaptation": "Packaging layout only; upstream source pinned to shared SFCGAL 2.2.0."
     }
   ],
-  "additional_sources": [],
+  "additional_sources": [
+    {
+      "name": "apache-arrow-9.0.0.tar.gz",
+      "url": "https://archive.apache.org/dist/arrow/arrow-9.0.0/apache-arrow-9.0.0.tar.gz",
+      "sha256": "a9a033f0a3490289998f458680d19579cf07911717ba65afde6cb80070f7a9b5",
+      "size": 18314915
+    },
+    {
+      "name": "xsimd-8.1.0.tar.gz",
+      "url": "https://github.com/xtensor-stack/xsimd/archive/8.1.0.tar.gz",
+      "sha256": "d52551360d37709675237d2a0418e28f70995b5b7cdad7c674626bcfbbf48328",
+      "size": 190180,
+      "use": "Arrow 9 private header-only xsimd dependency; upstream-pinned checksum verified"
+    }
+  ],
   "debian_patch_adaptations": {},
   "older_distribution_sources": [
     {

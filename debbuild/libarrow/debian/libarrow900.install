@@ -1,0 +1,4 @@
+usr/lib/*/libarrow.so.*
+usr/share/arrow/gdb
+usr/share/gdb/auto-load
+usr/share/doc/arrow/* usr/share/doc/libarrow900/

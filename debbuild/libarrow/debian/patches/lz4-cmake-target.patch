@@ -1,0 +1,25 @@
+Description: Accept the LZ4 1.10 CMake target namespace
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-needed
+
+--- a/cpp/cmake_modules/Findlz4Alt.cmake
++++ b/cpp/cmake_modules/Findlz4Alt.cmake
+@@ -23,7 +23,17 @@
+   list(APPEND find_package_args QUIET)
+ endif()
+ find_package(lz4 ${find_package_args})
+-if(lz4_FOUND)
++# LZ4 1.10 exports its CMake targets with an uppercase namespace.
++if(NOT TARGET lz4::lz4)
++  if(ARROW_LZ4_USE_SHARED AND TARGET LZ4::lz4_shared)
++    add_library(lz4::lz4 ALIAS LZ4::lz4_shared)
++  elseif(NOT ARROW_LZ4_USE_SHARED AND TARGET LZ4::lz4_static)
++    add_library(lz4::lz4 ALIAS LZ4::lz4_static)
++  elseif(TARGET LZ4::lz4)
++    add_library(lz4::lz4 ALIAS LZ4::lz4)
++  endif()
++endif()
++if(lz4_FOUND AND TARGET lz4::lz4)
+   set(lz4Alt_FOUND TRUE)
+   return()
+ endif()

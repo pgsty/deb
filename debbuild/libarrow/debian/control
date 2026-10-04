@@ -1,0 +1,23 @@
+Source: libarrow
+Section: libs
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), cmake, pkgconf, libboost-dev, libbrotli-dev, libbz2-dev, liblz4-dev, libsnappy-dev, libre2-dev, libutf8proc-dev, rapidjson-dev, libzstd-dev, zlib1g-dev
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://arrow.apache.org/
+
+Package: libarrow900
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Apache Arrow columnar data library
+ Shared runtime library used by the PGSTY GDAL build.
+
+Package: libarrow-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: libarrow900 (= ${binary:Version}), ${misc:Depends}
+Description: Apache Arrow columnar data library - development files
+ Headers, pkg-config files and link libraries for development.
