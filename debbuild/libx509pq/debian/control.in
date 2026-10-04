@@ -1,0 +1,14 @@
+Source: libx509pq
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libssl-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/crtsh/libx509pq
+
+Package: postgresql-PGVERSION-libx509pq
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: X.509 certificate parsing functions for PostgreSQL
+ X.509 certificate parsing functions for PostgreSQL.

@@ -69,5 +69,33 @@
     "patches": [],
     "kind": "pgrx",
     "pgrx": "0.19.2"
+  },
+  {
+    "extension": "libx509pq",
+    "package": "libx509pq",
+    "deb_package": "libx509pq",
+    "version": "1.3",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "libx509pq-1.3-bed05c6e87d7.tar.gz",
+      "sha256": "4f840143f771b588e654073e7d12fe2cbfb46c8adeb8c6b386abb5b6b701d8e4",
+      "url": "https://codeload.github.com/crtsh/libx509pq/tar.gz/bed05c6e87d79a98d79e42a1fac16386eead0c13",
+      "ref": "bed05c6e87d79a98d79e42a1fac16386eead0c13",
+      "source_kind": "pinned-upstream-commit",
+      "repository": "crtsh/libx509pq"
+    },
+    "patches": [
+      {
+        "name": "libx509pq-1.3-openssl11.patch",
+        "sha256": "4f9e5d583312a48322febca83670095f472adcccd7f140e539b94968b9dc0116"
+      }
+    ],
+    "kind": "pgxs"
   }
 ]

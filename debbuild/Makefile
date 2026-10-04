@@ -1283,7 +1283,7 @@ postgis:
 
 # New extension batch: shared pinned sources, PG14-18 where supported.
 
-.PHONY: vgram pg_money edtf_postgres
+.PHONY: vgram pg_money edtf_postgres libx509pq
 
 vgram:
 	$(MAKE) -C vgram
@@ -1293,3 +1293,6 @@ pg_money:
 
 edtf_postgres:
 	$(MAKE) -C edtf_postgres
+
+libx509pq:
+	$(MAKE) -C libx509pq
