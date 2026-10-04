@@ -194,5 +194,28 @@
     },
     "patches": [],
     "kind": "cmake"
+  },
+  {
+    "extension": "plphp",
+    "package": "plphp",
+    "deb_package": "plphp",
+    "version": "2.6",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "plphp-2.6.tar.gz",
+      "sha256": "73717c319f34e3e7dbb1e14adf2aff40b17aa63c75a45739b91253c5c1003927",
+      "url": "https://codeload.github.com/commandprompt/plPHP/tar.gz/plphp-2.6",
+      "ref": "plphp-2.6",
+      "source_kind": "release-tag",
+      "repository": "commandprompt/plPHP"
+    },
+    "patches": [],
+    "kind": "pgxs"
   }
 ]

@@ -1284,7 +1284,8 @@ postgis:
 # New extension batch: shared pinned sources, PG14-18 where supported.
 
 .PHONY: vgram pg_money edtf_postgres libx509pq \
-        pg_statvfs pg_json_diff pgtelemetry pgexporter_ext
+        pg_statvfs pg_json_diff pgtelemetry pgexporter_ext \
+        plphp
 
 vgram:
 	$(MAKE) -C vgram
@@ -1309,3 +1310,6 @@ pgtelemetry:
 
 pgexporter_ext:
 	$(MAKE) -C pgexporter_ext
+
+plphp:
+	$(MAKE) -C plphp
