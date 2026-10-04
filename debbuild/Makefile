@@ -1261,4 +1261,7 @@ sfcgal:
 libgeotiff:
 	$(MAKE) -C libgeotiff
 
-.PHONY: cgal geos proj sfcgal libgeotiff
+librttopo:
+	$(MAKE) -C librttopo
+
+.PHONY: cgal geos proj sfcgal libgeotiff librttopo

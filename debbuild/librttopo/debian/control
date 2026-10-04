@@ -1,0 +1,43 @@
+Source: librttopo
+Section: science
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13),
+               libgeos-dev (>= 3.14.1)
+Standards-Version: 4.7.0
+Vcs-Browser: https://salsa.debian.org/debian-gis-team/librttopo/
+Vcs-Git: https://salsa.debian.org/debian-gis-team/librttopo.git
+Homepage: https://git.osgeo.org/gitea/rttopo/librttopo
+Rules-Requires-Root: no
+
+Package: librttopo1
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Tuscany Region topology library
+ The RT Topology Library exposes an API to create and manage standard
+ (ISO 13249 aka SQL/MM) topologies using user-provided data stores.
+ .
+ The code is derived from PostGIS liblwgeom library enhanced to provide
+ thread-safety, have less dependencies and be independent from PostGIS
+ release cycles.
+ .
+ This package contains the shared library.
+
+Package: librttopo-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: librttopo1 (= ${binary:Version}),
+         ${misc:Depends},
+Description: Tuscany Region topology library - Development files
+ The RT Topology Library exposes an API to create and manage standard
+ (ISO 13249 aka SQL/MM) topologies using user-provided data stores.
+ .
+ The code is derived from PostGIS liblwgeom library enhanced to provide
+ thread-safety, have less dependencies and be independent from PostGIS
+ release cycles.
+ .
+ This package contains the development files.
