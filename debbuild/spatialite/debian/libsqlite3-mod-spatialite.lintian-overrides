@@ -1,0 +1,17 @@
+# mod_spatialite is a SQLite 3 loadable extension module, not a normal shared library
+link-to-shared-library-in-wrong-package usr/lib/*/mod_spatialite.so*
+no-symbols-control-file usr/lib/*/mod_spatialite.so.*
+package-name-doesnt-match-sonames mod-spatialite*
+
+# Truncated string
+spelling-error-in-binary Syste System *
+
+# False positive, lat/lon
+spelling-error-in-binary Lon Long *
+
+# False positive, string not included in source
+spelling-error-in-binary colum column *
+
+# False positive, line break in word
+spelling-error-in-binary ment meant *
+

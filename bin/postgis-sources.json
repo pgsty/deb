@@ -57,6 +57,28 @@
       ]
     },
     {
+      "package": "libspatialite50",
+      "srpm_url": "https://dnf-srpms.postgresql.org/srpms/common/redhat/rhel-9-x86_64/libspatialite50-5.1.0-15PGDG.rhel9.8.src.rpm",
+      "srpm_sha256": "13ea8a068088f45ed014605bb3e16f2fc5fd1bd6cd64e737ad43802cc8352c26",
+      "files": [
+        {
+          "name": "libspatialite-5.1.0.tar.gz",
+          "sha256": "43be2dd349daffe016dd1400c5d11285828c22fea35ca5109f21f3ed50605080",
+          "size": 6517377,
+          "archive_roots": [
+            "libspatialite-5.1.0"
+          ],
+          "deb_input": true
+        },
+        {
+          "name": "libspatialite50-pgdg-libs.conf",
+          "sha256": "84621e77812eca73edfe5bf16194a43aa3fe85cb43e9dcc6bf0aab411902c276",
+          "size": 26,
+          "deb_input": false
+        }
+      ]
+    },
+    {
       "package": "proj98",
       "srpm_url": "https://dnf-srpms.postgresql.org/srpms/common/redhat/rhel-9-x86_64/proj98-9.8.1-1PGDG.rhel9.8.src.rpm",
       "srpm_sha256": "e3ae1425ea09030134f6e03c97be50b6e171fb937dc20ea723a27affebff6875",
@@ -128,6 +150,11 @@
       "package": "librttopo",
       "url": "https://deb.debian.org/debian/pool/main/libr/librttopo/librttopo_1.1.0-4.debian.tar.xz",
       "sha256": "cd9a49c63d3144bc9519017e677f57e15e90a95ccccc8292db64eb48afd9b500"
+    },
+    {
+      "package": "spatialite",
+      "url": "https://deb.debian.org/debian/pool/main/s/spatialite/spatialite_5.1.0-4.debian.tar.xz",
+      "sha256": "a8542dfd13c854d2955c8553d90910bf45c47c85947fffb8addbde5fcf35dd4d"
     },
     {
       "package": "sfcgal",

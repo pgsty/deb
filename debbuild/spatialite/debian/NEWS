@@ -1,0 +1,93 @@
+spatialite (4.3.0a-5) unstable; urgency=medium
+
+  SpatiaLite 4.3.x is no longer configured to enable liblwgeom, because the
+  spatialite->postgis->gdal->spatialite circular dependency this created
+  caused too many issues with transitions to newer releases of GEOS and GDAL.
+
+  Concerns about the circular dependency were raised in #808606 and elsewhere.
+  Please refer to the following posts for more discussion about this issue:
+
+   * https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=808606#5
+   * https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=791045#49
+   * https://lists.debian.org/debian-gis/2016/02/msg00017.html
+   * https://lists.alioth.debian.org/pipermail/pkg-grass-devel/2016-January/042322.html
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 05 Feb 2016 15:53:48 +0100
+
+spatialite (4.3.0~rc0-1~exp1) experimental; urgency=medium
+
+  SpatiaLite 4.3.x is now configured to enable liblwgeom and GCP options.
+  This causes an implicit license escalation to GPLv2+ from the initial
+  tri-license (MPL/LGPL/GPL).
+
+  Enabling these features is the recommended configuration by upstream.
+  For more information refer to following posts on the spatialite-users list:
+
+   * ,/configure changes in 4.2.0:
+     https://groups.google.com/d/msg/spatialite-users/S2mY1Tj7BBc/_gWzznEKZnwJ
+
+   * 4.3.0: note for builders and packages:
+     https://groups.google.com/d/msg/spatialite-users/uawzaLjzbo4/_0JqJ8a6HmAJ
+
+  For the changes since Spatialite 4.1 please refer to the online documentation.
+
+  Spatialite 4.2.0:
+
+   * 4.2.0 Documentation and Tutorials about recent changes and new features:
+     https://www.gaia-gis.it/fossil/libspatialite/wiki?name=4.2.0-doc
+
+   * new SQL functions introduced since version 4.2.0:
+     https://www.gaia-gis.it/fossil/libspatialite/wiki?name=4.2.0+functions  
+
+   * SpatiaLite 4.2.0 SQL functions reference list:
+     http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.2.0.html
+
+  SpatiaLite 4.2.1:
+
+   * new SQL functions introduced since version 4.2.1-RC:
+     https://www.gaia-gis.it/fossil/libspatialite/wiki?name=4.2.1+functions
+
+   * SpatiaLite 4.2.1 SQL functions reference list:
+     http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.2.1.html
+
+  SpatiaLite 4.3.0:
+
+   * new SQL functions introduced since version 4.3.0:
+     https://www.gaia-gis.it/fossil/libspatialite/wiki?name=4.3.0+functions
+
+   * SpatiaLite 4.3.0 SQL functions reference list:
+     http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.3.0.html
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 19 Jun 2015 18:50:44 +0200
+
+spatialite (4.1.1-7) unstable; urgency=medium
+
+  The upgrade from SpatiaLite 3.0 to 4.1 brings many changes, some of which
+  will break compatibility. Please refer to the online documention for
+  details.
+
+  * Switching to 4.0:
+    https://www.gaia-gis.it/fossil/libspatialite/wiki?name=switching-to-4.0
+
+  * Switching to 4.1:
+    https://www.gaia-gis.it/fossil/libspatialite/wiki?name=4.1.0-doc
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 03 Apr 2014 22:00:56 +0200
+
+spatialite (3.0.1-1) unstable; urgency=low
+
+  Starting from this release Spatialite library and Spatialtools have been
+  decoupled in two different sources as in upstream kits. Each of them now
+  follows its own releasing process and has its own version.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 23 Feb 2012 13:47:17 +0100
+
+spatialite (3.0.0~beta20110817-3) unstable; urgency=medium
+
+  From this release, powerpc will lack full EPSG initialization.
+  .
+  This means that spatialite won't support all EPSG projections,
+  but only a small subset. The list of supported projections can be
+  found in '/usr/share/doc/libspatialite-dev/EPSG.powerpc'.
+
+ -- David Paleino <dapal@debian.org>  Mon, 21 Nov 2011 11:37:16 +0100

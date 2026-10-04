@@ -1,0 +1,54 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+# Enable hardening build flags
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+include /usr/share/dpkg/pkg-info.mk
+
+UPSTREAM_VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed -e 's/\+.*//')
+
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+
+# see FTBFS #649302
+ifeq ($(DEB_HOST_ARCH),powerpc)
+EPSG := --disable-epsg
+else
+EPSG :=
+endif
+
+# Verbose test output
+export VERBOSE=1
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		$(EPSG) \
+		--disable-examples \
+		--enable-gcp=yes \
+		--enable-geos \
+		--enable-proj \
+		--enable-rttopo=yes \
+		--enable-freexl=no
+
+override_dh_auto_test:
+	set -e; \
+		mkdir -p debian/backup/stmt; \
+		cp test/*.sqlite debian/backup/; \
+		cp test/sql_stmt_tests/*.sqlite debian/backup/stmt/; \
+		trap 'test_status=$$?; cp debian/backup/stmt/*.sqlite test/sql_stmt_tests/; cp debian/backup/*.sqlite test/; rm -rf debian/backup; exit "$$test_status"' EXIT; \
+		dh_auto_test --max-parallel=1
+
+override_dh_makeshlibs:
+	dh_makeshlibs -- -v$(UPSTREAM_VERSION)
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l/usr/lib:$(CURDIR)/debian/tmp/usr/lib

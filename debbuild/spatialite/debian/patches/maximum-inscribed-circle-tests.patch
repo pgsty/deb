@@ -1,0 +1,45 @@
+Description: Check the maximum inscribed circle without fixing a non-unique center
+ A 10 by 20 rectangle has multiple radius-five maximum circles. New GEOS
+ versions choose a different center. Assert the radius, that its disk is
+ covered by the polygon, and that the segment ends on the boundary.
+ Keep both integer and floating tolerance inputs.
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-10-04
+
+--- a/test/sql_stmt_geos3100_tests/geosmaxcircle6.testcase
++++ b/test/sql_stmt_geos3100_tests/geosmaxcircle6.testcase
+@@ -1,7 +1,11 @@
+ GEOSMaximumInscribedCircle - VALID BLOB  Geometry
+ :memory: #use in-memory database
+-SELECT AsText(GEOSMaximumInscribedCircle(GeomFromText('POLYGON ((0 0, 10 0, 10 20, 0 20, 0 0))'), 0.5))
++WITH input(p) AS (SELECT GeomFromText('POLYGON ((0 0, 10 0, 10 20, 0 20, 0 0))')), result(p, g) AS (SELECT p, GEOSMaximumInscribedCircle(p, 0.5) FROM input) SELECT ST_Length(g) AS radius, ST_Covers(p, ST_Buffer(ST_StartPoint(g), ST_Length(g))) AS circle_is_covered, ST_Intersects(ST_Boundary(p), ST_EndPoint(g)) AS end_is_on_boundary FROM result
+ 1 # rows (not including the header row)
+-1 # columns
+-AsText(GEOSMaximumInscribedCircle(GeomFromText('POLYGON ((0 0, 10 0, 10 20, 0 20, 0 0))'), 0.5))
+-LINESTRING(5 10, 10 10)
++3 # columns
++radius
++circle_is_covered
++end_is_on_boundary
++5.0
++1
++1
+--- a/test/sql_stmt_geos3100_tests/geosmaxcircle10.testcase
++++ b/test/sql_stmt_geos3100_tests/geosmaxcircle10.testcase
+@@ -1,7 +1,11 @@
+ GEOSMaximumInscribedCircle - VALID BLOB  Geometry INT Tolerance
+ :memory: #use in-memory database
+-SELECT AsText(GEOSMaximumInscribedCircle(GeomFromText('POLYGON ((0 0, 10 0, 10 20, 0 20, 0 0))'), 1))
++WITH input(p) AS (SELECT GeomFromText('POLYGON ((0 0, 10 0, 10 20, 0 20, 0 0))')), result(p, g) AS (SELECT p, GEOSMaximumInscribedCircle(p, 1) FROM input) SELECT ST_Length(g) AS radius, ST_Covers(p, ST_Buffer(ST_StartPoint(g), ST_Length(g))) AS circle_is_covered, ST_Intersects(ST_Boundary(p), ST_EndPoint(g)) AS end_is_on_boundary FROM result
+ 1 # rows (not including the header row)
+-1 # columns
+-AsText(GEOSMaximumInscribedCircle(GeomFromText('POLYGON ((0 0, 10 0, 10 20, 0 20, 0 0))'), 1))
+-LINESTRING(5 10, 10 10)
++3 # columns
++radius
++circle_is_covered
++end_is_on_boundary
++5.0
++1
++1

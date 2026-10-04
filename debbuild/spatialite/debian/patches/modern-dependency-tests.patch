@@ -1,0 +1,232 @@
+Description: Refresh test oracles for the pinned GIS stack on noble
+ PROJ 9.8 reports the missing CRS identifier. GEOS 3.14.1 changes the
+ predicates for the invalid zero-length lines in relations7/8; the expected
+ values were checked directly against all eight GEOS C API functions.
+ SQLite 3.45 renders huge integral doubles differently at precision zero
+ and precision fifteen. Accept only identical finite binary64 values for
+ the 100+ digit coordinate tokens in buffer-overflow tests; retain exact
+ byte comparison for all other content and retain the original 1e128
+ inputs, 16 KiB strings and excessive requested precision.
+ This changes tests only, not production library behavior.
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: no
+Last-Update: 2026-10-04
+
+--- a/test/check_bufovflw.c
++++ b/test/check_bufovflw.c
+@@ -45,12 +45,42 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
++#include <math.h>
+ 
+ #include <spatialite/gaiaconfig.h>
+ 
+ #include "sqlite3.h"
+ #include "spatialite.h"
+ #include <spatialite/gaiaaux.h>
++
++/* Huge coordinate text may differ between SQLite printf precisions while
++ * representing exactly the same binary64 value. Keep every other byte exact. */
++static int
++compare_large_coordinates (const char *left, const char *right)
++{
++    while (*left && *right)
++      {
++          if (*left >= '0' && *left <= '9' && *right >= '0' && *right <= '9')
++            {
++                char *left_end;
++                char *right_end;
++                double a = strtod (left, &left_end);
++                double b = strtod (right, &right_end);
++                if (left_end - left >= 100 && right_end - right >= 100
++                    && isfinite (a) && isfinite (b) && a == b)
++                  {
++                      left = left_end;
++                      right = right_end;
++                      continue;
++                  }
++            }
++          if (*left != *right)
++              return 1;
++          ++left;
++          ++right;
++      }
++    return *left != *right;
++}
+ 
+ void
+ cleanup_shapefile (const char *filename)
+@@ -945,7 +975,7 @@
+ 	  return -70;
+       }
+     value = results[1];
+-    if (strcmp (resvalue, value) != 0)
++    if (compare_large_coordinates (resvalue, value) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (AsKML#1): %s\n", results[1]);
+ 	  return -71;
+@@ -997,7 +1027,7 @@
+ 	  return -73;
+       }
+     value = results[1];
+-    if (strcmp (resvalue, value) != 0)
++    if (compare_large_coordinates (resvalue, value) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (AsKML#2): %s\n", results[1]);
+ 	  return -74;
+@@ -1050,7 +1080,7 @@
+ 	  return -76;
+       }
+     value = results[1];
+-    if (strcmp (resvalue, value) != 0)
++    if (compare_large_coordinates (resvalue, value) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (AsGML#1): %s\n", results[1]);
+ 	  return -77;
+@@ -1101,7 +1131,7 @@
+ 	  return -79;
+       }
+     value = results[1];
+-    if (strcmp (resvalue, value) != 0)
++    if (compare_large_coordinates (resvalue, value) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (AsGML#2): %s\n", results[1]);
+ 	  return -80;
+@@ -1153,7 +1183,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (WKT 2D)\n");
+ 	  return -82;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (WKT 2D): %s\n", string);
+ 	  return -83;
+@@ -1208,7 +1238,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (WKT 3D)\n");
+ 	  return -85;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (WKT 3D): %s\n", string);
+ 	  return -86;
+@@ -1263,7 +1293,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (WKT M)\n");
+ 	  return -88;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (WKT M): %s\n", string);
+ 	  return -89;
+@@ -1318,7 +1348,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (WKT 3D M)\n");
+ 	  return -91;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (WKT 3D M): %s\n", string);
+ 	  return -92;
+@@ -1371,7 +1401,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (EWKT 2D)\n");
+ 	  return -94;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (EWKT 2D): %s\n", string);
+ 	  return -95;
+@@ -1426,7 +1456,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (EWKT 3D)\n");
+ 	  return -97;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (EWKT 3D): %s\n", string);
+ 	  return -98;
+@@ -1481,7 +1511,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (EWKT M)\n");
+ 	  return -100;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (EWKT M): %s\n", string);
+ 	  return -101;
+@@ -1537,7 +1567,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (EWKT 3D M)\n");
+ 	  return -103;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (EWKT 3D M): %s\n", string);
+ 	  return -104;
+@@ -1591,7 +1621,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (WKT Strict)\n");
+ 	  return -106;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (WKT Strict): %s\n", string);
+ 	  return -107;
+@@ -1649,7 +1679,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (GeoJSON 2D)\n");
+ 	  return -109;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (GeoJSON 2D): %s\n", string);
+ 	  return -110;
+@@ -1708,7 +1738,7 @@
+ 	  fprintf (stderr, "Unexpected NULL result (GeoJSON 3D)\n");
+ 	  return -112;
+       }
+-    if (strcmp (resvalue, string) != 0)
++    if (compare_large_coordinates (resvalue, string) != 0)
+       {
+ 	  fprintf (stderr, "Unexpected result (GeoJSON 3D): %s\n", string);
+ 	  return -113;
+--- a/test/sql_stmt_proj910_tests/transform4.testcase
++++ b/test/sql_stmt_proj910_tests/transform4.testcase
+@@ -4,4 +4,4 @@
+ 1 # rows (not including the header row)
+ 1 # columns
+ AsText(Transform(GeomFromText('POINT(11 43)'), 32632))
+-ST_Transform exception - PROJ reports "proj_create: crs not found".
++ST_Transform exception - PROJ reports "proj_create: crs not found: NONE:0".
+--- a/test/sql_stmt_geos_tests/relations7.testcase
++++ b/test/sql_stmt_geos_tests/relations7.testcase
+@@ -12,10 +12,10 @@
+ Within(geom1, geom2)
+ Contains(geom1, geom2)
+ 0
++0
+ 1
+-0
+-0
+ 0
+ 0
+ 1
+ 0
++0
+--- a/test/sql_stmt_geos_tests/relations8.testcase
++++ b/test/sql_stmt_geos_tests/relations8.testcase
+@@ -12,10 +12,10 @@
+ Within(geom1, geom2)
+ Contains(geom1, geom2)
+ 0
++0
+ 1
+ 0
+ 0
++1
+ 0
+ 0
+-0
+-1

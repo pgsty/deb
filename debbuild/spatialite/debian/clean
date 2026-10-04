@@ -1,0 +1,5 @@
+test/*_logfile
+test/report.html
+test/report/
+test/sql_stmt_proc_tests/storproc_x.sqlite
+test/text_export1.geojson

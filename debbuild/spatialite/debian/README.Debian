@@ -1,0 +1,10 @@
+Spatialite for Debian
+---------------------
+
+Spatialite uses the SQLite experimental extension mechanism described in
+https://www.sqlite.org/loadext.html
+to provide spatial extensions to the SQLite database in both WKT and WKB
+formats as described by OGC. Note that the SQLite extension support could
+be changed in future release, so be warned.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 13 Mar 2009 16:01:40 +0100
