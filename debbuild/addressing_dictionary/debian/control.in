@@ -1,0 +1,14 @@
+Source: addressing-dictionary
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pramsey/pgsql-addressing-dictionary
+
+Package: postgresql-PGVERSION-addressing-dictionary
+Architecture: all
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Address-aware text search dictionaries for PostgreSQL
+ Address-aware text search dictionaries for PostgreSQL.

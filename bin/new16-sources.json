@@ -315,5 +315,28 @@
     "patches": [],
     "kind": "pgrx",
     "pgrx": "0.16.1"
+  },
+  {
+    "extension": "addressing_dictionary",
+    "package": "addressing_dictionary",
+    "deb_package": "addressing-dictionary",
+    "version": "1.1",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "addressing_dictionary-1.1-bf3590e038d8.tar.gz",
+      "sha256": "304188fa5e4aa0e7c8ad8aa4caf000608a01c7b38abac4793122028475dc0c43",
+      "url": "https://codeload.github.com/pramsey/pgsql-addressing-dictionary/tar.gz/bf3590e038d820c8eb5c79135e5a78abf5fc9f2f",
+      "ref": "bf3590e038d820c8eb5c79135e5a78abf5fc9f2f",
+      "source_kind": "pinned-upstream-commit",
+      "repository": "pramsey/pgsql-addressing-dictionary"
+    },
+    "patches": [],
+    "kind": "puresql"
   }
 ]

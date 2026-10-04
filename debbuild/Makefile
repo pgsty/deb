@@ -1286,7 +1286,7 @@ postgis:
 .PHONY: vgram pg_money edtf_postgres libx509pq \
         pg_statvfs pg_json_diff pgtelemetry pgexporter_ext \
         plphp istore is_jsonb_valid pg_rusage \
-        pg_lexo
+        pg_lexo addressing_dictionary
 
 vgram:
 	$(MAKE) -C vgram
@@ -1326,3 +1326,6 @@ pg_rusage:
 
 pg_lexo:
 	$(MAKE) -C pg_lexo
+
+addressing_dictionary:
+	$(MAKE) -C addressing_dictionary
