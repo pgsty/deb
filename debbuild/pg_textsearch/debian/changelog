@@ -1,3 +1,9 @@
+pg-textsearch (1.5.1-1PGSTY) unstable; urgency=medium
+
+  * Update to 1.5.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 pg-textsearch (1.4.0-1PGSTY) unstable; urgency=medium
 
   * Bump to 1.4.0.
