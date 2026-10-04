@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+
+override_dh_auto_test:
+	# Installed-package SQL tests run in the isolated matrix harness.
+
+export CARGO_PROFILE_RELEASE_DEBUG = 2
+export CARGO_PROFILE_RELEASE_STRIP = none
+export PATH := /opt/pgrx-0.16.1/bin:$(HOME)/.cargo/bin:$(PATH)
+export CARGO_BUILD_JOBS ?= 2
+
+override_dh_auto_build:
+	test "$$(cargo pgrx --version | awk '{print $$2}')" = "0.16.1"
+	sha256sum Cargo.lock > .cargo-lock.before
+	cargo fetch --locked
+	set -e; for v in $(PG_VERSIONS); do \
+		cargo pgrx init --pg$$v=/usr/lib/postgresql/$$v/bin/pg_config --no-run; \
+		cd $(CURDIR)/.; \
+		CARGO_NET_OFFLINE=true cargo pgrx package --no-default-features --features pg$$v --pg-config /usr/lib/postgresql/$$v/bin/pg_config --out-dir $(CURDIR)/package-pg$$v; \
+	done
+	sha256sum -c .cargo-lock.before
+
+override_dh_auto_install:
+	set -e; for v in $(PG_VERSIONS); do \
+		mkdir -p debian/postgresql-$$v-pg-lexo; \
+		cp -a package-pg$$v/usr debian/postgresql-$$v-pg-lexo/; \
+	done

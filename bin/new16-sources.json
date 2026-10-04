@@ -291,5 +291,29 @@
     },
     "patches": [],
     "kind": "pgxs"
+  },
+  {
+    "extension": "pg_lexo",
+    "package": "pg_lexo",
+    "deb_package": "pg-lexo",
+    "version": "0.6.1",
+    "pg_versions": [
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "pg_lexo-0.6.1.tar.gz",
+      "sha256": "a9a7e21538f20199d4cdfb7168c8eb51761464bac38c5b73aa77c8e4c57f65a3",
+      "url": "https://codeload.github.com/Blad3Mak3r/pg_lexo/tar.gz/v0.6.1",
+      "ref": "v0.6.1",
+      "source_kind": "release-tag",
+      "repository": "Blad3Mak3r/pg_lexo",
+      "lock_name": "pg_lexo-0.6.1-Cargo.lock",
+      "lock_sha256": "19ac620c120b6b1f5a3681ec768f304898b527d8f864a4a6bb470f080076813a"
+    },
+    "patches": [],
+    "kind": "pgrx",
+    "pgrx": "0.16.1"
   }
 ]
