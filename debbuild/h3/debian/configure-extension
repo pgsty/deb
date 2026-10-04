@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+version="$1"
+"/usr/lib/postgresql/$version/bin/pg_config" --configure | grep -q -- '--with-llvm'
+clang=$(dpkg-query --show --showformat='${Depends}' "postgresql-server-dev-$version" | grep -ow 'clang-[0-9]*')
+test "$(printf '%s\n' "$clang" | wc -l)" -eq 1
+printf '%s\n' "$clang" | grep -Eq '^clang-[0-9]+$'
+llvm_version=${clang#clang-}
+clang_bin=$(command -v "$clang")
+test -x "$clang_bin"
+llvm_lto="/usr/lib/llvm-$llvm_version/bin/llvm-lto"
+test -x "$llvm_lto"
+printf 'PG%s CLANG=%s LLVM_LTO=%s\n' "$version" "$clang_bin" "$llvm_lto"
+dh_auto_configure -B"build-$version" -- \
+    -DPostgreSQL_CONFIG="/usr/lib/postgresql/$version/bin/pg_config" \
+    -DPostgreSQL_LLVM_CLANG_BIN="$clang_bin" \
+    -DPostgreSQL_LLVM_LTO_BIN="$llvm_lto" \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF \
+    -DFETCHCONTENT_SOURCE_DIR_H3="$PWD/vendor/h3"

@@ -1,0 +1,20 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: h3-pg
+Source: https://github.com/postgis/h3-pg
+
+Files: *
+Copyright: 2018-2025 Zacharias Knudsen and h3-pg contributors
+License: Apache-2.0
+
+Files: vendor/h3/*
+Copyright: 2016-2026 Uber Technologies, Inc. and H3 contributors
+License: Apache-2.0
+
+Files: debian/*
+Copyright: 2026 Ruohang Feng <rh@vonng.com>
+License: Apache-2.0
+
+License: Apache-2.0
+ Licensed under the Apache License, Version 2.0.
+ On Debian systems the complete license text is available in
+ /usr/share/common-licenses/Apache-2.0.

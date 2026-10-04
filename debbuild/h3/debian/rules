@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	+pg_buildext run sh debian/configure-extension %v
+
+override_dh_auto_build:
+	+pg_buildext run dh_auto_build -Bbuild-%v
+
+override_dh_auto_install:
+	+pg_buildext run sh debian/install-extension %v
+
+override_dh_auto_test:
+	# Installed-package runtime QA exercises both extensions on each target PG.
+
+override_dh_auto_clean:
+	rm -rf build-*/ debian/postgresql-*-h3/ debian/postgresql-*-h3.substvars
+
+override_dh_installdocs:
+	dh_installdocs --all README.md LICENSE H3-LICENSE

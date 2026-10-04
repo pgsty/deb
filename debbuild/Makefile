@@ -240,6 +240,9 @@ pg_geohash:
 pghydro:
 	cd pghydro && make
 
+h3:
+	cd h3 && make
+
 mobilitydb:
 	cd mobilitydb && make
 

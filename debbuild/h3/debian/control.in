@@ -1,0 +1,25 @@
+Source: h3-pg
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13),
+               cmake (>= 3.20),
+               postgresql-server-dev-all
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/postgis/h3-pg
+Vcs-Browser: https://github.com/pgsty/deb/tree/main/debbuild/h3
+Vcs-Git: https://github.com/pgsty/deb.git
+
+Package: postgresql-PGVERSION-h3
+Architecture: any
+Depends: postgresql-PGVERSION-postgis-3,
+         postgresql-PGVERSION-postgis-3-scripts,
+         ${misc:Depends},
+         ${postgresql:Depends},
+         ${shlibs:Depends}
+Breaks: ${postgresql:Breaks}
+Description: H3 hierarchical geospatial indexing for PostgreSQL
+ This package contains the h3 and h3_postgis extensions, with a statically
+ linked H3 core. h3 provides hierarchical hexagonal cell indexing;
+ h3_postgis integrates cells with PostGIS geometry, geography, and raster.

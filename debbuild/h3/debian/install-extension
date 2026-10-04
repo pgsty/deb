@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eu
+version="$1"
+package="postgresql-$version-h3"
+DESTDIR="$PWD/debian/$package" cmake --install "build-$version" --component h3-pg
+printf 'postgresql:Depends=postgresql-%s\n' "$version" >> "debian/$package.substvars"
+breaks=''
+if [ -d "debian/$package/usr/lib/postgresql/$version/lib/bitcode" ]; then
+    clang=$(dpkg-query --show --showformat='${Depends}' "postgresql-server-dev-$version" | grep -ow 'clang-[0-9]*')
+    test "$(printf '%s\n' "$clang" | wc -l)" -eq 1
+    printf '%s\n' "$clang" | grep -Eq '^clang-[0-9]+$'
+    llvm_version=${clang#clang-}
+    if [ -n "$llvm_version" ]; then
+        breaks="postgresql-$version-jit-llvm (<< $llvm_version)"
+    fi
+fi
+printf 'postgresql:Breaks=%s\n' "$breaks" >> "debian/$package.substvars"
