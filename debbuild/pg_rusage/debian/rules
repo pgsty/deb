@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+
+override_dh_auto_test:
+	# Installed-package SQL tests run in the isolated matrix harness.
+
+override_dh_auto_build:
+
+override_dh_auto_install:
+	set -e; for v in $(PG_VERSIONS); do \
+		$(MAKE) -C pg_rusage PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config  clean; \
+		$(MAKE) -C pg_rusage PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config  CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS) -fPIC" -j2; \
+		$(MAKE) -C pg_rusage PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config  install DESTDIR=$(CURDIR)/debian/postgresql-$$v-pg-rusage; \
+	done
+	rm -rf debian/postgresql-*-pg-rusage/usr/share/doc/postgresql-doc-*

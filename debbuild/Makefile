@@ -1285,7 +1285,7 @@ postgis:
 
 .PHONY: vgram pg_money edtf_postgres libx509pq \
         pg_statvfs pg_json_diff pgtelemetry pgexporter_ext \
-        plphp istore is_jsonb_valid
+        plphp istore is_jsonb_valid pg_rusage
 
 vgram:
 	$(MAKE) -C vgram
@@ -1319,3 +1319,6 @@ istore:
 
 is_jsonb_valid:
 	$(MAKE) -C is_jsonb_valid
+
+pg_rusage:
+	$(MAKE) -C pg_rusage
