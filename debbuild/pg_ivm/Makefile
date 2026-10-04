@@ -1,6 +1,6 @@
 all: check-src setup build move
 
-TARBALL := pg_ivm-1.15.tar.gz
+TARBALL := pg_ivm-1.16.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
