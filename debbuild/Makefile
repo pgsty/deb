@@ -1280,3 +1280,10 @@ postgis:
 	$(MAKE) -C postgis
 
 .PHONY: cgal geos proj sfcgal libgeotiff librttopo spatialite libarrow libgta gdal postgis
+
+# New extension batch: shared pinned sources, PG14-18 where supported.
+
+.PHONY: vgram
+
+vgram:
+	$(MAKE) -C vgram

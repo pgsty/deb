@@ -1,0 +1,14 @@
+Source: vgram
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libicu-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/akorotkov/vgram
+
+Package: postgresql-PGVERSION-vgram
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Variable-length gram indexes for PostgreSQL
+ Variable-length gram indexes for PostgreSQL.

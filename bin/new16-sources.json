@@ -1,0 +1,25 @@
+[
+  {
+    "extension": "vgram",
+    "package": "vgram",
+    "deb_package": "vgram",
+    "version": "1.0",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "vgram-1.0-babae3775c9c.tar.gz",
+      "sha256": "354850de1e59de355ad3fe26239b88be5e8ec6cb935cf5cfa73e6c74fb98988d",
+      "url": "https://codeload.github.com/akorotkov/vgram/tar.gz/babae3775c9c21bcf66f55c434642af3eeb0ce0d",
+      "ref": "babae3775c9c21bcf66f55c434642af3eeb0ce0d",
+      "source_kind": "pinned-upstream-commit",
+      "repository": "akorotkov/vgram"
+    },
+    "patches": [],
+    "kind": "pgxs"
+  }
+]
