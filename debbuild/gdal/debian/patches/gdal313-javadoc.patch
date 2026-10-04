@@ -1,0 +1,217 @@
+--- a/swig/java/javadoc.java
++++ b/swig/java/javadoc.java
+@@ -18,7 +18,7 @@
+  * <p>
+  * In particular, it provides :
+  * <ul>
+- * <li>gdal.<a href="#AllRegister()">AllRegister()</a> and gdal.<a href="#Open(java.lang.String, int)">Open()</a> methods.
++ * <li>gdal.<a href="#AllRegister()">AllRegister()</a> and gdal.<a href="#Open(java.lang.String,int)">Open()</a> methods.
+  * <li>bindings for various GDAL algorithms.
+  * <li>bindings for some general purpose CPL functions.
+  * </ul>
+@@ -899,7 +899,7 @@
+  * <p>
+  * This function will generate one or more overview images from a base
+  * image using the requested downsampling algorithm.  It's primary use
+- * is for generating overviews via Dataset.<a href="Dataset.html#BuildOverviews(java.lang.String, int[], org.gdal.gdal.ProgressCallback)">BuildOverviews()</a>, but it
++ * is for generating overviews via Dataset.<a href="Dataset.html#BuildOverviews(java.lang.String,int%5B%5D,org.gdal.gdal.ProgressCallback)">BuildOverviews()</a>, but it
+  * can also be used to generate downsampled images in one file from another
+  * outside the overview architecture.
+  * <p>
+@@ -1593,9 +1593,9 @@
+  * A dataset encapsulating one or more raster bands. Details are further discussed in the <a href="http://gdal.org/gdal_datamodel.html#GDALDataset">GDAL Data Model</a>.
+  * <p>
+  * Dataset objects are returned by methods from other classes, such as
+- * gdal.<a href="gdal.html#Open(java.lang.String, int)">Open()</a> or
+- * Driver.<a href="Driver.html#Create(java.lang.String, int, int, int, int, java.lang.String[])">Create()</a> /
+- * Driver.<a href="Driver.html#CreateCopy(java.lang.String, org.gdal.gdal.Dataset)">CreateCopy()</a>
++ * gdal.<a href="gdal.html#Open(java.lang.String,int)">Open()</a> or
++ * Driver.<a href="Driver.html#Create(java.lang.String,int,int,int,int,java.lang.String%5B%5D)">Create()</a> /
++ * Driver.<a href="Driver.html#CreateCopy(java.lang.String,org.gdal.gdal.Dataset)">CreateCopy()</a>
+  */
+ public class Dataset
+ 
+@@ -1856,7 +1856,7 @@
+ /**
+  * Set the affine transformation coefficients.
+  * <p>
+- * See <a href="#GetGeoTransform(double[])">#GetGeoTransform()</a> for details on the meaning of the geoTransformArray
++ * See <a href="#GetGeoTransform(double%5B%5D)">#GetGeoTransform()</a> for details on the meaning of the geoTransformArray
+  * coefficients.
+  *
+  * @param geoTransformArray a six double array containing the transformation
+@@ -2000,8 +2000,8 @@
+  * writing from various organization of buffers.
+  * <p>
+  * For highest performance full resolution data access, read
+- * on "block boundaries" as returned by <a href="Band.html#GetBlockSize(int[], int[])">Band.GetBlockSize(int[], int[])</a>, or use the
+- * <a href="Band.html#ReadBlock_Direct(int, int, java.nio.ByteBuffer)">Band.ReadBlock(int, int, java.nio.ByteBuffer)</a> method.
++ * on "block boundaries" as returned by <a href="Band.html#GetBlockSize(int%5B%5D,int%5B%5D)">Band.GetBlockSize(int[], int[])</a>, or use the
++ * <a href="Band.html#ReadBlock_Direct(int,int,java.nio.ByteBuffer)">Band.ReadBlock(int, int, java.nio.ByteBuffer)</a> method.
+  * <p>
+  * When requesting a multi-byte datatype (GDT_Int16, GDT_Int32, GDT_Float32, ...),
+  * you should generally set the byte order of the buffer to the native order of the machine
+@@ -2085,8 +2085,8 @@
+  * writing from various organization of buffers.
+  * <p>
+  * For highest performance full resolution data access, read
+- * on "block boundaries" as returned by <a href="Band.html#GetBlockSize(int[], int[])">Band.GetBlockSize(int[], int[])</a>, or use the
+- * <a href="Band.html#ReadBlock_Direct(int, int, java.nio.ByteBuffer)">Band.ReadBlock(int, int, java.nio.ByteBuffer)</a> method.
++ * on "block boundaries" as returned by <a href="Band.html#GetBlockSize(int%5B%5D,int%5B%5D)">Band.GetBlockSize(int[], int[])</a>, or use the
++ * <a href="Band.html#ReadBlock_Direct(int,int,java.nio.ByteBuffer)">Band.ReadBlock(int, int, java.nio.ByteBuffer)</a> method.
+  * <p>
+  *
+  * @param xoff The pixel offset to the top left corner of the region
+@@ -2250,8 +2250,8 @@
+  * writing from various organization of buffers.
+  * <p>
+  * For highest performance full resolution data access, write
+- * on "block boundaries" as returned by <a href="Band.html#GetBlockSize(int[], int[])">Band.GetBlockSize(int[], int[])</a>, or use the
+- * <a href="Band.html#WriteBlock_Direct(int, int, java.nio.ByteBuffer)">Band.WriteBlock(int, int, java.nio.ByteBuffer)</a> method.
++ * on "block boundaries" as returned by <a href="Band.html#GetBlockSize(int%5B%5D,int%5B%5D)">Band.GetBlockSize(int[], int[])</a>, or use the
++ * <a href="Band.html#WriteBlock_Direct(int,int,java.nio.ByteBuffer)">Band.WriteBlock(int, int, java.nio.ByteBuffer)</a> method.
+  *<p>
+  * Before writing into a multi-byte datatype buffer (GDT_Int16, GDT_Int32, GDT_Float32, ...),
+  * you should generally set the byte order of the buffer to the native order of the machine
+@@ -2336,8 +2336,8 @@
+  * writing from various organization of buffers.
+  * <p>
+  * For highest performance full resolution data access, write
+- * on "block boundaries" as returned by <a href="Band.html#GetBlockSize(int[], int[])">Band.GetBlockSize(int[], int[])</a>, or use the
+- * <a href="Band.html#WriteBlock_Direct(int, int, java.nio.ByteBuffer)">Band.WriteBlock(int, int, java.nio.ByteBuffer)</a> method.
++ * on "block boundaries" as returned by <a href="Band.html#GetBlockSize(int%5B%5D,int%5B%5D)">Band.GetBlockSize(int[], int[])</a>, or use the
++ * <a href="Band.html#WriteBlock_Direct(int,int,java.nio.ByteBuffer)">Band.WriteBlock(int, int, java.nio.ByteBuffer)</a> method.
+  *<p>
+  *
+  * @param xoff The pixel offset to the top left corner of the region
+@@ -2532,7 +2532,7 @@
+  *      for(int i=0; i &lt; xsize; i++)
+  *      {
+  *          byte bVal = byteArray[j*xsize+i]; // ranging from -128 to 127
+- *          int nVal = ((int)bVal) & 0xff; // remapped to range from 0 to 255
++ *          int nVal = ((int)bVal) &amp; 0xff; // remapped to range from 0 to 255
+  *          int nVal2;
+  *          if (nVal > threshold)
+  *              nVal2 = 255;
+@@ -2772,7 +2772,7 @@
+  * <p>
+  * Note that the X and Y block sizes don't have to divide the image size
+  * evenly, meaning that right and bottom edge blocks may be incomplete.
+- * See <a href="#ReadBlock_Direct(int, int, java.nio.ByteBuffer)">ReadBlock_Direct()</a> for an example of code dealing with these issues.
++ * See <a href="#ReadBlock_Direct(int,int,java.nio.ByteBuffer)">ReadBlock_Direct()</a> for an example of code dealing with these issues.
+  *
+  * @param pnBlockXSize allocated array of 1 integer to put the X block size into or null.
+  *
+@@ -3292,8 +3292,8 @@
+  * reading from lower resolution overview images.
+  * <p>
+  * For highest performance full resolution data access, read
+- * on "block boundaries" as returned by <a href="#GetBlockSize(int[], int[])">GetBlockSize(int[], int[])</a>, or use the
+- * <a href="#ReadBlock_Direct(int, int, java.nio.ByteBuffer)">ReadBlock(int, int, java.nio.ByteBuffer)</a> method.
++ * on "block boundaries" as returned by <a href="#GetBlockSize(int%5B%5D,int%5B%5D)">GetBlockSize(int[], int[])</a>, or use the
++ * <a href="#ReadBlock_Direct(int,int,java.nio.ByteBuffer)">ReadBlock(int, int, java.nio.ByteBuffer)</a> method.
+  * <p>
+  * When requesting a multi-byte datatype (GDT_Int16, GDT_Int32, GDT_Float32, ...),
+  * you should generally set the byte order of the buffer to the native order of the machine
+@@ -3429,8 +3429,8 @@
+  * reading from lower resolution overview images.
+  * <p>
+  * For highest performance full resolution data access, read
+- * on "block boundaries" as returned by <a href="#GetBlockSize(int[], int[])">GetBlockSize(int[], int[])</a>, or use the
+- * <a href="#ReadBlock_Direct(int, int, java.nio.ByteBuffer)">ReadBlock(int, int, java.nio.ByteBuffer)</a> method.
++ * on "block boundaries" as returned by <a href="#GetBlockSize(int%5B%5D,int%5B%5D)">GetBlockSize(int[], int[])</a>, or use the
++ * <a href="#ReadBlock_Direct(int,int,java.nio.ByteBuffer)">ReadBlock(int, int, java.nio.ByteBuffer)</a> method.
+  *
+  * @param xoff The pixel offset to the top left corner of the region
+  * of the band to be accessed.  This would be zero to start from the left side.
+@@ -3701,8 +3701,8 @@
+  * reading from lower resolution overview images.
+  * <p>
+  * For highest performance full resolution data access, write
+- * on "block boundaries" as returned by <a href="#GetBlockSize(int[], int[])">GetBlockSize(int[], int[])</a>, or use the
+- * <a href="#WriteBlock_Direct(int, int, java.nio.ByteBuffer)">WriteBlock(int, int, java.nio.ByteBuffer)</a> method.
++ * on "block boundaries" as returned by <a href="#GetBlockSize(int%5B%5D,int%5B%5D)">GetBlockSize(int[], int[])</a>, or use the
++ * <a href="#WriteBlock_Direct(int,int,java.nio.ByteBuffer)">WriteBlock(int, int, java.nio.ByteBuffer)</a> method.
+  *<p>
+  * Before writing into a multi-byte datatype buffer (GDT_Int16, GDT_Int32, GDT_Float32, ...),
+  * you should generally set the byte order of the buffer to the native order of the machine
+@@ -3813,8 +3813,8 @@
+  * reading from lower resolution overview images.
+  * <p>
+  * For highest performance full resolution data access, write
+- * on "block boundaries" as returned by <a href="#GetBlockSize(int[], int[])">GetBlockSize(int[], int[])</a>, or use the
+- * <a href="#WriteBlock_Direct(int, int, java.nio.ByteBuffer)">WriteBlock(int, int, java.nio.ByteBuffer)</a> method.
++ * on "block boundaries" as returned by <a href="#GetBlockSize(int%5B%5D,int%5B%5D)">GetBlockSize(int[], int[])</a>, or use the
++ * <a href="#WriteBlock_Direct(int,int,java.nio.ByteBuffer)">WriteBlock(int, int, java.nio.ByteBuffer)</a> method.
+  *
+  * @param xoff The pixel offset to the top left corner of the region
+  * of the band to be accessed.  This would be zero to start from the left side.
+@@ -5706,7 +5706,7 @@
+  @param name the name for the new data source.
+  @param options a vector of strings of the format name=value.  Options are driver
+ specific, and driver information can be found at the following url:
+-<a href="http://www.gdal.org/ogr/ogr_formats.html ">OGR Formats</a>
++<a href="http://www.gdal.org/ogr/ogr_formats.html">OGR Formats</a>
+ 
+  @return null is returned on failure, or a new DataSource on
+ success.
+@@ -5731,7 +5731,7 @@
+  @param name the name for the new data source.
+  @param options a vector of strings of the format name=value.  Options are driver
+ specific, and driver information can be found at the following url:
+-<a href="http://www.gdal.org/ogr/ogr_formats.html ">OGR Formats</a>
++<a href="http://www.gdal.org/ogr/ogr_formats.html">OGR Formats</a>
+ 
+  @return null is returned on failure, or a new DataSource on
+ success.
+@@ -5889,7 +5889,7 @@
+  @param new_name the name of the layer to create.
+  @param options a StringList of name=value options.  Options are driver
+ specific, and driver information can be found at the following url:
+-<a href="http://www.gdal.org/ogr/ogr_formats.html ">OGR Formats</a>
++<a href="http://www.gdal.org/ogr/ogr_formats.html">OGR Formats</a>
+ 
+  @return a new layer, or null if an error occurs.
+ */
+@@ -5941,7 +5941,7 @@
+ are no constraints on the types geometry to be written.
+  @param options a vector of strings of the format name=value.  Options are driver
+ specific, and driver information can be found at the following url:
+-<a href="http://www.gdal.org/ogr/ogr_formats.html ">OGR Formats</a>
++<a href="http://www.gdal.org/ogr/ogr_formats.html">OGR Formats</a>
+ 
+  @return null is returned on failure, or a new Layer on success.
+ */
+@@ -7823,7 +7823,7 @@
+  * OGRFeatureDefn.  Field values are copied according to the provided indices
+  * map. Field types do not have to exactly match.  SetField() function
+  * conversion rules will be applied as needed. This is more efficient than
+- * <a href="#SetFrom(org.gdal.ogr.Feature, int)">SetFrom(Feature, int)</a>
++ * <a href="#SetFrom(org.gdal.ogr.Feature,int)">SetFrom(Feature, int)</a>
+  * in that this doesn't lookup the fields by their names.
+  * Particularly useful when the field names don't match.
+  *
+@@ -9368,7 +9368,7 @@
+ /**
+  * Class ogr is an uninstanciable class providing various utility functions as static methods.
+  * <p>
+- * In particular, it provides ogr.<a href="#RegisterAll()">RegisterAll()</a> and ogr.<a href="#Open(java.lang.String, int)">Open()</a> methods.
++ * In particular, it provides ogr.<a href="#RegisterAll()">RegisterAll()</a> and ogr.<a href="#Open(java.lang.String,int)">Open()</a> methods.
+  */
+ public class ogr
+ 
+--- a/swig/java/build_java_doc.cmake
++++ b/swig/java/build_java_doc.cmake
+@@ -32,7 +32,11 @@
+                         -sourcepath "${BUILD_DIR}/org_patched"
+                         -subpackages org.gdal
+                         -windowtitle "GDAL/OGR ${GDAL_VERSION} Java bindings API"
+-                WORKING_DIRECTORY "${BUILD_DIR}")
++                WORKING_DIRECTORY "${BUILD_DIR}"
++                RESULT_VARIABLE JAVADOC_RESULT)
++if(NOT JAVADOC_RESULT EQUAL 0)
++    message(FATAL_ERROR "Javadoc generation failed: ${JAVADOC_RESULT}")
++endif()
+ 
+ # Create a zip with the Javadoc
+ file(REMOVE "${BUILD_DIR}/javadoc.zip")

@@ -1,0 +1,26 @@
+gdal (1.8.0-2) unstable; urgency=low
+
+   Starting from this version GDAL follows the regular SONAME of the C API
+   interface which has to be considered the only officially supported.
+   The library still exports C++ symbols but the Debian package has introduced
+   symbol files and symbol versioning in order to track changes and possibly
+   introduce ad hoc patches whenever requiredi, in order to minimize the number
+   of manual rebuilds of reverse dependencies. The good side effect of
+   versioning script is that all symbols exported by the library which are
+   not part of the GDAL/OGR API set are now definitively hidden.
+   The use of symbol versioning could possibly introduce breakages against
+   third parties binaries not built against the Debian version. Be warned.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 06 Oct 2011 11:41:44 +0200
+
+gdal (1.5.0-3) unstable; urgency=low
+
+   GDAL deprecated the old-style Python binding starting from 1.5 branch, so
+   it has been dropped in Debian. Generally you should not experience big
+   problems, because almost all API functions are supported by the new
+   Swig-based binding. If not, consider that you need to upgrade to the 
+   current interface.
+   The old bindings use Numeric, the new SWIG-based use NumPy, for all
+   the rest refer to GDAL documentation.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 29 Jan 2008 12:37:07 +0100

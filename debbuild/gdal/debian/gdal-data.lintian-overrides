@@ -1,0 +1,12 @@
+# Not a problem
+national-encoding [usr/share/gdal/s57expectedinput.csv]
+
+# Not documentation
+package-contains-documentation-outside-usr-share-doc [usr/share/gdal/pci_*.txt]
+
+# Not documentation
+package-contains-documentation-outside-usr-share-doc [usr/share/gdal/leaflet_template.html]
+
+# Not guaranteed compatible with packaged version
+privacy-breach-generic * [usr/share/gdal/leaflet_template.html]
+

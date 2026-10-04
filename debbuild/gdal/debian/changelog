@@ -1,0 +1,3929 @@
+gdal (3.13.3-1PGSTY) unstable; urgency=medium
+
+  * Activate pkgkde_symbolshelper explicitly on Ubuntu 22.04.
+  * Allow the distribution JDK where OpenJDK 17 is unavailable.
+  * Align the core GIS sources and enabled features with the PGSTY RPM build.
+  * Keep native debug symbols and the distribution package layout.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 15:00:00 +0800
+
+gdal (3.13.3+dfsg-1.pgdg24.04+1) noble-pgdg; urgency=medium
+
+  * Rebuild for noble-pgdg.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Tue, 18 Aug 2026 12:06:13 +0200
+
+gdal (3.13.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 18 Aug 2026 12:06:13 +0200
+
+gdal (3.13.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop KML support, libkml is dead upstream.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Aug 2026 11:23:05 +0200
+
+gdal (3.13.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 22 Jul 2026 15:19:31 +0200
+
+gdal (3.13.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * debian/tests/autopkgtest-pkg-python.conf: Tell autodep8 about the module
+    name.
+
+  [ Bas Couwenberg ]
+  * New upstream release candidate.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 20 Jul 2026 14:12:28 +0200
+
+gdal (3.13.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add patch to use `pip install` instead of `setup.py install`.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 05 Jun 2026 13:10:29 +0200
+
+gdal (3.13.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 01 Jun 2026 17:13:18 +0200
+
+gdal (3.13.0+dfsg-1) unstable; urgency=medium
+
+  * Replace default-libmysqlclient-dev with libmariadb-dev-compat.
+    (closes: #1137148)
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 23 May 2026 07:11:09 +0200
+
+gdal (3.13.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 08 May 2026 13:36:12 +0200
+
+gdal (3.13.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 05 May 2026 05:51:10 +0200
+
+gdal (3.13.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 04 May 2026 13:07:35 +0200
+
+gdal (3.13.0~beta2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update symbols for other architectures.
+  * Drop spelling-errors.patch, applied upstream.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 22 Apr 2026 19:06:00 +0200
+
+gdal (3.13.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Bump Standards-Version to 4.7.4, no changes.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Include new manpages in gdal-bin.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 16 Apr 2026 07:52:01 +0200
+
+gdal (3.12.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 20 Mar 2026 15:27:45 +0100
+
+gdal (3.12.3~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 18 Mar 2026 11:36:18 +0100
+
+gdal (3.12.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop obsolete Breaks/Replaces.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 17 Mar 2026 07:40:06 +0100
+
+gdal (3.12.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 09 Feb 2026 19:04:10 +0100
+
+gdal (3.12.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop Priority: optional, default since dpkg 1.22.13.
+  * Bump Standards-Version to 4.7.3, changes: priority.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 03 Feb 2026 16:37:19 +0100
+
+gdal (3.12.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 18 Dec 2025 15:50:20 +0100
+
+gdal (3.12.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Use debrebuild instead of reprotest.
+  * Update gdal-vector-concat manpage filename.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 12 Dec 2025 19:26:48 +0100
+
+gdal (3.12.0+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 10 Nov 2025 09:20:28 +0100
+
+gdal (3.12.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 08 Nov 2025 05:34:12 +0100
+
+gdal (3.12.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Use test-build-validate-cleanup instead of test-build-twice.
+  * Suggest libgdal-plugin-grass instead of libgdal-grass.
+  * Add copyright for debian/*.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 03 Nov 2025 21:13:39 +0100
+
+gdal (3.12.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Drop Rules-Requires-Root: no, default since dpkg 1.22.13.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Update gdal manpages to install.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 20 Oct 2025 21:58:16 +0200
+
+gdal (3.11.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Update lintian overrides.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 11 Sep 2025 11:54:18 +0200
+
+gdal (3.11.4~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Disable libavif version check.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 04 Sep 2025 12:40:21 +0200
+
+gdal (3.11.3+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 22 Aug 2025 10:51:28 +0200
+
+gdal (3.11.3+dfsg-1~exp2) experimental; urgency=medium
+
+  * Replace libhdf4-alt-dev with libhdf4-dev.
+    (closes: #1108645)
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 12 Aug 2025 04:56:04 +0200
+
+gdal (3.11.3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 12 Jul 2025 14:02:36 +0200
+
+gdal (3.11.2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 11 Jul 2025 11:03:38 +0200
+
+gdal (3.11.2~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 09 Jul 2025 05:26:25 +0200
+
+gdal (3.11.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 08 Jul 2025 11:09:04 +0200
+
+gdal (3.11.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 01 Jul 2025 12:08:32 +0200
+
+gdal (3.11.1~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 25 Jun 2025 18:40:06 +0200
+
+gdal (3.11.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 24 Jun 2025 14:57:44 +0200
+
+gdal (3.11.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 09 May 2025 19:48:23 +0200
+
+gdal (3.11.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop pr12275-atomic.patch, included upstream.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 06 May 2025 21:06:45 +0200
+
+gdal (3.11.0~rc1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add upstream patch to fix FTBFS on armel & powerpc.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 06 May 2025 05:20:04 +0200
+
+gdal (3.11.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Update copyright file.
+  * Update manpages to include in gdal-bin.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 05 May 2025 17:42:42 +0200
+
+gdal (3.11.0~beta1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add libmuparser-dev & libexprtk-dev to (build) dependencies.
+    Required for C++ VRT expressions.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 28 Apr 2025 05:33:50 +0200
+
+gdal (3.11.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file.
+  * Drop OGDI support, removed upstream.
+  * Enable JPEGXL support.
+  * Refresh patches.
+  * Include gdal subcommand manpages in gdal-bin.
+  * Enable ARCHIVE support.
+  * Rename library package for SONAME bump.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 18 Apr 2025 08:15:22 +0200
+
+gdal (3.10.3+dfsg-2) unstable; urgency=medium
+
+  * Replace libhdf4-alt-dev with libhdf4-dev.
+    (closes: #1108645)
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 12 Aug 2025 04:28:49 +0200
+
+gdal (3.10.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 07 Apr 2025 11:58:42 +0200
+
+gdal (3.10.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.7.2, no changes.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 01 Apr 2025 13:37:58 +0200
+
+gdal (3.10.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 14 Feb 2025 15:05:09 +0100
+
+gdal (3.10.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 11 Feb 2025 12:52:00 +0100
+
+gdal (3.10.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 13 Jan 2025 16:58:49 +0100
+
+gdal (3.10.1~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 Jan 2025 16:25:17 +0100
+
+gdal (3.10.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 07 Jan 2025 15:59:51 +0100
+
+gdal (3.10.0+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 29 Dec 2024 11:43:08 +0100
+
+gdal (3.10.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 06 Nov 2024 16:10:40 +0100
+
+gdal (3.10.0~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Nov 2024 17:46:12 +0100
+
+gdal (3.10.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 30 Oct 2024 15:09:22 +0100
+
+gdal (3.10.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 29 Oct 2024 14:57:56 +0100
+
+gdal (3.10.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Enable AVIF driver.
+  * Refresh patches.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 15 Oct 2024 14:59:29 +0200
+
+gdal (3.9.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 14 Oct 2024 16:17:42 +0200
+
+gdal (3.9.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 07 Oct 2024 20:24:49 +0200
+
+gdal (3.9.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 16 Aug 2024 14:15:20 +0200
+
+gdal (3.9.2~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 13 Aug 2024 19:32:10 +0200
+
+gdal (3.9.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.7.0, no changes.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 11 Aug 2024 19:14:19 +0200
+
+gdal (3.9.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 26 Jun 2024 14:52:49 +0200
+
+gdal (3.9.1~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 23 Jun 2024 06:45:18 +0200
+
+gdal (3.9.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 19 Jun 2024 15:18:06 +0200
+
+gdal (3.9.0+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 22 May 2024 10:38:24 +0200
+
+gdal (3.9.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 10 May 2024 16:06:27 +0200
+
+gdal (3.9.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop dpkg-dev build dependency.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 07 May 2024 15:37:44 +0200
+
+gdal (3.9.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 06 May 2024 15:54:23 +0200
+
+gdal (3.9.0~beta2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 29 Apr 2024 14:35:23 +0200
+
+gdal (3.9.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update Files-Exclude paths.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Refresh patches.
+  * Update install file for Python scripts.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 22 Apr 2024 15:42:04 +0200
+
+gdal (3.8.5+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 04 Apr 2024 19:45:27 +0200
+
+gdal (3.8.5~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop python3-distutils build dependency.
+    (closes: #1065865)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 02 Apr 2024 12:29:35 +0200
+
+gdal (3.8.4+dfsg-3) unstable; urgency=medium
+
+  * Add dpkg-dev (>= 1.22.5) to build dependencies for t64 changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 02 Mar 2024 12:04:28 +0100
+
+gdal (3.8.4+dfsg-2) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+    (closes: #1061980)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 28 Feb 2024 14:45:27 +0100
+
+gdal (3.8.4+dfsg-2~exp1) experimental; urgency=medium
+
+  * Reinstate t64 changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 18 Feb 2024 17:12:36 +0100
+
+gdal (3.8.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Mark libgdal, gdal-bin, and gdal-plugins as Multi-Arch.
+    (closes: #1063994)
+  * Update symbols for other architectures.
+  * Revert t64 changes.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 18 Feb 2024 16:40:52 +0100
+
+gdal (3.8.4~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Replace pkg-config build dependency with pkgconf.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 08 Feb 2024 21:08:39 +0100
+
+gdal (3.8.3+dfsg-2~exp1) experimental; urgency=medium
+
+  * Improve t64 changes to match team standards.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 05 Feb 2024 13:39:20 +0100
+
+gdal (3.8.3+dfsg-1.1~exp1) experimental; urgency=medium
+
+  * Non-maintainer upload.
+  * Rename libraries for 64-bit time_t transition.
+
+ -- Lukas Märdian <slyon@debian.org>  Tue, 30 Jan 2024 16:43:00 +0000
+
+gdal (3.8.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 09 Jan 2024 05:23:52 +0100
+
+gdal (3.8.3~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 05 Jan 2024 06:14:29 +0100
+
+gdal (3.8.3~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 04 Jan 2024 05:23:34 +0100
+
+gdal (3.8.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 02 Jan 2024 14:32:20 +0100
+
+gdal (3.8.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 20 Dec 2023 13:36:25 +0100
+
+gdal (3.8.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 16 Dec 2023 15:17:16 +0100
+
+gdal (3.8.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 30 Nov 2023 17:11:47 +0100
+
+gdal (3.8.1~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+    (closes: #1055682)
+  * Update copyright file.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 28 Nov 2023 16:43:24 +0100
+
+gdal (3.8.1~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 24 Nov 2023 13:21:41 +0100
+
+gdal (3.8.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Fix installation of Python utilities.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 24 Nov 2023 06:22:21 +0100
+
+gdal (3.8.0+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 17 Nov 2023 07:50:32 +0100
+
+gdal (3.8.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 13 Nov 2023 18:38:12 +0100
+
+gdal (3.8.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Drop gcc-13.patch, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 09 Nov 2023 11:25:09 +0100
+
+gdal (3.8.0~rc1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add patch to fix compatibility with GCC 13.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 Nov 2023 20:33:43 +0100
+
+gdal (3.8.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 06 Nov 2023 12:02:00 +0100
+
+gdal (3.8.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file.
+  * Refresh patches.
+  * Include gdal_footprint in gdal-bin package.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 03 Nov 2023 15:24:56 +0100
+
+gdal (3.7.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update watch file to match only 3.7.x releases.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 03 Nov 2023 14:36:57 +0100
+
+gdal (3.7.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 30 Oct 2023 18:29:31 +0100
+
+gdal (3.7.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 13 Sep 2023 14:38:50 +0200
+
+gdal (3.7.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Remove generated files in clean target.
+    (closes: #1044490)
+  * Enable Salsa CI.
+  * Switch to dh-sequence-*.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 05 Sep 2023 11:39:15 +0200
+
+gdal (3.7.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Update lintian overrides.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 13 Jul 2023 19:07:41 +0200
+
+gdal (3.7.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Refresh patches.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 06 Jul 2023 15:31:43 +0200
+
+gdal (3.7.0+dfsg-1) unstable; urgency=medium
+
+  * Bump debhelper compat to 13.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 21 Jun 2023 05:29:36 +0200
+
+gdal (3.7.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 10 May 2023 17:28:36 +0200
+
+gdal (3.7.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+  * Drop spelling-errors.patch, generated files removed upstream.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+  * Include sozip in gdal-bin.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 02 May 2023 16:38:18 +0200
+
+gdal (3.6.4+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 11 Jun 2023 10:31:40 +0200
+
+gdal (3.6.4+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 21 Apr 2023 15:19:16 +0200
+
+gdal (3.6.4~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop spelling-errors2.patch, applied upstream.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 17 Apr 2023 14:23:20 +0200
+
+gdal (3.6.3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 14 Mar 2023 05:22:49 +0100
+
+gdal (3.6.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.6.2, no changes.
+  * Drop files removed upstream from Files-Excluded.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 07 Mar 2023 20:44:11 +0100
+
+gdal (3.6.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 05 Jan 2023 09:20:25 +0100
+
+gdal (3.6.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Enable numpy3 dh helper.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 02 Jan 2023 16:31:07 +0100
+
+gdal (3.6.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 15 Dec 2022 17:04:13 +0100
+
+gdal (3.6.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Add Rules-Requires-Root to control file.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 14 Dec 2022 09:17:30 +0100
+
+gdal (3.6.0+dfsg-2) unstable; urgency=medium
+
+  * Disable JPEGXL driver, not available on all release architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 20 Nov 2022 07:50:58 +0100
+
+gdal (3.6.0+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 20 Nov 2022 06:29:33 +0100
+
+gdal (3.6.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 11 Nov 2022 11:51:15 +0100
+
+gdal (3.6.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Include ogr_layer_algebra.1 in gdal-bin.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 07 Nov 2022 05:45:10 +0100
+
+gdal (3.6.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Enable JPEGXL driver.
+  * Refresh patches.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 03 Nov 2022 19:57:08 +0100
+
+gdal (3.5.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 31 Oct 2022 17:43:08 +0100
+
+gdal (3.5.3~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 27 Oct 2022 20:03:34 +0200
+
+gdal (3.5.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop spelling-errors2.patch, applied upstream.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 21 Oct 2022 18:50:11 +0200
+
+gdal (3.5.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 12 Sep 2022 19:49:48 +0200
+
+gdal (3.5.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Refresh patches.
+  * Update symbols for amd64.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 02 Sep 2022 15:54:22 +0200
+
+gdal (3.5.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 06 Jul 2022 12:57:26 +0200
+
+gdal (3.5.1~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 30 Jun 2022 12:46:55 +0200
+
+gdal (3.5.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.6.1, no changes.
+  * Refresh patches.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 27 Jun 2022 13:45:44 +0200
+
+gdal (3.5.0+dfsg-1) unstable; urgency=medium
+
+  * Update watch file to not match -doc-src tarballs.
+  * Update 3.5.0 symbols.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 11 Jun 2022 07:22:32 +0200
+
+gdal (3.5.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update 3.5.0~rc4 symbols.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 13 May 2022 14:36:47 +0200
+
+gdal (3.5.0~rc4+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 3.5.0~rc2 symbols.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 10 May 2022 16:26:41 +0200
+
+gdal (3.5.0~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 3.5.0~rc2 symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 09 May 2022 21:42:03 +0200
+
+gdal (3.5.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 3.5.0~rc1 symbols for other architectures.
+  * Drop PCISDK patches, included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 09 May 2022 12:22:34 +0200
+
+gdal (3.5.0~rc1+dfsg-1~exp3) experimental; urgency=medium
+
+  * Add another upstream patch to fix FTBFS on 32-bit architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 09 May 2022 08:29:30 +0200
+
+gdal (3.5.0~rc1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Use pkgkde-symbolshelper instead of gdal-symbols.pl.
+  * Drop obsolete README.source and TODO files.
+  * Update symbols for amd64.
+  * Add upstream patch to fix FTBFS on 32-bit architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 08 May 2022 21:13:11 +0200
+
+gdal (3.5.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Also exclude .gitattributes and .github/* from repacked upstream tarball.
+  * Don't limit watch file to only match 3.4.x releases.
+  * Switch to cmake buildsystem.
+  * Include gdalplugins/drivers.ini in gdal-plugins.
+  * Update copyright file.
+  * Drop CharLS support, removed upstream.
+  * Rename library package for SONAME bump.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 06 May 2022 15:54:30 +0200
+
+gdal (3.4.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.4.3~rc1.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 04 May 2022 11:38:11 +0200
+
+gdal (3.4.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop Ubuntu PIE changes.
+  * Update watch file to match only 3.4.x releases.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 22 Apr 2022 13:28:08 +0200
+
+gdal (3.4.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.4.2~rc2.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 14 Mar 2022 12:57:55 +0100
+
+gdal (3.4.2~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for 3.4.2~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 08 Mar 2022 12:23:22 +0100
+
+gdal (3.4.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Refresh patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 07 Mar 2022 12:47:33 +0100
+
+gdal (3.4.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.4.1~rc1.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 04 Jan 2022 12:38:30 +0100
+
+gdal (3.4.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+    (closes: #990403)
+  * Refresh patches.
+  * Switch to pcre2.
+    (closes: #1000119)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 28 Dec 2021 06:00:43 +0100
+
+gdal (3.4.0+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for hppa & riscv64.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 Dec 2021 12:40:33 +0100
+
+gdal (3.4.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.4.0~rc3.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 08 Nov 2021 15:02:37 +0100
+
+gdal (3.4.0~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 04 Nov 2021 13:54:37 +0100
+
+gdal (3.4.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 03 Nov 2021 13:32:20 +0100
+
+gdal (3.4.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+  * Enable blosc support.
+  * Enable lz4 support.
+  * Rename library package for SONAME bump.
+  * Refresh patches.
+  * Don't override dh_autoreconf to create config.rpath, included upstream.
+  * Update dh_clean override to remove move generated files.
+  * Add python3-setuptools to build dependencies.
+  * Don't install testepsg, removed upstream.
+  * Update dh_installchangelogs override for NEWS.md rename.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 01 Nov 2021 18:16:28 +0100
+
+gdal (3.3.3+dfsg-2) unstable; urgency=medium
+
+  * Add upstream patches from 3.4.0 for LVBAG driver issues.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 23 Nov 2021 06:40:25 +0100
+
+gdal (3.3.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Fix installation of python scripts.
+  * Update symbols for 3.3.3~rc1.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 29 Oct 2021 17:36:55 +0200
+
+gdal (3.3.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Refresh patches.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 25 Oct 2021 15:47:11 +0200
+
+gdal (3.3.2+dfsg-2) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.6.0, no changes.
+  * Bump debhelper compat to 12, changes:
+    - Drop --list-missing from dh_install
+  * Remove executable bit from examples.
+  * Drop --autodest from dh_install.
+  * Disable DODS support, libdap causes FTBFS.
+  * Add pkg-config to build dependencies.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 29 Sep 2021 22:16:07 +0200
+
+gdal (3.3.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.3.2~rc3.
+  * Update watch file to mangle dirversion.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 07 Sep 2021 13:24:04 +0200
+
+gdal (3.3.2~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Override dh_autoreconf to create config.rpath.
+    (closes: #993334)
+  * Refresh patches.
+  * Drop obsolete ogdi patch.
+  * Update directory pattern to also match pre-releases.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 01 Sep 2021 16:34:55 +0200
+
+gdal (3.3.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.3.1~rc1.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 05 Jul 2021 15:02:33 +0200
+
+gdal (3.3.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Refresh patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 28 Jun 2021 14:14:32 +0200
+
+gdal (3.3.0+dfsg-1~exp2) experimental; urgency=medium
+
+  * Include changes from 3.2.2+dfsg-2.
+  * Drop obsolete Breaks on libgdal1h.
+  * Drop obsolete dh_shlibdeps override.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 22 Jun 2021 05:56:17 +0200
+
+gdal (3.3.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.3.0~rc1.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 03 May 2021 15:05:33 +0200
+
+gdal (3.3.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Refresh patches.
+  * Update symbols for 3.2.2~beta1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 26 Apr 2021 15:19:59 +0200
+
+gdal (3.3.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file.
+  * Refresh patches.
+  * Drop epsilon support, removed upstream.
+  * Rename library package for SONAME bump.
+  * Use veryclean target for python bindings.
+  * Update rules for moved python scripts.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 20 Apr 2021 06:56:36 +0200
+
+gdal (3.2.2+dfsg-3) unstable; urgency=medium
+
+  * Override dh_autoreconf to create config.rpath.
+    (closes: #993334)
+  * Drop obsolete ogdi patch.
+  * Drop obsolete Breaks on libgdal1h.
+  * Drop obsolete dh_shlibdeps override.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 01 Sep 2021 18:08:06 +0200
+
+gdal (3.2.2+dfsg-2) unstable; urgency=medium
+
+  * Drop Breaks from gdal-data to make libgdal20 & libgdal28 co-installable.
+    (closes: #986975)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 21 Jun 2021 21:06:09 +0200
+
+gdal (3.2.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.2.2~rc1.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 10 Mar 2021 15:12:55 +0100
+
+gdal (3.2.2~rc1+dfsg-1~exp1) unstable; urgency=medium
+
+  * New upstream release candidate.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 05 Mar 2021 14:04:57 +0100
+
+gdal (3.2.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.2.1~rc1.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 04 Jan 2021 13:49:29 +0100
+
+gdal (3.2.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Apply patch by John Paul Adrian Glaubitz to fix FTBFS on sh4.
+    (closes: #976795)
+  * Update copyright file.
+  * Use DEB_CXXFLAGS_MAINT_APPEND instead of DEB_CXXFLAGS_APPEND.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 29 Dec 2020 15:00:40 +0100
+
+gdal (3.2.0+dfsg-1) unstable; urgency=medium
+
+  * Bump watch file version to 4.
+  * Bump Standards-Version to 4.5.1, no changes.
+  * Update symbols for alpha.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 06 Dec 2020 13:02:47 +0100
+
+gdal (3.2.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.2.0~rc1.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 02 Nov 2020 10:57:40 +0100
+
+gdal (3.2.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for mips*el.
+  * Update copyright file.
+  * Refresh patches.
+  * Rename library package for SONAME bump.
+  * Enable heif support.
+  * Update install file for gdal-bin.
+  * Update lintian overrides.
+  * Enable libdeflate support.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 26 Oct 2020 15:15:17 +0100
+
+gdal (3.1.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.1.4~rc2.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 24 Oct 2020 07:08:16 +0200
+
+gdal (3.1.4~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop charls.patch, applied upstream. Refresh remaining patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 20 Oct 2020 13:42:25 +0200
+
+gdal (3.1.4~rc1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add patch to restore CharLS support.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 20 Oct 2020 05:45:50 +0200
+
+gdal (3.1.4~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 19 Oct 2020 18:18:31 +0200
+
+gdal (3.1.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update lintian overrides for renamed tags.
+  * Update symbols for 3.1.3~rc1.
+  * Drop poppler patch, included upstream.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 07 Sep 2020 12:49:57 +0200
+
+gdal (3.1.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Fix duplicate files in copyright file.
+  * Add lintian overrides for file-references-package-build-path.
+  * Drop libspatialite-dev version requirement.
+  * Update copyright years for Tamas Szekeres.
+  * Refresh patches.
+  * Add overrides for package-contains-documentation-outside-usr-share-doc.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 01 Sep 2020 11:47:53 +0200
+
+gdal (3.1.2+dfsg-2) unstable; urgency=medium
+
+  * Fix duplicate files in copyright file.
+  * Add lintian overrides for file-references-package-build-path.
+  * Drop libspatialite-dev version requirement.
+  * Add upstream patch to fix FTBFS with poppler 20.09.0.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 04 Sep 2020 12:14:21 +0200
+
+gdal (3.1.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for alpha.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 07 Jul 2020 15:13:21 +0200
+
+gdal (3.1.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.1.1~rc1.
+  * Strip pre-releases from symbols version.
+  * Include additional utilities in gdal-bin.
+  * Update lintian overrides.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 29 Jun 2020 15:29:58 +0200
+
+gdal (3.1.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 22 Jun 2020 11:55:34 +0200
+
+gdal (3.1.0+dfsg-1) unstable; urgency=medium
+
+  [ Momtchil Momtchev ]
+  * Add bcep file to exclude bash-completion from python3 byte-compiling.
+    py3compile works fine, but pypy3compile fails.
+
+  [ Bas Couwenberg ]
+  * Rename gdal.bcap to gdal-bin.bcep, use dir instead of re.
+  * Update symbols for 3.1.0.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 11 Jun 2020 05:47:36 +0200
+
+gdal (3.1.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 07 May 2020 16:31:29 +0200
+
+gdal (3.1.0~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop d-shlibs build dependency.
+  * Drop ant build dependency.
+  * Rename library package for SONAME bump.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 04 May 2020 13:59:07 +0200
+
+gdal (3.1.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop spelling-errors.patch, applied upstream.
+  * Update symbols for 3.1.0~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 29 Apr 2020 06:07:37 +0200
+
+gdal (3.1.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump debhelper compat to 10, changes:
+    - Drop --parallel option, enabled by default
+    - Don't explicitly enable autoreconf, enabled by default
+    - Drop dh-autoreconf build dependency
+  * Explicitly enable CPU optimizations on amd64 & i386.
+    (closes: #954917)
+  * Drop libgdal-java package.
+    (closes: #947960)
+  * Exclude doc directory from repacked upstream tarball.
+  * Refresh patches.
+  * Update copyright file.
+  * Drop libgdal-doc package, license & copyright review is unpleasant.
+  * Enable bash-completion support.
+  * Add patch to fix spelling errors.
+  * Drop unused lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 27 Apr 2020 16:03:38 +0200
+
+gdal (3.0.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.0.4~rc1.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 30 Jan 2020 14:30:01 +0100
+
+gdal (3.0.4~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for mips64el & mipsel.
+  * Add upstream patch to use pkg-config for libxml2 support.
+    (closes: #949167)
+  * Bump Standards-Version to 4.5.0, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 28 Jan 2020 11:59:03 +0100
+
+gdal (3.0.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.0.3~rc1.
+  * Strip pre-releases from symbols version.
+  * Add Breaks to gdal-data for libgdal20.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 13 Jan 2020 14:56:08 +0100
+
+gdal (3.0.3~rc1+dfsg-1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 Jan 2020 14:33:12 +0100
+
+gdal (3.0.2+dfsg-1) unstable; urgency=medium
+
+  * Drop Provides: ${python3:Provides}.
+  * Drop Name field from upstream metadata.
+  * Add lintian overrides for manpage issues.
+  * Add lintian override for no-dh-sequencer.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 Jan 2020 05:51:12 +0100
+
+gdal (3.0.2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.0.2~rc1.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 04 Nov 2019 12:53:18 +0100
+
+gdal (3.0.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop CVE-2019-17545.patch, included upstream.
+  * Update 3.0.1 symbols for mips64el, powerpc, ppc64 & riscv64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 28 Oct 2019 14:33:35 +0100
+
+gdal (3.0.1+dfsg-1~exp4) experimental; urgency=medium
+
+  * Update symbols for 3.0.1.
+  * Bump Standards-Version to 4.4.1, no changes.
+  * Add upstream patch to fix CVE-2019-17545.
+  * Update lintian overrides for file-references-package-build-path.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 15 Oct 2019 07:03:04 +0200
+
+gdal (3.0.1+dfsg-1~exp3) experimental; urgency=medium
+
+  * Drop Python 2 support.
+    (closes: #936590)
+  * Update symbols for alpha, riscv64 & sparc64.
+  * Move Python scripts to gdal-bin package.
+  * Add lintian override for spelling-error-in-binary false positive.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 30 Aug 2019 10:18:01 +0200
+
+gdal (3.0.1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update gbp.conf to use --source-only-changes by default.
+  * Bump Standards-Version to 4.4.0, no changes.
+  * Update PIE hardening conditional, trusty is EOL.
+  * Re-enable CFITSIO support, license issues are resolved.
+    (closes: #932464)
+  * Add lintian override for spelling-error-in-binary.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 11 Aug 2019 09:55:45 +0200
+
+gdal (3.0.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 3.0.1~rc1.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 05 Jul 2019 13:04:35 +0200
+
+gdal (3.0.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 3.0.0 symbols for ia64, m68k, powerpc, sh4 & sparc64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Jun 2019 14:42:54 +0200
+
+gdal (3.0.0+dfsg-1~exp2) experimental; urgency=medium
+
+  * Replace package name with #PACKAGE# when updating symbols files.
+  * Re-enable OGDI support.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 09 May 2019 20:17:25 +0200
+
+gdal (3.0.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update gdal-symbols.pl to not append ' 1' to C++ symbols,
+    alternative dependency template no longer used.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 09 May 2019 13:30:40 +0200
+
+gdal (3.0.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 05 May 2019 12:29:44 +0200
+
+gdal (3.0.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update watch file to check version directories.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 02 May 2019 19:21:30 +0200
+
+gdal (2.5.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Add Andrey Kiselev to copyright holders.
+  * Drop spelling-errors.patch, applied upstream. Refresh remaining patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 26 Apr 2019 17:47:41 +0200
+
+gdal (2.5.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update ogdi (build) dependencies for 4.0.0.
+  * Update watch file for 2.5.0 pre-releases.
+  * Drop virtual ABI dependency, upstream is better at not breaking the ABI.
+  * Require libproj-dev >= 6.0.0 & libgeotiff-dev >= 1.5.0.
+  * Rename library package for SONAME bump.
+  * Update copyright file, changes:
+    - Update copyright years for copyright holders
+    - Add new copyright holders
+  * Refresh patches.
+  * Drop proj_api.h workaround for PROJ 6.0.0.
+  * Disable OGDI support, OGDI 4.0.0 is still in NEW.
+  * Move Python scripts & examples to python3-gdal package.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 19 Apr 2019 15:34:30 +0200
+
+gdal (2.4.3+dfsg-2) UNRELEASED; urgency=medium
+
+  * Drop Provides: ${python3:Provides}.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 07 Nov 2019 18:38:01 +0100
+
+gdal (2.4.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update watch file for 2.4.x releases.
+  * Drop CVE-2019-17545.patch, included upstream.
+  * Drop Python 2 support.
+    (closes: #936590)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 04 Nov 2019 12:59:11 +0100
+
+gdal (2.4.2+dfsg-2) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.4.1, no changes.
+  * Update PIE hardening conditional, trusty is EOL.
+  * Re-enable CFITSIO support, license issues are resolved.
+    (closes: #932464)
+  * Add upstream patch to fix CVE-2019-17545.
+  * Add lintian override for spelling-error-in-binary.
+  * Add lintian override for spelling-error-in-binary false positive.
+  * Update lintian overrides for file-references-package-build-path.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 15 Oct 2019 09:42:55 +0200
+
+gdal (2.4.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update gbp.conf to use --source-only-changes by default.
+  * Update watch file to check version directories.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 07 Jul 2019 14:13:35 +0200
+
+gdal (2.4.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update watch file for final releases.
+  * Update symbols for 2.4.1~rc1.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 22 Mar 2019 12:46:23 +0100
+
+gdal (2.4.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Add -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1 to CFLAGS for PROJ 6.0.0.
+  * Update ogdi (build) dependencies for 4.0.0.
+  * Update watch file for 2.4.1 pre-releases.
+  * Refresh patches.
+  * Drop package name from lintian overrides.
+  * Add lintian overrides for file-references-package-build-path.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 15 Mar 2019 14:02:35 +0100
+
+gdal (2.4.0+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for kfreebsd-i386.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 02 Jan 2019 12:59:50 +0100
+
+gdal (2.4.0+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update symbols for kfreebsd-amd64.
+  * Strip pre-releases from symbols version.
+  * Bump Standards-Version to 4.3.0, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 25 Dec 2018 20:59:37 +0100
+
+gdal (2.4.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update watch file for final releases.
+  * Update symbols for 2.4.0~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 21 Dec 2018 20:20:20 +0100
+
+gdal (2.4.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update watch file for 2.4.0 pre-releases.
+  * Refresh patches.
+  * Update copyright file, changes:
+    - Update copyright years for copyright holders
+    - Add copyright holders
+    - Add license & copyright for LercLib
+  * Override dh_installdocs to install NOTICE file in all packages.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 20 Dec 2018 17:42:37 +0100
+
+gdal (2.3.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update watch file for final releases.
+  * Update symbols for 2.3.3.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 20 Dec 2018 13:42:28 +0100
+
+gdal (2.3.3~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 14 Dec 2018 17:07:19 +0100
+
+gdal (2.3.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update watch file for 2.3.3 pre-releases.
+  * Drop Poppler patches, included upstream. Refresh remaining patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 14 Dec 2018 15:39:12 +0100
+
+gdal (2.3.2+dfsg-4) unstable; urgency=medium
+
+  * Add upstream patch for Poppler 0.71.0 support.
+    (closes: #915722)
+  * Update symbols.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 07 Dec 2018 09:59:28 +0100
+
+gdal (2.3.2+dfsg-3) unstable; urgency=medium
+
+  * Add Build-Depends-Package field to symbols file.
+  * Update symbols for 2.3.2.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 20 Nov 2018 11:24:35 +0100
+
+gdal (2.3.2+dfsg-2) unstable; urgency=medium
+
+  * Add upstream patch to fix FTBFS with Poppler 0.69.0.
+    (closes: #910872)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 12 Oct 2018 22:27:31 +0200
+
+gdal (2.3.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 2.3.2~rc1.
+  * Fix gdal-abi dependency for ia64 & riscv64 symbols.
+  * Update watch file for final releases.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Sep 2018 16:15:35 +0200
+
+gdal (2.3.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.2.1, no changes.
+  * Update copyright file.
+  * Update watch file for 2.3.2 pre-releases.
+  * Move JNI libraries from usr/lib/ to usr/lib/jni again.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 21 Sep 2018 11:33:48 +0200
+
+gdal (2.3.1+dfsg-3) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.2.0, no changes.
+  * Don't run python generate target in parallel.
+    (closes: #906222)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 20 Aug 2018 22:23:41 +0200
+
+gdal (2.3.1+dfsg-2) unstable; urgency=medium
+
+  [ Gianfranco Costamagna ]
+  * Disable PIE for older ubuntu releases, PIE
+    works correctly with cosmic+ releases.
+
+  [ Bas Couwenberg ]
+  * Bump Standards-Version to 4.1.5, no changes.
+  * Drop autopkgtest to test installability.
+  * Add lintian override for testsuite-autopkgtest-missing.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 31 Jul 2018 14:37:57 +0200
+
+gdal (2.3.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 2.3.1~rc2.
+  * Update watch file for final releases.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 28 Jun 2018 11:45:27 +0200
+
+gdal (2.3.1~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop parallel build patch, fixed with upstream patch.
+  * Update symbols for 2.3.1~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 23 Jun 2018 19:27:04 +0200
+
+gdal (2.3.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update watch file for 2.3.1 pre-releases.
+  * Refresh patches.
+  * Add patch to fix parallel build failure.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 23 Jun 2018 09:45:22 +0200
+
+gdal (2.3.0+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for mipsel.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 24 May 2018 18:32:34 +0200
+
+gdal (2.3.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update watch file for final releases.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 11 May 2018 12:36:56 +0200
+
+gdal (2.3.0~rc1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Drop ancient X-Python3-Version field.
+  * Strip trailing whitespace from changelog, control & rules files.
+  * Don't use version specified data & plugins directory.
+  * Update symbols for 2.3.0~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 07 May 2018 19:02:21 +0200
+
+gdal (2.3.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for 2.3.0~beta1.
+  * Drop Re-install-gdal_csv.h.patch, included upstream.
+    Refresh remaining patches.
+  * Enable parallel make.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 04 May 2018 18:33:14 +0200
+
+gdal (2.3.0~beta1+dfsg-2~exp1) experimental; urgency=medium
+
+  * Add upstream patch to re-install gdal_csv.h.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 21 Apr 2018 21:17:37 +0200
+
+gdal (2.3.0~beta1+dfsg-1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update upstream metadata for move to GitHub.
+  * Update Vcs-* URLs for Salsa.
+  * Drop override for vcs-deprecated-in-debian-infrastructure.
+  * Bump Standards-Version to 4.1.4, no changes.
+  * Update watch file for 2.3.0 (pre-)releases.
+  * Don't exclude esri_extra.wkt, license issue resolved.
+  * Refresh patches.
+  * Update copyright file, changes:
+    - Update copyright years for existing copyright holders
+    - Add new copyright holders
+    - Change license shortname MIT to Expat
+    - Drop license & copyright for autotools files
+    - Add license & copyright for ESRI WKT files
+    - Add license & copyright for cpl_mem_cache.h
+  * Enable zstd support.
+  * Enable CharLS support.
+  * Rename --with-static-proj4 configure option to --with-proj.
+  * Fix JNI library installation.
+  * Drop unnecessary get-orig-source target.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 20 Apr 2018 15:55:03 +0200
+
+gdal (2.2.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update watch file for final releases.
+  * Simplify overrides for vcs-deprecated-in-debian-infrastructure.
+  * Add python3-distutils to build dependencies.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 21 Mar 2018 16:14:53 +0100
+
+gdal (2.2.4~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update watch file for 2.2.4 (pre-)releases.
+  * Drop patches included upstream. Refresh remaining patches.
+  * Update C++ symbols files.
+  * Add lintian overrides for vcs-deprecated-in-debian-infrastructure.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 19 Mar 2018 15:35:59 +0100
+
+gdal (2.2.3+dfsg-2) unstable; urgency=medium
+
+  * Update spelling-errors.patch to also fix 'Altitude' typo.
+    Thanks to pabs for spotting this one.
+  * Update C++ symbols files.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 06 Feb 2018 07:39:14 +0100
+
+gdal (2.2.3+dfsg-2~exp1) experimental; urgency=medium
+
+  [ Francesco Paolo Lovergine ]
+  * Added a couple of missing build-dep to correctly generate Perl binding
+    documentation.
+  * New patch perl-doxygen added to get the full classes documentation in
+    Perl binding, due to current doxygen implementation.
+  * The doxygen jquery is currently a fork of jquery in minified form, and it
+    is not compatible with the modern one. Replacement with the libjsquery
+    provided now removed.
+  * autotools_dev plugin is deprecated since debhelper >= 9.20160114 and now
+    no more supported.
+
+  [ Bas Couwenberg ]
+  * Strip trailing whitespace form changelog and patch header.
+  * Reorder build dependencies (sorted by name).
+  * Remove jquery symlinks and dependencies.
+  * Update copyright-format URL to use HTTPS.
+  * Add upstream patch to avoid potential issue with CPL circular buffers.
+  * Bump Standards-Version to 4.1.3, no changes.
+  * Update symbols for powerpcspe.
+  * Move libgdal-perl documentation to separate arch:all package.
+  * Add lintian override for pkg-config-unavailable-for-cross-compilation.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 29 Jan 2018 22:45:49 +0100
+
+gdal (2.2.3+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for alpha, hurd-i386 & m68k.
+  * Bump Standards-Version to 4.1.2, no changes.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 17 Dec 2017 11:21:25 +0100
+
+gdal (2.2.3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 2.2.3~rc1.
+  * Drop unused override for debian-watch-uses-insecure-uri.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 23 Nov 2017 12:21:44 +0100
+
+gdal (2.2.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Strip trailing whitespace from changelog.
+  * Update watch file for 2.2.3 (pre-)releases.
+  * Drop svn-r40330_Add-support-for-openjpeg-2.3.patch, included upstream.
+  * Strip trailing whitespace from control & changelog files.
+  * Add lintian override for debian-watch-uses-insecure-uri.
+  * Use deferred asignment operator for dpkg-architecture call for
+    DEB_HOST_MULTIARCH variable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 20 Nov 2017 14:34:28 +0100
+
+gdal (2.2.2+dfsg-2) unstable; urgency=medium
+
+  * Mark gdal-data & libgdal-doc as Multi-Arch: foreign.
+    (closes: #879015)
+  * Update symbols for powerpc.
+  * Add upstream patch to support OpenJPEG 2.3.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 18 Oct 2017 16:03:28 +0200
+
+gdal (2.2.2+dfsg-1) unstable; urgency=medium
+
+  * Update watch file for final releases.
+  * Add patch to fix privacy-breach-generic lintian issues.
+  * Update symbols for alpha, armhf, hppa & sh4.
+  * Bump Standards-Version to 4.1.1, no changes.
+  * Add lintian overrides for copyright-year-in-future false positive.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 03 Oct 2017 19:53:18 +0200
+
+gdal (2.2.2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 2.2.2~rc1.
+  * Strip pre-releases from symbols version.
+  * Bump Standards-Version to 4.1.0, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 22 Sep 2017 14:55:55 +0200
+
+gdal (2.2.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update watch file for 2.2.2 (pre-)releases.
+  * Refresh patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 15 Sep 2017 21:10:25 +0200
+
+gdal (2.2.1+dfsg-2) unstable; urgency=medium
+
+  * Add symbols for sh4.
+  * Build & install documentation for Perl bindings.
+    (closes: #868311)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 14 Jul 2017 17:40:53 +0200
+
+gdal (2.2.1+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 10 Jul 2017 18:06:59 +0200
+
+gdal (2.2.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 2.2.1~rc1.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 30 Jun 2017 13:04:12 +0200
+
+gdal (2.2.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Disable PIE on Ubuntu where it's still problematic.
+  * Bump Standards-Version to 4.0.0, no changes.
+  * Add autopkgtest to test installability.
+  * Refresh patches.
+  * Use pkg-info.mk variables instead of dpkg-parsechangelog output.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 23 Jun 2017 14:57:10 +0200
+
+gdal (2.2.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 2.2.0~rc1.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 09 May 2017 17:33:46 +0200
+
+gdal (2.2.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for 2.2.0~beta2. Add symbols file for powerpcspe.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Apr 2017 18:41:31 +0200
+
+gdal (2.2.0~beta2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update symbols for 2.2.0~beta1.
+  * Update copyright years for Ivan Lucena.
+  * Refresh patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 23 Apr 2017 16:04:11 +0200
+
+gdal (2.2.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update watch file for 2.2.0 (pre-)releases.
+  * Drop patches applied upstream. Refresh remaining patches.
+  * Move data files to architecture independent gdal-data package.
+  * Update copyright file, changes:
+    - Update copyright years for copyright holders
+    - Add new copyright holders
+    - Add license & copyright for minidriver_mrf.cpp
+  * Enable SOSI support.
+  * Include ogrmerge.py in python-gdal package.
+  * Include gnmanalyse & gnmmanage in gdal-bin package.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 14 Apr 2017 14:52:26 +0200
+
+gdal (2.1.3+dfsg-1~exp4) experimental; urgency=medium
+
+  * Merge changes from gdal (2.1.2+dfsg-5).
+    (closes: #859918)
+  * Update symbols for hppa.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 09 Apr 2017 15:44:44 +0200
+
+gdal (2.1.3+dfsg-1~exp3) experimental; urgency=medium
+
+  * Update symbols for alpha.
+  * Merge changes from gdal (2.1.2+dfsg-4).
+    (closes: #859368)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 03 Apr 2017 01:10:07 +0200
+
+gdal (2.1.3+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update symbols for kfreebsd-{amd64,i386}.
+  * Add upstream patch to fix _gdal_array ImportError with Python 3.
+    (closes: #853900)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 02 Feb 2017 19:22:17 +0100
+
+gdal (2.1.3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 2.1.3, add symbols for m68k.
+  * Update watch file for final releases.
+  * Strip pre-releases from ABI version when creating new symbols files.
+  * Use dpkg-architecture to set DEB_HOST_MULTIARCH if not already set.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 27 Jan 2017 12:52:52 +0100
+
+gdal (2.1.3~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update watch file for 2.1.3 (pre-)releases.
+  * Drop svn-r36175-DODS-fix-crash-on-URL-that-are-not-DODS-servers.patch,
+    included upstream. Refresh remaining patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 20 Jan 2017 10:35:53 +0100
+
+gdal (2.1.2+dfsg-5) unstable; urgency=medium
+
+  * Mark libgdal20 as breaking libgdal1h to fix upgrades.
+    (closes: #859918)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 09 Apr 2017 13:22:29 +0200
+
+gdal (2.1.2+dfsg-4) unstable; urgency=medium
+
+  * Enable PIE hardening flags.
+    (closes: #859368)
+  * Drop unused hardening-no-pie lintian override.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 02 Apr 2017 23:35:22 +0200
+
+gdal (2.1.2+dfsg-3) unstable; urgency=medium
+
+  * Add upstream patch to fix _gdal_array ImportError with Python 3.
+    (closes: #853900)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 02 Feb 2017 20:15:59 +0100
+
+gdal (2.1.2+dfsg-2) unstable; urgency=medium
+
+  * Add upstream patch to fix crash on URLs that are not DODS servers.
+    (LP: #1640360)
+  * Disable cryptopp support, causes FTBFS with new revision.
+  * Re-instate hardening-no-pie lintian override.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 09 Nov 2016 18:38:03 +0100
+
+gdal (2.1.2+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Oct 2016 00:00:50 +0200
+
+gdal (2.1.2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 27 Oct 2016 14:27:42 +0200
+
+gdal (2.1.2~rc4+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 24 Oct 2016 18:56:33 +0200
+
+gdal (2.1.2~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 21 Oct 2016 11:50:27 +0200
+
+gdal (2.1.2~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64, arm*, i386, kfreebsd-*, mips*, powerpc, ppc64*,
+    s390x & sparc64.
+  * Drop unused override for hardening-no-pie.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 20 Oct 2016 10:42:00 +0200
+
+gdal (2.1.2~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Refresh patches.
+  * Update spelling-errors.patch to fix 'occurred' typo.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 14 Oct 2016 18:13:51 +0200
+
+gdal (2.1.1+dfsg-5) unstable; urgency=medium
+
+  * Update spelling-errors.patch to fix additional typos.
+  * Reinstate MySQL/MariaDB support, mariadb-10.0 available on mips64el now.
+    Changes:
+    - Add default-libmysqlclient-dev (build) dependency
+    - Add --with-mysql configure option
+    - Add RegisterOGRMySQL@Base symbol
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 13 Oct 2016 07:30:43 +0200
+
+gdal (2.1.1+dfsg-4) unstable; urgency=medium
+
+  * Remove MySQL support. The dependencies via default-libmysqlclient-dev
+    cannot be satisfied on all release architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 07 Sep 2016 21:17:25 +0200
+
+gdal (2.1.1+dfsg-3) unstable; urgency=medium
+
+  * Update symbols for ppc64 with GCC 6.2.
+  * Change libmysqlclient-dev dependencies to default-libmysqlclient-dev.
+    (closes: #836962)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 07 Sep 2016 18:05:23 +0200
+
+gdal (2.1.1+dfsg-2) unstable; urgency=medium
+
+  * Strip pre-releases from symbols version.
+  * Update symbols for rebuild with GCC 6.2.
+  * Add libgdal-grass to gdal-bin Suggests.
+  * Don't filter out -Werror=format-security, fixed upstream.
+    (closes: #834174)
+  * Switch to headless variant for default-jdk dependency.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 03 Sep 2016 16:03:40 +0200
+
+gdal (2.1.1+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 13 Jul 2016 16:27:21 +0200
+
+gdal (2.1.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for hppa & sparc64.
+  * Update watch file for final releases.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 13 Jul 2016 11:18:52 +0200
+
+gdal (2.1.1~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64, arm64, armel, armhf, hurd-i386, i386,
+    kfreebsd-{amd64,i386}, mips, mipsel, mips64el, powerpc, ppc64, ppc64el,
+    s390x.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 07 Jul 2016 13:44:17 +0200
+
+gdal (2.1.1~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Fix python3-gdal description, tools only included in python-gdal.
+  * Drop unused override for old-style-config-script-multiarch-path.
+  * Drop unused override for spelling-error-in-binary.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 03 Jul 2016 18:32:39 +0200
+
+gdal (2.1.0+dfsg-3) unstable; urgency=medium
+
+  * Add (modified) patch by Alexis Bienvenüe to make the build reproducible.
+    (closes: #824808)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 28 May 2016 12:11:11 +0200
+
+gdal (2.1.0+dfsg-2) unstable; urgency=medium
+
+  * Update symbols for alpha, hppa, sparc64 & x32.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 12 May 2016 19:24:04 +0200
+
+gdal (2.1.0+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for sparc64.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 10 May 2016 14:09:59 +0200
+
+gdal (2.1.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for mips64el & ppc64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 02 May 2016 11:20:36 +0200
+
+gdal (2.1.0~rc4+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 29 Apr 2016 11:59:48 +0200
+
+gdal (2.1.0~rc1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add automake1.11 to Build-Conflicts, causes FTBFS in experimental.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 19 Apr 2016 21:48:17 +0200
+
+gdal (2.1.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * Update symbols for hppa & x32.
+  * Bump Standards-Version to 3.9.8, no changes.
+  * Update watch file for 2.1.0 pre-releases.
+  * New upstream release candidate.
+  * Update copyright file, add license & copyright for JPNG_band.cpp.
+  * Drop java-version.patch, applied upstream. Refresh remaining patches.
+  * Drop Homepage field from binary packages.
+  * Update upstream metadata URLs to use HTTPS.
+  * Update common symbols for 2.1.0~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 18 Apr 2016 21:08:37 +0200
+
+gdal (2.1.0~beta1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update symbols for amd64, arm64, armel, armhf, i386, kfreebsd-{amd64,i386},
+    hurd-i386, mips, mipsel, powerpc, ppc64el & s390x.
+  * Drop --with-ruby=no configure option, Ruby support disabled upstream.
+  * Fix symbols version to include pre-releases.
+  * Rebuild with libcrypto++6.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 04 Apr 2016 06:34:54 +0200
+
+gdal (2.1.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file, changes:
+    - Update copyright years for Even Rouault
+    - Add Airbus DS Geo SA, Faza Mahamood & Mikhail Gusev to copyright holders
+    - Update copyright years for Free Software Foundation, Inc.
+    - Switch from GPL-2+ to GPL-3+ for config.{sub,guess}
+    - Add license & copyright for Qhull
+  * Enable QHull support.
+  * Enable cryptopp support.
+  * Drop patches applied upstream. Refresh remaining patches.
+  * Add patch to bump minimum Java version to 5 for annotations.
+  * Include additional manpages in gdal-bin.
+  * Have dh_numpy{,3} act on specific package only.
+  * Add patch to fix privacy-breach-logo issues in documentation.
+  * Reorder (build) dependencies and configure options.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 02 Apr 2016 16:51:24 +0200
+
+gdal (2.0.2+dfsg-5) unstable; urgency=medium
+
+  * Build with external libjson-c instead of internal copy.
+    (LP: #1565475)
+  * Have dh_numpy{,3} act on specific package only.
+  * Reorder (build) dependencies and configure options.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 03 Apr 2016 20:01:55 +0200
+
+gdal (2.0.2+dfsg-4) unstable; urgency=medium
+
+  * Disable JasPer support, will be removed from stretch.
+    (closes: #818198)
+  * Enable all hardening buildflags, disable pie
+    which breaks the Python bindings.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 15 Mar 2016 20:29:28 +0100
+
+gdal (2.0.2+dfsg-3) unstable; urgency=medium
+
+  * Add patch to fix segfault when exiting with proper closing of datasource.
+    (closes: #817146)
+  * Add patch for 'message' typo.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 08 Mar 2016 23:59:36 +0100
+
+gdal (2.0.2+dfsg-2) unstable; urgency=medium
+
+  * Fix gdal-abi dependency for mips64el symbols.
+  * Update symbols for alpha, hppa, sparc64 & x32.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 03 Mar 2016 19:24:09 +0100
+
+gdal (2.0.2+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for hurd-i386 & x32.
+  * Add patches for 'formatted' & 'Remaining' typos.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 01 Mar 2016 21:02:59 +0100
+
+gdal (2.0.2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Bump Standards-Version to 3.9.7, no changes.
+  * Update symbols for amd64, arm64, armel, armhf, hppa, i386,
+    kfreebsd-amd64, kfreebsd-i386, mips, mipsel, mips64el,
+    powerpc, ppc64, ppc64el, s390x.
+  * Add symbols for sparc64.
+  * Drop symbols for ia64 & sparc, ports discontinued.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 19 Feb 2016 13:57:50 +0100
+
+gdal (2.0.2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop hardening patch, applied upstream. Refresh remaining patches.
+  * Add patches for various typos.
+  * Add upstream patch to fix crash with SQLite 3.10.0.
+  * Enable parallel builds.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 12 Feb 2016 19:41:57 +0100
+
+gdal (2.0.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update copyright file, changes:
+    - Update copyright years & holders
+    - Drop files section for gcore/gdal_rpcimdio.cpp, removed upstream
+    - Drop .0 from GPL license shortnames
+    - Strip trailing whitespace
+    - Use range notation for copyright years
+    - Add sbnsearch.c to MIT or LGPL-2+ section
+  * Drop patches applied upstream, refresh remaining patches.
+  * Rename libgdal1i to libgdal20 to match SONAME.
+  * Use packaged libgeotiff & libtiff instead of internal copies.
+    (closes: #684233)
+  * Drop libgdal1-dev transitional package, and obsolete Breaks/Replaces.
+  * Change virtual package from libgdal.so.1-<major>.<minor>.<patch> format
+    to gdal-abi-<major>-<minor>-<patch> format.
+  * Drop custom symbol version script, never updated after 1.8.
+  * Include Geo::GDAL manpage in libgdal-perl.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 23 Oct 2015 17:01:12 +0200
+
+gdal (1.11.4+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update symbols for hppa, ppc64 & x32,
+    add symbols for mips64el & sparc64.
+  * Add upstream patch to fix crash with SQLite 3.10.0.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 10 Feb 2016 20:39:32 +0100
+
+gdal (1.11.4+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update watch file for final releases.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 01 Feb 2016 16:14:20 +0100
+
+gdal (1.11.4~rc2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Revert Multi-Arch: no change for libgdal-dev.
+  * Add lintian override for old-style-config-script-multiarch-path.
+    See: https://lists.debian.org/debian-devel/2016/01/msg00688.html
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 26 Jan 2016 21:30:29 +0100
+
+gdal (1.11.4~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update watch file for 1.11.4 pre-releases.
+  * Refresh patches.
+  * Add patches for various typos.
+  * Mark libgdal-dev as Multi-Arch: no, due to old style config file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 26 Jan 2016 06:10:18 +0100
+
+gdal (1.11.3+dfsg-3) unstable; urgency=medium
+
+  * Update Vcs-Git URL to use HTTPS.
+  * Add upstream patch to fix crash with SQLite 3.10.0.
+  * Add patches for various typos.
+  * Add lintian override for old-style-config-script-multiarch-path.
+    See: https://lists.debian.org/debian-devel/2016/01/msg00688.html
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 10 Feb 2016 19:06:55 +0100
+
+gdal (1.11.3+dfsg-2) unstable; urgency=medium
+
+  * Update symbols for alpha, amd64, kfreebsd-amd64, ppc64el & s390x.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 22 Oct 2015 12:29:38 +0200
+
+gdal (1.11.3+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for hppa, hurd-i386 & x32.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 22 Oct 2015 00:44:25 +0200
+
+gdal (1.11.3+dfsg-1~exp1) experimental; urgency=medium
+
+  * Update watch file to final releases.
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 23 Sep 2015 21:05:14 +0200
+
+gdal (1.11.3~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * Update watch file for 1.11.3 pre-releases.
+  * New upstream release candidate.
+  * Drop existant-typo patch, applied upstream.
+    Refresh remaining patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 16 Sep 2015 22:17:07 +0200
+
+gdal (1.11.2+dfsg-3) unstable; urgency=medium
+
+  * Bump minimum required libspatialite-dev to 4.3.0-3~ for liblwgeom support.
+  * Update Vcs-Browser URL to use HTTPS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Aug 2015 10:35:01 +0200
+
+gdal (1.11.2+dfsg-2) unstable; urgency=medium
+
+  * Bump minimum required libspatialite-dev to 4.3.0-2~ for circular
+    dependency change.
+  * Rebuild for geos transition.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 27 Aug 2015 16:48:40 +0200
+
+gdal (1.11.2+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 21 Aug 2015 17:25:49 +0200
+
+gdal (1.11.2+dfsg-1~exp7) experimental; urgency=medium
+
+  * Require at least libkml-dev 1.3.0~rc0-3 for boost dependencies.
+  * Add patch to support pkg-config for the new libkml.
+  * Add RegisterOGRLIBKML to common symbols file again.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 21 Aug 2015 11:13:01 +0200
+
+gdal (1.11.2+dfsg-1~exp6) experimental; urgency=medium
+
+  * Update symbols for all architectures with GCC 5.
+  * Drop symbols files for ia64 & sparc.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 20 Aug 2015 12:11:17 +0200
+
+gdal (1.11.2+dfsg-1~exp5) experimental; urgency=medium
+
+  * Update copyright file, changes:
+    - Drop .0 from GPL license shortnames
+    - Strip trailing whitespace
+    - Use range notation for copyright years
+    - Add sbnsearch.c to MIT or LGPL-2+ section
+  * Add patch to fix 'existent' typo.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 18 Aug 2015 23:05:54 +0200
+
+gdal (1.11.2+dfsg-1~exp4) experimental; urgency=medium
+
+  * Remove trailing whitespace to fix syntax error in symbols files.
+  * Use uscan in get-orig-source target.
+  * Rename library package to libgdal1i because of C++ symbols changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 19 Jun 2015 01:28:42 +0200
+
+gdal (1.11.2+dfsg-1~exp3) experimental; urgency=medium
+
+  * Use packaged jquery.js instead of Doxygen copy.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 23 May 2015 16:43:16 +0200
+
+gdal (1.11.2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update symbols for amd64, arm64, armel, armhf, hurd-i386, i386,
+    kfreebsd-amd64, kfreebsd-i386, mipsel, powerpc, ppc64el, s390x, sparc &
+    x32.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 20 Feb 2015 14:56:48 +0100
+
+gdal (1.11.2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Add upstream metadata.
+  * Have python*-gdal suggest gdal-bin.
+    (closes: #774243)
+  * Update my email to @debian.org address.
+  * Drop get-orig-source script in favor of uscan + Files-Excluded.
+  * Refresh patches.
+  * Update Vcs-Browser URL to use cgit instead of gitweb.
+  * Update copyright file, group files & copyright by license.
+  * Update openjpeg build dependency from 1.5 to 2.1.
+    (closes: #761957)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 19 Feb 2015 22:24:13 +0100
+
+gdal (1.11.1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Set experimental branch in Vcs-Git and gbp.conf.
+  * Update symbols for amd64, armel, armhf, i386, mips, mipsel, powerpc,
+    s390x & sparc.
+  * Don't exclude libhdf4-alt-dev from build dependencies on ppc64.
+  * Update gdal-symbols.pl to also generate symbols files for new
+    architectures.
+  * Add symbols files for alpha, arm64, hppa, hurd-i386,
+    kfreebsd-amd64, kfreebsd-i386, ppc64, ppc64el & x32.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 07 Nov 2014 20:53:35 +0100
+
+gdal (1.11.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Refresh patches.
+  * Bump Standards-Version to 3.9.6, no changes.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sat, 11 Oct 2014 18:11:56 +0200
+
+gdal (1.11.0+dfsg1-1~exp5) experimental; urgency=medium
+
+  * Use alternative dependency template for C++ symbols in libgdal1h.
+  * Update path in copyright file, ogrvrt.xsd moved to data directory.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Wed, 10 Sep 2014 20:27:35 +0200
+
+gdal (1.11.0+dfsg1-1~exp4) experimental; urgency=medium
+
+  * Merge changes from 1.10.1+dfsg-8 to support new hdf5 packaging layout.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 01 Aug 2014 00:08:50 +0200
+
+gdal (1.11.0+dfsg1-1~exp3) experimental; urgency=medium
+
+  * Merge changes from 1.10.1+dfsg-7 to include patch by Breno Leitao.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Tue, 29 Jul 2014 22:40:29 +0200
+
+gdal (1.11.0+dfsg1-1~exp2) experimental; urgency=low
+
+  [ Marc Deslauriers ]
+  * Fix ftbfs on arm64 and ppc64el.
+
+  [ Bas Couwenberg ]
+  * Simplify repacking with tar --delete.
+  * Update symbols for: amd64, armel, armhf, i386, mips, mipsel, powerpc &
+    s390x.
+  * Bump repacked upstream version, repacking was fixed to not delete the
+    .gitignore file included by upstream.
+  * Merge changes from 1.10.1+dfsg-6 to include patch by gregor herrmann.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Wed, 09 Jul 2014 00:32:07 +0200
+
+gdal (1.11.0+dfsg-1~exp1) experimental; urgency=low
+
+  * New upstream release.
+  * Update copyright file.
+  * Drop patch: man, applied upstream.
+  * Drop patch: unkown-typo, applied upstream.
+  * Drop patch: hurd-i386-pathmax, file removed upstream.
+  * Refresh patches.
+  * Update install paths for new upstream version.
+  * Add libpcre3-dev build dependency.
+  * Don't use -Werror=format-security, causes build failure on
+    ogrsxfdatasource.cpp.
+  * Add patch to fix 'recommended' typo.
+  * Update typo patches.
+  * Install JNI libraries in /usr/lib/jni instead of /usr/lib.
+  * Fix man page install.
+  * Also include gdal.pc in dev package.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sun, 04 May 2014 18:13:46 +0200
+
+gdal (1.10.1+dfsg-10) UNRELEASED; urgency=medium
+
+  * Update copyright file, changes:
+    - Group files & copyright by license
+    - Drop .0 from GPL license shortnames
+    - Strip trailing whitespace from end of lines
+    - Use range notation for copyright years
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 28 Jun 2015 23:35:25 +0200
+
+gdal (1.10.1+dfsg-9) unstable; urgency=medium
+
+  * Update my email to use @debian.org address.
+  * Add patch backporting upstream changes to fix FTBFS with MySQL 5.6.
+  * Bump Standards-Version to 3.9.6, no changes.
+  * Add upstream metadata.
+  * Have python*-gdal suggest gdal-bin.
+    (closes: #774243)
+  * Drop get-orig-source script in favor of uscan + Files-Excluded.
+  * Use uscan in get-orig-source target.
+  * Update Vcs-Browser URL to use cgit instead of gitweb.
+  * Remove trailing whitespace to fix syntax error in symbols files.
+  * Use packaged jquery.js instead of Doxygen copy.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 28 Jun 2015 15:10:22 +0200
+
+gdal (1.10.1+dfsg-8) unstable; urgency=medium
+
+  * Support hdf5 1.8.13 new packaging layout.
+    Thanks to Gilles Filippini for the patch.
+    (closes: #756662)
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 01 Aug 2014 00:02:15 +0200
+
+gdal (1.10.1+dfsg-7) unstable; urgency=medium
+
+  * Also use autotools_dev to update config.sub and config.guess.
+    Thanks to Breno Leitao for the patch.
+    (closes: #756412)
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Tue, 29 Jul 2014 22:17:47 +0200
+
+gdal (1.10.1+dfsg-6) unstable; urgency=medium
+
+  [ gregor herrmann ]
+  * Fix "hardcodes /usr/lib/perl5":
+    - add patch perl-vendor which passes INSTALLDIRS=vendor to Makefile.PL
+      which nicely drops perl files into suitable directories
+    - remove all perl juggling around from debian/rules as a result of the
+      patch
+    - make debian/libgdal-perl.install executable and use $Config{vendorarch}
+      there to install the perl files from the expected location
+    (Closes: #752473)
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Tue, 08 Jul 2014 20:44:25 +0200
+
+gdal (1.10.1+dfsg-5) unstable; urgency=medium
+
+  * Don't run dh for custom targets.
+  * Also remove config.log on clean.
+  * Don't strip .py extension from python scripts, breaks QGIS plugins.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Wed, 02 Apr 2014 00:31:29 +0200
+
+gdal (1.10.1+dfsg-4) unstable; urgency=medium
+
+  * Add libcurl-ssl-dev as alternative to libcurl4-gnutls-dev.
+    (closes: #741015)
+  * Enable WebP image format support.
+    (closes: #741004)
+  * Add gbp.conf to use pristine-tar by default.
+  * Drop lintian override for debian-watch-may-check-gpg-signature,
+    shouldn't override pedantic tags.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 07 Mar 2014 21:58:55 +0100
+
+gdal (1.10.1+dfsg-3) unstable; urgency=medium
+
+  * Add patch to fix FTBFS on hurd-i386 which doesn't defined PATH_MAX.
+  * Update symbols files for version 1.10.1.
+  * Add script to assist with symbols file updates.
+  * Add patch to fix 'suppress' typo in manpage.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sat, 11 Jan 2014 06:36:16 +0100
+
+gdal (1.10.1+dfsg-2) unstable; urgency=medium
+
+  * Moved to libhdf5-dev b-d with the right versioning.
+    (closes: #689426)
+  * Policy bumped to 3.9.5, no changes.
+  * Added a Breaks for python-gdal vs gdal-bin due to gdal_retile.1 collision
+    in pre-1.10 versions distributed in experimental. Just for safety.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 18 Dec 2013 13:10:55 +0100
+
+gdal (1.10.1+dfsg-1) unstable; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Change priority to optional.
+
+  [ Francesco Paolo Lovergine ]
+  * Ready for unstable.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 10 Dec 2013 12:59:27 +0100
+
+gdal (1.10.1+dfsg-0~exp1) experimental; urgency=low
+
+  [ Bas Couwenberg ]
+  * New upstream release.
+  * Add myself to Uploaders.
+  * Update watch file.
+  * Remove data files with unclear rights.
+    (closes: #721343)
+  * Refresh patches.
+  * Use canonical URLs for Vcs-* fields.
+  * Update copyright.
+  * Refer to quilt instead of dpatch, and fix typos in README.source.
+  * Add patches to fix various typos.
+  * Add lintian overrides for hyphen-used-as-minus-sign and
+    manpage-has-errors-from-man, man pages are automatically generated
+    with sphinx.
+  * Use versioned Breaks/Replaces instead of Conflicts/Replaces.
+  * Bump dephelper compatibility to 9.
+  * Install java files with mode 644.
+  * Exclude libgdal-java from dh_makeshlibs, doesn't install in default paths.
+  * Add doc-base configuration for libgdal-doc.
+  * Only install NEWS.Debian in libgdal-dev.
+    (closes: #677693)
+  * Reinstate doc patch, refresh and update to fix more links.
+    (closes: #471198)
+  * Drop temporary fix for #564243, doxygen doesn't generate files with extra
+    underscores anymore.
+  * Add patch to add a brief description to {gdal,ogr}_utilities documentation.
+    (closes: #421653)
+  * Drop ruby extension for ruby1.8 removal transition. See also: #684433.
+    (closes: #722383)
+  * Use minimal dh rules with dh-python, and dh-autoreconf for retooling.
+  * Add patch to use hardening flags for java and perl bindings.
+  * Install python scripts without .py extension.
+
+  [ Francesco Paolo Lovergine ]
+  * Added a missing manpages to python-gdal.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Thu, 03 Oct 2013 23:19:27 +0200
+
+gdal (1.10.0-0~exp3) experimental; urgency=low
+
+  * Added netcdf-bin build-dep to get nc-config, as required by current config.
+  * Fixed gdalpaths patch for version 1.10.
+  * Fixed symbols files to manage correctly library dependencies.
+  * Added java support. Thanks Ezequiel Lara Gómez for the initial patch.
+    Added a pair of new b-deps for that, along with two new patches java*.
+    (closes: #628022)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 26 Jun 2013 11:19:15 +0200
+
+gdal (1.10.0-0~exp2) experimental; urgency=low
+
+  * Removed Provides: libgdal1 in debian/control.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 25 Jun 2013 16:30:39 +0200
+
+gdal (1.10.0-0~exp1) experimental; urgency=low
+
+  * Moved to new LIBKML driver instead of the old KML one. It has a much
+    better support for complex KML files. (closes: #685695)
+  * Merged NMU 1.9.0-3.1:
+    Fix "FTBFS when ruby1.9.1 installed": force building with ruby1.8:
+    set variables in debian/rules and new patch force-ruby1.8 to ruby1.8.
+    Thanks to Cédric Boutillier for reviewing and testing this patch.
+    (closes: #684433)
+  * Added libarmadillo support.
+  * Added TIFF/GEOTIFF symbols rename to definitively solve problem of
+    symbol collisions for programs that both links geotiff/tiff libraries.
+    This choice implies that the API does not include anymore any *tiff
+    related functions: changed API declaration.
+  * Policy bumped to 3.9.4. No changes required.
+  * New upstream version with many fixes. All patches refreshed.
+  	(closes: #679887)
+  * Added a Breaks: libgdal1-1.6.0. I don't know if it still makes sense,
+    but for sure it does not hurt. (closes: #677403)
+  * Now debian/rules should be parallel-safe for making. Thanks Gregor Hermann
+    for the patch. (closes: #686014)
+  * Now it depends explicitly on epsilon >= 0.9.1 by upstream.
+    (closes: #672738)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sun, 04 Apr 2013 11:39:57 +0100
+
+gdal (1.9.2-1~exp2) experimental; urgency=low
+
+  * Reintroduced internal symbols hiding for better compatibility
+    against mixing external geotiff and gdal. See Orfeotoolbox case:
+    See #558733 again.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 29 Mar 2013 14:07:43 +0100
+
+gdal (1.9.2-1~exp1) experimental; urgency=low
+
+  [ Jerome Villeneuve Larouche ]
+  * New upstream release
+
+  [ Francesco Paolo Lovergine ]
+  * Reintroducing libgdal1-dev as a transitional package to allow r-deps
+    to build in any environment.
+  * Removed old dependency on libcurl3-dev for libgdal-dev and added a
+    preferred dep on libcurl4-gnutls-dev to make lintian happy.
+  * Added build-{arch|indep} targets in debian/rules.
+  * Fixed a bit debian/changelog for latest changes.
+  * Now using libxerces-c-dev as dependency for current library version.
+  * Policy bumped to 3.9.4. No special changes required.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 29 Mar 2013 10:38:40 +0100
+
+gdal (1.9.0-1) unstable; urgency=low
+
+  * Ready for sid, starting transition.
+  * All symfiles updated to latest builds.
+  * Added dh_numpy call in debian/rules to depend on numpy ABI.
+  * Policy bumped to 3.9.3, no changes required.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 07 May 2012 15:04:42 +0200
+
+gdal (1.9.0-1~exp5) experimental; urgency=low
+
+  * Added a build-dep on liburiparser-dev to satisfy configure test. Without
+    that GDAL reverts to the old KML support anyway :-(.
+  * Explicitly enabled Armadillo and LZMA supports.
+  * OpenJPEG is enabled in debian/rules, but still unsupported because current
+    library is obsolete. GDAL requires at least 1.4.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 05 Mar 2012 17:44:59 +0100
+
+gdal (1.9.0-1~exp4) experimental; urgency=low
+
+  * Moving from old KML to new libkml based.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 02 Mar 2012 14:44:23 +0100
+
+gdal (1.9.0-1~exp3) experimental; urgency=low
+
+  * Added b-deps and enabled a few new supports:
+    Poppler, Armadillo, OpenJPEG, FreeXL and libZMA.
+  * Revised copyright file for format 1.0.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sun, 26 Feb 2012 17:24:24 +0100
+
+gdal (1.9.0-1~exp2) experimental; urgency=low
+
+  * Fixed mipsel, mips, powerpc and s390 files for syntax errors that caused
+    FTBS on all those archs.
+  * Updated sparc, amd64 and ia64 symbol files to 1.9 series.
+  * Updated README.source to document symbol versioning and script.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 23 Feb 2012 11:53:59 +0100
+
+gdal (1.9.0-1~exp1) experimental; urgency=low
+
+  * New upstream release.
+  * New tool: gdalsrsinfo.
+  * Dropped patch epsilon.
+  * All patches refreshed for current version.
+  * Regenerating all symfiles from scratch. But for the usual stock of
+    internal C++ changes (with both adding and removing of methods) a couple
+    of TIFF related C functions have been dropped:
+       TIFFFindFieldInfo
+       TIFFFindFieldInfoByName
+    which is due to Tiff/GeoTiff resyncing against upstream. This is ignored,
+    but we already introduced a SONAME change, and it will not impact sid
+    builds and library use.
+  * Removed superfluous break/replaces against libgdal1-<version> package.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 21 Feb 2012 15:28:45 +0100
+
+gdal (1.8.1-2~exp3) experimental; urgency=low
+
+  * Fixed .common symbol file to drop conditionals.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 23 Nov 2011 14:23:29 +0100
+
+gdal (1.8.1-2~exp2) experimental; urgency=low
+
+  * Changed organization of symbol files in one common file and
+    multiple .symbols.arch file.
+  * Now normalized to conventional GDAL library name and dropping the Debian
+    specific versioned naming scheme for the library.
+    Dropped patch: libname, python.
+  * Added sparc and mipsel symbol files.
+  * Updated NEWS file with basic information about changes in the package.
+  * Removed now obsolete libtool build-dep.
+    (closes: #639887)
+  * Now avoid installing superfluous stuff in libgdal-perl. Thanks lintian.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 11 Oct 2011 14:41:31 +0200
+
+gdal (1.8.1-2~exp1) experimental; urgency=low
+
+  * Introduced per arch symbol files with demangled C++ symbols.
+    They are all included by the main symbol file after the C symbols.
+    Provided archs: amd64, armel, i386, ia64, mips, powerpc and s390.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 28 Sep 2011 00:22:42 +0200
+
+gdal (1.8.1-1) experimental; urgency=low
+
+  [ Aron Xu ]
+  * Really use libjpeg-dev to allow transition.
+    (Closes: #629964)
+  * Build-Depends on libpng-dev instead of libpng12-dev.
+  * Transition to dh_python2. (Closes: #616821)
+
+  [ Francesco Paolo Lovergine ]
+  * New upstream release with fixes for 1.8 series.
+    (closes: #636053, #638073)
+  * Revised for migration to dh_python2.
+    (closes: #616821)
+  * Merged lintian-overrides handling from 1.7 branch.
+  * This version is already compatible with libdap >= 3.10, no patch needed.
+  * Still retaining chrpath trick to maintain compatibility against libtool
+    inner use in swing-enabled bindings.
+  * Updated debian/watch file to cope with release-candidate versions which
+    results newer than final ones.
+  * Added symbol file to track changes in exported symbols from now on.
+  * The -fvisibility=hidden has been removed.
+  * Now linking uses a version script to include symbolic versions to all
+    global symbols.
+  * Added -Bsymbolic to force binding of global symbols to definition within
+    the library. This should solve problems in linking against both tiff,
+    geotiff and gdal. That should have no impact against netcdf, hdf5 and
+    other common formats.
+    (closes: #558733)
+  * Merged a lintian override from 1.7 series for TIFF library embedding.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 27 Sep 2011 12:59:27 +0200
+
+gdal (1.8.0-2) experimental; urgency=low
+
+  * Patch: symver. Added symbol versioning (GDAL_X.Y) for all symbols
+    exported by GDAL.
+    (closes: #558733)
+  * Patch: spatialite. Added explicit linking to sqlite3 for spatialite.
+    This is Debian specific, because Debian spatialite does not embed Sqlite
+    functions as in upstream release.
+  * Merged with 1.7 series: added epsilon patch to fix now unsupported unnamed
+    union use.
+  * Versioned strict build-dependency on libepsilon.
+  * Depends on libjpeg-dev.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 12 May 2011 13:11:06 +0200
+
+gdal (1.8.0-1) experimental; urgency=low
+
+  * New upstream release.
+  * Patchset update for the current major release.
+  * Added libepsilon support.
+  * Now debian/copyright has moved to DEP5 format and revised on the basis of
+    the GDAL LICENSE file.
+  * Swig generated stuff for perl is now removed just before building, not
+    at clean time to be more nice against git-bp.
+  * Added gdallocationinfo installation in gdal-bin.
+  * Policy bumped to 3.9.2, no changes required.
+  * Fixed manpages oddities.
+    (closes: #615535)
+  * Added some more cleanup instructions.
+  * Now post-removing rpath in main library as well to avoid libtool tricks at
+    building time.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 26 Apr 2011 17:55:11 +0200
+
+gdal (1.7.3-2) unstable; urgency=low
+
+  * Moved to alioth git repository, and changed Vcs-* fields.
+  * Now using source format 3.0 and quilt for patches.
+  * Added ${misc:Depends} due to debhelper use.
+  * Moved to debhelper level 8 which is now recommended default.
+  * Now adoptin /usr/lib/gdalplugins/X.Y as plugin directory, because
+    it will be the same used in 1.9 series. Changed patches as required.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 22 Feb 2011 15:35:34 +0100
+
+gdal (1.7.3-1) unstable; urgency=low
+
+  [ Alan Boudreault ]
+  * New upstream release with many fixes.
+  * Added libspatialite-dev dependency for libgdal1-dev.
+
+  [ Francesco Paolo Lovergine ]
+  * Added sample programs to python-gdal documentation.
+  * Merged changelog to be ready for true unstable upload.
+  * Policy bumped to 3.9.1, without changes.
+  * Added Build-Conflicts against python-setuptools, because it still
+    has problems at building time.
+    (closes: #579987)
+  * Removed unuseful strict versioning in libgdal-doc suggest for libgdal1-1.7.0.
+    (closes: #580172)
+  * Added libdap-dev dependency for libgdal1-dev.
+    (closes: #598346)
+  * Man pages garbling seems now fixed.
+    (closes: #598643)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 08 Feb 2011 15:05:36 +0100
+
+gdal (1.7.2-2) experimental; urgency=low
+
+  * Now enable static linking for proj at configuration time.
+    (closes: #579989)
+  * Fixed a couple of configure options not enabled.
+  * Fixed hdf4 patch.
+  * Added build-dep on libxml2-dev.
+  * Added build-dep on libspatialite-dev to support Spatialite as additional
+    format.
+  * Now install gdaldem among gdal-bin utilities.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 07 May 2010 16:46:03 +0200
+
+gdal (1.7.2-1) experimental; urgency=low
+
+  * New upstream release.
+  * Merged patch doxygen.dpatch.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 04 May 2010 10:03:26 +0200
+
+gdal (1.7.1-1) experimental; urgency=low
+
+  [ Alan Boudreault ]
+  * New upstream release.
+  * Patches updated for 1.7.0.
+  * Removed patches, applied upstream: cpl_dll.
+  * Removed pre 1.3.38 swig patch (ogr.py.diff).
+
+  [ Francesco Paolo Lovergine ]
+  * Now build-dep on netcdf 4 to allow deep testing.
+  * Policy bumped to 3.8.4 without changes.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 19 Apr 2010 18:11:49 +0200
+
+gdal (1.6.3-3) unstable; urgency=low
+
+  * Fixed previous dirty workaroud debian/rules for working Doxygen versions.
+    (closes: #566069)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 21 Jan 2010 18:21:18 +0100
+
+gdal (1.6.3-2) unstable; urgency=low
+
+  * Addded a couple of useful target in debian/rules to generate ECW/MrSID plugins.
+  * Fixed gdal-grass tarball name.
+    (closes: #560019)
+  * Fixed ecw-grass patch to remove an already provided init function.
+  * Added a simple workaround for manpages generated with a redundant _ character
+    by current version of Doxygen. It fixes a FTBS caused by missing manpages.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 23 Dec 2009 15:21:21 +0100
+
+gdal (1.6.3-1) unstable; urgency=low
+
+  [ Alan Boudreault ]
+  * New upstream release, with bugs fixing.
+  * Added MrSID plugins support as useful patch to generate separate
+    source tarballs.
+
+  [ Francesco Paolo Lovergine ]
+  * Added ECW plugins support as useful patch to generate separate
+    source tarballs.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 01 Dec 2009 19:37:58 +0100
+
+gdal (1.6.2-2) unstable; urgency=low
+
+  * Fixed gdal-grass patch to generate a tarball with a name coherent with
+    current plugin source package.
+  * Added a README.source document.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 11 Sep 2009 11:29:03 +0200
+
+gdal (1.6.2-1) unstable; urgency=low
+
+  * New upstream release, with a bounce of bugs fixing.
+  * [PATCH] Added gdal-grass.dpatch to add VERSION to the grass plugin
+    tarball. This is useful to force failing when a binNMU happens while
+    GDAL is transitioning to a major version. See gdal-grass package to
+    understand  how it is managed. This trick does allow a proper fix
+    of #544978.
+  * Removed .egg-info stripping.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 08 Sep 2009 16:51:50 +0200
+
+gdal (1.6.1-3) unstable; urgency=low
+
+  * Upload to unstable, due to hdf4 -alt support transitioned from experimental.
+    (closes: #540403)
+  * Build-dep on libmysqlclient-dev and removed duplicated build-dep. Now -dev
+    package also depends on the same package.
+    (closes: #538542)
+  * Build-dep on libhdf5-serial-dev >= 1.8.3 to be safe about linking HDF5 1.8.
+  * Ack previous NMU by aba. This version is also compatible with current
+    swing version.
+    (closes: #543629, #542968)
+  * Removed libtool .la file as required by current release goal for squeeze.
+  * Policy bumped to 3.8.3.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 31 Aug 2009 15:51:21 +0200
+
+gdal (1.6.1-2) experimental; urgency=low
+
+  * Removed superfluous patches, applied upstream: mysql5.1, swig1338
+  * [PATCH] Added cpl_ddl.dpatch to fix missing external declaration. Note that
+    the default -fvisibility=hidden is propagated into python stuff and other
+    swig bindings.
+    (closes: #529745)
+  * Fixed watch file url.
+    (closes: #504715)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 23 May 2009 12:04:58 +0200
+
+gdal (1.6.1-1) experimental; urgency=low
+
+  * New upstream release with many fixes.
+  * Updated patches: doxygen.dpatch and swig1338.dpatch.
+  * Added new binary/python tools.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 18 May 2009 13:03:04 +0200
+
+gdal (1.6.0-4) experimental; urgency=low
+
+  * NOT RELEASED.
+  * Patch hdf5.dpatch renamed into hdf4.dpatch, sorry.
+  * The mysql5.1.dpatch is a dirty trick to avoid FTBS due to MySQL 5.1 client
+    lib headers which collide with g++ headers. This should be fixed at MySQL
+    level, but at least it allows building.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 17 Apr 2009 12:02:35 +0200
+
+gdal (1.6.0-3) experimental; urgency=low
+
+  * Fixed rubymakefile.dpatch to also work with libtool 2.2.
+    (closes: #518495)
+  * Watch file updated to version 3.
+  * Updated build-deps to remove obsolete entries.
+  * Fixed internal tiff choice option at configure time which prevented it to work.
+    Thanks Even Roualt.
+    (closes: #521747)
+  * Removed obsolete Conflicts/Replaces on old gdal versions.
+  * Moved to libproj-dev build-dependency and recommending proj-bin.
+  * Moved to libhdf4-alt-dev build-dependency to be compatible with netcdf library.
+    (closes: #495353)
+  * [PATCH] Added hdf5.dpatch to link the -alt HDF4 libs.
+  * Added ODBC support for ESRI personal geo database.
+  * Policy bumped to 3.8.1. No changes.
+  * Changed section to ruby in ruby-related packages stanzas, due to
+    ftpmasters changes.
+  * Removed obsolete postgresql-dev dependency.
+  * [PATCH] Added swig1338 to be compatible with Swig 1.3.38 (currently in experimental).
+  * Swig 1.3.38 has no more problems with ogr.py, so the on-fly patch application trick is now
+    applied on for past versions in debian/rules.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 16 Apr 2009 10:05:53 +0200
+
+gdal (1.6.0-2) experimental; urgency=low
+
+  * Fixed gdalpath patch for using gdal16 instead of gdal15.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 26 Feb 2009 12:41:03 +0100
+
+gdal (1.6.0-1) experimental; urgency=low
+
+  * New upstream release.
+    (closes: #511874)
+  * Patchest updated for 1.6.0.
+  * Removed gcc4.4.dpatch merged upstream.
+  * Debhelper compatibility level moved to 7.
+    Changed dh_clean and dh_install usages.
+  * Deprecated dh_movefiles changed in dh_install.
+  * Now uses the more capable internal TIFF library which allows BigTIFF
+    support.
+    It also fixes http://trac.osgeo.org/gdal/ticket/2486 issue.
+    Removed libtiff4-dev dependencies.
+    (closes: #501127)
+  * [PATCH] doxygen.dpatch: missing gdalwarp.1 man page generation due to moving
+    of doxygen stuff into source. This will be fixed in 1.6.1.
+  * Now uses dh_prep instead of deprecated dh_clean -k.
+  * Some minor clean-ups in debian/rules.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 09 Feb 2009 17:32:12 +0100
+
+gdal (1.5.3-1) experimental; urgency=low
+
+  * New upstream release. This is a bug fixing release, no changes in API
+    are included.
+    Patches merged upstream and removed:
+         pythonmakefile
+         eoverflow
+         sincos
+  * [PATCH] gcc4.4.dpatch: fixed for gcc 4.4 compatibility. Thanks tbm.
+    (closes: #505629)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 21 Nov 2008 10:53:35 +0100
+
+gdal (1.5.2-3) unstable; urgency=low
+
+  * [PATCH] sincos.dpatch: the sincos() function is already defined
+    in libm. Hopefully this is the only case of a redefinition
+    of a standard weak function. This is exploited casually only in
+    case of an optimization because of the reason exposed in
+    http://www.nabble.com/Re%3A-g.region--g-crashes-in-a-latlon-location-p18579971.html
+    (closes: #489124)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 22 Jul 2008 10:30:00 +0200
+
+gdal (1.5.2-2) unstable; urgency=low
+
+  * Updated build-deps:
+  	netcdfg-dev -> libnetcdf-dev
+        libungif4-dev -> libgif-dev
+  * Policy bumped to 3.8.0.
+  * Added build-dep on libexpat1-dev to enable use of Expat library.
+  * Long descriptions revised.
+  * [PATCH] New eoverflow.dpatch.
+    It fixes largefile breakage introduced in recent versions.
+    See http://trac.osgeo.org/gdal/ticket/2437.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 02 Jul 2008 17:27:38 +0200
+
+gdal (1.5.2-1) unstable; urgency=low
+
+  * New upstream release. This is a bug fix release.
+    (closes: #485582)
+  * Patchset updated: removed max.dpatch, merged upstream.
+  * Added a gdal-grass stanza in debian/rules to generate the gdal-grass
+    tarball on fly.
+  * Added a Suggests for python-gdal in gdal-bin stanza within debian/control.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 10 Jun 2008 16:08:05 +0200
+
+gdal (1.5.1-5) unstable; urgency=low
+
+  * Installs gdal2tiles.py and other python scripts, previously missing.
+    Due to dependency from python-gdal extensions, scripts are installed in
+    that package instead of gdal-bin.
+    (closes: #484559)
+  * Removed ogr.py.dpatch for #473912. Fix needs to be applied on fly to
+    be effective. It also causes a twice build FTBS. Added patch build-dep
+    to apply ogr.py.diff in debian/rules.
+    (closes: #473912)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 06 Jun 2008 23:15:12 +0200
+
+gdal (1.5.1-4) unstable; urgency=medium
+
+  * [PATCH] ogr.py.dpatch added to manage #2187 upstream issue. Thanks Steko.
+    (closes: #473912)
+  * [PATCH] gdalpaths.dpatch added to use the same plugins directory
+    used currently in gdal-grass. It would require a much better approach
+    upstream. See #2371 upstream bug. Also changed path for share dir path
+    to /usr/share/gdal15.
+    (closes: #481263)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sun, 18 May 2008 09:55:57 +0200
+
+gdal (1.5.1-3) unstable; urgency=low
+
+  * Removed old-python stuff still around in debian/rules.
+  * [PATCH] pythonmakefile.dpatch to fix wrong interpreter override in 1.5.1
+    See #2333 on gdal trac.
+    (closes: #476657)
+  * Revised the build/install rules to manage better Swig stuff and
+    specifically Python bindings.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 19 Apr 2008 20:51:48 +0200
+
+gdal (1.5.1-2) unstable; urgency=low
+
+  * Moved libxerces27-dev dependency to libxerces-c2-dev in debian/control as
+    requested by xerces maintainer for migration.
+  * [PATCH] max.dpatch to fix max/min macros re-definition on some archs
+    which breaks C++ building. This is taken from GDAL patchest 13700+13701 in trunk.
+    Thanks DronK.
+    (closes: #474415)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 07 Apr 2008 12:58:56 +0200
+
+gdal (1.5.1-1) unstable; urgency=low
+
+  * New upstream release with useful bugfixes. No API/ABI changes, so
+    retaining package versions.
+    (closes: #464452)
+  * Moved build-dep libcurl-dev -> libcurl3-dev in debian/control for etch backports.
+  * Patch swig.dpatch removed (merged upstream).
+  * Patch gcc32.dpatch removed (merged upstream).
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 26 Mar 2008 23:23:00 +0100
+
+gdal (1.5.0-4) unstable; urgency=low
+
+  * Fixed removing of .info file in python-central area
+  * Fixed gcc43.dpatch to manage namespace issue. This is not accepted upstream.
+    (closes: #462709)
+  * Updated debian/TODO.
+  * Forcing regeneration of perl wrappers with current Swig in debian/rules
+    as suggested by Pabs.
+    (closes: #466785)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 14 Mar 2008 15:57:34 +0100
+
+gdal (1.5.0-3) unstable; urgency=low
+
+  * [debian/rules] Removing LICENSE.TXT placed in the data dir.
+  * [debian/rules] Added explicit python-binding generation previously missing
+    Now installs files from new locations because 1.5 moved to ng-python
+    (swig-based) support. (closes: #463077)
+  * Patch swig.dpatch changed to use the correct python interpreter at building
+    time as found at configuration time. Old pymod fix removed.
+  * [debian/control] Changed python-numeric -> python-numpy build-dep due to
+    new-generation python support.
+  * [debian/rules] Added missing dh_perl call.
+    (closes: #463086)
+  * [debian/rules] Added a info file exclusion at dh_pycentral call.
+  * [debian/rules] Now removing info file installed in pycentral area.
+  * Added gcc43.dpatch: remove transform() call.
+    See http://trac.osgeo.org/gdal/changeset/13615?format=diff&new=13615 for fix.
+    (closes: #462709)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 31 Jan 2008 14:23:29 +0100
+
+gdal (1.5.0-2) unstable; urgency=low
+
+  * Moved /usr/share/gdal -> /usr/share/gdal15 in order to avoid conflicting
+    with previous upstream version.
+    (closes: #462525)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 25 Jan 2008 14:25:21 +0100
+
+gdal (1.5.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Added Vcs-* fields to debian/control
+  * Policy bumped to 3.7.3 (no changes)
+  * Ruby stuff does not build correctly with upstream libtool stuff, so
+    overriding in debian/rules.
+    See http://trac.osgeo.org/gdal/ticket/2138 for reference about the issue.
+  * Added a (versioned for safety) build-dep on libtool.
+  * A group of new binaries added to gdal-bin stuff.
+  * [PATCH] man.dpatch:
+  	Man pages are not generated by upstream makefile, added .PHONY entry
+        and explicit generation.
+  * Minor changes for files installation due to changes upstream.
+  * Changed man pages removing style at clean time in debian/rules.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 09 Jan 2008 09:57:10 +0100
+
+gdal (1.4.4-1) unstable; urgency=low
+
+  * New upstream version, which fixes an ABI breakage.
+    (closes: #452355)
+  * Changed swig.dpatch because partially merged upstream.
+  * Removed gcc43.dpatch because merged upstream.
+  * Added missing swig build-dep.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 04 Dec 2007 11:10:37 +0100
+
+gdal (1.4.3-1) unstable; urgency=low
+
+  * New upstream release.
+    This is a bug fixing release without API changes, so retaining current
+    naming scheme as for previous 1.4 series releases.
+  * Uses PIC building in Ruby bindings and properly fails in case of
+    building problems to avoid creating empty packages. Changed rubymakefile.dpatch
+    for that.
+    (closes: #450882)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 15 Nov 2007 17:19:50 +0100
+
+gdal (1.4.2-3) unstable; urgency=low
+
+  * Fixed debian-rules-ignores-make-clean-error lintian warning
+  * Removes embedded rpath in perl extensions and MakeMaker .packlist files.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 19 Oct 2007 23:46:07 +0200
+
+gdal (1.4.2-2) unstable; urgency=low
+
+  [ Paul Wise ]
+  * Switch to new Homepage field
+
+  [ Francesco Paolo Lovergine ]
+  * Migrated obsolete ${Source-Version} to ${binary:Version} in debian/control
+  * Added perl and ruby binding and a couple of new binary packages for that.
+    (closes: #393167)
+  * Build-deps updated.
+  * Missing gdal_rasterize binary and python tools added to *.files
+  * Missing man pages added to *.files
+  * Added build dependency for install target in rules.
+  * Fixed swig/perl/Makefile.PL on fly via libname.dpatch to build correctly perl binding.
+  * Added debian/TODO file
+  * Added patch rubymakefile.dpatch to fix ruby module building.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 16 Oct 2007 12:16:16 +0200
+
+gdal (1.4.2-1) unstable; urgency=low
+
+  * New upstream version. Still an upstream fix without API changes.
+  * Removed obsolete postgresql-dev dependency.
+    (closes: #429974)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 03 Sep 2007 17:09:40 +0200
+
+gdal (1.4.1-6) unstable; urgency=low
+
+  * New patch gcc43.dpatch, to be compliant with gcc 4.3. Thanks Martin Michlmayr.
+    (closes: #419827)
+  * Revised libgdal1-dev dependencies due to libtool .la file. Thanks Kurt Roeckx.
+    (closes: #421992)
+  * Removed fake libsqlite0-dev build-dep.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 18 May 2007 22:28:24 +0200
+
+gdal (1.4.1-5) unstable; urgency=low
+
+  * libcfitsio3 library is now GPL on Debian, so disabled due to incompatibility with GDAL copyright.
+    (closes: #422537)
+  * Added a libhdf5-serial-dev dependency for libgdal1-dev.
+    (closes: #421992)
+  * Re-introduced libcurl4-dev build-dep, now in unstable.
+  * Added doc.dpatch for cross-linking html documentation in libgdal-doc.
+    (closes: #421655)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 12 May 2007 16:33:56 +0200
+
+gdal (1.4.1-4) unstable; urgency=medium
+
+  * New patch swig.dpatch to use a swig 1.1 version for gdal_warp.c.
+    (closes: #420706)
+  * New build also resolves the indirect dependency issue with libgnutls
+    (closes: #421434)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 30 Apr 2007 11:34:37 +0200
+
+gdal (1.4.1-3) unstable; urgency=medium
+
+  * Added OGDI support: new patch ogdi.dpatch
+  * This build should finally link current jasper 1.900.1
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 28 Apr 2007 08:54:51 +0200
+
+gdal (1.4.1-2) unstable; urgency=high
+
+  * Fixed rules file for libgdal-1.4.0
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 21 Apr 2007 20:36:47 +0200
+
+gdal (1.4.1-1) unstable; urgency=low
+
+  * New upstream version. Package names are not changed in respect with 1.4.0
+    and in derogation with current gdal migration policy for debian-gis
+    because there are not changes to C/C++ API.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sun,  8 Apr 2007 11:31:07 +0200
+
+gdal (1.4.0-2) unstable; urgency=low
+
+  * Moved header files under /usr/include/gdal.
+  * Added missing libjasper-dev dependency to libgdal1-dev.
+  * Added an alternate libcurl-dev build-dep.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sun,  8 Apr 2007 11:18:33 +0200
+
+gdal (1.4.0-1) experimental; urgency=low
+
+  * New upstream version. Moved to libgdal1-dev package, which allows rebuilds
+    of dependent packages without source changes. It is currently superfluous
+    changing the -dev package at every new release because we do not support
+    many different versions of the gdal lib.
+  * libname patch updated.
+  * Removed obsolete patches.
+  * debian/rules: removed previous hack for gdal-config. Now DESTDIR is managed correctly
+    in building scripts.
+  * Moved to libcfitsio3-dev|libcfitsio-dev build-dep to retain source back-compatibility with
+    etch and preferring the current library version.
+    (closes: #413126)
+  * Added missing sqlite3 and curl4 libraries support.
+  * Moved to libjasper-dev|libjasper-1.701-dev to retain source compatibility
+    with the old library version.
+  * Added libhd5-serial-dev build-dep to support both HDF4/5.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon,  5 Mar 2007 15:27:09 +0100
+
+gdal (1.3.2-5) UNRELEASED; urgency=low
+
+  * debian/watch: fixed.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri,  9 Feb 2007 12:18:49 +0100
+
+gdal (1.3.2-4) unstable; urgency=medium
+
+  * Now copies build-time gdal-config at install-time.
+    (closes: #385747)
+  * Removed Jon Saints and added Paul Wise to Uploaders.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 30 Jan 2007 17:45:14 +0100
+
+gdal (1.3.2-3) unstable; urgency=high
+
+  * Urgency high: this release fixes two RC bugs.
+  * debian/rules: moved dh_pycentral before dh_builddeb, this adds postinst
+    and prerm maintainer scripts. (Closes: #385460)
+  * debian/control: added missing depends for libgeos-dev,
+    libmysqlclient15-dev for libgdal1-1.3.2-dev.  (Closes: #401162)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri, 22 Dec 2006 16:57:54 +0100
+
+gdal (1.3.2-2) unstable; urgency=low
+
+  * Added missing gdal1-1.3.1(-dev) conflicts/replaces to debian/control to
+    prevent dist-upgrade errors.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue,  8 Aug 2006 14:08:32 +0200
+
+gdal (1.3.2-1) unstable; urgency=low
+
+  [ Francesco P. Lovergine ]
+
+  The "doing-it-yourself-is-better" release.
+
+  * New upstream release.
+    (closes: #370441)
+    As stated previously, changed package name for
+    a smooth C++ transition in case of (undocumented) API/ABI changes.
+    Changed control and other files as consequence for 1.3.1 -> 1.3.2 transition.
+    - Patch revised:
+    	libname.dpatch
+    - Patches removed:
+        351372_mipsel_ftbfs.dpatch (applied upstream)
+        357189_gcc4.1_ftbfs.dpatch (idem)
+        360389_amd64_ftbfs.dpatch  (better done by upstream)
+    - New patch:
+    	ogrili2layer.cpp.dpatch (gcc 4.1 STL compatibility)
+  * Policy bumped to 3.7.2. No changes.
+  * Removed a couple of old *.docs and *.files files in debian dir.
+  * Added mysql support.
+  * Moved to new python policy. Note that python-gdal provides both modules
+    and an extension, so quite a few changes are required all around.
+    See http://wiki.debian.org/DebianPython/NewPolicy for information about
+    the matter.
+    -- NOTE FOR BACKPORTERS: DO NOT EVEN TRY THAT, WITHOUT BACKPORTING ALL THE NEW PYTHON FRAMEWORK --
+    (Closes: #373433)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 20 Jun 2006 15:06:13 +0200
+
+gdal (1.3.1-6) unstable; urgency=high
+
+  * Switch from libxerces26-dev to libxerces27-dev (Closes: #368914)
+
+ -- Paul Wise <pabs3@bonedaddy.net>  Sat, 27 May 2006 12:55:30 +0800
+
+gdal (1.3.1-5) unstable; urgency=low
+
+  [ Paul Wise ]
+  * Fix GCC 4.1 FTBFS with patch from Martin Michlmayr. Closes: #357189
+
+  [ Francesco Paolo Lovergine ]
+  * Fix Unix ODBC FTBS with patch by me. Closes: #360389
+  * Added versioned build-dep on unixodbc-dev for safety, just in case.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue,  4 Apr 2006 00:14:56 +0200
+
+gdal (1.3.1-4) unstable; urgency=low
+
+  [ Paul Wise ]
+  * Fix FTBFS on mipsel with patch from upstream. Closes: #351372
+
+  [ Petter Reinholdtsen ]
+  * Add myself as uploader.
+  * Acknowledge NMU. (Closes: #321587)
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 10 Feb 2006 22:46:34 +0100
+
+gdal (1.3.1-3) unstable; urgency=high
+
+  [ Francesco Paolo Lovergine ]
+  * Revised rules to use binary-indep for its -doc package.
+  * Rebuilt to link the correct netcdf packages, which apparently did break
+    something and renders libgdal and all its rdepends uninstallable.
+    Sigh, netcdfg3 moved to libnetcdf3 but I would appreciate notifications
+    to all interested parties or proper mass bug filling...
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed,  1 Feb 2006 15:08:30 +0100
+
+gdal (1.3.1-2) unstable; urgency=low
+
+  [ Petter Reinholdtsen ]
+  * Add Francesco Paolo Lovergine as uploader, to make sure the next
+    upload isn't seen as a non-maintainer upload.
+
+  [ Francesco Paolo Lovergine ]
+  * Missed patched reverting, anyway moving to dpatch which is more robust for
+    patch management in case of build failures and re-builds.
+    (closes: #349562). Changed control and rules files as consequence.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 24 Jan 2006 10:56:55 +0100
+
+gdal (1.3.1-1) unstable; urgency=low
+
+  [ Steve Halasz ]
+  * Switch to team maintenance by the Debian GIS Project.
+    This is _not_ hijacking, Silke is no more active on this package
+    and passed the package to the team.
+  * New upstream release
+    - Don't crash on shapefiles without features (Closes: #309165)
+  * Build-dep on libpq-dev | postgresql-dev for postgresql transition
+  * Remove build-dep on postgresql-client
+  * Make libgdal-dev depend on a number of -dev packages so that
+    packages depending on libgdal-dev don't have to depend on them
+  * Change library package names to libgdal1-1.3.1 / libgdal1-1.3.1-dev
+    to reflect C++ ABI change that will be expected with every new
+    version. The C API is stable (SONAME 1), but unfortunately both
+    C and C++ API are merged in the same library by upstream.
+    See http://lists.alioth.debian.org/pipermail/pkg-grass-general/2005-December/001565.html
+    for a few details about the C++ API and ABI saga.
+
+  [ Paul Wise ]
+  * Add homepages to the package descriptions
+
+  [ Francesco Paolo Lovergine ]
+  * Added 02_libname.patch to add the version to the lib name. This will
+    allow cohexistence of more version of the library without glitches.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 21 Jan 2006 13:14:06 +0100
+
+gdal (1.2.6-1.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Medium-urgency upload for RC bugfix.
+  * Change package name from libgdal1c2 to libgdal1c2a for the C++ mt
+    allocator ABI change, and conflict/replace libgdal1c2 accordingly.
+    Closes: #339163.
+  * Build-depend on libgeos-dev (>= 2.1.4-2) to get the matching ABI.
+
+ -- Steve Langasek <vorlon@debian.org>  Tue, 29 Nov 2005 05:06:47 -0800
+
+gdal (1.2.6-1.2) unstable; urgency=low
+
+  * Fix broken library building introduced by my last NMU. (Closes: #322664)
+  * Moved GCC 4 patch into debian/patches/01_gcc4.patch, based on
+    patch from Stephan Hermann and Ubuntu.  Updated rules to use it.
+  * Add Conflicts and Replaces on libgdal1 for libgdal1c2 to ease upgrades.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Fri, 12 Aug 2005 08:11:40 +0200
+
+gdal (1.2.6-1.1) unstable; urgency=low
+
+  * Non-maintainer upload to move to new C++ ABI. (Closes: #321587)
+  * Rename library package from libgdal1 to libgdal1c2.
+  * Add forward declaration of ILWISDataset in
+    frmts/ilwis/ilwisdataset.h to make GCC 4.0 happy.
+
+ -- Petter Reinholdtsen <pere@debian.org>  Sat,  6 Aug 2005 11:57:48 +0200
+
+gdal (1.2.6-1) unstable; urgency=high
+
+  * New upstream release
+  * Made python-gdal explicitly dependend on current gdal-version
+    (Closes: #291361)
+  * Added pct2rgb.py and gdal_merge.py to python-gdal
+  * Changed xerces dependency from libxerces21 to libxerces26
+    (Closes: #301710 and Closes: #301650)
+  * Added link from /usr/include/gdal to /usr/include (Closes:#286709).
+  * Already in 1.2.5.-1: Added geos-support
+
+ -- Silke Reimer <silke.reimer@intevation.de>  Mon,  4 Apr 2005 19:04:21 +0200
+
+gdal (1.2.5-1) unstable; urgency=low
+
+  * New upstream release (Closes: #280343)
+  * Added gdaltindex and gdal_contour in debian/gdal-bin.files
+    (Closes: #278539)
+
+ -- Silke Reimer <silke.reimer@intevation.de>  Thu, 25 Nov 2004 18:06:07 +0100
+
+gdal (1.2.1-1) unstable; urgency=low
+
+  * New upstream release (Closes: #258367)
+  * Added flag -V'libgdal1 (>=1.2.0) to solve incompatibility between
+    libgdal1-1.2.x and libgdal-1.2+cvs031111 (Closes: #254344)
+  * Add support for jpeg2000 (jasper), netcdf and sqlite.
+  * Move tiff support to external library (finally added to debian!)(Thanks
+    Alessandro for your hint!)
+  * debian/control
+  * debian/changelog
+
+ -- Silke Reimer <silke.reimer@intevation.de>  Thu, 25 Nov 2004 18:05:53 +0100
+
+gdal (1.2.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Use manpages from upstream
+  * Changed package requirements for libgdal1-dev: added virtual package
+    libgdal-dev, added dependency on libc6-dev and unixodbc-dev
+
+ -- Silke Reimer (MoinMoin) <silke@intevation.de>  Mon,  8 Mar 2004 18:05:58 +0100
+
+gdal (1.2+cvs.031111-1) unstable; urgency=low
+
+  * New upstream cvs snapshot. This should fix the building failure
+    on arm, powerpc, mipsel and s390 due to "invalid conversion from
+    `int8*' to `const char*'"
+  * add odbc support to debian package.
+  * switch on xerces support.
+
+
+ -- Silke Reimer (MoinMoin) <silke@intevation.de>  Wed, 12 Nov 2003 10:21:13 +0100
+
+gdal (1.2+cvs.031016-1) unstable; urgency=low
+
+  * Take maintainership
+  * added man pages
+  * added libtool patch to debian/rules to avoid linking with rpath
+  * changed last line of pymod/GNUmakefile because otherwise all
+    files within pymod would be deleted when building package with
+    fakeroot
+
+ -- Silke Reimer (MoinMoin) <silke@intevation.de>  Fri, 17 Oct 2003 11:14:34 +0200
+
+gdal (1.2+0pre1) unstable; urgency=low
+
+  * New upstream cvs snapshot with proper soname versioning.
+    Getting ready for the upcoming 1.2.0.
+  * Add xerces support.
+  * Get the package generally in shape for being sponsored into Debian.
+  * Hand package maintainership over to Silke.
+
+ -- Alessandro Amici (devel) <alexamici@tiscali.it>  Fri, 26 Sep 2003 00:43:14 +0200
+
+gdal (1.1.9-1) unstable; urgency=low
+
+  * New upstream release with a lot of new formats and features.
+  * Fix the --libs option of the installed gdal-config.
+  * Many correctness and style fixes to debian/rules. The aim is to have
+    the source package to build cleanly on woody as well.
+  * Change the build dependencies to present a woody alternative to sid-only
+    packages.
+
+ -- Alessandro Amici (devel) <alexamici@tiscali.it>  Mon, 28 Jul 2003 23:18:55 +0200
+
+gdal (1.1.8+030610-1) unstable; urgency=low
+
+  * New cvs snapshot with improved handling of html documentation.
+  * Split libgdal-doc out of libgdal1-dev.
+  * Add html documentation for ogr.
+  * Add postgresql support.
+  * Set python dependencies to python2.2 (and add python2.2-numeric)
+  * Recommend proj (accessed via dlopen).
+
+ -- Alessandro Amici (devel) <alexamici@tiscali.it>  Tue, 10 Jun 2003 16:18:17 +0200
+
+gdal (1.1.8+030521-1) unstable; urgency=low
+
+  * New cvs snapshot with support for custom shared library soname.
+  * Build the gdal shared library with debian compliant file name and soname.
+    See the README.Debian for reasons and caveats.
+  * Rename the main packages to libgdal1 (OK, I learned the hard way how
+    important package names are!).
+  * Change the upstream version definition to $(version)+$(cvsdate).
+
+ -- Alessandro Amici (devel) <alexamici@tiscali.it>  Thu, 22 May 2003 19:33:54 +0200
+
+gdal (1.1.8-030518+1) unstable; urgency=low
+
+  * Initial release.
+  * libgdal.1.1.so is not a standard shared library.
+  * Man pages are missing.
+  * A few files are missing from the html documentation.
+
+ -- Alessandro Amici (devel) <alexamici@tiscali.it>  Sun, 18 May 2003 18:05:12 +0200

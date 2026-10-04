@@ -1,0 +1,48 @@
+Description: Use `pip install` instead of `setup.py install`.
+Author: Bas Couwenberg <sebastic@debian.org>
+Bug: https://github.com/OSGeo/gdal/issues/9965
+
+--- a/swig/python/install_python.cmake.in
++++ b/swig/python/install_python.cmake.in
+@@ -23,10 +23,10 @@ else()
+    set(PATH_SEP ":")
+ endif()
+ if(DEFINED INSTALL_PREFIX)
+-   execute_process(COMMAND ${CMAKE_COMMAND} -E env "PATH=@PROJECT_BINARY_DIR@/apps${PATH_SEP}$ENV{PATH}" "@Python_EXECUTABLE_CMAKE@" "@SETUP_PY_FILENAME@" install ${ROOT_DIR_ARG} @INSTALL_ARGS@ "${INSTALL_PREFIX}"
++   execute_process(COMMAND ${CMAKE_COMMAND} -E env "PATH=@PROJECT_BINARY_DIR@/apps${PATH_SEP}$ENV{PATH}" "@Python_EXECUTABLE_CMAKE@" -m pip install --no-build-isolation ${ROOT_DIR_ARG} @INSTALL_ARGS@ "${INSTALL_PREFIX}" .
+                    WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@" RESULT_VARIABLE res)
+ else()
+-   execute_process(COMMAND ${CMAKE_COMMAND} -E env "PATH=@PROJECT_BINARY_DIR@/apps${PATH_SEP}$ENV{PATH}" "@Python_EXECUTABLE_CMAKE@" "@SETUP_PY_FILENAME@" install ${ROOT_DIR_ARG} @INSTALL_ARGS@
++   execute_process(COMMAND ${CMAKE_COMMAND} -E env "PATH=@PROJECT_BINARY_DIR@/apps${PATH_SEP}$ENV{PATH}" "@Python_EXECUTABLE_CMAKE@" -m pip install --no-build-isolation ${ROOT_DIR_ARG} @INSTALL_ARGS@ .
+                    WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@" RESULT_VARIABLE res)
+ endif()
+ if(NOT res EQUAL 0)
+--- a/swig/python/CMakeLists.txt
++++ b/swig/python/CMakeLists.txt
+@@ -448,7 +448,6 @@ if __name__ == '__main__':
+     OUTPUT_VARIABLE SITE_PACKAGE_DIR
+     OUTPUT_STRIP_TRAILING_WHITESPACE)
+ 
+-  set(INSTALL_ARGS "--single-version-externally-managed --record=record.txt")
+   set(CAN_USE_CMAKE_INSTALL_PREFIX_FROM_CMAKE_INSTALL FALSE)
+   set(IGNORE_CMAKE_INSTALL_PREFIX_CONFIGURE_TIME_DIFFERENT_FROM_RUNTIME FALSE)
+   if (DEFINED GDAL_PYTHON_INSTALL_PREFIX)
+@@ -484,7 +483,6 @@ if __name__ == '__main__':
+   # setuptools 60.0 defaults to SETUPTOOLS_USE_DISTUTILS=local, and thus Debian's specific --install-layout distutils
+   # option cannot be used
+   if (DEFINED GDAL_PYTHON_INSTALL_LAYOUT)
+-    set(INSTALL_ARGS "${INSTALL_ARGS} --install-layout=${GDAL_PYTHON_INSTALL_LAYOUT}")
+     set(SETUPTOOLS_USE_DISTUTILS stdlib)
+   elseif ("${SITE_PACKAGE_DIR}" MATCHES "dist-packages")
+ 
+@@ -498,10 +496,6 @@ if __name__ == '__main__':
+         OUTPUT_STRIP_TRAILING_WHITESPACE
+         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+     )
+-    # If so, uses it.
+-    if ("${SETUP_INSTALL_HELP}" MATCHES "install-layout")
+-        set(INSTALL_ARGS "${INSTALL_ARGS} --install-layout=deb")
+-    endif()
+ 
+     if (NOT DEFINED GDAL_PYTHON_INSTALL_LIB AND "${PREFIX_FOR_TRIMMEDSYSCONFIG}" STREQUAL "/usr/local")
+         # Scenario of https://github.com/OSGeo/gdal/issues/10242

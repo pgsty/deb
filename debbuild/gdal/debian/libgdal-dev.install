@@ -1,0 +1,6 @@
+usr/bin/gdal-config
+usr/include
+usr/lib/*/cmake
+usr/lib/*/libgdal.so
+usr/lib/*/pkgconfig/gdal.pc
+usr/share/man/man1/gdal-config.1

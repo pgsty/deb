@@ -1,0 +1,8 @@
+version=4
+opts=\
+dversionmangle=s/\+(debian|dfsg|ds|deb)\d*$//,\
+uversionmangle=s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/;s/RC/rc/,\
+dirversionmangle=s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/;s/RC/rc/,\
+repacksuffix=+dfsg \
+https://download.osgeo.org/gdal/(\d+\.\d+\.\d+\w*)/ \
+(?:|.*/)gdal(?:[_\-]v?|)(\d\S*(?<!-doc-src))\.(?:tar\.xz|txz|tar\.bz2|tbz2|tar\.gz|tgz)

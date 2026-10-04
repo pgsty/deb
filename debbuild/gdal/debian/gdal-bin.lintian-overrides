@@ -1,0 +1,6 @@
+# Man pages are automatically generated with sphinx.
+no-manual-page *
+
+# QGIS plugins rely on .py extension, see: http://hub.qgis.org/issues/9924
+script-with-language-extension [usr/bin/*.py]
+

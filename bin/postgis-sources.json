@@ -19,6 +19,40 @@
       ]
     },
     {
+      "package": "gdal313",
+      "srpm_url": "https://dnf-srpms.postgresql.org/srpms/common/redhat/rhel-9-x86_64/gdal313-3.13.3-1PGDG.rhel9.8.src.rpm",
+      "srpm_sha256": "4ebe440da1e5889708c672a0dda212f4c9badffe7981f51da5c7e7505d2f5f3c",
+      "files": [
+        {
+          "name": "PROVENANCE.TXT-fedora",
+          "sha256": "f2ae00db0605d41731fc06550cce3d814ac772760e236278e6751e7a6239a229",
+          "size": 1257,
+          "deb_input": true
+        },
+        {
+          "name": "gdal-3.13.3-fedora.tar.xz",
+          "sha256": "5a003a023def166785526abd8f1413ff3651801425282123c92cfba983d05e74",
+          "size": 10735768,
+          "archive_roots": [
+            "gdal-3.13.3-fedora"
+          ],
+          "deb_input": true
+        },
+        {
+          "name": "gdal-cleaner.sh",
+          "sha256": "3b55a9d48b4334ee7788d14eafdb297d01a2b8034cff7bb10e6cc42c816b4b20",
+          "size": 878,
+          "deb_input": false
+        },
+        {
+          "name": "gdal313-pgdg-libs.conf",
+          "sha256": "0fd4b5242a630cf8f045ab21b55e8b6a6a72fdb767f5526c5c891ebb6aca6ff6",
+          "size": 18,
+          "deb_input": false
+        }
+      ]
+    },
+    {
       "package": "geos314",
       "srpm_url": "https://dnf-srpms.postgresql.org/srpms/common/redhat/rhel-9-x86_64/geos314-3.14.1-3PGDG.rhel9.8.src.rpm",
       "srpm_sha256": "cb0a93341c483bb034e27fc9db8924817fbe283f7d11857d3a23d27c7b62d344",
@@ -119,6 +153,16 @@
   ],
   "debian_packaging": [
     {
+      "package": "gdal",
+      "archive": "gdal_3.13.3+dfsg-1.pgdg24.04+1.debian.tar.xz",
+      "deb_input": true,
+      "members": [
+        "debian/libgdal39.symbols"
+      ],
+      "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/g/gdal/gdal_3.13.3%2Bdfsg-1.pgdg24.04%2B1.debian.tar.xz",
+      "sha256": "d86f69b389d95d7b32ecc045d036ece0e054f5f28fa8a6015a23c7d30dea5826"
+    },
+    {
       "package": "geos",
       "archive": "geos_3.14.1-2.pgdg24.04+1.debian.tar.xz",
       "deb_input": true,
@@ -184,7 +228,9 @@
       "use": "Arrow 9 private header-only xsimd dependency; upstream-pinned checksum verified"
     }
   ],
-  "debian_patch_adaptations": {},
+  "debian_patch_adaptations": {
+    "gdal313-cleanup.patch": "Identical patch hunks to RPM; only file-header prefixes normalized to a/ and b/ for dpkg-source quilt -p1."
+  },
   "older_distribution_sources": [
     {
       "name": "CGAL-5.6.1.tar.xz",

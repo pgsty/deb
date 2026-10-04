@@ -1,0 +1,8 @@
+# False positive, string not included in source
+spelling-error-in-binary Accesss Access *
+spelling-error-in-binary algoorithm algorithm *
+spelling-error-in-binary lengH length *
+
+# False positive, Lat/Lon
+spelling-error-in-binary lon long *
+
