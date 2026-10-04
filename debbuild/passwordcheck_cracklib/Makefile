@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := passwordcheck_cracklib-3.2.0.tar.gz
+TARBALL := passwordcheck_cracklib-3.2.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

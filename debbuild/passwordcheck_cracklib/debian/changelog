@@ -1,3 +1,9 @@
+passwordcheck-cracklib (3.2.1-1PGSTY) unstable; urgency=medium
+
+  * Update to 3.2.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 passwordcheck-cracklib (3.2.0-1PGSTY) unstable; urgency=medium
 
   * Bump to 3.2.0.
