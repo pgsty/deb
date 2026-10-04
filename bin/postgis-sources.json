@@ -3,6 +3,22 @@
   "description": "Core source bytes and versions align with the PGSTY RPM pilot; Debian packaging uses PGDG/Debian native package layout. Arrow and GTA are built separately where Ubuntu has no development packages.",
   "core": [
     {
+      "package": "SFCGAL",
+      "srpm_url": "https://dnf-srpms.postgresql.org/srpms/common/redhat/rhel-9-x86_64/SFCGAL-2.2.0-6PGDG.rhel9.8.src.rpm",
+      "srpm_sha256": "1d859f87994e658839677881cf63753d0e753127588f529e7447f5f736fde650",
+      "files": [
+        {
+          "name": "SFCGAL-v2.2.0.tar.gz",
+          "sha256": "bb6bb77ddb58523d8c229764de23699f99c1a7011d873419afd2a67df85602a2",
+          "size": 2974247,
+          "archive_roots": [
+            "SFCGAL-v2.2.0"
+          ],
+          "deb_input": true
+        }
+      ]
+    },
+    {
       "package": "geos314",
       "srpm_url": "https://dnf-srpms.postgresql.org/srpms/common/redhat/rhel-9-x86_64/geos314-3.14.1-3PGDG.rhel9.8.src.rpm",
       "srpm_sha256": "cb0a93341c483bb034e27fc9db8924817fbe283f7d11857d3a23d27c7b62d344",
@@ -64,6 +80,12 @@
       ],
       "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/p/proj/proj_9.8.1-1.pgdg24.04%2B1.debian.tar.xz",
       "sha256": "4a0b97c3d6c8b4aaa451593813ffda4456648868fe4bb40c3f9b4b96a7edba2c"
+    },
+    {
+      "package": "sfcgal",
+      "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/s/sfcgal/sfcgal_2.3.0-1.pgdg24.04%2B1.debian.tar.xz",
+      "sha256": "e746f4470a0c0c0e6e642ff7020e24fbae74b3433aa19ef750f75e886caab569",
+      "adaptation": "Packaging layout only; upstream source pinned to shared SFCGAL 2.2.0."
     }
   ],
   "additional_sources": [],

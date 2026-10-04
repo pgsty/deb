@@ -1,0 +1,7 @@
+version=4
+opts=\
+dversionmangle=s/\+(debian|dfsg|ds|deb)\d*$//,\
+uversionmangle=s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/;s/RC/rc/,\
+searchmode=plain \
+https://gitlab.com/sfcgal/SFCGAL/-/tags?sort=updated_desc \
+/sfcgal/SFCGAL/-/archive/v?\d+\.\d+(?:[\d\.]*)/(?:rel|v|SFCGAL)[\-\_]?v?(\d+\.\d+(?:[\d\.]*))\.(?:tgz|tbz|txz|(?:tar\.(?:gz|bz2|xz)))

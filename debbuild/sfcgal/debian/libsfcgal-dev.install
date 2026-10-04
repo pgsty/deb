@@ -1,0 +1,5 @@
+usr/bin/sfcgal-config
+usr/include/*
+usr/lib/*/lib*.so
+usr/lib/*/cmake
+usr/lib/*/pkgconfig/sfcgal.pc

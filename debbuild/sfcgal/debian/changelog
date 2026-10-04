@@ -1,0 +1,726 @@
+sfcgal (2.2.0-1PGSTY) unstable; urgency=medium
+
+  * Activate pkgkde_symbolshelper explicitly on Ubuntu 22.04.
+  * Handle header-only Boost.System after the 1.89 stub library removal.
+  * Align the core GIS sources and enabled features with the PGSTY RPM build.
+  * Keep native debug symbols and the distribution package layout.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 15:00:00 +0800
+
+sfcgal (2.3.0-1.pgdg24.04+1) noble-pgdg; urgency=medium
+
+  * Rebuild for noble-pgdg.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Sun, 14 Jun 2026 10:20:22 +0200
+
+sfcgal (2.3.0-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 14 Jun 2026 10:20:22 +0200
+
+sfcgal (2.3.0-1~exp3) experimental; urgency=medium
+
+  * Mark i386, hurd-i386, and powerpc as unsupport architectures.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 13 Jun 2026 12:08:46 +0200
+
+sfcgal (2.3.0-1~exp2) experimental; urgency=medium
+
+  * Update symbols for other architectures.
+  * Rebuild with CGAL 6.2.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 13 Jun 2026 07:16:00 +0200
+
+sfcgal (2.3.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.7.4, no changes.
+  * Update copyright file.
+  * Add nlohmann-json3-dev to (build) dependencies.
+  * Drop boost1.89.patch, included upstream.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 12 Jun 2026 18:56:37 +0200
+
+sfcgal (2.2.0-3) unstable; urgency=medium
+
+  * Skip tests on s390x where they timeout.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 04 Mar 2026 19:39:39 +0100
+
+sfcgal (2.2.0-2) unstable; urgency=medium
+
+  * Update lintian overrides.
+  * Drop Rules-Requires-Root: no, default since dpkg 1.22.13.
+  * Use test-build-validate-cleanup instead of test-build-twice.
+  * Use debrebuild instead of reprotest.
+  * Drop dh_auto_test override.
+  * Drop Priority: optional, default since dpkg 1.22.13.
+  * Bump Standards-Version to 4.7.3, changes: priority.
+  * Replace libboost-all-dev build dependency with only required ones.
+  * Add upstream patch to fix FTBFS with Boost 1.89.
+    (closes: #1128145)
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 04 Mar 2026 12:10:20 +0100
+
+sfcgal (2.2.0-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 10 Aug 2025 10:29:15 +0200
+
+sfcgal (2.2.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Mark libsfcgal2 as Multi-Arch: same.
+  * Update copyright file.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Aug 2025 06:16:42 +0200
+
+sfcgal (2.1.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.7.2, no changes.
+  * Update watch file to get full path to archive download.
+  * Update copyright file.
+  * Include CMake config scripts in -dev package.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 15 May 2025 05:39:49 +0200
+
+sfcgal (2.0.0-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 12 Oct 2024 11:11:16 +0200
+
+sfcgal (2.0.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update copyright file.
+  * Drop cgal6.patch, included upstream.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 11 Oct 2024 06:32:39 +0200
+
+sfcgal (1.5.2-2) unstable; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Bump Standards-Version to 4.7.0, no changes.
+  * Update lintian overrides.
+
+  [ Christoph Berg ]
+  * Cherry-pick upstream patch for CGAL6 support. (closes: #1074382)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 11 Sep 2024 16:42:59 +0200
+
+sfcgal (1.5.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update watch file to use searchmode=plain.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 26 Jul 2024 06:29:55 +0200
+
+sfcgal (1.5.1-3) unstable; urgency=medium
+
+  * Add dpkg-dev (>= 1.22.5) to build dependencies for t64 changes.
+    (closes: #1065297)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 02 Mar 2024 14:00:48 +0100
+
+sfcgal (1.5.1-2) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+    (closes: #1062893)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 28 Feb 2024 16:28:00 +0100
+
+sfcgal (1.5.1-2~exp1) experimental; urgency=medium
+
+  * Improve t64 changes to match team standards.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 05 Feb 2024 14:32:44 +0100
+
+sfcgal (1.5.1-1.1~exp1) experimental; urgency=medium
+
+  * Non-maintainer upload.
+  * Rename libraries for 64-bit time_t transition.
+
+ -- Sergio Durigan Junior <sergiodj@debian.org>  Sat, 03 Feb 2024 21:52:59 +0000
+
+sfcgal (1.5.1-1) unstable; urgency=medium
+
+  * Skip tests on hppa & sparc64.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 23 Dec 2023 16:08:21 +0100
+
+sfcgal (1.5.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Don't ignore test failures on amd64 & i386.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 22 Dec 2023 18:31:29 +0100
+
+sfcgal (1.5.0-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 02 Nov 2023 18:45:09 +0100
+
+sfcgal (1.5.0-1~exp2) experimental; urgency=medium
+
+  * Skip tests on architectures where they time out or fail to link.
+  * Update symbols for other architectures.
+  * Ignore test failures only on architectures where it does.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 01 Nov 2023 16:45:35 +0100
+
+sfcgal (1.5.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.6.2, no changes.
+  * Bump debhelper compat to 13.
+  * Update lintian overrides.
+  * Use execute_before instead of override in rules file.
+  * Remove generated files in clean target.
+    (closes: #1048430)
+  * Enable Salsa CI.
+  * Switch to dh-sequence-*.
+  * Update copyright file.
+  * Drop patches included upstream.
+  * Ignore test failures on all architectures.
+    https://gitlab.com/sfcgal/SFCGAL/-/issues/263
+  * Include architecture.mk instead of calling dpkg-architecture.
+  * Update GitLab repo URL.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 31 Oct 2023 20:01:10 +0100
+
+sfcgal (1.4.1-5) unstable; urgency=medium
+
+  * Drop obsolete dh_strip override, dbgsym migration complete.
+  * Add Rules-Requires-Root to control file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Dec 2022 19:14:24 +0100
+
+sfcgal (1.4.1-4) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.6.1, no changes.
+  * Add upstream patch to fix FTBFS with CGAL 5.4.1.
+    (closes: #1013580)
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 24 Jun 2022 12:52:47 +0200
+
+sfcgal (1.4.1-3) unstable; urgency=medium
+
+  * Drop -latomic workaround, fixed in cgal (5.4-2).
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 27 Feb 2022 12:17:04 +0100
+
+sfcgal (1.4.1-3~exp2) experimental; urgency=medium
+
+  * Use LDFLAGS for -latomic and add -Wl,--no-as-needed to CXXFLAGS on mipsel.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 14 Feb 2022 10:02:38 +0100
+
+sfcgal (1.4.1-3~exp1) experimental; urgency=medium
+
+  * Add -latomic to CXXFLAGS on mipsel to workaround #1005696.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 13 Feb 2022 17:58:54 +0100
+
+sfcgal (1.4.1-2) unstable; urgency=medium
+
+  * Update watch file to fix tag sorting.
+  * Add upstream patch to fix FTBFS with CGAL 5.4.
+    (closes: #1005568)
+  * Update symbols for other architectures.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 13 Feb 2022 09:08:06 +0100
+
+sfcgal (1.4.1-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Jan 2022 06:58:34 +0100
+
+sfcgal (1.4.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update copyright file.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 27 Jan 2022 20:41:46 +0100
+
+sfcgal (1.4.0-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 15 Sep 2021 10:20:03 +0200
+
+sfcgal (1.4.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Require at least libcgal-dev 5.3.
+  * Update copyright file.
+  * Drop CGAL 5.3 patch, included upstream.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 15 Sep 2021 06:14:46 +0200
+
+sfcgal (1.3.10-2) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.6.0, no changes.
+  * Bump debhelper compat to 12, changes:
+    - Drop --list-missing from dh_install
+  * Add upstream patch to fix FTBFS with CGAL 5.3.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 14 Sep 2021 16:24:01 +0200
+
+sfcgal (1.3.10-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 15 Aug 2021 14:00:39 +0200
+
+sfcgal (1.3.10-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop patches applied upstream.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 18 Apr 2021 07:04:44 +0200
+
+sfcgal (1.3.9-2) unstable; urgency=medium
+
+  * Bump watch file version to 4.
+  * Bump Standards-Version to 4.5.1, no changes.
+  * Add upstream patch to fix FTBFS with CGAL 5.2.
+    (closes: #978173)
+  * Add patch to disable test failing with CGAL 5.2.
+  * Add patch to fix sfcgal_cTest failure.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 27 Dec 2020 08:42:21 +0100
+
+sfcgal (1.3.9-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 03 Oct 2020 06:45:13 +0200
+
+sfcgal (1.3.9-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop CGAL 5.1 patch, included upstream.
+  * Don't ignore test failures everywhere, unit-test failure should be fixed.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Oct 2020 15:49:31 +0200
+
+sfcgal (1.3.8-1) unstable; urgency=medium
+
+  * Add upstream patch to fix FTBFS with CGAL 5.1.
+    (closes: #971145)
+  * Update lintian overrides.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 28 Sep 2020 07:04:47 +0200
+
+sfcgal (1.3.8-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop Name field from upstream metadata.
+  * Apply patch by Gianfranco Costamagna to use -02 on armhf & ppc64el too.
+    (closes: #949025)
+  * Bump Standards-Version to 4.5.0, no changes.
+  * Bump debhelper compat to 10, changes:
+    - Drop --parallel option, enabled by default
+  * Update packaging for move to GitLab.
+  * Refresh patches.
+  * Update copyright years for Oslandia & IGN.
+  * Ignore test failures everywhere until unit-test failure is fixed.
+    https://gitlab.com/sfcgal/SFCGAL/-/issues/231
+  * Update symbols for amd64.
+  * Add lintian override for spelling-error-in-binary.
+  * Include sfcgal.pc in libsfcgal-dev.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 30 Jun 2020 15:38:34 +0200
+
+sfcgal (1.3.7-4) unstable; urgency=medium
+
+  [ Gianfranco Costamagna ]
+  * Reduce debug info also on arm64 to fix a build failure
+
+  [ Bas Couwenberg ]
+  * Add gmpxx to `sfcgal-config --libs`.
+  * Add libgmp-dev to libsfcgal-dev dependencies.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 08 Dec 2019 18:41:57 +0100
+
+sfcgal (1.3.7-3) unstable; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Bump Standards-Version to 4.4.1, no changes.
+  * Drop unused lintian overrides.
+  * Update symbols for amd64.
+
+  [ Joachim Reichel ]
+  * Add patch to fix FTBFS with CGAL >= 5.0 (Closes: #946229).
+  * Add Build-Depends: libcgal-dev (>= 5.0~).
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 06 Dec 2019 06:43:24 +0100
+
+sfcgal (1.3.7-2) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.4.0, no changes.
+  * Drop OpenSceneGraphs support, barely used.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 18 Aug 2019 07:57:14 +0200
+
+sfcgal (1.3.7-1) unstable; urgency=medium
+
+  * Update gbp.conf to use --source-only-changes by default.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 07 Jul 2019 11:09:07 +0200
+
+sfcgal (1.3.7-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop libegl1-mesa-dev build dependency, issue fixed in mesa 18.2.5-2.
+  * Bump Standards-Version to 4.3.0, no changes.
+  * Remove package name from lintian overrides.
+  * Update symbols for amd64.
+  * Add lintian overrides for file-references-package-build-path.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 03 Jun 2019 15:13:48 +0200
+
+sfcgal (1.3.6-2) unstable; urgency=medium
+
+  * Add patch to not use -std=c++98, incompatible with CGAL build.
+  * Add libegl1-mesa-dev to build dependencies for KHR/khrplatform.h.
+    GL/glext.h from mesa-common-dev includes this header, but lacks dependency.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 20 Nov 2018 14:28:17 +0100
+
+sfcgal (1.3.6-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Strip trailing whitespace from changelog file.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 13 Nov 2018 14:32:32 +0100
+
+sfcgal (1.3.6-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.2.1, no changes.
+  * Update watch file to limit matches to archive path.
+  * Add Build-Depends-Package field to symbols files.
+  * Update copyright file, changes:
+    - Update copyright years for Oslandia.
+    - Add license & copyright for CGAL_patches.
+  * Drop patches, applied upstream.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 12 Nov 2018 15:14:32 +0100
+
+sfcgal (1.3.5-5) unstable; urgency=medium
+
+  * Skip tests on riscv64, sparc64, x32 too.
+  * Bump Standards-Version to 4.1.5, no changes.
+  * Use filter instead of findstring to prevent partial matches.
+  * Drop autopkgtest to test installability.
+  * Add lintian override for testsuite-autopkgtest-missing.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 01 Aug 2018 19:23:03 +0200
+
+sfcgal (1.3.5-4) unstable; urgency=medium
+
+  * Ignore test failures on mips64el too.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 30 Jun 2018 07:37:07 +0200
+
+sfcgal (1.3.5-3) unstable; urgency=medium
+
+  * Add patch to find CGAL before Boost, to not overwrite Boost_LIBRARIES.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 29 Jun 2018 18:41:35 +0200
+
+sfcgal (1.3.5-2) unstable; urgency=medium
+
+  * Strip trailing whitespace from rules file.
+  * Add upstream patch to fix FTBFS with CGAL 4.12.
+    (closes: #897487)
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 21 Jun 2018 16:31:56 +0200
+
+sfcgal (1.3.5-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop patches, included upstream.
+  * Remove trailing / from Vcs-Browser URL.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 23 Apr 2018 17:15:30 +0200
+
+sfcgal (1.3.4-2) unstable; urgency=medium
+
+  * Add libcgdal-dev to libsfcgal-dev dependencies,
+    libCGAL & libCGAL_Core are now explicitly linked.
+  * Add upstream patches to fix linking with CGAL & its dependencies.
+    (closes: #895388)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 11 Apr 2018 12:04:16 +0200
+
+sfcgal (1.3.4-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.1.4, no changes.
+  * Update symbols for other architectures.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 10 Apr 2018 18:24:55 +0200
+
+sfcgal (1.3.3-1) unstable; urgency=medium
+
+  * New upstream release.
+    (closes: #876521)
+  * Drop spelling-errors.patch, applied upstream.
+  * Require at least libcgal-dev 4.10.1.
+  * Change priority from extra to optional.
+  * Bump Standards-Version to 4.1.3, changes: priority.
+  * Update copyright-format URL to use HTTPS.
+  * Update symbols for amd64.
+  * Update Vcs-* URLs for Salsa.
+  * Drop obsolete dbg package.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 06 Apr 2018 14:10:43 +0200
+
+sfcgal (1.3.1-2) unstable; urgency=medium
+
+  * Apply patch to reduce build-time memory usage on mips/mipsel.
+    Thanks to Adrian Bunk.
+    (closes: #865310)
+  * Bump Standards-Version to 4.0.0, no changes.
+  * Add autopkgtest to test installability.
+  * Use pkg-info.mk variables instead of dpkg-parsechangelog output.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 20 Jun 2017 17:56:28 +0200
+
+sfcgal (1.3.1-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 18 Jun 2017 16:39:42 +0200
+
+sfcgal (1.3.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop openscenegraph.patch, applied upstream.
+  * Add SFCGAL_WITH_OSG to CMake options.
+  * Add binary package for OpenSceneGraph specific library.
+  * Add symbols file for libsfcgal-osg1.
+  * Update libsfcgal1 symbols for amd64.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 29 May 2017 12:36:41 +0200
+
+sfcgal (1.3.0-4) unstable; urgency=medium
+
+  * Drop i386-ftbfs.patch, did not fix FTBFS on i386.
+  * Skip tests on i386 architectures, causes FTBFS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 07 Aug 2016 16:45:19 +0200
+
+sfcgal (1.3.0-3) unstable; urgency=medium
+
+  * Add patch by Dimitri John Ledkov to fix FTBFS on i386.
+    (LP: #1610076)
+  * Update symbols for amd64 & i386.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 07 Aug 2016 14:11:19 +0200
+
+sfcgal (1.3.0-2) unstable; urgency=medium
+
+  * Fix hardening flags via DEB_BUILD_MAINT_OPTIONS.
+  * Skip tests on alpha, terminated after timeout.
+  * Ignore test failures on mips{,el}, test times too long.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 27 May 2016 11:44:55 +0200
+
+sfcgal (1.3.0-2~exp1) experimental; urgency=medium
+
+  * Add patch to enable OpenSceneGraph support when available.
+  * Bump Standards-Version to 3.9.8, no changes.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 21 May 2016 17:40:40 +0200
+
+sfcgal (1.3.0-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Drop viewer-SFCGAL manpage, viewer removed upstream.
+  * Update watch file to support other tar extensions in filenamemangle.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 06 Mar 2016 17:35:54 +0100
+
+sfcgal (1.3.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update Vcs-Git URL to use HTTPS.
+  * Drop sfcgal-bin package, viewer removed upstream.
+  * Update copyright file, add license & copyright for Boost patch.
+  * Bump Standards-Version to 3.9.7, no changes.
+  * Add myself to Uploaders.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 04 Mar 2016 02:16:43 +0100
+
+sfcgal (1.2.2-1) unstable; urgency=medium
+
+  * Team upload.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 03 Dec 2015 23:43:12 +0100
+
+sfcgal (1.2.2-1~exp1) experimental; urgency=medium
+
+  * Team upload.
+
+  [ Sven Geggus ]
+  * Update symbols for other architectures
+
+  [ Bas Couwenberg ]
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 19 Nov 2015 12:03:49 +0100
+
+sfcgal (1.2.1-1) unstable; urgency=medium
+
+  * Update symbols for other architectures
+  * Move from experimental to unstable.
+
+ -- Sven Geggus <sven-debian@geggus.net>  Fri, 13 Nov 2015 13:03:39 +0100
+
+sfcgal (1.2.1-1~exp1) experimental; urgency=medium
+
+  [ Sven Geggus ]
+  * Update SFCGAL 1.2.0 symbols for other architectures.
+  * New upstream release (Closes: #804589)
+
+  [ Bas Couwenberg ]
+  * Update SFCGAL 1.2.1 symbols for amd64.
+
+ -- Sven Geggus <sven-debian@geggus.net>  Tue, 10 Nov 2015 19:18:19 +0100
+
+sfcgal (1.2.0-1~exp1) experimental; urgency=medium
+
+  * Team upload.
+
+  [ Sven Geggus ]
+  * New upstream release.
+
+  [ Bas Couwenberg ]
+  * Update copyright file, add copyright holders for new files.
+  * Install NEWS file as upstream changelog.
+  * Use -DCMAKE_BUILD_TYPE=RelWithDebInfo instead of None.
+  * Update symbols for amd64.
+  * Explicitly remove .la files, not installed.
+  * Explicitly remove test executables, not installed.
+  * Add sfcgal-dbg package for debug symbols.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 02 Oct 2015 18:22:49 +0200
+
+sfcgal (1.1.0-6) unstable; urgency=medium
+
+  * Update symbols for mips(el) and armhf
+
+ -- Sven Geggus <sven-debian@geggus.net>  Fri, 18 Sep 2015 16:56:44 +0200
+
+sfcgal (1.1.0-5) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Sven Geggus ]
+  * Update symbols for other architectures
+
+  [ Bas Couwenberg ]
+  * Restructure control file with cme.
+  * Update Vcs-Browser URL to use HTTPS.
+  * Add upstream metadata.
+  * Don't strip RPATH from sfcgal-config.
+  * Rebuild for openscenegraph transition.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 02 Sep 2015 17:57:44 +0200
+
+sfcgal (1.1.0-4) unstable; urgency=medium
+
+  * re-enable tests which work fine without CMAKE_SKIP_RPATH
+  * remove rpath during install using chrpath instead
+  * skip style-test using patch from upstream
+  * Remove Multi-Arch option on libsfcgal-dev and sfcgal-bin (Closes: #794317)
+
+ -- Sven Geggus <sven-debian@geggus.net>  Fri, 28 Aug 2015 16:37:16 +0200
+
+sfcgal (1.1.0-3) unstable; urgency=medium
+
+  * Make package build in unstable with boost 1.58 and gcc5
+  * Change from Multi-Arch: same to foreign (Closes: #794317)
+  * Update symbols for other architectures.
+
+ -- Sven Geggus <sven-debian@geggus.net>  Thu, 27 Aug 2015 13:09:01 +0200
+
+sfcgal (1.1.0-2) unstable; urgency=medium
+
+  * Update symbols for other architectures to prepare for unstable
+
+ -- Sven Geggus <sven-debian@geggus.net>  Fri, 31 Jul 2015 14:09:35 +0200
+
+sfcgal (1.1.0-2~exp1) experimental; urgency=medium
+
+  * use pkgkde-symbolshelper to handle C++ symbols
+
+ -- Sven Geggus <sven-debian@geggus.net>  Wed, 29 Jul 2015 21:29:48 +0200
+
+sfcgal (1.1.0-1) unstable; urgency=medium
+
+  * Initial release (closes: #788560)
+
+ -- Sven Geggus <sven-debian@geggus.net>  Tue, 09 Jun 2015 14:24:02 +0200

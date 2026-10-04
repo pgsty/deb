@@ -1,0 +1,32 @@
+.TH "sfcgal-config" "1" "June 10, 2015" "sfcgal-config" "User Commands"
+.SH "NAME"
+sfcgal\-config \- returns information about the installed SFCGAL library
+.SH "SYNOPSIS"
+.PP 
+.B sfcgal\-config
+[OPTIONS]
+.SH "DESCRIPTION"
+.PP 
+The \fIsfcgal\-config\fP shell script displays configuration information for the installed SFCGAL library. 
+
+.SH "OPTIONS"
+.TP 
+\fB\-\-prefix\fR
+print the prefix used by sfcgal
+.TP 
+\fB\-\-version\fR
+print the SFCGAL version
+.TP 
+\fB\-\-libs\fR
+Shows the complete set of libs and other linker options you will need in order
+to link your application with libsfcgal.
+.TP 
+\fB\-\-cflags\fR
+Set of compiler options (CFLAGS) to use when compiling files that use libsfcgal.
+Currently that is only the include path to the sfcgal include files.
+.TP 
+\fB\-\-ldflags\fR
+Displays the linker options to use when linking a SFCGAL application.
+.TP 
+\fB\-\-static\fR
+Displays the location of the static library (if available)

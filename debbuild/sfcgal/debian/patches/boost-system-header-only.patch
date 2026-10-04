@@ -1,0 +1,21 @@
+Description: Support Boost 1.89 and newer without the retired System stub
+Author: Ruohang Feng <rh@vonng.com>
+Origin: https://www.boost.org/doc/libs/develop/libs/system/doc/html/system.html
+Forwarded: not-needed
+
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -134,7 +134,12 @@
+ endif()
+ 
+ #-- minimalist build allowed with boost version older than 1.48
+-set( SFCGAL_Boost_COMPONENTS thread system serialization )
++find_package(Boost REQUIRED)
++set( SFCGAL_Boost_COMPONENTS thread serialization )
++# Boost.System has been header-only since 1.69; its stub was removed in 1.89.
++if(Boost_VERSION_STRING VERSION_LESS "1.89.0")
++    list(APPEND SFCGAL_Boost_COMPONENTS system)
++endif()
+ #-- program_options
+ if ( SFCGAL_BUILD_TESTS OR SFCGAL_BUILD_EXAMPLES OR SFCGAL_BUILD_OSG )
+ 	set( SFCGAL_Boost_COMPONENTS chrono unit_test_framework filesystem program_options timer ${SFCGAL_Boost_COMPONENTS} )

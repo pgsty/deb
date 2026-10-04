@@ -1,0 +1,19 @@
+Description: Add gmpxx to `sfcgal-config --libs`.
+ Fixes link errors:
+ .
+ /usr/bin/ld: /usr/lib/x86_64-linux-gnu/libSFCGAL.so: undefined reference to `operator>>(std::istream&, __mpz_struct*)'
+ /usr/bin/ld: /usr/lib/x86_64-linux-gnu/libSFCGAL.so: undefined reference to `operator<<(std::ostream&, __mpz_struct const*)'
+Author: Bas Couwenberg <sebastic@debian.org>
+Forwarded: not-needed
+
+--- a/sfcgal-config.in
++++ b/sfcgal-config.in
+@@ -38,7 +38,7 @@ case $1 in
+ 	echo -I${prefix}/include 
+ 	;;
+     --libs)
+-	echo -L${libdir} -l@SFCGAL_LIB_NAME@
++	echo -L${libdir} -l@SFCGAL_LIB_NAME@ -lgmpxx
+ 	;;
+     --ldflags)
+ 	echo -L${libdir}
