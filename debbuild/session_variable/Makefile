@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := session_variable-3.5.tar.gz
+TARBALL := session_variable-3.6.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
