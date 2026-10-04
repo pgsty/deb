@@ -1,8 +1,8 @@
 all: setup build move
 
-TARBALL := pg_clickhouse-0.10.0.tar.gz
+TARBALL := pg_clickhouse-0.11.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/pg_clickhouse-0.10.0.patch
+SOURCE_PATCH := patches/pg_clickhouse-0.11.0.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
