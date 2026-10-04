@@ -171,5 +171,28 @@
     },
     "patches": [],
     "kind": "puresql"
+  },
+  {
+    "extension": "pgexporter_ext",
+    "package": "pgexporter_ext",
+    "deb_package": "pgexporter-ext",
+    "version": "0.2.5",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "pgexporter_ext-0.2.5.tar.gz",
+      "sha256": "f22af4223814858d61892037daa81ff85105fa9ac95c2c6082981c15ff76904e",
+      "url": "https://codeload.github.com/pgexporter/pgexporter_ext/tar.gz/0.2.5",
+      "ref": "0.2.5",
+      "source_kind": "release-tag",
+      "repository": "pgexporter/pgexporter_ext"
+    },
+    "patches": [],
+    "kind": "cmake"
   }
 ]

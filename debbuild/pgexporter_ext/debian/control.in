@@ -1,0 +1,14 @@
+Source: pgexporter-ext
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libssl-dev, cmake
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgexporter/pgexporter_ext
+
+Package: postgresql-PGVERSION-pgexporter-ext
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Operating system metrics for PostgreSQL
+ Operating system metrics for PostgreSQL.
