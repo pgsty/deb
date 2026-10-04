@@ -1,0 +1,4 @@
+usr/include
+usr/lib/*/*.so
+usr/lib/*/pkgconfig
+usr/share/doc/libgta/example-* usr/share/doc/libgta-dev/examples

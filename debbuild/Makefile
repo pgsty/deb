@@ -1270,4 +1270,7 @@ spatialite:
 libarrow:
 	$(MAKE) -C libarrow
 
-.PHONY: cgal geos proj sfcgal libgeotiff librttopo spatialite libarrow
+libgta:
+	$(MAKE) -C libgta
+
+.PHONY: cgal geos proj sfcgal libgeotiff librttopo spatialite libarrow libgta

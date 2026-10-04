@@ -1,0 +1,23 @@
+Source: libgta
+Section: libs
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), libtool, pkgconf
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://marlam.de/gta/
+
+Package: libgta1
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Generic Tagged Arrays library
+ Shared runtime library used by the PGSTY GDAL build.
+
+Package: libgta-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: libgta1 (= ${binary:Version}), ${misc:Depends}
+Description: Generic Tagged Arrays library - development files
+ Headers, pkg-config files and link libraries for development.
