@@ -4,8 +4,8 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-# Upstream 0.5.0 repacked with the PostgreSQL 14-18 manifest and pgrx 0.19.2 lock.
-TARBALL := pgmqtt-0.5.0.tar.gz
+# Upstream 0.5.1 repacked with the PostgreSQL 14-18 manifest and pgrx 0.19.2 lock.
+TARBALL := pgmqtt-0.5.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
