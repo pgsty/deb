@@ -1,0 +1,102 @@
+Source: proj
+Maintainer: Ruohang Feng <rh@vonng.com>
+Section: science
+Build-Depends: cmake,
+               debhelper-compat (= 13),
+               dh-sequence-pkgkde-symbolshelper,
+               libcurl4-gnutls-dev | libcurl-ssl-dev,
+               libgtest-dev,
+               libsqlite3-dev,
+               libtiff-dev,
+               pkg-kde-tools,
+               sharutils,
+               sqlite3,
+               xz-utils
+Standards-Version: 4.7.4
+Vcs-Browser: https://salsa.debian.org/debian-gis-team/proj
+Vcs-Git: https://salsa.debian.org/debian-gis-team/proj.git
+Homepage: https://proj.org/
+
+Package: proj-data
+Architecture: all
+Multi-Arch: foreign
+Section: libs
+Depends: ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: Cartographic projection filter and library (datum package)
+ Proj and invproj perform respective forward and inverse transformation
+ of cartographic data to or from Cartesian data with a wide range of
+ selectable projection functions (over 100 projections).
+ .
+ Geod and invgeod perform geodesic (Great Circle) computations for
+ determining latitude, longitude and back azimuth of a terminus point given
+ a initial point latitude, longitude, azimuth and distance (direct) or the
+ forward and back azimuths and distance between an initial and terminus
+ point latitudes and longitudes (inverse).
+ .
+ This package contains auxiliary projection datum grids used by the
+ library and tools.
+
+Package: libproj25
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: proj-data (>= ${source:Version}),
+         ${shlibs:Depends},
+         ${misc:Depends}
+Suggests: proj-bin
+Pre-Depends: ${misc:Pre-Depends}
+Description: Cartographic projection library
+ Proj and invproj perform respective forward and inverse transformation
+ of cartographic data to or from Cartesian data with a wide range of
+ selectable projection functions (over 100 projections).
+ .
+ Geod and invgeod perform geodesic (Great Circle) computations for
+ determining latitude, longitude and back azimuth of a terminus point given
+ a initial point latitude, longitude, azimuth and distance (direct) or the
+ forward and back azimuths and distance between an initial and terminus
+ point latitudes and longitudes (inverse).
+ .
+ This package provides the PROJ shared library used by tools and third
+ parties programs.
+
+Package: libproj-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: libproj25 (= ${binary:Version}),
+         libcurl4-gnutls-dev | libcurl-ssl-dev,
+         libsqlite3-dev,
+         libtiff-dev,
+         ${misc:Depends}
+Suggests: proj-bin
+Pre-Depends: ${misc:Pre-Depends}
+Description: Cartographic projection library (development files)
+ Proj and invproj perform respective forward and inverse transformation
+ of cartographic data to or from Cartesian data with a wide range of
+ selectable projection functions (over 100 projections).
+ .
+ Geod and invgeod perform geodesic (Great Circle) computations for
+ determining latitude, longitude and back azimuth of a terminus point given
+ a initial point latitude, longitude, azimuth and distance (direct) or the
+ forward and back azimuths and distance between an initial and terminus
+ point latitudes and longitudes (inverse).
+ .
+ This package provides the PROJ development files.
+
+Package: proj-bin
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Cartographic projection library (tools)
+ Proj and invproj perform respective forward and inverse transformation
+ of cartographic data to or from Cartesian data with a wide range of
+ selectable projection functions (over 100 projections).
+ .
+ Geod and invgeod perform geodesic (Great Circle) computations for
+ determining latitude, longitude and back azimuth of a terminus point given
+ a initial point latitude, longitude, azimuth and distance (direct) or the
+ forward and back azimuths and distance between an initial and terminus
+ point latitudes and longitudes (inverse).
+ .
+ This package provides the PROJ binary tools.

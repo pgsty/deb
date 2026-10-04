@@ -1,0 +1,1812 @@
+proj (9.8.1-1PGSTY) unstable; urgency=medium
+
+  * Extract datum grids from the pinned PGDG source archive during setup.
+  * Activate pkgkde_symbolshelper explicitly on Ubuntu 22.04.
+  * Build the PGDG-aligned GIS stack from the shared RPM source archive.
+  * Preserve native debug symbols and validate the arm64 pilot.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 15:00:00 +0800
+
+proj (9.8.1-1.pgdg24.04+1) noble-pgdg; urgency=medium
+
+  * Rebuild for noble-pgdg.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Fri, 10 Apr 2026 15:30:47 +0200
+
+proj (9.8.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 10 Apr 2026 15:30:47 +0200
+
+proj (9.8.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.7.4, no changes.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 Apr 2026 14:21:54 +0200
+
+proj (9.8.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 02 Mar 2026 14:44:23 +0100
+
+proj (9.8.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 25 Feb 2026 19:57:39 +0100
+
+proj (9.8.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop Priority: optional, default since dpkg 1.22.13.
+  * Bump Standards-Version to 4.7.3, changes: priority.
+  * Drop NEWS file, related version not available in truncated changelog.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 23 Feb 2026 18:15:44 +0100
+
+proj (9.7.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for amd64.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 01 Dec 2025 15:59:30 +0100
+
+proj (9.7.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop Rules-Requires-Root: no, default since dpkg 1.22.13.
+  * Use test-build-validate-cleanup instead of test-build-twice.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 25 Nov 2025 12:09:17 +0100
+
+proj (9.7.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update lintian overrides.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 15 Sep 2025 09:22:51 +0200
+
+proj (9.7.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 09 Sep 2025 05:39:34 +0200
+
+proj (9.6.2-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 10 Aug 2025 13:18:11 +0200
+
+proj (9.6.2-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 06 Jun 2025 14:38:51 +0200
+
+proj (9.6.2~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 04 Jun 2025 14:07:38 +0200
+
+proj (9.6.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 02 Jun 2025 16:05:07 +0200
+
+proj (9.6.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.7.2, no changes.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 26 May 2025 05:20:08 +0200
+
+proj (9.6.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Mar 2025 09:17:10 +0100
+
+proj (9.6.0~rc3-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 13 Mar 2025 16:17:34 +0100
+
+proj (9.6.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop spelling-errors.patch, upstream unwilling to patch EPSG data.
+    See: https://github.com/OSGeo/PROJ/pull/4417#issuecomment-2709550762
+  * Update symbols for other architectures.
+  * Drop bash-completion.patch, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 11 Mar 2025 15:38:59 +0100
+
+proj (9.6.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+  * Include bash-completions in proj-bin.
+  * Update symbols for amd64.
+  * Add patch to fix bash-completion-with-hashbang Lintian issue.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 08 Mar 2025 16:50:19 +0100
+
+proj (9.5.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 01 Dec 2024 12:53:25 +0100
+
+proj (9.5.1~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop generate_proj_db.patch, applied upstream.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 26 Nov 2024 20:49:02 +0100
+
+proj (9.5.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Add patch to fix FTBFS due to PROJ_DB_SQL_EXPECTED_MD5.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 26 Nov 2024 14:19:59 +0100
+
+proj (9.5.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 15 Sep 2024 14:20:21 +0200
+
+proj (9.5.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.7.0, no changes.
+  * Update filenames for dh_installdocs override.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 09 Sep 2024 18:32:11 +0200
+
+proj (9.4.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 01 Jun 2024 16:41:24 +0200
+
+proj (9.4.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 28 May 2024 05:46:43 +0200
+
+proj (9.4.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Mar 2024 17:31:58 +0100
+
+proj (9.4.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 26 Feb 2024 17:40:37 +0100
+
+proj (9.3.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Dec 2023 20:45:30 +0100
+
+proj (9.3.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Don't ignore test failures on s390x.
+    https://github.com/OSGeo/PROJ/issues/3862#issuecomment-1807606954
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 26 Nov 2023 18:08:49 +0100
+
+proj (9.3.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Sep 2023 11:17:47 +0200
+
+proj (9.3.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Ignore test failures on s390x.
+    https://github.com/OSGeo/PROJ/issues/3862#issuecomment-1695260886
+  * Switch to dh-sequence-*.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 30 Aug 2023 20:31:40 +0200
+
+proj (9.3.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump debhelper compat to 13.
+  * Use execute_{before,after} instead of override in rules file.
+  * Enable Salsa CI.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 27 Aug 2023 21:14:05 +0200
+
+proj (9.2.1-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 11 Jun 2023 12:12:12 +0200
+
+proj (9.2.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Set TZ=UTC to make datumgrid timestamps reproducible.
+    (closes: #1035704)
+  * Enable CMAKE_BUILD_RPATH_USE_ORIGIN for reproducible builds.
+    (closes: #1036939)
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Jun 2023 09:38:42 +0200
+
+proj (9.2.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 25 May 2023 05:23:27 +0200
+
+proj (9.2.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 01 Mar 2023 11:21:52 +0100
+
+proj (9.2.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Drop pr3633.patch, included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 24 Feb 2023 20:12:51 +0100
+
+proj (9.2.0~rc1-1~exp4) experimental; urgency=medium
+
+  * Update upstream patch to fix test failures on mips64el.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 23 Feb 2023 15:12:17 +0100
+
+proj (9.2.0~rc1-1~exp3) experimental; urgency=medium
+
+  * Update upstream patch to fix test failures on arm/mips.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 22 Feb 2023 20:24:43 +0100
+
+proj (9.2.0~rc1-1~exp2) experimental; urgency=medium
+
+  * Add upstream patch to fix test failures on arm/mips.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 22 Feb 2023 18:43:36 +0100
+
+proj (9.2.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.6.2, no changes.
+  * Update copyright file.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 22 Feb 2023 16:06:04 +0100
+
+proj (9.1.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add Rules-Requires-Root to control file.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Dec 2022 11:12:59 +0100
+
+proj (9.1.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 25 Nov 2022 19:13:15 +0100
+
+proj (9.1.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Sep 2022 17:33:31 +0200
+
+proj (9.1.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Drop patches, included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 28 Aug 2022 20:07:43 +0200
+
+proj (9.1.0~rc1-1~exp2) experimental; urgency=medium
+
+  * Add upstream patches to fix libm linking and test failures.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 27 Aug 2022 13:34:38 +0200
+
+proj (9.1.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.6.1, no changes.
+  * Update copyright file.
+  * Add patch to fix libm linking.
+  * Update symbols for amd64.
+  * Add patch to fix docfiles install path.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 26 Aug 2022 17:10:35 +0200
+
+proj (9.0.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 15 Jun 2022 16:20:21 +0200
+
+proj (9.0.1~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Drop soversion.patch, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 Jun 2022 20:23:37 +0200
+
+proj (9.0.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop SQLite 3.38.0 patch, included upstream.
+  * Add patch to revert SOVERSION bump.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 Jun 2022 18:19:10 +0200
+
+proj (9.0.0-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 22 Mar 2022 05:21:32 +0100
+
+proj (9.0.0-1~exp2) experimental; urgency=medium
+
+  * Add upstream patch to fix test failure with SQLite 3.38.0.
+  * Update symbols for hppa.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 06 Mar 2022 12:02:05 +0100
+
+proj (9.0.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Ignore test failures, see: https://github.com/OSGeo/PROJ/issues/3077.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 02 Mar 2022 06:45:13 +0100
+
+proj (9.0.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 23 Feb 2022 20:10:25 +0100
+
+proj (9.0.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Switch to cmake buildsystem.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 15 Feb 2022 22:01:30 +0100
+
+proj (8.2.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 01 Jan 2022 16:20:08 +0100
+
+proj (8.2.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 26 Dec 2021 16:46:46 +0100
+
+proj (8.2.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update 8.2.0~rc1 symbols other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 01 Nov 2021 18:59:51 +0100
+
+proj (8.2.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 27 Oct 2021 05:57:13 +0200
+
+proj (8.1.1-1) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.6.0, no changes.
+  * Bump debhelper compat to 12, changes:
+    - Drop --list-missing from dh_install
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 22 Oct 2021 06:32:30 +0200
+
+proj (8.1.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 01 Sep 2021 20:45:39 +0200
+
+proj (8.1.1~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 29 Aug 2021 16:48:32 +0200
+
+proj (8.1.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 26 Aug 2021 06:02:51 +0200
+
+proj (8.1.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update 8.1.0~rc1 symbols other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Jul 2021 06:02:51 +0200
+
+proj (8.1.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 25 Jun 2021 18:51:17 +0200
+
+proj (8.0.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 05 May 2021 12:45:31 +0200
+
+proj (8.0.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 8.0.0 symbols for other architectures.
+  * Update copyright file.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 28 Apr 2021 13:43:35 +0200
+
+proj (8.0.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update 8.0.0~rc2 symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 01 Mar 2021 12:49:39 +0100
+
+proj (8.0.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 8.0.0~rc1 symbols for other architectures.
+  * Drop spelling-errors.patch, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 25 Feb 2021 19:58:46 +0100
+
+proj (8.0.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Explicitly remove files in dh_auto_install override.
+  * Update symbols for amd64.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 20 Feb 2021 14:42:38 +0100
+
+proj (7.2.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update 7.2.1~rc1 symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Jan 2021 16:52:05 +0100
+
+proj (7.2.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump watch file version to 4.
+  * Bump Standards-Version to 4.5.1, no changes.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 27 Dec 2020 06:25:35 +0100
+
+proj (7.2.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update 7.2.0~rc2 symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Update symbols for amd64.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 01 Nov 2020 11:07:18 +0100
+
+proj (7.2.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 7.2.0~rc1 symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 28 Oct 2020 15:16:19 +0100
+
+proj (7.2.0~rc1-1~exp2) experimental; urgency=medium
+
+  * Revert SOVERSION changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 26 Oct 2020 15:25:18 +0100
+
+proj (7.2.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Rename library package for SONAME bump.
+  * Update lintian overrides.
+  * Add patch to fix SOVERSION to match CMake build.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 26 Oct 2020 13:03:19 +0100
+
+proj (7.1.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 01 Sep 2020 15:00:56 +0200
+
+proj (7.1.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 25 Aug 2020 05:51:43 +0200
+
+proj (7.1.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update 7.1.0~rc2 symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 01 Jul 2020 15:03:06 +0200
+
+proj (7.1.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches, included upstream.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 26 Jun 2020 15:27:20 +0200
+
+proj (7.1.0~rc1-1~exp2) experimental; urgency=medium
+
+  * Add upstream patch to fix FTBFS on arm* & mipsel.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 24 Jun 2020 11:41:34 +0200
+
+proj (7.1.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright years for Kristian Evers.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 23 Jun 2020 21:31:35 +0200
+
+proj (7.0.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update 7.0.1~rc1 symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 May 2020 10:42:00 +0200
+
+proj (7.0.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches, included upstream.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 27 Apr 2020 11:33:08 +0200
+
+proj (7.0.0-2) unstable; urgency=medium
+
+  * Update symbols for alpha.
+  * Add upstream patch to fix pkg-config.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 18 Mar 2020 16:53:38 +0100
+
+proj (7.0.0-1) unstable; urgency=medium
+
+  * Bump debhelper compat to 10, changes:
+    - Drop --parallel option, enabled by default
+    - Don't explicitly enable autoreconf, enabled by default
+    - Drop dh-autoreconf build dependency
+  * Update 7.0.0 symbols for arm64.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 18 Mar 2020 06:00:29 +0100
+
+proj (7.0.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 01 Mar 2020 10:40:35 +0100
+
+proj (7.0.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches, applied/included upstream.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 26 Feb 2020 05:24:10 +0100
+
+proj (7.0.0~rc1-1~exp3) experimental; urgency=medium
+
+  * Add upstream patch to fix test failure on big endian architectures.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 21 Feb 2020 12:07:24 +0100
+
+proj (7.0.0~rc1-1~exp2) experimental; urgency=medium
+
+  * Add upstream patch to fix FTBFS on big endian architectures.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 20 Feb 2020 17:04:44 +0100
+
+proj (7.0.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Add curl & tiff (build) dependencies.
+  * Update copyright years for Even Rouault.
+  * Remove data/null on clean again, removed upstream.
+  * Rename library package for SONAME bump.
+  * Drop make-readme.patch, applied upstream.
+  * Don't install man3 files in proj-dev, removed upstream.
+  * Update symbols for amd64.
+  * Add patch to fix test failure.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 18 Feb 2020 05:47:44 +0100
+
+proj (6.3.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 13 Feb 2020 16:29:49 +0100
+
+proj (6.3.1~rc1-1~exp2) experimental; urgency=medium
+
+  * Add patch to fix FTBFS when building twice.
+    (closes: #951187)
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 12 Feb 2020 14:28:09 +0100
+
+proj (6.3.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.5.0, no changes.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 10 Feb 2020 12:03:03 +0100
+
+proj (6.3.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 02 Jan 2020 08:03:43 +0100
+
+proj (6.3.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop Name field from upstream metadata.
+  * Update symbols for amd64.
+  * Add lintian override for no-dh-sequencer.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 28 Dec 2019 14:10:20 +0100
+
+proj (6.2.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update 6.2.1~rc1 symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Nov 2019 20:34:54 +0100
+
+proj (6.2.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.4.1, no changes.
+  * Update symbols for 6.2.1~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 28 Oct 2019 19:16:31 +0100
+
+proj (6.2.0-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 02 Sep 2019 13:10:14 +0200
+
+proj (6.2.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Don't remove data/null on clean, included upstream too.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 01 Sep 2019 09:38:16 +0200
+
+proj (6.2.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Add license & copyright for nlohmann sources.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 27 Aug 2019 05:58:40 +0200
+
+proj (6.1.1-1) unstable; urgency=medium
+
+  * Update gbp.conf to use --source-only-changes by default.
+  * Bump Standards-Version to 4.4.0, no changes.
+  * Update symbols for amd64.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 25 Aug 2019 15:30:21 +0200
+
+proj (6.1.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Use wildcards in manpage-has-errors-from-man lintian override.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 01 Jul 2019 09:32:49 +0200
+
+proj (6.1.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update URLs from proj4.org to proj.org.
+  * Update upstream metadata for proj.4 -> PROJ rename.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 23 Jun 2019 20:50:58 +0200
+
+proj (6.1.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 15 May 2019 19:54:22 +0200
+
+proj (6.1.0~rc3-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 6.1.0~rc2 symbols for other architectures.
+  * Update 6.1.0~rc3 symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 10 May 2019 14:55:42 +0200
+
+proj (6.1.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 6.1.0~rc1 symbols for other architectures.
+  * Drop patches, applied/included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 May 2019 06:20:12 +0200
+
+proj (6.1.0~rc1-1~exp2) experimental; urgency=medium
+
+  * Add patch from PR #1454 to fix proj-rdnap test failures.
+  * Update symbols for other architectures.
+  * Add lintian overrides for manpage-has-errors-from-man.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 06 May 2019 20:30:48 +0200
+
+proj (6.1.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 6.0.0 symbols for other architectures.
+  * Add patch to fix spelling errors.
+  * Update 6.1.0~rc1 symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 06 May 2019 08:37:02 +0200
+
+proj (6.0.0-1~exp2) experimental; urgency=medium
+
+  * Update URL to FAQ, wiki page is gone.
+  * Add version requirement for proj-data dependency.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 08 Mar 2019 10:56:50 +0100
+
+proj (6.0.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update 6.0.0~rc4 symbols for other architectures.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Mar 2019 19:48:28 +0100
+
+proj (6.0.0~rc4-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 6.0.0~rc3 symbols for other architectures.
+  * Update 6.0.0~rc4 symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 27 Feb 2019 06:56:06 +0100
+
+proj (6.0.0~rc3-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 6.0.0~rc2 symbols for other architectures.
+  * Drop spelling-errors.patch, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 25 Feb 2019 22:08:06 +0100
+
+proj (6.0.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches, included upstream.
+  * Update 6.0.0~rc1 symbols for other architectures.
+  * Drop unused lintian override for binary-without-manpage.
+  * Add patch to fix spelling errors.
+  * Update 6.0.0~rc2 symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 23 Feb 2019 12:41:22 +0100
+
+proj (6.0.0~rc1-1~exp3) experimental; urgency=medium
+
+  * Add upstream patch to implement fuzzy proj string comparison.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 18 Feb 2019 10:03:34 +0100
+
+proj (6.0.0~rc1-1~exp2) experimental; urgency=medium
+
+  * Add upstream patch to fix uniconvert test failure on some architectures.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 17 Feb 2019 08:49:03 +0100
+
+proj (6.0.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop pre-release from symbols version.
+  * Update datumgrids.shar (XZ compressed) with proj-datumgrid-1.8.
+  * Add Build-Depends-Package field to symbols file.
+  * Bump Standards-Version to 4.3.0, no changes.
+  * Use proj@lists.osgeo.org instead of metacrs.
+  * Add libsqlite3-dev & sqlite3 to (build) dependencies.
+  * Add pkg-config to build dependencies.
+  * Unpack datumgrids into data directory instead of nad.
+  * Don't install nad2bin manpage, executable removed upstream.
+  * Don't install projects.h manually, file removed upstream.
+  * Update copyright file, changes:
+    - Update copyright years for existing copyright holders
+    - Update paths for renamed files
+    - Add license & copyright for LRUCache11 files
+    - Add license & copyright for Bison generated parsers
+  * Rename library package for SONAME bump.
+  * Drop libproj-java package, jniwrap fails to build.
+  * Don't set {C,CPP,LD}FLAGS manually.
+  * Use pkgkde-symbolshelper for C++ symbols.
+  * Update symbols for amd64.
+  * Add lintian override for binary-without-manpage.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 16 Feb 2019 11:41:42 +0100
+
+proj (5.2.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Sep 2018 18:15:48 +0200
+
+proj (5.2.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 13 Sep 2018 07:22:54 +0200
+
+proj (5.2.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.2.1, no changes.
+  * Update Homepage URL to use HTTPS.
+  * Add license & copyright for gtest sources.
+  * Drop patches, included upstream.
+  * Update datumgrids.shar (XZ compressed) with proj-datumgrid-1.8RC1.
+  * Add patch to fix SONAME decrement.
+  * Update symbols for 5.2.0~rc1.
+  * Add patch to not install gtest libraries.
+  * Add patch to not install test executables.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 11 Sep 2018 09:23:37 +0200
+
+proj (5.1.0-2) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.2.0, no changes.
+  * Use filter instead of findstring to prevent partial matches.
+  * Update lintian override for embedded-javascript-library.
+  * Drop autopkgtest to test installability.
+  * Add lintian override for testsuite-autopkgtest-missing.
+  * Add upstream patches to fix test failure with GCC 8.x.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 11 Aug 2018 15:47:39 +0200
+
+proj (5.1.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop obsolete dh_clean override.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Jun 2018 15:12:04 +0200
+
+proj (5.1.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches, fixed upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 24 May 2018 21:46:51 +0200
+
+proj (5.1.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Also ignore test failures on kfreebsd-i386.
+  * Strip trailing whitespace from changelog & rules files.
+  * Drop patches, included upstream.
+  * Update copyright holders.
+  * Add patch to ignore failed_to_load_grid error for missing grid file.
+  * Add patch to fix SONAME.
+  * Update symbols for 5.1.0~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 24 May 2018 20:56:42 +0200
+
+proj (5.0.1-2) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.1.4, no changes.
+  * Add upstream patch to reset error state before each call to pj_inv/pj_fwd.
+    Fixes some gdalwarp scenarios.
+  * Add upstream patch to update jniwrap for Java 10 compatibility.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 04 May 2018 10:01:35 +0200
+
+proj (5.0.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update Vcs-* URLs for Salsa.
+  * Drop override for vcs-deprecated-in-debian-infrastructure.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 01 Apr 2018 13:29:00 +0200
+
+proj (5.0.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches, included upstream.
+  * Add lintian override for vcs-deprecated-in-debian-infrastructure.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 21 Mar 2018 16:50:34 +0100
+
+proj (5.0.0-4) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 15 Mar 2018 06:50:18 +0100
+
+proj (5.0.0-4~exp1) experimental; urgency=medium
+
+  * Add upstream patches from 5.0 branch:
+    - Remove-angle-brackets-for-proj-headers.patch
+    - Remove-pj_-prefix-from-static-functions.patch
+    - Make-sure-that-transient-errors-are-returned-correctly.patch
+      Should fix python-mpop test failure.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 12 Mar 2018 15:07:18 +0100
+
+proj (5.0.0-3) unstable; urgency=medium
+
+  * Update pj_transform-height_unit.patch which changes as applied upstream.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 09 Mar 2018 22:12:17 +0100
+
+proj (5.0.0-3~exp2) experimental; urgency=medium
+
+  * Add patch to fix height_unit() in proj_transform.c.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 09 Mar 2018 12:20:41 +0100
+
+proj (5.0.0-3~exp1) experimental; urgency=medium
+
+  * Add upstream patches to fix regressions in 5.0.0:
+    - 0001-Revert-fix-to-22.patch
+      Fixes web mercator projection
+    - pr845_*-reintroduce-support-for-vertical-scaling.patch
+      Fixes +vdatum handling in cs2cs
+    (closes: #892062)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 09 Mar 2018 07:34:25 +0100
+
+proj (5.0.0-2) unstable; urgency=medium
+
+  * Install docs in all packages.
+    (closes: #892025)
+  * Update Homepage URL.
+    (closes: #892026)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 04 Mar 2018 11:48:40 +0100
+
+proj (5.0.0-1) unstable; urgency=medium
+
+  * Strip pre-release from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 04 Mar 2018 09:52:44 +0100
+
+proj (5.0.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Ignore test failures on hppa.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Mar 2018 21:33:04 +0100
+
+proj (5.0.0~rc6-1~exp2) experimental; urgency=medium
+
+  * Update datumgrids.shar (XZ compressed) with proj-datumgrid-1.7RC2.
+  * Use XZ compression for datumgrids-ch.shar too.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 26 Feb 2018 22:29:10 +0100
+
+proj (5.0.0~rc6-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Don't ignore test failures for arm64, ppc64el, s390x & ppc64.
+  * Drop patches, included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 25 Feb 2018 20:39:55 +0100
+
+proj (5.0.0~rc5-1~exp2) experimental; urgency=medium
+
+  * Add patch by Charles Karney to relax some of the tests in geodtest.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 24 Feb 2018 11:15:11 +0100
+
+proj (5.0.0~rc5-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop install-nad-gtx.patch, applied upstream.
+  * Update copyright years for Charles Karney.
+  * Add upstream patch to fix gie test failures for missing grids.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 23 Feb 2018 22:13:06 +0100
+
+proj (5.0.0~rc4-1~exp2) experimental; urgency=medium
+
+  * Update datumgrids.shar (XZ compressed) with proj-datumgrid-1.7RC1.
+  * Add patch to also install .gtx files from proj-datumgrid.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 22 Feb 2018 19:06:16 +0100
+
+proj (5.0.0~rc4-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Ignore test failures on more problematic architectures.
+  * Update watch file to use HTTPS.
+  * Rename PROJ.4 to PROJ.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 21 Feb 2018 18:19:41 +0100
+
+proj (5.0.0~rc3-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches, applied/included upstream.
+  * Update symbols for 5.0.0~rc3.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 14 Feb 2018 07:34:04 +0100
+
+proj (5.0.0~rc2-1~exp4) experimental; urgency=medium
+
+  * Add patch for missing ! in boolean evaluation.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 11 Feb 2018 16:54:36 +0100
+
+proj (5.0.0~rc2-1~exp3) experimental; urgency=medium
+
+  * Ignore test failures on problematic architectures only.
+  * Add patch to avoid XY, LP and UV datatype clashes with other libraries.
+    See: #889922 & #889926
+  * Fix deprecated source override location.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 10 Feb 2018 11:13:32 +0100
+
+proj (5.0.0~rc2-1~exp2) experimental; urgency=medium
+
+  * Add patch to avoid numerical differences on non-amd64 architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 08 Feb 2018 15:58:39 +0100
+
+proj (5.0.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches applied upstream. Refresh remaining patch.
+  * Update symbols for 5.0.0~rc2.
+  * Don't ignore test failures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 07 Feb 2018 22:46:28 +0100
+
+proj (5.0.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Use pkg-info.mk variables instead of dpkg-parsechangelog output.
+  * Add autopkgtest to test installability.
+  * Bump Standards-Version to 4.1.3, no changes.
+  * Strip trailing whitespace from changelog, control & rules files.
+  * Update copyright-format URL to use HTTPS.
+  * Update copyright years for copyright holders.
+  * Drop patches, applied upstream.
+  * Add patch to link libm to fix FTBFS.
+  * Update symbols for 5.0.0~rc1.
+  * Add patch to fix SOVERSION for Automake builds.
+  * Rename library package for SONAME bump.
+  * Add lintian override for debian-watch-uses-insecure-uri.
+  * Add patch for adding cct & gie manpages.
+  * Include all headers in libproj-dev.
+  * Add patch to fix manpage formatting.
+  * Add patch to fix manpage section for pj_init.
+  * Don't use libjs-jquery for Doxygen docs.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 02 Feb 2018 18:17:50 +0100
+
+proj (4.9.3-2) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 18 Jun 2017 11:43:18 +0200
+
+proj (4.9.3-2~exp1) experimental; urgency=medium
+
+  * Add patch to fix PJ_sch description, causes issues with PDL parser.
+  * Add patch to fix 'International' typo.
+  * Mark binary packages for Multi-Arch.
+    (closes: #857538)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 12 Mar 2017 11:11:39 +0100
+
+proj (4.9.3-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 03 Sep 2016 14:48:27 +0200
+
+proj (4.9.3-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+  * Update datumgrids-ch.shar to also include the latest Swiss CHENyx06
+    dataset, replacing chenyx06etrs.gsb with CHENYX06_etrs.{asc,gsb}.
+  * Update README.debian & README.source for datumgrid{,-ch}.shar changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 03 Sep 2016 10:50:20 +0200
+
+proj (4.9.3~rc3-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Add Kristian Evers to copyright holders.
+  * Update symbols for 4.9.3~rc3.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 29 Aug 2016 21:23:40 +0200
+
+proj (4.9.3~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Revert OSX cruft exclusion from repacked upstream tarball.
+    RC2 was generated on Ubuntu which doesn't contain the cruft.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 17 Aug 2016 10:27:41 +0200
+
+proj (4.9.3~rc1+ds-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Repack upstream tarball to exclude OSX cruft.
+  * Update copyright file, changes:
+    - Update copyright years for Charles Karney
+    - Add Thomas Knudsen, Drazen Tutic & Lovro Gradiser to copyright holders
+    - Add license & copyright for src/PJ_sch.c
+    - Change MIT license shortname to Expat
+    - Add license & copyright for src/PJ_patterson.c
+  * Drop patches, applied upstream.
+  * Rename library package for SONAME bump.
+  * Switch to headless variant for default-jdk dependency.
+  * Drop custom backup handling for autoreconf.
+  * Update symbols for 4.9.3~rc1.
+  * Drop dh_installchangelogs override, rely on defaults.
+  * Also install NEWS file in docs.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 16 Aug 2016 11:48:27 +0200
+
+proj (4.9.2-3) unstable; urgency=medium
+
+  * Update Homepage URL for move to GitHub.
+  * Bump Standards-Version to 3.9.8, no changes.
+  * Add patch by Alexis Bienvenüe to make nad2bin output reproducible.
+    (closes: #825088)
+  * Enable all hardening buildflags.
+  * Add patch to add a BUGS section to the manpages & update old URLs.
+    (closes: #809690)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 23 May 2016 22:34:18 +0200
+
+proj (4.9.2-2) unstable; urgency=medium
+
+  * Add patch to fix unmatched ')' in man page.
+    (closes: 807145)
+  * Update Vcs-Git URL to use HTTPS.
+  * Add patch to fix transformation of points outside datum shift grids.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 02 Feb 2016 20:00:35 +0100
+
+proj (4.9.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Don't use RC version for symbols.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 14 Sep 2015 08:26:15 +0200
+
+proj (4.9.2~rc3-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop SONAME patch, fixed upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 11 Sep 2015 01:41:44 +0200
+
+proj (4.9.2~rc2+1-1~exp1) experimental; urgency=medium
+
+  * Import proj-4.9.2RC2.tar.gz again (changed after first published).
+  * Add patch to revert the SONAME back to libproj.so.9.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 11 Sep 2015 00:30:33 +0200
+
+proj (4.9.2~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for 4.9.2 RC1.
+  * Don't ignore symbols changes for libproj.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 10 Sep 2015 16:53:12 +0200
+
+proj (4.9.2~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update copyright for new & changed files.
+  * Drop patches, fixed upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 08 Sep 2015 19:27:36 +0200
+
+proj (4.9.1-3) unstable; urgency=medium
+
+  * Add patches to install proj_def.dat again.
+  * Update Vcs-Browser URL to use HTTPS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 06 Sep 2015 19:46:01 +0200
+
+proj (4.9.1-2) unstable; urgency=medium
+
+  * Update upstream metadata for move to GitHub.
+  * Update copyright file, changes:
+    - Group copyright holders by license
+    - Drop .0 from GPL license shortname
+    - Update my email to use @debian.org address
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 19 Aug 2015 15:49:24 +0200
+
+proj (4.9.1-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+  * Use jquery.js from libjs-jquery instead of doxygen copy.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 03 May 2015 21:15:10 +0200
+
+proj (4.9.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Ignore test failures instead of failing the build.
+  * Drop patches applied upstream.
+  * Update package names for SONAME bump (0 -> 9).
+  * Update symbols for PROJ 4.9.0/4.9.1.
+  * Add substitution variable ${misc:Pre-Depends} for libproj.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 10 Mar 2015 20:57:14 +0100
+
+proj (4.9.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Set experimental branch in Vcs-Git and gbp.conf.
+  * Add upstream metadata.
+  * Update Vcs-Browser URL to use cgit instead of gitweb.
+  * Update my email to use @debian.org address.
+  * Refresh patches.
+  * Update copyright years in copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 21 Feb 2015 00:12:35 +0100
+
+proj (4.9.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Refresh patches.
+  * Update copyright file.
+  * Use minimal dh rules.
+  * Update install files for Multi-Arch paths.
+  * Bump Standards-Version to 3.9.6, no changes.
+  * Remove useless autogenerated doxygen files.
+  * Update datumgrids.shar with proj-datumgrid-1.6RC1, it now includes
+    "CTable2" format grid shift files that aren't system dependent,
+    but requires PROJ 4.8.0 or newer.
+  * Update datumgrids-ch.shar to also include the latest Swiss CHENyx06
+    dataset, adding CHENYX06a.{asc,gsb} and chenyx06etrs.gsb.
+  * Update nad2bin-data.patch to fix the build when the .lla files from
+    proj-datumgrid-1.5 are not present, and install system independent
+    files from proj-datumgrid-1.6 if they are present.
+  * Add patch to use the higher precision towgs84 values as specified by
+    Kadaster for EPSG 28991 & 28992.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sun, 05 Oct 2014 21:45:15 +0200
+
+proj (4.8.0-5) unstable; urgency=medium
+
+  * Add patch to install nad2bin produced data files in /usr/lib/proj.
+    (closes: 747862)
+  * Symlink moved data files from /usr/lib/proj to /usr/share/proj.
+  * Remove debian/TODO, nad2bin data files moved to /usr/lib/proj.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Tue, 20 May 2014 20:05:43 +0200
+
+proj (4.8.0-4) unstable; urgency=medium
+
+  * proj-data is arch any because of architecture specific datumgrids.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sat, 10 May 2014 11:30:06 +0200
+
+proj (4.8.0-3) unstable; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Update watch file, handle common problems.
+  * Don't install geodesic.h.
+  * Move from experimental to unstable.
+
+  [ Andreas Tille ]
+  * proj-data is arch all
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 09 May 2014 20:46:34 +0200
+
+proj (4.8.0-3~exp1) experimental; urgency=low
+
+  * Add myself to Uploaders.
+  * Also install geodesic.h.
+  * Restructure control file with cme, changes: canonical Vcs-* URLs.
+  * Add gbp.conf to use pristine-tar by default.
+  * Use dh-autoreconf for retooling.
+    (closes: #703006)
+  * Bump debhelper compatibility to 9.
+  * Use hardening build flags.
+  * Strip debian revision from symbols version.
+  * Empty dependency_libs in .la files.
+  * Add patches to fix man pages issues.
+  * Also build the Java Native Interface bindings.
+    (closes: #293803)
+  * Update copyright file using copyright-format 1.0.
+  * Bump Standards-Version to 3.9.5, changes: Vcs-* fields, symbols, copyright.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sat, 12 Apr 2014 21:02:49 +0200
+
+proj (4.8.0-2) unstable; urgency=low
+
+  * Added back projects.h to libproj-dev, it is still used by Saga and
+    possibly other programs.
+  * The old utility nad2nad is not more distributed.
+    (closes: #716123)
+  * Wrong annotation is fixed.
+    (closes: #661827)
+  * Fixed minor manpages errors and removed reference to the obsolete nad2nad.
+    Added a patch manpages for that, because it is still not fixed upstream.
+    (closes: #575364)
+  * A few past errors seem fixed upstream
+    (closes: #323305, #516874)
+    or not issues
+   (closes: #475533)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 29 Nov 2013 11:53:34 +0100
+
+proj (4.8.0-1) unstable; urgency=low
+
+  [ Jerome Villeneuve Larouche ]
+  * New upstream release
+  * Modified libproj-dev.install to remove nad_list.h and projects.h
+  * Modified proj-bin.install to remove nad2nad
+  * Modified proj-bin.manpages to remove nad2nad man
+  * Added symbols for libproj0
+
+  [ Francesco Paolo Lovergine ]
+  * Properly merged with current git master and sid version 4.7.0-2.
+  * Removed proj transitional package and obsolete conflicts/replaces against
+    series 4.6 and older.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 25 Nov 2013 15:11:25 +0100
+
+proj (4.7.0-2) unstable; urgency=medium
+
+  * Moved to source format 3.0 with quilt support.
+  * Pushed policy to 3.9.3. No changes required.
+  * Alioth repository moved to git and Vcs-* fields updated.
+  * Dropped Peter S Galbraith as uploader.
+  * Dropped transitional proj package.
+  * Now suggesting proj-ps-doc in proj-bin.
+    (closes: #661662)
+  * Home page is now fixed with current OsGeo one.
+    (closes: #597587)
+  * Fixed proj-data description.
+    (closes: #613514)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 23 May 2012 14:16:42 +0200
+
+proj (4.7.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Datum grids files updated to version 1.5.
+    (closes: #548297)
+  * Removed manpages.dpatch, applied upstream.
+  * Generalized libproj0.install file.
+  * Policy changed to 3.8.3, without futher changes.
+  * Minor change to nad2bin.1 man page.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 05 Oct 2009 16:28:55 +0200
+
+proj (4.6.1-5) unstable; urgency=high
+
+  * Changed proj-data in an arch-dependent package, because one half of the files
+    are non endianess-aware and generated at build time on the host. That
+    could possibly change in the future, so better still having a single package.
+    (closes: #530818)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 28 May 2009 21:10:23 +0200
+
+proj (4.6.1-4) unstable; urgency=low
+
+  * Added Replaces/Conflicts for old proj into proj-data and changed revision
+    numbers.
+    (closes: #521402)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 27 Mar 2009 12:59:57 +0100
+
+proj (4.6.1-3) unstable; urgency=low
+
+  * Sigh, dh_clean and dh_prep called in the wrong targets caused missing
+    indep binaries in .changes.
+    (closes: #521100)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 24 Mar 2009 22:09:24 +0100
+
+proj (4.6.1-2) unstable; urgency=low
+
+  * Reordered dh_* rules.
+  * Now moving to a usual set of packages, with libraries, tools and
+    dev files split in different packages. The old proj package
+    is now a pure transitional meta-package, to be removed after Squeeze
+    release.
+  * Removed dummy postinst/postrm/shlibs in repository, because managed
+    by dh_makeshlibs.
+  * Fixed debian/rules targets to be idempotent.
+  * Other minor clenaups in debian/rules, such as .PHONY.
+  * Added Swiss datugrids file, taken from PROJ4 home page.
+  * Added useful Replaces/Conflicts to avoid problems in upgrading.
+  * Datum grids are now installed in a separate proj-data package.
+  * Suitable sections chosen for all packages.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sun, 15 Mar 2009 21:30:01 +0100
+
+proj (4.6.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Added Homepage and Vcs-* fields into debian/control.
+  * Policy bumped to 3.8.0 (no changes).
+  * Added US NAD83/NAD27, Canadian and French datum grids as distributed
+    in http://download.osgeo.org/proj/proj-datumgrid-1.4.zip
+    (closes: #458369)
+  * Added dpatch support.
+  * [PATCH] manpages fixes manpages known typos.
+    (closes: #407399, #407400, #407401, #407402)
+  * Added a README.sources with comments about datum grids.
+  * Moved to level debhelper level 7.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 26 Nov 2008 17:49:22 +0100
+
+proj (4.6.0-2) unstable; urgency=low
+
+  * proj.3 link moved in the right directory.
+  * Fixing manpages in debian/rules to avoid too narrow rendering.
+    (closes: #495995)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 28 Aug 2008 19:31:20 +0200
+
+proj (4.6.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Peter Galbraith <psg@dnydns.org>  Sat, 21 Dec 2007 16:46:09 -0500
+
+proj (4.5.0-2) unstable; urgency=low
+
+  * Releasing for unstable.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sun,  8 Apr 2007 11:23:57 +0200
+
+proj (4.5.0-1) experimental; urgency=low
+
+  * New upstream release.
+  * Moved to DebianGis Team maintainership, with Peter consent.
+  * Added Peter and me as Uploaders.
+  * Added a debian/watch file.
+  * Moved to debhelper level 5.
+  * Policy bumped to 3.7.2 without changes.
+  * Now using dh_link instead of manual sym links
+  * Now using makeshlibs again with default postrm/postinst
+  * Added a packaging TODO memo in debian/ dir.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon,  2 Apr 2007 00:50:09 +0200
+
+proj (4.4.9d-2) unstable; urgency=low
+
+  * Bug fix: "proj(GNU/k*BSD): FTBFS: out of date
+    config.sub/config.guess", thanks to Aurelien Jarno (Closes: #340013).
+    I copied the files from the autotools-dev package and asked upstream
+    to update the files as well.
+
+ -- Peter S Galbraith <psg@debian.org>  Mon, 21 Nov 2005 20:36:24 -0500
+
+proj (4.4.9d-1) unstable; urgency=low
+
+  * Add built-in datum conversion support into upstream version 4.4.9
+    Thanks to Stephan Holl (Closes: #339470).
+
+ -- Peter S Galbraith <psg@debian.org>  Wed, 16 Nov 2005 11:23:11 -0500
+
+proj (4.4.9-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Peter S Galbraith <psg@debian.org>  Sat,  6 Nov 2004 19:44:53 -0500
+
+proj (4.4.8-3) unstable; urgency=low
+
+  * Bug fix: "proj_4.4.8-2(mipsel/unstable): configure built with broken
+    libtool.m4", thanks to Ryan Murray for reporting and specifying how to
+    fix it.  I ran 'autoreconf --force' to rebuild the configure file
+    (Closes: #260683).
+
+ -- Peter S Galbraith <psg@debian.org>  Wed, 21 Jul 2004 22:57:32 -0400
+
+proj (4.4.8-2) unstable; urgency=low
+
+  * Use new /usr/share/misc/config.guess and config.sub instead of using
+    patch from 4.4.7-3 as in 4.4.8-1, which led to wrong library so names
+    (lacking the .so part).
+
+ -- Peter S Galbraith <psg@debian.org>  Sat, 17 Jul 2004 12:16:26 -0400
+
+proj (4.4.8-1) unstable; urgency=low
+
+  * New upstream release.  Bug fix: "proj: [wish] new version of PROJ.4
+    available", thanks to Hamish for reminding me (Closes: #255488).
+  * Update to Standards-Version 3.6.1 without changes.
+
+ -- Peter S Galbraith <psg@debian.org>  Tue, 13 Jul 2004 20:56:33 -0400
+
+proj (4.4.7-3) unstable; urgency=low
+
+  * autoreconf with libtool from unstable so that package may build on
+    mips (closes: #188684)
+
+ -- Peter S Galbraith <psg@debian.org>  Fri,  2 May 2003 22:56:05 -0400
+
+proj (4.4.7-2) unstable; urgency=low
+
+  * Updated README.Debian and nad2bin mane page concerning the creation of
+    datum conversion data files.
+  * Tweak geod man page (closes: #181998)
+
+ -- Peter S Galbraith <psg@debian.org>  Tue,  8 Apr 2003 22:44:39 -0400
+
+proj (4.4.7-1) unstable; urgency=low
+
+  * New upstream release
+  - Updated config.sub and config.status. (closes: #186586)
+  - Removed the -V flag from the cs2cs.1 man page. (closes: #162331)
+  - Corrected cs2cs to honour -f for z values (closes: #169056)
+  * Upgrade to Standards-Version 3.5.9, but have not yet implemented
+    parsing of DEB_BUILD_OPTIONS for optimization.
+
+ -- Peter S Galbraith <psg@debian.org>  Mon, 31 Mar 2003 13:43:02 -0500
+
+proj (4.4.6-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Peter S Galbraith <psg@debian.org>  Wed, 19 Mar 2003 14:26:17 -0500
+
+proj (4.4.5-1) unstable; urgency=low
+
+  * New upstream version (Bug fix release).
+  * debian/control Fix minor spelling mistake (closes: #125272)
+  * Update to Standards-Version 3.5.6, parse DEB_BUILD_OPTIONS for debug.
+  * debian/postrm: Add debhelper token (bug fix!).
+
+ -- Peter S Galbraith <psg@debian.org>  Fri, 11 Jan 2002 10:27:12 -0500
+
+proj (4.4.4-1) unstable; urgency=low
+
+  * New upstream release.
+  * Undo patches to config.guess and config.sub from 4.4.3-2 since this
+    was folded-in upstream.
+  * debian/postinst: Run ldconfig on configure only.
+  * debian/postrm (new file): Run ldconfig on remove.
+
+ -- Peter S Galbraith <psg@debian.org>  Mon, 17 Sep 2001 10:10:34 -0400
+
+proj (4.4.3-2) unstable; urgency=low
+
+  * Update config.guess and config.sub files from
+    http://subversions.gnu.org/cgi-bin/cvsweb/config (closes: #97374).
+    This was done in upstream CVS in response to this bug, but I shouldn't
+    wait any longer to update the package since woody freeze is starting
+    soon, and we want the archive sources to match the binary used on
+    PARISC.
+  * debian/control: change priority to extra (to match override file).
+
+ -- Peter S Galbraith <psg@debian.org>  Tue, 10 Jul 2001 16:02:47 -0400
+
+proj (4.4.3-1) unstable; urgency=low
+
+  * New upstream release.
+  * Change to section science.
+  * Includes cs2cs man page.
+
+ -- Peter S Galbraith <psg@debian.org>  Fri, 20 Apr 2001 16:24:21 -0400
+
+proj (4.4.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Peter S Galbraith <psg@debian.org>  Fri, 22 Sep 2000 13:05:35 -0400
+
+proj (4.4.1-2) unstable; urgency=low
+
+  * Fixed rules file for doing `make distclean' when no Makefile exists yet.
+    closes: #69847: freshly unpacked source cannot be cleaned
+
+ -- Peter S Galbraith <psg@debian.org>  Thu, 24 Aug 2000 09:34:06 -0400
+
+proj (4.4.1-1) unstable; urgency=low
+
+  * New upstream version (builds shared library now).
+  * Update to Standards-Version 3.1.1, adding Build-Depends.
+  * closes: #69380
+
+ -- Peter S Galbraith <psg@debian.org>  Fri, 18 Aug 2000 11:16:42 -0400
+
+proj (4.3.3-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Peter S Galbraith <psg@debian.org>  Sun, 24 Oct 1999 14:13:26 -0400

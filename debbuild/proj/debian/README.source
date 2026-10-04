@@ -1,0 +1,48 @@
+Debian Proj upstream source notes
+---------------------------------
+
+PGSTY keeps the datumgrid shell archives and libproj25.symbols outside
+the recipe repository.
+The byte-identical inputs are extracted during setup from the official PGDG
+proj_9.8.1-1.pgdg24.04+1.debian.tar.xz archive in ../SOURCES. Its SHA-256 is
+4a0b97c3d6c8b4aaa451593813ffda4456648868fe4bb40c3f9b4b96a7edba2c.
+The source URL and checksum are also recorded in bin/postgis-sources.json.
+
+The Debian proj package comes with both proj upstream and additional
+datum grids (http://download.osgeo.org/proj/proj-datumgrid-1.4.zip at
+the time of this file) in a single package. A note about datum grids you can
+find in nad/ directory and datumshifts.shar archive is mandatory.
+All those data are public domain, taken and collected from various
+US/Canada, France, Switzerland and New Zealand public domain resources.
+
+Most of them are available in ASCII form, and some use a NTv2 binary 
+format. The NTv2 format is a documented format used by some tools freely
+available by various sources: some of them are binary-only, other
+are available in source form. As references about data origins consider
+the following:
+
+Australia: http://www.icsm.gov.au/icsm/gda/gdatm/index.html
+France: http://www.stjohnspoint.co.uk/gis/france.htm
+Canada: http://www.geod.nrcan.gc.ca/tools-outils/ntv2_e.php
+Germany: http://crs.bkg.bund.de/crseu/crs/descrtrans/BeTA/de_dhdn2etrs_beta.php
+UK: http://lists.maptools.org/pipermail/proj/2006-November/002658.html
+New Zealand: http://www.linz.govt.nz/geodetic/software-downloads/index.aspx
+Switzerland: http://www.swisstopo.admin.ch/internet/swisstopo/en/home/products/software/products/chenyx06.html
+
+-- Francesco Paolo Lovergine <frankie@debian.org>  Wed Nov 26 10:52:29 CET 2008
+
+Since proj (4.9.0~rc2-1~exp1) datumgrids.shar has been using the "CTable2"
+format grid shift files that aren't system dependent, but require PROJ 4.8.0
+or newer. The files are available upstream in proj-datumgrid-1.6RC1.zip.
+
+datumgrids-ch.shar was also updated to include the latest Swiss CHENyx06
+dataset, adding CHENYX06a.{asc,gsb} and CHENYX06_etrs.{asc,gsb}. Those files
+were downloaded from https://shop.swisstopo.admin.ch/en/products/geo_software/GIS_info
+
+CHENYX06a.{asc,gsb} were provided by the 'NTv2 grid CH1903/LV03 -> CH1903+/LV95'
+download: http://geodesy.geo.admin.ch/shop/files/chenyx06_ntv2.zip
+
+CHENYX06_etrs.{asc,gsb} were provided by the 'NTv2 grid CH1903/LV03 -> ETRF93/ETRS89'
+download: http://geodesy.geo.admin.ch/shop/files/chenyx06_etrs_ntv2.zip
+
+-- Bas Couwenberg <sebastic@debian.org>  Sat, 03 Sep 2016 10:29:12 +0200

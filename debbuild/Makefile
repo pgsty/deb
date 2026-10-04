@@ -1252,4 +1252,7 @@ cgal:
 geos:
 	$(MAKE) -C geos
 
-.PHONY: cgal geos
+proj:
+	$(MAKE) -C proj
+
+.PHONY: cgal geos proj

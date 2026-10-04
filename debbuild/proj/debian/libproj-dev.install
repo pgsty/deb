@@ -1,0 +1,4 @@
+usr/lib/*/cmake
+usr/lib/*/libproj.so
+usr/lib/*/pkgconfig
+usr/include

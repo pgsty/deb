@@ -1,0 +1,117 @@
+proj for Debian
+---------------
+
+This is unusual, but let me provide some QuickStart on using this stuff.
+
+proj
+~~~~
+I use `proj' all the time to draw maps in various projections using
+graphing tools that cannot themselves handle fancy map projections
+by piping all my data (coastline, etc) through proj.
+
+For example, drawing Eastern Canada in Lambert Conformal Conic, I'd use:
+
+   proj +proj=lcc +ellps=clrk66 +lat_o=48.5 +lon_0="-62.5" -m 1:111120 -f '%.5f' -t9
+invproj +proj=lcc +ellps=clrk66 +lat_o=48.5 +lon_0="-62.5" -m 1:111120 -f '%.5f'
+  -r : reverses the order of the expected input from longitude-latitude or
+       x-y to latitude-longitude or y-x.
+
+  -f : Format is a printf format string to control the form of the output
+       values.
+
+  -m : scale
+
+  -t : specifies a character employed as the first character to denote a
+       control line to be passed through without processing.  This option
+       applicable to ascii input only.  (# is the default value).
+       I use this to skip over the missing data parameter.
+
+I pass Lat&Lon data segment to proj like so:
+
+-65   49
+-65.1 49.1
+99    99
+-66   49
+-66   49.1
+
+using 99 in this example to separate segments (missing data).  After piping
+the above through proj, I get :
+
+$ proj +proj=lcc +lat_o=48.5 +lon_0="-62.5" -m 1:111120 +ellps=clrk66 -f '%.5f' l.tmp
+-1.66314        51.62596
+-1.72676        51.72892
+*       *
+-2.32812        51.64792
+-2.32423        51.74899
+
+
+So, I might tell my graph-making package to use 99 as missing data
+parameter, and tell proj "-t9" (the first character of my missing value
+parameter) and get:
+
+$ proj +proj=lcc +lat_o=48.5 +lon_0="-62.5" -m 1:111120 -t9 ellps=clrk66 -f '%.5f' l.tmp
+-1.66314        51.62596
+-1.72676        51.72892
+99    99
+-2.32812        51.64792
+-2.32423        51.74899
+
+
+geod
+~~~~
+geod is useful for calculating a latitude & longitude given another
+position, along with distance and bearing.  The man page has a good
+example.  It's also useful to calculate the distance and bearing between two
+locations.  Let's verify that one nautical mile is (approx) equal to one
+minute in latitude (between 42 degN and 42 degN 1 minute):
+
+$ geod -I +ellps=clrk66 +units=kmi <<EOF
+42d00 72d00 42d01 72d00
+42 72 42.016666 72
+EOF
+
+It outputs two lines, showing that it's pretty liberal about input data
+format:
+
+ 0d      180d    1.000
+ 0d      180d    1.000
+
+So 1 nm at 180deg bearing.
+
+nad2nad and cs2cs:
+~~~~~~~~~~~~~~~~~
+The Debian proj package includes built-in datum conversion.
+
+nad2nad is a filter to convert data between North America Datum 1927
+(NAD27) and North American Datum 1983.  nad2nad can optionally process both
+State Plane Coordinate System (SPCS) and Universal Transverse Mercator
+(UTM) grid data as well as geographic data for both input and output.
+cs2cs is more general.  It performs transformation between the source and
+destination cartographic coordinate system on a set of input points.  The
+coordinate system transformation can include translation between projected
+and geographic coordinates as well as the application of datum shifts.
+
+Test nad2nad with the following example:
+
+$ nad2nad -i 83 -o 27 -r conus << EOF
+71d14'58.27"W   44d20'15.227"N
+EOF
+
+It should produce: 71d15'W 44d20'15"N
+
+While the nad2nad program can be used in some cases, the cs2cs is now the
+preferred mechanism. The following example demonstrates using the default
+shift parameters for NAD27 to NAD83:
+
+$ cs2cs +proj=latlong +datum=NAD27 +to +proj=latlong +datum=NAD83 
+-117 30
+
+producing:
+
+117d0'2.901"W   30d0'0.407"N 0.00
+
+See https://proj.org/faq.html
+
+Peter S Galbraith <psg@debian.org>
+Francesco P Lovergine <frankie@debian.org>
+Updated May 2009

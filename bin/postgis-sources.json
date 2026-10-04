@@ -17,6 +17,28 @@
           "deb_input": true
         }
       ]
+    },
+    {
+      "package": "proj98",
+      "srpm_url": "https://dnf-srpms.postgresql.org/srpms/common/redhat/rhel-9-x86_64/proj98-9.8.1-1PGDG.rhel9.8.src.rpm",
+      "srpm_sha256": "e3ae1425ea09030134f6e03c97be50b6e171fb937dc20ea723a27affebff6875",
+      "files": [
+        {
+          "name": "proj-9.8.1.tar.gz",
+          "sha256": "af5b731c145c1d13c4e3b4eeb7d167e94e845e440f71e3496b4ed8dae0291960",
+          "size": 5981846,
+          "archive_roots": [
+            "proj-9.8.1"
+          ],
+          "deb_input": true
+        },
+        {
+          "name": "proj98-pgdg-libs.conf",
+          "sha256": "2dc462d52efc4f514cf1e1f6f1f3feff8ab9e0f27d1e3f280d8c9453eba124fd",
+          "size": 19,
+          "deb_input": false
+        }
+      ]
     }
   ],
   "debian_packaging": [
@@ -30,6 +52,18 @@
       ],
       "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/g/geos/geos_3.14.1-2.pgdg24.04%2B1.debian.tar.xz",
       "sha256": "7a41e68ce6679c15271ee3fcc3cb745c7271c8cc437eacbd3ca3487ab6c4e766"
+    },
+    {
+      "package": "proj",
+      "archive": "proj_9.8.1-1.pgdg24.04+1.debian.tar.xz",
+      "deb_input": true,
+      "members": [
+        "debian/datumgrids.shar",
+        "debian/datumgrids-ch.shar",
+        "debian/libproj25.symbols"
+      ],
+      "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/p/proj/proj_9.8.1-1.pgdg24.04%2B1.debian.tar.xz",
+      "sha256": "4a0b97c3d6c8b4aaa451593813ffda4456648868fe4bb40c3f9b4b96a7edba2c"
     }
   ],
   "additional_sources": [],

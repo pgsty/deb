@@ -1,0 +1,53 @@
+#!/usr/bin/make -f
+# Made with the aid of dh_make, by Craig Small
+# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
+# Some lines taken from debmake, by Cristoph Lameter.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+# Enable hardening build flags
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+DEB_HOST_MULTIARCH?=$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+include /usr/share/dpkg/pkg-info.mk
+
+UPSTREAM_VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed -e 's/\+.*//')
+
+datumgrids: datumgrids-stamp
+datumgrids-stamp:
+	TZ=UTC unshar -c -d $(CURDIR)/data $(CURDIR)/debian/datumgrids.shar
+	TZ=UTC unshar -c -d $(CURDIR)/data $(CURDIR)/debian/datumgrids-ch.shar
+	touch $@
+
+%:
+	if [ "$@" != "datumgrids" -a "$@" != "datumgrids-stamp" ]; then \
+		dh $@ ; \
+	fi
+
+execute_before_dh_auto_clean:
+	( cd $(CURDIR)/data && cat $(CURDIR)/debian/datumgrids.list $(CURDIR)/debian/datumgrids-ch.list | xargs rm -f )
+
+override_dh_auto_configure: datumgrids
+	dh_auto_configure -- -DCMAKE_BUILD_RPATH_USE_ORIGIN=ON \
+	                     -DTESTING_USE_NETWORK=OFF \
+	                     -DRUN_NETWORK_DEPENDENT_TESTS=OFF
+
+override_dh_auto_test:
+	dh_auto_test
+
+execute_after_dh_auto_install:
+	# Explicitly remove files
+	$(RM) $(CURDIR)/debian/*/usr/share/doc/proj/AUTHORS
+	$(RM) $(CURDIR)/debian/*/usr/share/doc/proj/COPYING
+	$(RM) $(CURDIR)/debian/*/usr/share/doc/proj/NEWS
+
+override_dh_installdocs:
+	dh_installdocs -A AUTHORS.md NEWS.md README.md
+
+override_dh_makeshlibs:
+	dh_makeshlibs -- -c0 -v$(UPSTREAM_VERSION)
