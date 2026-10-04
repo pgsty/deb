@@ -3,7 +3,7 @@ all: pre build
 export DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
-VERSION := 2.30.1
+VERSION := 2.30.2
 TARBALL := timescaledb-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 
