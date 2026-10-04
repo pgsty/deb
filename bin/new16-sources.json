@@ -217,5 +217,33 @@
     },
     "patches": [],
     "kind": "pgxs"
+  },
+  {
+    "extension": "istore",
+    "package": "istore",
+    "deb_package": "istore",
+    "version": "0.1.12",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "istore-0.1.12.tar.gz",
+      "sha256": "1c770a799e26527362c316ce1c360f54d2674ba9f24047a00145819398442242",
+      "url": "https://api.pgxn.org/dist/istore/0.1.12/istore-0.1.12.zip",
+      "ref": "0.1.12",
+      "source_kind": "pgxn-stable",
+      "repository": "adjust/istore"
+    },
+    "patches": [
+      {
+        "name": "istore-0.1.12-pg16.patch",
+        "sha256": "9e5129766cd9206bb3c0d2ef1ff76b79d0ef14834762eceecc67c6e0912a391e"
+      }
+    ],
+    "kind": "pgxs"
   }
 ]

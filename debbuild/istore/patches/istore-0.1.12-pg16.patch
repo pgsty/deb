@@ -1,0 +1,34 @@
+--- a/src/istore.h
++++ b/src/istore.h
+@@ -2,6 +2,9 @@
+ #define ISTORE_H
+ 
+ #include "postgres.h"
++#if PG_VERSION_NUM >= 160000
++#include "varatt.h"
++#endif
+ 
+ #include "avl.h"
+ #include "fmgr.h"
+--- a/src/istore.c
++++ b/src/istore.c
+@@ -763,7 +763,7 @@
+         tuple      = heap_form_tuple(funcctx->tuple_desc, dvalues, nulls);
+         res        = HeapTupleGetDatum(tuple);
+ 
+-        SRF_RETURN_NEXT(funcctx, PointerGetDatum(res));
++        SRF_RETURN_NEXT(funcctx, res);
+     }
+ 
+     SRF_RETURN_DONE(funcctx);
+--- a/src/bigistore.c
++++ b/src/bigistore.c
+@@ -762,7 +762,7 @@
+         tuple      = heap_form_tuple(funcctx->tuple_desc, dvalues, nulls);
+         res        = HeapTupleGetDatum(tuple);
+ 
+-        SRF_RETURN_NEXT(funcctx, PointerGetDatum(res));
++        SRF_RETURN_NEXT(funcctx, res);
+     }
+ 
+     SRF_RETURN_DONE(funcctx);

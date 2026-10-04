@@ -1,0 +1,14 @@
+Source: istore
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/adjust/istore
+
+Package: postgresql-PGVERSION-istore
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Integer key/value types and aggregates for PostgreSQL
+ Integer key/value types and aggregates for PostgreSQL.

@@ -1285,7 +1285,7 @@ postgis:
 
 .PHONY: vgram pg_money edtf_postgres libx509pq \
         pg_statvfs pg_json_diff pgtelemetry pgexporter_ext \
-        plphp
+        plphp istore
 
 vgram:
 	$(MAKE) -C vgram
@@ -1313,3 +1313,6 @@ pgexporter_ext:
 
 plphp:
 	$(MAKE) -C plphp
+
+istore:
+	$(MAKE) -C istore
