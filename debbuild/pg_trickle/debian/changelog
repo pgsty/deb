@@ -1,3 +1,9 @@
+pg-trickle (0.108.1-1PGSTY) unstable; urgency=medium
+
+  * Update to 0.108.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 pg-trickle (0.108.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.108.0 with pgrx pinned to 0.19.2.
