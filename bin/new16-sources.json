@@ -361,5 +361,28 @@
     "patches": [],
     "kind": "pgrx",
     "pgrx": "0.18.1"
+  },
+  {
+    "extension": "colnames",
+    "package": "colnames",
+    "deb_package": "colnames",
+    "version": "1.7.1",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "colnames-1.7.1.tar.gz",
+      "sha256": "e62a0edfc21d56aaa58235c49ee7579695c4639518569e4df864aef0a09787dc",
+      "url": "https://codeload.github.com/theory/colnames/tar.gz/refs/tags/v1.7.1",
+      "ref": "v1.7.1",
+      "source_kind": "release-tag",
+      "repository": "theory/colnames"
+    },
+    "patches": [],
+    "kind": "pgxs"
   }
 ]

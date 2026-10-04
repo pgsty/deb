@@ -1,0 +1,5 @@
+colnames (1.7.1-1PGSTY) unstable; urgency=medium
+
+  * Initial package of upstream release 1.7.1, extension version 1.7.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 21:00:00 +0800

@@ -1,0 +1,15 @@
+Source: colnames
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/theory/colnames
+
+Package: postgresql-PGVERSION-colnames
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Return the column names of a PostgreSQL record
+ colnames(record) returns the column names of a composite value as a name array.
+ It supports generic triggers and dynamic SQL without additional dependencies.
