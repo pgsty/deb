@@ -1,7 +1,7 @@
 all: setup build move
 .NOTPARALLEL:
 
-TARBALL := jev-0.2.0.tar.gz
+TARBALL := jev-0.2.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

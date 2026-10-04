@@ -10,8 +10,8 @@ Homepage: https://github.com/realZachi/pg-jev
 Package: postgresql-PGVERSION-jev
 Architecture: all
 Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-plpython3-PGVERSION
-Description: Natural-language row predicates using the TypeSafe API
+Description: Natural-language row predicates using a Jev-compatible API
  jev filters, ranks and classifies PostgreSQL rows through a remote
- TypeSafe model API. It requires plpython3u and an API key; row contents
- are sent to the configured external service. This package contains SQL
+ Jev-compatible model API. It requires plpython3u; the TypeSafe provider
+ also requires an API key. Row contents are sent to the configured service. This package contains SQL
  and embedded Python code only, with no native shared library.
