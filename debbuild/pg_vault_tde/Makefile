@@ -1,7 +1,9 @@
 all: setup build move
 
-TARBALL := pg_vault_tde-1.7.1.tar.gz
+TARBALL := pg_vault_tde-1.7.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+SOURCE_PATCH := patches/pg-vault-tde-1.7.2-debug.patch
+PG_VERSIONS := 17 18
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
@@ -12,7 +14,9 @@ setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	(cd $(BUILD_DIR) && patch --fuzz=0 --batch --forward -p1 < ../$(SOURCE_PATCH))
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 

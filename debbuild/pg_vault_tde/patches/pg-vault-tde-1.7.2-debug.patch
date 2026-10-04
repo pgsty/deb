@@ -1,0 +1,10 @@
+--- a/Makefile
++++ b/Makefile
+@@ -377,6 +377,7 @@
+ endif
+ 
+ PG_DUMP_TDE_CFLAGS = \
++	$(filter-out -fPIC,$(CFLAGS)) \
+ 	$(TDE_OPT_CFLAGS) \
+ 	-Wall -Wextra -std=c99 \
+ 	-Wno-unused-parameter \
