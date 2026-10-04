@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -eu
+
+export LANG=C.UTF-8
+unset LC_ALL LANGUAGE
+
+ARCH="$(dpkg-architecture -qDEB_BUILD_ARCH)"
+
+case $ARCH in
+	s390x|alpha|ppc64|sparc64)
+		echo "Ignoring test failures on problematic architectures"
+		TEST_FAIL_EXITCODE=77 ;;
+	*)
+		TEST_FAIL_EXITCODE=1 ;;
+esac
+
+for v in $(pg_buildext installed-versions); do
+	echo "### PostgreSQL $v autopkgtest ###"
+	pg_virtualenv -v $v sh -ex <<-'EOF' || exit $TEST_FAIL_EXITCODE
+	# test extension (fuzzystrmatch is part of postgresql-contrib and is needed by postgis_tiger_geocoder)
+	for ext in postgis postgis_raster postgis_sfcgal fuzzystrmatch postgis_tiger_geocoder postgis_topology address_standardizer address_standardizer_data_us; do
+		psql -Xc "CREATE EXTENSION $ext"
+	done
+
+	psql -AXqt -vVERBOSITY=terse -vregdir=regress < regress/core/regress.sql > regress_expected 2>&1
+	diff -u regress/core/regress_expected regress_expected
+	EOF
+done
+

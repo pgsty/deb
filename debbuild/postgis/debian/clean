@@ -1,0 +1,6 @@
+extensions/address_standardizer/*.bc
+extensions/address_standardizer/*.o
+extensions/address_standardizer/*.so
+
+# created by debian/tests/test-extension-creation
+regress_expected

@@ -113,6 +113,34 @@
       ]
     },
     {
+      "package": "postgis",
+      "srpm_url": "https://dnf-srpms.postgresql.org/srpms/18/redhat/rhel-9-x86_64/postgis36_18-3.6.4-1PGDG.rhel9.8.src.rpm",
+      "srpm_sha256": "3f594564a633413296057ecede18c638b2532bcde52d2540e2775cfa42038d5f",
+      "files": [
+        {
+          "name": "postgis-3.6.4-en.pdf",
+          "sha256": "5cdd9deceb102762501a5f562d9cdb0ab9a39f37ec169c2a1100b8fac0cb551a",
+          "size": 5596441,
+          "deb_input": true
+        },
+        {
+          "name": "postgis-3.6.4.tar.gz",
+          "sha256": "ed8dc6679f1e06f7b113592b04cde2a7e00f1b1e681294c8ca2204058990cec6",
+          "size": 16289296,
+          "archive_roots": [
+            "postgis-3.6.4"
+          ],
+          "deb_input": true
+        },
+        {
+          "name": "postgis36-filter-requires-perl-Pg.sh",
+          "sha256": "859c4f19b3a9db9cd555d5dfc498a21934f2b86dd4494b0754705e3f3837c5a3",
+          "size": 56,
+          "deb_input": false
+        }
+      ]
+    },
+    {
       "package": "proj98",
       "srpm_url": "https://dnf-srpms.postgresql.org/srpms/common/redhat/rhel-9-x86_64/proj98-9.8.1-1PGDG.rhel9.8.src.rpm",
       "srpm_sha256": "e3ae1425ea09030134f6e03c97be50b6e171fb937dc20ea723a27affebff6875",
@@ -152,6 +180,11 @@
     }
   ],
   "debian_packaging": [
+    {
+      "package": "postgis",
+      "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/p/postgis/postgis_3.6.4%2Bdfsg-2.pgdg24.04%2B2.debian.tar.xz",
+      "sha256": "a98ba7be0b8e86a4fa053f0328ff235b7427d2ea35bbac3b2b7cbf1cfe689f5d"
+    },
     {
       "package": "gdal",
       "archive": "gdal_3.13.3+dfsg-1.pgdg24.04+1.debian.tar.xz",

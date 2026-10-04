@@ -1,0 +1,8 @@
+README.postgis usr/share/doc/postgis/
+usr/bin/pgsql2shp
+usr/bin/raster2pgsql
+usr/bin/shp2pgsql
+usr/bin/pgtopo_export
+usr/bin/pgtopo_import
+usr/bin/postgis*
+usr/share/man

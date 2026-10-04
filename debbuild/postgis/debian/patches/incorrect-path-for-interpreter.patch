@@ -1,0 +1,12 @@
+Description: Fix incorrect-path-for-interpreter issue.
+Author: Bas Couwenberg <sebastic@debian.org>
+Forwarded: not-needed
+
+--- a/utils/postgis_restore.pl.in
++++ b/utils/postgis_restore.pl.in
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env perl
++#!/usr/bin/perl
+ 
+ #
+ # PostGIS - Spatial Types for PostgreSQL

@@ -1,0 +1,102 @@
+Debian README for Postgis
+=========================
+
+These are the PostGIS packages for Debian. PostGIS is split into
+multiple Debian packages:
+
+postgresql-N.M-postgis-X.Y
+  This is the PostGIS module for the PostgreSQL server itself.  It
+  contains the library which is loaded by the server (postgis.so), as
+  of PostGIS version X.Y and for PostgreSQL version N.M.
+
+  Once the extension is created for a database, this package usually
+  is enough to keep PostGIS running.  An upgrade may provide a newer
+  PostGIS version of this package that can be installed in parallel.
+  Therefore not touching existing installations.  You'll need to run
+  the appropriate SQL scripts to upgrade your databases to use a newer
+  PostGIS version, though.  Of course, this does not apply to patch
+  releases or bug fixes.
+
+
+postgresql-N.M-postgis-X.Y-scripts
+  This package provides necessary scripts for creating or upgrading
+  the PostGIS extension in a given database, the extension's control
+  file, and various other SQL scripts.
+
+  To install the PostGIS extension as well as its topology extension
+  in a specific database, you need to run the following SQL commands
+  from your database prompt:
+
+    CREATE EXTENSION postgis;
+    CREATE EXTENSION postgis_topology;        -- optional
+
+  PostGIS also ships a decoder for TIGER data in a separate extension
+  that can additionally be installed as follows:
+
+    CREATE EXTENSION fuzzystrmatch;
+    CREATE EXTENSION postgis_tiger_decoder;
+
+
+postgis
+  This package contains the user-oriented PostGIS utilities for
+  loading data into and pulling data out of a PostGIS-enabled
+  PostgreSQL database.  These utilities are: pgsql2shp, shp2pgsql,
+  and raster2pgsql.  This package can be installed independent of the
+  extension and can well be used on client machines.
+
+
+postgis-gui
+  This package contains the PostGIS GUI utility: shp2pgsql-gui.
+  The GUI has been moved to its own package to not require installation
+  on the GUI dependencies on headless servers which only run the command
+  line utilities.
+
+
+libpostgis-java
+  This package used to be built from the 'postgis' source, but is no
+  longer shipped with it (since postgis-2.2.0~rc1). The separate
+  postgis-java source package now builds libpostgis-java.
+
+
+Upgrading existing spatial databases
+====================================
+
+Upgrading existing spatial databases can be tricky as it requires
+replacement or introduction of new PostGIS object definitions.
+
+Unfortunately not all definitions can be easily replaced in
+a live database, so sometimes your best bet is a dump/reload
+process.
+
+PostGIS provides a SOFT UPGRADE procedure for minor or bugfix
+releases, and an HARD UPGRADE procedure for major releases.
+
+--- SOFT UPGRADE ---
+
+Nowadays, soft upgrades are trivially handled by the Postgres
+extension mechanism.  For the manual procedure for Postgres versions
+before 9.1, please refer to the PostGIS documentation.  Using
+extensions, you simply need to run the following commands per database
+to upgrade to a new version of the extensions:
+
+  ALTER EXTENSION postgis UPDATE TO "2.2.2";
+  ALTER EXTENSION postgis_topology UPDATE TO "2.2.2";
+
+If a soft upgrade is not possible the SQL command should emit an error
+and you need to perform a HARD UPGRADE, instead.
+
+--- HARD UPGRADE ---
+
+Hard upgrades are required when object definitions have changed,
+aggregates have changed or been added, and when the underlying
+PostgreSQL database itself has undergone a major update.  The
+procedure basically consists of a PostgreSQL dump/restore, but the
+extension needs a bit of extra care, depending on what PostGIS version
+you are upgrading from.  Please refer to the PostGIS documentation.
+
+All of the required SQL files mentioned in the documentation should be
+provided by the postgresql-M.N-postgis-X.Y-scripts package and can be
+found in the following directory after its installation (replace M.N
+with the appropriate Postgres version used):
+
+  /usr/share/postgresql/M.N

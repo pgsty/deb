@@ -1,0 +1,5 @@
+---
+Bug-Database: https://trac.osgeo.org/postgis/report
+#Bug-Submit: https://trac.osgeo.org/postgis/newticket
+Repository: https://git.osgeo.org/gitea/postgis/postgis.git
+Repository-Browse: https://git.osgeo.org/gitea/postgis/postgis

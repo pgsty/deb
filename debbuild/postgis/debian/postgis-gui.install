@@ -1,0 +1,3 @@
+usr/bin/shp2pgsql-gui
+usr/share/postgresql-*-postgis/applications/* usr/share/applications/
+usr/share/postgresql-*-postgis/icons/* usr/share/icons/

@@ -1,0 +1,3 @@
+Depends: @
+Tests: test-extension-creation
+Restrictions: allow-stderr, skippable

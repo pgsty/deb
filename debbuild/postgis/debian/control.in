@@ -1,0 +1,128 @@
+Source: postgis
+Maintainer: Ruohang Feng <rh@vonng.com>
+Section: misc
+Build-Depends: architecture-is-64-bit <!pkg.postgresql.32-bit>,
+               bison,
+               dctrl-tools,
+               debhelper-compat (= 13),
+               dpkg-dev (>= 1.16.1~),
+               flex,
+               libgtk2.0-dev,
+               libdbd-pg-perl,
+               libcunit1-dev,
+               libgdal-dev (>= 3.13.3),
+               libgeos-dev (>= 3.14.1),
+               libjson-c-dev | libjson0-dev (>= 0.9~),
+               libpcre2-dev,
+               libproj-dev (>= 9.8.1),
+               libprotobuf-c-dev,
+               libsfcgal-dev (>= 2.2.0),
+               libxml2-dev (>= 2.5.0~),
+               lsb-release,
+               pkgconf,
+               po-debconf,
+               postgresql-common (>= 148~),
+               postgresql-server-dev-all,
+               protobuf-c-compiler,
+               rdfind
+Standards-Version: 4.7.4
+Vcs-Browser: https://salsa.debian.org/debian-gis-team/postgis
+Vcs-Git: https://salsa.debian.org/debian-gis-team/postgis.git
+Homepage: https://postgis.net/
+
+Package: postgis
+Architecture: any
+Depends: postgresql-client,
+         ${shlibs:Depends},
+         ${perl:Depends},
+         ${misc:Depends}
+Recommends: postgresql-postgis
+Description: Geographic objects support for PostgreSQL
+ PostGIS adds support for geographic objects to the PostgreSQL
+ object-relational database. In effect, PostGIS "spatially enables"
+ the PostgreSQL server, allowing it to be used as a backend spatial
+ database for geographic information systems (GIS), much like ESRI's
+ SDE or Oracle's Spatial extension. PostGIS follows the OpenGIS
+ "Simple Features Specification for SQL".
+ .
+ This package contains the PostGIS userland tools for importing and exporting
+ shape, raster, and topology data: pgsql2shp, raster2pgsql, shp2pgsql,
+ pgtopo_export, and pgtopo_import.
+
+Package: postgresql-PGVERSION-postgis-3
+Architecture: any
+Depends: postgresql-PGVERSION,
+         postgresql-PGVERSION-postgis-3-scripts,
+         ${shlibs:Depends},
+         ${misc:Depends}
+Suggests: postgis
+Provides: postgresql-PGVERSION-postgis
+Description: Geographic objects support for PostgreSQL PGVERSION
+ PostGIS adds support for geographic objects to the PostgreSQL
+ object-relational database. In effect, PostGIS "spatially enables"
+ the PostgreSQL server, allowing it to be used as a backend spatial
+ database for geographic information systems (GIS), much like ESRI's
+ SDE or Oracle's Spatial extension. PostGIS follows the OpenGIS
+ "Simple Features Specification for SQL".
+
+Package: postgresql-PGVERSION-postgis-3-scripts
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Recommends: postgresql-PGVERSION-postgis-3
+Provides: postgresql-PGVERSION-postgis-scripts
+Description: Geographic objects support for PostgreSQL PGVERSION -- SQL scripts
+ PostGIS adds support for geographic objects to the PostgreSQL
+ object-relational database. In effect, PostGIS "spatially enables"
+ the PostgreSQL server, allowing it to be used as a backend spatial
+ database for geographic information systems (GIS), much like ESRI's
+ SDE or Oracle's Spatial extension. PostGIS follows the OpenGIS
+ "Simple Features Specification for SQL".
+ .
+ This package contains the SQL scripts for installing PostGIS in a PostgreSQL
+ PGVERSION database, and for upgrading from earlier PostGIS versions.
+
+Package: postgresql-postgis
+Architecture: any
+Section: metapackages
+Depends: postgresql-postgis-scripts,
+         postgresql-PGVERSION-postgis-3,
+         ${misc:Depends}
+Description: Geographic objects support for PostgreSQL -- Metapackage
+ PostGIS adds support for geographic objects to the PostgreSQL
+ object-relational database. In effect, PostGIS "spatially enables"
+ the PostgreSQL server, allowing it to be used as a backend spatial
+ database for geographic information systems (GIS), much like ESRI's
+ SDE or Oracle's Spatial extension. PostGIS follows the OpenGIS
+ "Simple Features Specification for SQL".
+ .
+ This metapackage depends on the PostGIS package for PostgreSQL PGVERSION.
+
+Package: postgresql-postgis-scripts
+Architecture: all
+Multi-Arch: foreign
+Depends: postgresql-PGVERSION-postgis-3-scripts,
+         ${misc:Depends}
+Description: Geographic objects support for PostgreSQL -- SQL scripts metapackage
+ PostGIS adds support for geographic objects to the PostgreSQL
+ object-relational database. In effect, PostGIS "spatially enables"
+ the PostgreSQL server, allowing it to be used as a backend spatial
+ database for geographic information systems (GIS), much like ESRI's
+ SDE or Oracle's Spatial extension. PostGIS follows the OpenGIS
+ "Simple Features Specification for SQL".
+ .
+ This metapackage depends on the PostGIS scripts package for
+ PostgreSQL PGVERSION.
+
+Package: postgis-gui
+Architecture: any
+Depends: postgis (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Graphical Shapefile loader for PostGIS
+ GTK interface for loading Shapefiles into PostgreSQL with PostGIS.
+
+Package: postgis-doc
+Architecture: all
+Section: doc
+Depends: ${misc:Depends}
+Description: PostGIS reference documentation
+ Official English PDF manual for the matching PostGIS release.

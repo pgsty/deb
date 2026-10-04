@@ -1,0 +1,46 @@
+postgis (2.2.0~rc1+dfsg-1~exp2) experimental; urgency=medium
+
+  Debian is now shipping PostGIS version 2.2 and dropped support for 2.1,
+  meaning bug or security fixes will no longer be provided for the older
+  one. This means it is strongly recommended to migrate all databases to the
+  newer PostGIS version 2.2 as soon as possible.
+
+  Of course, databases that are already using PostGIS 2.1 will continue to
+  work. Note, however, that with this upgrade it is no longer possible
+  to create version 2.1 of the extension PostGIS. Instead, 'CREATE
+  EXTENSION postgis;' will now give you version 2.2. Note that this can also
+  affects backups.
+
+ -- Markus Wanner <markus@bluegap.ch>  Sat, 26 Sep 2015 16:07:18 +0200
+
+postgis (2.1.3+dfsg-1) unstable; urgency=high
+
+  It has come to our attention that the PostGIS Raster support
+  may give more privileges to users than an administrator is
+  willing to grant.
+
+  These include reading files from the filesystem and opening
+  connections to network hosts.
+
+  Both issues can be limited in existing installations by setting
+  the GDAL_SKIP variable (in the PostgreSQL server environment)
+  to the list of all gdal drivers, but some drivers would still be
+  forceably loaded by some operations.
+
+  This release strengthens the code to load no drivers by default
+  and allows for a fine-grained tuning of what's allowed and what
+  not through postgis-specific environment variables:
+
+  - POSTGIS_GDAL_ENABLED_DRIVERS
+    Specifies a list of GDAL drivers to _enable_ (rather than _skip_)
+    By default all drivers are disabled.
+    Example value: "GTiff PNG JPEG"
+
+  - POSTGIS_ENABLE_OUTDB_RASTERS
+    Enables read support for out-db raster bands if set to 1.
+    By default out-db raster bands reading is disabled.
+
+  On Debian, you can easily set these via the following file:
+  /etc/postgresql/${PG_VERSION}/${CLUSTER_NAME}/environment
+
+ -- Markus Wanner <markus@bluegap.ch>  Wed, 21 May 2014 10:49:10 +0200

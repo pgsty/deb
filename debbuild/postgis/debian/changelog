@@ -1,0 +1,2662 @@
+postgis (3.6.4-1PGSTY) unstable; urgency=medium
+
+  * Use consistent C collation for restore signature checks on Ubuntu 26.04.
+  * Align the core GIS sources and enabled features with the PGSTY RPM build.
+  * Keep native debug symbols and the distribution package layout.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 15:00:00 +0800
+
+postgis (3.6.4+dfsg-2.pgdg24.04+2) noble-pgdg; urgency=medium
+
+  * Rebuild for noble-pgdg.
+  * Rebuild against current geos, proj and gdal.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Sun, 14 Jun 2026 10:37:58 +0200
+
+postgis (3.6.4+dfsg-2) unstable; urgency=medium
+
+  * Add patch to fix FTBFS with SFCGAL 2.3.0.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 14 Jun 2026 10:37:58 +0200
+
+postgis (3.6.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 09 Jun 2026 05:57:53 +0200
+
+postgis (3.6.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.7.4, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 15 Apr 2026 05:38:50 +0200
+
+postgis (3.6.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Use debrebuild instead of reprotest.
+  * Drop 32-bit architectures from test-extension-creation.
+  * Drop architecture constraints for libsfcgal-dev.
+  * Drop Priority: optional, default since dpkg 1.22.13.
+  * Bump Standards-Version to 4.7.3, changes: priority.
+  * Drop clean.patch, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 10 Feb 2026 05:43:56 +0100
+
+postgis (3.6.1+dfsg-1) unstable; urgency=medium
+
+  * Add patch to remove generated files in clean target.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Nov 2025 06:35:50 +0100
+
+postgis (3.6.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 14 Nov 2025 06:44:32 +0100
+
+postgis (3.6.0+dfsg-3) unstable; urgency=medium
+
+  * Use test-build-validate-cleanup instead of test-build-twice.
+  * Drop postgis-doc package, graphicsmagick-imagemagick-compat is gone.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 03 Nov 2025 11:25:10 +0100
+
+postgis (3.6.0+dfsg-2) unstable; urgency=medium
+
+  * Update lintian overrides.
+  * Drop Rules-Requires-Root: no, default since dpkg 1.22.13.
+  * Update packaging for postgresql-18.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 08 Oct 2025 07:07:56 +0200
+
+postgis (3.6.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Ignore test failures on ppc64el.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 02 Sep 2025 09:35:26 +0200
+
+postgis (3.6.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop mips{,el} & 32bit archs from IGNORE_TEST_FAILURE_ARCHS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 25 Aug 2025 19:52:41 +0200
+
+postgis (3.6.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 19 Aug 2025 05:25:46 +0200
+
+postgis (3.6.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 20 Jul 2025 11:13:50 +0200
+
+postgis (3.6.0~alpha1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream alpha release.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 18 May 2025 19:01:04 +0200
+
+postgis (3.5.3+dfsg-2) unstable; urgency=medium
+
+  * Add upstream patch to fix FTBFS with GEOS 3.14.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 23 Aug 2025 12:12:46 +0200
+
+postgis (3.5.3+dfsg-1) unstable; urgency=medium
+
+  * Add patch to fix FTBFS with SFCGAL 2.2.0.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 11 Aug 2025 18:56:16 +0200
+
+postgis (3.5.3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.7.2, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 18 May 2025 06:25:38 +0200
+
+postgis (3.5.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 19 Jan 2025 07:35:59 +0100
+
+postgis (3.5.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 23 Dec 2024 06:24:34 +0100
+
+postgis (3.5.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 26 Sep 2024 04:47:44 +0200
+
+postgis (3.5.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop create_upgrade.patch, included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 23 Sep 2024 05:39:32 +0200
+
+postgis (3.5.0~beta1+dfsg-1~exp4) experimental; urgency=medium
+
+  * Update create_upgrade.pl patch with upstream changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 20 Sep 2024 17:07:24 +0200
+
+postgis (3.5.0~beta1+dfsg-1~exp3) experimental; urgency=medium
+
+  * Update create_upgrade.pl patch to revert 5aba8471.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 17 Sep 2024 20:30:59 +0200
+
+postgis (3.5.0~beta1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add patch to fix FTBFS caused by create_upgrade.pl failing.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 17 Sep 2024 07:41:08 +0200
+
+postgis (3.5.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 17 Sep 2024 05:03:25 +0200
+
+postgis (3.5.0~alpha2+dfsg-1~exp3) experimental; urgency=medium
+
+  * Include changes from 3.4.3+dfsg-2.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 11 Sep 2024 20:26:56 +0200
+
+postgis (3.5.0~alpha2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Bump Standards-Version to 4.7.0, no changes.
+  * Update packaging for postgresql-17.
+  * Ignore test failures on all architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 11 Sep 2024 11:54:34 +0200
+
+postgis (3.5.0~alpha2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream alpha release.
+  * Drop patches applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 06 Jul 2024 17:43:33 +0200
+
+postgis (3.5.0~alpha1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream alpha release.
+  * Update copyright file.
+  * Refresh patches.
+  * Add patch to fix FTBFS due to test failures.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 05 Jul 2024 06:48:44 +0200
+
+postgis (3.4.3+dfsg-2) unstable; urgency=medium
+
+  * Drop support for 32-bit architectures.
+  * Re-instate SFCGAL support, patched to support CGAL 6.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 11 Sep 2024 20:11:28 +0200
+
+postgis (3.4.3+dfsg-2~exp1) unstable; urgency=medium
+
+  * Update packaging for postgresql-17.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 11 Sep 2024 11:07:57 +0200
+
+postgis (3.4.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.7.0, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 05 Sep 2024 05:15:08 +0200
+
+postgis (3.4.2+dfsg-2) unstable; urgency=medium
+
+  * Drop SFCGAL support, it won't support CGAL 6 any time soon.
+    https://gitlab.com/sfcgal/SFCGAL/-/issues/267
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Jun 2024 17:01:34 +0200
+
+postgis (3.4.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Replace pkg-config build dependency with pkgconf.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 08 Feb 2024 18:55:49 +0100
+
+postgis (3.4.1+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 20 Nov 2023 20:00:22 +0100
+
+postgis (3.4.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop delaunaytriangles.patch, fixed upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 20 Nov 2023 14:49:29 +0100
+
+postgis (3.4.0+dfsg-4) unstable; urgency=medium
+
+  * Add patch to fix FTBFS due to test failure.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 17 Nov 2023 16:04:29 +0100
+
+postgis (3.4.0+dfsg-3) unstable; urgency=medium
+
+  * Use graphicsmagick instead of imagemagick to fix FTBFS.
+    (closes: #1054715)
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 28 Oct 2023 08:44:16 +0200
+
+postgis (3.4.0+dfsg-2) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 17 Sep 2023 11:22:54 +0200
+
+postgis (3.4.0+dfsg-2~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * debian/pgversions: Bump to 12+.
+
+  [ Bas Couwenberg ]
+  * Update packaging for postgresql-16.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 16 Sep 2023 18:43:08 +0200
+
+postgis (3.4.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 16 Aug 2023 06:15:31 +0200
+
+postgis (3.4.0~rc4+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop distclean.patch, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 15 Aug 2023 05:32:53 +0200
+
+postgis (3.4.0~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Use execute_before instead of override in rules file.
+  * Drop tzdata build dependency, no longer required.
+  * Add patch to fix distclean target.
+    (closes: #1047320)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 14 Aug 2023 09:47:30 +0200
+
+postgis (3.4.0~rc2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Require tzdata >= 2023c-9 for UTC timezone.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 12 Aug 2023 20:21:05 +0200
+
+postgis (3.4.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 12 Aug 2023 09:24:34 +0200
+
+postgis (3.4.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 06 Aug 2023 06:59:43 +0200
+
+postgis (3.4.0~beta2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Drop patches applied upstream.
+  * Don't remove postgis & postgis_restore, no longer undocumented.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 29 Jul 2023 21:32:13 +0200
+
+postgis (3.4.0~beta1+dfsg-1~exp7) experimental; urgency=medium
+
+  * Replace install-upgrade-paths.patch with committed upstream changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 20 Jul 2023 10:30:44 +0200
+
+postgis (3.4.0~beta1+dfsg-1~exp6) experimental; urgency=medium
+
+  * Add upstream patch to create installdirs before install-upgrade-paths.
+    https://trac.osgeo.org/postgis/ticket/5444
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 20 Jul 2023 09:40:04 +0200
+
+postgis (3.4.0~beta1+dfsg-1~exp5) experimental; urgency=medium
+
+  * Ignore test failure on i386.
+    https://trac.osgeo.org/postgis/ticket/5448
+  * Add patch to fix FTBFS on powerpc architectures.
+    https://trac.osgeo.org/postgis/ticket/5450
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 16 Jul 2023 08:54:59 +0200
+
+postgis (3.4.0~beta1+dfsg-1~exp4) experimental; urgency=medium
+
+  * Drop ${perl:Depends} from -scripts package,
+    postgis_restore.pl no longer included.
+  * Add graphicsmagick-imagemagick-compat to Build-Conflicts.
+    https://trac.osgeo.org/postgis/ticket/5446
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 16 Jul 2023 06:34:28 +0200
+
+postgis (3.4.0~beta1+dfsg-1~exp3) experimental; urgency=medium
+
+  * Add upstream patch to use xlstproc instead of xmllint to extract tags.
+    https://trac.osgeo.org/postgis/ticket/5446
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Jul 2023 19:15:40 +0200
+
+postgis (3.4.0~beta1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add libxml2-utils to build dependencies for xmllint.
+    https://trac.osgeo.org/postgis/ticket/5446
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Jul 2023 17:45:06 +0200
+
+postgis (3.4.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file.
+  * Refresh patches.
+  * Add patch to use DESTDIR for pg_sharedir.
+    https://trac.osgeo.org/postgis/ticket/5444
+  * Add patch to fix README.postgis installation failure.
+    https://trac.osgeo.org/postgis/ticket/5445
+  * Update HTML filename in postgis-doc.install.
+  * Include usr/bin in postgis package.
+  * Drop obsolete override for postgis_restore.pl executable bit.
+  * Don't install undocumented executables.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Jul 2023 07:37:42 +0200
+
+postgis (3.3.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop PROJ 9.2 & GEOS 3.12 patches, fixed upstream.
+    Drop powerpc patch, applied upstream.
+    Refresh remaining patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Jul 2023 14:40:16 +0200
+
+postgis (3.3.3+dfsg-5) unstable; urgency=medium
+
+  * Fix --enable-lto configure option.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 27 Jul 2023 10:02:30 +0200
+
+postgis (3.3.3+dfsg-4) unstable; urgency=medium
+
+  * Add graphicsmagick-imagemagick-compat to Build-Conflicts.
+    https://trac.osgeo.org/postgis/ticket/5446
+  * Ignore test failure on i386.
+    https://trac.osgeo.org/postgis/ticket/5448
+  * Add patch to fix FTBFS on powerpc architectures.
+    https://trac.osgeo.org/postgis/ticket/5450
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 27 Jul 2023 09:45:35 +0200
+
+postgis (3.3.3+dfsg-3) unstable; urgency=medium
+
+  * Add patch to fix FTBFS with GEOS 3.12.
+    (closes: #1042263)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 27 Jul 2023 07:09:44 +0200
+
+postgis (3.3.3+dfsg-2) unstable; urgency=medium
+
+  * Bump debhelper compat to 13.
+  * Add patch to fix FTBFS with PROJ 9.2.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 13 Jun 2023 21:01:54 +0200
+
+postgis (3.3.3+dfsg-1) unstable; urgency=medium
+
+  * Ignore autopkgtest failure on armel/armhf, sfcgal not available there.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 11 Jun 2023 11:59:00 +0200
+
+postgis (3.3.3+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * Refactor "ignore tests on some architectures" code.
+  * Sync architectures to skip between debian/rules and debian/tests,
+    effectively re-enabling tests on arm*.
+  * Remove obsolete Breaks and Replaces.
+
+  [ Bas Couwenberg ]
+  * New upstream release.
+  * Add Rules-Requires-Root to control file.
+  * Bump Standards-Version to 4.6.2, no changes.
+  * Update URLs to use HTTPS.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 30 May 2023 05:36:20 +0200
+
+postgis (3.3.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 13 Nov 2022 09:03:35 +0100
+
+postgis (3.3.1+dfsg-2) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Oct 2022 21:45:26 +0200
+
+postgis (3.3.1+dfsg-2~exp1) experimental; urgency=medium
+
+  * Add metapackages to help upgrade the postgis packages.
+  * Update packaging for postgresql-15.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Oct 2022 08:03:48 +0200
+
+postgis (3.3.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 10 Sep 2022 14:41:00 +0200
+
+postgis (3.3.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 27 Aug 2022 15:08:10 +0200
+
+postgis (3.3.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 23 Aug 2022 05:26:55 +0200
+
+postgis (3.3.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop basic_test.patch, included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 08 Aug 2022 09:01:27 +0200
+
+postgis (3.3.0~beta2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add upstream patch to fix test failure on i386.
+  * Don't ignore test failures on i386.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 24 Jul 2022 07:27:12 +0200
+
+postgis (3.3.0~beta2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Ignore test failures on i386.
+  * Drop pgsql2shp-core.patch, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 14 Jul 2022 05:23:29 +0200
+
+postgis (3.3.0~beta1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add patch to fix FTBFS on s390x.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 04 Jul 2022 06:04:08 +0200
+
+postgis (3.3.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * Run minimal regression tests from debian/tests/test-extension-creation.
+
+  [ Bas Couwenberg ]
+  * New upstream release.
+  * Bump Standards-Version to 4.6.1, no changes.
+  * Drop manpage patch, included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 03 Jul 2022 19:18:18 +0200
+
+postgis (3.3.0~alpha1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream alpha release.
+  * Update pgversions for PostgreSQL 11 or higher requirement.
+  * Require at least libproj-dev 5.2.0.
+  * Enable LTO.
+  * Update copyright file.
+  * Refresh patches.
+  * Add pgtopo_import/pgtopo_export manpages.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 22 May 2022 07:07:38 +0200
+
+postgis (3.2.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 19 Aug 2022 06:36:53 +0200
+
+postgis (3.2.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.6.1, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 23 Jul 2022 20:38:23 +0200
+
+postgis (3.2.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 13 Feb 2022 07:57:40 +0100
+
+postgis (3.2.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 18 Dec 2021 07:27:50 +0100
+
+postgis (3.2.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 11 Dec 2021 16:56:39 +0100
+
+postgis (3.2.0~beta3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Drop flatgeobuf patch, fixed upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 04 Dec 2021 09:21:53 +0100
+
+postgis (3.2.0~beta2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Switch to pcre2.
+    (closes: #999986)
+  * Drop flatgeobuff.patch, doesn't work for autopkgtest.
+  * Add patch to disable unreliable flageobuf tests.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 27 Nov 2021 14:00:25 +0100
+
+postgis (3.2.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file.
+  * Drop patches included upstream.
+  * Add patch to disable flatgeobuf tests causing FTBFS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 24 Oct 2021 08:01:21 +0200
+
+postgis (3.2.0~alpha1+dfsg-1~exp4) experimental; urgency=medium
+
+  * Drop pie rules for xenial.
+  * Add pkg-config to build dependencies.
+  * Update packaging for postgresql-14.
+  * Add upstream patch to fix missing the INSERT statements.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 05 Oct 2021 21:41:53 +0200
+
+postgis (3.2.0~alpha1+dfsg-1~exp3) experimental; urgency=medium
+
+  * Drop mr58.patch, did not fix FTBFS on i386.
+  * Add new upstream patch to possibly fix FTBFS on i386.
+  * Add upstream patch to fix not re-entrant loader tests.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 28 Sep 2021 12:54:08 +0200
+
+postgis (3.2.0~alpha1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Bump debhelper compat to 12, changes:
+    - Drop --list-missing from dh_install
+  * Add upstream patch to possibly fix FTBFS on i386.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 23 Sep 2021 05:54:59 +0200
+
+postgis (3.2.0~alpha1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream alpha release.
+  * Bump Standards-Version to 4.6.0, no changes.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 11 Sep 2021 07:49:54 +0200
+
+postgis (3.1.4+dfsg-3) unstable; urgency=medium
+
+  * Add upstream patch to fix test failures with GEOS 3.10.0.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 21 Oct 2021 06:25:59 +0200
+
+postgis (3.1.4+dfsg-2) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.6.0, no changes.
+  * Bump debhelper compat to 12, changes:
+    - Drop --list-missing from dh_install
+  * Drop pie rules for xenial.
+  * Add pkg-config to build dependencies.
+  * Update packaging for postgresql-14.
+  * Add upstream patch to fix missing the INSERT statements.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 08 Oct 2021 14:37:17 +0200
+
+postgis (3.1.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop build dependency on autoconf2.13.
+    (closes: #992813)
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 04 Sep 2021 09:26:17 +0200
+
+postgis (3.1.3+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 15 Aug 2021 12:45:13 +0200
+
+postgis (3.1.3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 03 Jul 2021 05:59:02 +0200
+
+postgis (3.1.2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Fix regression tests for older PG versions.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 31 May 2021 11:48:24 +0200
+
+postgis (3.1.2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+    (closes: #983256).
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 24 May 2021 05:46:19 +0200
+
+postgis (3.1.1+dfsg-1) unstable; urgency=medium
+
+  [ Christoph Berg ]
+  * Remove now redundant note on having to install the -scripts package from
+    the main module package description.
+
+  [ Bas Couwenberg ]
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 29 Jan 2021 06:27:33 +0100
+
+postgis (3.1.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 19 Dec 2020 06:55:38 +0100
+
+postgis (3.1.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 14 Dec 2020 19:42:10 +0100
+
+postgis (3.1.0~beta2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update upstream metadata.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 11 Dec 2020 19:40:34 +0100
+
+postgis (3.1.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Bump Standards-Version to 4.5.1, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 10 Dec 2020 05:43:06 +0100
+
+postgis (3.1.0~alpha3+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update regress autopkgtest for sfcgal.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 20 Nov 2020 09:03:25 +0100
+
+postgis (3.1.0~alpha3+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * Have the "postgis" package recommend "postgresql-postgis" instead of a
+    specific version.
+
+  [ Bas Couwenberg ]
+  * New upstream alpha release.
+  * Set PG_UPDATECONTROL=yes in rules file.
+  * Bump watch file version to 4.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 20 Nov 2020 06:50:41 +0100
+
+postgis (3.1.0~alpha2+dfsg-1~exp4) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * debian/tests: Use `pg_buildext installed-versions` to make tests work even
+    if the set of supported version has changed.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 08 Oct 2020 07:32:45 +0200
+
+postgis (3.1.0~alpha2+dfsg-1~exp3) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * Add build-dependency on libpcre3-dev which was implicit with GTK-2.
+
+  [ Bas Couwenberg ]
+  * Update packaging for postgresql-13.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Oct 2020 07:32:19 +0200
+
+postgis (3.1.0~alpha2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Drop postgis-gui package, requires GTK-2 which is deprecated.
+    (closes: #967707)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 04 Aug 2020 13:58:28 +0200
+
+postgis (3.1.0~alpha2+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * Remove debian/postgresql-generic-postgis-scripts.preinst.in.
+    Obsolete, and it was buggy with older dpkg-diversions which didn't have
+    --no-rename yet.
+
+  [ Bas Couwenberg ]
+  * New upstream alpha release.
+  * Skip autopkgtests on armel & armhf too.
+    (closes: #961188)
+  * Mark autopkgtests as skippable.
+    Thanks to Stefano Rivera.
+  * Update copyright file.
+  * Refresh patches.
+  * Add patch to fix incorrect-path-for-interpreter issue.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 19 Jul 2020 08:07:50 +0200
+
+postgis (3.1.0~alpha1+dfsg-1~exp4) experimental; urgency=medium
+
+  * Add patch to fix test failure with PROJ 7.0.1.
+    (closes: #959563)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 03 May 2020 16:00:28 +0200
+
+postgis (3.1.0~alpha1+dfsg-1~exp3) experimental; urgency=medium
+
+  * Bump debhelper compat to 10, changes:
+    - Drop --parallel option, enabled by default
+    - Don't explicitly enable autoreconf, enabled by default
+    - Drop dh-autoreconf build dependency
+  * Add upstream patch to fix FTBFS with GCC 10.
+    (closes: #957699)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 17 Apr 2020 22:05:57 +0200
+
+postgis (3.1.0~alpha1+dfsg-1~exp2) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * Bump minimum supported PostgreSQL version to 9.6.
+  * Disable automatic updates of postgis_revision.h.
+
+  [ Bas Couwenberg ]
+  * Add upstream patch to fix FTBFS with PROJ 7.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 01 Mar 2020 07:27:46 +0100
+
+postgis (3.1.0~alpha1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream alpha release.
+    (closes: #949426)
+  * Don't hardcode test exit status for failures.
+  * Don't bother with autopkgtest on problematic architectures.
+    (closes: #949026)
+  * Update update metadata for move to git.
+  * Bump Standards-Version to 4.5.0, no changes.
+  * Repack upstream tarball to remove .git directory.
+  * Update copyright file, changes:
+    - Add license & copyright for ryu sources.
+    - Add Kristian Thy to copyright holders
+    - Update copyright years for Paul Ramsey
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 02 Feb 2020 19:47:12 +0100
+
+postgis (3.0.0+dfsg-6) unstable; urgency=medium
+
+  * Revert postgresql-11 change in control file.
+  * Re-enable SFCGAL support.
+  * Drop Name field from upstream metadata.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 13 Dec 2019 09:57:13 +0100
+
+postgis (3.0.0+dfsg-5) unstable; urgency=medium
+
+  * Disable SFCGAL support in regress autopkgtest too.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 06 Dec 2019 14:45:21 +0100
+
+postgis (3.0.0+dfsg-4) unstable; urgency=medium
+
+  * Disable SFCGAL support entirely, causes FTBFS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 06 Dec 2019 13:08:37 +0100
+
+postgis (3.0.0+dfsg-3) unstable; urgency=medium
+
+  * Disable SFCGAL support on armhf, it FTBFS there.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 06 Dec 2019 11:23:34 +0100
+
+postgis (3.0.0+dfsg-2) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Nov 2019 07:19:47 +0100
+
+postgis (3.0.0+dfsg-2~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * Revert chaikin tests failing on ppc64el.
+
+  [ Bas Couwenberg ]
+  * Update packaging for postgresql-12.
+  * Add dctrl-tools to build dependencies for grep-dctrl.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 29 Oct 2019 05:24:36 +0100
+
+postgis (3.0.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 20 Oct 2019 07:56:41 +0200
+
+postgis (3.0.0~rc2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Remove the dpkg-diversions of .control files for older PostGIS versions,
+    using diversions on top of alternatives seems too fragile.
+    The 2.5 branch has been updated to use alternatives, so we should have
+    covered most cases in practise.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 15 Oct 2019 13:30:48 +0200
+
+postgis (3.0.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * regress/run_test.pl: Cherry-pick fix for running on installed packages.
+  * Disable PIE on Ubuntu xenial again, still causing issues.
+
+  [ Bas Couwenberg ]
+  * Reinstate lsb-release build dependency for PIE on Ubuntu.
+  * New upstream release candidate.
+  * Drop run-test-extension patch, included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 13 Oct 2019 08:54:07 +0200
+
+postgis (3.0.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Bas Couwenberg ]
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.4.1, no changes.
+  * Drop lsb-release build dependency, no longer used for PIE on Ubuntu.
+
+  [ Christoph Berg ]
+  * debian/tests/regress: Fix sh syntax
+  * debian/rules: Drop "disable PIE on Ubuntu" code.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 08 Oct 2019 09:40:15 +0200
+
+postgis (3.0.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright for fuzzers sources.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 29 Sep 2019 08:00:25 +0200
+
+postgis (3.0.0~alpha4+dfsg-2~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * debian/tests: Test postgis_raster extension as well.
+  * debian/tests/regress: Makefile.in needs some variables from ./configure.
+  * Instead of conflicting with older postgresql-*-postgis-*-scripts packages,
+    use the alternatives system for managing the extension/*.control files.
+    This finally allows us to depend on the -scripts package from the main
+    extension package.
+  * Remove unversioned and unused sql files from address standardizer.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 16 Sep 2019 15:21:59 +0200
+
+postgis (3.0.0~alpha4+dfsg-1) experimental; urgency=medium
+
+  * New upstream alpha release.
+  * Drop cppflags patch, applied upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 11 Aug 2019 09:46:58 +0200
+
+postgis (3.0.0~alpha3+dfsg-1~exp2) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * debian/tests/control: Tests don't need root, but support running as root.
+  * debian/.gitlab-ci.yml: Disable reprotest until clang understands
+    -ffile-prefix-map.
+  * Add CPPFLAGS where missing. Spotted by blhc.
+
+  [ Bas Couwenberg ]
+  * Update gbp.conf to use --source-only-changes by default.
+  * Bump Standards-Version to 4.4.0, no changes.
+  * Update PIE hardening conditional, trusty is EOL.
+  * Merge -arch & -indep targets.
+    (closes: #932833)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 23 Jul 2019 21:51:42 +0200
+
+postgis (3.0.0~alpha3+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * debian/tests: Run core and sfcgal regression tests.
+  * Add debian/.gitlab-ci.yml.
+
+  [ Bas Couwenberg ]
+  * New upstream alpha release.
+  * Update copyright file, changes:
+    - Update copyright years for Paul Ramsey
+    - Add license & copyright for lookup3.c
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 01 Jul 2019 21:02:32 +0200
+
+postgis (3.0.0~alpha2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream alpha release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 02 Jun 2019 06:59:58 +0200
+
+postgis (3.0.0~alpha1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update dh_install -a override to use --list-missing.
+  * Move binaries to postgis binary package.
+  * Remove README files before dh_install.
+  * Bump GEOS build dependency to 3.6.
+  * Bump pgversions to 9.5+.
+  * Require at least libsfcgal-dev 1.3.1.
+  * Drop preloading liblwgeom in test target.
+  * Drop postgis minor version from package name to match extension name.
+  * Update Conflicts for 2.5 packages.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 27 May 2019 16:24:15 +0200
+
+postgis (3.0.0~alpha1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream alpha release.
+  * Drop link-liblwgeom patch, refresh remaining patch.
+  * Drop liblwgeom packages, no longer built.
+  * Update copyright file, changes:
+    - Update copyright years for existing copyright holders
+    - Add new copyright holders
+    - Add license & copyright for uthash & wagyu
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 26 May 2019 17:38:38 +0200
+
+postgis (2.5.3+dfsg-3) UNRELEASED; urgency=medium
+
+  * Disable failing raster test.
+
+ -- Christoph Berg <myon@debian.org>  Sat, 19 Oct 2019 20:59:16 +0200
+
+postgis (2.5.3+dfsg-2) unstable; urgency=medium
+
+  * Instead of conflicting with older postgresql-*-postgis-*-scripts packages,
+    use the alternatives system for managing the extension/*.control files.
+    This finally allows us to depend on the -scripts package from the main
+    extension package.
+  * debian/tests: Run regression tests.
+  * regress: Backport fix for oriented-envelope test to be less sensitive.
+  * topology: Backport regression test update for geos 3.8 compatibility.
+  * Add debian/.gitlab-ci.yml.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 15 Oct 2019 13:26:11 +0200
+
+postgis (2.5.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Refresh patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 11 Aug 2019 09:18:54 +0200
+
+postgis (2.5.2+dfsg-2) unstable; urgency=medium
+
+  * Merge -arch & -indep targets.
+    (closes: #932833)
+  * Update PIE hardening conditional, trusty is EOL.
+  * Explicitly remove liblwgeom.la before dh_install.
+  * Bump Standards-Version to 4.4.0, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 23 Jul 2019 21:51:23 +0200
+
+postgis (2.5.2+dfsg-1) unstable; urgency=medium
+
+  * Update gbp.conf to use --source-only-changes by default.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 07 Jul 2019 13:12:25 +0200
+
+postgis (2.5.2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.3.0, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 12 Mar 2019 06:59:37 +0100
+
+postgis (2.5.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add Build-Depends-Package field to symbols file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 22 Nov 2018 06:52:52 +0100
+
+postgis (2.5.0+dfsg-2) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 14 Oct 2018 09:04:35 +0200
+
+postgis (2.5.0+dfsg-2~exp1) experimental; urgency=medium
+
+  * Strip trailing comma from Uploaders.
+  * Reorder Breaks/Provides/Replaces fields.
+  * Update packaging for postgresql-11.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 05 Oct 2018 17:05:37 +0200
+
+postgis (2.5.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 24 Sep 2018 07:30:53 +0200
+
+postgis (2.5.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.2.1, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 17 Sep 2018 07:27:59 +0200
+
+postgis (2.5.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * Provide postgresql-PGVERSION-postgis{,-scripts} so pgrouting can depend on
+    us without an explicit postgis version.
+
+  [ Bas Couwenberg ]
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 20 Aug 2018 08:42:48 +0200
+
+postgis (2.5.0~beta2+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Bas Couwenberg ]
+  * New upstream beta release.
+  * Don't quote filter string to fix match of first and last items.
+  * Bump Standards-Version to 4.2.0, no changes.
+  * Update copyright years for Paul Ramsey.
+  * Drop rt_gdalwarp.patch, worked around by upstream.
+  * Drop unused override for hardening-no-fortify-functions.
+  * Separate test restrictions with a comma.
+
+  [ Christoph Berg ]
+  * Re-enable tests on arm64 armel armhf i386 ppc64el, fixed upstream.
+  * Use make check RUNTESTFLAGS="-v" instead of cat'ing the failed results
+    from /tmp. Suggested by Darafei Praliaskouski, thanks!
+  * Provide postgresql-postgis and postgresql-postgis-scripts, so we can
+    depend on them in autopkgtests in other packages.
+  * Drop transitional postgresql-*-postgis-scripts package. The PG 9.6 variant
+    was already transitional in stretch, and the PG 10 variant was never in a
+    stable release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 11 Aug 2018 13:15:01 +0200
+
+postgis (2.5.0~beta1+dfsg-1~exp2) experimental; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Bump Standards-Version to 4.1.5, no changes.
+  * Skip tests on arm64 & ppc64el too.
+  * Drop parallel patches, fixed upstream.
+
+  [ Christoph Berg ]
+  * debian/pgversions: Bump to 9.4+, 9.3 is no longer supported.
+  * Bump required GEOS version to 3.5.
+  * Work around failure in building the postgis_tiger_geocoder extension.
+  * debian/rules: Ignore test failures instead of disabling tests completely
+    on specific architectures; ignore tests on i386.
+  * Don't run tests in -indep builds.
+  * debian/rules: Import architecture from /usr/share/dpkg/architecture.mk.
+  * Re-enable tests on Ubuntu.
+  * Add myself to Uploaders.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 16 Jul 2018 22:46:26 +0200
+
+postgis (2.5.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Re-enable SFCGAL support, FTBFS with CGAL 4.12 is fixed.
+  * Disable PIE only on older Ubuntu releases.
+  * Update copyright file, add copyright holders, update copyright years.
+  * Refresh patches.
+  * Disable parallel patches, may be fixed upstream.
+  * Update Conflicts for postgis-2.4.
+  * Update lintian override for address_standardizer.
+  * Update symbols for 2.5.0~beta1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 04 Jul 2018 07:51:44 +0200
+
+postgis (2.4.4+dfsg-4) unstable; urgency=medium
+
+  * Add patches to fix parallel build of other extensions.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 10 Jun 2018 00:28:43 +0200
+
+postgis (2.4.4+dfsg-3) unstable; urgency=medium
+
+  * Add patch to fix parallel build of postgis_tiger_geocoder extension.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 09 Jun 2018 21:39:17 +0200
+
+postgis (2.4.4+dfsg-2) unstable; urgency=medium
+
+  * Drop unnecessary get-orig-source target from rules file.
+  * Bump Standards-Version to 4.1.4, changes: get-orig-source target.
+  * Enable parallel builds.
+  * Don't use parallel for doc, docs-install & man-install targets.
+  * Strip trailing whitespace from changelog & control files.
+  * Add patch to fix expected test output with GDAL 2.3.0 & PROJ 5.1.0.
+    (closes: #901158)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 09 Jun 2018 19:11:01 +0200
+
+postgis (2.4.4+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update Vcs-* URLs for Salsa.
+  * Drop pkg-config patch, applied upstream.
+  * Strip trailing whitespace from README.Debian.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 06 Apr 2018 09:40:25 +0200
+
+postgis (2.4.3+dfsg-4) unstable; urgency=medium
+
+  * Update watch file to use HTTPS.
+  * Drop patch to fix FTBFS with proj 5.0.0, fixed in proj 5.0.0-rc4.
+  * Build-Depend on postgresql-all in control.in too.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 22 Feb 2018 22:47:48 +0100
+
+postgis (2.4.3+dfsg-3) unstable; urgency=medium
+
+  * Fix deprecated source override location.
+  * Add patch to fix FTBFS with proj 5.0.0.
+    (closes: #889981)
+  * Strip trailing whitespace from changelog file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 17 Feb 2018 12:24:27 +0100
+
+postgis (2.4.3+dfsg-2) unstable; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Merge changes from Christoph Berg.
+
+  [ Christoph Berg ]
+  * Build-Depend on postgresql-all, we need server packages for testing.
+  * Tests: Install fuzzystrmatch dependency explicitly, not all PostgreSQL
+    versions feature CREATE EXTENSION CASCADE yet.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 16 Jan 2018 16:41:25 +0100
+
+postgis (2.4.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.1.3, no changes.
+  * Add patch for autotools-pkg-config-macro-not-cross-compilation-safe
+    lintian issue.
+  * Update copyright-format URL to use HTTPS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 16 Jan 2018 15:23:39 +0100
+
+postgis (2.4.2+dfsg-3) unstable; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Use postgresql-all instead of postgresql-contrib-9.6 in tests/control.
+    (closes: #883608)
+  * Drop unused lintian overrides.
+  * Bump Standards-Version to 4.1.2, no changes.
+
+  [ Christoph Berg ]
+  * Test all extensions, not just postgis.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 06 Dec 2017 07:28:09 +0100
+
+postgis (2.4.2+dfsg-2) unstable; urgency=medium
+
+  * Disable SFCGAL support, FTBFS with CGAL 4.11. (see: #876521)
+  * Add lintian overrides for spelling-error-in-binary false positives.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 30 Nov 2017 21:14:37 +0100
+
+postgis (2.4.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Refresh patches.
+  * Strip trailing whitespace from changelog.
+  * Drop deprecated autotools_dev helper.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 15 Nov 2017 21:05:04 +0100
+
+postgis (2.4.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop postgresql-contrib-10 from Recommends, no longer a separate package
+    and provided by postgresql-10 now.
+  * Skip tests on powerpc, not a release architecture.
+  * Add lintian override for debian-watch-uses-insecure-uri.
+  * Mark postgis-doc & -scripts package as Multi-Arch: foreign.
+  * Update dh_autoreconf override to run autogen.sh instead of autoconf.
+  * Update symbols for 2.4.1.
+  * Drop license & copyright for autotools files.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 18 Oct 2017 21:36:00 +0200
+
+postgis (2.4.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Skip tests on s390x, has issues with rounding.
+  * Bump Standards-Version to 4.1.1, no changes.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 30 Sep 2017 10:49:27 +0200
+
+postgis (2.4.0~rc3+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 27 Sep 2017 09:11:26 +0200
+
+postgis (2.4.0~rc2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Change priority from extra to optional.
+  * Bump Standards-Version to 4.1.0, changes: priority.
+  * Update packaging for postgresql-10.
+  * Update symbols for 2.4.0~rc2.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 24 Sep 2017 22:32:29 +0200
+
+postgis (2.4.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Christoph Berg ]
+  * debian/pgversions: Bump to 9.3+, 9.2 is no longer supported.
+  * debian/control(.in): Bump GEOS build-dependency to 3.4.
+  * Include program names in postgis and postgis-gui descriptions.
+  * Clarify -scripts package description; the SQL files are also necessary for
+    the initial installation.
+  * debian/rules: Fix rdfind invocation to find SQL file duplicates properly.
+  * Declare Conflicts: -2.3-scripts in -2.4-scripts.
+    (closes: #875811)
+
+  [ Bas Couwenberg ]
+  * New upstream release candidate.
+  * Update symbols for 2.4.0~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 15 Sep 2017 22:00:13 +0200
+
+postgis (2.4.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file, changes:
+    - Update copyright years for copyright holders
+    - Add new copyright holders
+    - Add license & copyright for fuzzers sources
+    - Add license & copyright for protobuf files
+    - Add license & copyright for uthash.h
+    - Change license shortname from MIT to Expat
+  * Rename packages for new PostGIS minor version (2.3 -> 2.4).
+  * Drop avoid-bashisms.patch, applied upstream.
+  * Update symbols for 2.4.0~beta1.
+  * Drop unused overrides for hardening-no-pie.
+  * Add build dependencies for protobuf support.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 02 Sep 2017 20:28:29 +0200
+
+postgis (2.3.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Refresh patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 01 Jul 2017 20:50:54 +0200
+
+postgis (2.3.2+dfsg-2) unstable; urgency=medium
+
+  * Enable PIE hardening flags.
+    (closes: #865775)
+  * Disable PIE on Ubuntu where it's still problematic.
+  * Bump Standards-Version to 4.0.0, no changes.
+  * Use pkg-info.mk variables instead of dpkg-parsechangelog output.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 25 Jun 2017 10:06:51 +0200
+
+postgis (2.3.2+dfsg-1) unstable; urgency=medium
+
+  [ Markus Wanner ]
+  * Add a trivial autopkgtest to check creation of the extension.
+
+  [ Bas Couwenberg ]
+  * Fix test-extension-creation autopkgtest name in control file.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 18 Jun 2017 17:09:12 +0200
+
+postgis (2.3.2+dfsg-1~exp2) experimental; urgency=medium
+
+  * Add patch avoid-bashisms.patch to fix the generated sql files.
+    Closes: #858610.
+
+ -- Markus Wanner <markus@bluegap.ch>  Fri, 24 Mar 2017 19:46:04 +0100
+
+postgis (2.3.2+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Fix cleanup of generated .install files.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 31 Jan 2017 08:21:43 +0100
+
+postgis (2.3.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Use dh_install -a instead of deprecated -s option.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 29 Nov 2016 00:32:50 +0100
+
+postgis (2.3.0+dfsg-3) unstable; urgency=medium
+
+  * Restructure control file with cme.
+  * Reorder (build) dependencies.
+  * Drop explicit liblwgeom-2.3-0 dependency from -postgis-2.3 package,
+    already set via ${shlibs:Depends}.
+  * Rewrite rules file to use dh sequencer.
+  * Rely on dpkg-buildflags instead of including buildflags.mk.
+  * Use DEB_BUILD_ARCH instead of DEB_HOST_ARCH.
+  * Fix unused substitution variable ${perl:Depends} for -scripts package.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 10 Oct 2016 15:32:04 +0200
+
+postgis (2.3.0+dfsg-2) unstable; urgency=medium
+
+  * Update pgversions to require PostgreSQL 9.2 or newer.
+  * Run tests against all supported PostgreSQL versions.
+  * Downgrade the dependency from the extension package to the
+    scripts package to a recommendation, so the former becomes
+    co-installable with older versions, again. Closes: #839182.
+
+ -- Markus Wanner <markus@bluegap.ch>  Fri, 30 Sep 2016 16:36:08 +0200
+
+postgis (2.3.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 26 Sep 2016 21:00:23 +0200
+
+postgis (2.3.0~rc1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update packaging for postgresql-9.6.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 24 Sep 2016 19:23:01 +0200
+
+postgis (2.3.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Add Conficts on postgresql-9.5-postgis-2.2-scripts to 2.3-scripts package.
+    (closes: #837294)
+  * Drop run_test-INC.patch, applied upstream. Refresh remaining patches.
+  * Add license & copyright for debian/* in copyright file.
+  * Update symbols for 2.3.0~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 19 Sep 2016 11:33:41 +0200
+
+postgis (2.3.0~beta1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file, changes:
+    - Update copright years for various copyright holders
+    - Drop config.rpath from Files section, removed upstream
+  * Rename packages from 2.2 to 2.3.
+  * Update patches, changes:
+    - Drop hicolor-icons.patch, applied upstream
+    - Drop disable-tests.patch, only added to not block proj 4.9.3 transition
+    - Refresh remaining patches
+  * Drop custom icon installation, included upstream.
+  * Add patch to add . to @INC if removed for CVE-2016-1238.
+   -{pre,post}.pl scripts not executed by run_test.pl otherwise.
+  * Update symbols for 2.3.0~beta1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 06 Sep 2016 15:59:10 +0200
+
+postgis (2.2.2+dfsg-5) unstable; urgency=medium
+
+  * Skip tests on sparc64, not a release architecture.
+  * Add patch to disable tests failing on several architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 06 Sep 2016 02:21:46 +0200
+
+postgis (2.2.2+dfsg-4) unstable; urgency=medium
+
+  * Don't include desktop file & application icons in scripts package.
+  * Skip tests on alpha, has issues with sfcgal support.
+  * Drop unneeded build dependency on libssl-dev.
+    (closes: #828509)
+  * Disable interrupt tests, hang indefinitely.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 05 Jul 2016 01:41:48 +0200
+
+postgis (2.2.2+dfsg-3) unstable; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Disable tests on ppc64, fails to change owner and permissions.
+  * Install desktop file and application icons for shp2pgsql-gui.
+
+  [ Markus Wanner ]
+  * Re-rename the -scripts package to include the postgis version
+    for easier upgrading.
+  * Remove the postgis major.minor version from the generic file
+    and add the version from d/rules.
+  * Update README.Debian to reflect the renaming.
+
+ -- Markus Wanner <markus@bluegap.ch>  Fri, 24 Jun 2016 22:11:56 +0200
+
+postgis (2.2.2+dfsg-2) unstable; urgency=medium
+
+  * Disable tests on Ubuntu (and derivatives), hanging on their buildds.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 23 May 2016 19:30:19 +0200
+
+postgis (2.2.2+dfsg-2~exp1) experimental; urgency=medium
+
+  * Bump Standards-Version to 3.9.8, no changes.
+  * Fix duplicate words in copyright file.
+  * Move GUI binaries to separate postgis-gui package.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 16 May 2016 20:27:09 +0200
+
+postgis (2.2.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop patches applied upstream.
+  * Drop hppa.patch, fixed upstream.
+  * Update copyright years for Regina Obe & Sandro Santilli.
+  * Enable all hardening buildflags except PIE (causes build failure).
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 23 Mar 2016 22:09:17 +0100
+
+postgis (2.2.1+dfsg-3) unstable; urgency=medium
+
+  * Update Vcs-Git URL to use HTTPS.
+  * Skip tests on hppa, fails the tickets and wkb tests because of different
+    NaN representations.
+    (closes: #813846)
+  * Add patches for various typos.
+  * Bump Standards-Version to 3.9.7, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 02 Mar 2016 20:20:28 +0100
+
+postgis (2.2.1+dfsg-2) unstable; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Add patch by Helge Deller to fix wkb_output test failure on hppa & mips.
+    (closes: #810859)
+  * Add patch by Sandro Santilli to fix test failure on various architectures.
+  * Re-enable tests on arm64, powerpc, ppc64el & s390x.
+  * Skip tests on kfreebsd-i386 & mips64el, not release architectures.
+
+  [ Markus Wanner ]
+  * Add patch relax-test-timing-constraints.patch to increase chances of
+    tests passing on the pgapt infrastructure.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 21 Jan 2016 23:16:46 +0100
+
+postgis (2.2.1+dfsg-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 12 Jan 2016 20:59:04 +0100
+
+postgis (2.2.1+dfsg-1~exp3) experimental; urgency=medium
+
+  * Disable tests on arm64, powerpc, ppc64el & s390x.
+  * Mark SFCGAL symbols as not available on armel.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 10 Jan 2016 23:01:12 +0100
+
+postgis (2.2.1+dfsg-1~exp2) experimental; urgency=medium
+
+  * Rename packages for PostgreSQL 9.5.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 08 Jan 2016 10:20:38 +0100
+
+postgis (2.2.1+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop typo patches, applied upstream.
+  * Rename liblwgeom package for SONAME bump.
+  * Fix liblwgeom LD_PRELOAD for the renamed library.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 07 Jan 2016 08:46:03 +0100
+
+postgis (2.2.0+dfsg-3) unstable; urgency=medium
+
+  * Fix build with `dpkg-buildpackage -A`. Add dependency on build-arch-stamp
+    target to make build-indep-stamp target succeed.
+    (closes: #809123)
+  * Add patches for new typos.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 27 Dec 2015 16:10:27 +0100
+
+postgis (2.2.0+dfsg-2) unstable; urgency=medium
+
+  * Don't build depend on sfcgal on armel, cgal not available.
+  * Disable tests on armel, no sfcgal support and fails interrupt_buffer test.
+  * Document libpostgis-java move to postgis-java in README.Debian.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 20 Dec 2015 00:56:07 +0100
+
+postgis (2.2.0+dfsg-1) unstable; urgency=medium
+
+  * Update symbols for 2.2.0.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 09 Dec 2015 21:30:54 +0100
+
+postgis (2.2.0+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop patches applied upstream.
+  * Rename liblwgeom package to liblwgeom-2.2-2 to match new SONAME.
+  * Set executable bit for postgis_restore.pl to fix lintian warning.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 08 Oct 2015 21:09:52 +0200
+
+postgis (2.2.0~rc1+dfsg-1~exp3) experimental; urgency=medium
+
+  * Add patches to fix mapalgebra test failure on big endian architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 05 Oct 2015 21:47:42 +0200
+
+postgis (2.2.0~rc1+dfsg-1~exp2) experimental; urgency=medium
+
+  [ Markus Wanner ]
+  * Drop the transitional postgresql-X.Y-postgis-2.0-script package.
+  * Rename NEWS.Debian to NEWS to make it actually work. Add a warning
+    notifying the user to upgrade his databases.
+
+  [ Bas Couwenberg ]
+  * Drop add-lm-for-liblwgeom.patch, fixed upstream.
+  * Add patch to fix test failures on big endian architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 04 Oct 2015 18:11:02 +0200
+
+postgis (2.2.0~rc1+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Markus Wanner ]
+  * New upstream version
+  * Update package names, control, and rules for the new version 2.2.
+  * Refresh patches to apply, again.
+  * Adjust pgversions: 2.2 now needs at least PostgreSQL 9.1 to work.
+  * Drop old deprecation warnings for 2.0 and the transitional
+    package postgresql-9.4-postgis-2.1-scripts.
+  * Drop all Java related things, including the patches use-debian-maven
+    and strip-invalid-whitespace-in-pom.patch.
+  * Update copyright information.
+
+  [ Bas Couwenberg ]
+  * Add build dependency on libsfcgal-dev.
+  * Fix symbols version for pre-releases.
+  * Update copyright file, changes:
+    - Update copyright years
+    - Add copyright holders for new files
+    - Add license & copyright for address_standardizer extension
+    - Add license & copyright for bytebuffer files
+    - Drop license & copyright for java/* (separate project now)
+  * Drop patches for java bindings, refresh remaining patches.
+  * Update make commands for *_upgrade.sql files.
+  * Rename liblwgeom package to match SONAME.
+  * Update symbols for sfcgal & version 2.2.0 RC1.
+  * Update fix-spelling patch for additional typos.
+  * Reorder rules targets in order of execution.
+  * Fix liblwgeom LD_PRELOAD for regression tests.
+  * Drop unused postgis 2.0 debconf templates & translations.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 26 Sep 2015 15:29:26 +0200
+
+postgis (2.1.8+dfsg-4) unstable; urgency=medium
+
+  * Bump minimum required libgdal-dev to 1.11.2+dfsg-3~ for spatialite
+    with liblwgeom rebuild.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Aug 2015 11:20:39 +0200
+
+postgis (2.1.8+dfsg-3) unstable; urgency=medium
+
+  * Bump minimum required libgdal-dev to 1.11.2+dfsg-2~ for circular
+    dependency change.
+  * Rebuild for geos transition.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 27 Aug 2015 17:33:48 +0200
+
+postgis (2.1.8+dfsg-2) unstable; urgency=medium
+
+  * Update Vcs-Browser URL to use cgit instead of gitweb.
+  * Update copyright file, group files by path & license.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 23 Aug 2015 12:25:28 +0200
+
+postgis (2.1.8+dfsg-1) unstable; urgency=medium
+
+  [ Markus Wanner ]
+  * New upstream version.
+  * Re-add libmaven-compiler-plugin-java to the B-D as an alternative, so
+    this package remains backward compatible.
+
+  [ Bas Couwenberg ]
+  * Update copyright years for autotools files.
+  * Update liblwgeom package name for 2.1.8 version.
+
+ -- Markus Wanner <markus@bluegap.ch>  Fri, 10 Jul 2015 12:51:42 +0200
+
+postgis (2.1.7+dfsg-2) unstable; urgency=medium
+
+  * Apply patch from Ubuntu to depend on libmaven-compiler-plugin-2.5-java,
+    fixes build failure with maven-compiler-plugin 3.x.
+    (closes: #788761)
+  * Update copyright file, changes:
+    - Drop .0 from GPL license shortnames
+    - Align copyright holders
+    - Group files & copyright by license
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 14 Jun 2015 21:55:36 +0200
+
+postgis (2.1.7+dfsg-1) unstable; urgency=medium
+
+  * Restore get-orig-source target, but use uscan instead of custom script.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 May 2015 20:10:33 +0200
+
+postgis (2.1.7+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Bas Couwenberg ]
+  * Drop get-orig-source target, script removed in favor of uscan.
+
+  [ Markus Wanner ]
+  * New upstream release.
+
+ -- Markus Wanner <markus@bluegap.ch>  Mon, 30 Mar 2015 19:51:02 +0200
+
+postgis (2.1.6+dfsg-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Skip tests on mipsel too, due to persistent buildd issues.
+  * Use uscan repacking to exclude CITE tests from upstream source.
+  * Update patches for new upstream release.
+  * Generate pom.xml before running maven.
+  * Update symbols for liblwgeom-2.1.6.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 21 Mar 2015 15:49:02 +0100
+
+postgis (2.1.5+dfsg-1~exp2) experimental; urgency=medium
+
+  * Update symbols for liblwgeom-2.1.5.
+  * Update Homepage URL from postgis.refractions.net to postgis.net.
+  * Update my email to use @debian.org address.
+  * Add build dependency on openjdk-7-jdk | java7-sdk required to build
+    libpostgis-java. OpenJDK 7 is not yet available on GNU/Hurd.
+  * GNU/Hurd doesn't implement semaphores; skip regress tests on hurd-*.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 08 Feb 2015 21:41:31 +0100
+
+postgis (2.1.5+dfsg-1~exp1) experimental; urgency=medium
+
+  [ Markus Wanner ]
+  * Downgrade the recommends on postgis to a suggestion, so we don't ever
+    recommend all the way through to another PostgreSQL major version,
+    when installing a specific postgresql-X.Y-postgis-2.1 package.
+
+  [ Bas Couwenberg ]
+  * New upstream release.
+  * Add upstream metadata.
+  * Add Brazilian translation by José de Figueiredo. Closes: #771782.
+  * Fix get-orig-source path in watch file.
+  * Update copyright file, changes:
+    - Update copyright years
+    - Change config.{sub,guess} license to GPL-3+ with Autoconf exception
+    - Remove {extensions,raster}/Makefile, no longer included.
+  * Drop enable-ppc64el.patch, applied upstream. Refresh remaining patches.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Wed, 24 Dec 2014 14:49:02 +0100
+
+postgis (2.1.4+dfsg-2) unstable; urgency=medium
+
+  * Add Dutch translation by Frans Spiesschaert. Closes: #765409.
+  * Bump S-V: no changes required.
+
+ -- Markus Wanner <markus@bluegap.ch>  Wed, 15 Oct 2014 10:58:52 +0200
+
+postgis (2.1.4+dfsg-1) unstable; urgency=medium
+
+  [ Paulo Flabiano Smorigo ]
+  * add -lm for liblwgeom to avoid linkage problem.
+  * enable ppc64el.
+    (closes: #759505)
+
+  [ Bas Couwenberg ]
+  * Add Swedish translation by Martin Bagge. Closes: #761975.
+  * Add strip-invalid-whitespace-in-pom.patch to fix mh_cleanpom failure.
+  * Update copyright file.
+  * Add patch to fix FTBFS on hurd-i386.
+
+  [ Markus Wanner ]
+  * New upstream release, 2.1.4. Adapt packaging to the new version.
+  * Drop patches debian-versions, fix-armel, use-json-c, and
+    postgresql-9.4-fixes.patch, these should be fixed upstream.
+  * Refresh patches use-debian-maven, honor-build-flags, and
+    enable-ppc64el.patch.
+  * Add patch correct-java-version.patch.
+
+ -- Markus Wanner <markus@bluegap.ch>  Sun, 21 Sep 2014 19:39:46 +0200
+
+postgis (2.1.3+dfsg-4) unstable; urgency=low
+
+  [ Bas Couwenberg ]
+  * Add Czech translation by Michal Šimůnek. Closes: 751426.
+  * Add Japanese translation by victory. Closes: 756718.
+  * Add Danish translation by Joe Dalton. Closes: 757653.
+  * Update for PostgreSQL 9.4.
+
+  [ Jérémy Lal ]
+  * Switch Build-Deps back to default-jdk instead of openjdk 7 | 8,
+    as gcj-jdk does work now.
+  * Backport upstream commits fixing test results with PostgreSQL 9.4.
+
+  [ Markus Wanner ]
+  * Let postgis recommend the (most up to date) extension, rather than
+    only suggesting it.
+
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 14 Aug 2014 13:40:03 +0200
+
+postgis (2.1.3+dfsg-3) unstable; urgency=high
+
+  * In patch use-debian-maven: Also drop the version requirement for the
+    maven-javadoc-plugin.
+  * Add Breaks & Replaces against liblwgeom-2.1.2, which shipped
+    liblwgeom-2.1.3.so in a package named liblwgeom-2.1.2 due to the
+    attempted quick security fix. Closes: #749015.
+
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 22 May 2014 17:59:05 +0200
+
+postgis (2.1.3+dfsg-2) unstable; urgency=high
+
+  [ Bas Couwenberg ]
+  * Bump liblwgeom package name from 2.1.2 to 2.1.3.
+    (closes: #748756)
+
+  [ Markus Wanner ]
+  * Add NEWS.Debian to warn about a possibly breaking change.
+  * Correct patch use-json-c. Drop explicit dependencies, but rely on
+    shlibs:Depends, instead. Closes: #748332.
+  * Revert parts of the patch use-debian-maven to actually build the
+    javadocs. Add a libpostgis-java-doc package carrying the docs.
+
+ -- Markus Wanner <markus@bluegap.ch>  Wed, 21 May 2014 10:15:57 +0200
+
+postgis (2.1.3+dfsg-1) unstable; urgency=high
+
+  * New upstream release, 2.1.3: strengthens the code to forbid database
+    users to trigger opening of arbitrary files or network connections by
+    the system user running the PostgreSQL server process.
+  * Add B-D-I libmaven-javadoc-plugin-java to support a new plugin in the
+    jdbc pom file - supposedly generating java documentation.
+  * Adjust the following patches to the new release: debian-versions, and
+    use-debian-maven.
+  * Refresh line numbers on: honor-build-flags, use-json-c.
+  * Drop obsolete patch: java-version-fix.
+
+ -- Markus Wanner <markus@bluegap.ch>  Wed, 14 May 2014 13:55:46 +0200
+
+postgis (2.1.2+dfsg-3) unstable; urgency=low
+
+  * Also use dh-autoreconf to update libtool.m4. Closes: #744648. Move
+    that and dh_autotools-dev above the copying step.
+  * Update B-D on libjson-c-dev. Add patch use-josn-c to not only detect,
+    but actually use the new directory for its include files.
+    Closes: #745010.
+  * Allow translations of the debconf notice for postgis-2.0 deprecation.
+  * Add a German translation.
+  * Add a Russian translation by Yuri Kozlov. Closes: #744268.
+  * Add a French translation by Julien Patriarca. Closes: #744749.
+  * Add a Polish translation by Michał Kułach. Closes: #745068.
+  * Add a Portuguese translation by Américo Monteiro. Closes: #745148.
+  * Add a Spanish translation by Matias A. Bellone. Closes: #745785.
+  * Add a Italian translation by Beatrice Torracca. Closes: #747587.
+
+ -- Markus Wanner <markus@bluegap.ch>  Mon, 12 May 2014 18:53:55 +0200
+
+postgis (2.1.2+dfsg-2) unstable; urgency=medium
+
+  * Fix arch-only builds by moving the maven-repo-helper dependency from
+    B-D-I to B-D.
+
+ -- Markus Wanner <markus@bluegap.ch>  Mon, 07 Apr 2014 16:36:07 +0200
+
+postgis (2.1.2+dfsg-1) unstable; urgency=medium
+
+  * Add myself to Uploaders.
+  * Update copyright file using copyright-format 1.0.
+  * Repack upstream tarball, remove OGC test cases with unclear license.
+    (closes: #743489)
+  * Add gbp.conf to use pristine-tar by default.
+  * Add man page for raster2pgsql.
+    (closes: #717307)
+  * Bump Debhelper compatibility to 9.
+  * Add partial German translation for documentation.
+    Thanks to Chris Leick for the patch.
+    (closes: #729284)
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 04 Apr 2014 20:16:30 +0200
+
+postgis (2.1.2-1) unstable; urgency=low
+
+  * New upstream release, 2.1.1. Closes: #728724.
+  * Adapt liblwgeom package name and dependencies to match the new release
+    version number.
+  * Add a suggestion for postgis-doc. Closes: #737497.
+  * Refresh patches debian-versions, honor-build-flags, and
+    java-version-fix.
+  * Drop patches fix-kfreebsd, fix-big-endian, joinsel-issue2543, and
+    doc-resources - these got applied upstream.
+  * Add upstream issue number to patch fix-armel - that one hasn't been
+    applied upstream, yet.
+
+ -- Markus Wanner <markus@bluegap.ch>  Mon, 31 Mar 2014 13:07:07 +0200
+
+postgis (2.1.1-6) unstable; urgency=low
+
+  * Recommend postgresql-contrib-M.N for the fuzzystrmatch
+    extension, which postgis_tiger_decoder depends on.
+  * Update README.Debian, make sure the sql scripts are included in the
+    -scripts package for the newest Postgres version as well.
+    Closes: #724626.
+  * Correct java-version-fix, so the jar-version becomes 2.1.1 rather than
+    some rc. Closes: #721721.
+  * Deduplicate highly redundant .sql files in *-postgis-scripts.
+  * Drop the ored dependency on openjdk-6-jdk.
+  * Add a couple more files to the extend-diff-ignore.
+
+ -- Markus Wanner <markus@bluegap.ch>  Wed, 19 Mar 2014 10:16:41 +0100
+
+postgis (2.1.1-5) unstable; urgency=low
+
+  * Use dh-autoreconf for up-to-date config.guess and config.sub.
+    Closes: #727945.
+
+ -- Markus Wanner <markus@bluegap.ch>  Mon, 27 Jan 2014 21:10:42 +0100
+
+postgis (2.1.1-4) unstable; urgency=low
+
+  * Drop an unneeded fixmakedoc patch.
+  * Add style.css and images to postgis-doc. Closes: #649352.
+
+ -- Markus Wanner <markus@bluegap.ch>  Sun, 19 Jan 2014 15:48:48 +0100
+
+postgis (2.1.1-3) unstable; urgency=low
+
+  * Fix FTBFS on at least powerpc and mips by commenting out a few tests
+    that check against a serialized representation, which is architecture
+    dependent.
+  * Apply (experimental) upstream patch preventing against selectivity
+    estimates bigger than 1.0.
+
+ -- Markus Wanner <markus@bluegap.ch>  Tue, 14 Jan 2014 22:18:56 +0100
+
+postgis (2.1.1-2) unstable; urgency=medium
+
+  * Fix FTBFS on armel, maybe others, with yet another patch.
+  * debian/control: bumped Standard-Versions to 3.9.5, no changes needed.
+
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 09 Jan 2014 20:00:54 +0100
+
+postgis (2.1.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Drop patches upstream-r11979, upstream-r11983, upstream-r11990, and
+    minor-r11979-correction; these are included in this release.
+  * control, rules, liblwgeom-2.1.*.{install,symbols}: adapt to new liblwgeom
+    version.
+  * Adjust patch debian-versions: in doc/Makefile.comments, refer to
+    Postgres 9.3, as that's now default. Set POSTGIS_LIBXML2_VERSION to
+    2.9.1, as currently shipped.
+  * Adjust line numbers in patches honor-build-flags and link-liblwgeom
+
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 12 Dec 2013 20:38:27 +0100
+
+postgis (2.1.0-4) unstable; urgency=low
+
+  * Rename pg-X.Y-postgis-2.1-scripts package to exclude PostGIS version
+    number.
+  * Add transitional postgis-2.0-scripts packages for all Postgres
+    versions supported by the old *and* new PostGIS version. These
+    effectively remove scripts and the postgis.control file prior to
+    installing a newer *-postgis-scripts package, which Breaks+Replaces
+    the old one. Add appropriate notification messages on upgrade.
+  * Add patches upstream-r11983 and upstream-r11990 to try some more
+    big-endian fixes.
+
+ -- Markus Wanner <markus@bluegap.ch>  Sun, 20 Oct 2013 20:34:51 +0200
+
+postgis (2.1.0-3) unstable; urgency=low
+
+  * Update patch upstream-r11934 to cover rev 11979, instead. It seems to
+    be a more thorough fix. Add minor-r11979-correction patch to account
+    for some new WARNINGs, that didn't appear, before.
+
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 26 Sep 2013 15:36:22 +0200
+
+postgis (2.1.0-2) unstable; urgency=low
+
+  * Correct generation of debian/control: drop an unnecessary grep in
+    debian/pgversions. I broke it when changing to '9.0+'.
+  * Copy binaries for the common binary package 'postgis' from the newest
+    version, rather than hardcoding 9.1.
+  * Add experimental patch from upstream to increase pass rate on
+    non-Intel architectures (upstream-r11934).
+  * Add a description and some tags to patch fix-manpage.
+
+ -- Markus Wanner <markus@bluegap.ch>  Tue, 10 Sep 2013 21:53:57 +0200
+
+postgis (2.1.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Update pgversions, use '9.0+' feature of pg-common >= 148.
+  * Adjust liblwgeom version and symbols for new version.
+  * Update build dependencies according to README.postgis (FIXME: prefer
+    geos-3.4)
+  * Adapt patches debian-versions, java-version-fix, link-liblwgeom,
+    honor-build-flags.
+  * Refresh line numbers on patches: fixmakedoc, fix-spelling.
+  * Drop patches: fix-manpages, fix-test-case-for-i386,
+    fix-tests-on-big-endian: applied upstream.
+  * shp2pgsql-gui.1 is now provided upstream. Drop the debian variant. Add
+    a patch stripping an initial UTF-8 marker from the upstream file.
+
+ -- Markus Wanner <markus@bluegap.ch>  Mon, 26 Aug 2013 22:02:22 +0200
+
+postgis (2.0.3-8) unstable; urgency=low
+
+  * Don't err out when setting JAVA_HOME, but only later in
+    build-indep. So arch-only builds that don't have (nor need) the java
+    cruft available can succeed.
+
+ -- Markus Wanner <markus@bluegap.ch>  Wed, 07 Aug 2013 22:10:02 +0200
+
+postgis (2.0.3-7) unstable; urgency=low
+
+  * Let rules check for different OpenJDK versions supported and set
+    JAVA_HOME accordingly.
+  * Use a simple rm rather than invoking maven. Allows us to move all java
+    related Build-Depends back to Build-Depends-Indep.
+
+ -- Markus Wanner <markus@bluegap.ch>  Wed, 07 Aug 2013 13:12:25 +0200
+
+postgis (2.0.3-6) unstable; urgency=low
+
+  * Cleanup check target, reduce duplication.
+  * Re-add postgis_restore.pl from the utils directory. Closes: #718358.
+  * Add patch fix-tests-on-big-endian to fix unit tests on big
+    endian. Closes: #718749.
+
+ -- Markus Wanner <markus@bluegap.ch>  Wed, 06 Aug 2013 20:29:42 +0200
+
+postgis (2.0.3-5) unstable; urgency=low
+
+  * Build-Deps: rather than default-jdk, depend on openjdk 6 or 7, as the
+    gcj-jdk didn't work.
+  * Add patch fix-kfreebsd to get rid of a compilation error on kFreeBSD.
+  * rules: if 'make check' fails, print all the diffs of failing tests on
+    stdout.
+
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 25 Jul 2013 21:45:17 +0200
+
+postgis (2.0.3-4) unstable; urgency=low
+
+  * Build-Deps: also make libmaven-clean-plugin-java and
+    libmaven-jar-plugin-java a full build dependency. Fixes another FTBFS.
+
+ -- Markus Wanner <markus@bluegap.ch>  Tue, 23 Jul 2013 09:40:35 +0200
+
+postgis (2.0.3-3) unstable; urgency=low
+
+  [Mònica Ramírez Arceda]
+  * Add a manpage for shp2pgsql-gui. Closes: #656012.
+
+  [Markus Wanner]
+  * Add fix-test-case-for-i386 patch, back-ported from upstream's
+    r10642. Fixes tests on i386 (and possibly other non-amd64
+    architectures).
+
+ -- Markus Wanner <markus@bluegap.ch>  Fri, 19 Jul 2013 10:59:47 +0200
+
+postgis (2.0.3-2) unstable; urgency=low
+
+  * Correct dependency on libgdal-dev, allowing the old, now transitional
+    libgdal1-dev to satisfy it as well.
+  * Build-Deps: correct libgeos-dev version requirement, depend on
+    libpostgresql-jdbc-java instead of (transitional) libpg-java.
+  * Tweak extend-diff-ignore to save us a copying dance in
+    debian/rules. Cleanup the 'clean' target a bit.
+  * Make maven2 a full build-dep (not just B-D-Indep). Closes: #714712.
+  * Pass an LD_PRELOAD to postgres when running 'make check', so the
+    postgis library being loaded can find liblwgeom (and doesn't try to
+    use a pre-installed one).
+  * Add postgresql-common build dependency, as the above needs a relatively
+    new pg_createcluster feature.
+  * Drop libpostgresql-jdbc-java from B-D-I, it's already in B-D.
+
+ -- Markus Wanner  <markus@bluegap.ch>  Thu, 18 Jul 2013 20:29:41 +0200
+
+postgis (2.0.3-1) unstable; urgency=low
+
+  [Markus Wanner]
+  * Team upload
+  * New upstream release, 2.0.3
+  * Drop Build-Dep on postgresql server binaries.
+  * Downgrade postgresql-9.1-postgis dependency on postgis to a
+    recommendation. Downgrade several conflicts to breaks.
+  * Upgrade postgresql-9.1-java misc-depends from suggestion to dependency.
+  * Add patch fix-spelling: fixes a common spelling error in
+    liblwgeom/lwout_wkt.c.
+  * Ignore changes of some auto-updated files (via source/options). Let
+    debian/rules cleanup some more generated files.
+  * rules: use a separate build directory per Postgres version, swap
+    dh_makeshlibs and dh_installdeb, build in the appropriate build targets,
+    let install only install pre-built stuff.
+  * Compile the postgis jdbc java library again, using maven directly. Add
+    required Build-Depends-Indeps.
+  * Separate large SQL scripts and perl utils. Put them in their own
+    architecture independent indepentend package (..-scripts).
+  * Separate PostGIS documentation into a postgis-doc package, register its
+    contents with doc-base.
+  * Append the PostGIS version to postgresql-9.1-postgis, so multiple
+    versions of it can be co-installed. Required to keep systems working
+    after an upgrade.
+  * Represent the fact that lwgeom isn't backward compatible by renaming
+    liblwgeom2 to liblwgeom-2.0.3.
+  * Add patch java-version-fix: Corrects java jdbc jar version.
+  * Policy updated to 3.9.4. No changes.
+  * Add pgversions and allow generation of debian/control and various
+    install files based on it.
+  * Update debian/copyright a bit.
+  * Update and improve watchfile.
+
+  [Stephen Frost]
+  * Split out liblwgeom2 and liblwgeom-dev from postgis.
+  * Add patches debian-versions and link-liblwgeom.
+  * Let postgis install under /usr/lib/postgresql rather than under
+    /usr/lib/postgis plus symlink in the former directory.
+  * debian/rules: improve cleanup target.
+  * Simplify and tweak build rules.
+
+  [Jerome Villeneuve Larouche]
+  * Removed old patches (generator, html_doc_resources, install)
+  * Added patch fixmakedoc for doc/Makefile.comments.
+
+ -- Markus Wanner <markus@bluegap.ch>  Wed, 05 Jun 2013 23:12:35 +0200
+
+postgis (1.5.3-2) unstable; urgency=low
+
+  * Moved pgsql2shp/shp2pgsql under conventional /usr/bin path.
+    (closes: #648176)
+  * New patch html_doc_resourcesi added: now installing HTML documentation.
+    Thanks Andrew Harvey.
+    (closes: #649352)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 21 Nov 2011 15:43:23 +0100
+
+postgis (1.5.3-1) unstable; urgency=low
+
+  * New upstream minor release, with fix for PostgreSQL 9.1.
+  * Repository moved to git and changed Vcs-* fields in debian/control.
+  * Removed obsolete debian/*_lenny.
+  * Policy bumped to 3.9.2. No changes.
+  * Moved to source format 3.0 with quilt support.
+  * Dehelper compatibility level set to 8.
+  * Updated README to reflect current location of template SQL files.
+    (closes: #575622)
+  * Postrm was assigned to the wrong package (postgis), which caused
+    unexpected behavior on purging. Now each purge of postgresql-*-postgis will
+    cause extension removal.
+    (closes: #596663)
+  * Added PostgreSQL 9.1 support.
+    (closes: #633111)
+  * Dropped PostgreSQL 8.4 support, as required for wheezy.
+    (closes: #639474,#642356)
+  * Fixed (again) README.Debian for paths.
+    (closes: #575622)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 15 Sep 2011 15:14:57 +0200
+
+postgis (1.5.2-1) unstable; urgency=low
+
+  * New upstream release, with a few bug fixes.
+  * Added shp2pgsql-gui binary.
+  * Removed patches, applied upstream: getopt.
+
+ -- Alan Boudreault <aboudreault@mapgears.com>  Wed, 29 Sep 2010 09:16:10 -0400
+
+postgis (1.5.1-5) unstable; urgency=high
+
+  * This version requires geos >= 3.1.1, debian/control updated.
+    (closes: #580462)
+  * Moved libpostgis-java to java section.
+  * README.Debian has been fixed for old lwpostgis.sql since ages. Just ack.
+    (closes: #575622)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 24 May 2010 09:40:32 +0200
+
+postgis (1.5.1-4) unstable; urgency=high
+
+  * [PATCH] getopt.dpatch added to avoid var collisions among Postgis getopt
+    and glibc one. That solves a FTBS on mips/mipsel.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 22 May 2010 19:03:39 +0200
+
+postgis (1.5.1-3) unstable; urgency=medium
+
+  * Removed custom CFLAGS which probably caused FTBS on mips/mipsel archs.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 22 May 2010 11:20:44 +0200
+
+postgis (1.5.1-2) unstable; urgency=low
+
+  * Added generator.dpatch to avoid a buffer overflow on alpha due to
+    a too narrow buffer apparently.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 17 May 2010 14:21:37 +0200
+
+postgis (1.5.1-1) unstable; urgency=low
+
+  * New upstream release, with a few bug fixes.
+
+ -- Alan Boudreault <aboudreault@mapgears.com>  Sun, 16 May 2010 14:42:21 -0400
+
+postgis (1.5.0-1) unstable; urgency=low
+
+  * New upstream major release, with many enhancements.
+  * Policy bumped to 3.8.4, no changes.
+  * Added libxml2-dev as new build-dep.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 10 Mar 2010 09:32:20 +0100
+
+postgis (1.4.0-2) unstable; urgency=low
+
+  * Upload to unstable.
+  * Better parameterized debian/rules against postgis $(VERSION).
+  * Added dblatex and libcunit1-dev among build-deps.
+  * Added postgis_comments.sql to contrib/ SQL templates.
+  * Dropping 8.3 support, no more supported for squeeze.
+    (closes: #559587)
+  * Do not stop on error in postrm if the target dir does not exist.
+    (closes: #560409)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 11 Dec 2009 13:10:34 +0100
+
+postgis (1.4.0-1) experimental; urgency=low
+
+  * New upstream release.
+  * Updated configure arguments now obsolete/changed.
+  * Required some new var initialization for installing in debian/ its trees.
+  * The liblwgeom solib is now named postgis, so changed a few things around.
+  * Updated build-dep: proj -> libproj-dev.
+  * Policy bumped to 3.8.3. No changes.
+  * Debhelper level set to 7.
+  * Added ${misc:Depends}.
+  * Now postgresql >= 8.3, geos >= 3 and proj >= 4.5 are required. This is
+    reflected in debian/control for safety.
+  * Added PostgreSQL 8.4 support, the 8.3 version will be dropped when
+    required. Now the .in template for postrm changed for multiversioning.
+  * Now build-dep on default-jdk which is DFSG-safe.
+  * Removed Fabio Tranchitella among Uploaders because retired from DebianGis.
+  * Now build-dep on imagemagick because doc generation requires convert tool.
+  * Added patch install.dpatch to manage minor inconsistencies in the java
+    inatallation scripts.
+  * stamp files are now auto-cleaned.
+  * Cleaned debian/rules to be idempotent.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 14 Sep 2009 11:58:45 +0200
+
+postgis (1.3.5-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: bumped Standard-Versions to 3.8.0, no changes needed.
+  * debian/rules: copy utils/*.pl to the binary package. (Closes: #491154)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Thu, 05 Mar 2009 22:47:15 +0100
+
+postgis (1.3.3-3) unstable; urgency=low
+
+  * Added Vcs-* fields in debian/control.
+  * Fixed download URL in debian/copyright.
+  * Now it installs the shared lib in a private postgis path and makes a
+    hard link in the postgres library path at configure time. That would
+    allow coexistence of different flavors of the library which could be
+    used by different DBs at run-time and allowing soft/hard-upgrade scripts
+    working. (closes: #441794, #441797)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 09 Jun 2008 13:03:04 +0200
+
+postgis (1.3.3-2) unstable; urgency=high
+
+  * Dropped postgresql 8.2 support due to removal in Lenny.
+    (closes: #474287)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 06 Jun 2008 23:57:45 +0200
+
+postgis (1.3.3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Tue, 15 Apr 2008 09:01:58 +0200
+
+postgis (1.3.2-2) unstable; urgency=low
+
+  * Add support for postgresql-8.3. (Closes: #466417, #471689)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Wed, 19 Mar 2008 19:23:00 +0100
+
+postgis (1.3.2-1) unstable; urgency=low
+
+  [ Francesco Paolo Lovergine ]
+  * Added Homepage field in debian/control
+  * Fixed lintian warning: debian-rules-ignores-make-clean-error
+
+  [ Fabio Tranchitella ]
+  * New upstream release.
+  * Updated Standard-Version to 3.7.3.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon, 31 Dec 2007 10:57:12 +0100
+
+postgis (1.3.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon, 10 Sep 2007 10:36:30 +0200
+
+postgis (1.2.1-2) unstable; urgency=low
+
+  * Added build-dep from libjts-java 1.7
+    (closes: #425919)
+  * Added me among uploaders.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sat, 16 Jun 2007 01:00:49 +0200
+
+postgis (1.2.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Migrate to PostgreSQL 8.2-only (Closes: #419297)
+  * Remove busted templategis from the build (new in 1.2.1 anyway).
+    (Currently attempts to install files in /etc/default, doesn't
+     respect $DESTDIR and overall looks like a godawful mess)
+
+ -- Stephen Frost <sfrost@debian.org>  Fri, 13 Apr 2007 09:19:18 +0200
+
+postgis (1.1.6-2) unstable; urgency=low
+
+  * debian/README.Debian: added documentation for the new users on how to use
+    postgis and how to enable it for new or existent databases.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon, 18 Dec 2006 17:19:27 +0100
+
+postgis (1.1.6-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Tue,  7 Nov 2006 09:47:00 +0100
+
+postgis (1.1.5-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Tue, 31 Oct 2006 21:56:32 +0100
+
+postgis (1.1.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri,  6 Oct 2006 10:51:51 +0200
+
+postgis (1.1.3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sun, 16 Jul 2006 22:19:25 +0200
+
+postgis (1.1.2-1) unstable; urgency=low
+
+  - Fabio Tranchitella <kobold@debian.org>
+    * New upstream release. (Closes: #314854)
+    * Renamed packages to follow the actual naming conventions.
+      (Closes: #312675)
+    * Re-packaging, let's try to have postgis in etch. (Closes: #309528, #310094)
+    * Fixed several FTBFS and uninstallable bugs.
+      (Closes: #316519, #335631, #363946, #323120)
+    * Fixed libpostgis-java package FTBFS. (Closes: #308848)
+    * Move to the new postgresql infrastructure. (Closes: #321913, #312676)
+    * Team maintainership, added myself as uploader.
+
+  - Stephen Frost <sfrost@debian.org>
+    * Added myself as uploader
+    * Removed Alex from uploaders (for now at least)
+    * Cleaned up doc/html/postgis.html handling
+    * Renamed postgis-common -> postgis
+    * Made postgis package Arch: any
+    * Moved PostGIS binaries into base postgis package
+    * Changed postgis package to only suggest server packages (could very
+      reasonably be installed on a non-server machine for the PostGIS
+      binaries)
+    * Dropped extra extraneous linking (previously the server module and
+      the binaries were linking to everything the Postgres server linked
+      to, unnecessary and potentially dangerous)
+    * Dropped support for 7.4, after discussion with Martin Pitt and others
+      it's clear that there isn't any need for a 7.4 version of PostGIS in
+      etch.
+    * New upstream release Closes: #311732
+
+ -- Stephen Frost <sfrost@debian.org>  Wed, 31 May 2006 16:33:48 -0400
+
+postgis (1.1.0-7) unstable; urgency=low
+
+  * postgresql-postgis-common should depend on postgresql-common | postgresql,
+    not the other way.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Tue, 21 Mar 2006 03:13:04 +0200
+
+postgis (1.1.0-6) unstable; urgency=low
+
+  * Closes: #312675
+    postgresql-postgis-utils is the only utils package, replacing the
+    previous postgresql-pg_version-postgis-utils. a further elimination
+    of older method reminiscence.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sat, 18 Mar 2006 23:13:04 +0200
+
+postgis (1.1.0-5) unstable; urgency=low
+
+  * Closes: #312675
+    postgresql-postgis-utils is the only utils package, replacing the
+    previous postgresql-pg_version-postgis-utils.
+  * Closes: 335631
+    Depends on libgeos which passed c2 ABI transition.
+  * Uses /usr/share/postgresql-common/supported-versions to dynamically
+    detect postgresql supported versions. thanks martin.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Thu, 9 Mar 2006 04:26:05 +0200
+
+postgis (1.1.0-4) unstable; urgency=low
+
+  * made invariable control file to match standards. the control file
+    may be made automatically by calling 'debian/rules maintainer-configure'
+  * the supported postgresql versions may be filtered, by filling
+    'debian/_supported.postgresql'.
+  * the postgis binary packages have been renamed, to obey the postgresql
+    standard for extension packages: now their name allways begins with
+    'postgresql', eventually followed by the postgresql major and minor
+    version, if a specific one is needed.
+    'libpostgis' has become 'postgis'.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Mon, 27 Feb 2006 03:26:15 +0200
+
+postgis (1.1.0-3) unstable; urgency=low
+
+  * minor bug fixes
+  * recompilation
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sun, 26 Feb 2006 05:16:09 +0200
+
+postgis (1.1.0-2) unstable; urgency=low
+
+  * minor bug fixes
+  * the package builds again on systems without multiclustering postgresql.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Wed, 28 Dec 2005 07:11:39 +0200
+
+postgis (1.1.0-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Wed, 21 Dec 2005 05:15:37 +0200
+
+postgis (1.0.4-2) unstable; urgency=low
+
+  * Closes: #321913 Closes: #312676
+    Support of multiple postgis installations on the same postgresql server.
+    Please note:
+    - The template database will be template_gis#SONAME#,
+    - The famous (lw)?postgis.sql file will be postgis#SONAME#.sql,
+    where #SONAME# is roughly the major upstream postgis version.
+  * Closes: #323120
+    The building process is autodetecting the appropriate postgresql-dev.
+  * README.Debian updated to support multiversion postgresql architecture.
+  * Closes: #314854
+    Newer upstream version.
+  * Minor improvements to make the build process more quiet.
+  * Default variables are being kept in configuration files. Thus, the same
+    package diff will serve for postgis-0.9 and 1.0.
+  * Closes: #310100
+    The template database is no longer been installed/removed with every
+    installation/remove/upgrade of postgis. It should have received finer
+    grained parameters, anyway .
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sun, 16 Oct 2005 03:31:03 +0200
+
+postgis (0.9.2-1) unstable; urgency=low
+
+  * Basic support for libpostgis0.
+    The only package(s) made are the library and examples one(s), so that
+    postgis-0.9.2 databases can be created and used, while not clashing with
+    files and utilities for postgis-1.0.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sun, 9 Oct 2005 09:49:04 +0200
+
+postgis (1.0.4-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+  * Closes: #316519
+    Changed the dependencies in control file to work with multiversion
+    postgresql.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sat, 1 Oct 2005 18:07:37 +0300
+
+postgis (1.0.3-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+  * Adapted regress/test_index_concurrency to createdb.postgis method.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Thu, 1 Sep 2005 04:27:26 +0300
+
+postgis (1.0.1-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+  * Closes: #309528
+    binary-all has been separated from binary-arch
+  * Closes: #311732
+    upstream fix: problem with ' char in field names.
+  * Closes: #310094
+    all warnings have been clarified and/or the issues have been fixed
+  * libpostgis-java-debug has been split from libpostgis-java
+  * bug #308728 has been reassigned to postgresql
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Fri, 27 May 2005 17:17:06 +0300
+
+postgis (1.0.0-2) unstable; urgency=low
+
+  * Closes: #308848
+    gcj has been specifically set as the required java compiler, although other
+    java compilers would do as well
+  * Closes: #310101
+    createdb.postgis documentation updated
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Fri,  27 May 2005 05:02:45 +0300
+
+postgis (1.0.0-1) unstable; urgency=low
+
+  * First official release for the Debian archive.
+  * Corrected build-depends.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Thu,  5 May 2005 10:02:45 +0200
+
+postgis (1.0.0RELEASE-4) unstable; urgency=low
+
+  * example wkb_reader now compiles generically. tested with i386 and ppc.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Thu, 5 May 2005 05:14:02 +0300
+
+postgis (1.0.0RELEASE-3) unstable; urgency=low
+
+  * mktemplate_gis and rmtemplate_gis work on dash.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sat, 30 Apr 2005 17:34:02 +0300
+postgis (1.0.0RELEASE-2) unstable; urgency=low
+
+  * Fixed minor typos in manual pages.
+  * Documented the special debian usage of the ogc_test_suite.
+  * Fixed bug in automatic upstream version tracking.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sat, 30 Apr 2005 16:25:22 +0300
+
+
+postgis (1.0.0RELEASE-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sat, 30 Apr 2005 15:33:00 +0300
+
+postgis (1.0.0RELEASE-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+  * added libpostgisjava replacement directive.
+  * improved automatic upstream version sensing: adding RELEASE for clean
+    upstream versions.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sun, 24 Apr 2005 20:04:36 +0300
+
+postgis (1.0.0RC6-6) unstable; urgency=low
+
+  * renamed libpostgisjava to libpostgis-java
+  * specified libgeos2 version 2.1.1 and above as a dependency.
+    upstream authors will be warned to document this too.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Fri, 22 Apr 2005 18:49:01 +0200
+
+postgis (1.0.0RC6-5) unstable; urgency=low
+
+  * Cleaned up removal of .cvsignore files, so it will not be imposed on upstream.
+  * Added optional usage of postgresql-dev installed at custom location.
+  * NOTICE: Since manpages have been added and constantly updated after 1.0.0rc6
+    was released, please     copy them from postgis-cvs to the orig directory, or
+    use orig file uploaded with this package
+  * Improved the dependencies system, following suggestions from
+    Markus Schaber <markus@schabi.de>
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Fri, 15 Apr 2005 14:49:01 +0200
+
+postgis (1.0.0RC6-4) unstable; urgency=low
+
+  * Adjusted useless i386-linux-gcc to gcc (existent for postgresql 7.4 only), thanks to comments from
+    Giuseppe Sacco <giuseppe@eppesuigoccas.homedns.org>
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Tue, 12 Apr 2005 04:12:01 +0200
+
+postgis (1.0.0RC6-3) unstable; urgency=low
+
+  * Improved build-depends, thanks to comments from
+    Giuseppe Sacco <giuseppe@eppesuigoccas.homedns.org>
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Mon, 11 Apr 2005 05:15:01 +0200
+
+postgis (1.0.0RC6-2) unstable; urgency=low
+
+  * Improved mktemplate_gis, and renamed from mktemplate_gis.sh.
+  * Updated man pages.
+  * Using createdb.postgis as the main method of creating gis enambled databases.
+  * Updated upstream testing scripts to use createdb.postgis.
+  * Fixind problem: postgres should be able to call mktemplate_gis.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Thu, 31 Mar 2005 05:05:41 +0200
+
+postgis (1.0.0RC6-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Thu, 31 Mar 2005 05:05:41 +0200
+
+postgis (1.0.0RC4-2) unstable; urgency=low
+
+  * Minor bugfix in debian/rules
+  * Removed need for executable files in ./debian. rules is the only executable.
+  * Improvement for mktemplate_gis: now it may be run to grant full privileges to any user as argument.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Tue, 22 Mar 2005 03:51:20 +0200
+
+postgis (1.0.0RC4-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sun, 6 Mar 2005 05:06:51 +0200
+
+postgis (1.0.0RC3-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Thu, 3 Mar 2005 04:30:58 +0200
+
+postgis (1.0.0RC2-1) unstable; urgency=low
+
+  * Automatic upstream version tracking.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sun, 30 Jan 2005 05:18:50 +0200
+
+postgis (0.9.0-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Alex Bodnaru <alexbodn@012.net.il>  Sun,  7 Nov 2004 23:39:53 +0200
