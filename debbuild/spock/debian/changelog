@@ -1,3 +1,10 @@
+spock (5.0.12-2PGSTY) unstable; urgency=medium
+
+  * Update to 5.0.12; require pgEdge 18.6 revision 2 with matching Spock.
+  * Keep the standalone package name without duplicating bundled files.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 spock (5.0.6-1PGSTY) unstable; urgency=medium
 
   * Build spock from upstream source for pgedge-18.

@@ -2,13 +2,14 @@ Source: spock
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), pgedge-18 (>= 18.6), libjansson-dev, pkg-config
+Build-Depends: debhelper-compat (= 13)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/pgEdge/spock
 
 Package: pgedge-18-spock
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, pgedge-18 (>= 18.6)
-Description: Spock multi-master logical replication extension for pgedge-18
- Provides pgEdge Spock logical replication features, including node/subscription management and conflict handling APIs.
+Architecture: all
+Depends: ${misc:Depends}, pgedge-18 (>= 18.6-2PGSTY~)
+Description: compatibility package for Spock bundled with pgEdge PostgreSQL 18
+ Spock is included in pgedge-18. This package keeps the standalone package
+ name available without installing a second copy of the extension files.
