@@ -97,5 +97,28 @@
       }
     ],
     "kind": "pgxs"
+  },
+  {
+    "extension": "pg_statvfs",
+    "package": "pg_statvfs",
+    "deb_package": "pg-statvfs",
+    "version": "1.0",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "pg_plugins-ae57c1f3df69.tar.gz",
+      "sha256": "8e977f51901e1cb5357a24d16b7385aff58da7883c606eff195fc2923c8d5c15",
+      "url": "https://codeload.github.com/michaelpq/pg_plugins/tar.gz/ae57c1f3df697fb942f4576f873a655187193ace",
+      "ref": "ae57c1f3df697fb942f4576f873a655187193ace",
+      "source_kind": "pinned-upstream-commit",
+      "repository": "michaelpq/pg_plugins"
+    },
+    "patches": [],
+    "kind": "pgxs"
   }
 ]

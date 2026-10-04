@@ -1,0 +1,14 @@
+Source: pg-statvfs
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/michaelpq/pg_plugins
+
+Package: postgresql-PGVERSION-pg-statvfs
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Filesystem capacity statistics for PostgreSQL
+ Filesystem capacity statistics for PostgreSQL.
