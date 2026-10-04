@@ -1,12 +1,10 @@
-# kafgres 0.1.0
+# kafgres 0.3.0
 
-Source: [upstream release](https://codeload.github.com/RayElg/kafgres/tar.gz/refs/tags/0.1.0). The original source and both Cargo.lock
-files are unchanged. SHA256: `01076e258605655f279c2506aee6e0e3f40eda3a1ae66a1ab7cabcf438f8bc10`.
+Source: [upstream tag](https://codeload.github.com/RayElg/kafgres/tar.gz/refs/tags/0.3.0). The original source and both Cargo.lock
+files are unchanged. SHA256: `a0f47a90b04f19323b7e51ee6ef06b9f1b0fb4f769ea30adae572904e6ca29ad`.
 
-PostgreSQL 16 only, matching the upstream release binaries and Docker build.
-The upstream feature list also names other majors, but the PG17 build fails
-in `decoding.rs` because `ReorderBufferTupleBuf` no longer exists.
-Those feature names are not a supported package matrix.
+PGSTY retains its PostgreSQL 16 package target. Other PostgreSQL majors need
+separate build and runtime validation before expanding the package matrix.
 
 Build with cargo-pgrx 0.16.1 and an installed Rust toolchain. `PGRX_BIN_DIR`
 can select an isolated cargo-pgrx installation. The Cargo lockfiles are fetched
@@ -19,6 +17,6 @@ and a server restart. The default segment engine stores its message log in
 separate files and needs its own replication and archive configuration.
 The table engine stores the message log in PostgreSQL tables.
 
-EL9's packaged librdkafka 1.6.1 cannot query the logical END offset against
-this upstream broker. Explicit partition/offset consumption works; modern
-librdkafka 2.15.1 passes offset queries and read-committed consumption.
+The earlier 0.1.0 validation found that EL9's librdkafka 1.6.1 could not query
+the logical END offset, while librdkafka 2.15.1 passed offset queries and
+read-committed consumption. That result has not been revalidated for 0.3.0.

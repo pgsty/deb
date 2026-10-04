@@ -8,8 +8,8 @@ all: setup build move
 PGRX_BIN_DIR ?= $(HOME)/.cargo/bin
 export PATH := $(PGRX_BIN_DIR):$(PATH)
 
-# Unmodified upstream 0.1.0 release and committed pgrx 0.16.1 lockfile.
-TARBALL := kafgres-0.1.0.tar.gz
+# Unmodified upstream 0.3.0 release and committed pgrx 0.16.1 lockfile.
+TARBALL := kafgres-0.3.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -57,7 +57,8 @@ check-pgrx:
 
 packaging:
 	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
-	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc
+	# Builder images use rustup and versioned Clang; the locked build above checks the actual tools.
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;

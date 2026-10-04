@@ -1,3 +1,9 @@
+kafgres (0.3.0-1PGSTY) unstable; urgency=medium
+
+  * Update to 0.3.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 kafgres (0.1.0-1PGSTY) UNRELEASED; urgency=medium
 
   * Package upstream 0.1.0 with the original pgrx 0.16.1 lockfile.
