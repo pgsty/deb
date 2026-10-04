@@ -1249,4 +1249,7 @@ kafgres:
 cgal:
 	$(MAKE) -C cgal
 
-.PHONY: cgal
+geos:
+	$(MAKE) -C geos
+
+.PHONY: cgal geos

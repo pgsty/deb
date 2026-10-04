@@ -1,0 +1,8 @@
+Document: geos
+Title: GEOS - Geometry Engine Open Source
+Abstract: This manual describes the GEOS API.
+Section: Science/Geoscience
+
+Format: HTML
+Index: /usr/share/doc/libgeos-dev/html/index.html
+Files: /usr/share/doc/libgeos-dev/html/*.html

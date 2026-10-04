@@ -1,0 +1,18 @@
+geos (3.3.1-1) unstable; urgency=low
+
+   GEOS provides a (stable) C API and an unstable C++ one. Most programs use
+   the stable interface. See http://trac.osgeo.org/geos/wiki/Applications for
+   details. Starting from this version we are trying to short the list of
+   reverse build-deps that require erroneously linking both C/C++ and binary
+   NMUs frequency.
+
+   A program which depends on the C++ API has to b-depend on the libgeos++-dev
+   which in turn depends on the right libgeos-VERSION lib. All
+   other programs have to b-depend on the C libgeos-dev package, which 
+   depends strictly on the C stable interface (currently libgeos1).
+
+   Note that geos-config has some problems on those regards, so current 
+   version also provides the C lib only for --clibs, with the same approach
+   adopted by upstream. See http://trac.osgeo.org/geos/ticket/497 about that.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 30 Nov 2011 17:27:23 +0100

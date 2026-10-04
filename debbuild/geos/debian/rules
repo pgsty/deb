@@ -1,0 +1,42 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# Enable hardening build flags
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+# testrunner fails on some architectures
+DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
+include /usr/share/dpkg/pkg-info.mk
+
+UPSTREAM_VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed -e 's/\+.*//')
+
+export DEB_CXXFLAGS_MAINT_PREPEND=-fpermissive
+
+%:
+	dh $@ --builddirectory=build --buildsystem=cmake
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DBUILD_DOCUMENTATION=ON
+
+execute_after_dh_auto_build:
+	$(MAKE) -C build docs
+
+override_dh_auto_test:
+	dh_auto_test
+
+override_dh_install:
+	dh_install -Nlibgeos++-dev
+	dh_install -plibgeos++-dev -Xexport.h -Xttmathuint_x86_64_msvc.asm
+
+execute_after_dh_installexamples:
+	rm -f debian/*/usr/share/doc/libgeos-dev/examples/capi_indexed_predicate
+
+override_dh_installman:
+	dh_installman -plibgeos-dev debian/geos-config.1
+
+override_dh_makeshlibs:
+	dh_makeshlibs -- -v$(UPSTREAM_VERSION) -c0

@@ -1,0 +1,6 @@
+usr/bin/geos-config
+usr/include/geos_c.h
+usr/include/geos/export.h
+usr/lib/*/cmake/*
+usr/lib/*/libgeos_c.so
+usr/lib/*/pkgconfig/*

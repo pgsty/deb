@@ -1,0 +1,23 @@
+GEOS for Debian
+---------------
+
+To compile programs against GEOS:
+
+        CFLAGS += -I`geos-config --includes`
+        LDFLAGS += `geos-config --libs`
+
+Headers:
+
+        #include <geos.h>
+
+Example usage:
+
+	The libgeos-doc package provides basic usage examples in 
+	/usr/share/doc/libgeos-doc/ 
+
+Documentation:
+
+	The libgeos-doc package provides API documentation in
+	/usr/share/doc/libgeos-doc/
+
+ -- Steve Halasz (debian@adkgis.org), Fri, 5 Nov 2004

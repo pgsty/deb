@@ -1,0 +1,1194 @@
+geos (3.14.1-1PGSTY) unstable; urgency=medium
+
+  * Build the PGDG-aligned GIS stack from the shared RPM source archive.
+  * Preserve native debug symbols and validate the arm64 pilot.
+  * Support the pkg-kde-tools debhelper sequence on Ubuntu 22.04.
+  * Retain the native non-time64 package name on jammy and bookworm.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 15:00:00 +0800
+
+geos (3.14.1-2.pgdg24.04+1) noble-pgdg; urgency=medium
+
+  * Rebuild for noble-pgdg.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Tue, 16 Dec 2025 21:36:27 +0100
+
+geos (3.14.1-2) unstable; urgency=medium
+
+  * Simplify exclusion of export.h from libgeos++-dev.
+  * Use debrebuild instead of reprotest.
+  * Drop rules for armel & ia64.
+  * Add patch to fix FTBFS with doxygen 1.15.0.
+    (closes: #1123389)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 16 Dec 2025 21:36:27 +0100
+
+geos (3.14.1-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 29 Oct 2025 05:48:25 +0100
+
+geos (3.14.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update lintian overrides.
+  * Drop Rules-Requires-Root: no, default since dpkg 1.22.13.
+  * Use test-build-validate-cleanup instead of test-build-twice.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 27 Oct 2025 17:07:02 +0100
+
+geos (3.14.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 21 Aug 2025 19:08:53 +0200
+
+geos (3.14.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 20 Aug 2025 05:32:29 +0200
+
+geos (3.14.0~beta3-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 14 Aug 2025 05:40:55 +0200
+
+geos (3.14.0~beta2-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 13 Aug 2025 05:38:37 +0200
+
+geos (3.14.0~beta1-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Bump Standards-Version to 4.7.2, no changes.
+  * Update copyright file.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 22 Jul 2025 05:40:42 +0200
+
+geos (3.13.1-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 06 Mar 2025 07:07:43 +0100
+
+geos (3.13.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 04 Mar 2025 05:42:57 +0100
+
+geos (3.13.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+  * Drop doxygen.patch, applied upstream.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 07 Sep 2024 06:43:01 +0200
+
+geos (3.13.0~beta2-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Add patch to fix FTBFS with doxygen 1.20.0.
+    (closes: #1080182)
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 04 Sep 2024 05:14:37 +0200
+
+geos (3.13.0~beta1-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Bump Standards-Version to 4.7.0, no changes.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Update lintian overrides.
+  * Don't include macOS binary in examples.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 16 Aug 2024 21:13:36 +0200
+
+geos (3.12.2-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 07 Jun 2024 11:01:40 +0200
+
+geos (3.12.2-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 06 Jun 2024 05:28:53 +0200
+
+geos (3.12.1-3) unstable; urgency=medium
+
+  * Add dpkg-dev (>= 1.22.5) to build dependencies for t64 changes.
+    (closes: #1065262)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 02 Mar 2024 12:25:53 +0100
+
+geos (3.12.1-2) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+    (closes: #1062100)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 28 Feb 2024 15:19:43 +0100
+
+geos (3.12.1-2~exp1) experimental; urgency=medium
+
+  * Improve t64 changes to match team standards.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 05 Feb 2024 13:49:17 +0100
+
+geos (3.12.1-1.1~exp1) experimental; urgency=medium
+
+  * Non-maintainer upload.
+  * Rename libraries for 64-bit time_t transition.
+
+ -- Lukas Märdian <slyon@debian.org>  Wed, 31 Jan 2024 11:13:23 +0000
+
+geos (3.12.1-1) unstable; urgency=medium
+
+  * Ignore test failures on hurd-i386.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 12 Nov 2023 19:32:14 +0100
+
+geos (3.12.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Enable Salsa CI.
+  * Ignore test failure on i386.
+    https://github.com/libgeos/geos/issues/947
+  * Switch to dh-sequence-*.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 12 Nov 2023 06:45:28 +0100
+
+geos (3.12.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+  * Use execute_{before,after} instead of override in rules file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 27 Jun 2023 20:14:27 +0200
+
+geos (3.12.0~beta2-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Bump debhelper compat to 13.
+  * Drop patches, applied upstream.
+  * Update copyright file.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 14 Jun 2023 22:09:51 +0200
+
+geos (3.12.0~beta1-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Temporarily ignore test failures on all architectures.
+  * Update symbols for amd64.
+  * Add patch to fix spelling errors.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 08 Jun 2023 18:20:53 +0200
+
+geos (3.11.2-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Add Rules-Requires-Root to control file.
+  * Bump Standards-Version to 4.6.2, no changes.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 17 Mar 2023 06:28:41 +0100
+
+geos (3.11.1-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 16 Nov 2022 06:12:17 +0100
+
+geos (3.11.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Rename library package for SONAME bump.
+  * Drop doxygen 1.9.4 patch, fixed upstream.
+  * Update copyright file.
+  * Update lintian overrides.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 15 Nov 2022 05:25:47 +0100
+
+geos (3.11.0-2) unstable; urgency=medium
+
+  * Drop obsolete dh_strip override, dbgsym migration complete.
+  * Add patch to fix FTBFS with Doxygen 1.9.4.
+    (closes: #1015862)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 24 Jul 2022 18:03:03 +0200
+
+geos (3.11.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Jul 2022 20:30:53 +0200
+
+geos (3.11.0~rc0-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.6.1, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 30 Jun 2022 05:20:59 +0200
+
+geos (3.11.0~beta2-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Revert web directory exclusion, fixed upstream.
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 20 Jun 2022 19:45:02 +0200
+
+geos (3.11.0~beta1-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Rename library package for SONAME bump.
+  * Don't include .inl files in libgeos++-dev, removed upstream.
+  * Update copyright file.
+  * Exclude web directory from upstream tree.
+  * Update docs for renamed NEWS.md.
+  * Update symbols for amd64.
+  * Include geos.h in libgeos++-dev.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 13 Jun 2022 06:10:50 +0200
+
+geos (3.10.3-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 06 Jun 2022 08:06:45 +0200
+
+geos (3.10.3-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Include .inl files in libgeos++-dev.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 03 Jun 2022 18:59:19 +0200
+
+geos (3.10.2-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 17 Jan 2022 15:25:46 +0100
+
+geos (3.10.2-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update upstream metadata for GitHub repo.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+  * Also include .hpp files in libgeos++-dev.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 16 Jan 2022 07:19:33 +0100
+
+geos (3.10.1-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 06 Nov 2021 18:59:04 +0100
+
+geos (3.10.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 03 Nov 2021 05:55:36 +0100
+
+geos (3.10.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update 3.10.0~rc3 symbols for other architectures.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 21 Oct 2021 05:56:56 +0200
+
+geos (3.10.0~rc3-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 3.10.0~rc2 symbols for other architectures.
+  * Update 3.10.0~rc3 symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 20 Oct 2021 06:24:10 +0200
+
+geos (3.10.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 3.10.0~rc1 symbols for other architectures.
+  * Explicitly use cmake buildsystem to not use configure script.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 16 Oct 2021 08:35:02 +0200
+
+geos (3.10.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update 3.10.0~beta3 symbols for other architectures.
+  * Update 3.10.0~rc1 symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 13 Oct 2021 05:53:35 +0200
+
+geos (3.10.0~beta3-1~exp2) experimental; urgency=medium
+
+  * Don't use rules to install docs & examples.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 08 Oct 2021 14:27:07 +0200
+
+geos (3.10.0~beta3-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 06 Oct 2021 20:39:47 +0200
+
+geos (3.10.0~beta2-1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Drop patches, applied/included upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 02 Oct 2021 07:37:08 +0200
+
+geos (3.10.0~beta1-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Bump Standards-Version to 4.6.0, no changes.
+  * Bump debhelper compat to 12, changes:
+    - Drop --list-missing from dh_install
+  * Update copyright file.
+  * Add patch to not include pre-release in SONAME.
+  * Rename library package for SONAME bump.
+  * Add patch to disable test_docs, causes FTBFS.
+  * Switch from autotools to cmake.
+  * Add geos-bin package for geosop.
+  * Add patch to fix spelling errors.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Oct 2021 11:10:29 +0200
+
+geos (3.9.1-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 15 Aug 2021 17:49:39 +0200
+
+geos (3.9.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 11 Feb 2021 05:47:10 +0100
+
+geos (3.9.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop version.patch, fixed upstream.
+  * Update symbols for other architectures.
+  * Strip pre-release from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 10 Dec 2020 05:34:34 +0100
+
+geos (3.9.0~beta2-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Drop Contact from upstream metadata.
+  * Add patch to revert SOVERSION decrement.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 03 Dec 2020 05:44:45 +0100
+
+geos (3.9.0~beta1-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Bump watch file version to 4.
+  * Update copyright file.
+  * Rename library package for SONAME bump.
+  * Include pkgconfig file in libgeos-dev.
+  * Update symbols for amd64.
+  * Bump Standards-Version to 4.5.1, no changes.
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 28 Nov 2020 06:51:28 +0100
+
+geos (3.8.1-1) unstable; urgency=medium
+
+  * Bump debhelper compat to 10, changes:
+    - Drop --parallel option, enabled by default
+    - Don't explicitly enable autoreconf, enabled by default
+    - Drop dh-autoreconf build dependency
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 21 Mar 2020 19:34:57 +0100
+
+geos (3.8.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Ignore test failures on alpha, hppa & sparc64 too.
+  * Drop Name field from upstream metadata.
+  * Bump Standards-Version to 4.5.0, no changes.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 10 Mar 2020 19:52:28 +0100
+
+geos (3.8.0-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Strip pre-release from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 13 Oct 2019 12:01:18 +0200
+
+geos (3.8.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop ruby package, has no users in popcon.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 11 Oct 2019 06:50:28 +0200
+
+geos (3.8.0~rc3-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 08 Oct 2019 19:47:31 +0200
+
+geos (3.8.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop check-local.patch, fixed upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 03 Oct 2019 20:53:25 +0200
+
+geos (3.8.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.4.1, no changes.
+  * Add patch to ignore OSX cruft.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 03 Oct 2019 06:36:22 +0200
+
+geos (3.8.0~beta1-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Update copyright file, changes:
+    - Update copyright years for existing copyright holders
+    - Add new copyright holders
+    - Add license & copyright for ttmath sources
+    - Add license & copyright for tinyxml2 sources
+    - Add license & copyright for astyle sources
+  * Rename C++ library package for SONAME bump.
+  * Refresh patches.
+  * Don't install TODO in docs, removed upstream.
+  * Remove .asm files.
+  * Add lintian override for hardening-no-fortify-functions.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 28 Sep 2019 08:06:26 +0200
+
+geos (3.7.2-1) unstable; urgency=medium
+
+  * Update gbp.conf to use --source-only-changes by default.
+  * Bump Standards-Version to 4.4.0, no changes.
+  * Add copyright holders for debian/*.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 23 Jul 2019 07:12:24 +0200
+
+geos (3.7.2-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 4.3.0, no changes.
+  * Rename library package for SONAME bump.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 03 May 2019 06:10:50 +0200
+
+geos (3.7.1-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 05 Dec 2018 20:00:02 +0100
+
+geos (3.7.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Add Build-Depends-Package field to symbols files.
+  * Refresh patches.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 30 Nov 2018 06:52:18 +0100
+
+geos (3.7.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Strip pre-release from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 11 Sep 2018 07:38:23 +0200
+
+geos (3.7.0~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.2.1, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 04 Sep 2018 07:13:27 +0200
+
+geos (3.7.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 19 Aug 2018 14:30:47 +0200
+
+geos (3.7.0~beta2-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Bump Standards-Version to 4.2.0, no changes.
+  * Add Mateusz Loskot to copyright holders.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 06 Aug 2018 09:09:40 +0200
+
+geos (3.7.0~beta1-1~exp2) experimental; urgency=medium
+
+  * Bump Standards-Version to 4.1.5, no changes.
+  * Use filter instead of findstring to prevent partial matches.
+  * Drop autopkgtest to test installability.
+  * Add lintian override for testsuite-autopkgtest-missing.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 31 Jul 2018 16:18:56 +0200
+
+geos (3.7.0~beta1-1~exp1) experimental; urgency=medium
+
+  * New upstream beta release.
+  * Ignore test failures on riscv64 too.
+  * Drop patches applied upstream, refresh remaining patch.
+  * Update README filename in docs file.
+  * Update symbols for 3.7.0~beta1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 25 Jun 2018 22:00:03 +0200
+
+geos (3.7.0~alpha-1~exp1) experimental; urgency=medium
+
+  * New upstream alpha release.
+  * Update copyright-format URL to use HTTPS.
+  * Don't use libjs-jquery for Doxygen docs.
+  * Bump Standards-Version to 4.1.4, no changes.
+  * Fix deprecated source override location.
+  * Update watch file to use HTTPS.
+  * Ignore test failures on ia64 too.
+  * Update Vcs-* URLs for Salsa.
+  * Strip trailing whitespace from changelog, control & rules files.
+  * Rename library package for version bump.
+  * Drop control.in template, update library version manually.
+  * Refresh patches.
+  * Update upstream metadata for move to git.
+  * Update copyright file, changes:
+    - Add additional copyright holders
+    - Update email address for Sandro Santilli
+  * Add patch to fix check-local failure when quilt patches are applied.
+  * Use DEB_CXXFLAGS_MAINT_PREPEND instead of a custom CXX.
+  * Update symbols for 3.7.0~alpha.
+  * Add patch to strip pre-release from library filename.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 14 Jun 2018 09:17:25 +0200
+
+geos (3.6.2-1) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Add some Multi-Arch fields suggested by Multiarch hinter.
+    (LP: #1731706)
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 28 Dec 2017 09:54:46 +0100
+
+geos (3.6.2-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Merge changes from 3.5.1.
+  * Refresh patches.
+  * Update symbols for amd64.
+  * Bump Standards-Version to 4.1.2, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 17 Dec 2017 17:42:33 +0100
+
+geos (3.6.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Remove disabled PHP support, has split off into separate upstream project.
+  * Drop ruby build dependency, pulled in via ruby-all-dev.
+  * Update copyright file, changes:
+    - Add Daniel Baston & Nyall Dawson to copyright holders
+  * Drop isnan patches, applied upstream. Refresh remaining patches.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 25 Oct 2016 19:32:54 +0200
+
+geos (3.5.1-4) unstable; urgency=medium
+
+  * Ignore test failures on problematic architectures only.
+  * Strip trailing whitespace from changelog, control & rules files.
+  * Add patch to fix empty GEOSSimplify return on inner ring collapse.
+  * Change priority for libgeos-dbg from extra to optional.
+  * Bump Standards-Version to 4.1.1, changes: priority.
+  * Add lintian override for debian-watch-uses-insecure-uri.
+  * Drop obsolete dbg package.
+  * Add autopkgtest to test installability.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 28 Nov 2017 20:12:26 +0100
+
+geos (3.5.1-3) unstable; urgency=medium
+
+  * Fix architectures for getGeometryN(unsigned long) symbol.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 05 Nov 2016 10:09:15 +0100
+
+geos (3.5.1-2) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 05 Nov 2016 08:57:24 +0100
+
+geos (3.5.1-1) unstable; urgency=medium
+
+  * Use dh_install -a instead of deprecated --same-arch option.
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 31 Oct 2016 07:40:32 +0100
+
+geos (3.5.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Remove disabled PHP support, has split off into separate upstream project.
+  * Drop ruby build dependency, pulled in via ruby-all-dev.
+  * Limit watch file to 3.5.x releases.
+  * Drop isnan patches, applied upstream. Refresh remaining patches.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 26 Oct 2016 20:19:25 +0200
+
+geos (3.5.0-4) unstable; urgency=medium
+
+  * Bump Standards-Version to 3.9.8, no changes.
+  * Add patch to fix isnan() detection in configure.
+  * Add patch to use std::isnan() in platform.h too.
+    (closes: #831177)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 14 Jul 2016 12:11:04 +0200
+
+geos (3.5.0-3) unstable; urgency=medium
+
+  * Disable PHP support, SWIG doesn't support PHP 7 yet.
+  * Add patch to fix spelling errors.
+  * Enable all hardening buildflags.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 25 Mar 2016 13:26:06 +0100
+
+geos (3.5.0-2) unstable; urgency=medium
+
+  * Update Vcs-Git URL to use HTTPS.
+  * Bump Standards-Version to 3.9.7, no changes.
+  * Update upstream URLs to use HTTPS.
+  * Add dependency on php5-common to php5-geos for php5enmod.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 07 Mar 2016 21:34:23 +0100
+
+geos (3.5.0-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+  * Update Vcs-Browser URL to use HTTPS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 27 Aug 2015 15:29:22 +0200
+
+geos (3.5.0-1~exp2) experimental; urgency=medium
+
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 20 Aug 2015 10:52:14 +0200
+
+geos (3.5.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Drop libgeos-ruby1.8 transitional package.
+  * Bump debhelper compatibility to 9.
+  * Update copyright file, changes:
+    - Group copyright holders by license
+    - Drop .0 from GPL license shortname
+    - Update license & copyright for new & modified files
+  * Only clean generated libgeos++-dev.install.
+  * Drop patches applied upstream, refresh remaining patches.
+  * Enable verbose test output.
+  * Ignore test failures on all architectures, to not fail the entire
+    build.
+  * Update symbols for amd64.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 19 Aug 2015 14:56:09 +0200
+
+geos (3.4.2-8~exp3) experimental; urgency=medium
+
+  * Update symbols for other architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 15 Aug 2015 11:52:06 +0200
+
+geos (3.4.2-8~exp2) experimental; urgency=medium
+
+  * Update symbols for other architectures.
+  * Use multi-line uscan options, force lowercase RC in uversionmangle.
+  * Fix Breaks/Replaces version for experimental pre-releases.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 03 Aug 2015 12:35:52 +0200
+
+geos (3.4.2-8~exp1) experimental; urgency=medium
+
+  * Sync control & control.in to not lose libjs-jquery dependency.
+  * Append v5 to library package names for GCC 5 transition.
+  * Update symbols for amd64.
+  * Use dh_install --list-missing.
+  * Explicitly remove .la files, not installed.
+  * Explicitly remove static library for Ruby, not installed.
+  * Explicitly remove geos.h & .inl files, not installed.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 01 Aug 2015 20:08:03 +0200
+
+geos (3.4.2-7) unstable; urgency=medium
+
+  * Update symbols for other architectures.
+  * Move from experimental to unstable.
+  * Use jquery.js from libjs-jquery instead of doxygen copy.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 27 Apr 2015 10:14:34 +0200
+
+geos (3.4.2-7~exp1) experimental; urgency=medium
+
+  * Add upstream metadata.
+  * Update my email to @debian.org address.
+  * Use pkgkde-gensymbols & pkgkde-symbolshelper to handle C++ symbols.
+  * Add patch to disable HTML timestamps in Doxygen to allow
+    reproducible builds.
+  * Update Vcs-Browser URL to use cgit instead of gitweb.
+  * Bump Standards-Version to 3.9.6, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 22 Feb 2015 18:22:00 +0100
+
+geos (3.4.2-6) unstable; urgency=medium
+
+  * Also build the PHP binding.
+    (closes: #761467)
+  * Add Pre-Depends for ruby-geos & libgeos-dbg.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sun, 14 Sep 2014 18:16:28 +0200
+
+geos (3.4.2-5) unstable; urgency=medium
+
+  * Do run tests, but don't fail build on troublesome architectures.
+    (closes: #743822)
+  * Add patch to support Ruby 2.x.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 25 Apr 2014 22:57:49 +0200
+
+geos (3.4.2-4) unstable; urgency=low
+
+  * Re-enable parallel builds, wasn't cause of testrunning failures.
+  * Skip tests on troublesome architectures.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Thu, 20 Mar 2014 08:44:52 +0100
+
+geos (3.4.2-3) unstable; urgency=medium
+
+  * Add patch to include cmath in unit tests to have isnan() defined.
+  * Disable parallel builds, can cause xmltester failures.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Wed, 19 Mar 2014 09:15:09 +0100
+
+geos (3.4.2-2) unstable; urgency=medium
+
+  * Add myself to Uploaders.
+  * Restructure control file with cme, changes: Vcs-* fields.
+  * Rename libgeos-ruby1.8 to ruby-geos, according to Ruby packaging policy.
+  * Use minimal dh rules with autoreconf for retooling.
+    (closes: #733585)
+  * Also patch Makefile.am and macros/ruby.m4 for Ruby extension.
+  * Enable parallel builds.
+  * Link to LGPL-2.1 common license instead of symlink in copyright file.
+  * Update copyright file using copyright-format 1.0.
+  * Add DEP3 patch headers.
+  * Add doc-base registration for libgeos-doc.
+  * Add patches to modernize the build system to prevent autoreconf warnings.
+  * Add gbp.conf to use pristine-tar by default.
+  * Add lintian overrides for no symbols file,
+    symbols are problematic for C++ libraries.
+  * Bump Standards-Version to 3.9.5, changes: Vcs-* fields, minimal dh rules,
+    copyright-format.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 07 Mar 2014 21:08:52 +0100
+
+geos (3.4.2-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Build for current Ruby version. (Closes: #735652)
+
+ -- Christian Hofstaedtler <zeha@debian.org>  Thu, 13 Feb 2014 02:29:40 +0100
+
+geos (3.4.2-1) unstable; urgency=low
+
+  [ Markus Wanner and Francesco Paolo Lovergine ]
+  * New upstream release.
+    (closes: #693694)
+  * Patches just refreshed.
+
+  [ Bas Couwenberg ]
+  * Build-depend on autotools-dev so that the config.guess/config.sub update
+    code in debian/rules works properly. Thanks Colin Watson for the patch!
+    (closes: #726455)
+  * Update watch file, handle common mistakes.
+
+  [ Francesco Paolo Lovergine ]
+  * Added an idiot-proof ruby patch for libtool in order to avoid a FTBS.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 06 Dec 2013 13:48:39 +0100
+
+geos (3.3.3-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Build-depend on ruby/ruby-dev1.8 and build-conflict on ruby/ruby-dev1.9 to
+    ensure the package continues to be built using ruby1.8 (Closes: #676094)
+    - Thanks to Peter Green and Raspbian for the patch
+
+ -- Scott Kitterman <scott@kitterman.com>  Tue, 10 Jul 2012 23:39:07 -0400
+
+geos (3.3.3-1) unstable; urgency=low
+
+  * New upstream bugfixing version. This is useful because correctly
+    support new topology-enabled for Postgis 2.0.
+  * Policy bumped to 3.9.3, no changes required.
+  * Debhelper level set to 9.
+  * Patch geos-config revised, partially merged upstream.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 23 May 2012 15:30:33 +0200
+
+geos (3.3.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Dropped geos-config patch, merged upstream.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Sun, 26 Feb 2012 23:29:37 +0100
+
+geos (3.3.1-1) unstable; urgency=low
+
+  * New upstream major release.
+    (closes: #648611)
+  * Changed the C/C++ chain for development. See NEWS file for an explanation.
+    Thanks strk for a useful discussion about that.
+    (closes: #643658)
+  * Patches refreshed and merged with upstream changes.
+  * Added patch geos-config to fix library paths. This is coherent with
+    upstream approach too.
+  * Moved the C++ headers under libgeos++-dev automagically and added a break
+    against the old libgeos-dev all-in-one package.
+  * The libgeos++-dev package depends on libgeos-dev for a couple of reasons:
+      - a common header (geos/extern.h)
+      - a program using C++ API could mixup C and C++ APIs so better being
+        safe about that.
+  * Merged NMU change in debian/rules to fix armhf FTBS.
+    (closes: #641387)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 22 Feb 2012 14:20:57 +0100
+
+geos (3.2.2-3) unstable; urgency=low
+
+  * New patch: swig. Fixed for strong version detection in ac_pkg_swig.m4.
+    Merged from 3.3 series. Thanks strk. (closes: #631819)
+  * Removed obsolete python build-deps, because now the suggested binding
+    is via shapely. (closes: #616823)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 18 Jul 2011 12:23:11 +0200
+
+geos (3.2.2-2) unstable; urgency=low
+
+  * Policy bumped to 3.9.2, no changes.
+  * Fixed previous changelog entry.
+  * Added CoordinateSequenceFactory.h patch to fix a missing declaration.
+    (closes: #624949)
+  * Added Bintree.cpp, Node.cpp, MonotoneChainBuilder.h, AbstractNode.cpp,
+    and other patches to fix a missing cstddef header file inclusion in
+    some files and use of std namespace. This is required in current
+    default gcc flavor.
+  * Use -fpermessive at building time to work around some minor compatibility
+    problems which prevent a successuful building.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 25 May 2011 15:33:37 +0200
+
+geos (3.2.2-1) unstable; urgency=low
+
+  [ Alan Boudreault ]
+  * New upstream release.
+
+  [ Francesco Paolo Lovergine ]
+  * Policy set to 3.9.1, without changes.
+  * Merged log for post squeeze release.
+  * Repository moved to git and changed Vcs-* fields as required.
+  * Source format moved to 3.0 with quilt support.
+  * Added ${misc:Depends} to bin pkgs due to dh use.
+  * Added -dbg package for debugging symbols.
+    (closes: #582273)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 03 Mar 2011 13:40:04 +0100
+
+geos (3.2.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Removed kobold among uploaders because no more active on DebianGIS packages.
+  * Policy bumped to 3.8.3, without changes.
+  * Changed a bit debian/rules to manage RC patch version.
+  * Now, it does not install libtool helper file .la, as currently deprecated.
+  * Revised licenses around and updated the debian/copyright file.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 21 Jan 2010 17:05:45 +0100
+
+geos (3.1.1-1) unstable; urgency=low
+
+  * New upstream release (bug fixes only).
+  * Added me as an uploader.
+  * Policy bumped to 3.8.2 (no changes).
+  * Introduced a debian/control.in template to version automagically
+    the C++ binding package and dependencies.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Fri, 26 Jun 2009 14:28:42 +0200
+
+geos (3.1.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * This version includes also a missing header inclusion, which caused FTBFS
+    on armel. (Closes: #520447)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri, 27 Mar 2009 15:54:54 +0100
+
+geos (3.0.3-2) unstable; urgency=low
+
+  * debian/control: do not build the python bindings, they are deprecated by
+    upstream and superseded by python-shapely.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri, 06 Mar 2009 13:28:29 +0100
+
+geos (3.0.3-1) unstable; urgency=low
+
+  [ Francesco Paolo Lovergine ]
+  * New upstream release.
+  * Updated debian/copyright adding copyright notice [lintian].
+  * Policy bumped to 3.8.0 (no changes)
+  * C++ version bumped in package name.
+  * Updated homepage fields in debian/control to reflect moving into OSGeo
+    infrastracture.
+  * Watch file updated.
+    (closes: #504470)
+  * Patch gcc43.dpatch removed, merged upstream.
+  * Moved to debhelper level 7.
+  * Some minor clean up in debian/rules.
+
+  [ Fabio Tranchitella ]
+  * debian/control: added libgeos-ruby1.8 and python-geos. (Closes: #509679)
+  * debian/copyright: updated.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Thu, 05 Mar 2009 20:18:57 +0100
+
+geos (3.0.0-5) unstable; urgency=low
+
+  * debian/rules: fixed a FTBFS on arm eabi; patch from Riku Voipio.
+    (Closes: #480345)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon, 12 May 2008 12:33:47 +0200
+
+geos (3.0.0-4) unstable; urgency=low
+
+  * [PATCH] gcc4.3.dpatch added to manage GCC 4.3 issue.
+    (closes: #456089)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Thu, 10 Apr 2008 14:27:56 +0200
+
+geos (3.0.0-3) unstable; urgency=low
+
+  * debian/rules: the library itself (.so file) shouldn't be in the -dev
+    package. (Closes: #471745)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Thu, 20 Mar 2008 08:30:03 +0100
+
+geos (3.0.0-2) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Wed, 19 Mar 2008 19:18:41 +0100
+
+geos (3.0.0-1) experimental; urgency=low
+
+  [ Francesco Paolo Lovergine ]
+  * Added Vcs-* fields to debian/control
+  * Policy bumped to 3.7.3 without changes
+  * Removed Steve Halasz among Uploaders (last contribute is almost 2 years ago).
+  * Fixed debian/watch.
+    (closes: #460009)
+  * Now using ${binary:Version} instead of obsoleted ${Source-Version}
+
+  [ Fabio Tranchitella ]
+  * New upstream release. (Closes: #458893, #456089)
+  * Renamed binary package libgeos2c2a to libgeos-3.0.0 for C++ ABI transition.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon, 28 Jan 2008 17:42:00 +0100
+
+geos (2.2.3-4) unstable; urgency=low
+
+  [ Fabio Tranchitella ]
+  * debian/watch: fixed.
+
+  [ Paul Wise ]
+  * Switch to the new Homepage field
+
+  [ Francesco Paolo Lovergine ]
+  * Fixed lintian error: debian-rules-ignores-make-clean-error
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 17 Oct 2007 12:30:10 +0200
+
+geos (2.2.3-3) unstable; urgency=low
+
+  * debian/control: move doxygen from build-depends-indep to build-depends.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon,  6 Nov 2006 21:35:52 +0100
+
+geos (2.2.3-2) unstable; urgency=low
+
+  * Upload to unstable.
+  * debian/rules: added -V switch to dh_makeshlibs, since 2.2.3 doesn't bump
+    the SONAME but provides new functions. Packages which depend on this
+    version or above should have a versioned build-dependency on this release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Wed,  1 Nov 2006 08:46:54 +0100
+
+geos (2.2.3-1) experimental; urgency=low
+
+  * New upstream release. (Closes: #370498)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Tue, 10 Oct 2006 19:56:09 +0200
+
+geos (2.2.1-1) unstable; urgency=low
+
+  [ Steve Halasz ]
+  * New upstream release
+  * Convert to team maintenance by DebianGIS group
+  * 2.2.1 introduces a new C API in the libgeos-c1 package
+  * Apply patch from Martin Michlmayr for FTBFS with g++
+    (Closes: #356111)
+  * Don't put empty ChangeLog file in packages
+
+  [ Paul Wise ]
+  * Add homepages to the package descriptions.
+  * Add a watchfile
+
+  * Upload sponsored by Peter Reinholdtsen
+
+ -- Steve Halasz <debian@adkgis.org>  Sun, 15 Jan 2006 13:53:40 +0800
+
+geos (2.1.4-2) unstable; urgency=low
+
+  * Rename to libgeos2c2a for the libstdc++ transition.
+    Transitions are fun. Wheeeeee!
+
+ -- Steve Halasz <debian@adkgis.org>  Fri, 18 Nov 2005 13:22:44 -0500
+
+geos (2.1.4-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Steve Halasz <debian@adkgis.org>  Sat,  5 Nov 2005 20:15:22 -0500
+
+geos (2.1.3-2) unstable; urgency=low
+
+  * libgeos-dev should depend on libgeos2c2 rather than libgeos2
+    (Closes: #318990)
+  * bump standards version to 3.6.2
+
+ -- Steve Halasz <debian@adkgis.org>  Tue, 19 Jul 2005 13:18:19 -0400
+
+geos (2.1.3-1) unstable; urgency=low
+
+  * New upstream release
+  * Renaming libgeos2 to libgeos2c2 for C++ ABI transition
+  * Removed cp config.{guess,sub} from clean: target and
+    put it into configure target (change from ubuntu bug #11183)
+
+ -- Steve Halasz <debian@adkgis.org>  Mon, 11 Jul 2005 11:17:32 -0400
+
+geos (2.1.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Steve Halasz <debian@adkgis.org>  Thu,  9 Jun 2005 15:36:33 -0400
+
+geos (2.1.1-2) unstable; urgency=low
+
+  * Fix bug in isvalid(), backport from geos CVS (Closes: #303737).
+    Thanks to Markus Shaber for the patch.
+
+ -- Steve Halasz <debian@adkgis.org>  Fri,  8 Apr 2005 10:51:36 -0400
+
+geos (2.1.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Create libgeos-doc with the binary-indep target (Closes: #284361)
+
+ -- Steve Halasz <debian@adkgis.org>  Wed,  9 Mar 2005 10:34:56 -0500
+
+geos (2.0.1-1) unstable; urgency=low
+
+  * Initial Release. (Closes: #277514).
+
+ -- Steve Halasz <debian@adkgis.org>  Fri, 22 Oct 2004 23:24:25 -0400

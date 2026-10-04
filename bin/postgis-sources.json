@@ -1,8 +1,37 @@
 {
   "baseline_date": "2026-10-04",
   "description": "Core source bytes and versions align with the PGSTY RPM pilot; Debian packaging uses PGDG/Debian native package layout. Arrow and GTA are built separately where Ubuntu has no development packages.",
-  "core": [],
-  "debian_packaging": [],
+  "core": [
+    {
+      "package": "geos314",
+      "srpm_url": "https://dnf-srpms.postgresql.org/srpms/common/redhat/rhel-9-x86_64/geos314-3.14.1-3PGDG.rhel9.8.src.rpm",
+      "srpm_sha256": "cb0a93341c483bb034e27fc9db8924817fbe283f7d11857d3a23d27c7b62d344",
+      "files": [
+        {
+          "name": "geos-3.14.1.tar.bz2",
+          "sha256": "3c20919cda9a505db07b5216baa980bacdaa0702da715b43f176fb07eff7e716",
+          "size": 7013834,
+          "archive_roots": [
+            "geos-3.14.1"
+          ],
+          "deb_input": true
+        }
+      ]
+    }
+  ],
+  "debian_packaging": [
+    {
+      "package": "geos",
+      "archive": "geos_3.14.1-2.pgdg24.04+1.debian.tar.xz",
+      "deb_input": true,
+      "members": [
+        "debian/libgeos3.14.1.symbols",
+        "debian/libgeos-c1t64.symbols"
+      ],
+      "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/g/geos/geos_3.14.1-2.pgdg24.04%2B1.debian.tar.xz",
+      "sha256": "7a41e68ce6679c15271ee3fcc3cb745c7271c8cc437eacbd3ca3487ab6c4e766"
+    }
+  ],
   "additional_sources": [],
   "debian_patch_adaptations": {},
   "older_distribution_sources": [

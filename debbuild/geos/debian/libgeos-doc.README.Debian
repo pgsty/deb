@@ -1,0 +1,8 @@
+GEOS documentation for Debian
+-----------------------------
+
+To access the GEOS API Documentation open index.html in a web browser.
+
+There is example code in examples/example.cpp. It requires the libgeos2 package to be installed to compile and run. Invoke 'make' to compile it.
+
+ -- Steve Halasz (debian@adkgis.org), Fri, 5 Nov 2004
