@@ -2,7 +2,7 @@ Source: pg-mentat
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc, git
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc, git, libicu-dev
 Standards-Version: 4.7.2
 Rules-Requires-Root: no
 Homepage: https://codeberg.org/gregburd/mentat
