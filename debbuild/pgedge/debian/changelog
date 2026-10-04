@@ -1,5 +1,13 @@
 pgedge-@PG_MAJOR@ (@PG_VERSION@-@PKG_REV@) unstable; urgency=medium
 
+  * Bundle Spock 5.0.12 and rebase its PostgreSQL 17/18 patchset.
+  * Bump the revision to deliver Spock updates with unchanged core versions.
+  * Replace legacy standalone Spock files with the bundled extension.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
+pgedge-@PG_MAJOR@ (@PG_VERSION@-@PKG_REV@) unstable; urgency=medium
+
   * Collect automatic debug symbols with either .deb or .ddeb suffixes.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 08 Sep 2026 23:00:00 +0800

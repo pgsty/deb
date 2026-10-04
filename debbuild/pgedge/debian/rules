@@ -61,7 +61,7 @@ override_dh_auto_build:
 		'  *) exec "$${prefix}/bin/pg_config" "$$@" ;;' \
 		'esac' > .pg_config_build
 	chmod +x .pg_config_build
-	for extdir in .spock .lolor .snowflake; do \
+	set -e; for extdir in .spock .lolor .snowflake; do \
 		PGEDGE_STAGE="$(CURDIR)/.pgedge-stage" \
 		PG_CONFIG="$(CURDIR)/.pg_config_build" \
 		PATH="$(CURDIR)/.pgedge-stage/usr/pgedge-@PG_MAJOR@/bin:$$PATH" \
@@ -92,20 +92,21 @@ override_dh_auto_install:
 		'  *) exec "$${stage_prefix}/bin/pg_config" "$$@" ;;' \
 		'esac' > .pg_config_install
 	chmod +x .pg_config_install
-	for extdir in .spock .lolor .snowflake; do \
+	set -e; for extdir in .spock .lolor .snowflake; do \
 		PGEDGE_STAGE="$(CURDIR)/.pgedge-stage" \
 		PG_CONFIG="$(CURDIR)/.pg_config_install" \
 		PATH="$(CURDIR)/.pgedge-stage/usr/pgedge-@PG_MAJOR@/bin:$$PATH" \
 		USE_PGXS=1 \
 		MAKELEVEL=0 $(MAKE) -C "$$extdir" PG_CONFIG="$(CURDIR)/.pg_config_install" USE_PGXS=1 install DESTDIR=$(CURDIR)/debian/tmp; \
 	done
-	for binary in \
+	set -e; for binary in \
 		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/bin/spockctrl \
 		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/lib/postgresql/spock.so \
 		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/lib/postgresql/spock_output.so \
 		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/lib/postgresql/lolor.so \
 		$(CURDIR)/debian/tmp/usr/pgedge-@PG_MAJOR@/lib/postgresql/snowflake.so; do \
-		[ -f "$$binary" ] && patchelf --set-rpath "/usr/pgedge-@PG_MAJOR@/lib" "$$binary"; \
+		test -f "$$binary"; \
+		patchelf --set-rpath "/usr/pgedge-@PG_MAJOR@/lib" "$$binary"; \
 	done
 
 override_dh_shlibdeps:

@@ -5,7 +5,7 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends:
  autoconf,
  bison,
- clang | clang-21 | clang-20 | clang-19 | clang-18 | clang-17,
+ clang | clang-21 | clang-20 | clang-19 | clang-18 | clang-17 | clang-16 | clang-15 | clang-14,
  debhelper-compat (= 13),
  dh-exec (>= 0.13~),
  docbook-xml,
@@ -28,8 +28,8 @@ Build-Depends:
  libxml2-utils,
  libxslt1-dev,
  libzstd-dev,
- llvm | llvm-21 | llvm-20 | llvm-19 | llvm-18 | llvm-17,
- llvm-dev | llvm-21-dev | llvm-20-dev | llvm-19-dev | llvm-18-dev | llvm-17-dev,
+ llvm | llvm-21 | llvm-20 | llvm-19 | llvm-18 | llvm-17 | llvm-16 | llvm-15 | llvm-14,
+ llvm-dev | llvm-21-dev | llvm-20-dev | llvm-19-dev | llvm-18-dev | llvm-17-dev | llvm-16-dev | llvm-15-dev | llvm-14-dev,
  mawk,
  patch,
  patchelf,
@@ -49,6 +49,8 @@ Homepage: https://github.com/pgEdge
 Package: pgedge-@PG_MAJOR@
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata, ssl-cert
+Breaks: pgedge-@PG_MAJOR@-spock (<< 5.0.12-1PGSTY~)
+Replaces: pgedge-@PG_MAJOR@-spock (<< 5.0.12-1PGSTY~)
 Description: pgEdge PostgreSQL @PG_MAJOR@ with bundled replication extensions
  PostgreSQL @PG_MAJOR@ core package built from upstream PostgreSQL source plus
  pgEdge Spock PG@PG_MAJOR@ patchset.

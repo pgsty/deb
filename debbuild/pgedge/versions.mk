@@ -12,11 +12,11 @@ else
 $(error pgedge supports PG_MAJOR=15, 16, 17, or 18)
 endif
 
-SPOCK_VERSION ?= 5.0.11
+SPOCK_VERSION ?= 5.0.12
 SNOWFLAKE_VERSION ?= 2.6.0
 LOLOR_VERSION ?= 1.2.2
 
-PKG_REV ?= 1PGSTY
+PKG_REV ?= 2PGSTY
 
 SOURCE_DIR ?= ../SOURCES
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
