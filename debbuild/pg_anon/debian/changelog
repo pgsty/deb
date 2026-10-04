@@ -1,3 +1,9 @@
+pg-anon (3.2.3-1PGSTY) unstable; urgency=medium
+
+  * Update to 3.2.3.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 pg-anon (3.2.2-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 3.2.2 with security fixes and locked pgrx 0.19.2.
