@@ -1,0 +1,18 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: CGAL
+Source: https://github.com/CGAL/cgal/releases/tag/v5.6.1
+
+Files: *
+Copyright: CGAL authors and contributors, as listed in AUTHORS and source headers
+License: CGAL-per-file
+ Individual files use GPL-3.0-or-later, LGPL-3.0-or-later, or BSL-1.0.
+ The ETH Zurich random forest code uses the license in LICENSE.RFL;
+ examples without a separate license use CC0 as stated in LICENSE.
+ The upstream LICENSE and LICENSE.* files accompany this package and describe
+ the per-file license selection. See the individual source headers.
+
+Files: debian/*
+Copyright: 2026 Ruohang Feng <rh@vonng.com>
+License: GPL-3.0-or-later
+ On Debian systems the complete GPL version 3 is in
+ /usr/share/common-licenses/GPL-3.

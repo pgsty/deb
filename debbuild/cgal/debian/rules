@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+export DPKG_EXPORT_BUILDFLAGS=1
+include /usr/share/dpkg/buildflags.mk
+
+%:
+	dh $@ --buildsystem=cmake
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DCGAL_HEADER_ONLY=ON -DWITH_CGAL_Qt5=OFF \
+		-DCGAL_INSTALL_LIB_DIR=share -DCGAL_INSTALL_DOC_DIR=share/doc/libcgal-dev \
+		-DCGAL_DO_NOT_WARN_ABOUT_CMAKE_BUILD_TYPE=ON
+
+override_dh_auto_test:
+	printf '%s\n' '#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>' \
+		'int main() { using K = CGAL::Exact_predicates_inexact_constructions_kernel; return CGAL::orientation(K::Point_2(0,0), K::Point_2(1,0), K::Point_2(0,1)) != CGAL::LEFT_TURN; }' > debian/geometry-check.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -std=c++14 -Iinclude debian/geometry-check.cpp $(LDFLAGS) -lgmp -lmpfr -o debian/geometry-check
+	./debian/geometry-check
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/libcgal-dev

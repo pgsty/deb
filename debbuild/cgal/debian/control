@@ -1,0 +1,16 @@
+Source: cgal
+Section: libdevel
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), cmake, libboost-dev, libgmp-dev, libmpfr-dev, zlib1g-dev
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://www.cgal.org/
+
+Package: libcgal-dev
+Architecture: all
+Multi-Arch: foreign
+Depends: libboost-dev, libgmp-dev, libmpfr-dev, zlib1g-dev, ${misc:Depends}
+Description: Computational Geometry Algorithms Library - development files
+ Header-only geometry library and CMake support required by SFCGAL.
+ This backport provides CGAL 5.6 for the PostGIS stack on jammy and bookworm.
