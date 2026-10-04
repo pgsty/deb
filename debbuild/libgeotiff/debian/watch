@@ -1,0 +1,6 @@
+version=4
+opts=\
+dversionmangle=s/\+(debian|dfsg|ds|deb)\d*$//,\
+uversionmangle=s/(\d)[_\.\-\+]?((RC|rc|pre|dev|beta|alpha)\d*)$/$1~$2/;s/RC/rc/ \
+https://download.osgeo.org/geotiff/libgeotiff/ \
+(?:.*?/)?(?:rel|v|libgeotiff)?[\-\_]?(\d\S+)\.(?:tgz|tbz|txz|(?:tar\.(?:gz|bz2|xz)))

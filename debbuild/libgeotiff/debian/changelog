@@ -1,0 +1,519 @@
+libgeotiff (1.7.4-1PGSTY) unstable; urgency=medium
+
+  * Match the optional TIFFOpenOptions symbols to Ubuntu 22.04's TIFF 4.3.
+  * Build the PGDG-aligned GIS stack from the shared RPM source archive.
+  * Preserve native debug symbols and validate the arm64 pilot.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 15:00:00 +0800
+
+libgeotiff (1.7.4-2) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.7.3, no changes.
+  * Fix old FSF address in copyright file.
+  * Update lintian overrides.
+  * Drop Rules-Requires-Root: no, default since dpkg 1.22.13.
+  * Use test-build-validate-cleanup instead of test-build-twice.
+  * Drop libgeotiff-epsg from Suggests.
+  * Drop Priority: optional, default since dpkg 1.22.13.
+  * Drop obsolete Breaks/Replaces.
+  * Add upstream patch to fix FTBFS with PROJ 9.8.0.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 27 Feb 2026 12:29:18 +0100
+
+libgeotiff (1.7.4-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 19 Feb 2025 11:29:33 +0100
+
+libgeotiff (1.7.4~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+    (closes: #1097191)
+  * Bump Standards-Version to 4.7.0, no changes.
+  * Update copyright file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 18 Feb 2025 16:11:31 +0100
+
+libgeotiff (1.7.3-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 24 May 2024 15:54:29 +0200
+
+libgeotiff (1.7.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 23 May 2024 16:11:21 +0200
+
+libgeotiff (1.7.2~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Replace pkg-config (build) dependency with pkgconf.
+  * Drop patches, included/applied upstream.
+  * Include pkg-config file in -dev package.
+  * Update symbols for 1.7.2~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 21 May 2024 17:09:32 +0200
+
+libgeotiff (1.7.1-5) unstable; urgency=medium
+
+  * Add patch to fix FTBFS on i386.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Dec 2023 10:47:48 +0100
+
+libgeotiff (1.7.1-4) unstable; urgency=medium
+
+  * Update upstream patch to fix FTBFS with PROJ 9.3.
+  * Use `set -e` in autopkgtest script.
+  * Add patch to fix FTBFS with PROJ 9.3.1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Dec 2023 08:25:36 +0100
+
+libgeotiff (1.7.1-3) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.6.2, no changes.
+  * Bump debhelper compat to 13.
+  * Use not-installed file instead of dh_install override.
+  * Enable Salsa CI.
+  * Add autopkgtest using upstream test scripts.
+  * Add upstream patch to fix FTBFS with PROJ 9.3.
+    (closes: #1050775)
+  * Update lintian overrides.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 31 Aug 2023 18:06:14 +0200
+
+libgeotiff (1.7.1-2) unstable; urgency=medium
+
+  * Bump Standards-Version to 4.6.1, no changes.
+  * Drop obsolete dh_strip override, dbgsym migration complete.
+  * Add patch to fix FTBFS with PROJ 9.1.1.
+  * Update lintian overrides.
+  * Add Rules-Requires-Root to control file.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Dec 2022 11:14:27 +0100
+
+libgeotiff (1.7.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 14 Mar 2022 12:50:17 +0100
+
+libgeotiff (1.7.1~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 10 Mar 2022 10:15:39 +0100
+
+libgeotiff (1.7.1~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.6.0, no changes.
+  * Bump debhelper compat to 12, changes:
+    - Drop --list-missing from dh_install
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 08 Mar 2022 17:30:10 +0100
+
+libgeotiff (1.7.0-2) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 15 Aug 2021 10:39:14 +0200
+
+libgeotiff (1.7.0-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 05 Jul 2021 16:17:40 +0200
+
+libgeotiff (1.7.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+    (closes: #983212)
+  * Drop override for mailing-list-obsolete-in-debian-infrastructure.
+  * Bump watch file version to 4.
+  * Update lintian overrides.
+  * Bump Standards-Version to 4.5.1, no changes.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 30 Jun 2021 11:09:42 +0200
+
+libgeotiff (1.6.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+  * Add override for mailing-list-obsolete-in-debian-infrastructure.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 24 Apr 2020 14:16:58 +0200
+
+libgeotiff (1.6.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.5.0, no changes.
+  * Drop Name field from upstream metadata.
+  * Bump debhelper compat to 10, changes:
+    - Drop --parallel option, enabled by default
+    - Don't explicitly enable autoreconf, enabled by default
+    - Drop dh-autoreconf build dependency
+  * Drop patches, included upstream.
+  * Add pkg-config to build dependencies.
+  * Update symbols for 1.6.0~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 22 Apr 2020 20:45:15 +0200
+
+libgeotiff (1.5.1-2) unstable; urgency=medium
+
+  * Add patch to fix FTFBS with PROJ 6.2.0.
+    (closes: #939399)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 04 Sep 2019 16:05:10 +0200
+
+libgeotiff (1.5.1-1) unstable; urgency=medium
+
+  * Update gbp.conf to use --source-only-changes by default.
+  * Bump Standards-Version to 4.4.0, no changes.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 25 Aug 2019 15:31:39 +0200
+
+libgeotiff (1.5.1-1~exp3) experimental; urgency=medium
+
+  * Add libjpeg-dev & libproj-dev to libgeotiff-dev dependencies.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 13 Apr 2019 14:42:28 +0200
+
+libgeotiff (1.5.1-1~exp2) experimental; urgency=medium
+
+  * Add upstream patches to fix test failures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 02 Apr 2019 06:58:24 +0200
+
+libgeotiff (1.5.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update symbols for 1.5.1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 30 Mar 2019 06:45:46 +0100
+
+libgeotiff (1.5.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 22 Mar 2019 19:28:52 +0100
+
+libgeotiff (1.5.0~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update upstream metadata for move to GitHub.
+  * Bump Standards-Version to 4.3.0, no changes.
+  * Rename source package to remove '-dfsg' suffix.
+  * Update packaging for upstream removal of EPSG CSV files.
+  * Require at least libproj-dev 6.0.0.
+  * Update copyright file, changes:
+    - Change Source URL to GitHub repository
+    - Drop license & copyright for automake files
+    - Add Even Rouault to copyright holders
+  * Rename library package for SONAME bump.
+  * Update symbols for 1.5.0~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 14 Mar 2019 12:30:52 +0100
+
+libgeotiff-dfsg (1.4.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Strip pre-releases from symbols version.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 17 Dec 2018 20:28:33 +0100
+
+libgeotiff-dfsg (1.4.3~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 12 Dec 2018 08:19:16 +0100
+
+libgeotiff-dfsg (1.4.3~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Bump Standards-Version to 4.2.1, no changes.
+  * Add Build-Depends-Package field to symbols file.
+  * Refresh patches.
+  * Sort build dependencies.
+  * Update symbols for 1.4.3~rc1.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 07 Dec 2018 20:49:44 +0100
+
+libgeotiff-dfsg (1.4.2-4) unstable; urgency=medium
+
+  * Drop autopkgtest to test installability.
+  * Add lintian override for testsuite-autopkgtest-missing.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 31 Jul 2018 19:49:18 +0200
+
+libgeotiff-dfsg (1.4.2-3) unstable; urgency=medium
+
+  * Change priority from extra to optional.
+  * Bump Standards-Version to 4.1.5, changes: priority.
+  * Use pkg-info.mk variables instead of dpkg-parsechangelog output.
+  * Strip trailing whitespace from changelog, control & rules files.
+  * Update copyright-format URL to use HTTPS.
+  * Add autopkgtest to test installability.
+  * Update watch file to use HTTPS.
+  * Update Vcs-* URLs for Salsa.
+  * Drop obsolete get-orig-source target.
+  * Drop obsolete dbg package.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 19 Jul 2018 22:13:23 +0200
+
+libgeotiff-dfsg (1.4.2-2) unstable; urgency=medium
+
+  * Add upstream patch to revert back including "geo_config.h".
+    Caused librasterlite2 configure to fail (#836308).
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 01 Sep 2016 18:42:40 +0200
+
+libgeotiff-dfsg (1.4.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 28 Aug 2016 03:20:42 +0200
+
+libgeotiff-dfsg (1.4.2~rc4-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Refresh patches.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 18 Aug 2016 21:17:37 +0200
+
+libgeotiff-dfsg (1.4.2~rc3-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop automake-subdir-objects.patch, applied upstream.
+  * Don't patch Makefile.in, but only Makefile.am.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 17 Aug 2016 16:35:46 +0200
+
+libgeotiff-dfsg (1.4.2~rc2-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches applied upstream. Refresh remaining patch.
+  * Override dh_autoreconf to run autogen.sh instead of `autoreconf -fi`.
+  * Add patch to fix automake warning by adding subdir-objects option.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 11 Aug 2016 18:31:37 +0200
+
+libgeotiff-dfsg (1.4.2~rc1-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update watch file to also match pre-releases.
+  * Change Upstream-Contact to GeoTIFF mailinglist.
+  * Refresh patches.
+  * Update symbols, GTIFTiepointTranslate made static.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 11 Aug 2016 16:16:32 +0200
+
+libgeotiff-dfsg (1.4.1-4) unstable; urgency=medium
+
+  * Add patch to not install makegeo, install source in examples instead.
+  * Use dh-autoreconf instead of autotools-dev.
+  * Add patch to add manpages for applygeo & geotifcp, and fix listgeo manpage.
+  * Explicitly remove .la file, not installed.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 10 Aug 2016 00:05:17 +0200
+
+libgeotiff-dfsg (1.4.1-3) unstable; urgency=medium
+
+  * Bump Standards-Version to 3.9.8, no changes.
+  * Enable all hardening buidflags.
+  * Update Homepage URL to use HTTPS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 05 May 2016 18:05:54 +0200
+
+libgeotiff-dfsg (1.4.1-2) unstable; urgency=medium
+
+  * Update Vcs-Git URL to use HTTPS.
+  * Bump Standards-Version to 3.9.7, no changes.
+  * Update URLs in upstream metadata to use HTTPS.
+  * Update watch file to handle common issues and other tar extensions.
+  * Don't ignore symbols changes in dh_makeshlibs override.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 14 Feb 2016 17:41:35 +0100
+
+libgeotiff-dfsg (1.4.1-1) unstable; urgency=medium
+
+  * Add upstream metadata.
+  * Update my email to @debian.org address.
+  * Update copyright file, changes:
+    - Group copyright holders by license
+    - Use standalone license specification for FSF licenses
+    - Align copyright holders
+    - Drop .0 from GPL license shortname
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 27 Apr 2015 18:49:20 +0200
+
+libgeotiff-dfsg (1.4.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Use uscan and Files-Excluded in copyright file to remove non-free
+    csv files, repack upstream tarball using xz compression.
+  * Update Makefile.in patch to also drop installation of removed csv
+    files in Makefile.am.
+  * Update symbols for 1.4.1.
+  * Add debug package for libgeotiff2.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sat, 15 Nov 2014 15:22:25 +0100
+
+libgeotiff-dfsg (1.4.0-5) unstable; urgency=medium
+
+  * Add Breaks/Replaces libgeotiff-dev on geotiff-bin, listgeo.1 man page
+    was incorrectly included in libgeotiff-dev, it was added to geotiff-bin
+    in 1.4.0-3 and removed from libgeotiff-dev in 1.4.0-4.
+    (closes: #768141)
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Wed, 05 Nov 2014 12:59:54 +0100
+
+libgeotiff-dfsg (1.4.0-4) unstable; urgency=medium
+
+  * Add myself to Uploaders.
+  * Add gbp.conf to use pristine-tar by default.
+  * Remove duplicate section field in package geotiff-bin.
+  * Only install listgeo man page in package geotiff-bin.
+  * Remove unused debian/listgeo.1.
+  * Update copyright file using copyright-format 1.0.
+  * Add symbols file for libgeotiff.
+  * Change priority from extra to optional.
+  * Use minimal dh rules.
+  * Update control and install files for Multi-Arch.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 24 Oct 2014 16:57:23 +0200
+
+libgeotiff-dfsg (1.4.0-3) unstable; urgency=medium
+
+  * Team Upload
+  * Enable hardening
+  * Update debian/control
+  * Update short descriptions
+  * Install manfile for listgeo.1
+  * Fix macro error in manfile
+  * Update debhelper dep to 9
+
+ -- Johan Van de Wauw <johan.vandewauw@gmail.com>  Wed, 22 Oct 2014 08:39:54 +0200
+
+libgeotiff-dfsg (1.4.0-2) unstable; urgency=medium
+
+  * Moved b-d to libtiff-dev.
+    (closes: #736023)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 05 Mar 2014 10:05:37 +0100
+
+libgeotiff-dfsg (1.4.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Policy bumped to 3.9.5.
+  * Debhelper level set to 9.
+  * Updated watch file to reflect current repo.
+  * Set canonical Vcs-* fiedls.
+  * Added misc-depends to -dev package.
+  * Now using dh_ methods to update/restore autotools config.* stuff.
+  * Introduced missing recommended build-* targets in debian/rules.
+  * html docs dir is not more distributed in the original tarball,
+    reintroduced as a debian patch (docs).
+  * Annotated all patches.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 16 Dec 2013 16:20:15 +0100
+
+libgeotiff-dfsg (1.3.0+dfsg-1) unstable; urgency=low
+
+  * Moved to git repository on alioth.
+  * Updated Vcs-* fields as required.
+  * Moved to source format 3.0 and quilt.
+  * Debhelper level set to 8.
+  * Changed upstream version to reflect minor changes in upstream
+    tarball which resulted in a bit trashed tree.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 08 Nov 2011 14:49:37 +0100
+
+libgeotiff-dfsg (1.3.0-1) unstable; urgency=low
+
+  [ Alan Boudreault ]
+  * New upstream release.
+  * Updated some debian/* file for the new libgeotiff 1.3.
+  * Updated the project homepage in debian/control.
+  * Modified the package names with the proper major version in debian/control.
+  * Added Alan as Uploader in debian/control.
+
+  [ Francesco Paolo Lovergine ]
+  * Now following the new SONAME for libgeotiff as adopted upstream: package
+    name changed as consequence
+  * Updated to use libjpeg-dev as build-dep.
+    (closes: #634140)
+  * Now original autoconf helpers file are restored at cleaning time, to
+    be nice against SCMs.
+  * Added Vcs-* fields in debian/control.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 05 Sep 2011 13:59:19 +0200
+
+libgeotiff-dfsg (1.2.5-3) unstable; urgency=low
+
+  * Added libtiff4-dev dependency for the -dev package due to required header
+    files.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 03 Jun 2009 23:43:17 +0200
+
+libgeotiff-dfsg (1.2.5-2) unstable; urgency=low
+
+  * Changed build-dep: proj -> libproj-dev.
+  * Added listgeo.1 manpage, taken from trac.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 07 Apr 2009 12:58:00 +0200
+
+libgeotiff-dfsg (1.2.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Policy bumped to 3.8.1.
+  * Debhelper compatibility set to 7.
+  * Minor cleanups in debian/rules.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 25 Mar 2009 13:44:01 +0100
+
+libgeotiff-dfsg (1.2.4-4) unstable; urgency=high
+
+  * Fixed soname patch and removed overriding of LD_SHARED in debian/rules
+    (closes: #495349)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 03 Feb 2009 01:08:27 +0100
+
+libgeotiff-dfsg (1.2.4-3) unstable; urgency=low
+
+  * [Lintian] debian-rules-ignores-make-clean-error cleaned in debian/rules.
+  * [Lintian] extended-description-line-too-long cleaned in debian/control.
+  * [Lintian] substvar-source-version-is-deprecated cleaned in debian/control.
+  * Introduced homepage field in debian/control.
+  * Added installation path for libraries searching at dh_shlibdeps call.
+  * Added LD_SHARED ovverride at building time in debian/rules to link against libc
+    runtime also.
+  * Policy bumped to 3.7.3.
+  * Removing config.log at clean time for completeness.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 19 Dec 2007 13:25:57 +0100
+
+libgeotiff-dfsg (1.2.4-2) unstable; urgency=high
+
+  * Missing *.inc files added to /usr/include/geotiff.
+    (closes: #447234)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed, 14 Nov 2007 17:53:29 +0100
+
+libgeotiff-dfsg (1.2.4-1) unstable; urgency=low
+
+  * Initial release (closes: #418184)
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Wed,  4 Apr 2007 20:45:27 +0200

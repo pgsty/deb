@@ -1,0 +1,3 @@
+Tests: geotiff-bin
+Depends: geotiff-bin
+Restrictions: allow-stderr

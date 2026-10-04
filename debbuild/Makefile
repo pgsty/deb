@@ -1258,4 +1258,7 @@ proj:
 sfcgal:
 	$(MAKE) -C sfcgal
 
-.PHONY: cgal geos proj sfcgal
+libgeotiff:
+	$(MAKE) -C libgeotiff
+
+.PHONY: cgal geos proj sfcgal libgeotiff

@@ -1,0 +1,62 @@
+Source: libgeotiff
+Maintainer: Ruohang Feng <rh@vonng.com>
+Section: science
+Build-Depends: debhelper-compat (= 13),
+               libjpeg-dev,
+               libproj-dev (>= 9.8.1),
+               libtiff-dev,
+               pkgconf,
+               zlib1g-dev
+Standards-Version: 4.7.3
+Vcs-Browser: https://salsa.debian.org/debian-gis-team/libgeotiff
+Vcs-Git: https://salsa.debian.org/debian-gis-team/libgeotiff.git
+Homepage: https://geotiff.osgeo.org/
+
+Package: libgeotiff-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: libgeotiff5 (= ${binary:Version}),
+         libjpeg-dev,
+         libproj-dev (>= 9.8.1),
+         libtiff-dev,
+         ${misc:Depends}
+Description: GeoTIFF (geografic enabled TIFF) library -- development files
+ This C library supports TIFF 6.0 based interchange format for georeferenced
+ raster imagery. The GeoTIFF standard has been developed for reading, and
+ writing geographic meta-information tags on top of TIFF raster.
+ .
+ This package contains stuff to be used to develop programs based
+ on the GeoTIFF library.
+
+Package: libgeotiff5
+Multi-Arch: same
+Architecture: any
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Suggests: geotiff-bin,
+          gdal-bin
+Description: GeoTIFF (geografic enabled TIFF) library -- run-time files
+ This C library supports TIFF 6.0 based interchange format for georeferenced
+ raster imagery. The GeoTIFF standard has been developed for reading, and
+ writing geographic meta-information tags on top of TIFF raster.
+ .
+ This package contains the shared library only.
+
+Package: geotiff-bin
+Architecture: any
+Multi-Arch: foreign
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Suggests: gdal-bin
+Description: GeoTIFF (geografic enabled TIFF) library -- tools
+ This C library supports TIFF 6.0 based interchange format for georeferenced
+ raster imagery. The GeoTIFF standard has been developed for reading, and
+ writing geographic meta-information tags on top of TIFF raster.
+ .
+ The GeoTIFF library comes with two utility programs here included:
+ .
+  listgeo - dumps the metadata of a GeoTIFF file.
+  geotifcp - applies metadata to a TIFF file, making it a GeoTIFF file.

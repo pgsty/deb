@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+# Enable hardening build flags
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+include /usr/share/dpkg/pkg-info.mk
+
+UPSTREAM_VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed -e 's/\+.*//')
+
+%:
+	dh $@
+
+override_dh_autoreconf:
+	dh_autoreconf ./autogen.sh
+
+override_dh_installchangelogs:
+	dh_installchangelogs ChangeLog
+
+override_dh_makeshlibs:
+	dh_makeshlibs -- -v$(UPSTREAM_VERSION)
