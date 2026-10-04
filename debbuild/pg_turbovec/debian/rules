@@ -22,22 +22,9 @@ override_dh_auto_install:
 		SRC_ROOT=target/release/$$DIR_NAME/usr; \
 		test -f $$SRC_ROOT/lib/postgresql/$$PG_VERSION/lib/$(EXT_NAME).so; \
 		test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME).control; \
-		test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)--2.2.2.sql; \
-		for SQL_FILE in \
-			$(EXT_NAME)--1.28.3--1.28.4.sql \
-			$(EXT_NAME)--1.28.4--1.29.0.sql \
-			$(EXT_NAME)--1.29.0--1.29.1.sql \
-			$(EXT_NAME)--1.29.1--1.29.2.sql \
-			$(EXT_NAME)--1.29.2--1.29.3.sql \
-			$(EXT_NAME)--1.29.3--1.29.4.sql \
-			$(EXT_NAME)--1.29.4--1.29.5.sql \
-			$(EXT_NAME)--1.29.5--1.29.6.sql \
-			$(EXT_NAME)--1.29.6--1.29.7.sql \
-			$(EXT_NAME)--1.29.7--2.0.0.sql \
-			$(EXT_NAME)--2.0.0--2.1.0.sql \
-			$(EXT_NAME)--2.1.0--2.2.0.sql \
-			$(EXT_NAME)--2.2.0--2.2.1.sql \
-			$(EXT_NAME)--2.2.1--2.2.2.sql; do \
+		test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)--2.10.3.sql; \
+		for SQL_SOURCE in sql/$(EXT_NAME)--*--*.sql; do \
+			SQL_FILE=$${SQL_SOURCE##*/}; \
 			test -f $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$$SQL_FILE; \
 		done; \
 		dh_installdirs -p$$FULL_NAME; \

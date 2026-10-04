@@ -1,3 +1,9 @@
+pg-turbovec (2.10.3-1PGSTY) unstable; urgency=medium
+
+  * Update to 2.10.3.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 pg-turbovec (2.2.2-1PGSTY) unstable; urgency=medium
 
   * Upgrade to official tag 2.2.2 with the locked pgrx 0.19.2 dependency graph.

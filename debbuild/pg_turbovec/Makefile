@@ -4,9 +4,9 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-# Official Codeberg tag v2.2.2 peels to dd5e2800e90de64bd942cece030b0eb973b1111f.
+# Official Codeberg tag v2.10.3; upstream revision is recorded in SOURCE_MANIFEST.
 # Repacked with a versioned root and the pgrx 0.19.2 Cargo.lock.
-TARBALL := pg_turbovec-2.2.2.tar.gz
+TARBALL := pg_turbovec-2.10.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
