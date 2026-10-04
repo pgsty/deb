@@ -1,3 +1,9 @@
+pg-fts (1.9.0-1PGSTY) unstable; urgency=medium
+
+  * Update to 1.9.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 pg-fts (1.8.5-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.8.5.
