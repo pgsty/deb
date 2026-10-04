@@ -1,0 +1,14 @@
+Source: pgtelemetry
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/adjust/pg-telemetry
+
+Package: postgresql-PGVERSION-pgtelemetry
+Architecture: all
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Monitoring views and functions for PostgreSQL
+ Monitoring views and functions for PostgreSQL.

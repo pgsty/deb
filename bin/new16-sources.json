@@ -148,5 +148,28 @@
       }
     ],
     "kind": "pgxs"
+  },
+  {
+    "extension": "pgtelemetry",
+    "package": "pgtelemetry",
+    "deb_package": "pgtelemetry",
+    "version": "1.7",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "pgtelemetry-1.7-cac3d192a119.tar.gz",
+      "sha256": "b649abc2ca6b62e30e6bb02385c7a217833444852dce700bb1e7d596504deab3",
+      "url": "https://codeload.github.com/adjust/pg-telemetry/tar.gz/cac3d192a119f25dc1964b13624e49b5a5a6a27c",
+      "ref": "cac3d192a119f25dc1964b13624e49b5a5a6a27c",
+      "source_kind": "pinned-upstream-commit",
+      "repository": "adjust/pg-telemetry"
+    },
+    "patches": [],
+    "kind": "puresql"
   }
 ]
