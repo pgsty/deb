@@ -1,3 +1,11 @@
+pgrdf (0.6.39-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.6.39.
+  * Build with pgrx and cargo-pgrx 0.19.3 and an immutable Cargo.lock.
+  * Preserve SQL upgrade paths through 0.6.39.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 10:00:00 +0800
+
 pgrdf (0.6.36-1PGSTY) unstable; urgency=medium
 
   * Update to 0.6.36.

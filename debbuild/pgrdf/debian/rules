@@ -16,7 +16,7 @@ override_dh_auto_clean:
 	# Keep pre-built artifacts for packaging.
 
 override_dh_auto_install:
-	for PG_VERSION in $(PG_VERSIONS); do \
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 	    DIR_NAME=$(EXT_NAME)-pg$$PG_VERSION; \
 	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
 	    dh_installdirs -p$$FULL_NAME; \
@@ -26,9 +26,9 @@ override_dh_auto_install:
 	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME).control $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)*.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	    EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-	    test -f $$EXT_DIR/pgrdf--0.6.36.sql; \
-	    test "$$(find $$EXT_DIR -maxdepth 1 -type f -name 'pgrdf*.sql' | wc -l)" -eq 14; \
-	    for EDGE in 0.6.20--0.6.22 0.6.22--0.6.25 0.6.25--0.6.26 0.6.26--0.6.27 0.6.27--0.6.28 0.6.28--0.6.29 0.6.29--0.6.30 0.6.30--0.6.31 0.6.31--0.6.32 0.6.32--0.6.33 0.6.33--0.6.34 0.6.34--0.6.36; do \
+	    test -f $$EXT_DIR/pgrdf--0.6.39.sql; \
+	    test "$$(find $$EXT_DIR -maxdepth 1 -type f -name 'pgrdf*.sql' | wc -l)" -eq 17; \
+	    for EDGE in 0.6.20--0.6.22 0.6.22--0.6.25 0.6.25--0.6.26 0.6.26--0.6.27 0.6.27--0.6.28 0.6.28--0.6.29 0.6.29--0.6.30 0.6.30--0.6.31 0.6.31--0.6.32 0.6.32--0.6.33 0.6.33--0.6.34 0.6.34--0.6.36 0.6.36--0.6.37 0.6.37--0.6.38 0.6.38--0.6.39; do \
 	        test -f $$EXT_DIR/pgrdf--$$EDGE.sql; \
 	    done; \
 	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \

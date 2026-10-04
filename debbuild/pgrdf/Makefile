@@ -4,13 +4,13 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pgrdf-0.6.36.tar.gz
+TARBALL := pgrdf-0.6.39.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.2
-SOURCE_PATCH := patches/pgrdf-0.6.36.patch
+PGRX_VERSION := 0.19.3
+SOURCE_PATCH := patches/pgrdf-0.6.39.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_HTTP_TIMEOUT ?= 600
 CARGO_NET_RETRY ?= 10
@@ -46,8 +46,8 @@ building: check-pgrx
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0192-cargo-locks.before
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.before
+	@test -s $(BUILD_DIR)/.pgrx0193-cargo-locks.before
 	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) CARGO_HTTP_TIMEOUT=$(CARGO_HTTP_TIMEOUT) CARGO_NET_RETRY=$(CARGO_NET_RETRY) cargo fetch --locked
 	cd $(BUILD_DIR) && \
 	set -eu; export RUSTUP_TOOLCHAIN=stable; export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
@@ -58,8 +58,8 @@ building: check-pgrx
 		    EXT_DIR=target/release/pgrdf-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
 		    cp -f sql/pgrdf--*--*.sql "$$EXT_DIR/"; \
 		done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0192-cargo-locks.before $(BUILD_DIR)/.pgrx0192-cargo-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.after
+	cmp $(BUILD_DIR)/.pgrx0193-cargo-locks.before $(BUILD_DIR)/.pgrx0193-cargo-locks.after
 
 check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
