@@ -1,3 +1,10 @@
+pg-search (0.26.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.26.0.
+  * Build with pgrx and cargo-pgrx 0.19.3 and an immutable Cargo.lock.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 10:00:00 +0800
+
 pg-search (0.25.11-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.25.11 with pgrx pinned to 0.19.2.

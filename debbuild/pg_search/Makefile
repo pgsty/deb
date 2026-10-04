@@ -4,14 +4,14 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pg_search-0.25.11.tar.gz
+TARBALL := pg_search-0.26.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
-PGRX_VERSION := 0.19.2
+PGRX_VERSION := 0.19.3
 RUST_TOOLCHAIN := stable
-SOURCE_PATCH := patches/pg-search-0.25.11.patch
+SOURCE_PATCH := patches/pg-search-0.26.0.patch
 LICENSE_COLLECTOR := collect-third-party-licenses.py
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_BUILD_JOBS ?= 2
@@ -49,8 +49,8 @@ building: check-pgrx
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
 	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0192-cargo-locks.before
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.before
+	@test -s $(BUILD_DIR)/.pgrx0193-cargo-locks.before
 	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
 	set -e; \
 	cd $(BUILD_DIR)/pg_search; \
@@ -62,8 +62,8 @@ building: check-pgrx
 			    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
 			    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 		done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0192-cargo-locks.before $(BUILD_DIR)/.pgrx0192-cargo-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.after
+	cmp $(BUILD_DIR)/.pgrx0193-cargo-locks.before $(BUILD_DIR)/.pgrx0193-cargo-locks.after
 	cd $(BUILD_DIR) && \
 		TARGET_TRIPLE=$$(RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) rustc -vV | sed -n 's/^host: //p'); \
 		RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) CARGO_NET_OFFLINE=true cargo metadata --locked --offline \

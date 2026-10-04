@@ -10,15 +10,23 @@ from pathlib import Path
 from typing import Dict, List, Set
 
 EXPECTED_GIT_SOURCES = {
-    "git+https://github.com/paradedb/datafusion-distributed?tag=snapshot-main-2026-08-20-204632#4d870ae1a5abb23618eac0b1844c265ffa2991d8",
-    "git+https://github.com/paradedb/fst.git#11e89334c578f26f9fbafbd1122ffb220ebbdbbf",
-    "git+https://github.com/paradedb/opencc-jieba-rs?branch=paradedb.no-msrv#36bb03c052f087b603a483e01cdaac260e36898f",
-    "git+https://github.com/paradedb/superkmeans-rs?rev=b89e83196143acd518f1d8212ec1f53474e936d4#b89e83196143acd518f1d8212ec1f53474e936d4",
-    "git+https://github.com/paradedb/tantivy.git?rev=549273e3458ece1782aa459850bbde42c6cbc72f#549273e3458ece1782aa459850bbde42c6cbc72f",
+    "git+https://github.com/paradedb/datafusion-distributed.git?tag=snapshot-main-2026-09-28-172238#1e87c8d6bd266594ec9210f42ed783d8847aedeb",
+    "git+https://github.com/paradedb/datafusion.git?branch=paradedb.branch-55#41b058cc278eb497a2ffc6b41a323f056d3ef568",
+    "git+https://github.com/paradedb/fst.git?rev=1d2e473c6de63d17749030eb8538ba4d647f3430#1d2e473c6de63d17749030eb8538ba4d647f3430",
+    "git+https://github.com/paradedb/opencc-jieba-rs?branch=main#1bee2628bcae67a955caa5e91b740d170f5615d0",
+    "git+https://github.com/paradedb/superkmeans-rs?rev=c06dc2b6e9bd15fb5c4a0627178bebbe1fb37a64#c06dc2b6e9bd15fb5c4a0627178bebbe1fb37a64",
+    "git+https://github.com/paradedb/tantivy.git?rev=7540730ee070f1e668017bf0f003024554eaab0a#7540730ee070f1e668017bf0f003024554eaab0a",
 }
 NOTICE_NAME = re.compile(
     r"^(licen[cs]e|copying|notice|copyright|unlicense)([._-].*)?$", re.IGNORECASE
 )
+
+# These five manifests omit SPDX metadata at this exact Tantivy revision.
+# No subdirectory license overrides the repository's checked MIT LICENSE.
+QUANT_SOURCE = "git+https://github.com/paradedb/tantivy.git?rev=7540730ee070f1e668017bf0f003024554eaab0a#7540730ee070f1e668017bf0f003024554eaab0a"
+QUANT_CRATES = {"cascade", "fht", "grid-plane", "quant-model", "sign-plane"}
+QUANT_LICENSE_SHA256 = "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a"
+QUANT_LICENSE_URL = "https://github.com/paradedb/tantivy/blob/7540730ee070f1e668017bf0f003024554eaab0a/LICENSE"
 
 
 def normal_closure(metadata: dict) -> Set[str]:
@@ -109,6 +117,7 @@ def main() -> int:
     git_sources = set()
     license_expressions = set()
     notice_total = 0
+    repository_licenses = []
     for package_id in sorted(closure):
         package = packages[package_id]
         source = package.get("source") or ""
@@ -128,6 +137,19 @@ def main() -> int:
             continue
 
         declared_license = package.get("license")
+        if (
+            not declared_license
+            and source == QUANT_SOURCE
+            and package["name"] in QUANT_CRATES
+            and package["version"] == "0.1.0"
+        ):
+            root_license = Path(package["manifest_path"]).parents[2] / "LICENSE"
+            if hashlib.sha256(root_license.read_bytes()).hexdigest() != QUANT_LICENSE_SHA256:
+                raise SystemExit("reviewed Tantivy repository license changed")
+            declared_license = "MIT"
+            repository_licenses.append(
+                f"{package['name']}\t{package['version']}\tMIT\t{QUANT_LICENSE_URL}"
+            )
         if not declared_license:
             missing.append(
                 f"{package['name']} {package['version']} {source} has no license expression"
@@ -211,13 +233,20 @@ def main() -> int:
         f"packaged_notice_files={notice_total}\n"
         f"upstream_notice_gaps={len(notice_gaps)}\n"
         f"unique_license_expressions={len(license_expressions)}\n"
-        "missing_license_fields=0\n"
+        "unresolved_license_fields=0\n"
+        f"licenses_from_reviewed_repository={len(repository_licenses)}\n"
         f"notice_gaps_with_common_text_coverage={len(notice_gaps)}\n"
         "uncovered_notice_gaps=0\n",
         encoding="utf-8",
     )
     (out_dir / "LICENSE-EXPRESSIONS.txt").write_text(
         "\n".join(sorted(license_expressions)) + "\n", encoding="utf-8"
+    )
+    (out_dir / "REPOSITORY-LICENSES.tsv").write_text(
+        "package\tversion\tlicense\tsource_url\n"
+        + "\n".join(repository_licenses)
+        + ("\n" if repository_licenses else ""),
+        encoding="utf-8",
     )
     (out_dir / "UPSTREAM-NOTICE-GAPS.tsv").write_text(
         "package\tversion\tdeclared_license\tsource\n"
