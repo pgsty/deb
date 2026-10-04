@@ -1,3 +1,9 @@
+pg-eviltransform (0.0.7-1PGSTY) unstable; urgency=medium
+
+  * Update to 0.0.7.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 pg-eviltransform (0.0.5-1PGSTY) unstable; urgency=medium
 
   * Stop the PostgreSQL build loop immediately on failure.
