@@ -1,0 +1,14 @@
+Source: edtf-postgres
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libicu-dev, clang, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/monumental-archive/edtf
+
+Package: postgresql-PGVERSION-edtf-postgres
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Extended Date Time Format functions for PostgreSQL
+ Extended Date Time Format functions for PostgreSQL.

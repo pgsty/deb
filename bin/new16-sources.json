@@ -45,5 +45,29 @@
     "patches": [],
     "kind": "pgrx",
     "pgrx": "0.19.2"
+  },
+  {
+    "extension": "edtf_postgres",
+    "package": "edtf_postgres",
+    "deb_package": "edtf-postgres",
+    "version": "1.2.3",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "source": {
+      "archive": "edtf_postgres-1.2.3.tar.gz",
+      "sha256": "3be44049d4fdff0a512ea8118df8aba517c525ae053c74b94bc7e7737d34e206",
+      "url": "https://codeload.github.com/monumental-archive/edtf/tar.gz/edtf-postgres-v1.2.3",
+      "ref": "edtf-postgres-v1.2.3",
+      "source_kind": "release-tag",
+      "repository": "monumental-archive/edtf"
+    },
+    "patches": [],
+    "kind": "pgrx",
+    "pgrx": "0.19.2"
   }
 ]
