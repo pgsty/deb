@@ -1,3 +1,11 @@
+supautils (3.4.4-1PGSTY) unstable; urgency=medium
+
+  * Update to 3.4.4.
+  * Require ICU headers and stop immediately on build or install failures.
+  * Install the complete PGXS payload, including LLVM bitcode.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 supautils (3.4.3-1PGSTY) unstable; urgency=medium
 
   * Update to upstream supautils 3.4.3.

@@ -16,15 +16,15 @@ override_dh_auto_test:
 override_dh_auto_clean:
 
 override_dh_auto_install:
-	for PG_VERSION in $(PG_VERSIONS); do \
-		DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 		FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
-        rm -rf *.so; \
-        PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$PATH /usr/bin/make clean; \
-        PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$PATH /usr/bin/make; \
+		PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+		$(MAKE) PG_CONFIG=$$PG_CONFIG clean; \
+		$(MAKE) PG_CONFIG=$$PG_CONFIG; \
+		test -s supautils.so; \
 		dh_installdirs -p$$FULL_NAME; \
-		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
-		cp *.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+		$(MAKE) PG_CONFIG=$$PG_CONFIG DESTDIR=$(CURDIR)/debian/$$FULL_NAME install; \
+		test -s $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/supautils.so; \
 		printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
 		printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
 	done
