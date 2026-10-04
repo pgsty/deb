@@ -338,5 +338,28 @@
     },
     "patches": [],
     "kind": "puresql"
+  },
+  {
+    "extension": "pg_statkit",
+    "package": "pg_statkit",
+    "deb_package": "pg-statkit",
+    "version": "1.1.0",
+    "pg_versions": [
+      14,
+      15,
+      16,
+      17
+    ],
+    "source": {
+      "archive": "pg_statkit-1.1.0.tar.gz",
+      "sha256": "2e438bd4e102f38649bec19988a54531bab520de9589e053907311df1ea66979",
+      "url": "https://codeload.github.com/kirdmi/pg_statkit/tar.gz/v1.1.0",
+      "ref": "v1.1.0",
+      "source_kind": "release-tag",
+      "repository": "kirdmi/pg_statkit"
+    },
+    "patches": [],
+    "kind": "pgrx",
+    "pgrx": "0.18.1"
   }
 ]
