@@ -1,8 +1,8 @@
 geos (3.14.1-1PGSTY) unstable; urgency=medium
 
+  * Generate shared-library dependencies without maintained symbol templates.
   * Build the PGDG-aligned GIS stack from the shared RPM source archive.
   * Preserve native debug symbols and validate the arm64 pilot.
-  * Support the pkg-kde-tools debhelper sequence on Ubuntu 22.04.
   * Retain the native non-time64 package name on jammy and bookworm.
 
  -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 15:00:00 +0800

@@ -198,13 +198,10 @@
     {
       "package": "geos",
       "archive": "geos_3.14.1-2.pgdg24.04+1.debian.tar.xz",
-      "deb_input": true,
-      "members": [
-        "debian/libgeos3.14.1.symbols",
-        "debian/libgeos-c1t64.symbols"
-      ],
+      "deb_input": false,
       "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/g/geos/geos_3.14.1-2.pgdg24.04%2B1.debian.tar.xz",
-      "sha256": "7a41e68ce6679c15271ee3fcc3cb745c7271c8cc437eacbd3ca3487ab6c4e766"
+      "sha256": "7a41e68ce6679c15271ee3fcc3cb745c7271c8cc437eacbd3ca3487ab6c4e766",
+      "adaptation": "Packaging layout provenance only; no symbols archive is required to build."
     },
     {
       "package": "proj",

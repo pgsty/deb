@@ -10,10 +10,6 @@ export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 # testrunner fails on some architectures
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-include /usr/share/dpkg/pkg-info.mk
-
-UPSTREAM_VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed -e 's/\+.*//')
-
 export DEB_CXXFLAGS_MAINT_PREPEND=-fpermissive
 
 %:
@@ -39,4 +35,4 @@ override_dh_installman:
 	dh_installman -plibgeos-dev debian/geos-config.1
 
 override_dh_makeshlibs:
-	dh_makeshlibs -- -v$(UPSTREAM_VERSION) -c0
+	dh_makeshlibs -VUpstream-Version
