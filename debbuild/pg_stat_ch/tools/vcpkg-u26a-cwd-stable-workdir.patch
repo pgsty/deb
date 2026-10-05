@@ -1,0 +1,39 @@
+--- a/scripts/cmake/vcpkg_configure_cmake.cmake
++++ b/scripts/cmake/vcpkg_configure_cmake.cmake
+@@ -264,6 +264,18 @@
+         "-DCMAKE_INSTALL_PREFIX=${CURRENT_PACKAGES_DIR}/debug"
+         ${arg_OPTIONS} ${arg_OPTIONS_DEBUG})
+ 
++    set(rel_working_directory "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel")
++    set(dbg_working_directory "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg")
++    if(arg_Z_GET_CMAKE_VARS_USAGE)
++        # On the U26 Docker bind mount, the short-lived binary directory can be
++        # replaced before the spawned CMake resolves cwd. An explicit -B keeps
++        # the output identical while the child starts from the stable parent.
++        vcpkg_list(APPEND rel_command -B "${rel_working_directory}")
++        vcpkg_list(APPEND dbg_command -B "${dbg_working_directory}")
++        set(rel_working_directory "${CURRENT_BUILDTREES_DIR}")
++        set(dbg_working_directory "${CURRENT_BUILDTREES_DIR}")
++    endif()
++
+     if(ninja_host AND CMAKE_HOST_WIN32 AND NOT arg_DISABLE_PARALLEL_CONFIGURE)
+         vcpkg_list(APPEND arg_OPTIONS "-DCMAKE_DISABLE_SOURCE_CHANGES=ON")
+ 
+@@ -310,7 +322,7 @@
+             file(MAKE_DIRECTORY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg")
+             vcpkg_execute_required_process(
+                 COMMAND ${dbg_command}
+-                WORKING_DIRECTORY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-dbg"
++                WORKING_DIRECTORY "${dbg_working_directory}"
+                 LOGNAME "${arg_LOGNAME}-dbg"
+                 SAVE_LOG_FILES CMakeCache.txt
+             )
+@@ -324,7 +336,7 @@
+             file(MAKE_DIRECTORY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel")
+             vcpkg_execute_required_process(
+                 COMMAND ${rel_command}
+-                WORKING_DIRECTORY "${CURRENT_BUILDTREES_DIR}/${TARGET_TRIPLET}-rel"
++                WORKING_DIRECTORY "${rel_working_directory}"
+                 LOGNAME "${arg_LOGNAME}-rel"
+                 SAVE_LOG_FILES CMakeCache.txt
+             )
