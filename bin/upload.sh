@@ -11,12 +11,13 @@ TARBALL_NAME="debbuild.tar.gz"
 # make tarball
 echo "build tmp/${TARBALL_NAME}"
 mkdir -p "${TMP_DIR}"
+git -C "${HOME_DIR}" ls-files -z -- debbuild |
 COPYFILE_DISABLE=1 gtar -zcf "${TMP_DIR}/${TARBALL_NAME}" \
     --exclude-vcs --exclude='.DS_Store' --exclude='._*' \
     --exclude='debbuild/SOURCES' --exclude='debbuild/*/build' \
     --exclude='*.deb' --exclude='*.ddeb' --exclude='*.changes' \
     --exclude='*.buildinfo' --exclude='*.log' \
-    -C "${HOME_DIR}" debbuild
+    -C "${HOME_DIR}" --no-recursion --null -T -
 cd "${TMP_DIR}"
 
 # print info
