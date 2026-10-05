@@ -20,6 +20,7 @@ setup: check-src
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	echo "19ac620c120b6b1f5a3681ec768f304898b527d8f864a4a6bb470f080076813a  ../SOURCES/pg_lexo-0.6.1-Cargo.lock" | sha256sum -c -
 	cp ../SOURCES/pg_lexo-0.6.1-Cargo.lock $(BUILD_DIR)/Cargo.lock
+	patch -d $(BUILD_DIR) -p1 < patches/pg_lexo-0.6.1-ordering.patch
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build: setup

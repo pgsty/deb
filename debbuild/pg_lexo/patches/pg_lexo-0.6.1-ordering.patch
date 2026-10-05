@@ -1,0 +1,45 @@
+Use the lexo operator class for table helpers. PostgreSQL has no max(lexo)
+aggregate; casting the sort key to text would also apply locale ordering.
+Keep NULL/empty handling consistent with MAX, and preserve native order when
+rebalancing. Regression SQL: tests/pg_lexo.sql.
+
+--- a/src/schema.rs
++++ b/src/schema.rs
+@@ -133,18 +133,20 @@
+         quote_identifier(table_name)
+     };
+ 
++    // A scalar subquery preserves one NULL result for empty tables/groups.
++    // Cast outside it so ORDER BY uses lexo, not a text output alias.
+     let query = match (identifier_column_name, identifier_value) {
+         (Some(id_col), Some(id_val)) => {
+             let quoted_id_column = quote_identifier(id_col);
+             let quoted_id_value = quote_literal(id_val);
+             format!(
+-                "SELECT MAX({})::text FROM {} WHERE {} = {}",
++                "SELECT (SELECT {0} FROM {1} WHERE {2} = {3} ORDER BY {0} DESC NULLS LAST LIMIT 1)::text",
+                 quoted_lexo_column, quoted_table, quoted_id_column, quoted_id_value
+             )
+         }
+         _ => {
+             format!(
+-                "SELECT MAX({})::text FROM {}",
++                "SELECT (SELECT {0} FROM {1} ORDER BY {0} DESC NULLS LAST LIMIT 1)::text",
+                 quoted_lexo_column, quoted_table
+             )
+         }
+@@ -242,12 +244,12 @@
+             let quoted_key_column = quote_identifier(key_col);
+             let quoted_key_value = quote_literal(key_val);
+             format!(
+-                "SELECT ctid::text FROM {} WHERE {} = {} ORDER BY {}::text",
++                "SELECT ctid::text FROM {} WHERE {} = {} ORDER BY {}",
+                 quoted_table, quoted_key_column, quoted_key_value, quoted_lexo_column
+             )
+         }
+         _ => format!(
+-            "SELECT ctid::text FROM {} ORDER BY {}::text",
++            "SELECT ctid::text FROM {} ORDER BY {}",
+             quoted_table, quoted_lexo_column
+         ),
+     };

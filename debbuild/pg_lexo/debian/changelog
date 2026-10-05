@@ -1,5 +1,6 @@
 pg-lexo (0.6.1-1PGSTY) unstable; urgency=medium
 
+  * Fix lexo_next and preserve native ordering in lexo_rebalance.
   * Initial package using the same pinned source and patches as the RPM recipe.
 
  -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 08:00:00 +0000
