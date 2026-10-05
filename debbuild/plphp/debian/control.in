@@ -9,6 +9,6 @@ Homepage: https://github.com/commandprompt/plPHP
 
 Package: postgresql-PGVERSION-plphp
 Architecture: any
-Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Depends: postgresql-PGVERSION, ${php:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: PHP procedural language for PostgreSQL
  PHP procedural language for PostgreSQL.

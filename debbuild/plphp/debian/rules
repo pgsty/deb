@@ -3,6 +3,7 @@ export DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+PHP_VERSION := $(shell php-config --version | cut -d. -f1-2)
 
 %:
 	dh $@
@@ -13,6 +14,10 @@ override_dh_auto_test:
 	# Installed-package SQL tests run in the isolated matrix harness.
 
 override_dh_auto_build:
+
+# PHP's unversioned SONAME is not covered by Debian's shlibs metadata.
+override_dh_gencontrol:
+	dh_gencontrol -- -Vphp:Depends=libphp$(PHP_VERSION)-embed
 
 override_dh_auto_install:
 	set -e; for v in $(PG_VERSIONS); do \
