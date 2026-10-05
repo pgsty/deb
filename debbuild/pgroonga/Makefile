@@ -1,6 +1,6 @@
 all: check-src setup build move
 
-TARBALL := pgroonga-4.0.8.tar.gz
+TARBALL := pgroonga-4.0.9.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 
 check-src:

@@ -1,3 +1,9 @@
+pgroonga (4.0.9-1PGSTY) unstable; urgency=medium
+
+  * Update to 4.0.9.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 02 Oct 2026 14:15:00 +0800
+
 pgroonga (4.0.8-1PGSTY) unstable; urgency=low
 
   * Allow first-time Meson configuration on Debian bookworm.
