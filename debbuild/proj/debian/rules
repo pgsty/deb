@@ -14,10 +14,6 @@ export DEB_BUILD_MAINT_OPTIONS=hardening=+all
 
 DEB_HOST_MULTIARCH?=$(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
-include /usr/share/dpkg/pkg-info.mk
-
-UPSTREAM_VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed -e 's/\+.*//')
-
 datumgrids: datumgrids-stamp
 datumgrids-stamp:
 	TZ=UTC unshar -c -d $(CURDIR)/data $(CURDIR)/debian/datumgrids.shar
@@ -50,4 +46,4 @@ override_dh_installdocs:
 	dh_installdocs -A AUTHORS.md NEWS.md README.md
 
 override_dh_makeshlibs:
-	dh_makeshlibs -- -c0 -v$(UPSTREAM_VERSION)
+	dh_makeshlibs -VUpstream-Version

@@ -209,8 +209,7 @@
       "deb_input": true,
       "members": [
         "debian/datumgrids.shar",
-        "debian/datumgrids-ch.shar",
-        "debian/libproj25.symbols"
+        "debian/datumgrids-ch.shar"
       ],
       "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/p/proj/proj_9.8.1-1.pgdg24.04%2B1.debian.tar.xz",
       "sha256": "4a0b97c3d6c8b4aaa451593813ffda4456648868fe4bb40c3f9b4b96a7edba2c"

@@ -1,8 +1,9 @@
 Debian Proj upstream source notes
 ---------------------------------
 
-PGSTY keeps the datumgrid shell archives and libproj25.symbols outside
-the recipe repository.
+PGSTY keeps the required runtime datumgrid shell archives outside the
+recipe repository. ABI dependencies are generated automatically by debhelper;
+no separately maintained symbol template is required.
 The byte-identical inputs are extracted during setup from the official PGDG
 proj_9.8.1-1.pgdg24.04+1.debian.tar.xz archive in ../SOURCES. Its SHA-256 is
 4a0b97c3d6c8b4aaa451593813ffda4456648868fe4bb40c3f9b4b96a7edba2c.

@@ -1,7 +1,7 @@
 proj (9.8.1-1PGSTY) unstable; urgency=medium
 
+  * Generate shared-library dependencies without maintained symbol templates.
   * Extract datum grids from the pinned PGDG source archive during setup.
-  * Activate pkgkde_symbolshelper explicitly on Ubuntu 22.04.
   * Build the PGDG-aligned GIS stack from the shared RPM source archive.
   * Preserve native debug symbols and validate the arm64 pilot.
 

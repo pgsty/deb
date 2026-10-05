@@ -3,12 +3,10 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Section: science
 Build-Depends: cmake,
                debhelper-compat (= 13),
-               dh-sequence-pkgkde-symbolshelper,
                libcurl4-gnutls-dev | libcurl-ssl-dev,
                libgtest-dev,
                libsqlite3-dev,
                libtiff-dev,
-               pkg-kde-tools,
                sharutils,
                sqlite3,
                xz-utils

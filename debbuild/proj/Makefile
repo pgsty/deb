@@ -20,11 +20,7 @@ setup: check-src
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	rm -rf $(BUILD_DIR)/debian
 	cp -a debian $(BUILD_DIR)/debian
-	tar -C $(BUILD_DIR) -xf "$(SOURCE_DATUMGRIDS)" debian/datumgrids.shar debian/datumgrids-ch.shar debian/libproj25.symbols
-	@if [ "$$(lsb_release -sc)" = jammy ]; then \
-		sed -i '/dh-sequence-pkgkde-symbolshelper,/d' $(BUILD_DIR)/debian/control; \
-		sed -i 's/dh $$@/dh $$@ --with=pkgkde_symbolshelper/' $(BUILD_DIR)/debian/rules; \
-	fi
+	tar -C $(BUILD_DIR) -xf "$(SOURCE_DATUMGRIDS)" debian/datumgrids.shar debian/datumgrids-ch.shar
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/1PGSTY)/1PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build:
