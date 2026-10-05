@@ -1,6 +1,6 @@
 {
   "baseline_date": "2026-10-04",
-  "description": "Core source bytes and versions align with the PGSTY RPM pilot; Debian packaging uses PGDG/Debian native package layout. Arrow and GTA are built separately where Ubuntu has no development packages.",
+  "description": "Core source bytes and versions align with the PGSTY RPM pilot; Debian packaging uses PGDG/Debian native package layout. GDAL uses distribution/PGDG dependencies without requiring optional Arrow, GTA, or SFCGAL backports.",
   "core": [
     {
       "package": "SFCGAL",
@@ -188,12 +188,10 @@
     {
       "package": "gdal",
       "archive": "gdal_3.13.3+dfsg-1.pgdg24.04+1.debian.tar.xz",
-      "deb_input": true,
-      "members": [
-        "debian/libgdal39.symbols"
-      ],
+      "deb_input": false,
       "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/g/gdal/gdal_3.13.3%2Bdfsg-1.pgdg24.04%2B1.debian.tar.xz",
-      "sha256": "d86f69b389d95d7b32ecc045d036ece0e054f5f28fa8a6015a23c7d30dea5826"
+      "sha256": "d86f69b389d95d7b32ecc045d036ece0e054f5f28fa8a6015a23c7d30dea5826",
+      "adaptation": "Packaging layout provenance only; no symbols archive is required to build."
     },
     {
       "package": "geos",
@@ -241,20 +239,22 @@
       "name": "apache-arrow-9.0.0.tar.gz",
       "url": "https://archive.apache.org/dist/arrow/arrow-9.0.0/apache-arrow-9.0.0.tar.gz",
       "sha256": "a9a033f0a3490289998f458680d19579cf07911717ba65afde6cb80070f7a9b5",
-      "size": 18314915
+      "size": 18314915,
+      "use": "Optional standalone library recipe; not required by the default GDAL build."
     },
     {
       "name": "libgta-1.2.1.tar.xz",
       "url": "https://marlam.de/gta/releases/libgta-1.2.1.tar.xz",
       "sha256": "d445667e145f755f0bc34ac89b63a6bfdce1eea943f87ee7a3f23dc0dcede8b1",
-      "size": 326520
+      "size": 326520,
+      "use": "Optional standalone library recipe; not required by the default GDAL build."
     },
     {
       "name": "xsimd-8.1.0.tar.gz",
       "url": "https://github.com/xtensor-stack/xsimd/archive/8.1.0.tar.gz",
       "sha256": "d52551360d37709675237d2a0418e28f70995b5b7cdad7c674626bcfbbf48328",
       "size": 190180,
-      "use": "Arrow 9 private header-only xsimd dependency; upstream-pinned checksum verified"
+      "use": "Arrow 9 private header-only dependency for the optional standalone recipe; not required by default GDAL."
     }
   ],
   "debian_patch_adaptations": {

@@ -60,9 +60,9 @@ override_dh_auto_configure:
 			-DGDAL_JAVA_INSTALL_DIR=/usr/share/java \
 			-DGDAL_JAVA_JNI_INSTALL_DIR=/usr/lib/jni \
 			-DCMAKE_SKIP_INSTALL_RPATH=ON \
-			-DGDAL_USE_ARROW=ON \
-			-DGDAL_USE_GTA=ON \
-			-DGDAL_USE_SFCGAL=ON \
+			-DGDAL_USE_ARROW=OFF \
+			-DGDAL_USE_GTA=OFF \
+			-DGDAL_USE_SFCGAL=OFF \
 			-DGDAL_USE_LIBXML2=ON \
 			-DGDAL_USE_OPENSSL=ON \
 			-DGDAL_USE_HDF4=ON \
@@ -166,4 +166,4 @@ override_dh_numpy3:
 	dh_numpy3 -pgdal-bin -ppython3-gdal
 
 override_dh_makeshlibs:
-	dh_makeshlibs -- -c0 -v$(UPSTREAM_VERSION)
+	dh_makeshlibs -VUpstream-Version

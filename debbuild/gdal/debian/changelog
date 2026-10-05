@@ -1,8 +1,9 @@
 gdal (3.13.3-1PGSTY) unstable; urgency=medium
 
-  * Activate pkgkde_symbolshelper explicitly on Ubuntu 22.04.
+  * Generate shared-library dependencies without maintained symbol templates.
   * Allow the distribution JDK where OpenJDK 17 is unavailable.
-  * Align the core GIS sources and enabled features with the PGSTY RPM build.
+  * Keep the shared RPM source bytes and use distribution/PGDG dependencies.
+  * Do not require optional Arrow, GTA, or SFCGAL backports for GDAL.
   * Keep native debug symbols and the distribution package layout.
 
  -- Ruohang Feng <rh@vonng.com>  Sun, 04 Oct 2026 15:00:00 +0800
