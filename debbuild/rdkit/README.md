@@ -7,7 +7,7 @@ runtime, while Resolute builds one complete, ABI-coherent RDKit suite:
 - Debian 12 / Ubuntu 22.04: build PostgreSQL 17 and 18 from the official PGDG
   `202303.3` source, using PGDG `librdkit1` and `librdkit-dev`.
 - Ubuntu 26.04: build the complete `202603.6` suite (runtime, development,
-  data, Python bindings, and PostgreSQL 14-17 cartridges) from the Pigsty
+  data, Python bindings, and PostgreSQL 14-18 cartridges) from the Pigsty
   Resolute source triad with system InChI 1.07.5.
 - Debian 13 / Ubuntu 24.04: do not build; PGDG supplies RDKit and cartridges
   for PostgreSQL 14-18.
