@@ -93,14 +93,16 @@ path on every supported target.
 
 ```bash
 cd ~/debbuild
-pig build get -f haproxy-3.4.4.tar.gz haproxy-utils-3.4.4.tar.gz
+pig build get -f haproxy-3.4.4.tar.gz haproxy-utils-3.4.4.tar.gz haproxy_3.4.2-1~bpo13+1.debian.tar.xz
 make haproxy
 ```
 
 Use `-f` only after the public source mirror has been synchronized and
-verified. If the mirror has not been updated yet, copy only those two archives
-into `~/debbuild/SOURCES/` before building. The recipe checks both against
-their official SHA-256 digests before unpacking them.
+verified. If a mirror input is missing, copy only that archive into
+`~/debbuild/SOURCES/` before building. The documentation converter is extracted
+from the fixed Debian packaging archive, whose SHA-256 is checked before
+unpacking. `dconv.patch` retains the local documentation adaptations; the
+converter sources and image assets are kept outside this recipe repository.
 
 ## Regenerating the shared archive
 
