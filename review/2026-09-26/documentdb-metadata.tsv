@@ -1,0 +1,3 @@
+name	state	deb_repo	deb_ver	deb_pkg	deb_pg
+documentdb	available	PIGSTY	0.117	postgresql-$v-documentdb	{18,17,16,15}
+documentdb_distributed	available	PIGSTY	0.116	postgresql-$v-documentdb	{18,17,16,15}

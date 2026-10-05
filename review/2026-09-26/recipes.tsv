@@ -1,0 +1,369 @@
+recipe	static_family	changelog_template_version	pgversions_file	package_templates	source_candidates	missing_local_source_candidates	scan_flags_not_verdicts
+acdat	pgxs/loop	0.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-acdat	acdat-0.1.1.tar.gz		
+age	pgxs/loop	1.8.0-1PGSTY	17,18	postgresql-PGVERSION-age	age-1.7.0.tar.gz;age-PG18-v1.8.0-rc0.tar.gz		
+agensgraph	special/manual	2.17.0-1PGSTY		agensgraph-17	agensgraph-2.17.0.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+aggs_for_arrays	pgxs/loop	1.3.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-aggs-for-arrays	aggs_for_arrays-1.3.3.tar.gz		parallel-stage-risk
+aggs_for_vecs	pgxs/loop	1.4.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-aggs-for-vecs	aggs_for_vecs-1.4.1.tar.gz		parallel-stage-risk
+antlr4_runtime413	special/manual	4.13.2-1PGSTY		libantlr4-runtime413;libantlr4-runtime413-dev	antlr4-cpp-runtime-4.13.2-source.zip		parallel-stage-risk;no-control.in;no-pgversions
+argm	pgxs/loop	1.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-argm	argm-1.1.1.tar.gz		
+aws_s3	pgxs/loop	0.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-aws-s3	aws_s3-0.0.1.tar.gz		parallel-stage-risk
+babelfish	special/manual	@DEB_VERSION@		babelfish-@PG_MAJOR@	babelfish-17-17.10-5.7.0.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+block_copy_command	rust/pgrx	0.1.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-block-copy-command	block_copy_command-0.1.5.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+cat_tools	pgxs/loop	0.3.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-cat-tools	cat_tools-0.3.0.tar.gz		parallel-stage-risk
+chkpass	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-chkpass	chkpass-1.0.tar.gz		parallel-stage-risk
+citus	pgxs/loop	14.2.0-9PGSTY	16,17,18	postgresql-PGVERSION-citus	citus-14.2.0.tar.gz		parallel-stage-risk
+cloudberry	special/manual	2.1.0-1PGSTY		cloudberry	apache-cloudberry-2.1.0-incubating-src.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+cloudberry-backup	special/manual	2.2.0+git20260813.6d61e7e-1PGSTY		cloudberry-backup	apache-cloudberry-backup-2.2.0-src.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+cloudberry-pxf	special/manual	2.1.0-1PGSTY		cloudberry-pxf	apache-cloudberry-pxf-2.1.0-incubating-src.tar.gz;gradle-8.5-bin.zip		parallel-stage-risk;no-control.in;no-pgversions
+column_encrypt	pgxs/loop	4.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-column-encrypt	column_encrypt-4.0.tar.gz		parallel-stage-risk
+count_distinct	pgxs/loop	3.0.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-count-distinct	count_distinct-3.0.2.tar.gz		parallel-stage-risk
+cron_utils	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-cron-utils	cron_utils-0.1.0.tar.gz		parallel-stage-risk
+cryptint	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-cryptint	cryptint-1.0.0.tar.gz		parallel-stage-risk
+data_historization	pgxs/loop	1.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-data-historization	postgresql-data-historization-1.1.0.tar.gz		parallel-stage-risk
+datasketches	pgxs/loop	1.7.0-2PGSTY	14,15,16,17,18	postgresql-PGVERSION-datasketches	apache-datasketches-cpp-5.2.0-src.tar.gz;apache-datasketches-postgresql-1.7.0-src.tar.gz		parallel-stage-risk
+db_migrator	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-db-migrator	db_migrator-RELEASE_1_0_0.tar.gz		parallel-stage-risk
+dbt2	pgxs/loop	0.62.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-dbt2	dbt2-0.62.0.tar.gz		
+ddl_historization	pgxs/loop	1.0.0+git20241205.18eb9a4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-ddl-historization	pg_ddl_historization-1.0.0+git20241205.18eb9a4.tar.gz		parallel-stage-risk
+ddsketch	pgxs/loop	1.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-ddsketch	ddsketch-1.0.1.tar.gz		parallel-stage-risk
+decoder_raw	pgxs/loop	1.0+git20260728.2271b0d-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-decoder-raw	decoder_raw-1.0+git20260728.2271b0d.tar.gz		parallel-stage-risk
+documentdb	pgxs/loop	0.117-1PGSTY	15,16,17,18	postgresql-PGVERSION-documentdb	documentdb-0.117-0.tar.gz;intelrdfpmath-applied-2.0u3-1.tar.gz;mongo-c-driver-1.28.0.tar.gz;pcre2-10.40.tar.gz;uncrustify-uncrustify-0.68.1.tar.gz;citus-tools-e36e4ea4258989bf527744334f6c633bb67e0686.tar.gz		parallel-stage-risk
+duckdb_fdw	special/manual	2.0.1+git20260529.9354241-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-duckdb-fdw	duckdb_fdw-2.0.1+git20260529.9354241.tar.gz;pg_duckdb-1.1.1.tar.gz		parallel-stage-risk
+emaj	pgxs/loop	5.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-emaj	emaj-5.0.0.tar.gz		parallel-stage-risk
+etcd_fdw	rust/pgrx	0.0.1-3PGSTY	14,15,16,17,18	postgresql-PGVERSION-etcd-fdw	etcd_fdw-0.0.1.tar.gz;wrappers-0.6.2.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+external_file	special/manual	1.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-external-file	external_file-1.2.tar.gz		parallel-stage-risk
+faker	pgxs/loop	0.5.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-faker	postgresql_faker-0.5.3.tar.bz2		
+fbsql	pgxs/loop	0.1.0-1PGSTY	16,17,18	postgresql-PGVERSION-fbsql	fbsql-0.1.0.tar.gz		parallel-stage-risk
+firebird_fdw	pgxs/loop	1.4.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-firebird-fdw	firebird_fdw-1.4.2.tar.gz		parallel-stage-risk
+floatfile	pgxs/loop	1.3.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-floatfile	floatfile-1.3.1.tar.gz		parallel-stage-risk
+floatvec	pgxs/loop	1.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-floatvec	floatvec-1.1.1.tar.gz		parallel-stage-risk
+fsm_core	special/manual	1.1.0-1PGSTY	15,16,17,18	postgresql-PGVERSION-fsm-core	fsm_core-1.1.0.tar.gz		parallel-stage-risk
+geoip	pgxs/loop	0.4.0+git20250804.fcad7f1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-geoip	geoip-0.4.0+git20250804.fcad7f1.tar.gz		parallel-stage-risk
+graphblas	special/manual	10.5.0-1PGSTY		libgraphblas10;libgraphblas-dev	graphblas-10.5.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass;no-control.in;no-pgversions
+haproxy	special/manual	3.4.4-1PGSTY		haproxy;haproxy-doc;vim-haproxy	haproxy-3.4.4.tar.gz;haproxy-utils-3.4.4.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+hashtypes	pgxs/loop	0.1.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-hashtypes	hashtypes-0.1.5.tar.gz		parallel-stage-risk
+hdfs_fdw	pgxs/loop	2.3.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-hdfs-fdw	hdfs_fdw-2.3.3.tar.gz		
+hunspell	special/manual	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-hunspell	hunspell-1.0.tar.gz		parallel-stage-risk
+hydra	pgxs/loop	1.1.2-1PGSTY	14,15,16	postgresql-PGVERSION-hydra	hydra-1.1.2.tar.gz		parallel-stage-risk
+imgsmlr	pgxs/loop	1.0+git20180223.c484a15-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-imgsmlr	imgsmlr-1.0+git20180223.c484a15.tar.gz		parallel-stage-risk
+inchi	special/manual				inchi_1.07.5+dfsg-1.debian.tar.xz;inchi_1.07.5+dfsg.orig.tar.xz		parallel-stage-risk;no-control.in;no-pgversions
+index_advisor	pgxs/loop	0.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-index-advisor	index_advisor-0.2.0.tar.gz		parallel-stage-risk
+ivorysql	special/manual	@IVORY_VERSION@-@PKG_REV@		ivorysql-@PG_MAJOR@	ivorysql-5.6.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+ivorysql-contrib	special/manual	@IVORY_VERSION@-@PKG_REV@		ivorysql-@PG_MAJOR@-contrib	ivorysql-18-contrib-5.4-sources.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+jdbc_fdw	pgxs/loop	0.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-jdbc-fdw	jdbc_fdw-0.5.0.tar.gz		
+jev	pgxs/loop	0.2.0-1PGSTY	14,15,16,17	postgresql-PGVERSION-jev	jev-0.2.0.tar.gz		
+jsonschema	rust/pgrx	0.1.9-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-jsonschema	jsonschema-0.1.9.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+kafgres	rust/pgrx	0.1.0-1PGSTY	16	postgresql-PGVERSION-kafgres	kafgres-0.1.0.tar.gz		
+kafka_fdw	pgxs/loop	0.0.3+git20251030.8615082-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-kafka-fdw	kafka_fdw-0.0.3+git20251030.8615082.tar.gz		parallel-stage-risk
+lagraph	special/manual	1.2.2-1PGSTY		liblagraph1;liblagraphx1;liblagraph-dev	lagraph-1.2.2.tar.gz		parallel-stage-risk;dpkg-dependency-bypass;no-control.in;no-pgversions
+libduckdb	special/manual	1.5.5-1PGSTY		libduckdb	libduckdb-1.5.5-amd64.tar.gz;libduckdb-1.5.5-arm64.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+libfq	special/manual	0.6.2-1PGSTY		libfq	libfq-0.6.2.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+log_fdw	pgxs/loop	1.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-log-fdw	log_fdw-1.5.tar.gz		parallel-stage-risk
+logerrors	pgxs/loop	2.1.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-logerrors	logerrors-2.1.5.tar.gz		parallel-stage-risk
+logical_ddl	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-logical-ddl	logical_ddl-0.1.0.tar.gz		parallel-stage-risk
+login_hook	pgxs/loop	1.8-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-login-hook	login_hook-1.8.tar.gz		parallel-stage-risk
+lolor	special/manual	1.2.2-1PGSTY		pgedge-18-lolor	lolor-1.2.2.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+lower_quantile	pgxs/loop	1.0.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-lower-quantile	lower_quantile-1.0.3.tar.gz		parallel-stage-risk
+macavity	pgxs/loop	0.1.0-1PGSTY	16,17,18	postgresql-PGVERSION-macavity	macavity-0.1.0.tar.gz		
+md5hash	pgxs/loop	1.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-md5hash	md5hash-1.0.1.tar.gz		parallel-stage-risk
+mobilitydb	pgxs/loop	1.3.0-1PGSTY	18	postgresql-PGVERSION-mobilitydb	mobilitydb-1.3.0.tar.gz		parallel-stage-risk
+mongo_fdw	special/manual	5.5.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-mongo-fdw	mongo_fdw-REL-5_5_3.tar.gz		parallel-stage-risk
+multicorn	pgxs/loop	3.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-multicorn;python3-multicorn	multicorn2-3.2.tar.gz		parallel-stage-risk
+mysqlcompat	pgxs/loop	0.0.7-1PIGSTY	14,15,16,17,18	postgresql-PGVERSION-mysqlcompat	mysqlcompat-0.0.7.tar.gz	mysqlcompat-0.0.7.tar.gz	parallel-stage-risk;source-candidate-missing
+nominatim_fdw	pgxs/loop	2.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-nominatim-fdw	nominatim_fdw-2.2.0.tar.gz		parallel-stage-risk
+odbc_fdw	pgxs/loop	0.6.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-odbc-fdw	odbc_fdw-0.6.1.tar.gz		
+omnigres	special/manual	20260212-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-omnigres	omnigres-20260212.tar.gz		parallel-stage-risk
+omnisketch	pgxs/loop	1.0.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-omnisketch	omnisketch-1.0.2.tar.gz		parallel-stage-risk
+onesparse	special/manual	1.0.0-1PGSTY		postgresql-18-onesparse	onesparse-1.0.0.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+online_advisor	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-online-advisor	online_advisor-1.0.tar.gz		
+openhalodb	special/manual	1.0-1PGSTY		openhalodb-14	openhalodb-1.0.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+orioledb	special/manual	1.9~beta17-1PGSTY		@PACKAGE@	orioledb-beta17.tar.gz;postgres-patches16_48.tar.gz;postgres-patches17_21.tar.gz;postgres-patches18_2.tar.gz		no-pgversions
+pagevis	pgxs/loop	0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pagevis	pagevis-0.1.tar.gz		parallel-stage-risk
+parray_gin	pgxs/loop	1.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-parray-gin	parray_gin-1.5.0.tar.gz		parallel-stage-risk
+passwordcheck_cracklib	pgxs/loop	3.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-passwordcheck-cracklib	passwordcheck_cracklib-3.2.0.tar.gz		parallel-stage-risk
+passwordpolicy	pgxs/loop	2.0.6-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-passwordpolicy	passwordpolicy-2.0.6.tar.gz		parallel-stage-risk
+pdu	special/manual	3.0.25.12+git20260822.345422f-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pdu	pdu-3.0.25.12+git20260822.345422f.tar.gz		parallel-stage-risk
+permuteseq	pgxs/loop	1.2.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-permuteseq	permuteseq-1.2.2.tar.gz		parallel-stage-risk
+pg4ml	pgxs/loop	2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg4ml	pg4ml-2.0.tar.gz		parallel-stage-risk
+pg_accumulator	pgxs/loop	1.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-accumulator	pg_accumulator-1.2.0.tar.gz		parallel-stage-risk
+pg_acl	pgxs/loop	1.0.4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-acl	acl-1.0.4.tar.gz		parallel-stage-risk
+pg_ai_query	special/manual	0.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-ai-query	pg_ai_query-0.1.1.tar.gz		parallel-stage-risk
+pg_anon	rust/pgrx	3.2.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-anon	postgresql_anonymizer-3.2.2.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_arraymath	pgxs/loop	1.1+git20260702.4822319-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-arraymath	pgsql-arraymath-1.1+git20260702.4822319.tar.gz		parallel-stage-risk
+pg_ash	special/manual	1.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-ash	pg_ash-1.5.tar.gz		parallel-stage-risk
+pg_auditor	pgxs/loop	0.3+git20250228.7c2edff-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-auditor	pg_auditor-0.3+git20250228.7c2edff.tar.gz		parallel-stage-risk
+pg_auth_mon	pgxs/loop	5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-auth-mon	pg_auth_mon-5.0.tar.gz		parallel-stage-risk
+pg_background	pgxs/loop	2.0.3-2PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-background	pg_background-2.0.3.tar.gz		parallel-stage-risk
+pg_base36	pgxs/loop	1.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-base36	pg-base36-1.1.1.tar.gz		parallel-stage-risk
+pg_base58	rust/pgrx	0.0.1-2PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-base58	pg_base58-0.0.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_base62	pgxs/loop	0.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-base62	pg-base62-0.0.1.tar.gz		parallel-stage-risk
+pg_bestmatch	rust/pgrx	0.0.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-bestmatch	pg_bestmatch-0.0.2.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_bigm	pgxs/loop	1.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-bigm	pg_bigm-1.2-20250903.tar.gz		parallel-stage-risk
+pg_bikram_sambat	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-bikram-sambat	pg_bikram_sambat-0.1.0.tar.gz		parallel-stage-risk
+pg_biscuit	pgxs/loop	3.1.0-1PGSTY	16,17,18	postgresql-PGVERSION-biscuit	Biscuit-3.1.0.tar.gz		parallel-stage-risk
+pg_bulkload	pgxs/loop	3.1.23-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-bulkload	pg_bulkload-VERSION3_1_23.tar.gz		parallel-stage-risk
+pg_byteamagic	pgxs/loop	0.2.4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-byteamagic	pg_byteamagic-0.2.4.tar.gz		parallel-stage-risk
+pg_bzip	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-bzip	pg_bzip-1.0.0.tar.gz		parallel-stage-risk
+pg_cardano	rust/pgrx	1.2.0-1PGSTY	15,16,17,18	postgresql-PGVERSION-pg-cardano	pg_cardano-1.2.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_cheat_funcs	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-cheat-funcs	pg_cheat_funcs-1.0.tar.gz		parallel-stage-risk
+pg_circuit	pgxs/loop	0.1.0-1PGSTY	16,17,18	postgresql-PGVERSION-pg-circuit	pg_circuit-0.1.0.tar.gz		
+pg_cjk_parser	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-cjk-parser	pg_cjk_parser-0.1.0.tar.gz		
+pg_clickhouse	special/manual	0.10.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-clickhouse	pg_clickhouse-0.10.0.tar.gz		parallel-stage-risk
+pg_column_tetris	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-column-tetris	pg_column_tetris-0.1.0.tar.gz		parallel-stage-risk
+pg_command_fw	rust/pgrx	0.1.0-1PGSTY	15,16,17,18	postgresql-PGVERSION-pg-command-fw	pg_command_fw-0.1.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_convert	rust/pgrx	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-convert	convert-0.1.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_cooldown	pgxs/loop	0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-cooldown	pg_cooldown-0.1.tar.gz		parallel-stage-risk
+pg_country	pgxs/loop	0.0.4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-country	pg-country-0.0.4.tar.gz		parallel-stage-risk
+pg_crash	pgxs/loop	1:0.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-crash	pg_crash-0.3.tar.gz		parallel-stage-risk
+pg_curl	pgxs/loop	2.4.6-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-curl	pg_curl-2.4.6.tar.gz		
+pg_currency	pgxs/loop	0.0.4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-currency	pg-currency-0.0.4.tar.gz		parallel-stage-risk
+pg_datasentinel	pgxs/loop	1.0-1PGSTY	15,16,17,18	postgresql-PGVERSION-pg-datasentinel	pg_datasentinel-1.0.tar.gz		parallel-stage-risk
+pg_dbms_errlog	pgxs/loop	2.4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-dbms-errlog	pg_dbms_errlog-2.4.tar.gz		
+pg_dbms_job	pgxs/loop	2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-dbms-job	pg_dbms_job-2.0.tar.gz		
+pg_dbms_lock	pgxs/loop	2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-dbms-lock	pg_dbms_lock-2.0.tar.gz		
+pg_dbms_metadata	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-dbms-metadata	pg_dbms_metadata-1.0.0.tar.gz		
+pg_ddlx	pgxs/loop	0.31-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-ddlx	pgddl-0.31.tar.gz		parallel-stage-risk
+pg_describe	pgxs/loop	1.0.0-1PGSTY	17,18	postgresql-PGVERSION-pg-describe	pg_describe-1.0.0.tar.gz		parallel-stage-risk
+pg_disorder	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-disorder	pg_disorder-0.1.0.tar.gz		parallel-stage-risk
+pg_dispatch	special/manual	0.1.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-dispatch	pg_dispatch-0.1.5.tar.gz		parallel-stage-risk
+pg_drop_events	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-drop-events	pg_drop_events-0.1.0.tar.gz		parallel-stage-risk
+pg_duckdb	special/manual	1.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-duckdb	pg_duckdb-1.1.1.tar.gz		
+pg_ducklake	special/manual	1.0.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-ducklake	CRoaring-4.7.1-amalgamation.tar.gz;pg_ducklake-1.0.2.tar.gz		
+pg_durable	rust/pgrx	0.2.8-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-durable	pg_durable-0.2.8.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_duration	pgxs/loop	1.0.2-1PGSTY	17,18	postgresql-PGVERSION-pg-duration	pg_duration-1.0.2.tar.gz		parallel-stage-risk
+pg_ecdsa	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-ecdsa	pg-ecdsa-1.0.tar.gz		parallel-stage-risk
+pg_emailaddr	pgxs/loop	0-3PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-emailaddr	pgemailaddr-0.tar.gz		parallel-stage-risk
+pg_enigma	rust/pgrx	0.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-enigma	pg_enigma-0.5.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_envvar	pgxs/loop	1.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-envvar	pg-envvar-1.0.1.tar.gz		parallel-stage-risk
+pg_eviltransform	rust/pgrx	0.0.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-eviltransform	pg_eviltransform-0.0.5.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_explain_ui	rust/pgrx	0.0.2-4PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-explain-ui	pg_explain_ui-0.0.2.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_extra_time	pgxs/loop	2.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-extra-time	pg_extra_time-2.1.0.tar.gz		parallel-stage-risk
+pg_fact_loader	pgxs/loop	2.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-fact-loader	pg_fact_loader-2.0.1.tar.gz		parallel-stage-risk
+pg_failover_slots	pgxs/loop	1.2.1-2PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-failover-slots	pg_failover_slots-1.2.1.tar.gz		parallel-stage-risk
+pg_financial	pgxs/loop	1.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-financial	pg_financial-1.0.1.tar.gz		parallel-stage-risk
+pg_fio	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-fio	pg_fio-1.0.tar.gz		parallel-stage-risk
+pg_fkpart	pgxs/loop	1.7.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-fkpart	pg_fkpart-1.7.0.tar.gz		parallel-stage-risk
+pg_flight_recorder	special/manual	2.32.1-1PGSTY	15,16,17,18	postgresql-PGVERSION-pg-flight-recorder	pg_flight_recorder-2.32.1.tar.gz		
+pg_fsql	pgxs/loop	1.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-fsql	pg_fsql-1.1.0.tar.gz		parallel-stage-risk
+pg_fts	pgxs/loop	1.8.3-1PGSTY	17,18	postgresql-PGVERSION-pg-fts	pg_fts-1.8.3.tar.gz		parallel-stage-risk
+pg_geohash	pgxs/loop	1.0-4PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-geohash	pg_geohash-1.0.tar.gz		parallel-stage-risk
+pg_grammar_guard	pgxs/loop	0.4.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-grammar-guard	pg_grammar_guard-0.4.1.tar.gz		
+pg_graphql	rust/pgrx	1.6.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-graphql	pg_graphql-1.6.2.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_gzip	pgxs/loop	1.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-gzip	pgsql-gzip-1.1.1.tar.gz		parallel-stage-risk
+pg_hashids	pgxs/loop	1.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-hashids	pg_hashids-1.3.tar.gz		parallel-stage-risk
+pg_hashlib	pgxs/loop	1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-hashlib	pg_hashlib-1.1.tar.gz		parallel-stage-risk
+pg_html5_email_address	pgxs/loop	1.2.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-html5-email-address	pg_html5_email_address-1.2.3.tar.gz		parallel-stage-risk
+pg_http	pgxs/loop	1.7.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-http	pgsql-http-1.7.2.tar.gz		parallel-stage-risk
+pg_idkit	rust/pgrx	0.4.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-idkit	pg_idkit-0.4.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_incremental	pgxs/loop	1.5.0-1PGSTY	16,17,18	postgresql-PGVERSION-pg-incremental	pg_incremental-1.5.0.tar.gz		parallel-stage-risk
+pg_isok	special/manual	1.4.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-isok	pg_isok-1.4.1.tar.gz		parallel-stage-risk
+pg_ivm	pgxs/loop	1.15-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-ivm	pg_ivm-1.15.tar.gz		parallel-stage-risk
+pg_jieba	special/manual	2.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-jieba	pg_jieba-2.0.1.tar.gz		
+pg_jobmon	pgxs/loop	1.4.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-jobmon	pg_jobmon-1.4.1.tar.gz		parallel-stage-risk
+pg_jsonschema	rust/pgrx	0.3.4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-jsonschema	pg_jsonschema-0.3.4.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_kazsearch	rust/pgrx	2.3.0-1PGSTY	16,17,18	postgresql-PGVERSION-pg-kazsearch	pg_kazsearch-2.3.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_kpart	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-kpart	pg_kpart-1.0.tar.gz		parallel-stage-risk
+pg_lake	special/manual	3.5.1-1PGSTY	16,17,18	postgresql-PGVERSION-pg-lake	pg_lake-3.5.1.tar.gz		
+pg_later	rust/pgrx	0.4.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-later	pg_later-0.4.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_liquid	special/manual	0.1.7-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-liquid	pg_liquid-0.1.7.tar.gz		parallel-stage-risk
+pg_living_assertions	pgxs/loop	0.4.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-living-assertions	pg_living_assertions-0.4.2.tar.gz		
+pg_local_cache	pgxs/loop	2.0.4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-local-cache	pg_local_cache-2.0.4.tar.gz		parallel-stage-risk
+pg_math	pgxs/loop	1.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-math	pg_math-1.1.0.tar.gz		parallel-stage-risk
+pg_mentat	rust/pgrx	1.6.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-mentat	pg_mentat-1.6.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_meta	pgxs/loop	0.4.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-meta	meta-0.4.0.tar.gz		parallel-stage-risk
+pg_mockable	pgxs/loop	1.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-mockable	pg_mockable-1.1.0.tar.gz		parallel-stage-risk
+pg_mon	pgxs/loop	1.0-1PIGSTY	14,15,16	postgresql-PGVERSION-pg-mon	pg_mon-1.0.tar.gz	pg_mon-1.0.tar.gz	parallel-stage-risk;source-candidate-missing
+pg_mooncake	rust/pgrx	0.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-mooncake	pg_mooncake-0.2.0.tar.gz		dpkg-dependency-bypass
+pg_net	pgxs/loop	0.20.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-net	pg_net-0.9.2.tar.gz		parallel-stage-risk
+pg_noset	pgxs/loop	0.3.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-noset	noset-v0.3.0.tar.gz		parallel-stage-risk
+pg_oidc_validator	special/manual	1.1.0-1PGSTY	18	postgresql-PGVERSION-pg-oidc-validator	pg_oidc_validator-1.1.0.tar.gz		parallel-stage-risk
+pg_oidc_validator_rust	rust/pgrx	0.1.0-2PGSTY	18	postgresql-PGVERSION-pg-oidc-validator-rust	pg_oidc_validator_rust-0.1.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_orca	special/manual	1.0.0-1PGSTY	18	postgresql-PGVERSION-pg-orca	pg_orca-1.0.0.tar.gz		parallel-stage-risk
+pg_orphaned	pgxs/loop	1.0+git20260427-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-orphaned	pg_orphaned-git20260427.tar.gz		parallel-stage-risk
+pg_parquet	rust/pgrx	0.5.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-parquet	pg_parquet-0.5.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_partman	pgxs/loop	5.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-partman	pg_partman-5.5.0.tar.gz		parallel-stage-risk
+pg_pathcheck	pgxs/loop	0.9.1-1PGSTY	17,18	postgresql-PGVERSION-pg-pathcheck	pg_pathcheck-0.9.1-pg17-18.tar.gz		parallel-stage-risk
+pg_permissions	pgxs/loop	1.4.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-permissions	pg_permissions-REL_1_4_1.tar.gz		parallel-stage-risk
+pg_pinyin	rust/pgrx	0.0.6-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pinyin	pg_pinyin-0.0.6.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_plan_filter	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-plan-filter	pg_plan_filter-1.0.0.tar.gz		parallel-stage-risk
+pg_policy	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-policy	pg_policy-0.1.0.tar.gz		parallel-stage-risk
+pg_polyline	rust/pgrx	0.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-polyline	pg_polyline-0.0.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_profile	pgxs/loop	4.16-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-profile	pg_profile-4.16.tar.gz		parallel-stage-risk
+pg_projection	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-projection	pg_projection-1.0.0.tar.gz		parallel-stage-risk
+pg_protobuf	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-protobuf	pg_protobuf-1.0.tar.gz		parallel-stage-risk
+pg_qos	pgxs/loop	1.1.0-1PGSTY	15,16,17,18	postgresql-PGVERSION-qos	pg_qos-1.1.0.tar.gz		parallel-stage-risk
+pg_query_rewrite	pgxs/loop	0.0.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-query-rewrite	pg_query_rewrite-0.0.5.tar.gz		parallel-stage-risk
+pg_random	pgxs/loop	2.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-random	random-2.0.0-dev.tar.gz		parallel-stage-risk
+pg_readme	pgxs/loop	0.7.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-readme	pg_readme-0.7.1.tar.gz		parallel-stage-risk
+pg_readonly	pgxs/loop	1.0.6-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-readonly	pg_readonly-1.0.6.tar.gz		parallel-stage-risk
+pg_redis_pubsub	pgxs/loop	0.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-redis-pubsub	pg_redis_pubsub-0.0.1.tar.gz		parallel-stage-risk
+pg_regresql	pgxs/loop	2.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-regresql	pg_regresql-2.0.0.tar.gz		parallel-stage-risk
+pg_relation_sql	special/manual	0.2.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-relation-sql	pg_relation_sql-0.2.2.tar.gz		parallel-stage-risk
+pg_relusage	pgxs/loop	0.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-relusage	pg_relusage-0.0.1.tar.gz		parallel-stage-risk
+pg_render	rust/pgrx	0.1.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-render	pg_render-0.1.3.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_retry	pgxs/loop	1.0.0-1PGSTY	17,18	postgresql-PGVERSION-retry	pg_retry-1.0.0.tar.gz		parallel-stage-risk
+pg_rewrite	pgxs/loop	2.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-rewrite	pg_rewrite-REL2_2.tar.gz		parallel-stage-risk
+pg_roaringbitmap	pgxs/loop	1.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-roaringbitmap	pg_roaringbitmap-1.2.0.tar.gz		parallel-stage-risk
+pg_roast	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-roast	pg_roast-1.0.tar.gz		
+pg_rrf	rust/pgrx	0.0.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-rrf	pg_rrf-0.0.3.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_savior	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-savior	pg_savior-0.1.0.tar.gz		parallel-stage-risk
+pg_schedoc	pgxs/loop	0.0.2+git20260430.9f135c3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-schedoc	pg_schedoc-0.0.2+git20260430.9f135c3.tar.gz		parallel-stage-risk
+pg_search	rust/pgrx	0.25.9-1PGSTY	15,16,17,18	postgresql-PGVERSION-pg-search	pg_search-0.25.9.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_session_jwt	rust/pgrx	0.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-session-jwt	pg_session_jwt-0.5.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_slug_gen	pgxs/loop	1.0.0-1PGSTY	15,16,17,18	postgresql-PGVERSION-pg-slug-gen	pg_slug_gen-1.0.0.tar.gz		parallel-stage-risk
+pg_smtp_client	rust/pgrx	0.2.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-smtp-client	pg_smtp_client-0.2.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_sorted_heap	special/manual	0.14.0-1PGSTY	16,17,18	postgresql-PGVERSION-pg-sorted-heap	pg_sorted_heap-0.14.0.tar.gz		parallel-stage-risk
+pg_sqlog	pgxs/loop	1.7+git20241118.b016539-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-sqlog	pg_sqlog-1.7+git20241118.b016539.tar.gz		parallel-stage-risk
+pg_stat_backtrace	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-stat-backtrace	pg_stat_backtrace-1.0.0.tar.gz		parallel-stage-risk
+pg_stat_ch	special/manual	0.4.0-1PGSTY	16,17,18	postgresql-PGVERSION-pg-stat-ch	pg_stat_ch-0.4.0.tar.gz		parallel-stage-risk
+pg_stat_monitor	pgxs/loop	2.4.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-stat-monitor	pg_stat_monitor-2.4.0.tar.gz		parallel-stage-risk
+pg_statement_rollback	pgxs/loop	1.6-2PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-statement-rollback	pg_statement_rollback-1.6.tar.gz		parallel-stage-risk
+pg_statviz	pgxs/loop	1.2.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-statviz	pg_statviz-1.2.1.tar.gz		parallel-stage-risk
+pg_stl	pgxs/loop	1.0.0-1PGSTY	16,17,18	postgresql-PGVERSION-pg-stl	pg_stl-1.0.0.tar.gz		parallel-stage-risk
+pg_store_plans	pgxs/loop	1.10-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-store-plan	pg_store_plans-1.10.tar.gz		parallel-stage-risk
+pg_strict	rust/pgrx	1.0.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-strict	pg_strict-1.0.5.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_summarize	rust/pgrx	0.0.1-6PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-summarize	pg_summarize-0.0.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_task	pgxs/loop	3.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-task	pg_task-3.0.0.tar.gz		parallel-stage-risk
+pg_text_semver	pgxs/loop	1.2.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-text-semver	pg_text_semver-1.2.1.tar.gz		parallel-stage-risk
+pg_textsearch	special/manual	1.4.0-1PGSTY	17,18	postgresql-PGVERSION-textsearch	pg_textsearch-1.4.0.tar.gz		parallel-stage-risk
+pg_tiktoken	rust/pgrx	0.0.1+git20260825.99cb61d-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-tiktoken	pg_tiktoken-0.0.1+git20260825.99cb61d.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_tiktoken_c	pgxs/loop	1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-tiktoken-c	pg_tiktoken_c-1.1.tar.gz		parallel-stage-risk
+pg_timeit	pgxs/loop	1.0-1PIGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-timeit	pg-timeit-1.0.tar.gz	pg-timeit-1.0.tar.gz	parallel-stage-risk;source-candidate-missing
+pg_timeseries	pgxs/loop	0.2.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-timeseries	pg_timeseries-0.2.1.tar.gz		parallel-stage-risk
+pg_tle	pgxs/loop	1.5.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-tle	pg_tle-1.5.2.tar.gz		parallel-stage-risk
+pg_tokenizer	rust/pgrx	0.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-tokenizer	pg_tokenizer.rs-0.1.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_tracing	pgxs/loop	0.1.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-tracing	pg_tracing-0.1.3.tar.gz		parallel-stage-risk
+pg_track_optimizer	pgxs/loop	0.9.2-1PGSTY	17,18	postgresql-PGVERSION-pg-track-optimizer	pg_track_optimizer-0.9.2.tar.gz		parallel-stage-risk
+pg_trickle	rust/pgrx	0.107.0-1PGSTY	18	postgresql-PGVERSION-pg-trickle	pg_trickle-0.107.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_ttl_index	pgxs/loop	3.0.0-1PGSTY	15,16,17,18	postgresql-PGVERSION-ttl-index	postgres-extensions-pg_ttl-3.0.0.tar.gz		parallel-stage-risk
+pg_turbovec	rust/pgrx	2.2.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-turbovec	pg_turbovec-2.2.2.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_typeid	rust/pgrx	0.4.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-typeid	typeid-postgres-0.4.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_typescript	rust/pgrx	0.1.0-1PGSTY	16,17,18	postgresql-PGVERSION-pg-typescript	pg_typescript-0.1.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_tzf	rust/pgrx	0.3.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-tzf	pg-tzf-0.3.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_uint128	pgxs/loop	1.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-uint128	pg-uint128-1.2.0.tar.gz		parallel-stage-risk
+pg_upless	pgxs/loop	0.0.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-upless	pg_upless-0.0.3.tar.gz		parallel-stage-risk
+pg_uri	pgxs/loop	1.20251029-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-uri	pguri-1.20251029.tar.gz		parallel-stage-risk
+pg_utl_smtp	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-utl-smtp	pg_utl_smtp-1.0.tar.gz		parallel-stage-risk
+pg_uuid_v8	pgxs/loop	1.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-uuid-v8	pg_uuid_v8-1.1.0.tar.gz		parallel-stage-risk
+pg_uuidv7	pgxs/loop	1.7.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-uuidv7	pg_uuidv7-1.7.0.tar.gz		parallel-stage-risk
+pg_variables	pgxs/loop	1.2.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-variables	pg_variables-1.2.5.tar.gz		parallel-stage-risk
+pg_vault	pgxs/loop	0.3.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-vault	vault-0.3.1.tar.gz		parallel-stage-risk
+pg_vault_tde	pgxs/loop	1.7.1-1PGSTY	17,18	postgresql-PGVERSION-pg-vault-tde	pg_vault_tde-1.7.1.tar.gz		parallel-stage-risk
+pg_vectorize	rust/pgrx	0.27.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-vectorize	pg_vectorize-0.27.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_weighted_statistics	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-weighted-statistics	pg_weighted_statistics-1.0.0.tar.gz		parallel-stage-risk
+pg_when	rust/pgrx	0.1.10-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-when	pg_when-0.1.10.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pg_xenophile	pgxs/loop	0.8.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-xenophile	pg_xenophile-0.8.3.tar.gz		parallel-stage-risk
+pg_xxhash	pgxs/loop	0.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-xxhash	pg_xxhash-0.0.1.tar.gz		parallel-stage-risk
+pg_zstd	pgxs/loop	1.1.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-zstd	pgzstd-1.1.2.tar.gz		parallel-stage-risk
+pgactive	pgxs/loop	2.1.9-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgactive	pgactive-2.1.9.tar.gz		
+pgbouncer_fdw	pgxs/loop	1.4.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgbouncer-fdw	pgbouncer_fdw-1.4.0.tar.gz		
+pgcalendar	special/manual	1.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgcalendar	pgcalendar-1.1.0.tar.gz		parallel-stage-risk
+pgclone	pgxs/loop	4.4.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgclone	pgclone-4.4.2.tar.gz		parallel-stage-risk
+pgcollection	pgxs/loop	2.1.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-collection	pgcollection-2.1.3.tar.gz		parallel-stage-risk
+pgcontext	rust/pgrx	0.3.0-1PGSTY	17,18	postgresql-PGVERSION-pgcontext	pgcontext-0.3.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pgcopydb	special/manual	0.18-1PGSTY		pgcopydb	pgcopydb-0.18.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+pgcozy	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgcozy	pgcozy-1.0.tar.gz		parallel-stage-risk
+pgcryptokey	pgxs/loop	0.85-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgcryptokey	pgcryptokey-0.85.tar.gz		parallel-stage-risk
+pgdd	rust/pgrx	0.6.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgdd	pgdd-0.6.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pgdisablelogerror	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgdisablelogerror	pgdisablelogerror-1.0.tar.gz		parallel-stage-risk
+pgdog	rust/pgrx	0.1.57-1PGSTY		pgdog	pgdog-0.1.57-vendor.tar.gz;pgdog-0.1.57.tar.gz		parallel-stage-risk;dpkg-dependency-bypass;no-control.in;no-pgversions
+pgedge	special/manual	@PG_VERSION@-@PKG_REV@		pgedge-@PG_MAJOR@	postgresql-18.6.tar.gz;postgresql-17.11.tar.gz;postgresql-16.15.tar.gz;postgresql-15.19.tar.gz;spock-5.0.11.tar.gz;lolor-1.2.2.tar.gz;snowflake-2.6.0.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+pgelog	pgxs/loop	1.0.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgelog	pgelog-1.0.2.tar.gz		parallel-stage-risk
+pgfincore	pgxs/loop	1.4.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgfincore	pgfincore-1.4.0.tar.gz		parallel-stage-risk
+pggraph	rust/pgrx	1.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pggraph	pggraph-1.2.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pghydro	special/manual	6.6-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pghydro	pghydro-6.6.tar.gz		parallel-stage-risk
+pgjq	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgjq	pgjq-0.1.0.tar.gz		parallel-stage-risk
+pgjwt	pgxs/loop	0.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgjwt	pgjwt-0.2.0.tar.gz		parallel-stage-risk
+pgl_ddl_deploy	pgxs/loop	2.2.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgl-ddl-deploy	pgl_ddl_deploy-2.2.1.tar.gz		parallel-stage-risk
+pglinter	rust/pgrx	2.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pglinter	pglinter-2.0.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pglite_fusion	rust/pgrx	0.0.7-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pglite-fusion	pglite-fusion-0.0.7.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pglock	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pglock	pglock-1.0.0.tar.gz		parallel-stage-risk
+pglogical_ticker	pgxs/loop	1.4.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pglogical-ticker	pglogical_ticker-1.4.1.tar.gz		parallel-stage-risk
+pgmb	pgxs/loop	1.0.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgmb	pgmb-1.0.0.tar.gz		parallel-stage-risk
+pgmemento	special/manual	0.7.4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgmemento	pgmemento-0.7.4.tar.gz		
+pgmeminfo	pgxs/loop	1.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgmeminfo	pgmeminfo-VERSION_1_0_1.tar.gz		parallel-stage-risk
+pgml	rust/pgrx	2.10.0-1PGSTY	14,15,16,17	postgresql-PGVERSION-pgml	pgml-2.10.0.tar.gz		parallel-stage-risk
+pgmnemo	pgxs/loop	0.20.0-1PGSTY	17,18	postgresql-PGVERSION-pgmnemo	pgmnemo-0.20.0.tar.gz		parallel-stage-risk
+pgmonitor	pgxs/loop	2.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgmonitor	pgmonitor-extension-2.2.0.tar.gz		
+pgmp	pgxs/loop	1.0.6-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgmp	pgmp-1.0.6.tar.gz		parallel-stage-risk
+pgmq	pgxs/loop	1.13.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgmq	pgmq-1.13.0.tar.gz		parallel-stage-risk
+pgmqtt	rust/pgrx	0.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgmqtt	pgmqtt-0.5.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pgnodemx	pgxs/loop	2.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgnodemx	pgnodemx-2.0.1.tar.gz		parallel-stage-risk
+pgpdf	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgpdf	pgpdf-0.1.0.tar.gz		parallel-stage-risk
+pgproto	pgxs/loop	0.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgproto	pgproto-0.5.0.tar.gz		parallel-stage-risk
+pgqr	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgqr	pgqr-1.0.tar.gz		parallel-stage-risk
+pgrdf	rust/pgrx	0.6.36-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgrdf	pgrdf-0.6.36.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pgroonga	special/manual	4.0.8-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgroonga	pgroonga-4.0.8.tar.gz		parallel-stage-risk
+pgs3	rust/pgrx	0.1.1-1PGSTY	17,18	postgresql-PGVERSION-pgs3	pgs3-0.1.1.tar.gz		dpkg-dependency-bypass
+pgsentinel	pgxs/loop	1.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgsentinel	pgsentinel-1.5.0.tar.gz		parallel-stage-risk
+pgsmcrypto	rust/pgrx	0.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgsmcrypto	pgsmcrypto-0.1.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pgsodium	pgxs/loop	3.1.11-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgsodium	pgsodium-3.1.11.tar.gz		parallel-stage-risk
+pgsodium-libsodium	special/manual	1.0.22-1PGSTY		pgsodium-libsodium-dev	libsodium-1.0.22.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+pgsparql	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgsparql	pgsparql-1.0.tar.gz		parallel-stage-risk
+pgspider_ext	pgxs/loop	1.3.0-1PGSTY	15,16,17,18	postgresql-PGVERSION-pgspider-ext	pgspider_ext-1.3.0.tar.gz		parallel-stage-risk
+pgsql_tweaks	pgxs/loop	1.0.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgsql-tweaks	pgsql_tweaks-1.0.5.tar.gz		parallel-stage-risk
+pgsqlmock	pgxs/loop	1.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgsqlmock	pgsqlmock-1.0.1.tar.gz		parallel-stage-risk
+pgtde	special/manual	@PG_VERSION@-@PKG_REV@		pgtde-@PG_MAJOR@;pgtde-@PG_MAJOR@-contrib	percona-postgresql-18.6.tar.gz;percona-pg_tde18-2.2.2.tar.gz;percona-postgis-3.5.7.tar.gz;percona-pgvector_18-0.8.6.tar.gz;percona-wal2json-2.6.tar.gz;percona-pg_repack-1.5.3.tar.gz;percona-pgaudit-18.0.tar.gz;percona-pgaudit18_set_user-4.2.0.tar.gz;percona-pg-stat-monitor18-2.3.2.tar.gz;percona-pg_gather-33.tar.gz;pgtde-pg-config;pgtde-sfcgal-config		parallel-stage-risk;no-control.in;no-pgversions
+pgtt	pgxs/loop	4.6-2PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgtt	pgtt-4.6.tar.gz		parallel-stage-risk
+pguint	pgxs/loop	1.20260630-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pguint	pguint-1.20260630.tar.gz		parallel-stage-risk
+pgunit	pgxs/loop	7.10-7PGSTY	14,15,16,17,18	postgresql-PGVERSION-unit	postgresql-unit-7.10.tar.gz		parallel-stage-risk
+pgvector	pgxs/loop	0.8.6-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgvector	pgvector-0.8.6.tar.gz		parallel-stage-risk
+pgvectorscale	rust/pgrx	0.9.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgvectorscale	pgvectorscale-0.9.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pgwasm	rust/pgrx	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgwasm	pgwasm-0.1.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pgx_ulid	rust/pgrx	0.2.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgx-ulid	pgx_ulid-0.2.3.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+pgxicor	pgxs/loop	0.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgxicor	pgxicor-0.1.1.tar.gz		parallel-stage-risk
+pgzint	pgxs/loop	0.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgzint	pgzint-0.2.0.tar.gz		parallel-stage-risk
+pljs	pgxs/loop	1.0.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pljs	pljs-1.0.5.tar.gz		parallel-stage-risk
+plpgsql_check	pgxs/loop	2.10.10-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-plpgsql-check	plpgsql_check-2.10.10.tar.gz		parallel-stage-risk
+plpgsql_wrap	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-plpgsql-wrap	plpgsql_wrap-1.0.tar.gz		parallel-stage-risk
+plproxy	pgxs/loop	2.12.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-plproxy	plproxy-2.12.0.tar.gz		parallel-stage-risk
+plprql	rust/pgrx	18.0.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-plprql	plprql-18.0.2.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+plruby	special/manual	2.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-plruby	plruby-2.5.0.tar.gz		parallel-stage-risk
+plv8	pgxs/loop	3.2.4-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-plv8	plv8-3.2.4.tar.gz		
+plx	pgxs/loop	2.0.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-plx	plx-2.0.1.tar.gz		parallel-stage-risk
+plxslt	pgxs/loop	0.20140221-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-plxslt	plxslt-0.20140221.tar.gz		parallel-stage-risk
+polardb	special/manual			polardb-17	polardb-for-postgresql-17.11.1.0.tar.gz		no-control.in;no-pgversions
+polarstore	special/manual	1.2.42-1PGSTY		polarstore	polarstore-1.2.42-d0c5dc6.tar.gz		no-control.in;no-pgversions
+postbis	pgxs/loop	1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-postbis	postbis-1.0.tar.gz		parallel-stage-risk
+postgresbson	special/manual	2.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pgbson	postgresbson-2.1.0.tar.gz		parallel-stage-risk
+postgresql_anonymizer	pgxs/loop	1.3.2-1PIGSTY	14,15,16,17,18	postgresql-PGVERSION-anonymizer	postgresql_anonymizer-1.3.2.tar.gz	postgresql_anonymizer-1.3.2.tar.gz	parallel-stage-risk;source-candidate-missing
+provsql	pgxs/loop	1.12.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-provsql	provsql-1.12.0.tar.gz		parallel-stage-risk
+psql_bm25s	pgxs/loop	0.4.14-1PGSTY	17,18	postgresql-PGVERSION-psql-bm25s	psql_bm25s-0.4.14.tar.gz		parallel-stage-risk
+python-faker	special/manual	40.37.0-1PGSTY		python3-fake-factory	faker_40.37.0.orig.tar.gz		no-control.in;no-pgversions
+q3c	pgxs/loop	2.0.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-q3c	q3c-2.0.5.tar.gz		parallel-stage-risk
+qdgc	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-qdgc	qdgc-0.1.0.tar.gz		parallel-stage-risk
+quantile	pgxs/loop	1.1.8-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-quantile	quantile-1.1.8.tar.gz		parallel-stage-risk
+rdf_fdw	pgxs/loop	2.7.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-rdf-fdw	rdf_fdw-2.7.0.tar.gz		parallel-stage-risk
+rdkit	pgxs/loop	202603.6-1PGSTY~resolute	14,15,16,17,18	python3-rdkit;rdkit-data;librdkit1t64;librdkit-dev;postgresql-PGVERSION-rdkit	rdkit_202303.3-3.pgdg120+1.debian.tar.xz;rdkit_202303.3-3.pgdg22.04+1.debian.tar.xz;rdkit_202303.3.orig.tar.xz;rdkit_202603.6-1PGSTY~resolute.debian.tar.xz;rdkit_202603.6.orig.tar.xz		parallel-stage-risk
+re2	pgxs/loop	0.4.1-1PGSTY	16,17,18	postgresql-PGVERSION-re2	re2-0.4.1.tar.gz		parallel-stage-risk
+redis	special/manual	6:7.2.16-1PGSTY~@RELEASE@		redis;redis-dev	redis-7.2.16.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+redis_fdw	pgxs/loop	2.0+git20260808.ff37a7c8-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-redis-fdw	redis_fdw-2.0+git20260808.ff37a7c8.tar.gz		parallel-stage-risk
+safeupdate	pgxs/loop	1.7-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-pg-safeupdate	pg-safeupdate-1.7.tar.gz		parallel-stage-risk
+scws	special/manual	1.2.3-1PGSTY		scws	scws-1.2.3.tar.bz2		parallel-stage-risk;no-control.in;no-pgversions
+sequential_uuids	pgxs/loop	1.0.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-sequential-uuids	sequential-uuids-1.0.3.tar.gz		parallel-stage-risk
+session_variable	pgxs/loop	3.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-session-variable	session_variable-3.5.tar.gz		parallel-stage-risk
+shacrypt	pgxs/loop	1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-shacrypt	postgres_shacrypt-1.1.tar.gz		parallel-stage-risk
+smlar	pgxs/loop	1.0-2PGSTY	14,15,16,17,18	postgresql-PGVERSION-smlar	smlar-1.0.tar.gz		parallel-stage-risk
+snowflake	special/manual	2.4-1PGSTY		pgedge-18-snowflake	snowflake-2.6.0.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+spat	pgxs/loop	0.1.0a5+git20250512.fccb581-1PGSTY	17	postgresql-PGVERSION-spat	spat-0.1.0a5+git20250512.fccb581.tar.gz		parallel-stage-risk
+spock	special/manual	5.0.6-1PGSTY		pgedge-18-spock	spock-5.0.11.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+sqlite_fdw	pgxs/loop	2.5.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-sqlite-fdw	sqlite_fdw-2.5.0.tar.gz		parallel-stage-risk
+sslutils	pgxs/loop	1.4.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-sslutils	sslutils-1.4.1.tar.gz		parallel-stage-risk
+storage_engine	special/manual	2.4.0-1PGSTY	15,16,17,18	postgresql-PGVERSION-storage-engine	storage_engine-2.4.0.tar.gz		parallel-stage-risk
+supautils	special/manual	3.4.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-supautils	supautils-3.4.3.tar.gz		parallel-stage-risk
+system_stats	pgxs/loop	4.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-system-stats	system_stats-4.1.tar.gz		parallel-stage-risk
+table_version	pgxs/loop	1.11.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-table-version	postgresql-tableversion-1.11.1.tar.gz		parallel-stage-risk
+temporal_tables	pgxs/loop	1.2.2-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-temporal-tables	temporal_tables-1.2.2.tar.gz		parallel-stage-risk
+timescaledb	pgxs/loop	2.30.1-1PGSTY	16,17,18	postgresql-PGVERSION-timescaledb-tsl	timescaledb-2.30.1.tar.gz		
+timescaledb_toolkit	rust/pgrx	1.26.0-1PGSTY	16,17,18	postgresql-PGVERSION-timescaledb-toolkit	timescaledb-toolkit-1.26.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+timestamp9	special/manual	1.4.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-timestamp9	timestamp9-timestamp9-1.4.0.tar.gz		parallel-stage-risk
+topn	pgxs/loop	2.7.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-topn	postgresql-topn-2.7.1.tar.gz		parallel-stage-risk
+ulak	pgxs/loop	0.2.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-ulak	ulak-0.2.0.tar.gz		parallel-stage-risk
+url_encode	pgxs/loop	1.2.5-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-url-encode	url_encode-1.2.5.tar.gz		parallel-stage-risk
+valkey	special/manual	9.1.1-1PGSTY~@RELEASE@		valkey;valkey-dev	valkey-9.1.1.tar.gz		parallel-stage-risk;no-control.in;no-pgversions
+vasco	pgxs/loop	0.1.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-vasco	vasco-0.1.0.tar.gz		parallel-stage-risk
+vchord	rust/pgrx	1.1.1-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-vchord	VectorChord-1.1.1.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+vchord_bm25	rust/pgrx	0.3.0-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-vchord-bm25	VectorChord-bm25-0.3.0.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+wal2mongo	pgxs/loop	1.0.7-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-wal2mongo	wal2mongo-1.0.7.tar.gz		parallel-stage-risk
+wrappers	rust/pgrx	0.6.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-wrappers	wrappers-0.6.3.tar.gz		parallel-stage-risk;dpkg-dependency-bypass
+zhparser	pgxs/loop	2.3-1PGSTY	14,15,16,17,18	postgresql-PGVERSION-zhparser	zhparser-2.3.tar.gz		parallel-stage-risk
+zlog	special/manual	1.2.18-1PGSTY		zlog	zlog-1.2.18.tar.gz		no-control.in;no-pgversions

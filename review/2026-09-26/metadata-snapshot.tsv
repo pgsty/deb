@@ -1,0 +1,585 @@
+name	version	deb_ver	deb_pkg	deb_pg	source	mtime
+acdat	0.1.1	0.1.1	postgresql-$v-acdat	18 17 16 15 14	acdat-0.1.1.tar.gz	2026-09-03
+acl	1.0.4	1.0.4	postgresql-$v-acl	18 17 16 15 14	acl-1.0.4.tar.gz	2026-08-10
+address_standardizer	3.6.4	3.6.4	postgresql-$v-postgis-3	18 17 16 15 14		2026-09-03
+address_standardizer_data_us	3.6.4	3.6.4	postgresql-$v-postgis-3	18 17 16 15 14		2026-09-03
+adminpack	2.1	2.1	postgresql-$v	16 15 14		2026-07-29
+age	1.8.0	1.7.0	postgresql-$v-age	17	age-PG18-v1.8.0-rc0.tar.gz age-1.7.0.tar.gz	2026-09-04
+aggs_for_arrays	1.3.3	1.3.3	postgresql-$v-aggs-for-arrays	18 17 16 15 14	aggs_for_arrays-1.3.3.tar.gz	2026-07-29
+aggs_for_vecs	1.4.1	1.4.1	postgresql-$v-aggs-for-vecs	18 17 16 15 14	aggs_for_vecs-1.4.1.tar.gz	2026-07-29
+amcheck	1.4	1.4	postgresql-$v	18 17 16 15 14		2026-07-29
+anon	3.1.3	3.1.3	postgresql-$v-pg-anon	18 17 16 15 14	postgresql_anonymizer-3.1.3.tar.gz	2026-07-29
+argm	1.1.1	1.1.1	postgresql-$v-argm	18 17 16 15 14	argm-1.1.1.tar.gz	2026-07-29
+arraymath	1.1	1.1+git20260702.4822319	postgresql-$v-pg-arraymath	18 17 16 15 14	pgsql-arraymath-1.1+git20260702.4822319.tar.gz	2026-09-03
+asn1oid	1.6	1.6	postgresql-$v-asn1oid	18 17 16 15 14	pgsql-asn1oid-1.6.tar.gz	2026-07-29
+auth_delay	-	-	postgresql-$v	18 17 16 15 14		2026-07-29
+auto_explain	-	-	postgresql-$v	18 17 16 15 14		2026-07-29
+autoinc	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+aux_mysql	1.5	1.0	openhalodb-$v	14	openhalodb-1.0.tar.gz	2026-08-30
+aws_s3	0.0.1	0.0.1	postgresql-$v-aws-s3	18 17 16 15 14	aws_s3-0.0.1.tar.gz	2026-07-29
+babelfishpg_common	6.2.0	6.2.0	babelfish-$v	18 17	babelfish-18-18.4-6.2.0.tar.gz babelfish-17-17.10-5.7.0.tar.gz	2026-09-04
+babelfishpg_money	1.1.0	6.2.0	babelfish-$v	18 17	babelfish-18-18.4-6.2.0.tar.gz babelfish-17-17.10-5.7.0.tar.gz	2026-09-04
+babelfishpg_tds	1.0.0	6.2.0	babelfish-$v	18 17	babelfish-18-18.4-6.2.0.tar.gz babelfish-17-17.10-5.7.0.tar.gz	2026-09-04
+babelfishpg_tsql	6.2.0	6.2.0	babelfish-$v	18 17	babelfish-18-18.4-6.2.0.tar.gz babelfish-17-17.10-5.7.0.tar.gz	2026-09-04
+base36	1.1.1	1.1.1	postgresql-$v-base36	18 17 16 15 14	pg-base36-1.1.1.tar.gz	2026-09-03
+base62	0.0.1	0.0.1	postgresql-$v-base62	18 17 16 15 14	pg-base62-0.0.1.tar.gz	2026-07-29
+basebackup_to_shell	-	-	postgresql-$v	18 17 16 15		2026-07-29
+basic_archive	-	-	postgresql-$v	18 17 16 15		2026-07-29
+bgw_replstatus	1.0.8	1.0.8	postgresql-$v-bgw-replstatus	18 17 16 15 14		2026-07-29
+biscuit	3.1.0	3.1.0	postgresql-$v-biscuit	18 17 16	Biscuit-3.1.0.tar.gz	2026-09-19
+block_copy_command	0.1.5	0.1.5	postgresql-$v-block-copy-command	18 17 16 15 14	block_copy_command-0.1.5.tar.gz	2026-07-29
+bloom	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+bool_plperl	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+bool_plperlu	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+btree_gin	1.3	1.3	postgresql-$v	18 17 16 15 14		2026-07-29
+btree_gist	1.7	1.7	postgresql-$v	18 17 16 15 14		2026-07-29
+byteamagic	0.2.4	0.2.4	postgresql-$v-pg-byteamagic	18 17 16 15 14	pg_byteamagic-0.2.4.tar.gz	2026-07-29
+bzip	1.0.0	1.0.0	postgresql-$v-bzip	18 17 16 15 14	pg_bzip-1.0.0.tar.gz	2026-07-29
+cat_tools	0.3.0	0.3.0	postgresql-$v-cat-tools	18 17 16 15 14	cat_tools-0.3.0.tar.gz	2026-08-10
+chkpass	1.0	1.0	postgresql-$v-chkpass	18 17 16 15 14	chkpass-1.0.tar.gz	2026-07-29
+citext	1.6	1.6	postgresql-$v	18 17 16 15 14		2026-07-29
+citus	14.2.0	14.2.0	postgresql-$v-citus	18 17 16	citus-14.2.0.tar.gz	2026-08-30
+citus_columnar	14.2.0	14.2.0	postgresql-$v-citus	18 17 16	citus-14.2.0.tar.gz	2026-08-30
+collection	2.1.3	2.1.3	postgresql-$v-collection	18 17 16 15 14	pgcollection-2.1.3.tar.gz	2026-09-03
+column_encrypt	4.0	4.0	postgresql-$v-column-encrypt	18 17 16 15 14	column_encrypt-4.0.tar.gz	2026-07-29
+columnar	1.1.2	1.1.2	postgresql-$v-hydra	16 15 14	hydra-1.1.2.tar.gz	2026-09-04
+convert	0.1.0	0.1.0	postgresql-$v-convert	18 17 16 15 14	convert-0.1.0.tar.gz	2026-07-29
+count_distinct	3.0.2	3.0.2	postgresql-$v-count-distinct	18 17 16 15 14	count_distinct-3.0.2.tar.gz	2026-07-29
+country	0.0.4	0.0.4	postgresql-$v-pg-country	18 17 16 15 14	pg-country-0.0.4.tar.gz	2026-09-03
+credcheck	5.0	5.0	postgresql-$v-credcheck	18 17 16 15 14		2026-08-10
+cron_utils	0.1.0	0.1.0	postgresql-$v-cron-utils	18 17 16 15 14	cron_utils-0.1.0.tar.gz	2026-08-10
+cryptint	1.0.0	1.0.0	postgresql-$v-cryptint	18 17 16 15 14	cryptint-1.0.0.tar.gz	2026-07-29
+cube	1.5	1.5	postgresql-$v	18 17 16 15 14		2026-07-29
+currency	0.0.4	0.0.4	postgresql-$v-pg-currency	18 17 16 15 14	pg-currency-0.0.4.tar.gz	2026-09-03
+data_historization	1.1.0	1.1.0	postgresql-$v-data-historization	18 17 16 15 14	postgresql-data-historization-1.1.0.tar.gz	2026-07-29
+datasketches	1.7.0	1.7.0	postgresql-$v-datasketches	18 17 16 15 14	apache-datasketches-postgresql-1.7.0-src.tar.gz apache-datasketches-cpp-5.2.0-src.tar.gz	2026-09-04
+db2_fdw	18.2.0				db2_fdw-18.1.1.tar.gz	2026-08-30
+db2fce	0.0.17	0.0.17	postgresql-$v-db2fce	18 17 16 15 14	db2fce-0.0.17.tar.gz	2026-08-10
+db_migrator	1.0.0	1.0.0	postgresql-$v-db-migrator	18 17 16 15 14	db_migrator-RELEASE_1_0_0.tar.gz	2026-07-29
+dblink	1.2	1.2	postgresql-$v	18 17 16 15 14		2026-07-29
+dbt2	0.62.0	0.62.0	postgresql-$v-dbt2	18 17 16 15 14	dbt2-0.62.0.tar.gz	2026-09-03
+ddl_historization	1.0.0	1.0.0+git20241205.18eb9a4	postgresql-$v-ddl-historization	18 17 16 15 14	pg_ddl_historization-1.0.0+git20241205.18eb9a4.tar.gz	2026-09-03
+ddlx	0.31	0.31	postgresql-$v-ddlx	18 17 16 15 14	pgddl-0.31.tar.gz	2026-09-19
+ddsketch	1.0.1	1.0.1	postgresql-$v-ddsketch	18 17 16 15 14	ddsketch-1.0.1.tar.gz	2026-07-29
+debversion	1.2.0	1.2.0	postgresql-$v-debversion	18 17 16 15 14		2026-07-29
+decoder_raw	1.0	1.0+git20260728.2271b0d	postgresql-$v-decoder-raw	18 17 16 15 14	decoder_raw-1.0+git20260728.2271b0d.tar.gz	2026-09-03
+decoderbufs	3.6.1	3.6.1	postgresql-$v-decoderbufs	18 17 16 15 14		2026-09-03
+dict_int	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+dict_xsyn	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+documentdb	0.117	0.117	postgresql-$v-documentdb	18 17 16 15	documentdb-0.117-0.tar.gz intelrdfpmath-applied-2.0u3-1.tar.gz	2026-09-19
+documentdb_core	0.117	0.117	postgresql-$v-documentdb	18 17 16 15	documentdb-0.117-0.tar.gz intelrdfpmath-applied-2.0u3-1.tar.gz	2026-09-19
+documentdb_distributed	0.116	0.116	postgresql-$v-documentdb	18 17 16 15	documentdb-0.116-0.tar.gz intelrdfpmath-applied-2.0u3-1.tar.gz	2026-09-05
+documentdb_extended_rum	0.117	0.117	postgresql-$v-documentdb	18 17 16 15	documentdb-0.117-0.tar.gz intelrdfpmath-applied-2.0u3-1.tar.gz	2026-09-19
+duckdb_fdw	2.0.1	2.0.1+git20260529.9354241	postgresql-$v-duckdb-fdw	18 17 16 15 14	duckdb_fdw-2.0.1+git20260529.9354241.tar.gz duckdb-1.5.5-headers.tar.gz	2026-09-04
+earthdistance	1.2	1.2	postgresql-$v	18 17 16 15 14		2026-07-29
+emailaddr	0	0	postgresql-$v-pg-emailaddr	18 17 16 15 14	pgemailaddr-0.tar.gz	2026-08-14
+emaj	5.0.0	5.0.0	postgresql-$v-emaj	18 17 16 15 14	emaj-5.0.0.tar.gz	2026-08-30
+envvar	1.0.1	1.0.1	postgresql-$v-pg-envvar	18 17 16 15 14	pg-envvar-1.0.1.tar.gz	2026-07-29
+etcd_fdw	0.0.1	0.0.1	postgresql-$v-etcd-fdw	18 17 16 15 14	etcd_fdw-0.0.1.tar.gz wrappers-0.6.2.tar.gz	2026-09-04
+explain_ui	0.0.2	0.0.2	postgresql-$v-pg-explain-ui	18 17 16 15 14	pg_explain_ui-0.0.2.tar.gz	2026-08-14
+external_file	1.2	1.2	postgresql-$v-external-file	18 17 16 15 14	external_file-1.2.tar.gz	2026-08-30
+extra_window_functions	1.0	1.0	postgresql-$v-extra-window-functions	18 17 16 15 14		2026-07-29
+faker	0.5.3	0.5.3	postgresql-$v-faker	18 17 16 15 14	postgresql_faker-0.5.3.tar.bz2	2026-08-10
+fbsql	0.1.0	0.1.0	postgresql-$v-fbsql	18 17 16	fbsql-0.1.0.tar.gz	2026-08-10
+file_fdw	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+financial	1.0.1	1.0.1	postgresql-$v-pg-financial	18 17 16 15 14	pg_financial-1.0.1.tar.gz	2026-08-30
+fio	1.0	1.0	postgresql-$v-pg-fio	18 17 16 15 14	pg_fio-1.0.tar.gz	2026-07-29
+firebird_fdw	1.4.2	1.4.2	postgresql-$v-firebird-fdw	18 17 16 15 14	firebird_fdw-1.4.2.tar.gz	2026-07-29
+first_last_agg	0.1.4	0.1.4	postgresql-$v-first-last-agg	18 17 16 15 14	first_last_agg-0.1.4.tar.gz	2026-07-29
+floatfile	1.3.1	1.3.1	postgresql-$v-floatfile	18 17 16 15 14	floatfile-1.3.1.tar.gz	2026-07-29
+floatvec	1.1.1	1.1.1	postgresql-$v-floatvec	18 17 16 15 14	floatvec-1.1.1.tar.gz	2026-07-29
+fsm_core	1.1.0	1.1.0	postgresql-$v-fsm-core	15 16 17 18	fsm_core-1.1.0.tar.gz	2026-07-29
+fuzzystrmatch	1.2	1.2	postgresql-$v	18 17 16 15 14		2026-07-29
+gb18030_2022	1.0	5.6	ivorysql-$v	18	ivorysql-5.6.tar.gz	2026-09-19
+geoip	0.4.0	0.4.0+git20250804.fcad7f1	postgresql-$v-geoip	18 17 16 15 14	geoip-0.4.0+git20250804.fcad7f1.tar.gz	2026-09-03
+graph	1.2.0	1.2.0	postgresql-$v-pggraph	18 17 16 15 14	pggraph-1.2.0.tar.gz	2026-09-03
+gzip	1.1.1	1.1.1	postgresql-$v-gzip	18 17 16 15 14	pgsql-gzip-1.1.1.tar.gz	2026-09-03
+h3	4.2.3	4.2.3	postgresql-$v-h3	18 17 16 15 14		2026-08-30
+h3_postgis	4.2.3	4.2.3	postgresql-$v-h3	18 17 16 15 14		2026-08-30
+hashlib	1.1	1.1	postgresql-$v-pg-hashlib	18 17 16 15 14	pg_hashlib-1.1.tar.gz	2026-07-29
+hashtypes	0.1.5	0.1.5	postgresql-$v-hashtypes	18 17 16 15 14	hashtypes-0.1.5.tar.gz	2026-07-29
+hdfs_fdw	2.0.5	2.3.3	postgresql-$v-hdfs-fdw	18 17 16 15 14	hdfs_fdw-2.3.3.tar.gz	2026-08-30
+hll	2.21	2.21	postgresql-$v-hll	18 17 16 15 14		2026-08-30
+hstore	1.8	1.8	postgresql-$v	18 17 16 15 14		2026-07-29
+hstore_pllua	2.0.12	2.0.12	postgresql-$v-pllua	18 17 16 15 14		2026-08-30
+hstore_plluau	2.0.12	2.0.12	postgresql-$v-pllua	18 17 16 15 14		2026-08-30
+hstore_plperl	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+hstore_plperlu	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+hstore_plpython3u	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+hstore_plruby	1.0	2.5.0	postgresql-$v-plruby	18 17 16 15 14	plruby-2.5.0.tar.gz	2026-08-30
+http	1.7.2	1.7.2	postgresql-$v-http	18 17 16 15 14	pgsql-http-1.7.2.tar.gz	2026-09-03
+hunspell_cs_cz	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hunspell_de_de	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hunspell_en_us	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hunspell_fr	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hunspell_ne_np	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hunspell_nl_nl	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hunspell_nn_no	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hunspell_pt_pt	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hunspell_ru_ru	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hunspell_ru_ru_aot	1.0	1.0	postgresql-$v-hunspell	18 17 16 15 14	hunspell-1.0.tar.gz	2026-07-30
+hypopg	1.4.3	1.4.3	postgresql-$v-hypopg	18 17 16 15 14		2026-08-30
+icu_ext	1.11.0	1.11.0	postgresql-$v-icu-ext	18 17 16 15 14	icu_ext-1.11.0.tar.gz	2026-08-10
+imgsmlr	1.0	1.0+git20180223.c484a15	postgresql-$v-imgsmlr	18 17 16 15 14	imgsmlr-1.0+git20180223.c484a15.tar.gz	2026-09-03
+index_advisor	0.2.0	0.2.0	postgresql-$v-index-advisor	18 17 16 15 14	index_advisor-0.2.0.tar.gz	2026-08-30
+informix_fdw	0.6.3					2026-07-29
+insert_username	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+intagg	1.1	1.1	postgresql-$v	18 17 16 15 14		2026-07-29
+intarray	1.5	1.5	postgresql-$v	18 17 16 15 14		2026-07-29
+ip4r	2.4.3	2.4.3	postgresql-$v-ip4r	18 17 16 15 14		2026-08-10
+isn	1.2	1.2	postgresql-$v	18 17 16 15 14		2026-07-29
+ivorysql_ora	1.0	5.6	ivorysql-$v	18	ivorysql-5.6.tar.gz	2026-09-19
+jdbc_fdw	1.2	0.5.0	postgresql-$v-jdbc-fdw	18 17 16 15 14	jdbc_fdw-0.5.0.tar.gz	2026-08-10
+jev	0.2.0	0.2.0	postgresql-$v-jev	17 16 15 14	jev-0.2.0.tar.gz	2026-09-19
+jsonb_plperl	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+jsonb_plperlu	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+jsonb_plpython3u	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+jsonb_plruby	1.0	2.5.0	postgresql-$v-plruby	18 17 16 15 14	plruby-2.5.0.tar.gz	2026-08-30
+jsonschema	0.1.9	0.1.9	postgresql-$v-jsonschema	18 17 16 15 14	jsonschema-0.1.9.tar.gz	2026-07-29
+jsquery	1.2	1.2	postgresql-$v-jsquery	18 17 16 15 14	jsquery-1.2.tar.gz	2026-07-29
+kafgres	0.1.0	0.1.0	postgresql-$v-kafgres	16	kafgres-0.1.0.tar.gz	2026-09-19
+kafka_fdw	0.0.3	0.0.3+git20251030.8615082	postgresql-$v-kafka-fdw	18 17 16 15 14	kafka_fdw-0.0.3+git20251030.8615082.tar.gz	2026-09-03
+l10n_table_dependent_extension	0.8.3	0.8.3	postgresql-$v-pg-xenophile	18 17 16 15 14	pg_xenophile-0.8.3.tar.gz	2026-07-29
+lo	1.1	1.1	postgresql-$v	18 17 16 15 14		2026-07-29
+log_fdw	1.5	1.5	postgresql-$v-log-fdw	18 17 16 15 14	log_fdw-1.5.tar.gz	2026-09-19
+logerrors	2.1.5	2.1.5	postgresql-$v-logerrors	18 17 16 15 14	logerrors-2.1.5.tar.gz	2026-07-29
+logical_ddl	0.1.0	0.1.0	postgresql-$v-logical-ddl	18 17 16 15 14	logical_ddl-0.1.0.tar.gz	2026-07-29
+login_hook	1.8	1.8	postgresql-$v-login-hook	18 17 16 15 14	login_hook-1.8.tar.gz	2026-09-03
+lolor	1.2.2	18.4	pgedge-$v	18 17 16 15	lolor-1.2.2.tar.gz	2026-08-10
+lower_quantile	1.0.3	1.0.3	postgresql-$v-lower-quantile	18 17 16 15 14	lower_quantile-1.0.3.tar.gz	2026-07-29
+ltree	1.3	1.3	postgresql-$v	18 17 16 15 14		2026-07-29
+ltree_plpython3u	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+ltree_plruby	1.0	2.5.0	postgresql-$v-plruby	18 17 16 15 14	plruby-2.5.0.tar.gz	2026-08-30
+macavity	0.1.0	0.1.0	postgresql-$v-macavity	18 17 16	macavity-0.1.0.tar.gz	2026-09-19
+md5hash	1.0.1	1.0.1	postgresql-$v-md5hash	18 17 16 15 14	md5hash-1.0.1.tar.gz	2026-07-29
+meta	0.4.0	0.4.0	postgresql-$v-pg-meta	18 17 16 15 14	meta-0.4.0.tar.gz	2026-07-29
+mimeo	1.5.1	1.5.1	postgresql-$v-mimeo	18 17 16 15 14	mimeo-1.5.1.tar.gz	2026-07-29
+mobilitydb	1.3.0	1.3.0	postgresql-$v-mobilitydb	18 17 16 15 14	mobilitydb-1.3.0.tar.gz	2026-08-30
+mobilitydb_datagen	1.3.0	1.3.0	postgresql-$v-mobilitydb	18 17 16 15 14	mobilitydb-1.3.0.tar.gz	2026-08-30
+moddatetime	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+mongo_fdw	5.5.3	5.5.3	postgresql-$v-mongo-fdw	18 17 16 15 14	mongo_fdw-REL-5_5_3.tar.gz	2026-08-30
+multicorn	3.2	3.2	postgresql-$v-multicorn	18 17 16 15 14	multicorn2-3.2.tar.gz	2026-08-10
+mysql_fdw	2.9.3	2.9.3	postgresql-$v-mysql-fdw	18 17 16 15 14	mysql_fdw-REL-2_9_3.tar.gz	2026-08-30
+nominatim_fdw	2.2.0	2.2.0	postgresql-$v-nominatim-fdw	18 17 16 15 14	nominatim_fdw-2.2.0.tar.gz	2026-09-19
+noset	0.3.0	0.3.0	postgresql-$v-noset	18 17 16 15 14	noset-v0.3.0.tar.gz	2026-07-29
+numeral	1.3	1.3	postgresql-$v-numeral	18 17 16 15 14	postgresql-numeral-1.3.tar.gz	2026-08-10
+odbc_fdw	0.5.2	0.6.1	postgresql-$v-odbc-fdw	18 17 16 15 14	odbc_fdw-0.6.1.tar.gz	2026-08-30
+ogr_fdw	1.1.9	1.1.9	postgresql-$v-ogr-fdw	18 17 16 15 14		2026-08-30
+oidc_validator	0.1.0	0.1.0	postgresql-$v-pg-oidc-validator-rust	18	pg_oidc_validator_rust-0.1.0.tar.gz	2026-08-14
+old_snapshot	1.0	1.0	postgresql-$v	16 15 14		2026-07-29
+omni	0.2.14	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_auth	0.1.3	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_aws	0.1.2	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_cloudevents	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_containers	0.2.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_credentials	0.2.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_csv	0.1.1	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_datasets	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_email	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_http	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_httpc	0.1.11	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_httpd	0.4.11	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_id	0.4.3	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_json	0.1.1	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_kube	0.4.2	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_ledger	0.1.3	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_manifest	0.1.2	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_mimetypes	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_os	0.1.1	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_polyfill	0.2.2	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_python	0.1.1	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_regex	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_rest	0.1.1	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_schema	0.3.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_seq	0.1.1	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_service	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_session	0.2.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_shmem	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_sql	0.5.3	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_sqlite	0.2.2	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_test	0.4.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_txn	0.5.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_types	0.3.6	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_var	0.3.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_vfs	0.2.2	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_vfs_types_v1	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_web	0.3.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_worker	0.2.1	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_xml	0.1.2	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omni_yaml	0.1.0	20260212	postgresql-$v-omnigres	18 17 16 15 14	omnigres-20260212.tar.gz	2026-09-03
+omnisketch	1.0.2	1.0.2	postgresql-$v-omnisketch	18 17 16 15 14	omnisketch-1.0.2.tar.gz	2026-07-29
+onesparse	1.0.0	1.0.0	postgresql-$v-onesparse	18	onesparse-1.0.0.tar.gz	2026-08-30
+online_advisor	1.0	1.0	postgresql-$v-online-advisor	18 17 16 15 14	online_advisor-1.0.tar.gz	2026-08-30
+ora_btree_gin	1.0	5.6	ivorysql-$v	18	ivorysql-5.6.tar.gz	2026-09-19
+ora_btree_gist	1.0	5.6	ivorysql-$v	18	ivorysql-5.6.tar.gz	2026-09-19
+oracle_fdw	2.9.0	2.9.0	postgresql-$v-oracle-fdw	18 17 16 15 14	oracle_fdw-ORACLE_FDW_2_8_0.tar.gz	2026-08-30
+orafce	4.16.10	4.16.10	postgresql-$v-orafce	18 17 16 15 14		2026-09-19
+orioledb	1.8	1.8	orioledb-$v	18 17 16	orioledb-beta16.tar.gz postgres-patches16_47.tar.gz postgres-patches17_20.tar.gz postgres-patches18_1.tar.gz	2026-09-04
+pageinspect	1.12	1.12	postgresql-$v	18 17 16 15 14		2026-07-29
+pagevis	0.1	0.1	postgresql-$v-pagevis	18 17 16 15 14	pagevis-0.1.tar.gz	2026-07-29
+parray_gin	1.5.0	1.5.0	postgresql-$v-parray-gin	18 17 16 15 14	parray_gin-1.5.0.tar.gz	2026-07-29
+passwordcheck	-	-	postgresql-$v	18 17 16 15 14	passwordcheck_cracklib-3.1.0.tar.gz	2026-07-29
+passwordcheck_cracklib	3.2.0	3.2.0	postgresql-$v-passwordcheck-cracklib	18 17 16 15 14	passwordcheck_cracklib-3.2.0.tar.gz	2026-09-03
+passwordpolicy	2.0.6	2.0.6	postgresql-$v-passwordpolicy	18 17 16 15 14	passwordpolicy-2.0.6.tar.gz	2026-09-03
+periods	1.2.3	1.2.3	postgresql-$v-periods	18 17 16 15 14	periods-1.2.3.tar.gz	2026-08-30
+permuteseq	1.2.2	1.2.2	postgresql-$v-permuteseq	18 17 16 15 14	permuteseq-1.2.2.tar.gz	2026-08-10
+pg4ml	2.0	2.0	postgresql-$v-pg4ml	18 17 16 15 14	pg4ml-2.0.tar.gz	2026-07-29
+pg_accumulator	1.2.0	1.2.0	postgresql-$v-pg-accumulator	18 17 16 15 14	pg_accumulator-1.2.0.tar.gz	2026-09-03
+pg_ai_query	0.1.1	0.1.1	postgresql-$v-ai-query	18 17 16 15 14	pg_ai_query-0.1.1.tar.gz	2026-08-10
+pg_auditor	0.3	0.3+git20250228.7c2edff	postgresql-$v-pg-auditor	18 17 16 15 14	pg_auditor-0.3+git20250228.7c2edff.tar.gz	2026-09-03
+pg_auth_mon	5.0	5.0	postgresql-$v-pg-auth-mon	18 17 16 15 14	pg_auth_mon-5.0.tar.gz	2026-09-03
+pg_background	2.0.3	2.0.3	postgresql-$v-pg-background	18 17 16 15 14	pg_background-2.0.3.tar.gz	2026-09-03
+pg_base58	0.0.1	0.0.1	postgresql-$v-pg-base58	18 17 16 15 14	pg_base58-0.0.1.tar.gz	2026-07-29
+pg_bestmatch	0.0.2	0.0.2	postgresql-$v-pg-bestmatch	18 17 16 15 14	pg_bestmatch-0.0.2.tar.gz	2026-08-30
+pg_bigm	1.2	1.2	postgresql-$v-pg-bigm	18 17 16 15 14	pg_bigm-1.2-20250903.tar.gz	2026-08-30
+pg_bikram_sambat	0.1.0	0.1.0	postgresql-$v-pg-bikram-sambat	18 17 16 15 14	pg_bikram_sambat-0.1.0.tar.gz	2026-07-29
+pg_buffercache	1.5	1.5	postgresql-$v	18 17 16 15 14		2026-07-29
+pg_bulkload	3.1.23	3.1.23	postgresql-$v-pg-bulkload	18 17 16 15 14	pg_bulkload-VERSION3_1_23.tar.gz	2026-08-30
+pg_cardano	1.2.0	1.2.0	postgresql-$v-pg-cardano	18 17 16 15	pg_cardano-1.2.0.tar.gz	2026-07-29
+pg_catcheck	1.6.0	1.6.0	postgresql-$v-pg-catcheck	18 17 16 15 14		2026-07-29
+pg_cheat_funcs	1.0	1.0	postgresql-$v-pg-cheat-funcs	18 17 16 15 14	pg_cheat_funcs-1.0.tar.gz	2026-07-29
+pg_checksums	1.4	1.4	postgresql-$v-pg-checksums	18 17 16 15 14		2026-09-03
+pg_circuit	0.1.0	0.1.0	postgresql-$v-pg-circuit	18 17 16	pg_circuit-0.1.0.tar.gz	2026-09-19
+pg_cjk_parser	0.1.0	0.1.0	postgresql-$v-pg-cjk-parser	18 17 16 15 14	pg_cjk_parser-0.1.0.tar.gz	2026-07-29
+pg_clickhouse	0.10.0	0.10.0	postgresql-$v-clickhouse	18 17 16 15 14	pg_clickhouse-0.10.0.tar.gz	2026-08-30
+pg_column_tetris	0.1.0	0.1.0	postgresql-$v-pg-column-tetris	14 15 16 17 18	pg_column_tetris-0.1.0.tar.gz	2026-08-30
+pg_command_fw	0.1.0	0.1.0	postgresql-$v-pg-command-fw	18 17 16 15	pg_command_fw-0.1.0.tar.gz	2026-07-29
+pg_cooldown	0.1	0.1	postgresql-$v-pg-cooldown	18 17 16 15 14	pg_cooldown-0.1.tar.gz	2026-07-29
+pg_crash	0.3	0.3	postgresql-$v-pg-crash	18 17 16 15 14	pg_crash-0.3.tar.gz	2026-09-03
+pg_cron	1.6.8	1.6.8	postgresql-$v-cron	18 17 16 15 14		2026-09-19
+pg_csv	1.0.2	1.0.2	postgresql-$v-pg-csv	18 17 16 15 14	pg_csv-1.0.2.tar.gz	2026-07-29
+pg_curl	2.4.6	2.4.6	postgresql-$v-pg-curl	18 17 16 15 14	pg_curl-2.4.6.tar.gz	2026-09-19
+pg_datasentinel	1.0	1.0	postgresql-$v-pg-datasentinel	18 17 16 15	pg_datasentinel-1.0.tar.gz	2026-07-29
+pg_dbms_errlog	2.4	2.4	postgresql-$v-pg-dbms-errlog	18 17 16 15 14	pg_dbms_errlog-2.4.tar.gz	2026-09-03
+pg_dbms_job	2.0	2.0	postgresql-$v-pg-dbms-job	18 17 16 15 14	pg_dbms_job-2.0.tar.gz	2026-07-29
+pg_dbms_lock	2.0	2.0	postgresql-$v-pg-dbms-lock	18 17 16 15 14	pg_dbms_lock-2.0.tar.gz	2026-07-29
+pg_dbms_metadata	1.0.0	1.0.0	postgresql-$v-pg-dbms-metadata	18 17 16 15 14	pg_dbms_metadata-1.0.0.tar.gz	2026-07-29
+pg_describe	1.0.0	1.0.0	postgresql-$v-pg-describe	18 17	pg_describe-1.0.0.tar.gz	2026-08-07
+pg_dirtyread	2.8	2.8	postgresql-$v-dirtyread	18 17 16 15 14	pg_dirtyread-2.8.tar.gz	2026-08-10
+pg_disorder	0.1.0	0.1.0	postgresql-$v-pg-disorder	18 17 16 15 14	pg_disorder-0.1.0.tar.gz	2026-08-30
+pg_dispatch	0.1.5	0.1.5	postgresql-$v-pg-dispatch	18 17 16 15 14	pg_dispatch-0.1.5.tar.gz	2026-07-29
+pg_drop_events	0.1.0	0.1.0	postgresql-$v-pg-drop-events	18 17 16 15 14	pg_drop_events-0.1.0.tar.gz	2026-07-29
+pg_duckdb	1.1.1	1.1.1	postgresql-$v-pg-duckdb	18 17 16 15 14	pg_duckdb-1.1.1.tar.gz	2026-08-30
+pg_ducklake	1.0.2	1.0.2	postgresql-$v-pg-ducklake	18 17 16 15 14	pg_ducklake-1.0.2.tar.gz CRoaring-4.7.1-amalgamation.tar.gz	2026-09-04
+pg_durable	0.2.8	0.2.8	postgresql-$v-pg-durable	18 17 16 15 14	pg_durable-0.2.8.tar.gz	2026-09-19
+pg_duration	1.0.2	1.0.2	postgresql-$v-pg-duration	18 17	pg_duration-1.0.2.tar.gz	2026-07-29
+pg_enigma	0.5.0	0.5.0	postgresql-$v-enigma	18 17 16 15 14	pg_enigma-0.5.0.tar.gz	2026-07-29
+pg_eviltransform	0.0.5	0.0.5	postgresql-$v-eviltransform	18 17 16 15 14	pg_eviltransform-0.0.5.tar.gz	2026-09-03
+pg_extension_base	3.5	3.5.1	postgresql-$v-pg-lake	18 17 16	pg_lake-3.5.1.tar.gz	2026-09-19
+pg_extension_updater	3.5	3.5.1	postgresql-$v-pg-lake	18 17 16	pg_lake-3.5.1.tar.gz	2026-09-19
+pg_extra_time	2.1.0	2.1.0	postgresql-$v-pg-extra-time	18 17 16 15 14	pg_extra_time-2.1.0.tar.gz	2026-07-29
+pg_fact_loader	2.0.1	2.0.1	postgresql-$v-pg-fact-loader	18 17 16 15 14	pg_fact_loader-2.0.1.tar.gz	2026-07-29
+pg_failover_slots	1.2.1	1.2.1	postgresql-$v-pg-failover-slots	18 17 16 15 14	pg_failover_slots-1.2.1.tar.gz	2026-08-10
+pg_fkpart	1.7.0	1.7.0	postgresql-$v-pg-fkpart	18 17 16 15 14	pg_fkpart-1.7.0.tar.gz	2026-07-29
+pg_freespacemap	1.2	1.2	postgresql-$v	18 17 16 15 14		2026-07-29
+pg_fsql	1.1.0	1.1.0	postgresql-$v-pg-fsql	18 17 16 15 14	pg_fsql-1.1.0.tar.gz	2026-07-29
+pg_fts	1.8.3	1.8.3	postgresql-$v-pg-fts	18 17	pg_fts-1.8.3.tar.gz	2026-09-19
+pg_geohash	1.0	1.0	postgresql-$v-pg-geohash	18 17 16 15 14	pg_geohash-1.0.tar.gz	2026-07-29
+pg_get_functiondef	1.0	5.6	ivorysql-$v	18	ivorysql-5.6.tar.gz	2026-09-19
+pg_grammar_guard	0.4.1	0.4.1	postgresql-$v-pg-grammar-guard	18 17 16 15 14	pg_grammar_guard-0.4.1.tar.gz	2026-09-19
+pg_graphql	1.6.2	1.6.2	postgresql-$v-pg-graphql	18 17 16 15 14	pg_graphql-1.6.2.tar.gz	2026-09-03
+pg_hashids	1.3	1.3	postgresql-$v-pg-hashids	18 17 16 15 14	pg_hashids-1.3.tar.gz	2026-08-30
+pg_hint_plan	1.8.0	1.8.0	postgresql-$v-pg-hint-plan	18 17 16 15 14	pg_hint_plan-REL18_1_8_0.tar.gz	2026-08-10
+pg_html5_email_address	1.2.3	1.2.3	postgresql-$v-pg-html5-email-address	18 17 16 15 14	pg_html5_email_address-1.2.3.tar.gz	2026-07-29
+pg_idkit	0.4.0	0.4.0	postgresql-$v-pg-idkit	18 17 16 15 14	pg_idkit-0.4.0.tar.gz	2026-07-29
+pg_incremental	1.5.0	1.5.0	postgresql-$v-pg-incremental	18 17 16	pg_incremental-1.5.0.tar.gz	2026-07-29
+pg_isok	1.4.1	1.4.1	postgresql-$v-pg-isok	18 17 16 15 14	pg_isok-1.4.1.tar.gz	2026-07-29
+pg_ivm	1.15	1.15	postgresql-$v-pg-ivm	18 17 16 15 14	pg_ivm-1.15.tar.gz	2026-08-30
+pg_jieba	1.1.0	2.0.1	postgresql-$v-pg-jieba	18 17 16 15 14	pg_jieba-2.0.1.tar.gz	2026-08-30
+pg_jobmon	1.4.1	1.4.1	postgresql-$v-pg-jobmon	18 17 16 15 14	pg_jobmon-1.4.1.tar.gz	2026-07-29
+pg_jsonschema	0.3.4	0.3.4	postgresql-$v-pg-jsonschema	18 17 16 15 14	pg_jsonschema-0.3.4.tar.gz	2026-08-30
+pg_kazsearch	2.3.0	2.3.0	postgresql-$v-pg-kazsearch	18 17 16	pg_kazsearch-2.3.0.tar.gz	2026-08-30
+pg_kpart	1.0	1.0	postgresql-$v-pg-kpart	18 17 16 15 14	pg_kpart-1.0.tar.gz	2026-08-10
+pg_lake	3.5	3.5.1	postgresql-$v-pg-lake	18 17 16	pg_lake-3.5.1.tar.gz	2026-09-19
+pg_lake_copy	3.5	3.5.1	postgresql-$v-pg-lake	18 17 16	pg_lake-3.5.1.tar.gz	2026-09-19
+pg_lake_engine	3.5	3.5.1	postgresql-$v-pg-lake	18 17 16	pg_lake-3.5.1.tar.gz	2026-09-19
+pg_lake_iceberg	3.5	3.5.1	postgresql-$v-pg-lake	18 17 16	pg_lake-3.5.1.tar.gz	2026-09-19
+pg_lake_table	3.5	3.5.1	postgresql-$v-pg-lake	18 17 16	pg_lake-3.5.1.tar.gz	2026-09-19
+pg_later	0.4.0	0.4.0	postgresql-$v-pg-later	18 17 16 15 14	pg_later-0.4.0.tar.gz	2026-07-29
+pg_liquid	0.1.7	0.1.7	postgresql-$v-pg-liquid	18 17 16 15 14	pg_liquid-0.1.7.tar.gz	2026-07-29
+pg_living_assertions	0.4.1	0.4.2	postgresql-$v-pg-living-assertions	18 17 16 15 14	pg_living_assertions-0.4.2.tar.gz	2026-09-19
+pg_local_cache	2.0.4	2.0.4	postgresql-$v-pg-local-cache	18 17 16 15 14	pg_local_cache-2.0.4.tar.gz	2026-09-19
+pg_logicalinspect	1.0	1.0	postgresql-$v	18		2026-07-29
+pg_map	3.5	3.5.1	postgresql-$v-pg-lake	18 17 16	pg_lake-3.5.1.tar.gz	2026-09-19
+pg_math	1.1.0	1.1.0	postgresql-$v-pg-math	18 17 16 15 14	pg_math-1.1.0.tar.gz	2026-07-29
+pg_mentat	1.6.0	1.6.0	postgresql-$v-pg-mentat	18 17 16 15 14	pg_mentat-1.6.0.tar.gz	2026-09-03
+pg_mockable	1.1.0	1.1.0	postgresql-$v-pg-mockable	18 17 16 15 14	pg_mockable-1.1.0.tar.gz	2026-07-29
+pg_mooncake	0.2.0	0.2.0	postgresql-$v-pg-mooncake	18 17 16 15 14	pg_mooncake-0.2.0.tar.gz	2026-08-30
+pg_net	0.20.5	0.20.5	postgresql-$v-pg-net	18 17 16 15 14	pg_net-0.20.5.tar.gz pg_net-0.9.2.tar.gz	2026-09-04
+pg_oidc_validator	1.1.0	1.1.0	postgresql-$v-pg-oidc-validator	18	pg_oidc_validator-1.1.0.tar.gz	2026-09-03
+pg_orca	1.0.0	1.0.0	postgresql-$v-pg-orca	18	pg_orca-1.0.0.tar.gz	2026-08-30
+pg_orphaned	1.0	1.0+git20260427	postgresql-$v-pg-orphaned	18 17 16 15 14	pg_orphaned-git20260427.tar.gz	2026-09-03
+pg_overexplain	1.0	1.0	postgresql-$v	18		2026-07-29
+pg_parquet	0.5.1	0.5.1	postgresql-$v-pg-parquet	18 17 16 15 14	pg_parquet-0.5.1.tar.gz	2026-08-30
+pg_partman	5.5.0	5.5.0	postgresql-$v-partman	18 17 16 15 14	pg_partman-5.5.0.tar.gz	2026-08-30
+pg_pathcheck	0.9.1	0.9.1	postgresql-$v-pg-pathcheck	18 17	pg_pathcheck-0.9.1-pg17-18.tar.gz	2026-07-29
+pg_permissions	1.4.1	1.4.1	postgresql-$v-pg-permissions	18 17 16 15 14	pg_permissions-REL_1_4_1.tar.gz	2026-09-03
+pg_pinyin	0.0.6	0.0.6	postgresql-$v-pinyin	18 17 16 15 14	pg_pinyin-0.0.6.tar.gz	2026-09-03
+pg_policy	0.1.0	0.1.0	postgresql-$v-pg-policy	14 15 16 17 18	pg_policy-0.1.0.tar.gz	2026-08-12
+pg_polyline	0.0.1	0.0.1	postgresql-$v-pg-polyline	18 17 16 15 14	pg_polyline-0.0.1.tar.gz	2026-07-29
+pg_prewarm	1.2	1.2	postgresql-$v	18 17 16 15 14		2026-07-29
+pg_proctab	2.0.1	2.0.1	postgresql-$v-pgnodemx	18 17 16 15 14	pgnodemx-2.0.1.tar.gz	2026-07-29
+pg_profile	4.16	4.16	postgresql-$v-pg-profile	18 17 16 15 14	pg_profile-4.16.tar.gz	2026-09-19
+pg_projection	1.0.0	1.0.0	postgresql-$v-pg-projection	14 15 16 17 18	pg_projection-1.0.0.tar.gz	2026-07-29
+pg_protobuf	1.0	1.0	postgresql-$v-pg-protobuf	18 17 16 15 14	pg_protobuf-1.0.tar.gz	2026-08-10
+pg_pwhash	1.0	1.0	postgresql-$v-pg-pwhash	18 17 16 15 14		2026-08-10
+pg_qualstats	2.1.4	2.1.4	postgresql-$v-pg-qualstats	18 17 16 15 14		2026-08-30
+pg_query_rewrite	0.0.5	0.0.5	postgresql-$v-pg-query-rewrite	18 17 16 15 14	pg_query_rewrite-0.0.5.tar.gz	2026-07-29
+pg_rational	0.0.3	0.0.3	postgresql-$v-rational	18 17 16 15 14	pg_rational-0.0.3.tar.gz	2026-08-30
+pg_readme	0.7.1	0.7.1	postgresql-$v-pg-readme	18 17 16 15 14	pg_readme-0.7.1.tar.gz	2026-09-03
+pg_readme_test_extension	0.7.1	0.7.1	postgresql-$v-pg-readme	18 17 16 15 14	pg_readme-0.7.1.tar.gz	2026-08-07
+pg_readonly	1.0.6	1.0.6	postgresql-$v-pg-readonly	18 17 16 15 14	pg_readonly-1.0.6.tar.gz	2026-09-03
+pg_regresql	2.0.0	2.0.0	postgresql-$v-pg-regresql	18 17 16 15 14	pg_regresql-2.0.0.tar.gz	2026-08-10
+pg_relation_sql	0.2.2	0.2.2	postgresql-$v-pg-relation-sql	18 17 16 15 14	pg_relation_sql-0.2.2.tar.gz	2026-08-14
+pg_relusage	0.0.1	0.0.1	postgresql-$v-pg-relusage	18 17 16 15 14	pg_relusage-0.0.1.tar.gz	2026-07-29
+pg_render	0.1.3	0.1.3	postgresql-$v-pg-render	18 17 16 15 14	pg_render-0.1.3.tar.gz	2026-07-29
+pg_repack	1.5.3	1.5.3	postgresql-$v-repack	18 17 16 15 14		2026-08-30
+pg_retry	1.0.0	1.0.0	postgresql-$v-retry	18 17	pg_retry-1.0.0.tar.gz	2026-07-29
+pg_rewrite	2.2	2.2	postgresql-$v-pg-rewrite	18 17 16 15 14	pg_rewrite-REL2_2.tar.gz	2026-07-29
+pg_roast	1.0	1.0	postgresql-$v-pg-roast	18 17 16 15 14	pg_roast-1.0.tar.gz	2026-08-10
+pg_rrf	0.0.3	0.0.3	postgresql-$v-pg-rrf	18 17 16 15 14	pg_rrf-0.0.3.tar.gz	2026-07-29
+pg_rrule	0.3.0	0.3.0	postgresql-$v-pg-rrule	18 17 16 15 14	pg_rrule-0.3.0.tar.gz	2026-07-29
+pg_savior	0.1.0	0.1.0	postgresql-$v-pg-savior	18 17 16 15 14	pg_savior-0.1.0.tar.gz	2026-08-30
+pg_search	0.25.9	0.25.9	postgresql-$v-pg-search	18 17 16 15	pg_search-0.25.9.tar.gz pg_search_collect_third_party_licenses.py	2026-09-19
+pg_session_jwt	0.5.0	0.5.0	postgresql-$v-pg-session-jwt	18 17 16 15 14	pg_session_jwt-0.5.0.tar.gz	2026-08-30
+pg_show_plans	2.1.8	2.1.8	postgresql-$v-show-plans	18 17 16 15 14	pg_show_plans-2.1.8.tar.gz	2026-08-10
+pg_similarity	1.0	1.0	postgresql-$v-similarity	18 17 16 15 14	pg_similarity-1.0.tar.gz	2026-08-10
+pg_slug_gen	1.0.0	1.0.0	postgresql-$v-pg-slug-gen	18 17 16 15	pg_slug_gen-1.0.0.tar.gz	2026-07-29
+pg_smtp_client	0.2.1	0.2.1	postgresql-$v-pg-smtp-client	18 17 16 15 14	pg_smtp_client-0.2.1.tar.gz	2026-07-29
+pg_snakeoil	1.4	1.4	postgresql-$v-snakeoil	18 17 16 15 14	pg_snakeoil-1.4.tar.gz	2026-07-29
+pg_sorted_heap	0.14.0	0.14.0	postgresql-$v-pg-sorted-heap	16 17 18	pg_sorted_heap-0.14.0.tar.gz	2026-08-10
+pg_sphere	1.5.2	1.5.2	postgresql-$v-pgsphere	18 17 16 15 14	pgsphere-1.5.2.tar.gz	2026-07-29
+pg_sqlog	1.7	1.7+git20241118.b016539	postgresql-$v-pg-sqlog	18 17 16 15 14	pg_sqlog-1.7+git20241118.b016539.tar.gz	2026-09-03
+pg_squeeze	1.9.4	1.9.4	postgresql-$v-squeeze	18 17 16 15 14		2026-08-30
+pg_stat_backtrace	1.0.0	1.0.0	postgresql-$v-pg-stat-backtrace	18 17 16 15 14	pg_stat_backtrace-1.0.0.tar.gz	2026-07-29
+pg_stat_ch	0.4.0	0.4.0	postgresql-$v-pg-stat-ch	18 17 16	pg_stat_ch-0.4.0.tar.gz	2026-09-03
+pg_stat_kcache	2.3.2	2.3.2	postgresql-$v-pg-stat-kcache	18 17 16 15 14		2026-08-30
+pg_stat_log	0.2	0.2	postgresql-$v-stat-log	18		2026-09-03
+pg_stat_monitor	2.4.0	2.4.0	postgresql-$v-pg-stat-monitor	18 17 16 15 14	pg_stat_monitor-2.4.0.tar.gz	2026-09-19
+pg_stat_plans	2.1.0	2.1.0	postgresql-$v-pg-stat-plans	18 17 16		2026-08-10
+pg_stat_statements	1.11	1.11	postgresql-$v	18 17 16 15 14		2026-07-29
+pg_statement_rollback	1.6	1.6	postgresql-$v-pg-statement-rollback	18 17 16 15 14	pg_statement_rollback-1.6.tar.gz	2026-09-03
+pg_statviz	1.2.1	1.2.1	postgresql-$v-statviz	18 17 16 15 14	pg_statviz-1.2.1.tar.gz	2026-09-04
+pg_stl	1.0.0	1.0.0	postgresql-$v-pg-stl	16 17 18	pg_stl-1.0.0.tar.gz	2026-07-29
+pg_store_plans	1.10	1.10	postgresql-$v-pg-store-plan	18 17 16 15 14	pg_store_plans-1.10.tar.gz	2026-08-10
+pg_strict	1.0.5	1.0.5	postgresql-$v-pg-strict	18 17 16 15 14	pg_strict-1.0.5.tar.gz	2026-07-29
+pg_strom	6.1				pg_strom-6.1.0.tar.gz	2026-09-04
+pg_summarize	0.0.1	0.0.1	postgresql-$v-pg-summarize	18 17 16 15 14	pg_summarize-0.0.1.tar.gz	2026-08-14
+pg_surgery	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+pg_task	3.0.0	3.0.0	postgresql-$v-pg-task	18 17 16 15 14	pg_task-3.0.0.tar.gz	2026-09-19
+pg_tde	2.2.2	18.6	pgtde-$v	18	percona-postgresql-18.6.tar.gz percona-pg_tde18-2.2.2.tar.gz pgtde-pg-config percona-postgis-3.5.7.tar.gz percona-pgvector_18-0.8.6.tar.gz percona-wal2json-2.6.tar.gz percona-pg_repack-1.5.3.tar.gz percona-pgaudit-18.0.tar.gz percona-pgaudit18_set_user-4.2.0.tar.gz percona-pg-stat-monitor18-2.3.2.tar.gz percona-pg_gather-33.tar.gz pgtde-sfcgal-config	2026-09-04
+pg_text_semver	1.2.1	1.2.1	postgresql-$v-pg-text-semver	18 17 16 15 14	pg_text_semver-1.2.1.tar.gz	2026-07-29
+pg_textsearch	1.4.0	1.4.0	postgresql-$v-textsearch	18 17	pg_textsearch-1.4.0.tar.gz	2026-09-03
+pg_tiktoken	0.0.1	0.0.1+git20260825.99cb61d	postgresql-$v-pg-tiktoken	18 17 16 15 14	pg_tiktoken-0.0.1+git20260825.99cb61d.tar.gz	2026-09-03
+pg_tiktoken_c	1.1	1.1	postgresql-$v-pg-tiktoken-c	18 17 16 15 14	pg_tiktoken_c-1.1.tar.gz	2026-08-10
+pg_tle	1.5.2	1.5.2	postgresql-$v-pg-tle	18 17 16 15 14	pg_tle-1.5.2.tar.gz	2026-08-10
+pg_tokenizer	0.1.1	0.1.1	postgresql-$v-pg-tokenizer	18 17 16 15 14	pg_tokenizer.rs-0.1.1.tar.gz	2026-07-29
+pg_tracing	0.1.3	0.1.3	postgresql-$v-pg-tracing	18 17 16 15 14	pg_tracing-0.1.3.tar.gz	2026-08-30
+pg_track_optimizer	0.9.2	0.9.2	postgresql-$v-pg-track-optimizer	18 17	pg_track_optimizer-0.9.2.tar.gz	2026-07-29
+pg_track_settings	2.1.2	2.1.2	postgresql-$v-pg-track-settings	18 17 16 15 14		2026-07-29
+pg_trgm	1.6	1.6	postgresql-$v	18 17 16 15 14		2026-07-29
+pg_trickle	0.107.0	0.107.0	postgresql-$v-pg-trickle	18	pg_trickle-0.107.0.tar.gz	2026-09-19
+pg_ttl_index	3.0.0	3.0.0	postgresql-$v-ttl-index	18 17 16 15	postgres-extensions-pg_ttl-3.0.0.tar.gz	2026-08-30
+pg_turbovec	2.0.0	2.0.0	postgresql-$v-pg-turbovec	18 17 16 15 14	pg_turbovec-2.0.0.tar.gz	2026-09-03
+pg_upless	0.0.3	0.0.3	postgresql-$v-pg-upless	18 17 16 15 14	pg_upless-0.0.3.tar.gz	2026-07-29
+pg_utl_smtp	1.0.0	1.0.0	postgresql-$v-utl-smtp	18 17 16 15 14	pg_utl_smtp-1.0.tar.gz	2026-07-29
+pg_uuid_v8	1.1.0	1.1.0	postgresql-$v-pg-uuid-v8	14 15 16 17 18	pg_uuid_v8-1.1.0.tar.gz	2026-08-12
+pg_uuidv7	1.7.0	1.7.0	postgresql-$v-pg-uuidv7	18 17 16 15 14	pg_uuidv7-1.7.0.tar.gz	2026-08-30
+pg_variables	1.2.5	1.2.5	postgresql-$v-pg-variables	18 17 16 15 14	pg_variables-1.2.5.tar.gz	2026-08-10
+pg_vault_tde	1.7.1	1.7.1	postgresql-$v-pg-vault-tde	18 17	pg_vault_tde-1.7.1.tar.gz	2026-09-19
+pg_visibility	1.2	1.2	postgresql-$v	18 17 16 15 14		2026-07-29
+pg_wait_sampling	1.1.11	1.1.11	postgresql-$v-pg-wait-sampling	18 17 16 15 14	pg_wait_sampling-1.1.11.tar.gz	2026-07-29
+pg_walinspect	1.1	1.1	postgresql-$v	18 17 16 15		2026-07-29
+pg_when	0.1.10	0.1.10	postgresql-$v-pg-when	18 17 16 15 14	pg_when-0.1.10.tar.gz	2026-08-30
+pg_xenophile	0.8.3	0.8.3	postgresql-$v-pg-xenophile	18 17 16 15 14	pg_xenophile-0.8.3.tar.gz	2026-07-29
+pgactive	2.1.9	2.1.9	postgresql-$v-pgactive	18 17 16 15 14	pgactive-2.1.9.tar.gz	2026-09-03
+pgagent	4.2.3	4.2.3	pgagent	18 17 16 15 14		2026-07-29
+pgaudit	18.0	18.0	postgresql-$v-pgaudit	18 17 16 15 14		2026-08-30
+pgauditlogtofile	1.8.5	1.8.5	postgresql-$v-pgauditlogtofile	18 17 16 15 14		2026-08-30
+pgautofailover	2.2	2.2	postgresql-$v-auto-failover	18 17 16 15 14		2026-08-30
+pgbouncer_fdw	1.4.0	1.4.0	postgresql-$v-pgbouncer-fdw	18 17 16 15 14	pgbouncer_fdw-1.4.0.tar.gz	2026-07-29
+pgbson	2.1.0	2.1.0	postgresql-$v-pgbson	18 17 16 15 14	postgresbson-2.1.0.tar.gz	2026-08-07
+pgcalendar	1.1.0	1.1.0	postgresql-$v-pgcalendar	18 17 16 15 14	pgcalendar-1.1.0.tar.gz	2026-07-29
+pgclone	4.4.2	4.4.2	postgresql-$v-pgclone	18 17 16 15 14	pgclone-4.4.2.tar.gz	2026-08-30
+pgcontext	0.3.0	0.3.0	postgresql-$v-pgcontext	18 17	pgcontext-0.3.0.tar.gz	2026-09-03
+pgcontext_pgvector	0.2.0		postgresql-$v-pgcontext			2026-09-03
+pgcozy	1.0	1.0	postgresql-$v-pgcozy	18 17 16 15 14	pgcozy-1.0.tar.gz	2026-07-29
+pgcrypto	1.3	1.3	postgresql-$v	18 17 16 15 14		2026-07-29
+pgcryptokey	0.85	0.85	postgresql-$v-pgcryptokey	18 17 16 15 14	pgcryptokey-0.85.tar.gz	2026-07-29
+pgdd	0.6.1	0.6.1	postgresql-$v-pgdd	18 17 16 15 14	pgdd-0.6.1.tar.gz	2026-07-29
+pgdisablelogerror	1.0	1.0	postgresql-$v-pgdisablelogerror	18 17 16 15 14	pgdisablelogerror-1.0.tar.gz	2026-07-29
+pgelog	1.0.2	1.0.2	postgresql-$v-pgelog	18 17 16 15 14	pgelog-1.0.2.tar.gz	2026-07-29
+pgextwlist	1.20	1.20	postgresql-$v-pgextwlist	18 17 16 15 14	pgextwlist-1.19.tar.gz	2026-08-10
+pgfaceting	0.2.0	0.2.0	postgresql-$v-pgfaceting	18 17 16 15 14	pgfaceting-0.2.0.tar.gz	2026-07-29
+pgfincore	1.4.0	1.4.0	postgresql-$v-pgfincore	18 17 16 15 14	pgfincore-1.4.0.tar.gz	2026-08-10
+pgfr_analyze	2.32.1	2.32.1	postgresql-$v-pg-flight-recorder	18 17 16 15	pg_flight_recorder-2.32.1.tar.gz	2026-09-03
+pgfr_record	2.32.1	2.32.1	postgresql-$v-pg-flight-recorder	18 17 16 15	pg_flight_recorder-2.32.1.tar.gz	2026-09-03
+pgh_consistency	6.6	6.6	postgresql-$v-pghydro	18 17 16 15 14	pghydro-6.6.tar.gz	2026-07-29
+pgh_hgm	2.2.6	6.6	postgresql-$v-pghydro	18 17 16 15 14	pghydro-6.6.tar.gz	2026-07-29
+pgh_output	6.6	6.6	postgresql-$v-pghydro	18 17 16 15 14	pghydro-6.6.tar.gz	2026-07-29
+pgh_output_en_au	6.6	6.6	postgresql-$v-pghydro	18 17 16 15 14	pghydro-6.6.tar.gz	2026-07-29
+pgh_output_pt_br	6.6	6.6	postgresql-$v-pghydro	18 17 16 15 14	pghydro-6.6.tar.gz	2026-07-29
+pgh_raster	6.6	6.6	postgresql-$v-pghydro	18 17 16 15 14	pghydro-6.6.tar.gz	2026-07-29
+pghydro	6.6	6.6	postgresql-$v-pghydro	18 17 16 15 14	pghydro-6.6.tar.gz	2026-07-29
+pgjq	0.1.0	0.1.0	postgresql-$v-pgjq	18 17 16 15 14	pgjq-0.1.0.tar.gz	2026-08-10
+pgjwt	0.2.0	0.2.0	postgresql-$v-pgjwt	18 17 16 15 14	pgjwt-0.2.0.tar.gz	2026-08-10
+pgl_ddl_deploy	2.2.1	2.2.1	postgresql-$v-pgl-ddl-deploy	18 17 16 15 14		2026-07-29
+pglinter	2.0.0	2.0.0	postgresql-$v-pglinter	18 17 16 15 14	pglinter-2.0.0.tar.gz	2026-08-30
+pglite_fusion	0.0.7	0.0.7	postgresql-$v-pglite-fusion	18 17 16 15 14	pglite-fusion-0.0.7.tar.gz	2026-09-03
+pglock	1.0.0	1.0.0	postgresql-$v-pglock	18 17 16 15 14	pglock-1.0.0.tar.gz	2026-07-29
+pglogical	2.4.8	2.4.8	postgresql-$v-pglogical	18 17 16 15 14	pglogical-2.4.6.tar.gz	2026-08-30
+pglogical_origin	2.4.7	2.4.7	postgresql-$v-pglogical	18 17 16 15 14	pglogical-2.4.6.tar.gz	2026-08-30
+pglogical_ticker	1.4.1	1.4.1	postgresql-$v-pglogical-ticker	18 17 16 15 14	pglogical_ticker-1.4.1.tar.gz	2026-07-29
+pgmb	1.0.0	1.0.0	postgresql-$v-pgmb	18 17 16 15 14	pgmb-1.0.0.tar.gz	2026-07-29
+pgmemcache	2.3.0	2.3.0	postgresql-$v-pgmemcache	18 17 16 15 14		2026-08-10
+pgmemento	0.7.4	0.7.4	postgresql-$v-pgmemento	18 17 16 15 14	pgmemento-0.7.4.tar.gz	2026-08-10
+pgmeminfo	1.0.1	1.0.1	postgresql-$v-pgmeminfo	18 17 16 15 14	pgmeminfo-VERSION_1_0_1.tar.gz	2026-09-03
+pgml	2.10.0	2.10.0	postgresql-$v-pgml	17 16 15 14	pgml-2.10.0.tar.gz	2026-08-30
+pgmnemo	0.20.0	0.20.0	postgresql-$v-pgmnemo	18 17	pgmnemo-0.20.0.tar.gz	2026-09-03
+pgmonitor	2.2.0	2.2.0	postgresql-$v-pgmonitor	18 17 16 15 14	pgmonitor-extension-2.2.0.tar.gz	2026-08-10
+pgmp	1.0.6	1.0.6	postgresql-$v-pgmp	18 17 16 15 14	pgmp-1.0.6.tar.gz	2026-08-30
+pgmq	1.13.0	1.13.0	postgresql-$v-pgmq	18 17 16 15 14	pgmq-1.13.0.tar.gz	2026-09-19
+pgmqtt	0.4.2	0.4.2	postgresql-$v-pgmqtt	18 17 16 15 14	pgmqtt-0.4.2.tar.gz	2026-09-03
+pgnodemx	2.0.1	2.0.1	postgresql-$v-pgnodemx	18 17 16 15 14	pgnodemx-2.0.1.tar.gz	2026-07-29
+pgoutput	-	-	postgresql-$v	18 17 16 15 14		2026-07-29
+pgpcre	0.20190509	0.20190509	postgresql-$v-pgpcre	18 17 16 15 14	pgpcre-0.20190509.tar.gz	2026-09-04
+pgpdf	0.1.0	0.1.0	postgresql-$v-pgpdf	18 17 16 15 14	pgpdf-0.1.0.tar.gz	2026-08-10
+pgpool_adm	4.7.2	4.7.2	postgresql-$v-pgpool2	18 17 16 15 14		2026-07-29
+pgpool_recovery	4.7.2	4.7.2	postgresql-$v-pgpool2	18 17 16 15 14		2026-07-29
+pgpool_regclass	4.7.2	4.7.2	postgresql-$v-pgpool2	18 17 16 15 14		2026-07-29
+pgproto	0.5.0	0.5.0	postgresql-$v-pgproto	18 17 16 15 14	pgproto-0.5.0.tar.gz	2026-08-30
+pgq	3.5.1	3.5.1	postgresql-$v-pgq3	18 17 16 15 14		2026-08-30
+pgqr	1.0	1.0	postgresql-$v-pgqr	18 17 16 15 14	pgqr-1.0.tar.gz	2026-07-29
+pgrdf	0.6.36	0.6.36	postgresql-$v-pgrdf	18 17 16 15 14	pgrdf-0.6.36.tar.gz	2026-09-19
+pgroonga	4.0.8	4.0.8	postgresql-$v-pgroonga	18 17 16 15 14	pgroonga-4.0.8.tar.gz	2026-09-03
+pgroonga_database	4.0.8	4.0.8	postgresql-$v-pgroonga	18 17 16 15 14	pgroonga-4.0.8.tar.gz	2026-09-03
+pgrouting	4.0.2	4.0.2	postgresql-$v-pgrouting	18 17 16 15 14		2026-09-19
+pgrowlocks	1.2	1.2	postgresql-$v	18 17 16 15 14		2026-07-29
+pgs3	0.1.1	0.1.1	postgresql-$v-pgs3	18 17	pgs3-0.1.1.tar.gz	2026-09-03
+pgsentinel	1.5.0	1.5.0	postgresql-$v-pgsentinel	18 17 16 15 14	pgsentinel-1.5.0.tar.gz	2026-09-03
+pgsmcrypto	0.1.1	0.1.1	postgresql-$v-pgsmcrypto	18 17 16 15 14	pgsmcrypto-0.1.1.tar.gz	2026-08-10
+pgsodium	3.1.11	3.1.11	postgresql-$v-pgsodium	18 17 16 15 14	pgsodium-3.1.11.tar.gz	2026-09-03
+pgspider_ext	1.3.0	1.3.0	postgresql-$v-pgspider-ext	18 17 16 15	pgspider_ext-1.3.0.tar.gz	2026-07-29
+pgsql_tweaks	1.0.5	1.0.5	postgresql-$v-pgsql-tweaks	18 17 16 15 14	pgsql_tweaks-1.0.5.tar.gz	2026-07-29
+pgsqlmock	1.0.1	1.0.1	postgresql-$v-pgsqlmock	18 17 16 15 14	pgsqlmock-1.0.1.tar.gz	2026-08-10
+pgstattuple	1.5	1.5	postgresql-$v	18 17 16 15 14		2026-07-29
+pgtap	1.3.4	1.3.4	postgresql-$v-pgtap	18 17 16 15 14		2026-08-30
+pgtt	4.6	4.6	postgresql-$v-pgtt	18 17 16 15 14	pgtt-4.6.tar.gz	2026-09-03
+pguecc	1.0	1.0	postgresql-$v-pg-ecdsa	18 17 16 15 14	pg-ecdsa-1.0.tar.gz	2026-07-29
+pgwasm	0.1.0	0.1.0	postgresql-$v-pgwasm	18 17 16 15 14	pgwasm-0.1.0.tar.gz	2026-08-30
+pgx_ulid	0.2.3	0.2.3	postgresql-$v-pgx-ulid	18 17 16 15 14	pgx_ulid-0.2.3.tar.gz	2026-08-30
+plan_filter	1.0.0	1.0.0	postgresql-$v-pg-plan-filter	18 17 16 15 14	pg_plan_filter-1.0.0.tar.gz	2026-09-03
+pldbgapi	1.10	1.10	postgresql-$v-pldebugger	18 17 16 15 14		2026-08-30
+plisql	1.0	5.6	ivorysql-$v	18	ivorysql-5.6.tar.gz	2026-09-19
+pljava	1.6.10	1.6.10	postgresql-$v-pljava	18 17 16 15 14		2026-08-30
+pljs	1.0.5	1.0.5	postgresql-$v-pljs	18 17 16 15 14	pljs-1.0.5.tar.gz	2026-08-30
+pllua	2.0.12	2.0.12	postgresql-$v-pllua	18 17 16 15 14	pllua-2.0.12.tar.gz	2026-09-04
+plluau	2.0.12	2.0.12	postgresql-$v-pllua	18 17 16 15 14		2026-08-30
+plperl	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+plperlu	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+plpgsql	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+plpgsql_check	2.10.10	2.10.10	postgresql-$v-plpgsql-check	18 17 16 15 14	plpgsql_check-2.10.10.tar.gz	2026-09-19
+plpgsql_wrap	1.0	1.0	postgresql-$v-plpgsql-wrap	18 17 16 15 14	plpgsql_wrap-1.0.tar.gz	2026-07-29
+plprofiler	4.2.5	4.2.5	postgresql-$v-plprofiler	18 17 16 15 14		2026-08-10
+plproxy	2.12.0	2.12.0	postgresql-$v-plproxy	18 17 16 15 14	plproxy-2.12.0.tar.gz	2026-08-30
+plprql	18.0.2	18.0.2	postgresql-$v-plprql	18 17 16 15 14	plprql-18.0.2.tar.gz	2026-09-19
+plpython3u	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+plr	8.4.8.7	8.4.8.7	postgresql-$v-plr	18 17 16 15 14		2026-09-03
+plruby	2.5	2.5.0	postgresql-$v-plruby	18 17 16 15 14	plruby-2.5.0.tar.gz	2026-08-30
+plsh	1.20220917	1.20220917	postgresql-$v-plsh	18 17 16 15 14		2026-08-10
+pltcl	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+pltclu	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+plv8	3.2.4	3.2.4	postgresql-$v-plv8	18 17 16 15 14	plv8-3.2.4.tar.gz	2026-08-10
+plx	2.0.1	2.0.1	postgresql-$v-plx	18 17 16 15 14	plx-2.0.1.tar.gz	2026-09-03
+plxslt	0.20140221	0.20140221	postgresql-$v-plxslt	18 17 16 15 14	plxslt-0.20140221.tar.gz	2026-07-29
+pointcloud	1.2.5	1.2.5	postgresql-$v-pointcloud	18 17 16 15 14	pointcloud-1.2.5.tar.gz	2026-07-29
+pointcloud_postgis	1.2.5	1.2.5	postgresql-$v-pointcloud	18 17 16 15 14	pointcloud-1.2.5.tar.gz	2026-07-29
+postbis	1.0	1.0	postgresql-$v-postbis	18 17 16 15 14	postbis-1.0.tar.gz	2026-07-29
+postgis	3.6.4	3.6.4	postgresql-$v-postgis-3	18 17 16 15 14		2026-09-03
+postgis_raster	3.6.4	3.6.4	postgresql-$v-postgis-3	18 17 16 15 14		2026-09-03
+postgis_sfcgal	3.6.4	3.6.4	postgresql-$v-postgis-3	18 17 16 15 14		2026-09-03
+postgis_tiger_geocoder	3.6.4	3.6.4	postgresql-$v-postgis-3	18 17 16 15 14		2026-09-03
+postgis_topology	3.6.4	3.6.4	postgresql-$v-postgis-3	18 17 16 15 14		2026-09-03
+postgres_fdw	1.1	1.1	postgresql-$v	18 17 16 15 14		2026-07-29
+powa	5.3.0	5.3.0	postgresql-$v-powa	18 17 16 15 14		2026-09-03
+pre_prepare	0.9	0.9	postgresql-$v-preprepare	18 17 16 15 14	preprepare-0.9.tar.gz	2026-07-29
+prefix	1.2.11	1.2.11	postgresql-$v-prefix	18 17 16 15 14	prefix-1.2.11.tar.gz	2026-07-29
+prioritize	1.0.4	1.0.4	postgresql-$v-prioritize	18 17 16 15 14		2026-07-29
+provsql	1.12.0	1.12.0	postgresql-$v-provsql	18 17 16 15 14	provsql-1.12.0.tar.gz	2026-08-30
+psql_bm25s	0.4.14	0.4.14	postgresql-$v-psql-bm25s	18 17	psql_bm25s-0.4.14.tar.gz	2026-09-19
+q3c	2.0.5	2.0.5	postgresql-$v-q3c	18 17 16 15 14	q3c-2.0.5.tar.gz	2026-08-12
+qdgc	0.1.0	0.1.0	postgresql-$v-qdgc	18 17 16 15 14	qdgc-0.1.0.tar.gz	2026-07-29
+qdgc_postgis	0.1.0	0.1.0	postgresql-$v-qdgc	18 17 16 15 14	qdgc-0.1.0.tar.gz	2026-07-29
+qos	1.1.0	1.1.0	postgresql-$v-qos	18 17 16 15	pg_qos-1.1.0.tar.gz	2026-09-03
+quantile	1.1.8	1.1.8	postgresql-$v-quantile	18 17 16 15 14	quantile-1.1.8.tar.gz	2026-07-29
+random	2.0.0	2.0.0	postgresql-$v-random	18 17 16 15 14	random-2.0.0-dev.tar.gz	2026-07-29
+rdf_fdw	2.7.0	2.7.0	postgresql-$v-rdf-fdw	18 17 16 15 14	rdf_fdw-2.7.0.tar.gz	2026-08-30
+rdkit	202603.6	202603.6	postgresql-$v-rdkit	17 16 15 14	rdkit_202603.6.orig.tar.xz better-enums-0.11.3-enum.h rdkit_202603.6-1PGSTY~resolute.dsc rdkit_202603.6-1PGSTY~resolute.debian.tar.xz rdkit_202303.3.orig.tar.xz rdkit_202303.3-3.pgdg120+1.dsc rdkit_202303.3-3.pgdg120+1.debian.tar.xz rdkit_202303.3-3.pgdg22.04+1.dsc rdkit_202303.3-3.pgdg22.04+1.debian.tar.xz	2026-09-04
+re2	0.4.1	0.4.1	postgresql-$v-re2	18 17 16	re2-0.4.1.tar.gz	2026-08-30
+redis	0.0.1	0.0.1	postgresql-$v-pg-redis-pubsub	18 17 16 15 14	pg_redis_pubsub-0.0.1.tar.gz	2026-08-10
+redis_fdw	2.0	2.0+git20260808.ff37a7c8	postgresql-$v-redis-fdw	18 17 16 15 14	redis_fdw-2.0+git20260808.ff37a7c8.tar.gz	2026-09-03
+refint	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+repmgr	5.5.0	5.5.0	postgresql-$v-repmgr	18 17 16 15 14		2026-08-30
+roaringbitmap	1.2.0	1.2.0	postgresql-$v-roaringbitmap	18 17 16 15 14	pg_roaringbitmap-1.2.0.tar.gz	2026-08-30
+rum	1.3.15	1.3.15	postgresql-$v-rum	18 17 16 15 14	rum-1.3.15.tar.gz	2026-08-10
+safeupdate	1.7	1.7	postgresql-$v-pg-safeupdate	18 17 16 15 14	pg-safeupdate-1.7.tar.gz	2026-09-03
+schedoc	0.0.2	0.0.2+git20260430.9f135c3	postgresql-$v-pg-schedoc	18 17 16 15 14	pg_schedoc-0.0.2+git20260430.9f135c3.tar.gz	2026-09-03
+seg	1.4	1.4	postgresql-$v	18 17 16 15 14		2026-07-29
+semver	0.41.0	0.41.0	postgresql-$v-semver	18 17 16 15 14	pg-semver-0.41.0.tar.gz	2026-08-30
+sepgsql	-	-	postgresql-$v	18 17 16 15 14		2026-07-29
+sequential_uuids	1.0.3	1.0.3	postgresql-$v-sequential-uuids	18 17 16 15 14	sequential-uuids-1.0.3.tar.gz	2026-07-29
+session_variable	3.5	3.5	postgresql-$v-session-variable	18 17 16 15 14	session_variable-3.5.tar.gz	2026-09-03
+set_user	4.2.0	4.2.0	postgresql-$v-set-user	18 17 16 15 14		2026-08-30
+shacrypt	1.1	1.1	postgresql-$v-shacrypt	18 17 16 15 14	postgres_shacrypt-1.1.tar.gz	2026-07-29
+smlar	1.0	1.0	postgresql-$v-smlar	18 17 16 15 14	smlar-1.0.tar.gz	2026-08-14
+snowflake	2.6.0	18.6	pgedge-$v	18 17 16 15	snowflake-2.6.0.tar.gz	2026-09-03
+sparql	1.0	1.0	postgresql-$v-pgsparql	18 17 16 15 14	pgsparql-1.0.tar.gz	2026-08-30
+spock	5.0.11	18.6	pgedge-$v	18 17 16 15	spock-5.0.11.tar.gz	2026-09-03
+sqlite_fdw	2.5.0	2.5.0	postgresql-$v-sqlite-fdw	18 17 16 15 14	sqlite_fdw-2.5.0.tar.gz	2026-08-10
+sslinfo	1.2	1.2	postgresql-$v	18 17 16 15 14		2026-07-29
+sslutils	1.4.1	1.4.1	postgresql-$v-sslutils	18 17 16 15 14	sslutils-1.4.1.tar.gz	2026-09-03
+storage_engine	2.4.0	2.4.0	postgresql-$v-storage-engine	18 17 16 15	storage_engine-2.4.0.tar.gz	2026-08-30
+supabase_vault	0.3.1	0.3.1	postgresql-$v-vault	18 17 16 15 14	vault-0.3.1.tar.gz	2026-08-30
+supautils	3.4.3	3.4.3	postgresql-$v-supautils	18 17 16 15 14	supautils-3.4.3.tar.gz	2026-09-03
+system_stats	4.1	4.1	postgresql-$v-system-stats	18 17 16 15 14	system_stats-4.1.tar.gz	2026-08-30
+table_log	0.6.4	0.6.4	postgresql-$v-tablelog	18 17 16 15 14	table_log-0.6.4.tar.gz	2026-07-29
+table_version	1.11.1	1.11.1	postgresql-$v-table-version	18 17 16 15 14	postgresql-tableversion-1.11.1.tar.gz	2026-07-29
+tablefunc	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+tcn	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+tdigest	1.4.6	1.4.6	postgresql-$v-tdigest	18 17 16 15 14		2026-09-19
+tds_fdw	2.0.5	2.0.5	postgresql-$v-tds-fdw	18 17 16 15 14		2026-08-10
+temporal_tables	1.2.2	1.2.2	postgresql-$v-temporal-tables	18 17 16 15 14	temporal_tables-1.2.2.tar.gz	2026-07-29
+test_decoding	-	-	postgresql-$v	18 17 16 15 14		2026-07-29
+timescaledb	2.30.1	2.30.1	postgresql-$v-timescaledb-tsl	18 17 16	timescaledb-2.30.1.tar.gz	2026-09-19
+timescaledb_toolkit	1.26.0	1.26.0	postgresql-$v-timescaledb-toolkit	18 17 16	timescaledb-toolkit-1.26.0.tar.gz	2026-09-03
+timeseries	0.2.1	0.2.1	postgresql-$v-pg-timeseries	18 17 16 15 14	pg_timeseries-0.2.1.tar.gz	2026-08-10
+timestamp9	1.4.0	1.4.0	postgresql-$v-timestamp9	18 17 16 15 14	timestamp9-timestamp9-1.4.0.tar.gz	2026-08-30
+toastinfo	1.7	1.7	postgresql-$v-toastinfo	18 17 16 15 14	toastinfo-1.7.tar.gz	2026-07-29
+topn	2.7.1	2.7.1	postgresql-$v-topn	18 17 16 15 14	postgresql-topn-2.7.1.tar.gz	2026-09-03
+tsm_system_rows	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+tsm_system_time	1.0	1.0	postgresql-$v	18 17 16 15 14		2026-07-29
+typeid	0.4.1	0.4.1	postgresql-$v-typeid	18 17 16 15 14	typeid-postgres-0.4.1.tar.gz	2026-09-03
+tzf	0.3.1	0.3.1	postgresql-$v-tzf	18 17 16 15 14	pg-tzf-0.3.1.tar.gz	2026-09-03
+uint	1.20260630	1.20260630	postgresql-$v-pguint	18 17 16 15 14	pguint-1.20260630.tar.gz	2026-09-03
+uint128	1.2.0	1.2.0	postgresql-$v-pg-uint128	18 17 16 15 14	pg-uint128-1.2.0.tar.gz	2026-08-30
+ulak	0.2.0	0.2.0	postgresql-$v-ulak	18 17 16 15 14	ulak-0.2.0.tar.gz	2026-09-19
+unaccent	1.1	1.1	postgresql-$v	18 17 16 15 14		2026-07-29
+unit	7.10	7.10	postgresql-$v-unit	18 17 16 15 14	postgresql-unit-7.10.tar.gz	2026-08-10
+uri	1.20251029	1.20251029	postgresql-$v-pg-uri	18 17 16 15 14	pguri-1.20251029.tar.gz	2026-08-10
+url_encode	1.2.5	1.2.5	postgresql-$v-url-encode	18 17 16 15 14	url_encode-1.2.5.tar.gz	2026-07-29
+uuid-ossp	1.1	1.1	postgresql-$v	18 17 16 15 14		2026-07-29
+vasco	0.1.0	0.1.0	postgresql-$v-vasco	18 17 16 15 14	vasco-0.1.0.tar.gz	2026-07-29
+vchord	1.1.1	1.1.1	postgresql-$v-vchord	18 17 16 15 14	VectorChord-1.1.1.tar.gz	2026-08-30
+vchord_bm25	0.3.0	0.3.0	postgresql-$v-vchord-bm25	18 17 16 15 14	VectorChord-bm25-0.3.0.tar.gz	2026-08-30
+vector	0.8.6	0.8.6	postgresql-$v-pgvector	18 17 16 15 14	pgvector-0.8.6.tar.gz	2026-09-03
+vectorize	0.27.1	0.27.1	postgresql-$v-pg-vectorize	18 17 16 15 14	pg_vectorize-0.27.1.tar.gz	2026-09-19
+vectorscale	0.9.0	0.9.0	postgresql-$v-pgvectorscale	18 17 16 15 14	pgvectorscale-0.9.0.tar.gz	2026-08-30
+wal2json	2.6	2.6	postgresql-$v-wal2json	18 17 16 15 14	wal2json-2.6.tar.gz	2026-08-30
+wal2mongo	1.0.7	1.0.7	postgresql-$v-wal2mongo	18 17 16 15 14	wal2mongo-1.0.7.tar.gz	2026-07-29
+weighted_statistics	1.0.0	1.0.0	postgresql-$v-weighted-statistics	18 17 16 15 14	pg_weighted_statistics-1.0.0.tar.gz	2026-07-29
+wrappers	0.6.3	0.6.3	postgresql-$v-wrappers	18 17 16 15 14	wrappers-0.6.3.tar.gz	2026-09-19
+xicor	0.1.1	0.1.1	postgresql-$v-pgxicor	18 17 16 15 14	pgxicor-0.1.1.tar.gz	2026-07-29
+xml2	1.1	1.1	postgresql-$v	18 17 16 15 14		2026-07-29
+xxhash	0.0.1	0.0.1	postgresql-$v-pg-xxhash	18 17 16 15 14	pg_xxhash-0.0.1.tar.gz	2026-07-29
+zhparser	2.3	2.3	postgresql-$v-zhparser	18 17 16 15 14	zhparser-2.3.tar.gz	2026-08-30
+zstd	1.1.2	1.1.2	postgresql-$v-zstd	18 17 16 15 14	pgzstd-1.1.2.tar.gz	2026-07-29
