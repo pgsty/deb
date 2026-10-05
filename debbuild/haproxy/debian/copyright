@@ -117,14 +117,6 @@ Copyright: Copyright (C) 2007-2011, Arnaud Cornet <acornet@debian.org>
            Copyright (C) 2013-2016, Vincent Bernat <bernat@debian.org>
 License: GPL-2.0-only
 
-Files: debian/dconv/*
-Copyright: 2012, Cyril Bonté
-License: Apache-2.0
-Comment:
- An OpenSSL exception is present in the LICENSE file: "This program is
- released under the GPL with the additional exemption that compiling,
- linking, and/or using OpenSSL is allowed."
-
 Files: dev/base64/*
 Copyright: 2009, 2010, Krzysztof Piotr Oledzki <ole@ans.pl>
 License: GPL-2.0-or-later

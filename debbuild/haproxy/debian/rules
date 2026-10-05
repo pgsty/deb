@@ -57,7 +57,7 @@ MAKEARGS += USE_QUIC_OPENSSL_COMPAT=1
 endif
 
 %:
-	dh $@ --with sphinxdoc
+	dh $@
 
 override_dh_auto_configure:
 	echo "$(SERVICE_IN_SHA256)  admin/systemd/haproxy.service.in" | sha256sum -c -
@@ -68,17 +68,11 @@ override_dh_auto_configure:
 
 override_dh_auto_build-arch:
 	make $(MAKEARGS) EXTRA="$(USER_TOOLS)"
-	$(MAKE) -C doc/lua-api man
 
 override_dh_auto_build-indep:
-	# Build the HTML documentation with the packaged dconv adaptations.
-	python3 -B $(CURDIR)/debian/dconv/dconv.py \
-			-o $(CURDIR)/doc \
-			    $(CURDIR)/doc/intro.txt $(CURDIR)/doc/configuration.txt $(CURDIR)/doc/management.txt
-	$(MAKE) -C doc/lua-api html
+	# Architecture-independent files are shipped directly from upstream.
 
 override_dh_auto_clean:
-	$(MAKE) -C doc/lua-api clean
 	rm -f debian/haproxy.service debian/haproxy.default debian/haproxy.tmpfile
 	dh_auto_clean
 
