@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := agensgraph-2.17.0.tar.gz
+TARBALL := agensgraph-2.18.4.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

@@ -1,7 +1,9 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE=1
-export PGBASEINSTDIR=/usr/agens-17
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+export PGBASEINSTDIR=/usr/agens-18
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 # Filter out -ffast-math to avoid precision regressions.
@@ -26,7 +28,7 @@ override_dh_auto_configure:
 		--with-system-tzdata=/usr/share/zoneinfo \
 		--with-lz4 --with-zstd \
 		--with-uuid=e2fs --with-libxml --with-libxslt \
-		--with-icu \
+		--with-icu --with-llvm \
 		--with-gssapi \
 		--with-perl --with-python --with-tcl \
 		--with-openssl --with-pam --with-ldap \

@@ -1,10 +1,12 @@
-Source: agensgraph-17
+Source: agensgraph-18
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends:
  autoconf,
  bison,
+ clang,
+ llvm-dev,
  flex,
  debhelper-compat (= 13),
  dh-exec (>= 0.13~),
@@ -40,11 +42,11 @@ Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/skaiworldwide-oss/agensgraph
 
-Package: agensgraph-17
+Package: agensgraph-18
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata, ssl-cert
-Description: AgensGraph graph database kernel based on PostgreSQL 17
+Description: AgensGraph graph database kernel based on PostgreSQL 18
  AgensGraph is a multi-model database that integrates relational SQL and
  graph data processing in one kernel.
  .
- This package installs AgensGraph under /usr/agens-17.
+ This package installs AgensGraph under /usr/agens-18.

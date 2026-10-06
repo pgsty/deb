@@ -1,3 +1,11 @@
+agensgraph-18 (2.18.4.0-1PGSTY) unstable; urgency=medium
+
+  * Update to the stable AgensGraph 2.18.4.0 tag based on PostgreSQL 18.4.
+  * Install the bundled kernel and graph engine under /usr/agens-18.
+  * Enable LLVM JIT and preserve distribution build and debug flags.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 06 Oct 2026 00:00:00 +0000
+
 agensgraph-17 (2.17.0-1PGSTY) unstable; urgency=medium
 
   * Build AgensGraph 2.17.0 based on PostgreSQL 17.10.
