@@ -1,0 +1,13 @@
+--- a/Code/PgSQL/rdkit/CMakeLists.txt
++++ b/Code/PgSQL/rdkit/CMakeLists.txt
+@@ -79,6 +79,10 @@
+     message(FATAL_ERROR "${PostgreSQL_CONFIG} ${arg} failed")
+   endif()
+ endmacro ()
++# Distribution libpq headers are shared across server major versions.
++# Generate SQL for the selected server instead of the installed client.
++run_pg_config (--version PG_CONFIG_VERSION)
++string(REGEX MATCH "[0-9]+\\.[0-9]+" PostgreSQL_VERSION_STRING "${PG_CONFIG_VERSION}")
+ run_pg_config (--bindir PG_BINDIR)
+ run_pg_config (--sharedir PG_SHAREDIR)
+ run_pg_config (--pkglibdir PG_PKGLIBDIR)

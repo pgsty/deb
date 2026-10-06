@@ -1,3 +1,13 @@
+rdkit (202609.1-1PGSTY) unstable; urgency=medium
+
+  * Update runtime, Python bindings and PostgreSQL 14-18 cartridges to 2026.09.1.
+  * Build on Trixie, Noble and Resolute using their default system Boost.
+  * Share the official source and offline patches with the RPM build.
+  * Keep InChI, JSON and ring-family support enabled without bundled Boost.
+  * Generate per-server SQL using pg_config instead of shared libpq headers.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 05 Oct 2026 18:00:00 +0800
+
 rdkit (202603.6-1PGSTY~resolute) resolute; urgency=medium
 
   * Update the full RDKit suite to upstream 2026.03.6.

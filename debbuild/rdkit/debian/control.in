@@ -4,10 +4,11 @@ Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: bison,
                cmake,
+               ccache,
                debhelper-compat (= 13),
                dh-python,
                flex,
-               libboost-dev,
+               libboost-dev (>= 1.81),
                libboost-iostreams-dev,
                libboost-numpy-dev,
                libboost-python-dev,
@@ -58,7 +59,10 @@ Description: RDKit cheminformatics shared libraries
 Package: librdkit-dev
 Section: libdevel
 Architecture: any
-Depends: librdkit1t64 (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Depends: librdkit1t64 (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends},
+         libboost-dev, libboost-serialization-dev, libboost-iostreams-dev,
+         libboost-python-dev, libboost-numpy-dev, libeigen3-dev, libinchi-dev,
+         python3-dev, python3-numpy
 Description: RDKit cheminformatics development files
  Headers, linker symlinks, and CMake metadata for RDKit development.
 
@@ -72,5 +76,5 @@ Description: RDKit cartridge for PostgreSQL PGVERSION
  RDKit adds cheminformatics data types, operators, and functions to
  PostgreSQL.
  .
- This Pigsty package is built together with the matching RDKit 2026.03.6
- runtime, Python bindings, data, and development files for Ubuntu 26.04.
+ This package is built together with matching RDKit 2026.09.1 runtime,
+ Python bindings, data, and development files using distribution Boost.

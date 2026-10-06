@@ -6,6 +6,11 @@ Files: *
 Copyright: 2001-2026, the RDKit contributors
 License: BSD-3-Clause
 
+Files: External/RingFamilies/RingDecomposerLib/*
+Copyright: 2016, University of Hamburg, ZBH - Center for Bioinformatics
+           Niek Andresen, Florian Flachsenberg, Matthias Rarey
+License: BSD-3-Clause
+
 Files: debian/*
 Copyright: 2026, Ruohang Feng <rh@vonng.com>
 License: BSD-3-Clause
