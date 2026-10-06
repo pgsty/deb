@@ -1,3 +1,11 @@
+orioledb-18 (1.10~beta19-1PGSTY) unstable; urgency=medium
+
+  * Update to OrioleDB beta19 and PostgreSQL 16/17/18 patchsets 49/22/3.
+  * Bundle extension SQL version 1.10 and preserve LLVM and debug symbols.
+  * Apply distribution compiler and linker flags to the complete build.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 06 Oct 2026 00:00:00 +0000
+
 orioledb-18 (1.9~beta17-1PGSTY) unstable; urgency=medium
 
   * Update to beta17 and PostgreSQL 16.15, 17.11, and 18.6 patchsets.

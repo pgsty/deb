@@ -1,12 +1,14 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE=1
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
 PG_MAJOR ?= 18
 PGBASEINSTDIR := /usr/oriole-$(PG_MAJOR)
 DEB_PACKAGE := orioledb-$(PG_MAJOR)
-ORIOLEDB_PATCHSET_VERSION ?= 2
-ORIOLEDB_VERSION ?= 1.9
-ORIOLEDB_BETA ?= beta17
+ORIOLEDB_PATCHSET_VERSION ?= 3
+ORIOLEDB_VERSION ?= 1.10
+ORIOLEDB_BETA ?= beta19
 
 # Filter out -ffast-math which is known to cause precision issues
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')

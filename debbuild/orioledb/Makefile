@@ -5,30 +5,30 @@ BUILD_DIR := build
 SOURCE_DIR ?= ../SOURCES
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
-ORIOLEDB_VERSION := 1.9
-ORIOLEDB_BETA := beta17
-ORIOLEDB_DEB_VERSION := 1.9~beta17-1
+ORIOLEDB_VERSION := 1.10
+ORIOLEDB_BETA := beta19
+ORIOLEDB_DEB_VERSION := 1.10~beta19-1
 ORIOLEDB_TARBALL := orioledb-$(ORIOLEDB_BETA).tar.gz
 ORIOLEDB_SOURCE_TARBALL ?= $(SOURCE_DIR)/$(ORIOLEDB_TARBALL)
 
 ifeq ($(PG_MAJOR),16)
-ORIOLEDB_PATCHSET_VERSION := 48
-PATCHSET_LABEL := 16_48
+ORIOLEDB_PATCHSET_VERSION := 49
+PATCHSET_LABEL := 16_49
 PG_UPSTREAM_VERSION := 16.15
-PG_PATCH_TARBALL := postgres-patches16_48.tar.gz
-CHANGELOG_DATE := Tue, 08 Sep 2026 00:00:00 +0000
+PG_PATCH_TARBALL := postgres-patches16_49.tar.gz
+CHANGELOG_DATE := Tue, 06 Oct 2026 00:00:00 +0000
 else ifeq ($(PG_MAJOR),17)
-ORIOLEDB_PATCHSET_VERSION := 21
-PATCHSET_LABEL := 17_21
+ORIOLEDB_PATCHSET_VERSION := 22
+PATCHSET_LABEL := 17_22
 PG_UPSTREAM_VERSION := 17.11
-PG_PATCH_TARBALL := postgres-patches17_21.tar.gz
-CHANGELOG_DATE := Tue, 08 Sep 2026 00:00:00 +0000
+PG_PATCH_TARBALL := postgres-patches17_22.tar.gz
+CHANGELOG_DATE := Tue, 06 Oct 2026 00:00:00 +0000
 else ifeq ($(PG_MAJOR),18)
-ORIOLEDB_PATCHSET_VERSION := 2
-PATCHSET_LABEL := 18_2
+ORIOLEDB_PATCHSET_VERSION := 3
+PATCHSET_LABEL := 18_3
 PG_UPSTREAM_VERSION := 18.6
-PG_PATCH_TARBALL := postgres-patches18_2.tar.gz
-CHANGELOG_DATE := Tue, 08 Sep 2026 00:00:00 +0000
+PG_PATCH_TARBALL := postgres-patches18_3.tar.gz
+CHANGELOG_DATE := Tue, 06 Oct 2026 00:00:00 +0000
 else
 $(error unsupported PG_MAJOR=$(PG_MAJOR), expected 16, 17, or 18)
 endif
@@ -70,7 +70,7 @@ setup: check-src
 	{ \
 		printf '%s\n' "$(SOURCE_PACKAGE) ($${PACKAGE_VERSION}) unstable; urgency=medium"; \
 		printf '%s\n' ""; \
-		printf '%s\n' "  * Merge the OriolePG kernel and OrioleDB extension into bundled $(PACKAGE)."; \
+		printf '%s\n' "  * Update the bundled OriolePG kernel and OrioleDB storage engine extension."; \
 		printf '%s\n' "  * Build from PostgreSQL $(PG_UPSTREAM_VERSION) patchset $(PATCHSET_LABEL) and OrioleDB $(ORIOLEDB_VERSION) $(ORIOLEDB_BETA)."; \
 		printf '%s\n' ""; \
 		printf '%s\n' " -- Ruohang Feng <rh@vonng.com>  $(CHANGELOG_DATE)"; \
