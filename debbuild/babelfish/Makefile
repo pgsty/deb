@@ -1,7 +1,7 @@
 all: setup build move
 
 PG_MAJOR ?= 17
-PG_VERSION ?= 17.10
+PG_VERSION ?= 17.11
 BBF_VERSION ?= 5.7.0
 DEB_VERSION ?= $(BBF_VERSION)-1PGSTY
 TARBALL := babelfish-$(PG_MAJOR)-$(PG_VERSION)-$(BBF_VERSION).tar.gz
@@ -9,10 +9,10 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 
 build17:
-	$(MAKE) PG_MAJOR=17 PG_VERSION=17.10 BBF_VERSION=5.7.0
+	$(MAKE) PG_MAJOR=17 PG_VERSION=17.11 BBF_VERSION=5.7.0
 
 build18:
-	$(MAKE) PG_MAJOR=18 PG_VERSION=18.4 BBF_VERSION=6.2.0
+	$(MAKE) PG_MAJOR=18 PG_VERSION=18.6 BBF_VERSION=6.2.0
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get babelfish-$(PG_MAJOR) first"; exit 1)

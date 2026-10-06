@@ -1,0 +1,13 @@
+Description: Keep the native ANTLR archive out of PGXS bitcode installation
+ PGXS derives its bitcode input from OBJS. Link the native archive through
+ SHLIB_LINK instead; SHLIB_LINK_INTERNAL also enters exported LDFLAGS and
+ breaks the CMake bootstrap that creates the archive itself.
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-needed
+Last-Update: 2026-10-06
+--- a/contrib/babelfishpg_tsql/Makefile
++++ b/contrib/babelfishpg_tsql/Makefile
+@@ -65 +65,2 @@
+-OBJS += antlr/libantlr_tsql.a
++SHLIB_LINK += antlr/libantlr_tsql.a
++SHLIB_PREREQS += antlr/libantlr_tsql.a

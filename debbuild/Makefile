@@ -1157,9 +1157,9 @@ antlr4:
 
 babelfish: babelfish-17
 babelfish-18:
-	cd babelfish && make PG_MAJOR=18 PG_VERSION=18.4 BBF_VERSION=6.2.0
+	cd babelfish && make PG_MAJOR=18 PG_VERSION=18.6 BBF_VERSION=6.2.0
 babelfish-17:
-	cd babelfish && make PG_MAJOR=17 PG_VERSION=17.10 BBF_VERSION=5.7.0
+	cd babelfish && make PG_MAJOR=17 PG_VERSION=17.11 BBF_VERSION=5.7.0
 cloudberry:
 	cd cloudberry && make
 cloudberry-backup:
