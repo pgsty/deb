@@ -1,0 +1,125 @@
+Description: use the system LLVM shared library and fix pg_repack version parsing
+Author: Pigsty
+Forwarded: not-yet
+Last-Update: 2026-10-06
+--- a/configure
++++ b/configure
+@@ -5193,20 +5193,20 @@
+ 
+   # Collect compiler flags necessary to build the LLVM dependent
+   # shared library.
+-  for pgac_option in `$LLVM_CONFIG --link-static --cppflags`; do
++  for pgac_option in `$LLVM_CONFIG --link-shared --cppflags`; do
+     case $pgac_option in
+       -I*|-D*) LLVM_CPPFLAGS="$pgac_option $LLVM_CPPFLAGS";;
+     esac
+   done
+ 
+-  for pgac_option in `$LLVM_CONFIG --link-static --ldflags`; do
++  for pgac_option in `$LLVM_CONFIG --link-shared --ldflags`; do
+     case $pgac_option in
+       -L*) LLVM_LIBS="$LLVM_LIBS $pgac_option";;
+     esac
+   done
+ 
+   # ABI influencing options, standard influencing options
+-  for pgac_option in `$LLVM_CONFIG --link-static --cxxflags`; do
++  for pgac_option in `$LLVM_CONFIG --link-shared --cxxflags`; do
+     case $pgac_option in
+       -fno-rtti*) LLVM_CXXFLAGS="$LLVM_CXXFLAGS $pgac_option";;
+       -std=*) LLVM_CXXFLAGS="$LLVM_CXXFLAGS $pgac_option";;
+@@ -5217,7 +5217,7 @@
+   # libs. As some components are optional, we can't just list all of
+   # them as it'd raise an error.
+   pgac_components='';
+-  for pgac_component in `$LLVM_CONFIG --link-static --components`; do
++  for pgac_component in `$LLVM_CONFIG --link-shared --components`; do
+     case $pgac_component in
+       engine) pgac_components="$pgac_components $pgac_component";;
+       debuginfodwarf) pgac_components="$pgac_components $pgac_component";;
+@@ -5231,7 +5231,7 @@
+   # And then get the libraries that need to be linked in for the
+   # selected components.  They're large libraries, we only want to
+   # link them into the LLVM using shared library.
+-  for pgac_option in `$LLVM_CONFIG --link-static --libs --system-libs $pgac_components`; do
++  for pgac_option in `$LLVM_CONFIG --link-shared --libs --system-libs $pgac_components`; do
+     case $pgac_option in
+       -l*) LLVM_LIBS="$LLVM_LIBS $pgac_option";;
+     esac
+--- a/config/llvm.m4
++++ b/config/llvm.m4
+@@ -47,20 +47,20 @@
+ 
+   # Collect compiler flags necessary to build the LLVM dependent
+   # shared library.
+-  for pgac_option in `$LLVM_CONFIG --link-static --cppflags`; do
++  for pgac_option in `$LLVM_CONFIG --link-shared --cppflags`; do
+     case $pgac_option in
+       -I*|-D*) LLVM_CPPFLAGS="$pgac_option $LLVM_CPPFLAGS";;
+     esac
+   done
+ 
+-  for pgac_option in `$LLVM_CONFIG --link-static --ldflags`; do
++  for pgac_option in `$LLVM_CONFIG --link-shared --ldflags`; do
+     case $pgac_option in
+       -L*) LLVM_LIBS="$LLVM_LIBS $pgac_option";;
+     esac
+   done
+ 
+   # ABI influencing options, standard influencing options
+-  for pgac_option in `$LLVM_CONFIG --link-static --cxxflags`; do
++  for pgac_option in `$LLVM_CONFIG --link-shared --cxxflags`; do
+     case $pgac_option in
+       -fno-rtti*) LLVM_CXXFLAGS="$LLVM_CXXFLAGS $pgac_option";;
+       -std=*) LLVM_CXXFLAGS="$LLVM_CXXFLAGS $pgac_option";;
+@@ -71,7 +71,7 @@
+   # libs. As some components are optional, we can't just list all of
+   # them as it'd raise an error.
+   pgac_components='';
+-  for pgac_component in `$LLVM_CONFIG --link-static --components`; do
++  for pgac_component in `$LLVM_CONFIG --link-shared --components`; do
+     case $pgac_component in
+       engine) pgac_components="$pgac_components $pgac_component";;
+       debuginfodwarf) pgac_components="$pgac_components $pgac_component";;
+@@ -85,7 +85,7 @@
+   # And then get the libraries that need to be linked in for the
+   # selected components.  They're large libraries, we only want to
+   # link them into the LLVM using shared library.
+-  for pgac_option in `$LLVM_CONFIG --link-static --libs --system-libs $pgac_components`; do
++  for pgac_option in `$LLVM_CONFIG --link-shared --libs --system-libs $pgac_components`; do
+     case $pgac_option in
+       -l*) LLVM_LIBS="$LLVM_LIBS $pgac_option";;
+     esac
+--- a/.pg_repack-src/Makefile
++++ b/.pg_repack-src/Makefile
+@@ -12,7 +12,7 @@
+ .PHONY: dist/$(EXTENSION)-$(EXTVERSION).zip
+ 
+ # Pull out PostgreSQL version number from pg_config
+-VERSION := $(shell $(PG_CONFIG) --version | awk '{print $2}')
++VERSION := $(shell $(PG_CONFIG) --version | awk '{print $$2}')
+ ifeq ("$(VERSION)","")
+ $(error pg_config not found)
+ endif
+--- a/.pg_repack-src/lib/Makefile
++++ b/.pg_repack-src/lib/Makefile
+@@ -9,7 +9,7 @@
+ PG_CONFIG ?= pg_config
+ 
+ # version as a number, e.g. 9.1.4 -> 901
+-VERSION := $(shell $(PG_CONFIG) --version | awk '{print $2}')
++VERSION := $(shell $(PG_CONFIG) --version | awk '{print $$2}')
+ INTVERSION := $(shell echo $$(($$(echo $(VERSION).0 | sed 's/\([[:digit:]]\{1,\}\)\.\([[:digit:]]\{1,\}\).*/\1*100+\2/'))))
+ 
+ EXTENSION = pg_repack
+--- a/.pg_repack-src/regress/Makefile
++++ b/.pg_repack-src/regress/Makefile
+@@ -9,7 +9,7 @@
+ PG_CONFIG ?= pg_config
+ 
+ # version as a number, e.g. 9.1.4 -> 901
+-VERSION := $(shell $(PG_CONFIG) --version | awk '{print $2}')
++VERSION := $(shell $(PG_CONFIG) --version | awk '{print $$2}')
+ INTVERSION := $(shell echo $$(($$(echo $(VERSION).0 | sed 's/\([[:digit:]]\{1,\}\)\.\([[:digit:]]\{1,\}\).*/\1*100+\2/'))))
+ 
+ 

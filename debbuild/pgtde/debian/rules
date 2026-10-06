@@ -5,6 +5,7 @@ export PGBASEINSTDIR=/usr/pgtde-@PG_MAJOR@
 export PGTDE_STAGE=$(CURDIR)/.pgtde-stage
 export PGTDE_CONTRIB_STAGE=$(CURDIR)/.pgtde-contrib-stage
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+NUMJOBS ?= $(shell nproc)
 
 # PostgreSQL does not support fast-math. GCC 15 and later default to C23, so
 # force GNU17 only when the compiler advertises a C23-or-newer default.
@@ -12,6 +13,8 @@ CC_FOR_STD_CHECK := $(if $(CC),$(CC),cc)
 CC_DEFAULT_STDC_VERSION := $(shell printf '\n' | $(CC_FOR_STD_CHECK) -dM -E -x c - 2>/dev/null | awk '$$2 == "__STDC_VERSION__" { print $$3 }')
 NEED_GNU17_CFLAGS := $(shell printf '%s\n' '$(CC_DEFAULT_STDC_VERSION)' | awk '{ gsub(/L$$/, "", $$1); if ($$1 ~ /^[0-9]+$$/ && $$1 >= 202311) print "-std=gnu17" }')
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g') $(NEED_GNU17_CFLAGS)
+export CXXFLAGS=$(shell dpkg-buildflags --get CXXFLAGS)
+export CPPFLAGS=$(shell dpkg-buildflags --get CPPFLAGS)
 export LDFLAGS=$(shell dpkg-buildflags --get LDFLAGS) -Wl,--as-needed
 
 %:
@@ -33,7 +36,7 @@ override_dh_auto_configure:
 		--with-system-tzdata=/usr/share/zoneinfo \
 		--with-lz4 --with-zstd --with-liburing \
 		--with-uuid=e2fs --with-libxml --with-libxslt \
-		--with-icu --without-llvm --with-gssapi \
+		--with-icu --with-llvm --with-gssapi \
 		--with-perl --with-python --with-tcl \
 		--with-openssl --with-pam --with-ldap \
 		--with-selinux --with-systemd --with-libcurl \
@@ -43,15 +46,15 @@ override_dh_auto_configure:
 
 override_dh_auto_build:
 	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
-	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
+	MAKELEVEL=0 $(MAKE) -j$(NUMJOBS) world-bin
 	rm -rf $(PGTDE_STAGE) $(PGTDE_CONTRIB_STAGE)
 	mkdir -p $(PGTDE_STAGE) $(PGTDE_CONTRIB_STAGE)
-	$(MAKE) DESTDIR=$(PGTDE_STAGE) -j$(shell nproc) install
-	$(MAKE) -C contrib DESTDIR=$(PGTDE_CONTRIB_STAGE) -j$(shell nproc) install
+	$(MAKE) DESTDIR=$(PGTDE_STAGE) -j$(NUMJOBS) install
+	$(MAKE) -C contrib DESTDIR=$(PGTDE_CONTRIB_STAGE) -j$(NUMJOBS) install
 	PGTDE_STAGE=$(PGTDE_STAGE) PGTDE_PG_CONFIG_MODE=stage \
 		meson setup .pgtde-build .pg_tde-src \
 		--buildtype=release -Dpg_config=$(CURDIR)/.pgtde-pg-config
-	PGTDE_STAGE=$(PGTDE_STAGE) meson compile -C .pgtde-build
+	PGTDE_STAGE=$(PGTDE_STAGE) meson compile -C .pgtde-build -j $(NUMJOBS)
 	PGTDE_STAGE=$(PGTDE_STAGE) meson install -C .pgtde-build
 	install -D -m 0644 \
 		.pg_tde-src/ci_scripts/perl/PostgreSQL/Test/TdeCluster.pm \
@@ -67,7 +70,7 @@ override_dh_auto_build:
 		ext_ldflags="-L$(PGTDE_STAGE)$(PGBASEINSTDIR)/lib -Wl,-rpath,$(PGBASEINSTDIR)/lib $(LDFLAGS)"; \
 		build_pgxs() { \
 			srcdir="$$1"; \
-			MAKELEVEL=0 $(MAKE) -C "$$srcdir" -j$(shell nproc) \
+			MAKELEVEL=0 $(MAKE) -C "$$srcdir" -j$(NUMJOBS) \
 				USE_PGXS=1 PG_CONFIG="$$build_pg_config" \
 				CPPFLAGS="$$ext_cppflags" LDFLAGS="$$ext_ldflags"; \
 			MAKELEVEL=0 $(MAKE) -C "$$srcdir" \
@@ -94,7 +97,7 @@ override_dh_auto_build:
 			--with-pgconfig=$(CURDIR)/.pgtde-pg-config \
 			--with-sfcgal=$(CURDIR)/.pgtde-sfcgal-config \
 			--with-protobuf --without-gui --enable-rpath
-	$(MAKE) -C .postgis-src -j$(shell nproc)
+	$(MAKE) -C .postgis-src -j$(NUMJOBS)
 	$(MAKE) -C .postgis-src DESTDIR=$(PGTDE_CONTRIB_STAGE) install
 	install -d $(PGTDE_CONTRIB_STAGE)$(PGBASEINSTDIR)/share/postgresql/postgis-utils
 	install -m 0755 .postgis-src/utils/*.pl \

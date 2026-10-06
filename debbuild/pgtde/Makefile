@@ -38,7 +38,7 @@ setup: check-src
 	tar -C $(BUILD_DIR) -xf "$(SET_USER_SOURCE)"
 	mv $(BUILD_DIR)/percona-pgaudit$(PG_MAJOR)_set_user-$(SET_USER_VERSION) $(BUILD_DIR)/.set_user-src
 	tar -C $(BUILD_DIR) -xf "$(PG_STAT_MONITOR_SOURCE)"
-	mv $(BUILD_DIR)/percona-pg-stat-monitor$(PG_MAJOR)-$(PG_STAT_MONITOR_VERSION) $(BUILD_DIR)/.pg_stat_monitor-src
+	mv $(BUILD_DIR)/pg_stat_monitor-$(PG_STAT_MONITOR_VERSION) $(BUILD_DIR)/.pg_stat_monitor-src
 	tar -C $(BUILD_DIR) -xf "$(PG_GATHER_SOURCE)"
 	mv $(BUILD_DIR)/percona-pg_gather-$(PG_GATHER_VERSION) $(BUILD_DIR)/.pg_gather-src
 	cp "$(PG_CONFIG_SOURCE)" $(BUILD_DIR)/.pgtde-pg-config

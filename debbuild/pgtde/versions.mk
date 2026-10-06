@@ -10,7 +10,7 @@ WAL2JSON_VERSION ?= 2.6
 PGREPACK_VERSION ?= 1.5.3
 PGAUDIT_VERSION ?= 18.0
 SET_USER_VERSION ?= 4.2.0
-PG_STAT_MONITOR_VERSION ?= 2.3.2
+PG_STAT_MONITOR_VERSION ?= 2.4.0
 PG_GATHER_VERSION ?= 33
 else
 $(error pgtde supports PG_MAJOR=18 for now)
@@ -28,7 +28,7 @@ WAL2JSON_TARBALL := percona-wal2json-$(WAL2JSON_VERSION).tar.gz
 PGREPACK_TARBALL := percona-pg_repack-$(PGREPACK_VERSION).tar.gz
 PGAUDIT_TARBALL := percona-pgaudit-$(PGAUDIT_VERSION).tar.gz
 SET_USER_TARBALL := percona-pgaudit$(PG_MAJOR)_set_user-$(SET_USER_VERSION).tar.gz
-PG_STAT_MONITOR_TARBALL := percona-pg-stat-monitor$(PG_MAJOR)-$(PG_STAT_MONITOR_VERSION).tar.gz
+PG_STAT_MONITOR_TARBALL := pg_stat_monitor-$(PG_STAT_MONITOR_VERSION).tar.gz
 PG_GATHER_TARBALL := percona-pg_gather-$(PG_GATHER_VERSION).tar.gz
 
 SOURCE_DIR ?= ../SOURCES

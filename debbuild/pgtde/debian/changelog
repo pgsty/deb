@@ -1,5 +1,13 @@
 pgtde-@PG_MAJOR@ (@PG_VERSION@-@PKG_REV@) unstable; urgency=medium
 
+  * Update bundled pg_stat_monitor to 2.4.0 with matching RPM source inputs.
+  * Enable LLVM, link its shared library and fix pg_repack version parsing.
+  * Preserve C++ debug flags and allow bounded build parallelism.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 06 Oct 2026 20:45:00 +0800
+
+pgtde-@PG_MAJOR@ (@PG_VERSION@-@PKG_REV@) unstable; urgency=medium
+
   * Collect server and contrib debug symbols with .deb or .ddeb suffixes.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 08 Sep 2026 23:00:00 +0800
