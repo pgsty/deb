@@ -2,6 +2,9 @@
 
 all: setup build verify move
 
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
 POLAR_VERSION := 17.11.1.0
 TARBALL := polardb-for-postgresql-$(POLAR_VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
@@ -134,13 +137,13 @@ verify:
 	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DEB_FILE)" Architecture)" = "$(DEB_ARCH)"
 	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DEB_FILE)" X-Pigsty-Source-Commit)" = "$(POLAR_COMMIT)"
 	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | awk '$$NF == "./usr/polar-17/bin/postgres" { postgres=1 } $$NF ~ /^\.\/u01\// { legacy=1 } END { exit !(postgres && !legacy) }'
-	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | grep -q './usr/share/doc/polardb-17/copyright'
-	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | grep -q './usr/share/doc/polardb-17/COPYRIGHT'
-	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | grep -q './usr/share/doc/polardb-17/LICENSE'
+	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | grep './usr/share/doc/polardb-17/copyright' >/dev/null
+	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | grep './usr/share/doc/polardb-17/COPYRIGHT' >/dev/null
+	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DEB_FILE)" | grep './usr/share/doc/polardb-17/LICENSE' >/dev/null
 	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" Package)" = "$(DEB_PACKAGE)-dbgsym"
 	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" Version)" = "$(POLAR_VERSION)-$(DEB_RELEASE)~$(DISTRO_CODENAME)"
 	@test "$$(dpkg-deb -f "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" Architecture)" = "$(DEB_ARCH)"
-	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" | grep -q './usr/lib/debug/'
+	@dpkg-deb -c "$(BUILD_DIR)/package/debian/$(DBGSYM_FILE)" | grep './usr/lib/debug/' >/dev/null
 
 # collect deb
 move: verify

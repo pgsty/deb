@@ -37,6 +37,8 @@ The upstream workflow calls `dpkg-deb` directly and therefore does not run
 debhelper's automatic symbol split. After the upstream package tree is built,
 `split-dbgsym.sh` detaches DWARF into standard build-id paths, strips the main
 ELFs, rebuilds the main package, and creates the matching `-dbgsym` `.ddeb`.
+The recipe exports Debian build flags to the upstream build, preserving
+optimization, hardening, and DWARF while keeping upstream `--debug=off`.
 
 The source commit remains available as the `X-Pigsty-Source-Commit` binary
 control field instead of occupying the Debian revision. `DEB_RELEASE` can be
