@@ -1,3 +1,10 @@
+pg-local-cache (3.1.0-1PGSTY) unstable; urgency=medium
+
+  * Update to 3.1.0 (RESP-only API, native TLS; requires openssl)
+  * Drop the retained 1.x get API on upgrade from 2.x; 3.x has no SQL read path
+
+ -- Maxim Bronnikov <bronnikovmr@gmail.com>  Fri, 09 Oct 2026 12:00:00 +0300
+
 pg-local-cache (2.0.4-1PGSTY) unstable; urgency=medium
 
   * Update to 2.0.4.

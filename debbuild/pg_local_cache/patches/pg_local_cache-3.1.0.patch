@@ -1,0 +1,16 @@
+Description: drop retained 1.x SQL get functions on upgrade to RESP-only 3.x
+Author: Maxim Bronnikov <bronnikovmr@gmail.com>
+Forwarded: no
+
+--- a/sql/pg_local_cache--2.0.4--3.0.0.sql
++++ b/sql/pg_local_cache--2.0.4--3.0.0.sql
+@@ -1,6 +1,9 @@
+ \echo Use "ALTER EXTENSION pg_local_cache UPDATE TO '3.0.0'" to load this file. \quit
+ 
+ DROP FUNCTION mget(regclass, anyarray);
++-- Pigsty 2.x packages retained the 1.x get API; 3.x has no SQL read path.
++DROP FUNCTION IF EXISTS get(regclass, text[]);
++DROP FUNCTION IF EXISTS get(regclass, anyelement);
+ 
+ CREATE OR REPLACE FUNCTION _row_invalidate()
+ RETURNS trigger

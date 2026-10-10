@@ -2,7 +2,7 @@ Source: pg-local-cache
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libssl-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/profundium/pg_local_cache
@@ -12,8 +12,8 @@ Architecture: any
 Provides: postgresql-pg-local-cache
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: Transaction-aware primary-key row cache for PostgreSQL PGVERSION
- pg_local_cache keeps bounded whole-row entries in PostgreSQL shared memory and
- accelerates supported primary-key reads while preserving PostgreSQL as the
- source of truth. It targets one configured database and one writable primary.
- The module requires shared_preload_libraries and a PostgreSQL restart before
- its cache workers and SQL fast path can be used.
+ pg_local_cache keeps bounded whole-row entries in PostgreSQL shared memory.
+ Rows are served over authenticated RESP (Redis protocol) by a background
+ worker; there is no SQL read fast path. It targets one configured database
+ and one writable primary. The module must be added to shared_preload_libraries
+ and PostgreSQL restarted before its cache workers can be used.
