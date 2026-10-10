@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_tle-1.5.2.tar.gz
+TARBALL := pg_tle-1.5.3.tar.gz
 
 # prepare directory
 setup:

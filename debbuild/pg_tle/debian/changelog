@@ -1,3 +1,10 @@
+pg-tle (1.5.3-1PGSTY) unstable; urgency=medium
+
+  * Update to 1.5.3.
+  * Declare native shared-library runtime dependencies.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 10 Oct 2026 08:00:00 +0800
+
 pg-tle (1.5.2-1PGSTY) unstable; urgency=medium
 
   * https://github.com/aws/pg_tle/releases/tag/v1.5.2
