@@ -10,7 +10,6 @@ BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.3
-SOURCE_PATCH := patches/pgrdf-0.6.40.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_HTTP_TIMEOUT ?= 600
 CARGO_NET_RETRY ?= 10
@@ -18,22 +17,14 @@ CARGO_NET_RETRY ?= 10
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-check-patches:
-	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
-
-setup: check-src check-patches
+setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-
-apply-patches:
-	@echo "apply $(SOURCE_PATCH)"
-	@(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
@@ -79,4 +70,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-patches setup apply-patches build building check-pgrx packaging move clean
+.PHONY: all check-src setup build building check-pgrx packaging move clean
