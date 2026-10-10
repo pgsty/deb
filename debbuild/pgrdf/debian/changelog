@@ -1,3 +1,12 @@
+pgrdf (0.6.40-1PGSTY) unstable; urgency=medium
+
+  * Align pgrx and cargo-pgrx with the 0.19.3 Docker builder toolchain.
+  * Update to upstream 0.6.40.
+  * Retain the historical SQL upgrade bridge and check all 18 SQL files.
+  * Build with upstream pgrx 0.19.3 and an immutable Cargo.lock.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 10 Oct 2026 12:00:00 +0800
+
 pgrdf (0.6.39-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.6.39.

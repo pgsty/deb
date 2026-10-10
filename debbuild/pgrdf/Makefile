@@ -4,13 +4,13 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pgrdf-0.6.39.tar.gz
+TARBALL := pgrdf-0.6.40.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.3
-SOURCE_PATCH := patches/pgrdf-0.6.39.patch
+SOURCE_PATCH := patches/pgrdf-0.6.40.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_HTTP_TIMEOUT ?= 600
 CARGO_NET_RETRY ?= 10
