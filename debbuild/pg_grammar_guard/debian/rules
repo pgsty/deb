@@ -12,7 +12,8 @@ override_dh_auto_test:
 	# Runtime regression tests run against an isolated installed-package cluster.
 
 override_dh_auto_install:
-	+pg_buildext loop postgresql-%v-pg-grammar-guard
+	# Upstream's first target starts a test cluster; packaging must select all.
+	+pg_buildext -m '.DEFAULT_GOAL=all DOCS=' loop postgresql-%v-pg-grammar-guard
 	rm -rf debian/postgresql-*-pg-grammar-guard/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:

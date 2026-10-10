@@ -1,3 +1,11 @@
+pg-grammar-guard (0.4.9-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.4.9.
+  * Align the Apache-2.0 license and require pg_living_assertions >= 0.5.9.
+  * Select the packaging build target without starting an upstream test cluster.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 10 Oct 2026 12:00:00 +0800
+
 pg-grammar-guard (0.4.1-1PGSTY) UNRELEASED; urgency=medium
 
   * Package upstream 0.4.1 for PostgreSQL 14 through 18.

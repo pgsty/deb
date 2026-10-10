@@ -9,7 +9,7 @@ Homepage: https://github.com/Manuelreyesbravo/pg_grammar_guard
 
 Package: postgresql-PGVERSION-pg-grammar-guard
 Architecture: all
-Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-pg-living-assertions (>= 0.4.2)
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-pg-living-assertions (>= 0.5.9)
 Description: Catalog-derived grammars and schema drift checks
  pg_grammar_guard builds GBNF grammars and JSON Schema from PostgreSQL
  catalog identifiers and detects changes to approved grammar definitions.

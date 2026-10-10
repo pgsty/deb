@@ -1,7 +1,7 @@
 all: setup build move
 .NOTPARALLEL:
 
-TARBALL := pg_grammar_guard-0.4.1.tar.gz
+TARBALL := pg_grammar_guard-0.4.9.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
