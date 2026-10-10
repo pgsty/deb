@@ -1,3 +1,10 @@
+timescaledb-tsl (2.30.2-2PGSTY) unstable; urgency=medium
+
+  * Declare a conflict with the Apache-licensed TimescaleDB package for the same
+    PostgreSQL major version.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 10 Oct 2026 17:34:00 +0800
+
 timescaledb-tsl (2.30.2-1PGSTY) unstable; urgency=medium
 
   * Update to 2.30.2.
