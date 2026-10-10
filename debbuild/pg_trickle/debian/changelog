@@ -1,11 +1,10 @@
 pg-trickle (0.108.3-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.108.3.
-  * Rebase the pgrx 0.19.3 lock and existing upgrade safeguards.
+  * Rebase the pgrx 0.19.3 lock and release-archive build fixes.
   * Align pgrx and cargo-pgrx with the new Docker builder toolchain.
   * Declare git for the locked Verus and synstructure source dependencies.
-  * Document the full refresh boundary for 0.108.1 and 0.108.2.
-  * Record the known upstream identity collision for projections without keys.
+  * Ship upstream SQL and pg_trickle_dump without downstream migration changes.
 
  -- Ruohang Feng <rh@vonng.com>  Sat, 10 Oct 2026 12:00:00 +0800
 
