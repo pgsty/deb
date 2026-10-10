@@ -1,3 +1,11 @@
+pgroonga (4.1.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 4.1.0.
+  * Keep the Meson build and package both PGroonga extensions.
+  * Honor the active PostgreSQL version list during Meson packaging.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 10 Oct 2026 12:00:00 +0800
+
 pgroonga (4.0.9-1PGSTY) unstable; urgency=medium
 
   * Update to 4.0.9.

@@ -16,7 +16,7 @@ override_dh_auto_build:
 
 override_dh_auto_install:
 	set -e; \
-	for version in $$(cat debian/pgversions); do \
+	for version in $$(pg_buildext supported-versions); do \
 		meson setup build-$$version \
 			-Dinstall_to_postgresql=true \
 			-Dmessage_pack=enabled \
