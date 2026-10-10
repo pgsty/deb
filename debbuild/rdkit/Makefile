@@ -55,7 +55,6 @@ ifeq ($(PACKAGING_DIR),debian)
 	mkdir -p $(BUILD_DIR)
 	tar -xzf "$(SOURCE_TARBALL)" --strip-components=1 -C $(BUILD_DIR)
 	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/rdkit-202609.1-offline.patch
-	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/rdkit-202603.6-extension-upgrade.patch
 	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/rdkit-202609.1-pg-config-version.patch
 	cp "$(SOURCE_ENUM)" $(BUILD_DIR)/Code/RDGeneral/enum.h
 	tar -xzf "$(SOURCE_RINGS)" -C $(BUILD_DIR)/External/RingFamilies
@@ -72,7 +71,7 @@ endif
 		done; \
 		sed -i "1s/~SUITE)/~$(SUITE))/" $(BUILD_DIR)/debian/changelog; \
 	fi
-	if [ "$(PACKAGING_DIR)" = "debian" ]; then sed -i "1s/1PGSTY)/1PGSTY~$(SUITE))/" $(BUILD_DIR)/debian/changelog; fi
+	if [ "$(PACKAGING_DIR)" = "debian" ]; then sed -i "1s/PGSTY)/PGSTY~$(SUITE))/" $(BUILD_DIR)/debian/changelog; fi
 	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS=installed pg_buildext updatecontrol
 
 build:
