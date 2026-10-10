@@ -1,8 +1,9 @@
-# pg_living_assertions 0.5.1
+# pg_living_assertions 0.5.10
 
-Source: [official v0.5.1 tag archive](https://codeload.github.com/Manuelreyesbravo/pg_living_assertions/tar.gz/refs/tags/v0.5.1).
+Source: [official v0.5.10 tag archive](https://codeload.github.com/Manuelreyesbravo/pg_living_assertions/tar.gz/refs/tags/v0.5.10).
 The official archive is used unchanged.
-SHA256: `80b9049aa16a15e38d64bea75c093d233df64f8457dd4c3d53e000926bc8449c`.
+SHA256: `62ec0d1bdb569d6b339bf60783e04783b96d17481494808623ac0a8733eb30fd`.
+License: Apache-2.0.
 
 PostgreSQL targets: 14, 15, 16, 17, 18.
 

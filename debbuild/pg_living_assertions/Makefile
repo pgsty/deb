@@ -1,7 +1,7 @@
 all: setup build move
 .NOTPARALLEL:
 
-TARBALL := pg_living_assertions-0.5.1.tar.gz
+TARBALL := pg_living_assertions-0.5.10.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
