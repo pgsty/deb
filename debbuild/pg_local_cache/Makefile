@@ -2,7 +2,6 @@ all: setup build move
 
 VERSION := 3.1.0
 TARBALL := pg_local_cache-$(VERSION).tar.gz
-PATCH := patches/pg_local_cache-$(VERSION).patch
 SOURCE_TARBALL ?= $(firstword $(wildcard \
 	$(HOME)/ext/src/$(TARBALL) \
 	$(HOME)/pgsty/repo/ext/src/$(TARBALL) \
@@ -17,7 +16,6 @@ setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
-	patch -d $(BUILD_DIR) -p1 --fuzz=0 < $(PATCH)
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
