@@ -1,3 +1,10 @@
+pg-utl-smtp (2.0.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream v2.0, SQL extension version 2.0.0.
+  * Depend directly on IO::Socket::SSL for SSL/TLS connections.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 10 Oct 2026 08:00:00 +0800
+
 pg-utl-smtp (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Mark the pure SQL extension package Architecture: all.

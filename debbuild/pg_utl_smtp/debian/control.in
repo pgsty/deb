@@ -10,7 +10,7 @@ Homepage: https://github.com/hexacluster/pg_utl_smtp
 Package: postgresql-PGVERSION-utl-smtp
 Architecture: all
 Provides: postgresql-utl-smtp
-Depends: ${postgresql:Depends}, postgresql-plperl-PGVERSION, libnet-smtp-ssl-perl, ${misc:Depends}
+Depends: ${postgresql:Depends}, postgresql-plperl-PGVERSION, libio-socket-ssl-perl (>= 2.007), ${misc:Depends}
 Description: Oracle UTL_SMTP compatibility extension for PostgreSQL
   pg_utl_smtp provides Oracle UTL_SMTP package compatibility, implemented with
   plperlu and Perl Net::SMTP. It uses a fixed schema "utl_smtp" and is not
