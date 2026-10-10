@@ -1,12 +1,20 @@
-# pg_turbovec 2.x to 2.10.3
+# pg_turbovec 2.x to 2.12.0
 
-Version 2.10.3 retains wire v8. Install the new package, restart PostgreSQL
+Version 2.12.0 retains wire v8. Install the new package, restart PostgreSQL
 to load the new shared library, then run
-`ALTER EXTENSION pg_turbovec UPDATE TO '2.10.3';` in each database.
+`ALTER EXTENSION pg_turbovec UPDATE TO '2.12.0';` in each database.
 Upgrading an intact 2.x index does not require REINDEX. An index that is already
 damaged still needs the recovery reported by `turbovec_check()`.
 
-## pg_turbovec 1.28.3 or 1.29.x to 2.10.3
+The 2.12.0 distance kernels can change the last rounding digits for vectors
+with 8 or more dimensions. Expression indexes, partial-index predicates,
+stored generated columns and materialized views computed from these distance
+functions retain their previous values. Rebuild or refresh them if exact
+equality with newly computed values is required; stored generated columns need
+their owning rows recomputed. Ordinary turbovec indexes retain the same wire
+v8 representation and do not require a format migration.
+
+## pg_turbovec 1.28.3 or 1.29.x to 2.12.0
 
 Version 2.0.0 changes the on-disk turbovec index format from wire v7 to
 wire v8. Installing or successfully building the package does not migrate any
@@ -15,9 +23,9 @@ database containing the extension:
 
 1. Record every index using the `turbovec` access method and stop application
    writes that can change the indexed tables.
-2. Install the 2.10.3 package, then restart PostgreSQL so no backend retains the
+2. Install the 2.12.0 package, then restart PostgreSQL so no backend retains the
    1.28.3/1.29.x shared library.
-3. Reconnect and run `ALTER EXTENSION pg_turbovec UPDATE TO '2.10.3';`.
+3. Reconnect and run `ALTER EXTENSION pg_turbovec UPDATE TO '2.12.0';`.
 4. Run `REINDEX INDEX schema.index_name;` once for every turbovec index. Do not
    resume indexed queries until all indexes are rebuilt from their heap data.
 
@@ -38,8 +46,9 @@ pre-v8 index must fail with a REINDEX hint rather than read the old format.
 ## Release test gate
 
 Before publication, validate both fresh install and a real currently published
-package upgrade on U24A for PostgreSQL 14 through 18 (currently 1.29.0; the
-shipped SQL graph is guarded continuously from 1.28.3). The upgrade test must
+package upgrade on U24A for PostgreSQL 14 through 18. Also retain a historical
+v7 fixture such as 1.29.0; the shipped SQL graph is guarded continuously from
+1.28.3. The v7 upgrade test must
 preserve a populated heap, prove the pre-REINDEX v7 scan fails with the expected
 hint, and REINDEX every captured index. Compare the exact ordered distance
 results before and after migration. Because v8 changes the quantizer and
@@ -47,6 +56,6 @@ on-disk candidate representation, approximate index candidate sets are not
 required to be byte-for-byte identical to v7; instead, record their overlap and
 gate top-1 correctness plus recall against the exact result set at a declared
 `turbovec.search_k`.
-Also verify `pg_extension.extversion = '2.10.3'`, dump/restore the upgraded
-database, inspect the complete 1.29.0-to-2.10.3 SQL payload, and prove the final
+Also verify `pg_extension.extversion = '2.12.0'`, dump/restore the upgraded
+database, inspect the complete 1.29.0-to-2.12.0 SQL payload, and prove the final
 shared object has no OpenBLAS `NEEDED` entry or unresolved `cblas_*` symbol.
