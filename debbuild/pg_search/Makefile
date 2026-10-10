@@ -4,14 +4,14 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pg_search-0.26.0.tar.gz
+TARBALL := pg_search-0.26.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
 PGRX_VERSION := 0.19.3
 RUST_TOOLCHAIN := stable
-SOURCE_PATCH := patches/pg-search-0.26.0.patch
+# Upstream 0.26.1 already pins pgrx 0.19.3 in its manifests and Cargo.lock.
 LICENSE_COLLECTOR := collect-third-party-licenses.py
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_BUILD_JOBS ?= 2
@@ -20,24 +20,18 @@ check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 # prepare directory
-check-patches:
-	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
+check-licenses:
 	@test -f "$(LICENSE_COLLECTOR)" || (echo "missing $(LICENSE_COLLECTOR)" >&2; exit 1)
 
-setup: check-src check-patches
+setup: check-src check-licenses
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	test -n "$$OS_CODENAME" || OS_CODENAME=unknown; \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-
-apply-patches:
-	@echo "apply $(SOURCE_PATCH)"
-	@(cd $(BUILD_DIR) && patch --fuzz=0 --batch --forward -p1 < "../$(SOURCE_PATCH)")
 
 build: building packaging
 
@@ -65,6 +59,7 @@ building: check-pgrx
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.after
 	cmp $(BUILD_DIR)/.pgrx0193-cargo-locks.before $(BUILD_DIR)/.pgrx0193-cargo-locks.after
 	cd $(BUILD_DIR) && \
+		export PATH="$$HOME/.cargo/bin:$$PATH"; \
 		TARGET_TRIPLE=$$(RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) rustc -vV | sed -n 's/^host: //p'); \
 		RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) CARGO_NET_OFFLINE=true cargo metadata --locked --offline \
 		  --manifest-path pg_search/Cargo.toml --no-default-features \
@@ -74,7 +69,7 @@ building: check-pgrx
 		.cargo-metadata-pg-search.json third-party-licenses
 
 check-pgrx:
-	@CURRENT=$$(RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
+	@CURRENT=$$(RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
 	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
 	    exit 1; \
@@ -93,4 +88,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-patches setup apply-patches build building check-pgrx packaging move clean
+.PHONY: all check-src check-licenses setup build building check-pgrx packaging move clean

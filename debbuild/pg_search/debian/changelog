@@ -1,3 +1,14 @@
+pg-search (0.26.1-1PGSTY) unstable; urgency=medium
+
+  * Align pgrx and cargo-pgrx with the 0.19.3 Docker builder toolchain.
+  * Update to upstream 0.26.1.
+  * Use upstream pgrx 0.19.3 and remove the obsolete compatibility patch.
+  * Preserve the locked dependency graph and third-party license payload.
+  * Refresh the reviewed Tantivy and DataFusion license source revisions.
+  * Use the builder Rustup toolchain for metadata and pgrx preflight checks.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 10 Oct 2026 12:00:00 +0800
+
 pg-search (0.26.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.26.0.
