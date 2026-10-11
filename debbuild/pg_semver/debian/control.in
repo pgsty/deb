@@ -1,0 +1,15 @@
+Source: postgresql-semver
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/theory/pg-semver
+
+Package: postgresql-PGVERSION-semver
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Semantic version data type for PostgreSQL
+ semver implements the Semantic Versioning 2.0.0 format as a PostgreSQL data
+ type with comparison operators and support for btree and hash indexes.
