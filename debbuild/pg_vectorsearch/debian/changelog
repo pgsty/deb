@@ -1,0 +1,8 @@
+pg-vectorsearch (0.1.0-1PGSTY) unstable; urgency=medium
+
+  * Package the upstream alpha release for PostgreSQL 18 evaluation.
+  * Retain portable SIMD, OpenBLAS, DWARF, and main-package LLVM bitcode.
+  * Exclude the regression helper and remove the unnecessary library RPATH.
+  * Use the same source archive and RPATH patch as the RPM recipe.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 15 Oct 2026 12:00:00 +0800

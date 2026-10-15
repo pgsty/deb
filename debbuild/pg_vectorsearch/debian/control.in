@@ -1,0 +1,18 @@
+Source: pg-vectorsearch
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-common-dev, postgresql-server-dev-18, gcc (>= 11), make, meson (>= 0.61), ninja-build, python3, pkg-config, libopenblas-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/timescale/pg_vectorsearch
+
+Package: postgresql-PGVERSION-vectorsearch
+Architecture: any
+Provides: postgresql-vectorsearch
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Approximate nearest neighbor search with PRISM for PostgreSQL PGVERSION
+ pg_vectorsearch provides the PRISM index with RaBitQ quantization, SIMD
+ distance kernels, and native vec32/vec16 types. It can also index existing
+ pgvector vector/halfvec columns without requiring pgvector for standalone
+ use. This upstream alpha release is for evaluation.

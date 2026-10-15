@@ -1,0 +1,44 @@
+#!/usr/bin/make -f
+
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+export CC = gcc
+PG_CONFIG := /usr/lib/postgresql/18/bin/pg_config
+PACKAGE := postgresql-18-vectorsearch
+
+override_dh_auto_configure:
+	test "$$(pg_buildext supported-versions)" = 18
+	meson setup builddir --buildtype=release -Dstrip=false \
+		-Dpostgresql=enabled -Dpg_config=$(PG_CONFIG) \
+		-Dnative=false -Dsimd=full -Dblas=enabled \
+		-Dtools=disabled -Dhdf5=disabled -Dfaiss=false
+
+override_dh_auto_build:
+	meson compile -C builddir
+	python3 debian/generate-llvm-makefile.py
+	$(MAKE) -f Makefile.llvm bitcode PG_CONFIG=$(PG_CONFIG) with_llvm=yes
+
+override_dh_auto_install:
+	DESTDIR=$(CURDIR)/debian/$(PACKAGE) meson install -C builddir --no-rebuild
+	rm -f debian/$(PACKAGE)/usr/lib/postgresql/18/lib/pgvs_test_helpers.so
+	$(MAKE) -f Makefile.llvm install-bitcode PG_CONFIG=$(PG_CONFIG) \
+		DESTDIR=$(CURDIR)/debian/$(PACKAGE) with_llvm=yes
+	printf 'postgresql:Depends=postgresql-18\n' > debian/$(PACKAGE).substvars
+
+override_dh_auto_test:
+	# Upstream regression/TAP tests need the installed extension and a non-root user.
+	# Run them against the built package in the pilot container.
+	:
+
+override_dh_auto_clean:
+	rm -rf builddir
+	rm -f Makefile.llvm
+	find src -type f -name '*.bc' -delete
+
+override_dh_installdocs:
+	dh_installdocs --all README.md CHANGELOG.md docs/tuning.md docs/maintenance.md
+
+%:
+	dh $@ --buildsystem=meson --builddirectory=builddir

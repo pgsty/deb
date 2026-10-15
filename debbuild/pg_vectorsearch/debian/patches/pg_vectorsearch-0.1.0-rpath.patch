@@ -1,0 +1,14 @@
+diff --git a/src/pg/meson.build b/src/pg/meson.build
+--- a/src/pg/meson.build
++++ b/src/pg/meson.build
+@@ -81,7 +81,9 @@ pgvs_ext_so = shared_module(ext_module_name,
+   include_directories: src_inc,
+   name_prefix: '',
+   build_rpath: pg_rpath.length() > 0 ? pg_rpath[0] : '',
+-  install_rpath: pg_libdir,
++  # PostgreSQL symbols come from the backend; BLAS lives in the system
++  # library path. Do not embed the server's private library directory.
++  install_rpath: '',
+   install: true,
+   install_dir: pg_pkglibdir,
+   # dlopen()'d, never exec'd -- match every other installed PostgreSQL
