@@ -23,6 +23,11 @@ PG_CPPFLAGS += $(shell pkg-config --cflags openblas)
 PG_CONFIG ?= pg_config
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
+# LLVM 15 cannot thin-link x86 target_clones IFUNC summaries.
+# Keep all modules and native SIMD; only JIT bitcode uses the generic clones.
+ifeq ($(shell $(CLANG) -dumpversion | cut -d. -f1),15)
+BITCODE_CFLAGS += -DVS_DISABLE_TARGET_CLONES
+endif
 .PHONY: bitcode install-bitcode
 ifeq ($(with_llvm),yes)
 bitcode: $(OBJS:.o=.bc)

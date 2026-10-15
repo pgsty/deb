@@ -1,0 +1,41 @@
+From: PGSTY packaging
+Subject: Initialize atomic function pointers with their exact pointer type
+
+Clang 15 rejects a void-pointer NULL as a static atomic function-pointer
+initializer. An explicit function-pointer cast preserves the null initial
+value and avoids changing dispatch or memory ordering.
+
+--- a/src/algo/vecops.c
++++ b/src/algo/vecops.c
+@@ -111,13 +111,13 @@
+  * a data race whatever they write. Only standalone runs threads; a
+  * PostgreSQL backend is a process with its own copy.
+  */
+-static _Atomic(DotProductFn) g_dot_product_fn		  = NULL;
+-static _Atomic(NormFn)		 g_l2_norm_squared_fn	  = NULL;
+-static _Atomic(SumFn)		 g_vector_sum_fn		  = NULL;
+-static _Atomic(BinaryOpFn)	 g_vector_sub_fn		  = NULL;
+-static _Atomic(BinaryOpFn)	 g_vector_add_fn		  = NULL;
+-static _Atomic(ScaleFn)		 g_vector_scale_fn		  = NULL;
+-static _Atomic(DistanceFn)	 g_l2_distance_squared_fn = NULL;
++static _Atomic(DotProductFn) g_dot_product_fn		  = (DotProductFn)NULL;
++static _Atomic(NormFn)		 g_l2_norm_squared_fn	  = (NormFn)NULL;
++static _Atomic(SumFn)		 g_vector_sum_fn		  = (SumFn)NULL;
++static _Atomic(BinaryOpFn)	 g_vector_sub_fn		  = (BinaryOpFn)NULL;
++static _Atomic(BinaryOpFn)	 g_vector_add_fn		  = (BinaryOpFn)NULL;
++static _Atomic(ScaleFn)		 g_vector_scale_fn		  = (ScaleFn)NULL;
++static _Atomic(DistanceFn)	 g_l2_distance_squared_fn = (DistanceFn)NULL;
+ 
+ static _Atomic(const char *) g_impl_name   = NULL;
+ static _Atomic(bool)		 g_initialized = false;
+--- a/src/algo/simd_utils.h
++++ b/src/algo/simd_utils.h
+@@ -232,7 +232,7 @@
+  */
+ #define DECLARE_DISPATCH(name, ret_type, ...)                   \
+ 	typedef ret_type (*name##_fn_t)(__VA_ARGS__);               \
+-	static _Atomic(name##_fn_t) g_##name##_fn		   = NULL;  \
++	static _Atomic(name##_fn_t) g_##name##_fn		   = (name##_fn_t)NULL;  \
+ 	static _Atomic(bool)		g_##name##_initialized = false; \
+ 	static inline int			name##_init(void);              \
+ 	static inline ret_type		name##_dispatch(__VA_ARGS__);   \

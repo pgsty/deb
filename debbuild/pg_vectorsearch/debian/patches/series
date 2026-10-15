@@ -1,1 +1,3 @@
 pg_vectorsearch-0.1.0-rpath.patch
+pg_vectorsearch-0.1.0-clang15-atomics.patch
+pg_vectorsearch-0.1.0-llvm15-ifunc.patch

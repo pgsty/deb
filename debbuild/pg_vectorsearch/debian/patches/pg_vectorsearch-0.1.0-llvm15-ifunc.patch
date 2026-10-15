@@ -1,0 +1,23 @@
+From: PGSTY packaging
+Subject: Allow LLVM 15 bitcode to avoid unsupported IFUNC summaries
+
+LLVM 15 crashes in llvm-lto thinlink when vecops contains target_clones
+IFUNCs. The packaging generator opts out only for Clang 15 bitcode.
+Native SIMD multiversioning and the explicit SIMD kernels are unchanged.
+
+--- a/src/algo/simd_utils.h
++++ b/src/algo/simd_utils.h
+@@ -64,10 +64,12 @@
+  * Disable target_clones when:
+  * - simd=none (VS_SIMD_NONE)
+  * - coverage build (VS_COVERAGE) - each clone is separate, only one executes
++ * - bitcode toolchains unable to serialize IFUNC summaries
+  * - compiler lacks target_clones support
+  * - non-x86 architecture (ARM target_clones generates single clone anyway)
+  */
+-#if !defined(VS_SIMD_NONE) && !defined(VS_COVERAGE) && \
++#if !defined(VS_DISABLE_TARGET_CLONES) && \
++		!defined(VS_SIMD_NONE) && !defined(VS_COVERAGE) && \
+ 		__has_attribute(target_clones) && defined(__x86_64__)
+ /*
+  * v3 is 256-bit AVX2+FMA, v4 is 512-bit AVX-512+FMA. GCC 11's

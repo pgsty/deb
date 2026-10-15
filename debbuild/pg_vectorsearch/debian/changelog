@@ -1,5 +1,7 @@
 pg-vectorsearch (0.1.0-1PGSTY) unstable; urgency=medium
 
+  * Keep atomic function pointer initialization compatible with Clang 15.
+  * Avoid LLVM 15 IFUNC thin-link failures without disabling JIT bitcode.
   * Package the upstream alpha release for PostgreSQL 18 evaluation.
   * Retain portable SIMD, OpenBLAS, DWARF, and main-package LLVM bitcode.
   * Exclude the regression helper and remove the unnecessary library RPATH.
