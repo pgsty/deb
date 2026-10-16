@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: pg_relusage
-Source: https://github.com/dmitry-astapov/pg_relusage
+Source: https://github.com/adept/pg_relusage
 
 Files: *
 Copyright: 2022 Dmitry Astapov

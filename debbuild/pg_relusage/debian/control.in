@@ -10,7 +10,7 @@ Homepage: https://github.com/adept/pg_relusage
 Package: postgresql-PGVERSION-pg-relusage
 Architecture: any
 Provides: postgresql-pg-relusage
-Depends: ${misc:Depends}, ${postgresql:Depends}
+Depends: ${misc:Depends}, ${postgresql:Depends}, ${shlibs:Depends}
 Description: discover and log the relations used in your statements
   pg_relusage is a PostgreSQL extension which allows one to discover and log
-  the relations used in SQL statements. Supported PostgreSQL versions: 9.5 to 17
+  the relations used in SQL statements. This package supports PostgreSQL 14 through 18.
