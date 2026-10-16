@@ -1,0 +1,17 @@
+Source: textsearch-intl
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libicu-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/benjaminsanborn/textsearch_intl
+
+Package: postgresql-PGVERSION-textsearch-intl
+Architecture: any
+Provides: postgresql-textsearch-intl
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Multilingual full-text search with ICU segmentation and normalization for PostgreSQL PGVERSION
+ textsearch_intl provides ICU word segmentation, Unicode normalization and
+ optional n-gram matching for multilingual full-text search. It requires UTF-8
+ and the unaccent extension. This package contains a pinned upstream snapshot.

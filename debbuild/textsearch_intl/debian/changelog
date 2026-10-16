@@ -1,0 +1,6 @@
+textsearch-intl (1.0.0-1PGSTY) unstable; urgency=medium
+
+  * Initial package for PostgreSQL 14 through 18.
+  * Pin the unreleased textsearch_intl rename at commit 3cc6bf9.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 15 Oct 2026 23:30:00 +0800
