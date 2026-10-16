@@ -1,0 +1,6 @@
+pg-icu-parser (1.0.0-1PGSTY) unstable; urgency=medium
+
+  * Initial package for PostgreSQL 14 through 18.
+  * Use public encoding APIs on PG18 and link ICU explicitly.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 15 Oct 2026 23:30:00 +0800
