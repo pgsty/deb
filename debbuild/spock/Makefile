@@ -1,5 +1,7 @@
 include ../pgedge/versions.mk
 
+EXT_PKG_REV ?= 1PGSTY
+
 all: setup build move
 
 TARBALL := spock-$(SPOCK_VERSION).tar.gz
@@ -12,7 +14,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf $(SOURCE_DIR)/$(TARBALL)
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
-	sed -i -E "1s/\([^)]+\)/($(SPOCK_VERSION)-$(PKG_REV))/" $(BUILD_DIR)/debian/changelog
+	sed -i -E "1s/\([^)]+\)/($(SPOCK_VERSION)-$(EXT_PKG_REV))/" $(BUILD_DIR)/debian/changelog
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 

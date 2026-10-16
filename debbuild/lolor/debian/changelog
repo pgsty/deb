@@ -1,3 +1,10 @@
+lolor (1.2.3-1PGSTY) unstable; urgency=medium
+
+  * Require pgEdge 18.6 revision 3 with bundled LOLOR 1.2.3.
+  * Keep the standalone package name without duplicating bundled files.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 15 Oct 2026 12:00:00 +0800
+
 lolor (1.2.2-1PGSTY) unstable; urgency=medium
 
   * Build lolor from upstream source for pgedge-18.

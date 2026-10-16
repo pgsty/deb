@@ -1,0 +1,22 @@
+--- a/patches/17/pg17-015-attoptions.diff
++++ b/patches/17/pg17-015-attoptions.diff
+@@ -114,7 +114,7 @@
+  		bms_free(interesting_attrs);
+  		return result;
+  	}
+-@@ -4005,6 +4015,7 @@ l2:
++@@ -4175,6 +4185,7 @@ l2:
+  	old_key_tuple = ExtractReplicaIdentity(relation, &oldtup,
+  										   bms_overlap(modified_attrs, id_attrs) ||
+  										   id_has_external,
+--- a/patches/18/pg18-015-attoptions.diff
++++ b/patches/18/pg18-015-attoptions.diff
+@@ -115,7 +115,7 @@
+  		bms_free(interesting_attrs);
+  		return result;
+  	}
+-@@ -4041,6 +4052,7 @@ l2:
++@@ -4151,6 +4162,7 @@ l2:
+  	old_key_tuple = ExtractReplicaIdentity(relation, &oldtup,
+  										   bms_overlap(modified_attrs, id_attrs) ||
+  										   id_has_external,

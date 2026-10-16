@@ -49,8 +49,10 @@ Homepage: https://github.com/pgEdge
 Package: pgedge-@PG_MAJOR@
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata, ssl-cert
-Breaks: pgedge-@PG_MAJOR@-spock (<< 5.0.12-1PGSTY~)
-Replaces: pgedge-@PG_MAJOR@-spock (<< 5.0.12-1PGSTY~)
+Breaks: pgedge-@PG_MAJOR@-spock (<< 5.0.12-1PGSTY~),
+        pgedge-@PG_MAJOR@-lolor (<< 1.2.3-1PGSTY~)
+Replaces: pgedge-@PG_MAJOR@-spock (<< 5.0.12-1PGSTY~),
+          pgedge-@PG_MAJOR@-lolor (<< 1.2.3-1PGSTY~)
 Description: pgEdge PostgreSQL @PG_MAJOR@ with bundled replication extensions
  PostgreSQL @PG_MAJOR@ core package built from upstream PostgreSQL source plus
  pgEdge Spock PG@PG_MAJOR@ patchset.
