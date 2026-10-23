@@ -1,0 +1,18 @@
+Source: lead
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, rustc, clang, libclang-dev, git
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/planetscale/lead
+
+Package: postgresql-PGVERSION-lead
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: TIN-compatible text search for development and testing on PostgreSQL PGVERSION
+ Lead provides the tin access method, TINQL matching, tokenization, scoring,
+ and highlighting for development, tests, and CI. It intentionally scans
+ the heap for exact matches and is unsuitable for production workloads.
+ The SQL extension is named tin and loads without shared preload libraries.
+ This package contains an untagged upstream source snapshot.

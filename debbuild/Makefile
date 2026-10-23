@@ -291,6 +291,11 @@ pg_icu_parser:
 pg_fts:
 	cd pg_fts && make
 
+.PHONY: lead
+
+lead:           # upstream snapshot, SQL extension tin
+	$(MAKE) -C lead
+
 psql_bm25s:
 	cd psql_bm25s && make
 

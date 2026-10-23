@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+
+%:
+	dh $@
+
+override_dh_auto_test:
+
+override_dh_auto_build:
+	# Built by the outer Makefile via cargo pgrx package.
+
+override_dh_auto_clean:
+	# Preserve the artifacts created before dpkg-buildpackage.
+
+override_dh_auto_install:
+	set -eu; for PG_VERSION in $(PG_VERSIONS); do \
+	    PACKAGE=postgresql-$$PG_VERSION-lead; \
+	    SOURCE=target/release/tin-pg$$PG_VERSION; \
+	    LIBDIR=usr/lib/postgresql/$$PG_VERSION/lib; \
+	    EXTDIR=usr/share/postgresql/$$PG_VERSION/extension; \
+	    install -d debian/$$PACKAGE/$$LIBDIR debian/$$PACKAGE/$$EXTDIR; \
+	    install -m 755 $$SOURCE/$$LIBDIR/tin.so debian/$$PACKAGE/$$LIBDIR/; \
+	    install -m 644 $$SOURCE/$$EXTDIR/tin.control $$SOURCE/$$EXTDIR/tin--*.sql debian/$$PACKAGE/$$EXTDIR/; \
+	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$PACKAGE.substvars; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md LICENSE

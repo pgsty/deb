@@ -1,0 +1,8 @@
+lead (1.0.6-1PGSTY) unstable; urgency=medium
+
+  * Package upstream snapshot e3ed2f4ce1388167b0254a0c0c706a61d0a37d83
+    (2026-10-08) for PostgreSQL 17 and 18.
+  * Keep upstream Rust 1.96.0, pgrx 0.19.1, and locked dependencies.
+  * Preserve complete release debug information for automatic dbgsym packages.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 23 Oct 2026 21:00:00 +0800
