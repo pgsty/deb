@@ -1,0 +1,5 @@
+hdr-histogram (1.0.0-1PGSTY) unstable; urgency=medium
+
+  * Initial release for PostgreSQL 14-18.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 23 Oct 2026 14:00:00 +0800

@@ -1,0 +1,17 @@
+Source: hdr-histogram
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), zlib1g-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/vovcke/pg_hdr_histogram
+
+Package: postgresql-PGVERSION-hdr-histogram
+Architecture: any
+Provides: postgresql-hdr-histogram
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: HDR histogram type and mergeable percentile aggregates
+ Stores compressed HDR histograms as a PostgreSQL type and provides aggregates
+ and scalar functions to build, merge and query bounded-error percentiles.
+ Includes the vendored HdrHistogram_c implementation.
