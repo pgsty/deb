@@ -1,0 +1,17 @@
+Source: pg-improv
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), clang-19, pkg-config, libssl-dev
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://codeberg.org/gregburd/improv
+
+Package: postgresql-PGVERSION-pg-improv
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Incremental multidimensional models over PostgreSQL tables
+ Bind tables to multidimensional models, evaluate formulas and what-if
+ scenarios, and maintain result tables incrementally. Logical synchronization
+ requires preloading pg_improv and enabling logical decoding. Numeric model
+ values use double precision.

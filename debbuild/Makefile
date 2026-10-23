@@ -84,6 +84,9 @@ pg_graphql:
 pg_jsonschema:
 	cd pg_jsonschema && make
 
+pg_improv:		# rust pgrx 0.19.3, Rust 1.97+
+	cd pg_improv && make
+
 pg_kv:			# rust pgrx 0.19.3, shared-memory cache
 	cd pg_kv && make
 
@@ -1318,7 +1321,7 @@ postgis:
 
 # New extension batch: shared pinned sources, PG14-18 where supported.
 
-.PHONY: hdr_histogram pg_kv pg_try_cast pg_synonym vgram pg_money edtf_postgres libx509pq \
+.PHONY: hdr_histogram pg_improv pg_kv pg_try_cast pg_synonym vgram pg_money edtf_postgres libx509pq \
         pg_statvfs pg_json_diff pgtelemetry pgexporter_ext \
         plphp istore is_jsonb_valid pg_rusage \
         pg_lexo addressing_dictionary pg_statkit colnames
