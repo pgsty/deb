@@ -1,0 +1,18 @@
+Source: stannum
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), clang, libclang-dev, git, pkg-config
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/TeamSpringbird/stannum
+
+Package: postgresql-PGVERSION-stannum
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Experimental TINQL text search and BM25 ranking for PostgreSQL PGVERSION
+ Stannum provides persistent segmented indexes, TINQL queries and BM25 ranking.
+ This package contains an unreleased development snapshot. Do not install
+ stannum and tin in the same database because their global operators conflict.
+ Preloading is optional on a primary; standby index reads require preloading
+ on both the primary and standby.

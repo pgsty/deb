@@ -1,0 +1,19 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: stannum
+Source: https://github.com/TeamSpringbird/stannum
+
+Files: *
+Copyright: 2026 PlanetScale
+           2026 Ben Weis <ben@springbird.app>
+License: AGPL-3.0-or-later
+ Stannum is free software: you can redistribute it and/or modify it under
+ the terms of the GNU Affero General Public License as published by the
+ Free Software Foundation, either version 3 of the License, or (at your
+ option) any later version.
+ .
+ Stannum is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for
+ more details.
+ .
+ The complete license text is included in the upstream LICENSE file.

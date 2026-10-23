@@ -1,0 +1,37 @@
+export CARGO_PROFILE_RELEASE_DEBUG := 2
+export CARGO_PROFILE_RELEASE_STRIP := none
+export PATH := $(HOME)/.cargo/bin:$(PATH)
+
+TARBALL := stannum-0.1.0.tar.gz
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+BUILD_DIR := build
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+PG_VERSIONS ?= 17 18
+
+all: move
+
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get stannum first; if needed, copy this tarball into ../SOURCES"; exit 1)
+	@set -e; for pg in $(PG_VERSIONS); do case "$$pg" in 17|18) ;; *) echo "stannum only supports PostgreSQL 17 and 18"; exit 1 ;; esac; done
+
+setup: check-src
+	rm -rf $(BUILD_DIR)
+	mkdir -p $(BUILD_DIR)
+	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	cp -r debian $(BUILD_DIR)/debian
+	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
+	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+
+build: setup
+	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
+
+move: build
+	mkdir -p "$(PKG_OUTPUT_DIR)"
+	cp *.deb "$(PKG_OUTPUT_DIR)/"
+	find . -maxdepth 1 -type f -name '*.ddeb' -exec cp {} "$(PKG_OUTPUT_DIR)/" \;
+
+clean:
+	rm -rf $(BUILD_DIR) *.deb *.ddeb *.changes *.buildinfo
+
+.PHONY: all check-src setup build move clean

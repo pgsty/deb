@@ -291,10 +291,13 @@ pg_icu_parser:
 pg_fts:
 	cd pg_fts && make
 
-.PHONY: lead
+.PHONY: lead stannum
 
 lead:           # upstream snapshot, SQL extension tin
 	$(MAKE) -C lead
+
+stannum:        # upstream snapshot, PostgreSQL 17 and 18
+	$(MAKE) -C stannum
 
 psql_bm25s:
 	cd psql_bm25s && make

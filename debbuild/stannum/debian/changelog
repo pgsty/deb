@@ -1,0 +1,7 @@
+stannum (0.1.0-1PGSTY) unstable; urgency=medium
+
+  * Package unreleased upstream commit 7573fc49a48486b7acc9a1107545b515ef9a83f3 (2026-10-19).
+  * Build PostgreSQL 17 and 18 with upstream Rust 1.96.0 and pgrx 0.19.1.
+  * Preserve the locked dependency graph and automatic dbgsym packages.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 23 Oct 2026 20:00:00 +0800

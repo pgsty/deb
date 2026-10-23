@@ -1,0 +1,41 @@
+#!/usr/bin/make -f
+
+export PATH := $(HOME)/.cargo/bin:$(PATH)
+export CARGO_PROFILE_RELEASE_DEBUG := 2
+export CARGO_PROFILE_RELEASE_STRIP := none
+export CARGO_NET_GIT_FETCH_WITH_CLI := true
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+# Rust 1.96.0 and cargo-pgrx 0.19.1 are supplied by rustup/cargo, outside dpkg.
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	test "$$(cargo pgrx --version | awk '{print $$2}')" = 0.19.1
+	sha256sum Cargo.lock > .cargo-lock.before
+	cargo fetch --locked
+	set -e; for pg in $(PG_VERSIONS); do \
+	    cargo pgrx init --pg$$pg=/usr/lib/postgresql/$$pg/bin/pg_config --no-run; \
+	    RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--unresolved-symbols=ignore-all -C link-arg=-Wl,--no-gc-sections" \
+	    CARGO_NET_OFFLINE=true cargo pgrx package --package stannum --no-default-features --features pg$$pg --pg-config /usr/lib/postgresql/$$pg/bin/pg_config --out-dir pgstaging/pg$$pg; \
+	done
+	sha256sum -c .cargo-lock.before
+
+override_dh_auto_test:
+	# Installed-package smoke and upstream lifecycle tests run in disposable clusters.
+
+override_dh_auto_install:
+	set -e; for pg in $(PG_VERSIONS); do \
+	    pkg=postgresql-$$pg-stannum; \
+	    install -d debian/$$pkg/usr/lib/postgresql/$$pg/lib debian/$$pkg/usr/share/postgresql/$$pg/extension; \
+	    install -m 755 pgstaging/pg$$pg/usr/lib/postgresql/$$pg/lib/stannum.so debian/$$pkg/usr/lib/postgresql/$$pg/lib/; \
+	    install -m 644 pgstaging/pg$$pg/usr/share/postgresql/$$pg/extension/stannum.control debian/$$pkg/usr/share/postgresql/$$pg/extension/; \
+	    install -m 644 pgstaging/pg$$pg/usr/share/postgresql/$$pg/extension/stannum*.sql debian/$$pkg/usr/share/postgresql/$$pg/extension/; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md CHANGELOG.md
+
+override_dh_auto_clean:
+	rm -rf pgstaging .cargo-lock.before
