@@ -1,0 +1,16 @@
+Source: pg-synonym
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Mazuco/pg_synonym
+
+Package: postgresql-PGVERSION-pg-synonym
+Architecture: any
+Provides: postgresql-pg-synonym
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Automatically maintained table and view synonyms for PostgreSQL
+ pg_synonym provides synonyms backed by security-invoker views and event
+ triggers that keep them in sync with changes to their target relations.
