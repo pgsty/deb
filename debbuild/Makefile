@@ -755,6 +755,9 @@ pg_upless:
 pgcozy:
 	cd pgcozy && make
 
+pg_try_cast:
+	cd pg_try_cast && make
+
 pg_orphaned:
 	cd pg_orphaned && make
 
@@ -1306,7 +1309,7 @@ postgis:
 
 # New extension batch: shared pinned sources, PG14-18 where supported.
 
-.PHONY: vgram pg_money edtf_postgres libx509pq \
+.PHONY: pg_try_cast vgram pg_money edtf_postgres libx509pq \
         pg_statvfs pg_json_diff pgtelemetry pgexporter_ext \
         plphp istore is_jsonb_valid pg_rusage \
         pg_lexo addressing_dictionary pg_statkit colnames

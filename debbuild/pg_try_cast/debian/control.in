@@ -1,0 +1,16 @@
+Source: pg-try-cast
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Mazuco/pg_try_cast
+
+Package: postgresql-PGVERSION-pg-try-cast
+Architecture: any
+Provides: postgresql-pg-try-cast
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Safe text conversion with fallback values for PostgreSQL
+ pg_try_cast provides try_cast and try_convert functions that convert text
+ to a requested PostgreSQL type and return a fallback on soft input errors.
