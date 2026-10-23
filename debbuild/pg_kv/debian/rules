@@ -1,0 +1,25 @@
+#!/usr/bin/make -f
+
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	# cargo-pgrx builds the payload before dpkg-buildpackage.
+
+override_dh_auto_clean:
+
+override_dh_auto_test:
+
+override_dh_auto_install:
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
+	    FULL_NAME=postgresql-$$PG_VERSION-pg-kv; \
+	    install -d debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
+	    install -d debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
+	    cp target/release/pg_kv-pg$$PG_VERSION/usr/lib/postgresql/$$PG_VERSION/lib/pg_kv.so debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp target/release/pg_kv-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension/pg_kv* debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.md

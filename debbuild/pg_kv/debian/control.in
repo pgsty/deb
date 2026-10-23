@@ -1,0 +1,18 @@
+Source: pg-kv
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Murat7Ay/pg_kv
+
+Package: postgresql-PGVERSION-pg-kv
+Architecture: any
+Provides: postgresql-pg-kv
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Shared-memory key/value cache, rate limits and sorted sets
+ pg_kv provides a shared-memory key/value cache with TTL, token-bucket rate
+ limits and sorted sets. It requires shared_preload_libraries and uses one
+ nontransactional, nonpersistent keyspace across all databases in the cluster.
+ This is an early upstream release, not intended for production use.
