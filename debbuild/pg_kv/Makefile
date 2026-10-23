@@ -50,7 +50,7 @@ packaging:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
 	# Builder Rust is managed by rustup and Clang uses a versioned package;
 	# validate the dpkg-managed prerequisites before skipping those tool aliases.
-	cd $(BUILD_DIR) && dpkg-checkbuilddeps -d 'debhelper-compat (= 13), postgresql-all (>= 217~)'
+	cd $(BUILD_DIR) && dpkg-checkbuilddeps -d 'debhelper-compat (= 13), postgresql-all (>= 217~), libicu-dev'
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc -d
 
 move:
