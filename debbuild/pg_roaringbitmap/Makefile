@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_roaringbitmap-1.2.0.tar.gz
+TARBALL := pg_roaringbitmap-1.3.0.tar.gz
 
 # prepare directory
 setup:
