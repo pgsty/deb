@@ -4,15 +4,15 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-# Source: https://codeberg.org/gregburd/pg_turbovec/archive/v2.12.1.tar.gz
-# Normalize the archive root to pg_turbovec-2.12.1 without changing source contents.
-TARBALL := pg_turbovec-2.12.1.tar.gz
+# Source: https://codeberg.org/gregburd/pg_turbovec/archive/v2.14.1.tar.gz
+# Normalize the archive root to pg_turbovec-2.14.1 without changing source contents.
+TARBALL := pg_turbovec-2.14.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.3
-SOURCE_PATCH := patches/pg-turbovec-2.12.1.patch
+SOURCE_PATCH := patches/pg-turbovec-2.14.1.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 
 check-src:

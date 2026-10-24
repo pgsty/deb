@@ -1,0 +1,16 @@
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -26,13 +26,11 @@
+ 
+ [features]
+ default = ["pg16"]
+-pg13 = ["pgrx/pg13", "pgrx-tests/pg13"]
+ pg14 = ["pgrx/pg14", "pgrx-tests/pg14"]
+ pg15 = ["pgrx/pg15", "pgrx-tests/pg15"]
+ pg16 = ["pgrx/pg16", "pgrx-tests/pg16"]
+ pg17 = ["pgrx/pg17", "pgrx-tests/pg17"]
+ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
+-pg19 = ["pgrx/pg19", "pgrx-tests/pg19"]
+ pg_test = []
+ # v1.3.0 (Phase Q) retired the `experimental_index_am` and
+ # `relfile_storage` Cargo feature flags. The `turbovec` index
