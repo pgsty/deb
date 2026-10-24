@@ -11,6 +11,7 @@ Package: postgresql-PGVERSION-pg-duckdb
 Architecture: any
 Provides: postgresql-pg-duckdb
 Depends: ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION
+Conflicts: postgresql-PGVERSION-duckdb-fdw
 Description: DuckDB-powered Postgres for high performance apps & analytics for PostgreSQL PGVERSION
   pg_duckdb is a Postgres extension that embeds DuckDB's columnar-vectorized analytics engine and features into Postgres.
   We recommend using pg_duckdb to build high performance analytics and data-intensive applications.
