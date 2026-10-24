@@ -1,3 +1,10 @@
+citus (13.5.0-9PGSTY) unstable; urgency=low
+
+  * Package upstream 13.5.0 with the established 9PGSTY release revision.
+  * Align supported PostgreSQL versions with upstream 15-17.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 24 Oct 2026 12:00:00 +0800
+
 citus (14.2.0-9PGSTY) unstable; urgency=low
 
   * Update to upstream 14.2.0.

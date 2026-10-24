@@ -3,7 +3,7 @@ all: setup build move
 export DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
-TARBALL := citus-14.2.0.tar.gz
+TARBALL := citus-13.5.0.tar.gz
 
 # prepare directory
 setup:
@@ -14,15 +14,9 @@ setup:
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
-build: build18 build17 build16
+build: build17 build16 build15
 
 # building deb
-build18: setup
-	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
-	echo '18' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
 build17: setup
 	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
 	echo '17' > build/debian/pgversions
