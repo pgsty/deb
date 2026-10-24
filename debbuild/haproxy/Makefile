@@ -1,4 +1,4 @@
-VERSION := 3.4.4
+VERSION := 3.4.7
 TARBALL := haproxy-$(VERSION).tar.gz
 UTILS_TARBALL := haproxy-utils-$(VERSION).tar.gz
 BUILD_DIR := build
