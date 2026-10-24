@@ -288,6 +288,9 @@ pg_biscuit:
 pg_textsearch:
 	cd pg_textsearch && make
 
+pg_tre:
+	$(MAKE) -C pg_tre
+
 textsearch_intl:
 	cd textsearch_intl && make
 
@@ -1380,4 +1383,4 @@ pg_statkit:
 colnames:
 	$(MAKE) -C colnames
 
-.PHONY: pg_nanotime pg_checksums_ext
+.PHONY: pg_nanotime pg_checksums_ext pg_tre

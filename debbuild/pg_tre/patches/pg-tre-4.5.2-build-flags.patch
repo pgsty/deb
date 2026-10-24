@@ -1,0 +1,21 @@
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -261,7 +261,7 @@ $(TRE_CONFIG_H): $(TRE_CONFIGURE)
+ 	cd $(TRE_DIR) && ./configure \
+ 	    --enable-static --disable-shared --disable-nls \
+ 	    --without-alloca \
+-	    CFLAGS="-fPIC -O2 -g" >/dev/null
++	    CFLAGS="$(CFLAGS) -fPIC" LDFLAGS="$(LDFLAGS)" >/dev/null
+ 
+ $(TRE_LIB): $(TRE_CONFIG_H) $(TRE_PATCH_STAMP)
+ 	@echo "==> build TRE"
+@@ -283,7 +283,7 @@ LIME_SRCS = $(LIME_DIR)/lime.c \
+             $(LIME_DIR)/src/lex/emit_c_skin_flex.c
+ $(LIME_BIN): $(LIME_SRCS)
+ 	@echo "==> build Lime generator"
+-	$(CC) -O2 -I$(LIME_DIR)/include -I$(LIME_DIR)/src -I$(LIME_DIR)/src/lex \
++	$(CC) $(CFLAGS) $(LDFLAGS) -I$(LIME_DIR)/include -I$(LIME_DIR)/src -I$(LIME_DIR)/src/lex \
+ 	    -o $@ $(LIME_SRCS)
+ 
+ # ------------------------------------------------------------------

@@ -1,0 +1,18 @@
+Source: pg-tre
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), autoconf, automake, libtool, gettext, git, m4, libicu-dev
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://codeberg.org/gregburd/pg_tre
+
+Package: postgresql-PGVERSION-pg-tre
+Architecture: any
+Provides: postgresql-pg-tre
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Native index access method for approximate regular expressions for PostgreSQL PGVERSION
+ pg_tre provides a native text index access method for approximate regular
+ expression matching, backed by compressed trigram postings and the TRE
+ matcher. It also supports regular expressions, LIKE and edit-distance
+ ordering. It uses generic WAL and needs no shared preload.
