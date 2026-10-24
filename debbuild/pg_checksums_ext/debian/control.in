@@ -1,0 +1,17 @@
+Source: pg-checksums-ext
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/VictorNagibator/pg_checksums
+
+Package: postgresql-PGVERSION-pg-checksums-ext
+Architecture: any
+Provides: postgresql-pg-checksums-ext
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Multi-level data integrity checksum functions for PostgreSQL PGVERSION
+ pg_checksums provides SQL checksum functions for pages, cells, tuples,
+ tables, indexes and databases, with physical and logical variants.
+ This extension is separate from the PGDG pg_checksums command-line tool.
