@@ -1,3 +1,21 @@
+pg-mentat (1.18.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.18.0 with pgrx 0.19.3 and PostgreSQL 14-18.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 24 Oct 2026 12:00:00 +0800
+
+pg-mentat (1.17.2-1PGSTY) unstable; urgency=high
+
+  * Update to upstream 1.17.2 to fix trusted installation privilege escalation.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 23 Oct 2026 14:00:00 +0800
+
+pg-mentat (1.17.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.17.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 21 Oct 2026 21:00:00 +0800
+
 pg-mentat (1.14.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.14.0.

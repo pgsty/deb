@@ -4,15 +4,15 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-# Source: https://codeberg.org/gregburd/mentat/archive/v1.14.0.tar.gz
-# Normalize the archive root to pg_mentat-1.14.0 without changing source contents.
-TARBALL := pg_mentat-1.14.0.tar.gz
+# Source: https://codeberg.org/gregburd/mentat/archive/v1.18.0.tar.gz
+# Normalize the archive root to pg_mentat-1.18.0 without changing source contents.
+TARBALL := pg_mentat-1.18.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
 PGRX_VERSION := 0.19.3
-SOURCE_PATCH := patches/pg-mentat-1.14.0.patch
+SOURCE_PATCH := patches/pg-mentat-1.18.0.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 
 check-src:
