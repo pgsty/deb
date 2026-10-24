@@ -10,23 +10,24 @@ from pathlib import Path
 from typing import Dict, List, Set
 
 EXPECTED_GIT_SOURCES = {
-    "git+https://github.com/paradedb/datafusion-distributed.git?tag=snapshot-main-2026-10-06-224907#2b82e8d2af32a6b15fb301be858ef47d7b629a3c",
+    "git+https://github.com/paradedb/superkmeans-rs.git?rev=28d7f26eec11548bb0b7435b36df6383b116c9b0#28d7f26eec11548bb0b7435b36df6383b116c9b0",
+    "git+https://github.com/paradedb/datafusion-distributed.git?tag=snapshot-main-2026-10-21-212219#ecf7b0b8aa041c64317b76259282d2f5fc130f68",
     "git+https://github.com/paradedb/datafusion.git?branch=paradedb.branch-55#41b058cc278eb497a2ffc6b41a323f056d3ef568",
     "git+https://github.com/paradedb/fst.git?rev=1d2e473c6de63d17749030eb8538ba4d647f3430#1d2e473c6de63d17749030eb8538ba4d647f3430",
     "git+https://github.com/paradedb/opencc-jieba-rs?branch=main#1bee2628bcae67a955caa5e91b740d170f5615d0",
-    "git+https://github.com/paradedb/superkmeans-rs?rev=c06dc2b6e9bd15fb5c4a0627178bebbe1fb37a64#c06dc2b6e9bd15fb5c4a0627178bebbe1fb37a64",
-    "git+https://github.com/paradedb/tantivy.git?rev=63e0c241cfd330381aebd5893f188fa858acbf45#63e0c241cfd330381aebd5893f188fa858acbf45",
+    "git+https://github.com/paradedb/superkmeans-rs?rev=ced81ac6f010ff79e74b161df9454e51bc1a8d0e#ced81ac6f010ff79e74b161df9454e51bc1a8d0e",
+    "git+https://github.com/paradedb/tantivy.git?rev=101d03ad260b5cbb67829b6ef41d9f6359cad6e5#101d03ad260b5cbb67829b6ef41d9f6359cad6e5",
 }
 NOTICE_NAME = re.compile(
     r"^(licen[cs]e|copying|notice|copyright|unlicense)([._-].*)?$", re.IGNORECASE
 )
 
-# These five manifests omit SPDX metadata at this exact Tantivy revision.
+# The quant manifest omits SPDX metadata at this exact Tantivy revision.
 # No subdirectory license overrides the repository's checked MIT LICENSE.
-QUANT_SOURCE = "git+https://github.com/paradedb/tantivy.git?rev=63e0c241cfd330381aebd5893f188fa858acbf45#63e0c241cfd330381aebd5893f188fa858acbf45"
-QUANT_CRATES = {"cascade", "fht", "grid-plane", "quant-model", "sign-plane"}
+QUANT_SOURCE = "git+https://github.com/paradedb/tantivy.git?rev=101d03ad260b5cbb67829b6ef41d9f6359cad6e5#101d03ad260b5cbb67829b6ef41d9f6359cad6e5"
+QUANT_CRATES = {"tantivy-quant"}
 QUANT_LICENSE_SHA256 = "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a"
-QUANT_LICENSE_URL = "https://github.com/paradedb/tantivy/blob/63e0c241cfd330381aebd5893f188fa858acbf45/LICENSE"
+QUANT_LICENSE_URL = "https://github.com/paradedb/tantivy/blob/101d03ad260b5cbb67829b6ef41d9f6359cad6e5/LICENSE"
 
 
 def normal_closure(metadata: dict) -> Set[str]:
@@ -143,7 +144,7 @@ def main() -> int:
             and package["name"] in QUANT_CRATES
             and package["version"] == "0.1.0"
         ):
-            root_license = Path(package["manifest_path"]).parents[2] / "LICENSE"
+            root_license = Path(package["manifest_path"]).parents[1] / "LICENSE"
             if hashlib.sha256(root_license.read_bytes()).hexdigest() != QUANT_LICENSE_SHA256:
                 raise SystemExit("reviewed Tantivy repository license changed")
             declared_license = "MIT"

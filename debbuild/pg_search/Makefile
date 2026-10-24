@@ -4,14 +4,14 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pg_search-0.26.1.tar.gz
+TARBALL := pg_search-0.26.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
 PGRX_VERSION := 0.19.3
 RUST_TOOLCHAIN := stable
-# Upstream 0.26.1 already pins pgrx 0.19.3 in its manifests and Cargo.lock.
+# Keep pgrx aligned with the 0.19.3 Docker builder toolchain.
 LICENSE_COLLECTOR := collect-third-party-licenses.py
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_BUILD_JOBS ?= 2
