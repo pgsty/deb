@@ -1,3 +1,12 @@
+provsql (1.13.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.13.0.
+  * Enable PGXS LLVM output instead of the upstream wrapper default.
+  * Apply C++17 to LLVM bitcode compilation on older Clang toolchains.
+  * Allow the register keyword in PostgreSQL 14 and 15 bitcode headers.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 21 Oct 2026 21:00:00 +0800
+
 provsql (1.12.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream PGXN 1.12.0.

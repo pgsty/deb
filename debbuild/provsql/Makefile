@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := provsql-1.12.0.tar.gz
+TARBALL := provsql-1.13.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -12,6 +12,9 @@ setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
+	sed -i 's/^ARGS = with_llvm=no$$/ARGS = with_llvm=yes/' $(BUILD_DIR)/Makefile
+	# PGXS bitcode flags do not inherit the native C++17 compiler flags.
+	printf '\noverride BITCODE_CXXFLAGS += -std=c++17\nifneq ($$(filter 14 15,$$(PGVER_MAJOR)),)\noverride BITCODE_CXXFLAGS += -Wno-register\nendif\n' >> $(BUILD_DIR)/Makefile.internal
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
