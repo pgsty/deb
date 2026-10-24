@@ -1,3 +1,10 @@
+jsonschema (0.1.11-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.1.11.
+  * Declare the ICU headers required by pgrx bindgen.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 21 Oct 2026 21:00:00 +0800
+
 jsonschema (0.1.10-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.1.10 and pin pgrx to 0.19.2.
