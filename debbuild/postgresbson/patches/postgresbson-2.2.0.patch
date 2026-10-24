@@ -1,0 +1,31 @@
+--- a/pgbson.c
++++ b/pgbson.c
+@@ -48,7 +48,7 @@
+ 
+ 
+ // Others:  
+-#include "bson.h"  // obviously...
++#include <bson/bson.h>  // obviously...
+ 
+ 
+ 
+@@ -809,8 +809,17 @@
+ 
+     if(rc) {
+ 	size_t blen;
+-	// This is what makes it all possible:
+-	char* jsons = bson_array_as_json(&b2, &blen);
++	char* jsons;
++#if BSON_MAJOR_VERSION >= 2
++	bson_json_opts_t* opts;
++
++	opts = bson_json_opts_new(BSON_JSON_MODE_LEGACY, BSON_MAX_LEN_UNLIMITED);
++	bson_json_opts_set_outermost_array(opts, true);
++	jsons = bson_as_json_with_opts(&b2, &blen, opts);
++	bson_json_opts_destroy(opts);
++#else
++	jsons = bson_array_as_json(&b2, &blen);
++#endif
+ 	Jsonb *jsonb;
+ 
+ 	// bson_array_as_json() returns NULL when it cannot render the value,

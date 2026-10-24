@@ -1,10 +1,10 @@
 all: setup build move
 
-TARBALL := postgresbson-2.1.0.tar.gz
+TARBALL := postgresbson-2.2.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PATCHES := $(sort $(wildcard patches/*.patch))
+PATCHES := patches/postgresbson-2.2.0.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
