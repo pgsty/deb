@@ -486,6 +486,9 @@ pgmp:
 pguint:
 	cd pguint && make
 
+pg_nanotime:
+	$(MAKE) -C pg_nanotime
+
 pg_uint128:
 	cd pg_uint128 && make
 
@@ -1377,4 +1380,4 @@ pg_statkit:
 colnames:
 	$(MAKE) -C colnames
 
-.PHONY: pg_checksums_ext
+.PHONY: pg_nanotime pg_checksums_ext

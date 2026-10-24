@@ -1,0 +1,16 @@
+Source: pg-nanotime
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/bunko666-cloud/pg_nanotime
+
+Package: postgresql-PGVERSION-pg-nanotime
+Architecture: any
+Provides: postgresql-pg-nanotime
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Nanosecond-precision timestamp types and clocks for PostgreSQL PGVERSION
+ pg_nanotime provides nanosecond-precision timestamp and interval types,
+ clock functions, and monotonic clocks for PostgreSQL 17 and 18.
