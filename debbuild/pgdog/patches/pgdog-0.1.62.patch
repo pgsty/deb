@@ -1,0 +1,165 @@
+--- a/.cargo/config.toml
++++ b/.cargo/config.toml
+@@ -1,18 +1,4 @@
+-[target.'cfg(all())']
+-rustflags = ["--cfg", "tokio_unstable"]
+-
+-[target.x86_64-unknown-linux-gnu]
+-linker = "/usr/bin/clang"
+-rustflags = ["-C", "link-arg=--ld-path=/usr/bin/mold"]
+-
+-[target.aarch64-unknown-linux-gnu]
+-linker = "/usr/bin/clang"
+-rustflags = [
+-    "-C",
+-    "link-arg=--ld-path=/usr/bin/mold",
+-    "-C",
+-    "target-feature=+lse",
+-]
++# Linux packages supply tokio_unstable and ARM64 LSE through RUSTFLAGS.
+ 
+ # Bump reserved stack size size to 2 MB (from default 1 MB) on
+ # Windows to buid pg_query. This setting applies to all binaries,
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -41,6 +41,12 @@
+ # [patch."https://github.com/pgdogdev/pg_raw_parse.git"]
+ # pg_raw_parse = { path = "../pg_raw_parse" }
+ 
++[patch."https://github.com/pgdogdev/pg_raw_parse.git"]
++pg_raw_parse = { path = "vendor/pg_raw_parse" }
++
++[patch."https://github.com/pgdogdev/scram.git"]
++scram = { path = "vendor/scram" }
++
+ [profile.release]
+ lto = true
+ codegen-units = 1
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -3134,7 +3134,6 @@
+ [[package]]
+ name = "pg_raw_parse"
+ version = "0.1.0"
+-source = "git+https://github.com/pgdogdev/pg_raw_parse.git?rev=89937b1#89937b1a9c39bbb53b679f12aba3ff7c5ab3c093"
+ dependencies = [
+  "bindgen 0.72.1",
+  "cc",
+@@ -4200,7 +4199,6 @@
+ [[package]]
+ name = "scram"
+ version = "0.6.0"
+-source = "git+https://github.com/pgdogdev/scram.git?rev=ee15a47f1051dc79589e8db666be7014c1e23fba#ee15a47f1051dc79589e8db666be7014c1e23fba"
+ dependencies = [
+  "aws-lc-rs",
+  "base64 0.13.1",
+--- a/pgdog/build.rs
++++ b/pgdog/build.rs
+@@ -1,4 +1,4 @@
+-use std::process::Command;
++use std::{env, process::Command};
+ 
+ // Compile time checks.
+ fn main() {
+@@ -9,14 +9,15 @@
+         .flags(["-Wno-implicit-fallthrough"])
+         .compile("postgres_hash");
+ 
+-    let output = Command::new("git").args(["rev-parse", "HEAD"]).output();
+-    if let Ok(output) = output {
+-        let git_hash = String::from_utf8(output.stdout).unwrap_or_default();
+-        println!(
+-            "cargo:rustc-env=GIT_HASH={}",
+-            git_hash.chars().take(7).collect::<String>()
+-        );
+-    } else {
+-        println!("cargo:rustc-env=GIT_HASH={}", env!("CARGO_PKG_VERSION"));
+-    }
++    println!("cargo:rerun-if-env-changed=PGDOG_GIT_HASH");
++    let packaged_hash = env::var("PGDOG_GIT_HASH")
++        .ok().map(|value| value.trim().to_owned()).filter(|value| !value.is_empty());
++    let checkout_hash = Command::new("git").args(["rev-parse", "HEAD"])
++        .output().ok().filter(|output| output.status.success())
++        .and_then(|output| String::from_utf8(output.stdout).ok())
++        .map(|value| value.trim().to_owned()).filter(|value| !value.is_empty());
++    let git_hash = packaged_hash.or(checkout_hash)
++        .unwrap_or_else(|| env!("CARGO_PKG_VERSION").to_owned());
++    println!("cargo:rustc-env=GIT_HASH={}", git_hash.chars().take(7).collect::<String>());
++
+ }
+--- a/pgdog/src/cli.rs
++++ b/pgdog/src/cli.rs
+@@ -17,7 +17,7 @@
+ 
+ /// PgDog is a PostgreSQL pooler, proxy, load balancer and query router.
+ #[derive(Parser, Debug)]
+-#[command(name = "", version = concat!("PgDog v", env!("GIT_HASH")))]
++#[command(name = "", version = concat!("PgDog v", env!("CARGO_PKG_VERSION"), " (", env!("GIT_HASH"), ")"))]
+ pub(crate) struct Cli {
+     /// Path to the configuration file. Default: "pgdog.toml"
+     #[arg(short, long, default_value = "pgdog.toml")]
+--- a/packaging/rpm/pgdog.service
++++ b/packaging/rpm/pgdog.service
+@@ -0,0 +1,22 @@
++[Unit]
++Description=PgDog PostgreSQL proxy and pooler
++After=network-online.target
++Wants=network-online.target
++
++[Service]
++Type=simple
++User=postgres
++Group=postgres
++WorkingDirectory=/var/lib/pgsql/pgdog
++Environment=LD_LIBRARY_PATH=/usr/lib64/pgdog/plugins
++ExecStartPre=/usr/bin/pgdog -c /etc/pgdog/pgdog.toml -u /etc/pgdog/users.toml configcheck
++ExecStart=/usr/bin/pgdog -c /etc/pgdog/pgdog.toml -u /etc/pgdog/users.toml run
++ExecReload=/bin/kill -HUP $MAINPID
++KillSignal=SIGINT
++Restart=on-failure
++RestartSec=3s
++LimitNOFILE=1048576
++TimeoutStopSec=75s
++
++[Install]
++WantedBy=multi-user.target
+--- a/packaging/rpm/pgdog.toml
++++ b/packaging/rpm/pgdog.toml
+@@ -0,0 +1,27 @@
++# Default PgDog configuration installed by the PGSTY RPM.
++# Edit this file before starting the service in production.
++
++[general]
++host = "0.0.0.0"
++port = 6432
++workers = 2
++default_pool_size = 10
++min_pool_size = 1
++pooler_mode = "transaction"
++shutdown_timeout = 60_000
++log_format = "text"
++log_level = "info"
++
++[admin]
++name = "admin"
++user = "admin"
++password = "change-me"
++
++[replication]
++pg_dump_path = "/usr/pgsql-18/bin/pg_dump"
++
++[[databases]]
++name = "pgdog"
++host = "127.0.0.1"
++port = 5432
++role = "primary"
+--- a/packaging/rpm/users.toml
++++ b/packaging/rpm/users.toml
+@@ -0,0 +1,7 @@
++# Default PgDog user configuration installed by the PGSTY RPM.
++# Edit this file before starting the service in production.
++
++[[users]]
++name = "pgdog"
++database = "pgdog"
++password = "change-me"
