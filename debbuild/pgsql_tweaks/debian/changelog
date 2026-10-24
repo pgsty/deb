@@ -1,3 +1,9 @@
+pgsql-tweaks (1.1.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.1.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 21 Oct 2026 21:00:00 +0800
+
 pgsql-tweaks (1.0.5-1PGSTY) unstable; urgency=low
 
   * Upgrade to upstream PGXN 1.0.5.
