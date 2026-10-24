@@ -2,13 +2,13 @@
 set -euo pipefail
 
 if [[ $# -ne 2 ]]; then
-  echo 'usage: prepare.sh documentdb-0.117-0.tar.gz intelrdfpmath-applied-2.0u3-1.tar.gz' >&2
+  echo 'usage: prepare.sh documentdb-1.0-0.tar.gz intelrdfpmath-applied-2.0u3-1.tar.gz' >&2
   exit 2
 fi
 
 TARBALL=$1
 INTEL_TARBALL=$2
-EXPECTED_TARBALL=documentdb-0.117-0.tar.gz
+EXPECTED_TARBALL=documentdb-1.0-0.tar.gz
 EXPECTED_INTEL_TARBALL=intelrdfpmath-applied-2.0u3-1.tar.gz
 EXPECTED_INTEL_SIZE=5805822
 EXPECTED_INTEL_SHA256=3212a37262ce55c9f0bf16103f6a5df0e4ce9e9eea3c2a7866c39097227e5e56

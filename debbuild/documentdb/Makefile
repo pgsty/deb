@@ -1,6 +1,6 @@
 all: pre setup build move
 
-TARBALL := documentdb-0.117-0.tar.gz
+TARBALL := documentdb-1.0-0.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 INTEL_TARBALL := intelrdfpmath-applied-2.0u3-1.tar.gz
 INTEL_SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(INTEL_TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(INTEL_TARBALL)),$(wildcard ../SOURCES/$(INTEL_TARBALL)))
@@ -26,7 +26,7 @@ setup: check-src
 	chown -R $(shell whoami):$(shell whoami) build/
 
 # building deb
-build: build18 build17 build16 build15
+build: build18 build17 build16
 
 build18: setup
 	echo '18' > build/debian/pgversions
@@ -46,12 +46,6 @@ build16: setup
 	echo '16' > build/debian/pgversions
 	cd build/ && pg_buildext updatecontrol
 	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build15: setup
-	echo '15' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
 
 # collect deb
 move:
