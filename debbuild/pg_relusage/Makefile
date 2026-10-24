@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_relusage-1.0.1.tar.gz
+TARBALL := pg_relusage-1.0.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

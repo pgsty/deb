@@ -1,3 +1,9 @@
+pg-relusage (1.0.2-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.0.2.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 21 Oct 2026 21:00:00 +0800
+
 pg-relusage (1.0.1-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.0.1.
