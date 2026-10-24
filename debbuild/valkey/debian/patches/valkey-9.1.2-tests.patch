@@ -1,0 +1,66 @@
+From: Ruohang Feng <rh@vonng.com>
+Subject: Allow bounded scheduling margins in asynchronous tests
+
+Origin: vendor
+Forwarded: no
+Last-Update: 2026-10-22
+
+The PAUSE test's default one-second polling budget races the one-second
+BLPOP timeout itself. Keep the command timeout and blocked-client assertion,
+but allow one more second for the server cron and test client to observe it.
+
+The diskless replication test sends SIGTERM and immediately checks for the
+TLS disconnection log with a one-millisecond budget. Wait up to one second
+for that same log; retain the replica count and data integrity assertions.
+
+The timeout subcase can finish full sync before the test observes the load
+log and sends SIGSTOP. Apply the existing bounded key-load delay there too,
+so the test actually exercises a full-sync timeout and retains its original
+log, surviving replica, and data integrity assertions.
+
+Only tests change; server code and installed payload remain unchanged.
+
+--- a/tests/unit/type/list.tcl
++++ b/tests/unit/type/list.tcl
+@@ -2449,8 +2449,8 @@
+         # now unpause the writes
+         r client unpause
+ 
+-        # client should time-out
+-        wait_for_blocked_clients_count 0
++        # Allow scheduling margin beyond the BLPOP one-second timeout.
++        wait_for_blocked_clients_count 0 200 10
+         
+         $rd close
+     }
+
+--- a/tests/integration/replication.tcl
++++ b/tests/integration/replication.tcl
+@@ -914,13 +914,14 @@
+                     # so that the whole rdb generation process is bound to that
+                     set loglines [count_log_lines -2]
+                     [lindex $replicas 0] config set repl-diskless-load swapdb
+-                    # For "no" and "fast" subcases, use key-load-delay to keep
++                    # For "no", "fast", and "timeout", use key-load-delay to keep
+                     # replica 0 as a steady slow reader for the entire RDB
+                     # transfer. A brief SIGSTOP/SIGCONT is insufficient
+                     # because after resume the TLS layer on slow CI runners
+                     # can't drain the pipe fast enough, leaving the RDB child
+                     # blocked on write() for minutes.
+-                    if {$all_drop == "no" || $all_drop == "fast"} {
++                    if {$all_drop == "no" || $all_drop == "fast" || $all_drop == "timeout"} {
++                        # Keep timeout in full sync until SIGSTOP is observed.
+                         # 4k keys with 500 microseconds each keeps replica 0
+                         # slow for about 2 seconds, which is long enough to
+                         # fill the pipe without turning the transfer into a
+@@ -1011,7 +1012,8 @@
+                             wait_for_log_messages -2 {"*Diskless rdb transfer, done reading from pipe, 1 replicas still up*"} $loglines 1 1
+                         }]} {
+                             wait_for_log_messages -2 {"*Diskless rdb transfer, done reading from pipe, 2 replicas still up*"} $loglines 1 1
+-                            wait_for_log_messages -2 {"*Connection with replica * lost.*"} $loglines 1 1
++                            # SIGTERM and the TLS disconnect are asynchronous.
++                            wait_for_log_messages -2 {"*Connection with replica * lost.*"} $loglines 100 10
+                         }
+                     }
+                     if {$all_drop == "timeout"} {
+

@@ -1,3 +1,10 @@
+valkey (9.1.2-1PGSTY~@RELEASE@) @RELEASE@; urgency=medium
+
+  * Update to upstream 9.1.2.
+  * Allow bounded scheduling margins in asynchronous tests.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 21 Oct 2026 21:00:00 +0800
+
 valkey (9.1.1-5PGSTY~@RELEASE@) @RELEASE@; urgency=medium
 
   * Restore versioned Provides, Replaces, and Conflicts for valkey-server,
