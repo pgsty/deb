@@ -1,3 +1,14 @@
+duckdb-fdw (2.0.2-1PGSTY) unstable; urgency=medium
+
+  * Package official duckdb_fdw 2.0.2 with DuckDB 2.0.0 PIC static archives
+  * Remove pg_duckdb build/runtime dependencies, headers and shlibs mapping
+  * Preserve Parquet, JSON, ICU, dynamic plugins, LLVM and automatic dbgsym
+  * Bind embedded definitions locally and guard stale preloaded peer libraries
+  * Conflict with pg_duckdb for the same PG major; require restart on switch
+  * Install the upstream control and SQL files without migration changes
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 24 Oct 2026 12:00:00 +0800
+
 duckdb-fdw (2.0.1+git20260529.9354241-1PGSTY) unstable; urgency=medium
 
   * Upgrade to the duckdb_fdw 2.0.1 main snapshot at 9354241

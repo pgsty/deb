@@ -1,0 +1,231 @@
+--- a/Makefile
++++ b/Makefile
+@@ -10,7 +10,7 @@
+ MODULE_big = duckdb_fdw
+ # 注意: nanoarrow.c 为 vendored 上游代码, 当前未被编译/链接 (无调用点);
+ # 保留源文件以便后续接入 Arrow 主路径。恢复编译时在下方 OBJS 加回 nanoarrow.o。
+-OBJS = connection.o option.o deparse.o duckdb_fdw.o import.o sql_utils.o runtime_guard.o
++OBJS = connection.o option.o deparse.o duckdb_fdw.o import.o sql_utils.o runtime_guard.o duckdb_static_loader.o
+ 
+ EXTENSION = duckdb_fdw
+ DATA = $(wildcard duckdb_fdw--*.sql)
+@@ -26,8 +26,21 @@
+ endif
+ 
+ # 编译选项
+-PG_CPPFLAGS = -I.
+-SHLIB_LINK = -L. -lduckdb -lstdc++
++# PGSTY builds these PIC archives from the pinned DuckDB source, never -lduckdb.
++DUCKDB_SOURCE_DIR ?= $(CURDIR)/duckdb
++DUCKDB_BUILD_DIR ?= $(DUCKDB_SOURCE_DIR)/build-pgsty
++PG_CPPFLAGS = -I$(DUCKDB_SOURCE_DIR)/src/include
++DUCKDB_ARCHIVES = $(DUCKDB_BUILD_DIR)/src/libduckdb_static.a \
++    $(DUCKDB_BUILD_DIR)/src/main/http/libduckdb_httplib.a \
++    $(DUCKDB_BUILD_DIR)/src/main/extension/libduckdb_loadable_extensions.a \
++    $(DUCKDB_BUILD_DIR)/extension/core_functions/libcore_functions_extension.a \
++    $(DUCKDB_BUILD_DIR)/extension/parquet/libparquet_extension.a \
++    $(DUCKDB_BUILD_DIR)/extension/json/libjson_extension.a \
++    $(DUCKDB_BUILD_DIR)/extension/icu/libicu_extension.a
++# Export the core for official C++ plugins. Bind this module's own definitions
++# locally, including data; this is NOT isolation of another module loaded later.
++# Whole archives retain API entry points used only by dynamic plugins.
++SHLIB_LINK = -Wl,-Bsymbolic -Wl,--whole-archive $(DUCKDB_ARCHIVES) -Wl,--no-whole-archive -lstdc++ -lm -pthread
+ 
+ ifeq ($(detected_OS),Darwin)
+     DLSUFFIX = .dylib
+@@ -37,8 +50,6 @@
+ ifeq ($(detected_OS),Linux)
+     DLSUFFIX = .so
+     PG_CXXFLAGS = -std=c++11
+-    # 针对现代环境的 ABI 兼容性设置
+-    PG_CPPFLAGS += -D_GLIBCXX_USE_CXX11_ABI=0
+     SHLIB_LINK += -ldl
+ endif
+ 
+@@ -63,15 +74,3 @@
+     include $(top_srcdir)/contrib/contrib-global.mk
+ endif
+ 
+-# 设置 RPATH，确保运行时能找到同目录下的 libduckdb.so
+-ifneq ($(detected_OS),Windows)
+-SHLIB_LINK += -Wl,-rpath,'$$ORIGIN' -Wl,-rpath,$(PG_LIB)
+-endif
+-
+-# 安装钩子
+-install-duckdb:
+-	$(install_bin) -m 755 libduckdb$(DLSUFFIX) $(DESTDIR)$(PG_LIB)
+-
+-install: install-duckdb
+-
+-.PHONY: install-duckdb
+--- a/runtime_guard.c
++++ b/runtime_guard.c
+@@ -4,9 +4,6 @@
+ 
+ #include <string.h>
+ 
+-extern bool duckdb_fdw_allow_unsupported_pg_duckdb_coexistence;
+-
+-static bool duckdb_runtime_unsupported_warning_emitted = false;
+ 
+ #ifdef __linux__
+ #include <dlfcn.h>
+@@ -40,6 +37,19 @@
+ 
+ 	base = duckdb_runtime_basename(path);
+ 	return base != NULL && strncmp(base, "libduckdb", strlen("libduckdb")) == 0;
++}
++
++/* Identify the embedded core by ELF object identity, not by a fabricated name.
++ * Bsymbolic binds duckdb_library_version to our own definition; the local helper
++ * also provides an address that cannot be interposed by another shared object. */
++static bool
++duckdb_runtime_is_embedded_core(const Dl_info *core)
++{
++	Dl_info module;
++
++	memset(&module, 0, sizeof(module));
++	return dladdr((void *) duckdb_runtime_is_embedded_core, &module) != 0 &&
++		core->dli_fbase == module.dli_fbase;
+ }
+ 
+ static bool
+@@ -90,7 +100,7 @@
+ 	if (dladdr((void *) duckdb_library_version, &self_info) == 0)
+ 		return DUCKDB_RUNTIME_COMPATIBLE_UNPROVEN;
+ 
+-	if (!duckdb_runtime_is_duckdb_library_path(self_info.dli_fname))
++	if (!duckdb_runtime_is_embedded_core(&self_info))
+ 		return DUCKDB_RUNTIME_COMPATIBLE_UNPROVEN;
+ 
+ 	memset(&context, 0, sizeof(context));
+@@ -98,6 +108,9 @@
+ 	context.fingerprint.duckdb_symbol_path = self_info.dli_fname;
+ 
+ 	dl_iterate_phdr(duckdb_runtime_scan_loaded_object, &context);
++
++	if (context.fingerprint.peer_runtime_path != NULL)
++		return DUCKDB_RUNTIME_INCOMPATIBLE;
+ 
+ 	if (context.pg_duckdb_module_count > 0)
+ 		return DUCKDB_RUNTIME_PEER_LOADED_NEED_VALIDATION;
+@@ -149,7 +162,7 @@
+ 		fingerprint->duckdb_symbol_path = self_info.dli_fname;
+ 		fingerprint->duckdb_version = duckdb_library_version();
+ 
+-		if (!duckdb_runtime_is_duckdb_library_path(self_info.dli_fname))
++		if (!duckdb_runtime_is_embedded_core(&self_info))
+ 		{
+ 			fingerprint->source_unproven = true;
+ 			return;
+@@ -194,7 +207,7 @@
+ 			(errcode(ERRCODE_OBJECT_NOT_IN_PREREQUISITE_STATE),
+ 			 errmsg("strict coexistence policy rejected the current DuckDB runtime combination"),
+ 			 errdetail("%s Runtime status: \"%s\".", detail, duckdb_runtime_status_name(status)),
+-			 errhint("Use a backend without peer-loaded pg_duckdb, or explicitly set duckdb_fdw.allow_unsupported_pg_duckdb_coexistence = on for unsupported experiments.")));
++			 errhint("Choose one DuckDB extension package per PostgreSQL major. Remove pg_duckdb from shared_preload_libraries and restart PostgreSQL before switching to duckdb_fdw; replacing packages does not unload existing libraries.")));
+ }
+ 
+ void
+@@ -211,18 +224,6 @@
+ 		case DUCKDB_RUNTIME_PEER_LOADED_NEED_VALIDATION:
+ 		case DUCKDB_RUNTIME_COMPATIBLE_UNPROVEN:
+ 		case DUCKDB_RUNTIME_INCOMPATIBLE:
+-			if (duckdb_fdw_allow_unsupported_pg_duckdb_coexistence)
+-			{
+-				if (!duckdb_runtime_unsupported_warning_emitted)
+-				{
+-					duckdb_runtime_unsupported_warning_emitted = true;
+-					ereport(WARNING,
+-							(errmsg("duckdb_fdw is running in unsupported pg_duckdb coexistence mode"),
+-							 errdetail("The current backend reported runtime status \"%s\".", duckdb_runtime_status_name(status)),
+-							 errhint("Use a backend without peer-loaded pg_duckdb for supported execution.")));
+-				}
+-				return;
+-			}
+ 
+ 			duckdb_runtime_guard_error(status);
+ 			return;
+--- a/duckdb_fdw.c
++++ b/duckdb_fdw.c
+@@ -3137,28 +3137,22 @@
+ 	if (!*newval)
+ 		return true;
+ 
+-	if (source != PGC_S_SESSION)
+-	{
+-		GUC_check_errmsg("duckdb_fdw.allow_unsupported_pg_duckdb_coexistence may only be enabled with SET in the current session");
+-		GUC_check_errdetail("Persistent, placeholder, and startup-time sources are intentionally rejected for this unsupported override.");
+-		GUC_check_errhint("Load duckdb_fdw in the target backend first, then run SET duckdb_fdw.allow_unsupported_pg_duckdb_coexistence = on.");
+-		return false;
+-	}
+-
+-	if (IsTransactionBlock())
+-	{
+-		GUC_check_errmsg("duckdb_fdw.allow_unsupported_pg_duckdb_coexistence may not be enabled inside an explicit transaction block");
+-		GUC_check_errdetail("The unsupported override is restricted to ordinary session-level SET so it cannot hide inside SET LOCAL or preload transaction state.");
+-		GUC_check_errhint("Run LOAD duckdb_fdw and SET duckdb_fdw.allow_unsupported_pg_duckdb_coexistence = on as standalone session commands.");
+-		return false;
+-	}
+-
+-	return true;
+-}
++	(void) source;
++	GUC_check_errmsg("the statically linked PGSTY package does not support pg_duckdb coexistence");
++	GUC_check_errhint("Select one package and restart PostgreSQL after changing shared_preload_libraries.");
++	return false;
++}
++
++extern int32_t duckdb_register_static_extensions(void);
+ 
+ void
+ _PG_init(void)
+ {
++	/* This is a stale-process safeguard, not a pre-dlopen isolation boundary. */
++	duckdb_runtime_guard_check();
++	if (duckdb_register_static_extensions() != 0)
++		elog(ERROR, "duckdb_fdw: could not register embedded DuckDB extensions");
++
+ 	DefineCustomBoolVariable(
+ 		"duckdb_fdw.allow_unsupported_pg_duckdb_coexistence",
+ 		"Allow duckdb_fdw to continue in an unsupported backend-local pg_duckdb coexistence state.",
+--- /dev/null
++++ b/build-duckdb.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++# Build only PIC static archives; caller supplies distribution build/debug flags.
++set -eu
++src=${DUCKDB_SOURCE_DIR:-"$(pwd)/duckdb"}
++build=${DUCKDB_BUILD_DIR:-"$src/build-pgsty"}
++jobs=${DUCKDB_BUILD_JOBS:-2}
++: "${CFLAGS:?distribution CFLAGS required}"
++: "${CXXFLAGS:?distribution CXXFLAGS required}"
++# Avoid the GCC 11 LTO INSERT regression and GNU unique process-wide data binding.
++# PostgreSQL Clang bitcode is built separately by PGXS and remains enabled.
++cmake -S "$src" -B "$build" -G Ninja \
++    -DCMAKE_BUILD_TYPE=None -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
++    -DCMAKE_C_FLAGS="${CPPFLAGS:-} $CFLAGS -DNDEBUG -fno-lto" \
++    -DCMAKE_CXX_FLAGS="${CPPFLAGS:-} $CXXFLAGS -DNDEBUG -fno-lto -fno-gnu-unique" \
++    -DCMAKE_SHARED_LINKER_FLAGS="${LDFLAGS:-}" \
++    -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS:-}" \
++    -DDUCKDB_EXPLICIT_VERSION=v2.0.0 \
++    -DGIT_COMMIT_HASH=d54cbbe3df17e8e5ce68312f483b4155836112aa \
++    -DBUILD_UNITTESTS=OFF -DBUILD_SHELL=OFF -DDISABLE_UNITY=ON \
++    -DENABLE_SANITIZER=OFF -DENABLE_UBSAN=OFF -DENABLE_JEMALLOC=OFF \
++    '-DDUCKDB_CAPABILITIES=httplib;loadable_extensions'
++cmake --build "$build" --parallel "$jobs" --target \
++    duckdb_static duckdb_httplib duckdb_loadable_extensions \
++    core_functions_extension parquet_extension json_extension icu_extension
++python3 "$src/scripts/generate_static_extension_loader.py" \
++    --output duckdb_static_loader.c \
++    httplib loadable_extensions core_functions parquet json icu
++# Retain license notices for bundled code, under the package's private doc path.
++mkdir -p duckdb-licenses
++cp "$src/LICENSE" duckdb-licenses/DuckDB-LICENSE
++find "$src/third_party" "$src/extension" -type f \
++    \( -iname 'LICENSE' -o -iname 'LICENSE.*' -o -iname 'LICENCE*' -o -iname 'copyright*' -o -iname 'copying*' -o -iname 'notice*' \) \
++    | while IFS= read -r file; do
++        rel=${file#"$src/"}
++        mkdir -p "duckdb-licenses/$(dirname "$rel")"
++        cp "$file" "duckdb-licenses/$rel"
++    done

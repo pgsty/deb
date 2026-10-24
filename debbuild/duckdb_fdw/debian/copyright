@@ -21,3 +21,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+This package also embeds DuckDB 2.0.0 (MIT, DuckDB Foundation and contributors).
+The complete DuckDB license and the bundled third-party license/copyright
+notices are installed in the package-private duckdb-licenses/ directory.
+Bundled components include code under Apache-2.0, BSD-2-Clause, BSD-3-Clause,
+BSL-1.0, Zlib and Unicode licenses; consult their individual retained notices.
