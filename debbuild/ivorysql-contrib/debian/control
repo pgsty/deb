@@ -8,6 +8,7 @@ Build-Depends:
  bison,
  build-essential,
  clang,
+ cargo,
  cmake,
  debhelper-compat (= 13),
  flex,
@@ -33,12 +34,16 @@ Build-Depends:
  libkrb5-dev,
  liblz4-dev,
  libmsgpack-dev,
+ libnuma-dev,
+ libpam0g-dev,
  libpcre2-dev,
  libproj-dev,
  libprotobuf-c-dev,
  libreadline-dev,
  libsfcgal-dev,
  libssl-dev,
+ libselinux1-dev,
+ liburing-dev,
  libtool,
  libxerces-c-dev,
  libxml2-dev,
@@ -47,6 +52,10 @@ Build-Depends:
  libxxhash-dev,
  libzstd-dev,
  llvm-dev,
+ meson,
+ ninja-build,
+ rustc,
+ rustfmt,
  perl,
  pkgconf,
  protobuf-c-compiler,
@@ -67,7 +76,7 @@ Depends:
  ivorysql-@PG_MAJOR@ (<< 6.0),
  python3-psycopg2
 Description: External extensions for IvorySQL @IVORY_MAJOR@ / PostgreSQL @PG_MAJOR@
- This package adds the 29 extension controls and wal2json output plugin that
+ This package adds the 39 extension controls and wal2json output plugin that
  are present in the official IvorySQL @IVORY_VERSION@ bundle but absent from
  Pigsty's IvorySQL kernel package. All PostgreSQL modules are compiled against
  /usr/ivory-@PG_MAJOR@ and use normal distribution packages for external

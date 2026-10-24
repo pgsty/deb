@@ -1,3 +1,6 @@
 EXTENSIONS.md
 SOURCES.sha256
 FILES.sha256
+sources.json
+expected-controls.txt
+expected-modules.txt

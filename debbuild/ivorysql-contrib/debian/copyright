@@ -5,7 +5,7 @@ Source: https://github.com/IvorySQL/IvorySQL
 Files: *
 Copyright: 1996-2026 PostgreSQL Global Development Group
            2001-2026 the individual extension authors
-License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and GPL-2.0-or-later and MIT and PostgreSQL
+License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and GPL-2.0-or-later and ISC and MIT and PostgreSQL
 
 License: Apache-2.0
  Licensed under the Apache License, Version 2.0. On Debian systems, the full
@@ -40,3 +40,9 @@ License: PostgreSQL
  documentation for any purpose, without fee, and without a written agreement
  is hereby granted, provided that the copyright notice and disclaimer appear
  in all copies. The software is provided on an "as is" basis without warranty.
+
+License: ISC
+ Permission to use, copy, modify, and distribute this software for any purpose
+ with or without fee is hereby granted, provided that the above copyright
+ notice and this permission notice appear in all copies.
+ THE SOFTWARE IS PROVIDED AS IS WITHOUT ANY WARRANTY.
