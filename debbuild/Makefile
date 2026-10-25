@@ -731,9 +731,6 @@ dbt2:
 #            Category: ADMIN - Administration                 #
 ###############################################################
 
-pg_checksums_ext:
-	$(MAKE) -C pg_checksums_ext
-
 pg_rewrite:
 	cd pg_rewrite && make
 
@@ -1383,4 +1380,4 @@ pg_statkit:
 colnames:
 	$(MAKE) -C colnames
 
-.PHONY: pg_nanotime pg_checksums_ext pg_tre
+.PHONY: pg_nanotime pg_tre

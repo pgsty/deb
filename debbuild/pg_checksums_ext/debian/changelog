@@ -1,7 +1,0 @@
-pg-checksums-ext (1.3.1-1PGSTY) unstable; urgency=medium
-
-  * Initial package for PostgreSQL 14-18.
-  * Preserve native debug symbols and PGXS bitcode.
-  * Use a distinct package name to coexist with the PGDG checksum utility.
-
- -- Ruohang Feng <rh@vonng.com>  Sat, 24 Oct 2026 12:00:00 +0800
