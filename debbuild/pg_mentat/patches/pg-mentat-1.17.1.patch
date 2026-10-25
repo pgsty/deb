@@ -1,0 +1,25 @@
+--- a/crates/pg/pg_mentat/Cargo.toml
++++ b/crates/pg/pg_mentat/Cargo.toml
+@@ -20,13 +20,11 @@
+ # embedding the pure-Rust mino-rs interpreter. Default off; a build without it
+ # pulls nothing and pays nothing.
+ script = ["dep:mino-rs", "dep:mentat_script"]
+-pg13 = ["pgrx/pg13", "pgrx-tests/pg13"]
+ pg14 = ["pgrx/pg14", "pgrx-tests/pg14"]
+ pg15 = ["pgrx/pg15", "pgrx-tests/pg15"]
+ pg16 = ["pgrx/pg16", "pgrx-tests/pg16"]
+ pg17 = ["pgrx/pg17", "pgrx-tests/pg17"]
+ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
+-pg19 = ["pgrx/pg19", "pgrx-tests/pg19"]
+ pg_test = []
+ 
+ [dependencies]
+--- a/rust-toolchain.toml
++++ b/rust-toolchain.toml
+@@ -1,5 +1,5 @@
+ # 1.96 is pgrx 0.19's minimum (rust-version), needed for PostgreSQL 19.
+ # Bump together with RUST_TOOLCHAIN in the CI workflows and flake.nix.
+ [toolchain]
+-channel = "1.96.0"
++channel = "stable"
+ components = ["rustfmt", "clippy"]
