@@ -14,6 +14,25 @@ DEB 独有适配：大型静态核心超过 noble `dwz` 的 DIE 数量限制，�
 
 在隔离 builder 中先 `pig build get duckdb_fdw`，再请求两个准确归档；失败后只复制缺失文件。源码位于 `~/ext/src`，`~/debbuild/SOURCES` 指向它。运行 `make PG_VERSIONS=18 FDW_MAX_JOBS=12` 可构建代表性 PG18；不指定 PG_VERSIONS 时使用 PG15–18。取源校验已内置 recipe。
 
+## 2026-10-24 全矩阵补充验收
+
+在首轮代表性验收之后，又以本轮新构建的二进制包完成 **16 个平台 × PG15–18，共 64 个主包坐标**。六个 RPM 平台为 EL8/9/10 × x86_64/aarch64；十个 DEB 平台为 bookworm/trixie/jammy/noble/resolute × amd64/arm64。
+
+| 范围 | 构建、包/ELF/DWARF、SQL/Parquet、11 个 examples、取回 | PG18 官方 httpfs、LLVM JIT、双向安装冲突、残留 preload/重启 |
+|---|---|---|
+| EL8、EL9、EL10，双架构 | 24/24 通过 | 6/6 平台通过 |
+| bookworm、trixie、jammy、noble、resolute，双架构 | 40/40 通过 | 10/10 平台通过 |
+
+每个 PG 都执行原样上游 installcheck，仍保留已知 EXPLAIN CAST 与空行/对齐预期差异；仅规范化这些差异后 SQL 输出一致，不能宣称原样回归全绿。插件/JIT/残留 preload 检查限于每个平台 PG18。全部上游 control 与 11 个 SQL 文件原样安装并逐文件比较。
+
+EL8 完整构建发现 GCC8 在 DuckDB `filter_combiner.cpp:1174` 的 reference_wrapper 转换错误。RPM spec 仅在 EL8 改用 GCC Toolset 15、匹配 annobin 和 C17 native C 语义后，双架构 PG15–18 全部通过。EL10 直接 rpmbuild 编排恢复仓库 wrapper 已有的 `QA_RPATHS=3`，并验证实际 RUNPATH 仅为对应 PG 库目录。Ubuntu 26.04 的符号比较脚本固定 `LC_ALL=C` 解决 uutils sort/comm 的 locale 排序差异，原包重验通过；未修改 DEB recipe 或通用源码补丁。EL8 HTTP 测试兼容 Python3.6。原失败日志均保留。
+
+本轮产物已取回本地 `rpm/yum/<el>.<arch>/` 与 `deb/apt/<codename>/`：24 RPM 主包、24 debuginfo、24 debugsource、24 SRPM；40 DEB 主包、40 dbgsym、10 buildinfo、10 changes，共 **196 个文件**。所有文件独立复核 SHA-256 和大小，DEB 元数据引用与实际文件一致；全部路径被 Git 忽略。
+
+完整矩阵、实际系统/工具链、逐文件哈希、失败与重试记录位于 `/Users/vonng/tmp/duckdb-fdw-matrix-20261024/REPORT.md`、`verification.json`、`artifacts/manifest.json`、`environments/` 和 `logs/`；复现入口为该目录的 `REPRODUCE.md`。未复用首轮代表性二进制包。完整 DWARF、LLVM bitcode/index、动态插件均保留，未用 llvm=0 回退。
+
+必要修复与本文记录保持未提交。未导入生产 staging、签名、发布源码/YUM/APT 或写入 pgext；未重编 pg_duckdb。下面的首轮记录保留其当时的验证范围和制品哈希，后续支持范围以上述矩阵为准。
+
 ## 固定来源
 
 | 项目 | 正式 tag / commit | 归档和 SHA-256 |
@@ -25,7 +44,7 @@ DEB 独有适配：大型静态核心超过 noble `dwz` 的 DIE 数量限制，�
 
 删除旧 2.0.1 补丁和 `shlibs.local`；原有 PG API、slot、连接/事务、类型和普通方括号文本适配采用正式上游实现，不复用旧源码修改。新通用补丁仅涉及静态构建、静态扩展注册和运行时 guard；与 RPM 的 `duckdb_fdw-2.0.2-static.patch` 逐字一致。11 个 SQL/升级脚本及 control 原样安装并逐文件比较，不新增迁移。
 
-## 2026-10-24 实际验收
+## 2026-10-24 首轮代表性验收
 
 先完成 EL9 RPM 验收，再开始本次 noble 构建。实际环境：Ubuntu **24.04.5 LTS**，arm64/aarch64，PostgreSQL **18.6-1.pgdg24.04+2**，GCC **13.3.0**，CMake **3.28.3**，Clang/LLVM **19.1.1**。镜像 `pgsty/u24a:build` 的 ID 为 `sha256:a4fa63b43bba30fbab4d71d85bcff43a4b9bc95a539e7d6e15af4201c19c7b89`，独立容器为 `duckdb-fdw-20261024-u24a` 和 `duckdb-fdw-20261024-u24a-peer`。
 
@@ -73,12 +92,12 @@ noble builder 的 `/etc/dpkg/dpkg.cfg.d/excludes` 默认过滤大部分文档。
 - `logs/u24a-runtime.log`、`u24a-qa-final/`、`u24a-peer-tests.log`、`u24a-peer-qa-final/`：运行和错误组合验证。
 - `artifacts/u24a/`：主包、dbgsym、buildinfo、changes；`artifacts/manifest.json` 包含大小与 SHA-256。
 
-主包 SHA-256 为 `4c6aa7550c29bdd7465dd9718aafd87bf9780c689ba46edb6cf3d936a3906d2b`，dbgsym 为 `c7dd5918d3badd842836d37d7c4d327b2c13fc03c4ebf13a73d5ca67b8234c8e`。本次是完整代表性二进制包和运行验收，没有生成 DEB source package，也没有执行十平台矩阵。
+主包 SHA-256 为 `4c6aa7550c29bdd7465dd9718aafd87bf9780c689ba46edb6cf3d936a3906d2b`，dbgsym 为 `c7dd5918d3badd842836d37d7c4d327b2c13fc03c4ebf13a73d5ca67b8234c8e`。该首轮记录是代表性二进制包和运行验收，没有生成 DEB source package；之后已完成十平台矩阵，见上文。
 
-## 后续范围
+## 首轮范围与后续验证
 
-本次仅 PG18 获得完整包和运行验证。在 EL9 对 PG14.24 的后续编译探测发现，正式 2.0.2 使用了 PG14 没有的 `boolVal` / `makeBoolean`，LLVM 编译失败（`logs/el9a-pg14-compile-probe-final.log`）。因此两侧默认入口收敛为 PG15–18，PG14 列为兼容性待办；没有修改已验收 PG18 的编译/链接输入。PG15–17 尚待完整包和运行验证，建议先补 PG17 再 PG15/16；其他发行版/架构分别核对编译器、系统 ABI 和对应官方插件。EL9 RPM 依赖不能作为 EL8 可用性的证据，noble 包也不能直接用于其他 Ubuntu/Debian 版本。无需因此重编 pg_duckdb 或其他无编译输入变化的扩展。
+首轮仅 PG18 获得完整包和运行验证；后续矩阵已覆盖 PG15–18。在 EL9 对 PG14.24 的后续编译探测发现，正式 2.0.2 使用了 PG14 没有的 `boolVal` / `makeBoolean`，LLVM 编译失败（`logs/el9a-pg14-compile-probe-final.log`）。因此两侧默认入口收敛为 PG15–18，PG14 列为兼容性待办；没有修改已验收 PG18 的编译/链接输入。后续矩阵已补齐 PG15–17 完整包和运行验证，各发行版/架构均分别核对编译器、系统 ABI 与 PG18 对应官方插件。EL9 RPM 依赖不能作为 EL8 可用性的证据，noble 包也不能直接用于其他 Ubuntu/Debian 版本。无需因此重编 pg_duckdb 或其他无编译输入变化的扩展。
 
-当前状态为代表性完整包和运行验收通过，未推送、导入 APT/YUM、签名或发布。pgext 版本、source 两个归档、移除旧 pg_duckdb 依赖和标注同 PG 安装互斥均列为后续元数据待办，尚未写入数据库。
+当前状态为完整矩阵的包与运行验收通过且产物已取回本地，未推送、导入 APT/YUM、签名或发布。pgext 版本、source 两个归档、移除旧 pg_duckdb 依赖和标注同 PG 安装互斥均列为后续元数据待办，尚未写入数据库。
 
-补充 EL8 情况：另在 Rocky 8.10 ARM64 PG18、GCC 8.5、LLVM 21.1.8 做了 180 秒编译探测。依赖和配置通过，完成 88/2,018 步后按时限中止，未发现真实编译错误，也没有完成包或运行验证；不能宣称 EL8 已支持。详见证据目录 `logs/el8a-probe.log`。
+首轮 EL8 探测记录（后续已完成双架构 PG15–18，见上文）：另在 Rocky 8.10 ARM64 PG18、GCC 8.5、LLVM 21.1.8 做了 180 秒编译探测。依赖和配置通过，完成 88/2,018 步后按时限中止，未发现真实编译错误，也没有完成包或运行验证；该时限探测本身不能作为 EL8 可用性的证据。详见证据目录 `logs/el8a-probe.log`。
