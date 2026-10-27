@@ -1,8 +1,8 @@
 all: move
 
-# Source: https://api.github.com/repos/bunko666-cloud/pg_nanotime/tarball/v0.2.0
-# Normalize the official tag archive root to pg_nanotime-0.2.0 with GNU tar.
-TARBALL := pg_nanotime-0.2.0.tar.gz
+# Source: https://api.github.com/repos/bunko666-cloud/pg_nanotime/tarball/v0.3.0
+# Normalize the official tag archive root to pg_nanotime-0.3.0 with GNU tar.
+TARBALL := pg_nanotime-0.3.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
