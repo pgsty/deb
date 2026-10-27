@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := vault-0.3.1.tar.gz
+TARBALL := vault-0.3.2.tar.gz
 
 # prepare directory
 setup:
