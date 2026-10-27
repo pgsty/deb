@@ -1,6 +1,6 @@
 all: move
 
-TARBALL := textsearch_intl-1.0.0.tar.gz
+TARBALL := textsearch_intl-1.0.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
