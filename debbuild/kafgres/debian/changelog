@@ -1,3 +1,9 @@
+kafgres (0.3.1-1PGSTY) unstable; urgency=medium
+
+  * Update to 0.3.1 and migrate the locked build to pgrx 0.19.3.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 27 Oct 2026 00:00:00 +0800
+
 kafgres (0.3.0-1PGSTY) unstable; urgency=medium
 
   * Update to 0.3.0.
