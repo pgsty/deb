@@ -10,6 +10,6 @@ Homepage: https://github.com/supabase/index_advisor
 Package: postgresql-PGVERSION-index-advisor
 Architecture: all
 Provides: postgresql-index-advisor
-Depends: ${postgresql:Depends}, ${misc:Depends}
+Depends: ${postgresql:Depends}, ${misc:Depends}, postgresql-PGVERSION-hypopg
 Description: PostgreSQL Index Advisor
   A PostgreSQL extension for recommending indexes to improve query performance.
