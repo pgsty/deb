@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := supautils-3.4.4.tar.gz
+TARBALL := supautils-4.0.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
