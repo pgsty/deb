@@ -1,3 +1,9 @@
+pg-lake (3.5.9-1PGSTY) unstable; urgency=medium
+
+  * Update to pg_lake 3.5.9 with the pinned DuckDB and Avro runtimes.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 27 Oct 2026 00:00:00 +0800
+
 pg-lake (3.5.3-1PGSTY) unstable; urgency=medium
 
   * Update to 3.5.3.
