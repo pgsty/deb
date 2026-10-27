@@ -1,3 +1,11 @@
+pg-ducklake (1.0.3-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to the upstream 1.0.3 bug-fix release.
+  * Refresh the normalized multi-repository source manifest and patch name.
+  * Build only the bundled static archives used by the PostgreSQL module.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 27 Oct 2026 00:00:00 +0800
+
 pg-ducklake (1.0.2-1PGSTY) unstable; urgency=medium
 
   * Upgrade to the upstream 1.0.2 bug-fix release.

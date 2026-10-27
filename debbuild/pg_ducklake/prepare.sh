@@ -4,9 +4,9 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
-VERSION="${VERSION:-1.0.2}"
+VERSION="${VERSION:-1.0.3}"
 UPSTREAM_REPO="${UPSTREAM_REPO:-https://github.com/relytcloud/pg_ducklake.git}"
-UPSTREAM_COMMIT="${UPSTREAM_COMMIT:-b7da9fc28f4845a7c84c026ca6569d2d289ea303}"
+UPSTREAM_COMMIT="${UPSTREAM_COMMIT:-9fef142965aa4af3e9da17be7ce210ed90f12ed6}"
 DUCKDB_REPO="${DUCKDB_REPO:-https://github.com/duckdb/duckdb.git}"
 DUCKDB_COMMIT="${DUCKDB_COMMIT:-9a64d338f2fa1d3c1d43c016b09c538b529dd397}"
 DUCKLAKE_REPO="${DUCKLAKE_REPO:-https://github.com/duckdb/ducklake.git}"

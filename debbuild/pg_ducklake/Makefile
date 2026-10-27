@@ -1,9 +1,9 @@
 all: build move
 
-VERSION := 1.0.2
+VERSION := 1.0.3
 TARBALL := pg_ducklake-$(VERSION).tar.gz
 ROARING_VERSION := 4.7.1
-# Upstream v1.0.2 CI pins vcpkg 84bab45d, whose roaring port is 4.5.0.
+# Upstream v1.0.3 CI pins vcpkg 84bab45d, whose roaring port is 4.5.0.
 # Keep Pigsty's already-validated 4.7.1; CRoaring 5 is a separate major upgrade.
 ROARING_TARBALL := CRoaring-$(ROARING_VERSION)-amalgamation.tar.gz
 PATCH := patches/pg_ducklake-$(VERSION).patch
