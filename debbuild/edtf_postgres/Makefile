@@ -1,5 +1,6 @@
-TARBALL := edtf_postgres-1.2.3.tar.gz
+TARBALL := edtf_postgres-1.3.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+SOURCE_PATCH := patches/edtf-postgres-1.3.2-pgrx-0.19.3.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS ?= 14 15 16 17 18
@@ -9,12 +10,14 @@ all: move
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL); run pig build get edtf_postgres first" >&2; exit 1)
-	@echo "3be44049d4fdff0a512ea8118df8aba517c525ae053c74b94bc7e7737d34e206  $(SOURCE_TARBALL)" | sha256sum -c -
+	@echo "139ffd3675a8cbcca780f9c511dcf8b8f3f2e8a3aa46f6c9aade35e7b8ac0cc2  $(SOURCE_TARBALL)" | sha256sum -c -
+	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH)"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(SOURCE_PATCH)
 	rm -rf $(BUILD_DIR)/debian
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions

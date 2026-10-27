@@ -15,11 +15,11 @@ override_dh_auto_test:
 export CARGO_PROFILE_RELEASE_DEBUG = 2
 export CARGO_PROFILE_RELEASE_STRIP = none
 export RUSTFLAGS := $(RUSTFLAGS) -C link-arg=-Wl,--no-gc-sections
-export PATH := /opt/pgrx-0.19.2/bin:$(HOME)/.cargo/bin:$(PATH)
+export PATH := /opt/pgrx-0.19.3/bin:$(HOME)/.cargo/bin:$(PATH)
 export CARGO_BUILD_JOBS ?= 2
 
 override_dh_auto_build:
-	test "$$(cargo pgrx --version | awk '{print $$2}')" = "0.19.2"
+	test "$$(cargo pgrx --version | awk '{print $$2}')" = "0.19.3"
 	sha256sum Cargo.lock > .cargo-lock.before
 	cargo fetch --locked
 	set -e; for v in $(PG_VERSIONS); do \
