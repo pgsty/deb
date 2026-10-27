@@ -1,3 +1,10 @@
+wrappers (0.6.4-1PGSTY) unstable; urgency=medium
+
+  * Update to wrappers 0.6.4 and migrate the locked build to pgrx 0.19.3.
+  * Find cargo-pgrx in the configured Cargo bin directory in non-login shells.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 27 Oct 2026 00:00:00 +0800
+
 wrappers (0.6.3-1PGSTY) unstable; urgency=medium
 
   * Update to 0.6.3.
