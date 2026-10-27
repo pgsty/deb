@@ -1,3 +1,9 @@
+plpgsql-check (2.10.16-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 2.10.16.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 27 Oct 2026 00:00:00 +0800
+
 plpgsql-check (2.10.15-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 2.10.15.
