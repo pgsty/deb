@@ -1,8 +1,8 @@
 all: setup build move
 
-# Source: https://github.com/jimjonesbr/rdf_fdw/archive/refs/tags/v3.0.tar.gz
-# Normalize the root/version to rdf_fdw-3.0.0; the SQL extension version is 3.0.
-TARBALL := rdf_fdw-3.0.0.tar.gz
+# Source: https://github.com/jimjonesbr/rdf_fdw/archive/refs/tags/v3.1.tar.gz
+# Normalize the root/version to rdf_fdw-3.1.0; the SQL extension version is 3.1.
+TARBALL := rdf_fdw-3.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
