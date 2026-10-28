@@ -1,0 +1,17 @@
+Source: oai-fdw
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev, libxml2-dev, pkg-config
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jimjonesbr/oai_fdw
+
+Package: postgresql-PGVERSION-oai-fdw
+Architecture: any
+Provides: postgresql-oai-fdw
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: OAI-PMH foreign data wrapper for PostgreSQL
+ Read metadata from OAI-PMH repositories over HTTP or HTTPS through foreign
+ tables. This is a read-only wrapper using libcurl and libxml2. Distribution
+ version 1.16.0 uses the upstream SQL extension version 1.16.

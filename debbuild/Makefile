@@ -90,12 +90,13 @@ pg_improv:		# rust pgrx 0.19.3, Rust 1.97+
 pg_agent_gate:           # rust pgrx 0.19.3, PostgreSQL 18 only
 	$(MAKE) -C pg_agent_gate
 
-.PHONY: pg_agent_gate
-
 pg_integrity_checksums:  # SQL extension, unrelated to the pg_checksums utility
 	$(MAKE) -C pg_integrity_checksums
 
-.PHONY: pg_agent_gate pg_integrity_checksums
+oai_fdw:
+	$(MAKE) -C oai_fdw
+
+.PHONY: pg_agent_gate pg_integrity_checksums oai_fdw
 
 pg_kv:			# rust pgrx 0.19.3, shared-memory cache
 	cd pg_kv && make
