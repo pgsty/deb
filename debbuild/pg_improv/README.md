@@ -1,15 +1,15 @@
 # pg_improv packaging
 
-This recipe and the RPM spec use the upstream **0.10.0** archive with an identical
+This recipe and the RPM spec use the upstream **0.12.1** archive with an identical
 packaging patch for pgrx **0.19.3**. The patch updates the extension dependency
 lockfile and removes the obsolete pgrx embed binary; the original archive is
 unchanged.
 
 - Upstream: <https://codeberg.org/gregburd/improv>
-- Release mirror: <https://github.com/gburd/improv/releases/tag/v0.10.0>
-- Source: <https://github.com/gburd/improv/archive/refs/tags/v0.10.0.tar.gz>
-- Archive: `improv-0.10.0.tar.gz`, root `improv-0.10.0/`
-- SHA-256: `4d27747a90a358750ddd05811687618c1de97e1c73743d97c92d98aed38ad626`
+- Release: <https://codeberg.org/gregburd/improv/src/tag/v0.12.1>
+- Source: <https://codeberg.org/gregburd/improv/archive/v0.12.1.tar.gz>
+- Archive: `improv-0.12.1.tar.gz`, root `improv-0.12.1/`
+- SHA-256: `491b23690ee9c2de6deba93ac0f773a7365953b8d580ab9c65cfc300ae188487`
 - License: Apache-2.0 OR MIT
 - PostgreSQL feature range: 15–18
 - Required toolchain: Rust 1.97 or newer, cargo-pgrx **0.19.3**, libclang
@@ -24,23 +24,23 @@ is retained for RPM debuginfo/debugsource and Debian's automatic dbgsym split.
 Upstream does not emit PGXS bitcode for this Rust extension.
 
 Run `pig build get pg_improv` first. Until the catalogue and source mirror
-are updated, copy only `improv-0.10.0.tar.gz` into the builder's source
+are updated, copy only `improv-0.12.1.tar.gz` into the builder's source
 directory (`~/rpmbuild/SOURCES/` on RPM; `~/ext/src/` linked by
 `~/debbuild/SOURCES` on DEB). Prepare the matching toolchain:
 
 ```sh
-pig build pgrx -v 0.19.3 --pg 17
+pig build pgrx -v 0.19.3 --pg 18
 # RPM
 cd ~/rpmbuild
-./dep pg_improv 17
-./build pg_improv 17
+./dep pg_improv 18
+./build pg_improv 18
 # DEB
 cd ~/debbuild/pg_improv
-make PG_VERSIONS=17
+make PG_VERSIONS=18
 ```
 
 `make` defaults to PG15–18 on DEB; the RPM shortcut selects the same range.
-The package installs the generated base SQL and all three migration scripts
+The package installs the generated base SQL and every migration script
 shipped by upstream. No migration or product behavior is added by packaging.
 
 The package does not change PostgreSQL configuration. Manual and trigger
@@ -64,7 +64,22 @@ transaction rollback, commit/logical modes, dump/restore, and real financial
 models with what-if scenarios. The GUI/CLI and DuckDB extension are separate
 products and are not installed by these packages.
 
-## Trial validation, 2026-10-23
+## Trial validation: 0.12.1, 2026-10-28
+
+PostgreSQL 18.6 builds, installation and upstream `txn.sh` / `finance.sh` passed
+on Rocky Linux 9.8 aarch64 and Ubuntu 24.04.5 arm64. Main packages and all
+RPM debuginfo/debugsource and DEB dbgsym payloads were checked, including DWARF
+and matching build IDs. The dependency lockfile remained unchanged.
+The temporary EL9 finance test disables logging_collector to avoid a log-path
+conflict; the archive and installed packages are unchanged. Other PostgreSQL
+versions were not built or tested in this pilot.
+
+Artifacts and evidence: `/Users/vonng/tmp/pgxn-packaging-20261028-hassp03o/`.
+No commit, production matrix, repository import or publication was performed.
+
+## Historical trial validation: 0.10.0, 2026-10-23
+
+The results below apply to 0.10.0, not to other PostgreSQL versions of 0.12.1.
 
 PostgreSQL 17.11 builds and installation passed on `pgsty/el9a:build`
 (Rocky Linux 9.8, aarch64) and `pgsty/u24a:build` (Ubuntu 24.04.5 noble,
