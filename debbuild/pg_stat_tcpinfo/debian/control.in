@@ -1,0 +1,18 @@
+Source: pg-stat-tcpinfo
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/jakubwartakEDB/pg_stat_tcpinfo
+
+Package: postgresql-PGVERSION-pg-stat-tcpinfo
+Architecture: any
+Provides: postgresql-pg-stat-tcpinfo
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Detailed Linux TCP socket statistics for PostgreSQL
+ Expose TCP connections owned by the PostgreSQL server OS user, including
+ round-trip time, retransmissions, congestion control and queue statistics.
+ Requires Linux 4.18 or newer with procfs and NETLINK_INET_DIAG.
+ Access is restricted to PostgreSQL monitoring roles; no preload is needed.
