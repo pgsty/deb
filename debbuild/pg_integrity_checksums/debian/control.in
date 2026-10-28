@@ -1,0 +1,18 @@
+Source: pg-integrity-checksums
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/VictorNagibator/pg_integrity_checksums
+
+Package: postgresql-PGVERSION-pg-integrity-checksums
+Architecture: any
+Provides: postgresql-pg-integrity-checksums
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Physical and logical data checksums for PostgreSQL
+ Compute physical and logical checksums for pages, cells, rows, tables,
+ indexes and databases. This is the renamed continuation of the SQL extension
+ pg_checksums, unrelated to the PostgreSQL and PGDG command-line utilities.
+ Follow upstream MIGRATION.md when moving from the old extension name.
