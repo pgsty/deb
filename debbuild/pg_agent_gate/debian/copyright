@@ -1,0 +1,11 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: pg_agent_gate
+Source: https://github.com/Manuelreyesbravo/pg_agent_gate
+
+Files: *
+Copyright: 2026 Manuel Reyes Bravo
+License: Apache-2.0
+
+License: Apache-2.0
+ On Debian systems, the complete Apache License version 2.0 is available in
+ /usr/share/common-licenses/Apache-2.0.

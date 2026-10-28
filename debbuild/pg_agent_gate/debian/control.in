@@ -1,0 +1,18 @@
+Source: pg-agent-gate
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), clang | clang-21 | clang-19 | clang-15, pkg-config, libssl-dev, libicu-dev
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/Manuelreyesbravo/pg_agent_gate
+
+Package: postgresql-PGVERSION-pg-agent-gate
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: Server-side SQL proposal and approval gate for agent roles
+ Verify and execute SQL proposals under an agent role's own privileges,
+ record attempts and optionally require human approval before commit.
+ The library must be loaded before the agent's first statement using
+ shared or role-level session preload. Optional bound assertions use
+ the separate pg_living_assertions extension.

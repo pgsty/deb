@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+
+PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+
+%:
+	dh $@ --with pgxs
+
+override_dh_auto_build:
+	# cargo-pgrx packages are built by the outer recipe with locked dependencies.
+
+override_dh_auto_clean:
+	# Preserve the binaries prepared by the outer recipe.
+
+override_dh_auto_test:
+	# Run installed-package integration tests in a disposable PostgreSQL instance.
+
+override_dh_pgxs_test:
+	# This Rust crate has no PGXS installcheck target.
+	# Run tests/approvals.sh against the installed package instead.
+
+override_dh_auto_install:
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
+	    PKG=postgresql-$$PG_VERSION-pg-agent-gate; \
+	    DIR=target/release/pg_agent_gate-pg$$PG_VERSION; \
+	    mkdir -p debian/$$PKG/usr/lib/postgresql/$$PG_VERSION/lib debian/$$PKG/usr/share/postgresql/$$PG_VERSION/extension; \
+	    cp $$DIR/usr/lib/postgresql/$$PG_VERSION/lib/pg_agent_gate.so debian/$$PKG/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp $$DIR/usr/share/postgresql/$$PG_VERSION/extension/* debian/$$PKG/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    cp sql/pg_agent_gate--*.sql debian/$$PKG/usr/share/postgresql/$$PG_VERSION/extension/; \
+	done

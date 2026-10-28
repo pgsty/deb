@@ -1,0 +1,7 @@
+pg-agent-gate (0.3.0-1PGSTY) unstable; urgency=medium
+
+  * Initial release for PostgreSQL 18.
+  * Pin pgrx 0.19.3 and a shared Cargo.lock for reproducible builds.
+  * Preserve upstream SQL updates and full release debug information.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 28 Oct 2026 14:00:00 +0800

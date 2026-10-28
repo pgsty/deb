@@ -87,6 +87,11 @@ pg_jsonschema:
 pg_improv:		# rust pgrx 0.19.3, Rust 1.97+
 	cd pg_improv && make
 
+pg_agent_gate:           # rust pgrx 0.19.3, PostgreSQL 18 only
+	$(MAKE) -C pg_agent_gate
+
+.PHONY: pg_agent_gate
+
 pg_kv:			# rust pgrx 0.19.3, shared-memory cache
 	cd pg_kv && make
 
