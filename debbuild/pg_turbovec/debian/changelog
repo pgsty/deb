@@ -1,3 +1,10 @@
+pg-turbovec (2.15.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 2.15.0.
+  * Fix empty-IVF fallback and reporting; cache query decoding and rotation matrices.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 29 Oct 2026 12:00:00 +0800
+
 pg-turbovec (2.14.1-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 2.14.1.
