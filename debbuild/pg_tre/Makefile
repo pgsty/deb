@@ -1,8 +1,8 @@
 all: move
 
 # Complete upstream release archive with pinned TRE and Lime sources.
-# https://github.com/gburd/pg_tre/releases/download/v4.5.2/pg_tre-4.5.2.tar.gz
-TARBALL := pg_tre-4.5.2.tar.gz
+# https://github.com/gburd/pg_tre/releases/download/v4.5.3/pg_tre-4.5.3.tar.gz
+TARBALL := pg_tre-4.5.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -18,7 +18,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR)/debian
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	cd $(BUILD_DIR) && patch -p1 --fuzz=0 < ../patches/pg-tre-4.5.2-build-flags.patch
+	cd $(BUILD_DIR) && patch -p1 --fuzz=0 < ../patches/pg-tre-4.5.3-build-flags.patch
 	OS_CODENAME=$$(lsb_release -sc); \
 		sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
