@@ -1,3 +1,10 @@
+pg-fts (1.14.3-1PGSTY) unstable; urgency=high
+
+  * Update to upstream 1.14.3.
+  * Fix ranked-scan backend crashes and BM25 scorer out-of-bounds reads.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 29 Oct 2026 12:00:00 +0800
+
 pg-fts (1.14.2-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.14.2.
