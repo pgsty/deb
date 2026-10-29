@@ -1,3 +1,10 @@
+pg-incremental (1.6.1-1PGSTY) unstable; urgency=high
+
+  * Update to upstream 1.6.1.
+  * Include upstream search_path and pipeline privilege security fixes.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 29 Oct 2026 12:00:00 +0800
+
 pg-incremental (1.5.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 1.5.0.
