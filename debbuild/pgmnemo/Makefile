@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pgmnemo-0.20.0.tar.gz
+TARBALL := pgmnemo-0.21.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -12,7 +12,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
-	cp -f $(BUILD_DIR)/extension/pgmnemo.control $(BUILD_DIR)/pgmnemo.control
+	test -e $(BUILD_DIR)/pgmnemo.control || cp $(BUILD_DIR)/extension/pgmnemo.control $(BUILD_DIR)/pgmnemo.control
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
