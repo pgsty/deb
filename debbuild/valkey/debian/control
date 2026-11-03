@@ -9,6 +9,7 @@ Build-Depends:
  openssl <!nocheck>,
  pkgconf,
  procps <!nocheck>,
+ quilt,
  tcl <!nocheck>,
  tcl-tls <!nocheck>
 Standards-Version: 4.7.2
