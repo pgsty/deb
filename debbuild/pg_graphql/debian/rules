@@ -17,7 +17,7 @@ override_dh_auto_clean:
 	# Disable the clean step to avoid cleaning up pre-built binaries
 
 override_dh_auto_install:
-	for PG_VERSION in $(PG_VERSIONS); do \
+	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
 	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
 	    dh_installdirs -p$$FULL_NAME; \
@@ -26,9 +26,8 @@ override_dh_auto_install:
 	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
 	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	    EXT_DIR=$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-	    test "$$(find $$EXT_DIR -maxdepth 1 -type f -name 'pg_graphql*.sql' | wc -l)" -eq 2; \
-	    test -f $$EXT_DIR/pg_graphql--1.6.1--1.6.2.sql; \
-	    test -f $$EXT_DIR/pg_graphql--1.6.2.sql; \
+	    test "$$(find $$EXT_DIR -maxdepth 1 -type f -name 'pg_graphql*.sql' | wc -l)" -eq 1; \
+	    test -f $$EXT_DIR/pg_graphql--1.6.3.sql; \
 	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
 	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
 	done

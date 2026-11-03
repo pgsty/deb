@@ -2,7 +2,7 @@ Source: pg-graphql
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, rustc
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), clang | clang-15 | clang-19 | clang-21, pkg-config, libssl-dev, libicu-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/supabase/pg_graphql
@@ -13,7 +13,5 @@ Provides: postgresql-pg-graphql
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: GraphQL support for PostgreSQL
  pg_graphql reflects a GraphQL schema from the existing PostgreSQL schema and
- resolves queries inside the database server. This package builds PostgreSQL
- 14 through 18. The shipped catalog edge starts at extension version 1.6.1;
- older catalogs require a separately audited path. Disconnect old backends or
- restart PostgreSQL before relying on the 1.6.2 query-depth security limit.
+ resolves queries inside the database server. This package supports
+ PostgreSQL 14 through 18.

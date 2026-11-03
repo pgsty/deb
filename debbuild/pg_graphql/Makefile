@@ -2,15 +2,18 @@ CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
-all: setup build move
+all: move
 
-TARBALL := pg_graphql-1.6.2.tar.gz
+TARBALL := pg_graphql-1.6.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.2
-SOURCE_PATCH := patches/pg-graphql-1.6.2.patch
+PGRX_VERSION := 0.19.3
+RUST_VERSION := 1.99.0
+CARGO_BUILD_JOBS ?= 2
+export CARGO_BUILD_JOBS
+SOURCE_PATCH := patches/pg-graphql-1.6.3.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -32,9 +35,9 @@ apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
 	@(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
 
-build: building packaging
+build: packaging
 
-building: check-pgrx
+building: check-build-deps
 	cd $(BUILD_DIR) && \
 	RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
@@ -51,27 +54,30 @@ building: check-pgrx
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 		    CARGO_NET_OFFLINE=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 		    EXT_DIR=target/release/pg_graphql-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
-		    cp -f sql/pg_graphql--*--*.sql "$$EXT_DIR/"; \
+		    find sql -maxdepth 1 -type f -name 'pg_graphql--*--*.sql' -exec cp -t "$$EXT_DIR" {} +; \
 		done
 
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.after && cmp .pgrx-locks.before .pgrx-locks.after && rm -f .pgrx-locks.before .pgrx-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.after && cmp .pgrx-locks.before .pgrx-locks.after
+
+check-build-deps: setup check-pgrx
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol && dpkg-checkbuilddeps
 
 check-pgrx:
-	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
+	@test "$$(RUSTUP_TOOLCHAIN=stable rustc --version | awk '{print $$2}')" = "$(RUST_VERSION)" || (echo "Rust $(RUST_VERSION) is required in the builder Rustup stable toolchain" >&2; exit 1)
+	@CURRENT=$$(RUSTUP_TOOLCHAIN=stable cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
 	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
 	    exit 1; \
 	fi
 
-packaging:
+packaging: building
 	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
-	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc
 
-move:
+move: build
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-patches setup apply-patches build building check-pgrx packaging move clean
+.PHONY: all check-src check-patches setup apply-patches build building check-build-deps check-pgrx packaging move clean
