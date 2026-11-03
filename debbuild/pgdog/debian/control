@@ -3,6 +3,12 @@ Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends:
+ bison,
+ flex,
+ libicu-dev,
+ libreadline-dev,
+ make,
+ zlib1g-dev,
  cargo,
  clang,
  cmake,
@@ -24,7 +30,7 @@ Architecture: any
 Depends: adduser, ca-certificates, postgresql-client-18, ${shlibs:Depends}, ${misc:Depends}
 Description: PostgreSQL proxy, pooler, load balancer, sharder and query router
  PgDog is a PostgreSQL proxy, pooler, load balancer, sharder and query router
- written in Rust. Version 0.1.62 uses the new parser and plugin ABI 0.5;
+ written in Rust. Version 0.1.63 uses the new parser and plugin ABI 0.5;
  custom 0.1.32 plugins must be rebuilt and manual query fingerprints retired.
  .
  This package ships the PgDog daemon, a systemd service unit, and default

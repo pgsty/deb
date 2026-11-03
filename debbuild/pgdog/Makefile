@@ -4,13 +4,13 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pgdog-0.1.62.tar.gz
-VENDOR_TARBALL := pgdog-0.1.62-vendor.tar.gz
+TARBALL := pgdog-0.1.63.tar.gz
+VENDOR_TARBALL := pgdog-0.1.63-vendor.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 VENDOR_SOURCE_TARBALL ?= ../SOURCES/$(VENDOR_TARBALL)
-SOURCE_PATCH := patches/pgdog-0.1.62.patch
+SOURCE_PATCH := patches/pgdog-0.1.63.patch
 RUST_TOOLCHAIN := 1.96.1
-PGDOG_GIT_HASH := 96ba64d
+GIT_HASH := 3f2b2ea
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
@@ -31,10 +31,11 @@ setup: check-src
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
-# building deb
+# The builder supplies Rust/Cargo 1.96.1 through rustup, outside dpkg.
+# Verify the remaining Build-Depends before using dpkg-buildpackage -d.
 build:
 	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) cargo fetch --locked
-	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PGDOG_GIT_HASH=$(PGDOG_GIT_HASH) dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) GIT_HASH=$(GIT_HASH) dpkg-buildpackage -b -us -uc -d
 
 # collect deb
 move:

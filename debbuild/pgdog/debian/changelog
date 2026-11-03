@@ -1,3 +1,11 @@
+pgdog (0.1.63-1PGSTY) unstable; urgency=high
+
+  * Update to upstream security release 0.1.63.
+  * Vendor each pinned Git source without changing the upstream Cargo.lock.
+  * Preserve upstream deterministic GIT_HASH support.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 12:00:00 +0800
+
 pgdog (0.1.62-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.1.62.
