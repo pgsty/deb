@@ -1,6 +1,6 @@
-all: setup build move
+all: move
 
-TARBALL := agensgraph-2.18.6.0.tar.gz
+TARBALL := agensgraph-2.18.6.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -17,15 +17,15 @@ setup: check-src
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 # building deb
-build:
+build: setup
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
 # collect deb
-move:
+move: build
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 # remove building artifacts
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup update build move clean ls
+.PHONY: all check-src setup build move clean

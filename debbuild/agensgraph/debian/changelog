@@ -1,3 +1,12 @@
+agensgraph-18 (2.18.6.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream AgensGraph 2.18.6.1 based on PostgreSQL 18.6.
+  * Preserve the complete kernel, contrib, LLVM bitcode and debug payload.
+  * Include upstream Apache-2.0 and PostgreSQL license notices.
+  * Honor DEB_BUILD_OPTIONS parallel limits during kernel compilation.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 05:25:00 +0800
+
 agensgraph-18 (2.18.6.0-1PGSTY) unstable; urgency=medium
 
   * Update AgensGraph to 2.18.6.0 based on PostgreSQL 18.6.
