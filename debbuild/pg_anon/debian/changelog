@@ -1,3 +1,11 @@
+pg-anon (3.3.2-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 3.3.2 with its locked pgrx 0.19.3 dependencies.
+  * Correct the root package version in the upstream Cargo.lock.
+  * Declare native build dependencies and retain normal dependency checks.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 02:05:00 +0800
+
 pg-anon (3.2.3-1PGSTY) unstable; urgency=medium
 
   * Update to 3.2.3.

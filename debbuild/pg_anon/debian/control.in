@@ -2,7 +2,7 @@ Source: pg-anon
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), clang | clang-21 | clang-19 | clang-15, pkg-config, libssl-dev, libicu-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://gitlab.com/dalibo/postgresql_anonymizer

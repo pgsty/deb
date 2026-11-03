@@ -2,14 +2,14 @@ CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
-all: setup build move
+all: move
 
-TARBALL := postgresql_anonymizer-3.2.3.tar.gz
+TARBALL := postgresql_anonymizer-3.3.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.2
+PG_VERSIONS ?= 14 15 16 17 18
+PGRX_VERSION := 0.19.3
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -18,25 +18,23 @@ setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) -name '._*' -delete
+	cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < ../patches/pg-anon-3.3.2-lock-version.patch
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	# The source archive includes the pgrx 0.19.2 dependency update.
+	# Upstream already uses pgrx 0.19.3; correct only the stale root lock version.
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
-build: building packaging
+build: packaging
 
-building: check-pgrx
-	cd $(BUILD_DIR) && \
-	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
-	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
-	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
-	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
-	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
-	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
-	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0192-cargo-locks.before
+building: setup check-pgrx
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol && dpkg-checkbuilddeps
+	set -e; cd $(BUILD_DIR); \
+	for PG_VERSION in $(PG_VERSIONS); do \
+	    PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init --pg$$PG_VERSION=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config --no-run; \
+	done
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .cargo-locks.before
+	@test -s $(BUILD_DIR)/.cargo-locks.before
 	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	cd $(BUILD_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
@@ -44,22 +42,21 @@ building: check-pgrx
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    CARGO_NET_OFFLINE=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0192-cargo-locks.before $(BUILD_DIR)/.pgrx0192-cargo-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .cargo-locks.after
+	cmp $(BUILD_DIR)/.cargo-locks.before $(BUILD_DIR)/.cargo-locks.after
 
 check-pgrx:
-	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
+	@CURRENT=$$(PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
 	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
 	    exit 1; \
 	fi
 
-packaging:
+packaging: building
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
-	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc
 
-move:
+move: build
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
