@@ -3,6 +3,10 @@
 export DH_VERBOSE=1
 export CB_PREFIX=/usr/cloudberry
 export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+NUMJOBS := $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+ifeq ($(NUMJOBS),)
+NUMJOBS := 1
+endif
 
 # Filter out flags that are unsafe for the bundled PostgreSQL/PAX build.
 export CFLAGS := $(filter-out -ffast-math -flto=% -ffat-lto-objects,$(shell dpkg-buildflags --get CFLAGS))
@@ -53,8 +57,8 @@ override_dh_auto_configure:
 override_dh_auto_build:
 	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
 	cd ../..
-	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
-	$(MAKE) -j$(shell nproc) -C contrib
+	MAKELEVEL=0 $(MAKE) -j$(NUMJOBS) world-bin
+	$(MAKE) -j$(NUMJOBS) -C contrib
 
 override_dh_auto_install:
 	install -d -m 0755 $(CURDIR)/debian/tmp$(CB_PREFIX)/share/postgresql/cdb_init.d
