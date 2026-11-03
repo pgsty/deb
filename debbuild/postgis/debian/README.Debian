@@ -30,12 +30,6 @@ postgresql-N.M-postgis-X.Y-scripts
     CREATE EXTENSION postgis;
     CREATE EXTENSION postgis_topology;        -- optional
 
-  PostGIS also ships a decoder for TIGER data in a separate extension
-  that can additionally be installed as follows:
-
-    CREATE EXTENSION fuzzystrmatch;
-    CREATE EXTENSION postgis_tiger_decoder;
-
 
 postgis
   This package contains the user-oriented PostGIS utilities for

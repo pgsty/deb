@@ -6,7 +6,6 @@ Comment: The OGC test cases are removed because they have unclear licensing,
  the work is probably licensed under the OGC Document Notice which doesn't
  permit modification.
 Files-Excluded: extras/ogc_test_suite/*
- .git/*
 
 Files: *
 Copyright:                   PostGIS Developers <postgis-devel@lists.osgeo.org>
@@ -55,9 +54,9 @@ Copyright:                   PostGIS Developers <postgis-devel@lists.osgeo.org>
             2004, 2008-2024, Paul Ramsey <pramsey@cleverelephant.ca>
                   2010-2024, Leo Hsu <lr@pcorp.us>
                        2024, Sam Peters <gluser1357@gmx.de>
-                  2008-2025, Sandro Santilli <strk@kbt.io>
                   2010-2025, Regina Obe <lr@pcorp.us>
-                  2017-2025, Darafei Praliaskouski <me@komzpa.net>
+                  2008-2026, Sandro Santilli <strk@kbt.io>
+                  2017-2026, Darafei Praliaskouski <me@komzpa.net>
 License: GPL-2+
 
 Files: deps/flatgeobuf/include/flatbuffers/*
@@ -73,7 +72,7 @@ Copyright: 2019, Raúl Marín
 License: GPL-2+
 
 Files: deps/uthash/*
-Copyright: 2003-2017, Troy D. Hanson (http://troydhanson.github.com/uthash/)
+Copyright: 2003-2026, Troy D. Hanson (http://troydhanson.github.com/uthash/)
 License: uthash
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
@@ -115,8 +114,8 @@ Copyright: 2005, Google Inc.
 License: BSD-3-Clause
 
 Files: deps/wagyu/Makefile.in
- deps/wagyu/lwgeom_wagyu.cpp
- deps/wagyu/lwgeom_wagyu.h
+       deps/wagyu/lwgeom_wagyu.cpp
+       deps/wagyu/lwgeom_wagyu.h
 Copyright: 2019, Raúl Marín
 License: GPL-2+
 
@@ -139,59 +138,47 @@ Copyright: 2003-2012, Sandro Santilli <strk@keybit.net>
 License: GPL-2+
 
 Files: doc/html/images/Makefile.in
- doc/html/images/generator.c
- doc/html/images/styles.c
- doc/html/images/styles.h
 Copyright: 2008, Kevin Neufeld
 License: GPL-2+
 
 Files: doc/xsl/list_3d_functions.xml.xsl
- doc/xsl/list_aggregates.xml.xsl
- doc/xsl/list_box_functions.xml.xsl
- doc/xsl/list_curved_geometry_functions.xml.xsl
- doc/xsl/list_dump_functions.xml.xsl
- doc/xsl/list_geography_functions.xml.xsl
- doc/xsl/list_new_functions.xml.xsl
- doc/xsl/list_raster_functions.xml.xsl
- doc/xsl/list_sqlmm_functions.xml.xsl
- doc/xsl/list_window_functions.xml.xsl
- doc/xsl/post_gis_day_cards.html.xsl
- doc/xsl/postgis_cheatsheet.html.xsl
- doc/xsl/postgis_comments.sql.xsl
- doc/xsl/postgis_gardentest.sql.xsl
- doc/xsl/postgis_reference.xml.xsl
- doc/xsl/raster_cheatsheet.html.xsl
- doc/xsl/raster_comments.sql.xsl
- doc/xsl/raster_gardentest.sql.xsl
- doc/xsl/sfcgal_cheatsheet.html.xsl
- doc/xsl/sfcgal_comments.sql.xsl
- doc/xsl/table_body_function_support_matrix.xml.xsl
- doc/xsl/tiger_geocoder_cheatsheet.html.xsl
- doc/xsl/tiger_geocoder_comments.sql.xsl
- doc/xsl/topology_cheatsheet.html.xsl
- doc/xsl/topology_comments.sql.xsl
- doc/xsl/topology_gardentest.sql.xsl
+       doc/xsl/list_aggregates.xml.xsl
+       doc/xsl/list_box_functions.xml.xsl
+       doc/xsl/list_curved_geometry_functions.xml.xsl
+       doc/xsl/list_dump_functions.xml.xsl
+       doc/xsl/list_geography_functions.xml.xsl
+       doc/xsl/list_new_functions.xml.xsl
+       doc/xsl/list_raster_functions.xml.xsl
+       doc/xsl/list_sqlmm_functions.xml.xsl
+       doc/xsl/list_window_functions.xml.xsl
+       doc/xsl/post_gis_day_cards.html.xsl
+       doc/xsl/postgis_cheatsheet.html.xsl
+       doc/xsl/postgis_comments.sql.xsl
+       doc/xsl/postgis_gardentest.sql.xsl
+       doc/xsl/postgis_reference.xml.xsl
+       doc/xsl/raster_cheatsheet.html.xsl
+       doc/xsl/raster_comments.sql.xsl
+       doc/xsl/raster_gardentest.sql.xsl
+       doc/xsl/sfcgal_cheatsheet.html.xsl
+       doc/xsl/sfcgal_comments.sql.xsl
+       doc/xsl/table_body_function_support_matrix.xml.xsl
+       doc/xsl/topology_cheatsheet.html.xsl
+       doc/xsl/topology_comments.sql.xsl
+       doc/xsl/topology_gardentest.sql.xsl
 Copyright: 2008-2022, Regina Obe
 License: BSD-3-Clause
 
-Files: extensions/address_standardizer/*
-Copyright: 2006-2014, Stephen Woodbridge
-           2001-2012, Walter Bruce Sinclair
-                2012, TJ Holowaychuk <tj@vision-media.ca>
-                2008, Attractive Chaos <attractivechaos@aol.co.uk>
-License: Expat
-
 Files: fuzzers/fuzzingengine.c
- fuzzers/geojson_import_fuzzer.cpp
- fuzzers/geos_stub.h
- fuzzers/proj_stub.h
- fuzzers/wkb_import_fuzzer.cpp
- fuzzers/wkt_import_fuzzer.cpp
+       fuzzers/geojson_import_fuzzer.cpp
+       fuzzers/geos_stub.h
+       fuzzers/proj_stub.h
+       fuzzers/wkb_import_fuzzer.cpp
+       fuzzers/wkt_import_fuzzer.cpp
 Copyright: 2017, Even Rouault <even.rouault@spatialys.com>
 License: Expat
 
 Files: liblwgeom/bytebuffer.c
- liblwgeom/bytebuffer.h
+       liblwgeom/bytebuffer.h
 Copyright: 2015, Nicklas Avén <nicklas.aven@jordogskog.no>
 License: BSD-3-Clause
 
@@ -201,7 +188,7 @@ Copyright: 2016-2023, Université libre de Bruxelles and MobilityDB contributors
 License: PostgreSQL and GPL-2+
 
 Files: liblwgeom/stringbuffer.c
- liblwgeom/stringbuffer.h
+       liblwgeom/stringbuffer.h
 Copyright: 2002, Thamer Alharbash
            2009, Paul Ramsey <pramsey@cleverelephant.ca>
 License: BSD-3-Clause
@@ -212,20 +199,20 @@ License: public-domain
  This file is in the public domain
 
 Files: liblwgeom/lwin_wkt_parse.c
- liblwgeom/lwin_wkt_parse.h
+       liblwgeom/lwin_wkt_parse.h
 Copyright: 1984, 1989-1990, 2000-2015, Free Software Foundation, Inc
 License: GPL-3+
 
 Files: loader/dbfopen.c
- loader/safileio.c
- loader/shapefil.h
- loader/shpopen.c
+       loader/safileio.c
+       loader/shapefil.h
+       loader/shpopen.c
 Copyright: 1999, 2001, 2007, Frank Warmerdam
                   2012-2019, Even Rouault <even dot rouault at spatialys.com>
 License: Expat or LGPL-2+
 
 Files: loader/getopt.c
- loader/getopt.h
+       loader/getopt.h
 Copyright: disclaimed
 License: public-domain
  Here's something you've all been waiting for:  the AT&T public domain

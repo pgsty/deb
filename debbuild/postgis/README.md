@@ -11,7 +11,9 @@ The core source archives are byte-identical to the PGSTY EL9/EL10 RPM builds:
 | librttopo | 1.1.0 | librttopo1 |
 | spatialite | 5.1.0 | libspatialite8t64 |
 | gdal | 3.13.3 | libgdal39 |
-| postgis | 3.6.4 | postgresql-<major>-postgis-3 |
+| postgis | 3.7.0 | postgresql-<major>-postgis-3 |
+| address-standardizer | 3.7.0 | postgresql-<major>-address-standardizer |
+| postgis-tiger-geocoder | 2025.2 | postgresql-<major>-postgis-tiger-geocoder |
 
 Debian 12 and Ubuntu 22.04 retain their native `libgeos-c1v5` and
 `libspatialite8` package names. On these two distributions, build `cgal`
@@ -56,9 +58,10 @@ Build and install dependencies before their consumers:
 1. CGAL where required, then GEOS, PROJ, SFCGAL, Arrow and GTA.
 2. GeoTIFF and librttopo, then SpatiaLite.
 3. GDAL, including Python and Java bindings.
-4. PostGIS, including raster, SFCGAL, topology, Tiger geocoder, address
-   standardizer, client tools (including topology import/export), GUI, PDF
-   documentation and LLVM bitcode.
+4. PostGIS 3.7.0, including raster, SFCGAL, topology, client tools (including
+   topology import/export), GUI, PDF documentation and LLVM bitcode.
+5. `address-standardizer` 3.7.0 for PostgreSQL 14–18 and
+   `postgis-tiger-geocoder` 2025.2 for PostgreSQL 16–18.
 
 First run `pig build get <tarball>` inside the builder. If it fails, copy only
 the missing archive from the shared `~/pgsty/repo/ext/src` directory into
@@ -70,6 +73,12 @@ Plain `make` runs the stages sequentially. For the representative build use:
 
 ```sh
 cd ~/debbuild/postgis
+make PG_VERSIONS=18 BUILD_JOBS=3
+
+cd ~/debbuild/address-standardizer
+make PG_VERSIONS=18 BUILD_JOBS=3
+
+cd ~/debbuild/postgis-tiger-geocoder
 make PG_VERSIONS=18 BUILD_JOBS=3
 ```
 
@@ -93,8 +102,11 @@ not replace them with a higher revision from PGDG while resolving later build
 dependencies. Package-version checks and ELF dependency inspection must verify
 the final selected libraries.
 
-The shared `bin/postgis-test.sql` checks all seven extensions and representative
-GEOS, PROJ, SFCGAL, raster and topology operations in a disposable database.
+The shared `bin/postgis-test.sql` checks the four core PostGIS extensions and
+representative GEOS, PROJ, SFCGAL, raster and topology operations in a
+disposable database. After installing the two split packages, create
+`address_standardizer`, `address_standardizer_data_us`, and
+`postgis_tiger_geocoder` separately.
 Builder logs, test results and package audits are collected under `apt/noble/`
 for the pilot. A single pilot does not certify the full platform matrix or
 publish any packages.

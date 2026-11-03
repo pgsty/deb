@@ -1,3 +1,12 @@
+postgis (3.7.0-1PGSTY) unstable; urgency=medium
+
+  * Update the shared PostGIS source and documentation to 3.7.0.
+  * Remove packaging references to the address standardizer and Tiger geocoder
+    extensions, which moved out of the upstream source tree.
+  * Refresh the timing workaround and add the upstream Chaikin test patch.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 02 Nov 2026 16:00:00 +0800
+
 postgis (3.6.4-1PGSTY) unstable; urgency=medium
 
   * Use consistent C collation for restore signature checks on Ubuntu 26.04.

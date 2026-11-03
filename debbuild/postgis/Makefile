@@ -1,12 +1,12 @@
 all: check-src setup build move
 .NOTPARALLEL:
 
-TARBALL := postgis-3.6.4.tar.gz
+TARBALL := postgis-3.7.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 BUILD_JOBS ?= 3
 PG_VERSIONS ?= 14 15 16 17 18
-DOC_TARBALL := postgis-3.6.4-en.pdf
+DOC_TARBALL := postgis-3.7.0-en.pdf
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
 check-src:

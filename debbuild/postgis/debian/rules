@@ -186,10 +186,6 @@ override_dh_auto_install:
 			install DESTDIR=$(CURDIR)/debian/tmp; \
 	done)
 
-#	Remove unversioned and unused files from address standardizer
-	rm -fv debian/tmp/usr/share/postgresql/*/extension/address_standardizer.sql
-	rm -fv debian/tmp/usr/share/postgresql/*/extension/address_standardizer_data_us.sql
-
 #	Move extension control files to version-specific names
 #	(otherwise, the -script packages from different major versions would conflict)
 	(set -ex; \
@@ -210,7 +206,6 @@ override_dh_auto_install:
 execute_before_dh_install:
 	$(RM) $(CURDIR)/debian/tmp/usr/lib/postgresql/*/bin/*
 	$(RM) $(CURDIR)/debian/tmp/usr/share/doc/postgis/README.postgis
-	$(RM) $(CURDIR)/debian/tmp/usr/share/doc/postgresql-doc-*/extension/README.address_standardizer
 
 override_dh_makeshlibs:
 	dh_makeshlibs -Xusr/lib/postgis -- -v$(UPSTREAM_VERSION)
