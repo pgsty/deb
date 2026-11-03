@@ -2,6 +2,7 @@ pg-tokenizer (0.2.0-1PGSTY) unstable; urgency=medium
 
   * Switch to the PGSTY-maintained fork and prepare pg_tokenizer 0.2.0.
   * Build directly from the fork source without a downstream compatibility patch.
+  * Use the v0.2.0 GitHub source archive with the pg_tokenizer name.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 09:00:00 +0800
 
