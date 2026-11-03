@@ -1,11 +1,11 @@
 all: setup build move
 
-VERSION := 9.1.2
+VERSION := 9.1.3
 TARBALL := valkey-$(VERSION).tar.gz
 SOURCEDIR ?= ../SOURCES
 SOURCE := $(SOURCEDIR)/$(TARBALL)
 SOURCE_URL := https://github.com/valkey-io/valkey/archive/refs/tags/$(VERSION).tar.gz
-SOURCE_SHA256 := 19c23908e7d57e8d91ef85b41f5646307582f10f4f0fb999bbf89ed24ec9c983
+SOURCE_SHA256 := 184e34ed2d9b51879b682b5b15205e2b9d677c60280e3cb453be8f520d04e293
 OS_CODENAME ?= $(shell command -v lsb_release >/dev/null 2>&1 && lsb_release -sc || (. /etc/os-release 2>/dev/null && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown)
 DEB_BUILD_OPTIONS ?= parallel=$(shell nproc)
 
