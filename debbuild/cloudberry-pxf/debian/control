@@ -8,7 +8,7 @@ Build-Depends:
  curl,
  g++,
  gcc,
- cloudberry (>= 2.1.0),
+ cloudberry (>= 2.2.0),
  golang | golang-go,
  libcurl4-gnutls-dev | libcurl4-openssl-dev,
  make,

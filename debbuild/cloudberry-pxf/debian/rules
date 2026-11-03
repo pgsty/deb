@@ -1,6 +1,8 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE=1
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
 export GPHOME=/usr/cloudberry
 export PXF_HOME=/usr/cloudberry-pxf
 export GOPATH := $(CURDIR)/.gopath
@@ -44,7 +46,7 @@ override_dh_auto_install:
 	cp -a cli/build/stage/. $(CURDIR)/debian/tmp$(PXF_HOME)/
 	cp -a server/build/stage/. $(CURDIR)/debian/tmp$(PXF_HOME)/
 	install -d -m 0700 $(CURDIR)/debian/tmp$(PXF_HOME)/run
-	printf 'apache-cloudberry-pxf-2.1.0-source-release\n' > $(CURDIR)/debian/tmp$(PXF_HOME)/commit.sha
+	printf 'apache-cloudberry-pxf-2.2.0-source-release\n' > $(CURDIR)/debian/tmp$(PXF_HOME)/commit.sha
 	sed -i "s|directory =.*|directory = '$(PXF_HOME)/gpextable/'|g" $(CURDIR)/debian/tmp$(PXF_HOME)/gpextable/pxf.control
 	sed -i "s|module_pathname =.*|module_pathname = '$(PXF_HOME)/gpextable/pxf'|g" $(CURDIR)/debian/tmp$(PXF_HOME)/gpextable/pxf.control
 	if [ -f $(CURDIR)/debian/tmp$(PXF_HOME)/fdw/pxf_fdw.control ]; then \

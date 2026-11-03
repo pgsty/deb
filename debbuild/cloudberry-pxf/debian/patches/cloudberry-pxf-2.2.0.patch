@@ -1,0 +1,30 @@
+--- a/server/build.gradle
++++ b/server/build.gradle
+@@ -66,6 +66,9 @@
+ 
+     sourceCompatibility = JavaVersion.VERSION_1_8
+     targetCompatibility = JavaVersion.VERSION_1_8
++    tasks.withType(JavaCompile) {
++        options.encoding = 'UTF-8'
++    }
+ 
+     ext['log4j2.version'] = '2.25.4'
+ 
+@@ -257,7 +260,7 @@
+         options.compilerArgs += [
+                 "-g", "-Xlint:varargs", "-Xlint:cast", "-Xlint:classfile", "-Xlint:dep-ann", "-Xlint:divzero",
+                 "-Xlint:empty", "-Xlint:finally", "-Xlint:overrides", "-Xlint:path", "-Xlint:-processing", "-Xlint:static",
+-                "-Xlint:try", "-Xlint:fallthrough", "-Xlint:unchecked", "-Xlint:-options", "-Werror"
++                "-Xlint:try", "-Xlint:fallthrough", "-Xlint:unchecked", "-Xlint:-options"
+         ]
+         // JEP 411 (Java 17) - java.security.AccessController is deprecated.
+         // Note, in JEP 486 (Java 24) Security Manager is completely disabled, however Java-API is not broken.
+@@ -268,7 +271,7 @@
+         options.compilerArgs += [
+                 "-g", "-Xlint:varargs", "-Xlint:cast", "-Xlint:classfile", "-Xlint:dep-ann", "-Xlint:divzero",
+                 "-Xlint:empty", "-Xlint:finally", "-Xlint:overrides", "-Xlint:path", "-Xlint:-processing", "-Xlint:static",
+-                "-Xlint:try", "-Xlint:fallthrough", "-Xlint:unchecked", "-Xlint:-options", "-Werror"
++                "-Xlint:try", "-Xlint:fallthrough", "-Xlint:unchecked", "-Xlint:-options"
+         ]
+         // JEP 411 (Java 17) - java.security.AccessController is deprecated.
+         // Note, in JEP 486 (Java 24) Security Manager is completely disabled, however Java-API is not broken.
