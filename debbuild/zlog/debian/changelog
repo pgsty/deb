@@ -1,3 +1,9 @@
+zlog (1.2.20-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.2.20.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 01:10:00 +0800
+
 zlog (1.2.18-1PGSTY) unstable; urgency=medium
 
   * Verify and collect matching automatic debug packages on Debian and Ubuntu.

@@ -2,7 +2,7 @@
 
 all: setup build verify move
 
-VERSION := 1.2.18
+VERSION := 1.2.20
 DEB_RELEASE ?= 1PGSTY
 TARBALL := zlog-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
