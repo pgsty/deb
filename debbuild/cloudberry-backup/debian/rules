@@ -1,11 +1,16 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE=1
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+export CGO_CFLAGS = $(CFLAGS)
+export CGO_CPPFLAGS = $(CPPFLAGS)
+export CGO_LDFLAGS = $(LDFLAGS)
 export GOPATH := $(CURDIR)/.gopath
 export GOBIN := $(GOPATH)/bin
 export GOPROXY ?= https://goproxy.cn,direct
 export GOTOOLCHAIN ?= auto
-export SOURCE_DATE_EPOCH ?= 1786614056
+export SOURCE_DATE_EPOCH ?= 1790147090
 export PATH := $(GOBIN):/usr/local/go/bin:$(PATH)
 
 OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
