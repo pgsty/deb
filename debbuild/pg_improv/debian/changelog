@@ -1,3 +1,10 @@
+pg-improv (0.12.2-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.12.2 with the shared pgrx 0.19.3 patch.
+  * Preserve upstream SQL files and the locked dependency graph.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 02:05:00 +0800
+
 pg-improv (0.12.1-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.12.1 and refresh the shared pgrx 0.19.3 patch.

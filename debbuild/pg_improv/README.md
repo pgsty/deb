@@ -1,15 +1,15 @@
 # pg_improv packaging
 
-This recipe and the RPM spec use the upstream **0.12.1** archive with an identical
+This recipe and the RPM spec use the upstream **0.12.2** archive with an identical
 packaging patch for pgrx **0.19.3**. The patch updates the extension dependency
 lockfile and removes the obsolete pgrx embed binary; the original archive is
 unchanged.
 
 - Upstream: <https://codeberg.org/gregburd/improv>
-- Release: <https://codeberg.org/gregburd/improv/src/tag/v0.12.1>
-- Source: <https://codeberg.org/gregburd/improv/archive/v0.12.1.tar.gz>
-- Archive: `improv-0.12.1.tar.gz`, root `improv-0.12.1/`
-- SHA-256: `491b23690ee9c2de6deba93ac0f773a7365953b8d580ab9c65cfc300ae188487`
+- Release: <https://codeberg.org/gregburd/improv/src/tag/v0.12.2>
+- Source: <https://codeberg.org/gregburd/improv/archive/v0.12.2.tar.gz>
+- Archive: `improv-0.12.2.tar.gz`, root `improv-0.12.2/`
+- SHA-256: `db14fc1f3f7e7d5425c5230122baeafda6e11583fbb91107c8d09ca521265e15`
 - License: Apache-2.0 OR MIT
 - PostgreSQL feature range: 15–18
 - Required toolchain: Rust 1.97 or newer, cargo-pgrx **0.19.3**, libclang
@@ -24,7 +24,7 @@ is retained for RPM debuginfo/debugsource and Debian's automatic dbgsym split.
 Upstream does not emit PGXS bitcode for this Rust extension.
 
 Run `pig build get pg_improv` first. Until the catalogue and source mirror
-are updated, copy only `improv-0.12.1.tar.gz` into the builder's source
+are updated, copy only `improv-0.12.2.tar.gz` into the builder's source
 directory (`~/rpmbuild/SOURCES/` on RPM; `~/ext/src/` linked by
 `~/debbuild/SOURCES` on DEB). Prepare the matching toolchain:
 
@@ -58,13 +58,20 @@ including inputs from `numeric` and `bigint`; this is not exact-decimal
 accounting arithmetic. `what_if` evaluates changes without storing them.
 
 For installed-package verification, run upstream `crates/pg_improv/tests/txn.sh`
-and `tests/finance.sh` as a non-root PostgreSQL user, setting `PG_BIN` to the
+on PG15–18 and `tests/finance.sh` on PG17–18 as a non-root PostgreSQL user, setting `PG_BIN` to the
 installed PostgreSQL bin directory. They create disposable clusters and cover
 transaction rollback, commit/logical modes, dump/restore, and real financial
 models with what-if scenarios. The GUI/CLI and DuckDB extension are separate
 products and are not installed by these packages.
 
-## Trial validation: 0.12.1, 2026-10-28
+The unmodified financial fixture uses `MERGE ... WHEN NOT MATCHED BY SOURCE`
+in `examples/family-finance/schema.sql:203`, requiring PostgreSQL 17 or later
+([MERGE syntax](https://www.postgresql.org/docs/17/sql-merge.html)). It is not
+applicable to PG15/16; the complete upstream transaction suite still covers
+those extension packages. Packaging does not rewrite the example or add
+product compatibility code.
+
+## Historical trial validation: 0.12.1, 2026-10-28
 
 PostgreSQL 18.6 builds, installation and upstream `txn.sh` / `finance.sh` passed
 on Rocky Linux 9.8 aarch64 and Ubuntu 24.04.5 arm64. Main packages and all
@@ -104,3 +111,17 @@ updated one changed result and was idempotent thereafter.
 PG15, PG16 and PG18 passed `cargo check` with the same patched pgrx 0.19.3
 source. Their binary packages and runtime paths were not tested in this pilot.
 Builds and tests do not establish production maturity or publication.
+
+## Production validation: 0.12.2, 2026-11-03
+
+Native DEB builds passed for PG15–18 on bookworm, trixie, jammy, noble and
+resolute, on both amd64 and arm64: 40 main packages and 40 automatic dbgsym
+packages. Rust 1.99.0 and pgrx 0.19.3 were used with the unchanged patched
+extension lockfile (SHA-256
+`439f673a28380cc2fb3719c84f45cfc8b005dae46d1b1a39b310f1d713d0cc4f`).
+Every coordinate passed payload/dependency checks, matching ELF/debug build
+IDs, installation and the complete upstream `txn.sh` suite. The unmodified
+`finance.sh` suite passed on PG17/18 at every platform; its PG17-specific
+MERGE syntax excludes PG15/16 from that example test only.
+Packages were collected into the DEB repository's local `apt/` directories.
+No repository import, publication or pgext database write was performed.
