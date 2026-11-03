@@ -11,12 +11,12 @@ from typing import Dict, List, Set
 
 EXPECTED_GIT_SOURCES = {
     "git+https://github.com/paradedb/superkmeans-rs.git?rev=28d7f26eec11548bb0b7435b36df6383b116c9b0#28d7f26eec11548bb0b7435b36df6383b116c9b0",
-    "git+https://github.com/paradedb/datafusion-distributed.git?tag=snapshot-main-2026-10-21-212219#ecf7b0b8aa041c64317b76259282d2f5fc130f68",
+    "git+https://github.com/paradedb/datafusion-distributed.git?tag=snapshot-main-2026-10-27-165520#a37869c70636f4bbd1d44f270fea146550537802",
     "git+https://github.com/paradedb/datafusion.git?branch=paradedb.branch-55#41b058cc278eb497a2ffc6b41a323f056d3ef568",
     "git+https://github.com/paradedb/fst.git?rev=1d2e473c6de63d17749030eb8538ba4d647f3430#1d2e473c6de63d17749030eb8538ba4d647f3430",
     "git+https://github.com/paradedb/opencc-jieba-rs?branch=main#1bee2628bcae67a955caa5e91b740d170f5615d0",
     "git+https://github.com/paradedb/superkmeans-rs?rev=ced81ac6f010ff79e74b161df9454e51bc1a8d0e#ced81ac6f010ff79e74b161df9454e51bc1a8d0e",
-    "git+https://github.com/paradedb/tantivy.git?rev=101d03ad260b5cbb67829b6ef41d9f6359cad6e5#101d03ad260b5cbb67829b6ef41d9f6359cad6e5",
+    "git+https://github.com/paradedb/tantivy.git?branch=paradedb-0.26.x#3e38ac089a1740fa0c9b69775b71feaee82e3636",
 }
 NOTICE_NAME = re.compile(
     r"^(licen[cs]e|copying|notice|copyright|unlicense)([._-].*)?$", re.IGNORECASE
@@ -24,10 +24,10 @@ NOTICE_NAME = re.compile(
 
 # The quant manifest omits SPDX metadata at this exact Tantivy revision.
 # No subdirectory license overrides the repository's checked MIT LICENSE.
-QUANT_SOURCE = "git+https://github.com/paradedb/tantivy.git?rev=101d03ad260b5cbb67829b6ef41d9f6359cad6e5#101d03ad260b5cbb67829b6ef41d9f6359cad6e5"
+QUANT_SOURCE = "git+https://github.com/paradedb/tantivy.git?branch=paradedb-0.26.x#3e38ac089a1740fa0c9b69775b71feaee82e3636"
 QUANT_CRATES = {"tantivy-quant"}
 QUANT_LICENSE_SHA256 = "acacd14bebbffdb30d62443c282fb4da3e81915a9f69c63d5d745a029f44de8a"
-QUANT_LICENSE_URL = "https://github.com/paradedb/tantivy/blob/101d03ad260b5cbb67829b6ef41d9f6359cad6e5/LICENSE"
+QUANT_LICENSE_URL = "https://github.com/paradedb/tantivy/blob/3e38ac089a1740fa0c9b69775b71feaee82e3636/LICENSE"
 
 
 def normal_closure(metadata: dict) -> Set[str]:

@@ -2,19 +2,20 @@ CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
-all: setup build move
+all: move
 
-TARBALL := pg_search-0.26.3.tar.gz
+TARBALL := pg_search-0.26.4.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
 PGRX_VERSION := 0.19.3
 RUST_TOOLCHAIN := stable
+RUST_VERSION := 1.99.0
 # Keep pgrx aligned with the 0.19.3 Docker builder toolchain.
 LICENSE_COLLECTOR := collect-third-party-licenses.py
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-CARGO_BUILD_JOBS ?= 2
+CARGO_BUILD_JOBS ?= 1
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -33,9 +34,9 @@ setup: check-src check-licenses
 	test -n "$$OS_CODENAME" || OS_CODENAME=unknown; \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
-build: building packaging
+build: packaging
 
-building: check-pgrx
+building: check-build-deps
 	cd $(BUILD_DIR) && \
 	RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
@@ -68,24 +69,27 @@ building: check-pgrx
 	cd $(BUILD_DIR) && python3 ../$(LICENSE_COLLECTOR) \
 		.cargo-metadata-pg-search.json third-party-licenses
 
+check-build-deps: setup check-pgrx
+	cd $(BUILD_DIR) && pg_buildext updatecontrol && dpkg-checkbuilddeps
+
 check-pgrx:
+	@test "$$(RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" rustc --version | awk '{print $$2}')" = "$(RUST_VERSION)" || (echo "Rust $(RUST_VERSION) is required in the selected Rustup toolchain" >&2; exit 1)
 	@CURRENT=$$(RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
 	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
 	    exit 1; \
 	fi
 
-packaging:
+packaging: building
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
-	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc
 
 # collect deb
-move:
+move: build
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 # remove building craps
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-licenses setup build building check-pgrx packaging move clean
+.PHONY: all check-src check-licenses setup build building check-build-deps check-pgrx packaging move clean

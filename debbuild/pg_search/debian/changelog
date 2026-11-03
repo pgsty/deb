@@ -1,3 +1,13 @@
+pg-search (0.26.4-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.26.4 with pgrx 0.19.3 and Rust 1.99.0.
+  * Preserve the upstream locked dependency graph and full release DWARF.
+  * Refresh the reviewed Tantivy and DataFusion Distributed license sources.
+  * Check Rustup/pgrx versions and dpkg dependencies before compilation.
+  * Order source preparation, compilation, packaging and collection explicitly.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 03:07:00 +0800
+
 pg-search (0.26.3-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.26.3.
