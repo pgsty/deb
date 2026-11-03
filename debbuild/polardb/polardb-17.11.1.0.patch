@@ -38,7 +38,7 @@ diff --git a/package/debian/build-deb.sh b/package/debian/build-deb.sh
 +  configure_flag+=" --prefix=$package_prefix --with-pgport=$port ${extra_configure_flag-}"
 @@ -251 +252 @@
 -export LDFLAGS="-Wl,-rpath,'\$\$ORIGIN/../lib:$base_dir/lib',--build-id=sha1 ${LDFLAGS-}"
-+export LDFLAGS="-Wl,-rpath,'\$\$ORIGIN/../lib',--build-id=sha1 ${LDFLAGS-}"
++export LDFLAGS="-Wl,-rpath,'\$\$ORIGIN/../lib:${POLAR_PACKAGE_PREFIX:-$base_dir}/lib',--build-id=sha1 ${LDFLAGS-}"
 --- a/package/debian/build-deb.sh
 +++ b/package/debian/build-deb.sh
 @@ -52 +52 @@

@@ -1,0 +1,7 @@
+polardb-17 (17.11.1.0-2PGSTY) unstable; urgency=medium
+
+  * Rebuild against PolarStore SDK 1.2.42-3PGSTY built with zlog 1.2.20.
+  * Preserve the complete kernel, contrib, LLVM and detached debug payload.
+  * Resolve bundled libraries for nested PGXS tools using the install prefix.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 05:45:00 +0800

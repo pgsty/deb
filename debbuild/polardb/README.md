@@ -25,12 +25,12 @@ Prefix:  /usr/polar-17
 ```
 
 The output `.deb` file follows the Pigsty Debian repository naming style. The
-release defaults to `1PGSTY`, and the build script appends the detected distro
+release defaults to `2PGSTY`, and the build script appends the detected distro
 codename:
 
 ```text
-polardb-17_17.11.1.0-1PGSTY~bookworm_<arch>.deb
-polardb-17-dbgsym_17.11.1.0-1PGSTY~bookworm_<arch>.ddeb
+polardb-17_17.11.1.0-2PGSTY~bookworm_<arch>.deb
+polardb-17-dbgsym_17.11.1.0-2PGSTY~bookworm_<arch>.ddeb
 ```
 
 The upstream workflow calls `dpkg-deb` directly and therefore does not run
@@ -39,6 +39,11 @@ debhelper's automatic symbol split. After the upstream package tree is built,
 ELFs, rebuilds the main package, and creates the matching `-dbgsym` `.ddeb`.
 The recipe exports Debian build flags to the upstream build, preserving
 optimization, hardening, and DWARF while keeping upstream `--debug=off`.
+
+The RUNPATH contains both `$ORIGIN/../lib` and the fixed installed library
+path `/usr/polar-17/lib`. The latter lets deeply nested PGXS executables,
+including `pg_regress`, resolve bundled libpq without falling back to a system
+PostgreSQL library. The temporary package staging directory is not embedded.
 
 The source commit remains available as the `X-Pigsty-Source-Commit` binary
 control field instead of occupying the Debian revision. `DEB_RELEASE` can be
@@ -86,6 +91,11 @@ Upstream builds with `--with-pfsd`. The PFSD SDK is provided by the Pigsty
 /usr/local/polarstore/pfsd
 ```
 
+Revision `2PGSTY` rebuilds the unchanged PolarDB source against zlog 1.2.20
+and PolarStore SDK `1.2.42-3PGSTY`. The default SDK gate requires that exact
+PolarStore revision for the builder's suite. Production orchestration must also
+verify the package, header and static archive hashes for its architecture.
+
 Build and install the current Pigsty zlog and PolarStore packages before
 building PolarDB. The production matrix deliberately uses the newly built zlog
 artifact on every target, including Trixie and Resolute:
@@ -103,7 +113,7 @@ apt-get install -y "$HOME/ext/pkg/$polarstore_deb"
 Before continuing, verify that the installed zlog and PolarStore versions are
 the exact artifacts produced for the current suite and architecture. The
 package metadata uses ordinary upstream minimum versions; exact
-`1PGSTY~<codename>` provenance is a build-pipeline gate, not a dependency
+`3PGSTY~<codename>` PolarStore SDK provenance is a build-pipeline gate, not a dependency
 constraint.
 
 The official full-feature build also needs the normal PostgreSQL kernel build
@@ -131,3 +141,46 @@ Required local tarball:
 ```text
 ~/pgsty/repo/ext/src/polardb-for-postgresql-17.11.1.0.tar.gz
 ```
+
+## 2026-11-03 production rebuild
+
+All ten Debian/Ubuntu coordinates (Bookworm, Trixie, Jammy, Noble and Resolute,
+each on amd64 and arm64) passed native full-bundle builds and installation/runtime
+QA for `17.11.1.0-2PGSTY`. The official source remains
+`deeed25e271bb6507c6a190a6b72539718ec1f95893bc79132f8ebe2ee44ed17`.
+The packaging patch, shared byte-for-byte with RPM, is
+`fc65bf1fe6750631c5e4c0f5b1fff0e9a2b4575bcd76b9969b2549d1a65abe42`.
+
+The build order was zlog 1.2.20 → PolarStore SDK 1.2.42-3PGSTY → PolarDB
+17.11.1.0-2PGSTY. Each builder installed its exact platform packages from batch
+03. Package, SDK header and `libpfsd.a` hashes were verified before and after
+compilation. Linker traces name the absolute SDK archive, and the detached
+PolarDB debug files contain the embedded PFSD symbols. Existing upstream
+versions were retained for the dependency rebuilds; package revisions follow
+the verified published APT history.
+
+Builders were `pgsty/{d12,d13,u22,u24,u26}:build` on native amd64 m3, and the
+corresponding `a` ARM64 images on m1/m5. Every package preserves all staged
+files, 93 controls, 404 SQL files, 117 top-level modules and 1144 bitcode files
+including 84 indexes. Each `.ddeb` contains 163 matching debug ELFs with DWARF.
+All installed dynamic links resolve. Every executable or library using libpq,
+including nested PGXS tools, resolves the bundled library after the RUNPATH fix.
+The main package retains upstream-bundled system libraries; their distributor's
+already stripped files are distinguished from the locally compiled kernel ELFs.
+
+All ten runtime checks used the upstream localfs initialization path, four
+required preloads, pg_trgm/hstore/pgcrypto/pg_hint_plan/roaringbitmap/pg_repack/
+pg_partman/pg_jieba/pgtap, and PL/Python/Perl/Tcl. Version and commit, transaction
+rollback, restart persistence and forced LLVM JIT with inlining/optimization
+passed. This validates localfs packaging, not a distributed PFSD deployment.
+`polar_resource_manager` and `polar_io_stat` ship no upstream installation SQL;
+those files were not invented. The release build disables the upstream
+fault-injector development feature.
+
+Twenty main/debug artifacts were SHA-256 verified and collected in local
+`apt/<codename>/`. Test databases and containers were stopped. Evidence lives
+under `/Users/vonng/.cache/pgsty-build/20261103-extension-production-003724/deb/`:
+`09b-evidence.json`, source/recipe manifests, `09b-polardb-matrix.json`,
+`09b-polardb-artifacts.json`, and per-platform SDK, installed dependency, QA and
+build-log records. No production stash/import/publication, database write or
+Git commit was performed. The independent kernel has no `pgext.extension` row.

@@ -17,8 +17,8 @@ PG_PORT := 5432
 POLAR_COMMIT := ff510dfc
 POLAR_BRANCH := POLARDB_17_STABLE
 POLARSTORE_VERSION := 1.2.42
-POLARSTORE_DEB_RELEASE ?= 1PGSTY
-DEB_RELEASE ?= 1PGSTY
+POLARSTORE_DEB_RELEASE ?= 3PGSTY
+DEB_RELEASE ?= 2PGSTY
 NUMJOBS ?= $(shell nproc)
 DETECTED_CODENAME := $(shell (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-}}))
 DETECTED_ARCH := $(shell dpkg --print-architecture 2>/dev/null)
@@ -90,6 +90,8 @@ setup: check-src check-release check-platform
 	sed -i.bak -e 's|^Depends: |Depends: adduser, tzdata, libbsd0, libexpat1, python3, |' $(BUILD_DIR)/package/debian/control
 	rm -f $(BUILD_DIR)/package/debian/control.bak
 	cp debian/copyright $(BUILD_DIR)/package/debian/copyright
+	cp debian/changelog $(BUILD_DIR)/package/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$(DISTRO_CODENAME))/" $(BUILD_DIR)/package/debian/changelog
 	awk '{ print; if ($$0 == "mkdir -p $${pkgname}/DEBIAN") { \
 		print "cat > $${pkgname}/DEBIAN/postinst <<'\''POSTINST'\''"; \
 		print "#!/bin/sh"; \
@@ -116,7 +118,7 @@ setup: check-src check-release check-platform
 	grep -Fq 'pgsty_release=$${PGSTY_RELEASE:-' $(BUILD_DIR)/package/debian/build-deb.sh || (echo "PGSTY release injection FAILED"; exit 1)
 	grep -q 'package_release=$${pgsty_release}~$${distcodename}' $(BUILD_DIR)/package/debian/build-deb.sh || (echo "PGSTY package release injection FAILED"; exit 1)
 	grep -q -- '--debug=off --jobs=$(NUMJOBS) --ni' $(BUILD_DIR)/package/debian/build-deb.sh || (echo "NUMJOBS injection FAILED"; exit 1)
-	awk '/^dpkg-deb --build --root-owner-group/ { print "mkdir -p $${pkgname}/usr/share/doc/$${debpkgname}"; print "cp ./copyright $${pkgname}/usr/share/doc/$${debpkgname}/copyright"; print "cp ../../COPYRIGHT ../../LICENSE $${pkgname}/usr/share/doc/$${debpkgname}/" } 1' \
+	awk '/^dpkg-deb --build --root-owner-group/ { print "mkdir -p $${pkgname}/usr/share/doc/$${debpkgname}"; print "cp ./copyright $${pkgname}/usr/share/doc/$${debpkgname}/copyright"; print "cp ../../COPYRIGHT ../../LICENSE $${pkgname}/usr/share/doc/$${debpkgname}/"; print "gzip -n -c ./changelog > $${pkgname}/usr/share/doc/$${debpkgname}/changelog.Debian.gz" } 1' \
 		$(BUILD_DIR)/package/debian/build-deb.sh > $(BUILD_DIR)/package/debian/build-deb.sh.new
 	mv $(BUILD_DIR)/package/debian/build-deb.sh.new $(BUILD_DIR)/package/debian/build-deb.sh
 	chmod +x $(BUILD_DIR)/package/debian/build-deb.sh
