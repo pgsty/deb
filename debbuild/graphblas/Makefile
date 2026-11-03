@@ -1,6 +1,6 @@
-all: setup build move
+all: move
 
-TARBALL := graphblas-10.5.0.tar.gz
+TARBALL := graphblas-10.5.2.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -20,7 +20,7 @@ setup: check-src
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i.bak "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog && rm -f $(BUILD_DIR)/debian/changelog.bak
 
-check-build-deps:
+check-build-deps: setup
 ifeq ($(SYSTEM_CMAKE_OK),yes)
 	cd $(BUILD_DIR) && dpkg-checkbuilddeps
 else
@@ -30,14 +30,14 @@ else
 	cd $(BUILD_DIR) && dpkg-checkbuilddeps -d 'debhelper-compat (= 13), pkg-config'
 endif
 
-build: check-build-deps
+build: setup check-build-deps
 ifeq ($(SYSTEM_CMAKE_OK),yes)
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 else
 	cd $(BUILD_DIR) && CMAKE="$(PRIVATE_CMAKE)" dpkg-buildpackage -d -b -us -uc
 endif
 
-move:
+move: build
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:

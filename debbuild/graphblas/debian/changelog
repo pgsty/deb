@@ -1,3 +1,11 @@
+graphblas (10.5.2-1PGSTY) unstable; urgency=medium
+
+  * Update SuiteSparse:GraphBLAS to 10.5.2.
+  * Retain compact mode, CPU JIT, the libgraphblas.so.10 ABI and dbgsym.
+  * Bound build parallelism and retain compilation metadata for consumers.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 02:45:00 +0800
+
 graphblas (10.5.0-1PGSTY) unstable; urgency=medium
 
   * Update SuiteSparse:GraphBLAS to 10.5.0.

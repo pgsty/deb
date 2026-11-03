@@ -6,6 +6,7 @@ export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 export DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
 export DPKG_EXPORT_BUILDFLAGS = 1
 CMAKE ?= cmake
+BUILD_JOBS ?= $(shell nproc)
 
 # GCC 12 on arm64 can ICE in vect_transform_reduction when compiling
 # GraphBLAS-generated kernels. Disable tree vectorization on arm64 builders.
@@ -21,6 +22,7 @@ include /usr/share/dpkg/buildflags.mk
 override_dh_auto_configure:
 	$(CMAKE) -S $(CURDIR) -B $(CURDIR)/build \
 		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DGRAPHBLAS_COMPACT=ON \
 		-DSUITESPARSE_USE_FORTRAN=OFF \
@@ -31,7 +33,7 @@ override_dh_auto_configure:
 		-DSUITESPARSE_PKGFILEDIR=lib/$(DEB_HOST_MULTIARCH)
 
 override_dh_auto_build:
-	$(CMAKE) --build $(CURDIR)/build -j$(shell nproc)
+	$(CMAKE) --build $(CURDIR)/build --verbose -j$(BUILD_JOBS)
 
 override_dh_auto_install:
 	DESTDIR=$(CURDIR)/debian/tmp $(CMAKE) --install $(CURDIR)/build

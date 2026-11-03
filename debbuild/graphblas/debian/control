@@ -19,4 +19,4 @@ Architecture: any
 Depends: ${misc:Depends}, libgraphblas10 (= ${binary:Version})
 Description: SuiteSparse GraphBLAS development files
  Headers, pkg-config metadata, CMake config, and linker symlink for
- SuiteSparse:GraphBLAS 10.5.0.
+ SuiteSparse:GraphBLAS 10.5.2.

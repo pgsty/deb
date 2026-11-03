@@ -1,6 +1,6 @@
 # GraphBLAS and LAGraph builds
 
-GraphBLAS 10.5.0 and LAGraph 1.2.2 require CMake 3.23 or newer. Ubuntu
+GraphBLAS 10.5.2 and LAGraph 1.2.2 require CMake 3.23 or newer. Ubuntu
 22.04 (Jammy) provides the dpkg-managed CMake 3.22.1, so its system package
 cannot satisfy that build dependency.
 
@@ -54,3 +54,28 @@ package name; it does not change the binary package names, ABI, install
 payload, or build flags. If a published artifact at the same upstream version
 needs a packaging or payload replacement, increment the Debian revision before
 rebuilding.
+
+The current dependency rebuild uses GraphBLAS `10.5.2-1PGSTY`, LAGraph
+`1.2.2-1PGSTY`, and OneSparse `1.0.0-2PGSTY` (PG18). The published APT
+history contains LAGraph 1.2.1, but no LAGraph 1.2.2, so its unpublished
+revision remains 1. OneSparse 1.0.0 revision 1 was published and therefore
+advances to revision 2. Its upstream SQL extension version remains `0.1.0`.
+
+Build and install each library before its consumer. Record the installed
+package versions and hashes of headers, shared libraries and pkg-config
+files before compiling LAGraph and OneSparse. Validate GraphBLAS matrix
+multiplication, LAGraph BFS, and OneSparse SQL matrix/vector and BFS
+operations against the newly installed libraries. OneSparse must be in
+`shared_preload_libraries`; restart PostgreSQL before `CREATE EXTENSION`.
+Its upstream `onesparse.jit_control` parameter has postmaster context.
+`BUILD_JOBS` limits CMake
+parallelism; verbose commands and compile databases retain build evidence.
+
+The 2026-11-03 production rebuild passed on bookworm, trixie, jammy, noble,
+and resolute, each on native amd64 and arm64 builders. Each platform produced
+three GraphBLAS packages, five LAGraph packages and two PG18 OneSparse
+packages, including four automatic dbgsym packages. The checks above passed
+on all ten platforms; each OneSparse payload also contains 134 LLVM bitcode
+objects and the upstream SQL installation script. Build logs, package hashes,
+producer/consumer input manifests and runtime results are retained outside
+Git in the production run evidence directory.
