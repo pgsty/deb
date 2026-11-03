@@ -2,10 +2,10 @@ Source: pg-tokenizer
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, clang, libclang-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/tensorchord/pg_tokenizer.rs
+Homepage: https://vchord.pgsty.com/
 
 Package: postgresql-PGVERSION-pg-tokenizer
 Architecture: any

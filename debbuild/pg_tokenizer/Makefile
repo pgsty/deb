@@ -4,17 +4,19 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-# Source archive includes the shared compatibility fixes and pgrx 0.19.2 lockfile.
-TARBALL := pg_tokenizer.rs-0.1.1.tar.gz
+# Source archive is the PGSTY fork snapshot; no downstream patch is applied.
+TARBALL := pg_tokenizer.rs-0.2.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS ?= 18
-PGRX_VERSION := 0.19.2
+PGRX_VERSION := 0.19.3
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CRATE_DIR := .
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SNAPSHOT := /tmp/pgrx0192-pg-tokenizer-cargo-locks.before
+LOCK_SNAPSHOT := /tmp/pgrx0193-pg-tokenizer-cargo-locks.before
+LIBCLANG_PATH ?= $(firstword $(wildcard /usr/lib/llvm-*/lib))
+export LIBCLANG_PATH
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
