@@ -1,3 +1,10 @@
+pg-agent-gate (0.4.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.4.1.
+  * Retain the shared pgrx 0.19.3 dependency lock and full release DWARF.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 02:00:00 +0800
+
 pg-agent-gate (0.3.0-1PGSTY) unstable; urgency=medium
 
   * Initial release for PostgreSQL 18.

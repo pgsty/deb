@@ -2,9 +2,9 @@ CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
-# Source: https://api.github.com/repos/Manuelreyesbravo/pg_agent_gate/tarball/v0.3.0
-# SHA256: 07f3c91aa54d03b51f9a4101ed8edc47d65cf7072b7b32b94c9b50a56eb3a7c0
-TARBALL := pg_agent_gate-0.3.0.tar.gz
+# Source: https://github.com/Manuelreyesbravo/pg_agent_gate/archive/refs/tags/v0.4.1.tar.gz
+# SHA256: fae0bff41e71f5f6462745477800c334a7cbf043953aaf862de81dd42076ec36
+TARBALL := pg_agent_gate-0.4.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -20,7 +20,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < ../patches/pg-agent-gate-0.3.0-pgrx-0.19.3.patch
+	cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < ../patches/pg-agent-gate-0.4.1-pgrx-0.19.3.patch
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
@@ -32,6 +32,7 @@ check-pgrx:
 	fi
 
 building: setup check-pgrx
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol && dpkg-checkbuilddeps
 	set -e; cd $(BUILD_DIR); \
 	export PATH="$$HOME/.cargo/bin:$$PATH"; \
 	sha256sum Cargo.lock > .lock.before; \
