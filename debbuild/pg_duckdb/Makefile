@@ -6,6 +6,7 @@ all: build move
 .NOTPARALLEL:
 
 TARBALL := pg_duckdb-1.2.0.tar.gz
+CURL_TARBALL := curl-8.23.0.tar.gz
 SOURCE_SHA256 := $(shell sha256sum ../SOURCES/$(TARBALL) | awk '{print $$1}')
 
 
@@ -19,6 +20,10 @@ build18:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
 	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
+	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
+		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
+		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
+	fi
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/18/" build/debian/control
@@ -31,6 +36,10 @@ build17:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
 	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
+	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
+		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
+		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
+	fi
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/17/" build/debian/control
@@ -43,6 +52,10 @@ build16:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
 	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
+	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
+		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
+		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
+	fi
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/16/" build/debian/control
@@ -55,6 +68,10 @@ build15:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
 	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
+	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
+		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
+		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
+	fi
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/15/" build/debian/control
@@ -67,6 +84,10 @@ build14:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
 	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
+	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
+		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
+		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
+	fi
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 	sed -i "s/PGVERSION/14/" build/debian/control

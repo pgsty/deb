@@ -1,9 +1,11 @@
 pg-duckdb (1.2.0-1PGSTY) unstable; urgency=medium
 
-  * Prepare upstream experimental 1.2.0 with its pinned DuckDB 2.0.0 source.
-  * Build from bundled sources and set the module version without Git metadata.
+  * Package upstream experimental 1.2.0 with its pinned DuckDB 2.0.0 source.
+  * Preserve the module version and DuckDB source identity without Git metadata.
+  * Apply the pinned httpfs source patch for GCC 8-11 unique_ptr conversion.
+  * Build private static curl 8.23.0 when system libcurl is older than 7.85.
+  * Include patches, dependency versions and source identity in the core cache key.
   * Declare native build dependencies and retain PostgreSQL 14-18 and dbgsym.
-  * Defer build and runtime validation to the dedicated DuckDB build task.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 22:00:00 +0800
 

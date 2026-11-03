@@ -1,9 +1,12 @@
-# pg_duckdb 1.2.0 打包准备
+# pg_duckdb 1.2.0 打包与验证
 
 上游发行说明：https://github.com/duckdb/pg_duckdb/releases/tag/v1.2.0 。
 上游将此版本标为 Experimental，明确表示尚不适合生产使用。
-本次仅准备配方与源码，未执行构建、安装、运行回归或容器解包验证。
-后续在其他批次项目完成后，通过独立会话先做代表性验证，再构建全平台候选包。
+阶段 B 使用固定源码开展代表性构建、包检查和隔离数据库验收，
+三个 PG17 pilot 全部通过后才展开六个 RPM、十个 DEB 平台的 PG14–18 候选矩阵。
+实时状态及完整日志保存在仓库外的
+`~/pgsty/artifacts/full-matrix-20261103/stage-b-pg-duckdb/`。
+配方存在或候选构建完成均不表示已发布，也不改变上游的 Experimental 定位。
 
 ## 固定源码
 
@@ -24,18 +27,47 @@
 `77392a72077a85897db2519fae11e2c0da972b8a` 获取 `duckdb/duckdb-httpfs`。
 在 builder 中按仓库规则配置 GitHub HTTP 代理，保留实际取源日志。
 
+当系统 `libcurl < 7.85` 时，还需要官方构建输入 `curl-8.23.0.tar.gz`：
+
+- 来源：`https://curl.se/download/curl-8.23.0.tar.gz`。
+- SHA-256：`e3de77cfa6367083c776a26647fc9f633b538c06c3baa73d931a252ac8f72b49`。
+- 保存在同一权威源码目录；先运行 `pig build get curl-8.23.0.tar.gz`，取不到才复制该文件。
+
+helper 在构建树中生成带 PIC 的私有静态 libcurl，供本轮 httpfs 编译使用，
+不会替换系统 libcurl。系统版本足够时继续使用发行版提供的库。
+
 ## 配方边界
 
 两侧使用同一份 `pg_duckdb-1.2.0-source-build.patch`：
 以随包 DuckDB 的 `CMakeLists.txt` 代替 Git 子模块 HEAD 作为构建前置，
 并保留 PGXS 安装目录先于 `install-duckdb` 的顺序约束。
-配方显式设置 `PG_DUCKDB_VERSION=v1.2.0`、`PG_MAX_VER=18`，仅打包 PG14–18。
+httpfs 继续固定原提交，通过上游 `APPLY_PATCHES` 钩子对派生类 `unique_ptr`
+返回值显式使用 `std::move`，解决 GCC 8–11 的 C++17 编译错误。
+配方显式设置 `PG_DUCKDB_VERSION=v1.2.0`、`PG_MAX_VER=18` 和完整
+`DUCKDB_COMMIT=d54cbbe3df17e8e5ce68312f483b4155836112aa`，仅打包 PG14–18。
 
 保留动态 `libduckdb.so`、LLVM、既有调试信息策略、两任务的 DuckDB 内层并行默认值，
-以及同一平台内按源码、编译器和 flags 区分的跨 PG 主版本核心缓存。
+以及同一平台内按源码、补丁、commit、依赖版本、编译器和 flags 区分的跨 PG 主版本核心缓存。
 PGXS 桥接层仍逐 PG 版本重建，不跨系统或架构共享编译缓存。
+DuckDB 核心保留既有 `-g1` 函数及行号 DWARF，桥接层保留发行版完整 `-g`；
+不能把核心调试信息描述为完整变量调试。
 
-独立构建会话必须检查新版本的工具链需求、补丁应用、容器解包、payload、
-Build-ID/DWARF、PG14–18 加载与查询，以及与 pg_mooncake 的真实 API/ABI 关系。
+验收检查主包与 dbgsym 的逐文件归属、Build-ID/DWARF、候选与安装 ELF 的 SHA-256、
+PG14–18 预加载、版本、强制执行计划、事务、跨连接读取、非 public 安装、
+本地 JSON/Parquet，以及来自同批构建的 httpfs 插件和真实本机 HTTP 读取。
+还需验证多个 PG 主版本的主包和全部 dbgsym 同时安装。
+隔离测试允许本轮未签名 httpfs 插件，不代表公共插件、MotherDuck 或云认证集成通过。
+
+## 下游兼容边界
+
+`pg_mooncake` Rust 包的 `RegisterDuckdbTableAm` C 接口未变化，未发现需要自动
+重编 Rust 包的新编译输入。但其独立 C++ 社区插件与 DuckDB 版本严格匹配：
+已有 v1.4.3 插件不能用于 v2.0.0；2026-11-04 检查的双架构 v2.0.0 社区路径均为 404。
+因此本批候选不声明与现有 Mooncake 插件兼容；仅重编 Rust 包不能解决该缺口。
+需要上游提供匹配插件后再单独验收，不在打包任务内实现其 API 迁移。
+
 `duckdb_fdw` 已有自己的静态 DuckDB 输入，不因本次升级自动重建。
-本轮没有修改 PGEXT 数据库或发布源码与二进制包。
+同一 PG 主版本的既有互斥关系保留。
+
+本轮不写 PGEXT 数据库，不进入生产 staging，不发布源码或二进制包。
+后续元数据维护须包含新增 curl 源码输入；当前数据库同步仍是外部待办。

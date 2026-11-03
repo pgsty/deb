@@ -37,3 +37,57 @@
  clean-duckdb:
  	rm -rf third_party/duckdb/build
  
+--- a/third_party/pg_duckdb_extensions.cmake
++++ b/third_party/pg_duckdb_extensions.cmake
+@@ -3,6 +3,7 @@
+ duckdb_extension_load(httpfs
+     GIT_URL https://github.com/duckdb/duckdb-httpfs
+     GIT_TAG 77392a72077a85897db2519fae11e2c0da972b8a
++    APPLY_PATCHES
+ )
+ # Static builds of pg_duckdb link httpfs in, the others load it as an extension
+ if(PG_DUCKDB_STATIC_HTTPFS)
+--- /dev/null
++++ b/third_party/duckdb/.github/patches/extensions/httpfs/0001-move-http-parameters.patch
+@@ -0,0 +1,10 @@
++--- a/src/http/httpfs.cpp
+++++ b/src/http/httpfs.cpp
++@@ -213,4 +213,6 @@
++ 	auto result = InitializeRawParameters(*this, opener, info);
++ 	result->RefreshTransportReuseDomain();
++-	return result;
+++	// GCC 8-11 need an explicit move for this derived-to-base unique_ptr
+++	// conversion through DuckDB's inherited constructors in C++17 mode.
+++	return std::move(result);
++ }
+--- /dev/null
++++ b/scripts/build-distribution-curl.sh
+@@ -0,0 +1,28 @@
++#!/bin/sh
++# httpfs uses libcurl APIs introduced in 7.85.  Keep the system libcurl when
++# sufficient; otherwise build a private PIC static library for httpfs only.
++set -eu
++if pkg-config --atleast-version=7.85.0 libcurl; then
++    exit 0
++fi
++curl_source=$1
++curl_prefix=$2
++curl_jobs=$3
++test -f "$curl_source/CMakeLists.txt"
++cmake -S "$curl_source" -B "$curl_prefix-build" \
++    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$curl_prefix" \
++    -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
++    -DCMAKE_C_FLAGS="${CFLAGS:-} -g1" \
++    -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS:-}" \
++    -DCMAKE_SHARED_LINKER_FLAGS="${LDFLAGS:-}" \
++    -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON -DBUILD_CURL_EXE=OFF \
++    -DBUILD_TESTING=OFF -DBUILD_LIBCURL_DOCS=OFF -DENABLE_CURL_MANUAL=OFF \
++    -DCURL_USE_OPENSSL=ON -DCURL_USE_LIBPSL=OFF -DCURL_USE_LIBSSH2=OFF \
++    -DCURL_USE_LIBSSH=OFF -DCURL_USE_GSSAPI=OFF \
++    -DCURL_ZLIB=OFF -DCURL_BROTLI=OFF -DCURL_ZSTD=OFF \
++    -DUSE_NGHTTP2=OFF -DUSE_NGTCP2=OFF -DUSE_NGHTTP3=OFF \
++    -DCURL_DISABLE_LDAP=ON -DCURL_DISABLE_LDAPS=ON
++cmake --build "$curl_prefix-build" --parallel "$curl_jobs"
++cmake --install "$curl_prefix-build"
++test -s "$curl_prefix/lib/libcurl.a"
++PKG_CONFIG_PATH="$curl_prefix/lib/pkgconfig" pkg-config --modversion libcurl

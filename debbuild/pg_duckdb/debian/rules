@@ -5,6 +5,7 @@ export CC = gcc
 # Source archives have no Git metadata; keep the supported packaging scope.
 export PG_DUCKDB_VERSION = v1.2.0
 export PG_MAX_VER = 18
+export DUCKDB_COMMIT = d54cbbe3df17e8e5ce68312f483b4155836112aa
 
 # Keep the distribution debug, hardening, and reproducibility flags.  PGXS
 # supplies the compiler-specific LTO mode itself (GCC for native objects and
@@ -33,6 +34,9 @@ DUCKDB_CMAKE_FLAGS := \
 	-DCMAKE_EXE_LINKER_FLAGS:STRING="$(DUCKDB_LDFLAGS)" \
 	-DCMAKE_SHARED_LINKER_FLAGS:STRING="$(DUCKDB_LDFLAGS)" \
 	-DCMAKE_MODULE_LINKER_FLAGS:STRING="$(DUCKDB_LDFLAGS)"
+ifeq ($(shell pkg-config --atleast-version=7.85.0 libcurl && echo system),)
+DUCKDB_CMAKE_FLAGS += -DCURL_ROOT=$(CURDIR)/.pgsty-curl -DCURL_USE_STATIC_LIBS=ON
+endif
 
 # DuckDB has no PostgreSQL-major input.  Its build tree is safe to reuse in
 # this platform-local recipe directory when source, compiler, flags, and build
@@ -41,21 +45,28 @@ DUCKDB_CMAKE_FLAGS := \
 # outside the cached tree and is rebuilt for every PostgreSQL major.
 DUCKDB_CACHE_KEY := $(shell { \
 	cat debian/duckdb-source-sha256; \
+	sha256sum debian/patches/series debian/patches/*.patch; \
+	printf '%s\n' '$(DUCKDB_COMMIT)'; \
+	if test -f debian/duckdb-curl-source-sha256; then cat debian/duckdb-curl-source-sha256; fi; \
+	pkg-config --modversion libcurl openssl; \
 	$(CXX) --version | head -1; \
 	printf '%s\n' '$(DUCKDB_CFLAGS)' '$(DUCKDB_CXXFLAGS)' '$(DUCKDB_LDFLAGS)' '$(DUCKDB_CMAKE_FLAGS)' "$${DUCKDB_BUILD:-Release}" "$${DUCKDB_DISABLE_ASSERTIONS:-0}"; \
 } | sha256sum | awk '{print $$1}')
 DUCKDB_CACHE_DIR := $(HOME)/.cache/pg_duckdb/$(DUCKDB_CACHE_KEY)
 
 # DuckDB unity objects can exceed the 20 GiB builder limit at eight-way
-# concurrency.  Keep its core and the PG bridge inside a four-job token pool;
+# concurrency.  Keep its core and the PG bridge inside a two-job token pool;
 # callers may lower this further for smaller builders.
 DUCKDB_MAX_JOBS ?= 2
 export CMAKE_BUILD_PARALLEL_LEVEL := $(DUCKDB_MAX_JOBS)
 
 override_dh_auto_build:
+	CFLAGS='$(DUCKDB_CFLAGS)' LDFLAGS='$(DUCKDB_LDFLAGS)' \
+		sh scripts/build-distribution-curl.sh '$(CURDIR)/curl-8.23.0' '$(CURDIR)/.pgsty-curl' '$(DUCKDB_MAX_JOBS)'
 	if test -f '$(DUCKDB_CACHE_DIR)/.complete' && test -f '$(DUCKDB_CACHE_DIR)/release/src/libduckdb.so'; then \
 		mkdir -p third_party/duckdb/build; \
 		cp -a '$(DUCKDB_CACHE_DIR)/.' third_party/duckdb/build/; \
+		touch third_party/duckdb/build/release/src/libduckdb.so; \
 	fi
 	+$(MAKE) -j$(DUCKDB_MAX_JOBS) \
 		PG_CFLAGS='$(PG_CFLAGS)' PG_CXXFLAGS='$(PG_CXXFLAGS)' LDFLAGS='$(PG_LDFLAGS)' \
