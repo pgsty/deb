@@ -1,4 +1,4 @@
-all: setup build move
+all: move
 
 TARBALL := onesparse-1.0.0.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
@@ -17,10 +17,10 @@ setup: check-src
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i.bak "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog && rm -f $(BUILD_DIR)/debian/changelog.bak
 
-build:
+build: setup
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
-move:
+move: build
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:

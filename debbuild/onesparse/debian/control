@@ -2,7 +2,7 @@ Source: onesparse
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), pkgconf, postgresql-server-dev-18, libgraphblas-dev, liblagraph-dev
+Build-Depends: debhelper-compat (= 13), pkg-config, postgresql-server-dev-18, libgraphblas-dev (>= 10.5.2), liblagraph-dev (>= 1.2.2)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/OneSparse/OneSparse
@@ -13,3 +13,5 @@ Depends: postgresql-18, ${shlibs:Depends}, ${misc:Depends}
 Description: Sparse linear algebra and graph extension for PostgreSQL 18
  OneSparse exposes sparse vectors, matrices, and graph algorithms backed by
  SuiteSparse GraphBLAS and LAGraph for PostgreSQL 18.
+ Add onesparse to shared_preload_libraries and restart PostgreSQL before
+ creating the extension.

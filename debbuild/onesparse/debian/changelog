@@ -1,3 +1,12 @@
+onesparse (1.0.0-2PGSTY) unstable; urgency=medium
+
+  * Rebuild against GraphBLAS 10.5.2 and LAGraph 1.2.2.
+  * Use pkg-config as the portable build dependency, including Jammy.
+  * Document the required shared_preload_libraries configuration.
+  * Preserve upstream's SQL extension version 0.1.0 and packaged files.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 02:45:00 +0800
+
 onesparse (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Package the official upstream v1.0.0 release for PostgreSQL 18.
