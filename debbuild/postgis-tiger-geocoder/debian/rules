@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with pgxs_loop
+
+#execute_before_dh_auto_build:
+#	# populate the data/ directory (the Makefile only works when "all" is built)
+#	$(MAKE)
+
+override_dh_installdocs:
+	dh_installdocs --all README.*
+
+override_dh_pgxs_test:
+	# The package is staged under debian/ during the binary build; run the
+	# installcheck suite from debian/tests after the package is installed.

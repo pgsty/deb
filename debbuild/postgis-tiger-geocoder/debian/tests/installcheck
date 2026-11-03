@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# create test input files (and some more)
+make all
+
+pg_buildext installcheck

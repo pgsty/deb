@@ -1340,7 +1340,10 @@ postgis:
 address-standardizer:
 	$(MAKE) -C address-standardizer
 
-.PHONY: cgal geos proj sfcgal libgeotiff librttopo spatialite libarrow libgta gdal postgis address-standardizer
+postgis-tiger-geocoder:
+	$(MAKE) -C postgis-tiger-geocoder
+
+.PHONY: cgal geos proj sfcgal libgeotiff librttopo spatialite libarrow libgta gdal postgis address-standardizer postgis-tiger-geocoder
 
 # New extension batch: shared pinned sources, PG14-18 where supported.
 

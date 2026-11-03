@@ -1,0 +1,13 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: postgis-tiger-geocoder
+Source: https://gitea.osgeo.org/postgis/postgis_tiger_geocoder
+
+Files: *
+Copyright:
+ Copyright (C) 2012-2026 Regina Obe and Leo Hsu
+ Paragon Corporation
+License: GPL-2
+ This is free software; you can redistribute and/or modify it under
+ the terms of the GNU General Public Licence. See the COPYING file.
+ .
+ On Debian systems, the GPL is located in /usr/share/common-licenses/GPL-2.

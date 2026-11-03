@@ -1,0 +1,36 @@
+Source: postgis-tiger-geocoder
+Section: database
+Priority: optional
+Maintainer: Debian PostgreSQL Maintainers <team+postgresql@tracker.debian.org>
+Uploaders:
+ Christoph Berg <myon@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ postgresql-PGVERSIONS-postgis-3 <!nocheck>,
+ postgresql-all <!nocheck>,
+ postgresql-server-dev-all (>= 217~),
+Standards-Version: 4.7.4
+Rules-Requires-Root: no
+Homepage: https://gitea.osgeo.org/postgis/postgis_tiger_geocoder
+Vcs-Browser: https://salsa.debian.org/postgresql/postgis-tiger-geocoder
+Vcs-Git: https://salsa.debian.org/postgresql/postgis-tiger-geocoder.git
+
+Package: postgresql-PGVERSION-postgis-tiger-geocoder
+Architecture: all
+Depends:
+ postgresql-PGVERSION-postgis-3,
+ ${misc:Depends},
+ ${postgresql:Depends},
+ ${shlibs:Depends},
+Replaces:
+ postgresql-PGVERSION-postgis-3-scripts (<< 3.7),
+Breaks:
+ postgresql-PGVERSION-postgis-3-scripts (<< 3.7),
+ ${postgresql:Breaks},
+Description: PostGIS tiger geocoder and reverse geocoder
+ postgis_tiger_geocoder is a PostgreSQL extension that provides a complete
+ geocoding stack for United States addresses, built on top of PostGIS and the
+ U.S. Census Bureau's TIGER/Line shapefiles. The extension loads TIGER/Line
+ data (such as 2025 vintages) into a normalized schema and exposes loader,
+ normalization, and geocoding functions that turn street addresses into
+ geographic coordinates and structured locations.

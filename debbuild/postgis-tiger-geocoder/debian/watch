@@ -1,0 +1,4 @@
+Version: 5
+
+Source: https://gitea.osgeo.org/postgis/postgis_tiger_geocoder/tags
+Uversion-Mangle: auto

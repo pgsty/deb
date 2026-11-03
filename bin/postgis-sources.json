@@ -195,6 +195,22 @@
       "rpm_srpm_sha256": "9e3f4b9855125c0323e3868a8064f074ee74e7de9a2c63285929f4982b3f0f48",
       "debian_packaging_url": "https://apt.postgresql.org/pub/repos/apt/pool/main/a/address-standardizer/address-standardizer_3.7.0-1.pgdg24.04%2B1.debian.tar.xz",
       "debian_packaging_sha256": "17d139a76b2eb286ad6d6d6f1cbd7445435f3ac1f36498f9d909de73745b0214"
+    },
+    {
+      "package": "postgis-tiger-geocoder",
+      "source_archive": {
+        "name": "postgis_tiger_geocoder-2025.2.tar.gz",
+        "sha256": "c33cfbfb40785db8754a36be66060e8d023773e7e1be8fb8a622bb3c48db9f54",
+        "size": 150231,
+        "archive_roots": [
+          "postgis_tiger_geocoder"
+        ],
+        "shared_with_rpm": true
+      },
+      "rpm_srpm_url": "https://dnf-srpms.postgresql.org/srpms/18/redhat/rhel-9-x86_64/postgis_tiger_geocoder_18-2025.2-1PGDG.rhel9.8.src.rpm",
+      "rpm_srpm_sha256": "58f89924fb19d6d455b46861ee7c045f32f9780c7b155d0d8b7da1ffa414e1c3",
+      "debian_packaging_url": "https://apt.postgresql.org/pub/repos/apt/pool/main/p/postgis-tiger-geocoder/postgis-tiger-geocoder_2025.2-1.pgdg24.04%2B1.debian.tar.xz",
+      "debian_packaging_sha256": "ce851ea70d651cd66ef948854322027efc464179c90c24995aa62b37af37142a"
     }
   ],
   "debian_packaging": [
@@ -208,6 +224,12 @@
       "archive": "address-standardizer_3.7.0-1.pgdg24.04+1.debian.tar.xz",
       "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/a/address-standardizer/address-standardizer_3.7.0-1.pgdg24.04%2B1.debian.tar.xz",
       "sha256": "17d139a76b2eb286ad6d6d6f1cbd7445435f3ac1f36498f9d909de73745b0214"
+    },
+    {
+      "package": "postgis-tiger-geocoder",
+      "archive": "postgis-tiger-geocoder_2025.2-1.pgdg24.04+1.debian.tar.xz",
+      "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/p/postgis-tiger-geocoder/postgis-tiger-geocoder_2025.2-1.pgdg24.04%2B1.debian.tar.xz",
+      "sha256": "ce851ea70d651cd66ef948854322027efc464179c90c24995aa62b37af37142a"
     },
     {
       "package": "gdal",

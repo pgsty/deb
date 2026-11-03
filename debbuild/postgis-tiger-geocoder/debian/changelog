@@ -1,0 +1,8 @@
+postgis-tiger-geocoder (2025.2-1PGSTY) unstable; urgency=medium
+
+  * Package the PostGIS Tiger geocoder independently for the PostGIS 3.7 split.
+  * Restrict builds to PostgreSQL 16 through 18, matching upstream support.
+
+  * Retain normal dependency checks on Debian and Ubuntu builders.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 02 Nov 2026 19:00:00 +0800
