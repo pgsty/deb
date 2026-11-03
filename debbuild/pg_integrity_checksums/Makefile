@@ -1,8 +1,8 @@
 all: move
 
-# Source: https://api.github.com/repos/VictorNagibator/pg_integrity_checksums/tarball/v2.0.0
-# SHA256: 73297f1433538c31a2edc8953c0a024f401d3718121286fe683601a960bf8f13
-TARBALL := pg_integrity_checksums-2.0.0.tar.gz
+# Source: https://github.com/VictorNagibator/pg_integrity_checksums/archive/refs/tags/v2.1.0.tar.gz
+# SHA256: 33b3798123f71eda7fd48238145b650ae1c87139c5f12bec2d6fe59dbaa779c0
+TARBALL := pg_integrity_checksums-2.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

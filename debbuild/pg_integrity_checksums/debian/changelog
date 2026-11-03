@@ -1,3 +1,10 @@
+pg-integrity-checksums (2.1.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 2.1.0.
+  * Use canonical byte order for logical checksums.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 01:00:00 +0800
+
 pg-integrity-checksums (2.0.0-1PGSTY) unstable; urgency=medium
 
   * Initial release for PostgreSQL 14 through 18.
