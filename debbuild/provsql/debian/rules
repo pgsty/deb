@@ -19,7 +19,7 @@ override_dh_auto_install:
 	rm -rf debian/postgresql-*-provsql/usr/share/doc/postgresql-doc-*/
 
 override_dh_installdocs:
-	dh_installdocs --all README.md doc/provsql.md
+	dh_installdocs --all doc/provsql.md
 
 %:
 	dh $@

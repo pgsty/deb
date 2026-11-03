@@ -1,3 +1,10 @@
+provsql (1.13.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.13.1.
+  * Install package documentation without the upstream README symlink.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 01:20:00 +0800
+
 provsql (1.13.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.13.0.
