@@ -1,3 +1,9 @@
+cat-tools (0.4.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.4.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 12:00:00 +0800
+
 cat-tools (0.3.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for upstream PGXN 0.3.0.

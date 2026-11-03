@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := cat_tools-0.3.0.tar.gz
+TARBALL := cat_tools-0.4.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
