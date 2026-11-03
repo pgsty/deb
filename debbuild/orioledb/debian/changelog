@@ -1,3 +1,11 @@
+orioledb-18 (1.10.1-1PGSTY) unstable; urgency=medium
+
+  * Update to OrioleDB 1.10.1 with PostgreSQL patchsets 18_4, 17_23 and 16_50.
+  * Preserve upstream SQL version 1.10 and full kernel/contrib/LLVM payload.
+  * Honor parallel build limits and install upstream licenses and patent grant.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 06:15:00 +0800
+
 orioledb-18 (1.10~beta19-1PGSTY) unstable; urgency=medium
 
   * Update to OrioleDB beta19 and PostgreSQL 16/17/18 patchsets 49/22/3.

@@ -1,14 +1,17 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE=1
+BUILD_JOBS := $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+ifeq ($(strip $(BUILD_JOBS)),)
+BUILD_JOBS := $(shell nproc)
+endif
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 PG_MAJOR ?= 18
 PGBASEINSTDIR := /usr/oriole-$(PG_MAJOR)
 DEB_PACKAGE := orioledb-$(PG_MAJOR)
-ORIOLEDB_PATCHSET_VERSION ?= 3
-ORIOLEDB_VERSION ?= 1.10
-ORIOLEDB_BETA ?= beta19
+ORIOLEDB_PATCHSET_VERSION ?= 4
+ORIOLEDB_VERSION ?= 1.10.1
 
 # Filter out -ffast-math which is known to cause precision issues
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
@@ -30,7 +33,7 @@ override_dh_auto_configure:
 		--docdir=$(PGBASEINSTDIR)/doc \
 		--htmldir=$(PGBASEINSTDIR)/doc/html \
 		--with-system-tzdata=/usr/share/zoneinfo \
-		--with-extra-version=" (OrioleDB $(ORIOLEDB_VERSION)-$(ORIOLEDB_BETA))" \
+		--with-extra-version=" (OrioleDB $(ORIOLEDB_VERSION))" \
 			--with-lz4 --with-zstd \
 			--with-uuid=e2fs --with-libxml --with-libxslt \
 			--with-icu --with-llvm \
@@ -44,13 +47,18 @@ override_dh_auto_build:
 	# Source tarball lacks .git metadata; pin patchset version for contrib/orioledb.
 	sed -E -i 's|^ORIOLEDB_PATCHSET_VERSION =.*|ORIOLEDB_PATCHSET_VERSION = $(ORIOLEDB_PATCHSET_VERSION)|' src/Makefile.global
 	cd src/backend && MAKELEVEL=0 $(MAKE) submake-generated-headers
-	MAKELEVEL=0 $(MAKE) -j$(shell nproc) world-bin
+	MAKELEVEL=0 $(MAKE) -j$(BUILD_JOBS) world-bin
 
 override_dh_auto_install:
 	$(MAKE) DESTDIR=$(CURDIR)/debian/$(DEB_PACKAGE) install-world-bin
 	for library in $(CURDIR)/debian/$(DEB_PACKAGE)$(PGBASEINSTDIR)/lib/postgresql/*plpython3*.so; do \
 		[ -e "$$library" ] || continue; chrpath -d "$$library"; \
 	done
+
+override_dh_installdocs:
+	dh_installdocs COPYRIGHT
+	mkdir -p debian/$(DEB_PACKAGE)/usr/share/doc/$(DEB_PACKAGE)/orioledb
+	cp contrib/orioledb/README.md contrib/orioledb/LICENSE-APACHE.txt contrib/orioledb/LICENSE-POSTGRESQL.txt contrib/orioledb/PATENTS.txt debian/$(DEB_PACKAGE)/usr/share/doc/$(DEB_PACKAGE)/orioledb/
 
 override_dh_shlibdeps:
 	dh_shlibdeps -l$(CURDIR)/debian/$(DEB_PACKAGE)$(PGBASEINSTDIR)/lib
