@@ -1,3 +1,10 @@
+pg-lake (3.5.10-1PGSTY) unstable; urgency=medium
+
+  * Update to pg_lake 3.5.10 with the pinned DuckDB and Avro runtimes.
+  * Include upstream Iceberg catalog fixes and the bundled Brotli update.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 06:45:00 +0800
+
 pg-lake (3.5.9-1PGSTY) unstable; urgency=medium
 
   * Update to pg_lake 3.5.9 with the pinned DuckDB and Avro runtimes.

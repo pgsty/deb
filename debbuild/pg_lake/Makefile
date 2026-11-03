@@ -1,6 +1,6 @@
 all: move
 
-VERSION := 3.5.9
+VERSION := 3.5.10
 TARBALL := pg_lake-$(VERSION).tar.gz
 BUILD_DIR := build
 PG_VERSIONS := 16 17 18
@@ -31,11 +31,11 @@ PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 VCPKG_ROOT ?= $(HOME)/.cache/pg_lake/vcpkg-$(VCPKG_VERSION)
 VCPKG_TOOLCHAIN_PATH := $(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
 SOURCE_CANDIDATE_DIR ?= $(CURDIR)/candidate
-SOURCE_PATCHES := patches/pg_lake-3.5.9.patch
+SOURCE_PATCHES := patches/pg_lake-3.5.10.patch
 TAR_BIN := $(shell command -v gtar 2>/dev/null || command -v tar)
 
 check-src:
-	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing authoritative $(TARBALL); run make source to create a candidate, then review and promote it"; exit 1)
+	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing authoritative $(TARBALL); run pig build get $(TARBALL) first; if unavailable, use the reviewed canonical archive"; exit 1)
 
 source: refresh-source
 

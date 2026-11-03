@@ -11,7 +11,7 @@ export CCACHE_MAXSIZE := 16G
 include /usr/share/dpkg/buildflags.mk
 
 VERSIONS := $(shell cat debian/pgversions)
-PG_LAKE_GIT_VERSION ?= v3.5.9
+PG_LAKE_GIT_VERSION ?= v3.5.10
 PG_LAKE_DELTA_SUPPORT ?= 0
 PGCOMPAT_BUILD_CONFIG ?= Release
 PG_LAKE_CLEAN ?= 1
@@ -27,15 +27,28 @@ PG_LAKE_LTO_JOBS ?= 1
 # and keep their pg_config flags.
 CFLAGS := $(subst -flto=auto,-flto=$(PG_LAKE_LTO_JOBS),$(CFLAGS)) -g1
 CXXFLAGS := $(subst -flto=auto,-flto=$(PG_LAKE_LTO_JOBS),$(CXXFLAGS)) -g1
-LDFLAGS := $(subst -flto=auto,-flto=$(PG_LAKE_LTO_JOBS),$(LDFLAGS))
+# Each PG major ships private copies of libduckdb/libavro.  Force a fresh
+# linker build ID for every staged ELF so the three dbgsym packages can be
+# installed together without sharing /usr/lib/debug/.build-id entries.
+LDFLAGS := $(subst -flto=auto,-flto=$(PG_LAKE_LTO_JOBS),$(LDFLAGS)) -Wl,--build-id=uuid
+export LDFLAGS
 VCPKG_DEB_ARCH := $(shell dpkg --print-architecture)
 VCPKG_RELEASE_ARCH := $(if $(filter arm64,$(VCPKG_DEB_ARCH)),arm64,x64)
 VCPKG_TARGET_TRIPLET ?= $(VCPKG_RELEASE_ARCH)-linux-release
 VCPKG_HOST_TRIPLET ?= $(VCPKG_RELEASE_ARCH)-linux-release
 # PGDG-style non-system libpq prefixes otherwise become build-tree RUNPATHs;
 # the packaged libraries resolve libpq through the platform loader config.
-DUCKDB_RELEASE_FLAGS ?= -DBUILD_UNITTESTS=OFF -DBUILD_SHELL=OFF -DCMAKE_SKIP_BUILD_RPATH=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DVCPKG_TARGET_TRIPLET=$(VCPKG_TARGET_TRIPLET) -DVCPKG_HOST_TRIPLET=$(VCPKG_HOST_TRIPLET)
+DUCKDB_RELEASE_FLAGS ?= -DBUILD_UNITTESTS=OFF -DBUILD_SHELL=OFF -DCMAKE_SKIP_BUILD_RPATH=ON -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DVCPKG_TARGET_TRIPLET=$(VCPKG_TARGET_TRIPLET) -DVCPKG_HOST_TRIPLET=$(VCPKG_HOST_TRIPLET) $(HTTPFS_FETCHCONTENT_FLAG) $(AWS_FETCHCONTENT_FLAG) $(AZURE_FETCHCONTENT_FLAG)
 VCPKG_TOOLCHAIN_PATH ?= $(HOME)/.cache/pg_lake/vcpkg-2025.10.17/scripts/buildsystems/vcpkg.cmake
+# The pinned connector sources are seeded on builders that cannot reach GitHub
+# through the local proxy.  Use them when present and otherwise let FetchContent
+# resolve the normal pinned repositories.
+HTTPFS_SOURCE_OVERRIDE ?= $(HOME)/ext/src/httpfs-827222fb/source
+AWS_SOURCE_OVERRIDE ?= $(HOME)/ext/src/aws-b2649e68/source
+AZURE_SOURCE_OVERRIDE ?= $(HOME)/ext/src/azure-003214c9/source
+HTTPFS_FETCHCONTENT_FLAG := $(if $(wildcard $(HTTPFS_SOURCE_OVERRIDE)/CMakeLists.txt),-DFETCHCONTENT_SOURCE_DIR_HTTPFS_EXTENSION_FC=$(HTTPFS_SOURCE_OVERRIDE),)
+AWS_FETCHCONTENT_FLAG := $(if $(wildcard $(AWS_SOURCE_OVERRIDE)/CMakeLists.txt),-DFETCHCONTENT_SOURCE_DIR_AWS_EXTENSION_FC=$(AWS_SOURCE_OVERRIDE),)
+AZURE_FETCHCONTENT_FLAG := $(if $(wildcard $(AZURE_SOURCE_OVERRIDE)/CMakeLists.txt),-DFETCHCONTENT_SOURCE_DIR_AZURE_EXTENSION_FC=$(AZURE_SOURCE_OVERRIDE),)
 
 export PG_LAKE_DELTA_SUPPORT
 export PGCOMPAT_BUILD_CONFIG
@@ -132,6 +145,18 @@ override_dh_installdocs:
 		while IFS= read -r license; do \
 			component=$$(basename "$$(dirname "$$license")"); \
 			install -D -m 0644 "$$license" "$$docdir/duckdb-extensions/$$component-$$(basename "$$license")"; \
+		done; \
+		for connector in httpfs aws azure; do \
+			case "$$connector" in \
+				httpfs) connector_root="$(HTTPFS_SOURCE_OVERRIDE)" ;; \
+				aws) connector_root="$(AWS_SOURCE_OVERRIDE)" ;; \
+				azure) connector_root="$(AZURE_SOURCE_OVERRIDE)" ;; \
+				esac; \
+			find "$$connector_root" -maxdepth 1 -type f \( -iname 'LICENSE*' -o -iname 'NOTICE*' \) -print 2>/dev/null | LC_ALL=C sort | \
+			while IFS= read -r license; do \
+				[ -f "$$license" ] || continue; \
+				install -D -m 0644 "$$license" "$$docdir/duckdb-extensions/$$connector-$$(basename "$$license")"; \
+			done; \
 		done; \
 		find duckdb_pglake/vcpkg_installed -path '*/share/*/copyright' -type f -print | LC_ALL=C sort | \
 		while IFS= read -r license; do \

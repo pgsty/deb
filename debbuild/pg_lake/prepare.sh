@@ -4,9 +4,9 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
-VERSION="${VERSION:-3.5.9}"
+VERSION="${VERSION:-3.5.10}"
 UPSTREAM_REPO="${UPSTREAM_REPO:-https://github.com/Snowflake-Labs/pg_lake.git}"
-EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-62e672670c2964d4128b51c1a9bb80df75b72de3}"
+EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-ac94b91467860e9103d19217999585a17db1db84}"
 EXPECTED_AVRO_COMMIT="${EXPECTED_AVRO_COMMIT:-2b11dba4fb28c7bb6ff08b40509a6a71fcaf4c21}"
 EXPECTED_DUCKDB_COMMIT="${EXPECTED_DUCKDB_COMMIT:-d8cdaa33fda8df955cc76ef58a280f68f4cd43fa}"
 EXPECTED_DUCKDB_POSTGRES_COMMIT="${EXPECTED_DUCKDB_POSTGRES_COMMIT:-41223e51559cd581f1c06e170b71c71df25bbaac}"
@@ -85,6 +85,10 @@ database_connector_commit=${DATABASE_CONNECTOR_COMMIT}
 duckdb_httpfs_commit=${EXPECTED_DUCKDB_HTTPFS_COMMIT}
 duckdb_aws_commit=${EXPECTED_DUCKDB_AWS_COMMIT}
 duckdb_azure_commit=${EXPECTED_DUCKDB_AZURE_COMMIT}
+vcpkg_commit=74e6536215718009aae747d86d84b78376bf9e09
+vcpkg_version=2025.10.17
+brotli_version=1.1.1
+brotli_source=duckdb_pglake/patches/duckdb/brotli-1.1.1-block-switch-cve.patch
 polaris_included=false
 EOF
 
