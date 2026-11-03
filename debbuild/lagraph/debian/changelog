@@ -1,6 +1,8 @@
 lagraph (1.2.2-1PGSTY) unstable; urgency=medium
 
   * Update LAGraph and LAGraphX to 1.2.2.
+  * Rebuild against GraphBLAS 10.5.2 with the existing upstream version.
+  * Retain revision 1PGSTY before the first binary publication.
   * Keep the liblagraph.so.1 and liblagraphx.so.1 ABI package names.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 14:15:00 +0800
