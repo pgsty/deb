@@ -1,3 +1,11 @@
+polarstore (1.2.42-3PGSTY) unstable; urgency=medium
+
+  * Rebuild the PFSD SDK against zlog 1.2.20-1PGSTY.
+  * Preserve static-library DWARF for downstream PolarDB debug packages.
+  * Advance the revision after the published 1.2.42-2PGSTY packages.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 01:10:00 +0800
+
 polarstore (1.2.42-1PGSTY) unstable; urgency=medium
 
   * Preserve PFSD static-library DWARF for downstream consumer debug packages.

@@ -7,7 +7,7 @@ Build-Depends:
  cmake,
  g++,
  make,
- zlog (>= 1.2.18) | libzlog-dev (>= 1.2.18),
+ zlog (>= 1.2.20) | libzlog-dev (>= 1.2.20),
  libaio-dev
 Standards-Version: 4.7.0
 Rules-Requires-Root: no
@@ -16,7 +16,7 @@ Homepage: https://github.com/ApsaraDB/PolarDB-FileSystem
 Package: polarstore
 Architecture: any
 Depends:
- zlog (>= 1.2.18) | libzlog-dev (>= 1.2.18),
+ zlog (>= 1.2.20) | libzlog-dev (>= 1.2.20),
  libaio-dev,
  ${misc:Depends}
 Description: PolarStore PFSD SDK for PolarDB

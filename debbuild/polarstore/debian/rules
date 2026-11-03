@@ -3,6 +3,8 @@
 export DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
+BUILD_JOBS = $(or $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS))),1)
+
 %:
 	dh $@
 
@@ -11,10 +13,10 @@ override_dh_auto_configure:
 	sed -i -e 's|-march=native ||g' CMakeLists.txt
 	sed -i -e 's|-Werror|-Werror -Wno-array-bounds|g' CMakeLists.txt
 	sed -i -e 's|calloc(sizeof(chnl_ctx_shm_t), 1)|calloc(1, sizeof(chnl_ctx_shm_t))|g' src/pfs_sdk/pfsd_chnl_shm.cc src/pfsd/pfsd_chnl_shm.cc
-	cmake -S . -B obj -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+	cmake -S . -B obj -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
 override_dh_auto_build:
-	cmake --build obj --target pfsd --parallel
+	cmake --build obj --target pfsd --parallel $(BUILD_JOBS) --verbose
 
 override_dh_auto_install:
 	install -d debian/polarstore/usr/local/polarstore/pfsd/include
