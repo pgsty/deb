@@ -2,7 +2,9 @@ Source: pg-duckdb
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-server-dev-PGVERSION, libicu-dev, libcurl4-openssl-dev (>= 7)
+Build-Depends: debhelper-compat (= 13), postgresql-server-dev-PGVERSION,
+ cmake, ninja-build, gcc, g++, make, python3, git, pkg-config,
+ libicu-dev, libcurl4-openssl-dev (>= 7), liblz4-dev, libssl-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/duckdb/pg_duckdb

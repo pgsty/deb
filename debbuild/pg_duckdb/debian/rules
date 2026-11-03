@@ -2,6 +2,9 @@
 
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
+# Source archives have no Git metadata; keep the supported packaging scope.
+export PG_DUCKDB_VERSION = v1.2.0
+export PG_MAX_VER = 18
 
 # Keep the distribution debug, hardening, and reproducibility flags.  PGXS
 # supplies the compiler-specific LTO mode itself (GCC for native objects and

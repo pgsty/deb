@@ -1,3 +1,12 @@
+pg-duckdb (1.2.0-1PGSTY) unstable; urgency=medium
+
+  * Prepare upstream experimental 1.2.0 with its pinned DuckDB 2.0.0 source.
+  * Build from bundled sources and set the module version without Git metadata.
+  * Declare native build dependencies and retain PostgreSQL 14-18 and dbgsym.
+  * Defer build and runtime validation to the dedicated DuckDB build task.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 22:00:00 +0800
+
 pg-duckdb (1.1.1-1PGSTY) unstable; urgency=medium
 
   * Align the package revision with the RPM cross-PG-major co-installation fix.

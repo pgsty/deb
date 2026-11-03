@@ -5,7 +5,7 @@ all: build move
 # DuckDB's inner CMake/Ninja build remains parallel.
 .NOTPARALLEL:
 
-TARBALL := pg_duckdb-1.1.1.tar.gz
+TARBALL := pg_duckdb-1.2.0.tar.gz
 SOURCE_SHA256 := $(shell sha256sum ../SOURCES/$(TARBALL) | awk '{print $$1}')
 
 
