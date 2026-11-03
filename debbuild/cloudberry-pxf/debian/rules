@@ -8,6 +8,7 @@ export PXF_HOME=/usr/cloudberry-pxf
 export GOPATH := $(CURDIR)/.gopath
 export GOBIN := $(GOPATH)/bin
 export GOPROXY ?= https://goproxy.cn,direct
+export GOTOOLCHAIN ?= auto
 
 OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
 
@@ -30,7 +31,7 @@ override_dh_auto_build:
 	if [ -z "$$JAVA_HOME" ]; then \
 		JAVA_HOME=$$(dirname $$(dirname $$(readlink -f $$(command -v javac)))); \
 	fi; \
-	export JAVA_HOME GPHOME=$(GPHOME) PXF_HOME=$(PXF_HOME) PG_CONFIG=$(GPHOME)/bin/pg_config GOPATH=$(GOPATH) GOBIN=$(GOBIN) PATH=$(GPHOME)/bin:$$JAVA_HOME/bin:$(GOBIN):/usr/local/go/bin:$$PATH; \
+	export JAVA_HOME GPHOME=$(GPHOME) PXF_HOME=$(PXF_HOME) PG_CONFIG=$(GPHOME)/bin/pg_config GOPATH=$(GOPATH) GOBIN=$(GOBIN) PATH=$(GPHOME)/bin:$$JAVA_HOME/bin:$(GOBIN):/usr/lib/go-1.23/bin:/usr/local/go/bin:$$PATH; \
 	mkdir -p $(GOPATH); \
 	$(MAKE) -C external-table stage; \
 	$(MAKE) -C fdw stage; \

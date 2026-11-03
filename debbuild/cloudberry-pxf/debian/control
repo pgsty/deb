@@ -9,7 +9,7 @@ Build-Depends:
  g++,
  gcc,
  cloudberry (>= 2.2.0),
- golang | golang-go,
+ golang-go (>= 2:1.21~) | golang-1.23-go,
  libcurl4-gnutls-dev | libcurl4-openssl-dev,
  make,
  openjdk-17-jdk-headless | default-jdk-headless | openjdk-17-jdk | default-jdk,

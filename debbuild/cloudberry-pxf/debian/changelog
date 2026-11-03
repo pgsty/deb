@@ -3,6 +3,7 @@ cloudberry-pxf (2.2.0-1PGSTY) unstable; urgency=medium
   * Update to the official Apache Cloudberry PXF 2.2.0 source release.
   * Build against Cloudberry 2.2.0 and upstream Gradle 8.14.4.
   * Refresh Java compatibility and retain distribution compiler flags.
+  * Require a Go bootstrap with automatic toolchain selection on older systems.
 
  -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 12:00:00 +0800
 
