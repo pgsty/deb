@@ -1337,7 +1337,10 @@ gdal:
 postgis:
 	$(MAKE) -C postgis
 
-.PHONY: cgal geos proj sfcgal libgeotiff librttopo spatialite libarrow libgta gdal postgis
+address-standardizer:
+	$(MAKE) -C address-standardizer
+
+.PHONY: cgal geos proj sfcgal libgeotiff librttopo spatialite libarrow libgta gdal postgis address-standardizer
 
 # New extension batch: shared pinned sources, PG14-18 where supported.
 

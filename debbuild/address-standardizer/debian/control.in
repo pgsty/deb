@@ -1,0 +1,35 @@
+Source: address-standardizer
+Section: database
+Priority: optional
+Maintainer: Debian PostgreSQL Maintainers <team+postgresql@tracker.debian.org>
+Uploaders:
+ Christoph Berg <myon@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ libpcre2-dev,
+ postgresql-all <!nocheck>,
+ postgresql-server-dev-all (>= 217~),
+Standards-Version: 4.7.4
+Rules-Requires-Root: no
+Homepage: https://github.com/postgis/address_standardizer
+Vcs-Browser: https://salsa.debian.org/postgresql/address-standardizer
+Vcs-Git: https://salsa.debian.org/postgresql/address-standardizer.git
+
+Package: postgresql-PGVERSION-address-standardizer
+Architecture: any
+Depends:
+ ${misc:Depends},
+ ${postgresql:Depends},
+ ${shlibs:Depends},
+Breaks:
+ postgresql-PGVERSION-postgis-3-scripts (<< 3.7),
+ ${postgresql:Breaks},
+Description: Postgres extension to parse a US street address string
+ Address_standardizer is a Postgres extension to parse a US street address
+ string into its component parts.
+ .
+ The parser works from right to left looking first at the macro elements for
+ postcode, state/province, city, and then looks micro elements to determine if
+ we are dealing with a house number street or intersection or landmark. It
+ currently does not look for a country code or name, but that could be
+ introduced in the future.

@@ -179,11 +179,35 @@
       ]
     }
   ],
+  "split_extensions": [
+    {
+      "package": "address-standardizer",
+      "source_archive": {
+        "name": "address_standardizer-3.7.0.tar.gz",
+        "sha256": "3f193591c1c0f8ec7d9f3cd179021a9df4e35594e0543fae187f3394721f2983",
+        "size": 466771,
+        "archive_roots": [
+          "address_standardizer-3.7.0"
+        ],
+        "shared_with_rpm": true
+      },
+      "rpm_srpm_url": "https://dnf-srpms.postgresql.org/srpms/18/redhat/rhel-9-x86_64/address_standardizer_18-3.7.0-4PGDG.rhel9.8.src.rpm",
+      "rpm_srpm_sha256": "9e3f4b9855125c0323e3868a8064f074ee74e7de9a2c63285929f4982b3f0f48",
+      "debian_packaging_url": "https://apt.postgresql.org/pub/repos/apt/pool/main/a/address-standardizer/address-standardizer_3.7.0-1.pgdg24.04%2B1.debian.tar.xz",
+      "debian_packaging_sha256": "17d139a76b2eb286ad6d6d6f1cbd7445435f3ac1f36498f9d909de73745b0214"
+    }
+  ],
   "debian_packaging": [
     {
       "package": "postgis",
       "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/p/postgis/postgis_3.7.0%2Bdfsg-1.pgdg24.04%2B1.debian.tar.xz",
       "sha256": "217081e2850aa20eea07d864b327d7301cc10b152e0d715d4f0572958efaa264"
+    },
+    {
+      "package": "address-standardizer",
+      "archive": "address-standardizer_3.7.0-1.pgdg24.04+1.debian.tar.xz",
+      "url": "https://apt.postgresql.org/pub/repos/apt/pool/main/a/address-standardizer/address-standardizer_3.7.0-1.pgdg24.04%2B1.debian.tar.xz",
+      "sha256": "17d139a76b2eb286ad6d6d6f1cbd7445435f3ac1f36498f9d909de73745b0214"
     },
     {
       "package": "gdal",

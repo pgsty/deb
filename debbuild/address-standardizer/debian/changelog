@@ -1,0 +1,8 @@
+address-standardizer (3.7.0-1PGSTY) unstable; urgency=medium
+
+  * Package address_standardizer independently for the PostGIS 3.7 split.
+  * Use the shared upstream 3.7.0 source archive for RPM and DEB builds.
+
+  * Retain normal dependency checks on Debian and Ubuntu builders.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 02 Nov 2026 19:00:00 +0800
