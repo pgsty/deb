@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := apache-cloudberry-2.1.0-incubating-src.tar.gz
+TARBALL := apache-cloudberry-2.2.0-incubating-src.tar.gz
 BUILD_DIR := build
 
 setup:
@@ -8,12 +8,9 @@ setup:
 	tar -C $(BUILD_DIR) --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	mkdir -p $(BUILD_DIR)/gpMgmt/bin/pythonSrc/ext
-	cp ../SOURCES/psutil-5.7.0.tar.gz ../SOURCES/PyGreSQL-5.2.tar.gz ../SOURCES/PyYAML-5.4.1.tar.gz ../SOURCES/Cython-0.29.37.tar.gz $(BUILD_DIR)/gpMgmt/bin/pythonSrc/ext/
+	cp ../SOURCES/psutil-7.2.2.tar.gz ../SOURCES/PyGreSQL-5.2.5.tar.gz ../SOURCES/PyYAML-6.0.1.tar.gz ../SOURCES/Cython-0.29.37.tar.gz $(BUILD_DIR)/gpMgmt/bin/pythonSrc/ext/
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog; \
-	if [ "$$OS_CODENAME" = "resolute" ]; then \
-		sed -i 's/xmlErrorPtr error/const xmlError *error/g' $(BUILD_DIR)/src/backend/utils/adt/xml.c; \
-	fi
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 build:
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc

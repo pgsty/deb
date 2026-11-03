@@ -1,0 +1,95 @@
+--- a/gpMgmt/bin/Makefile
++++ b/gpMgmt/bin/Makefile
+@@ -87,43 +87,18 @@
+ PSUTIL_VERSION=7.2.2
+ PYYAML_VERSION=6.0.1
+ 
++# Retain distribution hardening and DWARF for the bundled Python extensions.
++PYTHON_CFLAGS=$(filter-out -Werror,$(CFLAGS))
++ifneq ($(strip $(DESTDIR)),)
++PYTHON_CFLAGS += -ffile-prefix-map=$(DESTDIR)= -fdebug-prefix-map=$(DESTDIR)=
++endif
++
++# Package recipes provide the pinned sources; installation stays offline.
+ download-python-deps:
+-	@echo "--- Downloading Python dependencies for gpMgmt modules"
+-	@mkdir -p $(PYLIB_SRC_EXT)
+-	# Download psutil using curl (only if not exists)
+-	@if [ ! -f $(PYLIB_SRC_EXT)/psutil-$(PSUTIL_VERSION).tar.gz ]; then \
+-		echo "Downloading psutil-$(PSUTIL_VERSION).tar.gz..."; \
+-		curl -sSL https://files.pythonhosted.org/packages/source/p/psutil/psutil-$(PSUTIL_VERSION).tar.gz -o $(PYLIB_SRC_EXT)/psutil-$(PSUTIL_VERSION).tar.gz; \
+-	else \
+-		echo "psutil-$(PSUTIL_VERSION).tar.gz already exists, skipping download"; \
+-	fi
+-	# Download PyYAML using curl (only if not exists)
+-	@if [ ! -f $(PYLIB_SRC_EXT)/PyYAML-$(PYYAML_VERSION).tar.gz ]; then \
+-		echo "Downloading PyYAML-$(PYYAML_VERSION).tar.gz..."; \
+-		curl -sSL https://files.pythonhosted.org/packages/source/P/PyYAML/PyYAML-$(PYYAML_VERSION).tar.gz -o $(PYLIB_SRC_EXT)/PyYAML-$(PYYAML_VERSION).tar.gz; \
+-	else \
+-		echo "PyYAML-$(PYYAML_VERSION).tar.gz already exists, skipping download"; \
+-	fi
+-	# Download PyGreSQL using curl (only if not exists)
+-	@if [ ! -f $(PYLIB_SRC_EXT)/PyGreSQL-$(PYGRESQL_VERSION).tar.gz ]; then \
+-		echo "Downloading PyGreSQL-$(PYGRESQL_VERSION).tar.gz..."; \
+-		curl -sSL https://files.pythonhosted.org/packages/source/P/PyGreSQL/PyGreSQL-$(PYGRESQL_VERSION).tar.gz -o $(PYLIB_SRC_EXT)/PyGreSQL-$(PYGRESQL_VERSION).tar.gz; \
+-	else \
+-		echo "PyGreSQL-$(PYGRESQL_VERSION).tar.gz already exists, skipping download"; \
+-	fi
+-	# Install wheel and cython for PyYAML building (only if not exists)
+-	@if python3 -c "import wheel" >/dev/null 2>&1; then \
+-		echo "wheel already exists, skipping installation"; \
+-	else \
+-		echo "Installing wheel..."; \
+-		pip3 install --user wheel 2>/dev/null || pip3 install --user --break-system-packages wheel; \
+-	fi
+-	@if python3 -c "import cython" >/dev/null 2>&1; then \
+-		echo "cython already exists, skipping installation"; \
+-	else \
+-		echo "Installing cython..."; \
+-		pip3 install --user "cython<3.0.0" 2>/dev/null || pip3 install --user --break-system-packages "cython<3.0.0"; \
+-	fi
++	@for archive in psutil-$(PSUTIL_VERSION).tar.gz PyYAML-$(PYYAML_VERSION).tar.gz PyGreSQL-$(PYGRESQL_VERSION).tar.gz Cython-0.29.37.tar.gz; do \
++		test -s "$(PYLIB_SRC_EXT)/$$archive" || { echo "Missing pinned Python source: $$archive" >&2; exit 1; }; \
++	done
++	cd $(PYLIB_SRC_EXT)/ && $(TAR) xzf Cython-0.29.37.tar.gz
+ 
+ #
+ # PyGreSQL
+@@ -132,7 +107,7 @@
+ pygresql: download-python-deps
+ 	@echo "--- PyGreSQL"
+ 	cd $(PYLIB_SRC_EXT)/ && $(TAR) xzf $(PYGRESQL_DIR).tar.gz
+-	cd $(PYLIB_SRC_EXT)/$(PYGRESQL_DIR)/ && PATH=$(DESTDIR)$(bindir):$$PATH LDFLAGS='$(LDFLAGS) $(PYGRESQL_LDFLAGS)' python3 setup.py build
++	cd $(PYLIB_SRC_EXT)/$(PYGRESQL_DIR)/ && PATH=$(DESTDIR)$(bindir):$$PATH CFLAGS="$(PYTHON_CFLAGS)" LDFLAGS='$(LDFLAGS) $(PYGRESQL_LDFLAGS)' python3 setup.py build
+ 	cp -r $(PYLIB_SRC_EXT)/$(PYGRESQL_DIR)/build/lib*-3*/* $(PYLIB_DIR)/
+ 
+ #
+@@ -143,7 +118,7 @@
+ 	@echo "--- psutil"
+ ifeq "$(findstring $(BLD_ARCH),aix7_ppc_64 )" ""
+ 	cd $(PYLIB_SRC_EXT)/ && $(TAR) xzf $(PSUTIL_DIR).tar.gz
+-	cd $(PYLIB_SRC_EXT)/$(PSUTIL_DIR)/ && env -u CC python3 setup.py build
++	cd $(PYLIB_SRC_EXT)/$(PSUTIL_DIR)/ && env -u CC CFLAGS="$(PYTHON_CFLAGS)" python3 setup.py build
+ 	cp -r $(PYLIB_SRC_EXT)/$(PSUTIL_DIR)/build/lib.*/psutil $(PYLIB_DIR)
+ endif
+ 
+@@ -155,7 +130,7 @@
+ pyyaml: download-python-deps
+ 	@echo "--- pyyaml"
+ 	cd $(PYLIB_SRC_EXT)/ && $(TAR) xzf $(PYYAML_DIR).tar.gz
+-	cd $(PYLIB_SRC_EXT)/$(PYYAML_DIR)/ && env -u CC CFLAGS="-w" python3 setup.py build
++	cd $(PYLIB_SRC_EXT)/$(PYYAML_DIR)/ && env -u CC PYTHONPATH="$(PYLIB_SRC_EXT)/Cython-0.29.37$${PYTHONPATH:+:$$PYTHONPATH}" CFLAGS="$(PYTHON_CFLAGS) -w" python3 setup.py build
+ 	cp -r $(PYLIB_SRC_EXT)/$(PYYAML_DIR)/build/lib*-3*/* $(PYLIB_DIR)/
+ 
+ #
+--- a/gpMgmt/bin/stream/Makefile
++++ b/gpMgmt/bin/stream/Makefile
+@@ -8,7 +8,7 @@
+ all: stream
+ 
+ stream: $(OBJS)
+-	$(CC) $(CFLAGS) $(OBJS) -o $@$(X)
++	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LDFLAGS_EX) -o $@$(X)
+ 
+ installdirs:
+ 	$(MKDIR_P) '$(DESTDIR)$(bindir)/lib'

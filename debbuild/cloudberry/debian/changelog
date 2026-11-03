@@ -1,3 +1,11 @@
+cloudberry (2.2.0-1PGSTY) unstable; urgency=medium
+
+  * Update to the official Apache Cloudberry 2.2.0 incubating source release.
+  * Refresh platform patches and the pinned offline Python dependencies.
+  * Drop initdb and libxml compatibility fixes already merged upstream.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 12:00:00 +0800
+
 cloudberry (2.1.0-1PGSTY) unstable; urgency=medium
 
   * Use shlex quoting for Python 3.13 and require the gpMgmt pager.

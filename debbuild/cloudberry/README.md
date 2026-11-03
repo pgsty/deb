@@ -1,6 +1,6 @@
 # cloudberry debbuild
 
-This recipe builds the Apache Cloudberry 2.1.0 main package.
+This recipe builds the Apache Cloudberry 2.2.0 main package.
 
 ## Usage
 
@@ -11,4 +11,4 @@ make
 
 Required local tarball:
 
-`~/ext/src/apache-cloudberry-2.1.0-incubating-src.tar.gz`
+`~/ext/src/apache-cloudberry-2.2.0-incubating-src.tar.gz`
