@@ -1,3 +1,9 @@
+pgsentinel (1.5.2-1PGSTY) unstable; urgency=medium
+
+  * Update recipe to 1.5.2; retain PGDG as the binary package supplier.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 00:45:00 +0800
+
 pgsentinel (1.5.1-1PGSTY) unstable; urgency=medium
 
   * Update to 1.5.1.
