@@ -11,7 +11,7 @@ export GOBIN := $(GOPATH)/bin
 export GOPROXY ?= https://goproxy.cn,direct
 export GOTOOLCHAIN ?= auto
 export SOURCE_DATE_EPOCH ?= 1790147090
-export PATH := $(GOBIN):/usr/local/go/bin:$(PATH)
+export PATH := $(GOBIN):/usr/lib/go-1.23/bin:/usr/local/go/bin:$(PATH)
 
 OS_CODENAME := $(shell . /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}})
 

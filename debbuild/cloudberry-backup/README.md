@@ -20,3 +20,11 @@ Required local tarball:
 The recipe uses Go's automatic toolchain selector because upstream declares
 `go 1.25.0` in `go.mod`. It packages gpbackup, gprestore,
 gpbackup_helper, gpbackup_s3_plugin, gpbackman, and gpbackup_exporter.
+
+The bootstrap Go compiler must be at least 1.21. Debian 12 builders must enable
+the official `bookworm-backports` repository and install `golang-1.23-go`;
+Ubuntu 22.04 builders can install that versioned package from the official
+Ubuntu repositories. The recipe prefers `/usr/lib/go-1.23/bin` when installed.
+Newer distributions can use their default `golang-go` package. Toolchain
+selection still respects `GOTOOLCHAIN` and `GOPROXY`, and dependency checks are
+not bypassed.
