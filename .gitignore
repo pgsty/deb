@@ -17,6 +17,9 @@ tf/.terraform*
 #tf/terraform.tf
 
 docs/
+!docs/
+docs/*
+!docs/vchord-suite.md
 apt/
 
 AGENTS.md

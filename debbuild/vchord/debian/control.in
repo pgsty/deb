@@ -2,15 +2,17 @@ Source: vchord
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), clang
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, libicu-dev,
+ clang-21 | clang-20 | clang-19 | clang-18 | clang-17 | clang-16,
+ libclang-21-dev | libclang-20-dev | libclang-19-dev | libclang-18-dev | libclang-17-dev | libclang-16-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/tensorchord/VectorChord
+Homepage: https://vchord.pgsty.com/
 
 Package: postgresql-PGVERSION-vchord
 Architecture: any
 Provides: postgresql-vchord
 Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgvector
-Description: Scalable, fast, and disk-friendly vector search in Postgres, the successor of pgvecto.rs.
-  VectorChord (vchord) is a PostgreSQL extension designed for scalable, high-performance, and disk-efficient vector similarity search, and serves as the successor to pgvecto.rs.
-  With VectorChord, you can store 400,000 vectors for just $1, enabling significant savings: 6x more vectors compared to Pinecone's optimized storage and 26x more than pgvector/pgvecto.rs for the same price1. For further insights, check out our launch blog post.
+Description: Scalable vector search in PostgreSQL
+ VectorChord provides scalable, disk-efficient vector similarity search
+ and is the successor to pgvecto.rs. This package uses the PGSTY fork.
