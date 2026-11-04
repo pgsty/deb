@@ -1,7 +1,8 @@
-pg-parquet (0.5.1-2PGSTY) unstable; urgency=medium
+pg-parquet (0.5.1-4PGSTY) unstable; urgency=medium
 
   * Backport upstream #178 to fix temporary file leaks in streaming COPY.
   * Patch official sources with pgrx 0.19.3 and refreshed locked dependencies.
+  * Supersede the previously published 0.5.1-3PIGSTY packages.
 
  -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 09:00:00 +0800
 
