@@ -1,10 +1,11 @@
-pg-tokenizer (0.2.0-1PGSTY) unstable; urgency=medium
+pg-tokenizer (1.0.0-1PGSTY) unstable; urgency=medium
 
-  * Switch to the PGSTY-maintained fork and prepare pg_tokenizer 0.2.0.
+  * Switch to the PGSTY-maintained fork and package pg_tokenizer 1.0.0.
+  * Fetch Snowball stemmers from pgsty/rust-stemmers v1.2.1.
   * Build directly from the fork source without a downstream compatibility patch.
-  * Use the v0.2.0 GitHub source archive with the pg_tokenizer name.
+  * Use the v1.0.0 GitHub source archive with the pg_tokenizer name.
 
- -- Ruohang Feng <rh@vonng.com>  Tue, 03 Nov 2026 09:00:00 +0800
+ -- Ruohang Feng <rh@vonng.com>  Wed, 04 Nov 2026 09:00:00 +0800
 
 pg-tokenizer (0.1.1-2PGSTY) unstable; urgency=medium
 

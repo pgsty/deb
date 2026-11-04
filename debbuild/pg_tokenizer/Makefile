@@ -4,9 +4,9 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-# GitHub tag archive: https://github.com/pgsty/pg_tokenizer/archive/refs/tags/v0.2.0.tar.gz
+# GitHub tag archive: https://github.com/pgsty/pg_tokenizer/archive/refs/tags/v1.0.0.tar.gz
 # No downstream patch is applied.
-TARBALL := pg_tokenizer-0.2.0.tar.gz
+TARBALL := pg_tokenizer-1.0.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
