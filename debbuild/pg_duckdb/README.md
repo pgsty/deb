@@ -45,12 +45,20 @@ httpfs 继续固定原提交，通过上游 `APPLY_PATCHES` 钩子对派生类 `
 返回值显式使用 `std::move`，解决 GCC 8–11 的 C++17 编译错误。
 配方显式设置 `PG_DUCKDB_VERSION=v1.2.0`、`PG_MAX_VER=18` 和完整
 `DUCKDB_COMMIT=d54cbbe3df17e8e5ce68312f483b4155836112aa`，仅打包 PG14–18。
+PG18 还在 PGXS 读取变量前导出版本定义；验收要求加载模块报告 `v1.2.0`，
+不能接受上游 target-specific 变量生效过晚造成的 `unknown`。
 
 保留动态 `libduckdb.so`、LLVM、既有调试信息策略、两任务的 DuckDB 内层并行默认值，
 以及同一平台内按源码、补丁、commit、依赖版本、编译器和 flags 区分的跨 PG 主版本核心缓存。
 PGXS 桥接层仍逐 PG 版本重建，不跨系统或架构共享编译缓存。
 DuckDB 核心保留既有 `-g1` 函数及行号 DWARF，桥接层保留发行版完整 `-g`；
 不能把核心调试信息描述为完整变量调试。
+
+DWZ 使用 `--no-dwz-multifile`，保留逐 ELF 优化和正常 dbgsym 分离。
+由于不同 PG 包不能共同拥有同一个全局 Build-ID 路径，`dh_strip` 在 staged
+核心上写入确定性的 PG 专属 Build-ID；核心缓存本身不变，自动生成的 dbgsym
+因此可以同时安装。dbgsym 使用构建器实际生成的 `.deb` 或 `.ddeb` 文件名，
+收集时不改名，也不同时保留两种后缀的重复候选。
 
 验收检查主包与 dbgsym 的逐文件归属、Build-ID/DWARF、候选与安装 ELF 的 SHA-256、
 PG14–18 预加载、版本、强制执行计划、事务、跨连接读取、非 public 安装、

@@ -6,6 +6,11 @@ export CC = gcc
 export PG_DUCKDB_VERSION = v1.2.0
 export PG_MAX_VER = 18
 export DUCKDB_COMMIT = d54cbbe3df17e8e5ce68312f483b4155836112aa
+# PGXS copies PG_CPPFLAGS before upstream's target-specific version assignment.
+# Export the definition before including PGXS so PG18 module metadata is valid.
+ifeq ($(shell pg_config --version | sed -n 's/^PostgreSQL \([0-9]*\).*/\1/p'),18)
+export PG_CPPFLAGS = -DPG_DUCKDB_VERSION=\"$(PG_DUCKDB_VERSION)\"
+endif
 
 # Keep the distribution debug, hardening, and reproducibility flags.  PGXS
 # supplies the compiler-specific LTO mode itself (GCC for native objects and
@@ -79,6 +84,30 @@ override_dh_auto_build:
 	mv '$(DUCKDB_CACHE_DIR).tmp' '$(DUCKDB_CACHE_DIR)'
 
 override_dh_auto_test:
+
+# The cached core has the same Build-ID in every PG-major package.  A DWZ
+# multifile would add a PG-specific debugaltlink to that core's global debug
+# path, producing different bytes and preventing dbgsym coinstallation.
+# Keep each ELF's DWARF self-contained while retaining normal debug splitting.
+override_dh_dwz:
+	dh_dwz --no-dwz-multifile
+
+# The cached core is intentionally reused across PG majors, so its original
+# linker Build-ID would otherwise make every automatic dbgsym package claim
+# the same global /usr/lib/debug/.build-id path.  Rewrite only the staged
+# copy, after DWZ and before dh_strip, with a deterministic PG-specific note.
+# This preserves the cache bytes and lets dh_strip generate a matching debug
+# file under a distinct Build-ID path for each PostgreSQL major.
+override_dh_strip:
+	set -eu; \
+	core=$$(find debian -type f -path '*/usr/lib/postgresql/*/lib/libduckdb.so' -print -quit); \
+	test -n "$$core"; \
+	pg=$$(basename "$$(dirname "$$(dirname "$$core")")"); \
+	note=$$(mktemp --tmpdir pg-duckdb-build-id.XXXXXX); \
+	trap 'rm -f "$$note"' EXIT; \
+	python3 -c 'import hashlib,pathlib,struct,sys; pg,path,out=sys.argv[1:]; digest=hashlib.sha1(pathlib.Path(path).read_bytes()+pg.encode()).digest(); pathlib.Path(out).write_bytes(struct.pack("<III",4,20,3)+b"GNU\0"+digest)' "$$pg" "$$core" "$$note"; \
+	objcopy --update-section .note.gnu.build-id="$$note" "$$core"; \
+	dh_strip
 
 override_dh_installdocs:
 	dh_installdocs --all README.*
