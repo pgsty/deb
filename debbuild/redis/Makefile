@@ -1,10 +1,11 @@
 all: setup build move
 
-VERSION := 7.2.16
+VERSION := 7.2.17
 TARBALL := redis-$(VERSION).tar.gz
 SOURCEDIR ?= ../SOURCES
 SOURCE := $(SOURCEDIR)/$(TARBALL)
 SOURCE_URL := https://download.redis.io/releases/$(TARBALL)
+SOURCE_SHA256 := 07c679c013fd82513299733bddf91999bbbc830351ec9ea985a533b09a595d76
 OS_CODENAME ?= $(shell command -v lsb_release >/dev/null 2>&1 && lsb_release -sc || (. /etc/os-release 2>/dev/null && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown)
 DEB_BUILD_OPTIONS ?= parallel=$(shell nproc)
 
@@ -29,6 +30,7 @@ $(SOURCE):
 	fi
 
 verify: $(SOURCE)
+	echo "$(SOURCE_SHA256)  $(SOURCE)" | sha256sum -c -
 
 # prepare directory
 setup: verify
@@ -36,6 +38,8 @@ setup: verify
 	tar -C build --strip-components=1 -xf $(SOURCE)
 	rm -rf build/debian; cp -r debian build/debian
 	sed -i "s/@RELEASE@/$(OS_CODENAME)/g" build/debian/changelog
+	# Focal ships debhelper 12; keep the compatibility change in the build copy.
+	if [ "$(OS_CODENAME)" = focal ]; then sed -i 's/debhelper-compat (= 13)/debhelper-compat (= 12)/' build/debian/control; fi
 	chmod +x build/debian/rules
 	cd build && QUILT_PATCHES=debian/patches quilt push -a
 
