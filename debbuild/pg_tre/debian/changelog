@@ -1,3 +1,9 @@
+pg-tre (4.6.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 4.6.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 04 Nov 2026 18:00:00 +0800
+
 pg-tre (4.5.3-1PGSTY) unstable; urgency=high
 
   * Update to upstream 4.5.3.
