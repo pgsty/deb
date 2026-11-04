@@ -4,15 +4,20 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pg_parquet-0.5.1.tar.gz
+TARBALL := pg_parquet-v0.5.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PGRX_VERSION := 0.19.2
-PG_VERSIONS ?= 18
+PGRX_VERSION := 0.19.3
+PG_VERSIONS ?= 14 15 16 17 18
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SNAPSHOT := /tmp/pgrx0192-pg-parquet-cargo-locks.before
+LOCK_SNAPSHOT := $(CURDIR)/$(BUILD_DIR)/.Cargo.lock.before
+LOCK_EXPECTED := 428de8eff063e6d7e207aec170247e18700007e401034d9b46395aebabf5dac2
+LIBCLANG_PATH ?= $(lastword $(sort $(wildcard /usr/lib/llvm-*/lib)))
+export LIBCLANG_PATH
+
+.NOTPARALLEL:
 
 # prepare directory
 setup:
@@ -20,14 +25,19 @@ setup:
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
-	# The source archive includes the pgrx 0.19.2 dependency update.
+	patch -d $(BUILD_DIR) -p1 < patches/pg-parquet-0.5.1.patch
+	cd $(BUILD_DIR) && echo "$(LOCK_EXPECTED)  Cargo.lock" | sha256sum -c -
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 check-pgrx:
-	@cargo pgrx --version 2>/dev/null | grep -q "cargo-pgrx $(PGRX_VERSION)" || (cargo pgrx --version 2>/dev/null || true; echo "expected cargo-pgrx $(PGRX_VERSION) in builder" >&2; exit 1)
+	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
+	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
+		echo "found cargo-pgrx $${CURRENT:-<missing>}; expected $(PGRX_VERSION)" >&2; \
+		exit 1; \
+	fi
 
 build: check-pgrx building packaging
 building:
@@ -48,6 +58,7 @@ building:
 
 packaging:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	# The builder provides rustup and cargo-pgrx outside dpkg; their versions are checked above.
 	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
 # collect deb

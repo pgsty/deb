@@ -2,7 +2,9 @@ Source: pg-parquet
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, cmake, pkg-config, libssl-dev,
+ clang | clang-21 | clang-20 | clang-19 | clang-18 | clang-17 | clang-16,
+ libclang-dev | libclang-21-dev | libclang-20-dev | libclang-19-dev | libclang-18-dev | libclang-17-dev | libclang-16-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/CrunchyData/pg_parquet
