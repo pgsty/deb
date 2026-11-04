@@ -2,16 +2,18 @@ Source: vchord-bm25
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cargo, libicu-dev,
+ clang | clang-21 | clang-20 | clang-19 | clang-18 | clang-17 | clang-16,
+ libclang-dev | libclang-21-dev | libclang-20-dev | libclang-19-dev | libclang-18-dev | libclang-17-dev | libclang-16-dev
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/tensorchord/VectorChord-bm25
+Homepage: https://vchord.pgsty.com/
 
 Package: postgresql-PGVERSION-vchord-bm25
 Architecture: any
 Provides: postgresql-vchord-bm25
 Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Description: BM25 ranking and indexing for PostgreSQL
- VectorChord-BM25 implements BM25 ranking and Block-Max WAND indexing inside
- PostgreSQL. It can be used alone with bm25vector values, or together with
- pg_tokenizer for customized text tokenization.
+ VectorChord-BM25 implements BM25 ranking and Block-WeakAnd (WAND) indexing
+ over PostgreSQL tsvector values. It works with standard PostgreSQL text search
+ configurations and can optionally integrate with pg_tokenizer.

@@ -1,3 +1,19 @@
+vchord-bm25 (1.0.0-1PGSTY) unstable; urgency=medium
+
+  * Switch to the PGSTY-maintained fork and prepare VectorChord-bm25 1.0.0.
+  * Use PostgreSQL tsvector values and the new PGSTY index format.
+  * Build directly from the fork source without a downstream compatibility patch.
+  * Install the fork's release SQL and supplied upgrade scripts.
+  * Include ICU headers required by PostgreSQL bindings.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 04 Nov 2026 09:00:00 +0800
+
+vchord-bm25 (0.3.0-2PGSTY) unstable; urgency=medium
+
+  * Build with cargo-pgrx/pgrx 0.19.3 and refresh the source patch and locked dependencies.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 02 Nov 2026 09:00:00 +0800
+
 vchord-bm25 (0.3.0-1PGSTY) unstable; urgency=medium
 
   * Build with pgrx 0.19.2 from the updated source archive and locked dependencies.
