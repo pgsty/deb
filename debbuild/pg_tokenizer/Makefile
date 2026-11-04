@@ -16,7 +16,7 @@ PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/b
 CRATE_DIR := .
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 LOCK_SNAPSHOT := /tmp/pgrx0193-pg-tokenizer-cargo-locks.before
-LIBCLANG_PATH ?= $(firstword $(wildcard /usr/lib/llvm-*/lib))
+LIBCLANG_PATH ?= $(lastword $(sort $(wildcard /usr/lib/llvm-*/lib)))
 export LIBCLANG_PATH
 
 check-src:
