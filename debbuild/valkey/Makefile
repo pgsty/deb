@@ -33,6 +33,8 @@ setup: verify
 	tar -C build --strip-components=1 -xf $(SOURCE)
 	rm -rf build/debian; cp -r debian build/debian
 	sed -i "s/@RELEASE@/$(OS_CODENAME)/g" build/debian/changelog
+	# Focal ships debhelper 12; keep the compatibility change in the build copy.
+	if [ "$(OS_CODENAME)" = focal ]; then sed -i 's/debhelper-compat (= 13)/debhelper-compat (= 12)/' build/debian/control; fi
 	chmod +x build/debian/rules
 	cd build && QUILT_PATCHES=debian/patches quilt push -a
 
