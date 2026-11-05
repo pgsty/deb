@@ -1,3 +1,13 @@
+pg-lake (3.6.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 3.6.0 with pinned DuckDB 1.5.6 and httpfs.
+  * Rebase private-library packaging; retain PostgreSQL 16 through 18.
+  * Apply overlapping scanner patches once using a verified input manifest.
+  * Retain the upstream Brotli 1.1.1 block-switch fix and regression test.
+  * Give the region-aware S3 deletion batch a distinct internal C++ type name.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 00:00:00 +0800
+
 pg-lake (3.5.10-1PGSTY) unstable; urgency=medium
 
   * Update to pg_lake 3.5.10 with the pinned DuckDB and Avro runtimes.

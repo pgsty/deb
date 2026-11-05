@@ -11,7 +11,7 @@ export CCACHE_MAXSIZE := 16G
 include /usr/share/dpkg/buildflags.mk
 
 VERSIONS := $(shell cat debian/pgversions)
-PG_LAKE_GIT_VERSION ?= v3.5.10
+PG_LAKE_GIT_VERSION ?= v3.6.0
 PG_LAKE_DELTA_SUPPORT ?= 0
 PGCOMPAT_BUILD_CONFIG ?= Release
 PG_LAKE_CLEAN ?= 1
@@ -43,7 +43,7 @@ VCPKG_TOOLCHAIN_PATH ?= $(HOME)/.cache/pg_lake/vcpkg-2025.10.17/scripts/buildsys
 # The pinned connector sources are seeded on builders that cannot reach GitHub
 # through the local proxy.  Use them when present and otherwise let FetchContent
 # resolve the normal pinned repositories.
-HTTPFS_SOURCE_OVERRIDE ?= $(HOME)/ext/src/httpfs-827222fb/source
+HTTPFS_SOURCE_OVERRIDE ?= $(HOME)/ext/src/httpfs-4bc690db/source
 AWS_SOURCE_OVERRIDE ?= $(HOME)/ext/src/aws-b2649e68/source
 AZURE_SOURCE_OVERRIDE ?= $(HOME)/ext/src/azure-003214c9/source
 HTTPFS_FETCHCONTENT_FLAG := $(if $(wildcard $(HTTPFS_SOURCE_OVERRIDE)/CMakeLists.txt),-DFETCHCONTENT_SOURCE_DIR_HTTPFS_EXTENSION_FC=$(HTTPFS_SOURCE_OVERRIDE),)

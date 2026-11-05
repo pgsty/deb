@@ -1,23 +1,23 @@
-# pg_lake 3.5.10
+# pg_lake 3.6.0
 
-This recipe builds the upstream `pg_lake` 3.5.10 bundle for PostgreSQL 16,
+This recipe builds the upstream `pg_lake` 3.6.0 bundle for PostgreSQL 16,
 17 and 18. The single DEB source produces the eight extensions
 `pg_extension_updater`, `pg_lake`, `pg_extension_base`, `pg_lake_iceberg`,
 `pg_lake_engine`, `pg_map`, `pg_lake_table` and `pg_lake_copy`.
 
 - Upstream: <https://github.com/Snowflake-Labs/pg_lake>
-- Release: <https://github.com/Snowflake-Labs/pg_lake/releases/tag/v3.5.10>
-- Source: `pg_lake-3.5.10.tar.gz`
-- Source SHA-256: `7b39247062ef5e1511c1feefb381b735ff211f50e2e441e8b701b1ac89efcd53`
-- Upstream commit: `ac94b91467860e9103d19217999585a17db1db84`
-- Packaging patch: `patches/pg_lake-3.5.10.patch`
-- Patch SHA-256: `21b061739a804c01c3bb6d7a74bf1d27a4bc0f73f1ed2d2f71234ef17bbac07f`
+- Release: <https://github.com/Snowflake-Labs/pg_lake/releases/tag/v3.6.0>
+- Source: `pg_lake-3.6.0.tar.gz`
+- Source SHA-256: `4b0856a2fbbc6d4b2ad1ad29430cb9e060f8ce9e35efd1c8a39e8b18add6fe96`
+- Upstream commit: `11e80f182559f43a1181a05759283b509e01b6ab`
+- Packaging patch: `patches/pg_lake-3.6.0.patch`
+- Patch SHA-256: `bb5ed4ea9b165f5413a782da097e2883ad451c55d77662298ece2211b0bb154c`
 
 The archive includes the pinned Avro, DuckDB, DuckDB PostgreSQL and database
 connector sources. `SOURCE_MANIFEST` and `extension_config.cmake` record the
 httpfs, AWS and Azure commits fetched during the build. The build uses vcpkg 2025.10.17 at
-commit `74e6536215718009aae747d86d84b78376bf9e09`, DuckDB v1.5.5 and the
-bundled Brotli 1.1.1 patch. The build does not fetch Polaris and does not add
+commit `74e6536215718009aae747d86d84b78376bf9e09`, DuckDB v1.5.6 and the
+Brotli 1.1.1 compatibility patch described below. The build does not fetch Polaris and does not add
 SQL upgrade scripts or product migrations that are absent from upstream.
 
 The package preserves the eight extension control files, SQL payloads,
@@ -34,7 +34,7 @@ Builders with restricted GitHub access may seed these exact connector checkouts:
 
 | Connector | Commit | Default source override |
 | --- | --- | --- |
-| httpfs | `827222fb45a043a7a852d1f7aae46901492a3cda` | `~/ext/src/httpfs-827222fb/source` |
+| httpfs | `4bc690dba4496c765777a0269d48fdbaff7cdc11` | `~/ext/src/httpfs-4bc690db/source` |
 | AWS | `b2649e68341a9ee717588dd23f277904727ce793` | `~/ext/src/aws-b2649e68/source` |
 | Azure | `003214c96d0caa39d5c3e27a9e1976a0692c7d37` | `~/ext/src/azure-003214c9/source` |
 
@@ -43,14 +43,22 @@ select those directories when present; otherwise CMake uses the upstream
 pinned repositories. Verify each checkout's commit before building. License
 installation covers both FetchContent's build directories and these overrides.
 
-Production validation for 3.5.10 covers Debian 12 (`bookworm`), Debian 13
-(`trixie`), Ubuntu 22.04 (`jammy`), Ubuntu 24.04 (`noble`) and Ubuntu 26.04
-(`resolute`), on amd64 and arm64, for PostgreSQL 16 through 18. The completed
-matrix is expected to contain 30 main packages and 30 matching dbgsym packages.
-Runtime checks cover extension creation, `pg_map`, DuckDB v1.5.5, Moto S3,
-Iceberg insert/update/delete and rollback, Parquet and CSV export/read,
-restart persistence, EXPLAIN JSON and the Brotli 1.1.1 decoder vector.
+Upstream 3.6.0 removed the Brotli block-switch fix present in 3.5.10 while
+its pinned DuckDB still embeds Brotli 1.1.0. Both recipes retain that exact
+upstream fix and regression test in `pg_lake-3.6.0-brotli-1.1.1.patch`, applied
+after the packaging patch. `SOURCE_MANIFEST` describes the unmodified source;
+the effective packaged decoder includes the fix and reports 1.1.1. The new
+packaging patch also tolerates an absent upstream `patches/duckdb` directory
+and regenerates context in the embedded scanner patch so it applies exactly.
+A checksum stamp prevents overlapping patches from being reapplied on install;
+changed patch inputs require a fresh source extraction.
 
-Artifacts are collected under the local `apt/<codename>/` directories. This
-work does not import or publish an APT repository, synchronize a CDN, update
-the `pgext` database, or commit Git changes.
+`pg_lake-3.6.0-s3-odr.patch` gives pg_lake's internal S3 deletion batch a
+distinct type name. The pinned httpfs defines a different `S3DeleteBatch`
+layout in the same namespace, which otherwise produces an LTO ODR warning.
+The patch changes no deletion behavior or external API.
+
+This recipe keeps PG16–18 even though upstream 3.6.0 adds PG19 support.
+Prior full-matrix validation for 3.5.10 does not establish acceptance of 3.6.0.
+Run representative package, private-library, debug and runtime checks before
+production builds.

@@ -4,13 +4,13 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
-VERSION="${VERSION:-3.5.10}"
+VERSION="${VERSION:-3.6.0}"
 UPSTREAM_REPO="${UPSTREAM_REPO:-https://github.com/Snowflake-Labs/pg_lake.git}"
-EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-ac94b91467860e9103d19217999585a17db1db84}"
+EXPECTED_UPSTREAM_COMMIT="${EXPECTED_UPSTREAM_COMMIT:-11e80f182559f43a1181a05759283b509e01b6ab}"
 EXPECTED_AVRO_COMMIT="${EXPECTED_AVRO_COMMIT:-2b11dba4fb28c7bb6ff08b40509a6a71fcaf4c21}"
-EXPECTED_DUCKDB_COMMIT="${EXPECTED_DUCKDB_COMMIT:-d8cdaa33fda8df955cc76ef58a280f68f4cd43fa}"
+EXPECTED_DUCKDB_COMMIT="${EXPECTED_DUCKDB_COMMIT:-069cc9f9b5be802405797faecc284961b07c70ef}"
 EXPECTED_DUCKDB_POSTGRES_COMMIT="${EXPECTED_DUCKDB_POSTGRES_COMMIT:-41223e51559cd581f1c06e170b71c71df25bbaac}"
-EXPECTED_DUCKDB_HTTPFS_COMMIT="${EXPECTED_DUCKDB_HTTPFS_COMMIT:-827222fb45a043a7a852d1f7aae46901492a3cda}"
+EXPECTED_DUCKDB_HTTPFS_COMMIT="${EXPECTED_DUCKDB_HTTPFS_COMMIT:-4bc690dba4496c765777a0269d48fdbaff7cdc11}"
 EXPECTED_DUCKDB_AWS_COMMIT="${EXPECTED_DUCKDB_AWS_COMMIT:-b2649e68341a9ee717588dd23f277904727ce793}"
 EXPECTED_DUCKDB_AZURE_COMMIT="${EXPECTED_DUCKDB_AZURE_COMMIT:-003214c96d0caa39d5c3e27a9e1976a0692c7d37}"
 EXPECTED_DATABASE_CONNECTOR_COMMIT="${EXPECTED_DATABASE_CONNECTOR_COMMIT:-43e79061e5d00411612fee98482586a0e7a756cd}"
@@ -30,15 +30,16 @@ fi
 rm -rf "${SOURCE_DIR}"
 mkdir -p "${WORK_DIR}" "${OUT_DIR}"
 
-git clone --filter=blob:none --depth 1 --branch "v${VERSION}" \
+# A full shallow checkout avoids deferred blob downloads during archiving.
+git clone --depth 1 --branch "v${VERSION}" \
     "${UPSTREAM_REPO}" "${SOURCE_DIR}"
 
-git -C "${SOURCE_DIR}" submodule update --init --depth 1 --filter=blob:none \
+git -C "${SOURCE_DIR}" submodule update --init --depth 1 \
     avro \
     duckdb_pglake/duckdb \
     duckdb_pglake/duckdb-postgres
 
-git -C "${SOURCE_DIR}/duckdb_pglake/duckdb-postgres" submodule update --init --depth 1 --filter=blob:none database-connector
+git -C "${SOURCE_DIR}/duckdb_pglake/duckdb-postgres" submodule update --init --depth 1 database-connector
 
 # Polaris is only needed by the REST-catalog test suite.  Keep the stock
 # `make submodules` target from fetching it during a package build.
@@ -87,8 +88,8 @@ duckdb_aws_commit=${EXPECTED_DUCKDB_AWS_COMMIT}
 duckdb_azure_commit=${EXPECTED_DUCKDB_AZURE_COMMIT}
 vcpkg_commit=74e6536215718009aae747d86d84b78376bf9e09
 vcpkg_version=2025.10.17
-brotli_version=1.1.1
-brotli_source=duckdb_pglake/patches/duckdb/brotli-1.1.1-block-switch-cve.patch
+brotli_version=1.1.0
+brotli_source=duckdb_pglake/duckdb/third_party/brotli
 polaris_included=false
 EOF
 
