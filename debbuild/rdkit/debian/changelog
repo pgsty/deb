@@ -1,3 +1,11 @@
+rdkit (202609.2-1PGSTY) unstable; urgency=medium
+
+  * Update runtime, Python bindings and PostgreSQL cartridges to RDKit 2026.09.2.
+  * Rebase offline packaging against upstream Catch2 and Python fixes.
+  * Retain the separate bookworm and jammy compatibility source.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 23:45:00 +0800
+
 rdkit (202609.1-2PGSTY) unstable; urgency=medium
 
   * Ship upstream extension update SQL without downstream migration repairs.

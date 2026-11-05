@@ -16,7 +16,7 @@ ORIG_FILE := rdkit_202303.3.orig.tar.xz
 DEBIAN_FILE := rdkit_202303.3-3.pgdg22.04+1.debian.tar.xz
 PACKAGING_DIR := debian-legacy
 else ifneq ($(filter $(SUITE),trixie noble resolute),)
-TARBALL := rdkit-Release_2026_09_1.tar.gz
+TARBALL := rdkit-Release_2026_09_2.tar.gz
 PACKAGING_DIR := debian
 else
 DSC_FILE := unsupported
@@ -54,8 +54,8 @@ setup: check-src
 ifeq ($(PACKAGING_DIR),debian)
 	mkdir -p $(BUILD_DIR)
 	tar -xzf "$(SOURCE_TARBALL)" --strip-components=1 -C $(BUILD_DIR)
-	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/rdkit-202609.1-offline.patch
-	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/rdkit-202609.1-pg-config-version.patch
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/rdkit-202609.2-offline.patch
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/rdkit-202609.2-pg-config-version.patch
 	cp "$(SOURCE_ENUM)" $(BUILD_DIR)/Code/RDGeneral/enum.h
 	tar -xzf "$(SOURCE_RINGS)" -C $(BUILD_DIR)/External/RingFamilies
 	mv $(BUILD_DIR)/External/RingFamilies/RingDecomposerLib-1.1.3_rdkit $(BUILD_DIR)/External/RingFamilies/RingDecomposerLib

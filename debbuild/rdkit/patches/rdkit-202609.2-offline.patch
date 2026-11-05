@@ -1,0 +1,37 @@
+--- a/Code/RDGeneral/CMakeLists.txt
++++ b/Code/RDGeneral/CMakeLists.txt
+@@ -5,10 +5,11 @@
+ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/RDConfig.h.cmake
+         ${CMAKE_CURRENT_SOURCE_DIR}/RDConfig.h)
+ 
+-FetchContent_MakeAvailable(better_enums)
+ if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/enum.h)
++    FetchContent_MakeAvailable(better_enums)
+     file(COPY ${better_enums_SOURCE_DIR}/enum.h DESTINATION ${CMAKE_CURRENT_SOURCE_DIR})
+ endif (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/enum.h)
++    FetchContent_MakeAvailable(better_enums)
+ 
+ rdkit_library(RDGeneral
+         Invariant.cpp types.cpp utils.cpp RDGeneralExceptions.cpp RDLog.cpp
+--- a/rdkit-config.cmake.in
++++ b/rdkit-config.cmake.in
+@@ -38,7 +38,7 @@
+ 
+ find_dependency(Threads REQUIRED)
+ 
+-find_dependency(Boost @Boost_VERSION_STRING@ COMPONENTS ${RDKit_USE_BOOST_COMPONENTS})
++find_dependency(Boost @Boost_VERSION_STRING@ EXACT CONFIG HINTS "@Boost_DIR@" COMPONENTS ${RDKit_USE_BOOST_COMPONENTS})
+ 
+ if(RDKit_HAS_DESCRIPTORS3D)
+     find_dependency(Eigen3 REQUIRED NO_MODULE)
+--- a/rdkitpython-config.cmake.in
++++ b/rdkitpython-config.cmake.in
+@@ -2,7 +2,7 @@
+ include(CMakeFindDependencyMacro)
+ 
+ find_dependency(Python @Python_VERSION_MAJOR@.@Python_VERSION_MINOR@ COMPONENTS Interpreter Development.Module NumPy)
+-find_dependency(Boost @Boost_VERSION_STRING@ COMPONENTS python@Python_VERSION_MAJOR@@Python_VERSION_MINOR@ numpy@Python_VERSION_MAJOR@@Python_VERSION_MINOR@)
++find_dependency(Boost @Boost_VERSION_STRING@ EXACT CONFIG HINTS "@Boost_DIR@" COMPONENTS python@Python_VERSION_MAJOR@@Python_VERSION_MINOR@ numpy@Python_VERSION_MAJOR@@Python_VERSION_MINOR@)
+ find_dependency(RDKit @RDKit_RELEASENAME@ REQUIRED)
+ 
+ # Import the targets
