@@ -1,0 +1,14 @@
+Source: repmgr
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libcurl4-openssl-dev, libjson-c-dev, flex
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/EnterpriseDB/repmgr
+
+Package: postgresql-PGVERSION-repmgr
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Replication management tools for PostgreSQL
+ repmgr provides tools for managing PostgreSQL replication and failover.
