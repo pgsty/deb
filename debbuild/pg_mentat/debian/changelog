@@ -1,3 +1,9 @@
+pg-mentat (1.19.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.19.1 and retain the PG14-18 pgrx 0.19.3 build.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 22:00:00 +0800
+
 pg-mentat (1.19.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.19.0.
