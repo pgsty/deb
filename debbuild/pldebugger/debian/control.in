@@ -1,0 +1,14 @@
+Source: pldebugger
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/EnterpriseDB/pldebugger
+
+Package: postgresql-PGVERSION-pldebugger
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Server-side debugger for PL/pgSQL
+ The PL/pgSQL debugger API supports debugging functions with clients such as pgAdmin.

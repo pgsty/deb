@@ -1,0 +1,5 @@
+pldebugger (1.10-1PGSTY) unstable; urgency=medium
+
+  * Package upstream 1.10 for PostgreSQL 14 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 23:45:00 +0800
