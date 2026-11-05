@@ -1,0 +1,10 @@
+Description: Prefer the target PostgreSQL major's headers over shared libpq headers
+ Debian installs libpq's internal headers for only one major. Searching them
+ first can select a newer c.h and pg_config.h while compiling an older server.
+Author: Ruohang Feng <rh@vonng.com>
+Forwarded: not-needed
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -49,1 +49,1 @@
+-PG_CPPFLAGS = -std=gnu89 -I$(includedir_internal) -I$(libpq_srcdir) -Wall -Wmissing-prototypes -Wmissing-declarations $(EXTRA_CFLAGS)
++PG_CPPFLAGS = -std=gnu89 -I$(includedir_server) -I$(includedir_internal) -I$(libpq_srcdir) -Wall -Wmissing-prototypes -Wmissing-declarations $(EXTRA_CFLAGS)

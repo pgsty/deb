@@ -11,6 +11,7 @@ check-src:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar --strip-components=1 -xf "$(SOURCE_TARBALL)" -C $(BUILD_DIR)
+	patch -d $(BUILD_DIR) -p1 < patches/target-server-headers.patch
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	sed -i "1s/PGSTY)/PGSTY~$(shell lsb_release -sc))/" $(BUILD_DIR)/debian/changelog
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
