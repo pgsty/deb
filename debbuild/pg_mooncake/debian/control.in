@@ -2,15 +2,20 @@ Source: pg-mooncake
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~),
+ build-essential, cmake (>= 3.24), ninja-build, pkg-config, git, python3,
+ libclang-dev, libicu-dev, libssl-dev, libcurl4-openssl-dev, liblz4-dev, protobuf-compiler
+# Rust 1.99.0 and cargo-pgrx 0.19.3 are supplied by the builder's rustup toolchain;
+# check-pgrx and the source's rust-toolchain.toml validate them before compiling.
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/Mooncake-Labs/pg_mooncake
+Homepage: https://github.com/pgsty/pg_mooncake
 
 Package: postgresql-PGVERSION-pg-mooncake
 Architecture: any
 Provides: postgresql-pg-mooncake
-Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pg-duckdb (>= 1.1.1)
-Description: Columnstore Table in Postgres
-  pg_mooncake is a PostgreSQL extension that adds native columnstore tables with DuckDB execution.
-  Columnstore tables are stored as Iceberg or Delta Lake tables in object storage.
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pg-duckdb (>= 1.2.0), postgresql-PGVERSION-pg-duckdb (<< 1.2.1~)
+Description: Real-time columnstore analytics in PostgreSQL
+ pg_mooncake adds columnstore tables and real-time replication from PostgreSQL
+ heap tables, using Moonlink and DuckDB execution. This PGSTY-maintained fork
+ includes a local DuckDB Mooncake extension for pg_duckdb 1.2.0 / DuckDB 2.0.0.

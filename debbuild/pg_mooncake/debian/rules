@@ -1,29 +1,39 @@
 #!/usr/bin/make -f
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
-
-SRC_DIR := pg_mooncake
-PKG_NAME := pg-mooncake
-
 %:
 	dh $@
 
+override_dh_auto_configure:
 override_dh_auto_test:
-
 override_dh_auto_build:
-	# Disable the build step since binaries are pre-built
-
 override_dh_auto_clean:
-	# Disable the clean step to avoid cleaning up pre-built binaries
 
 override_dh_auto_install:
-	set -e; for PG_VERSION in $$(cat debian/pgversions); do \
-	    DIR_NAME=$(SRC_DIR)-pg$$PG_VERSION; \
-	    FULL_NAME=postgresql-$$PG_VERSION-$(PKG_NAME); \
-	    dh_installdirs -p$$FULL_NAME; \
-	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
-	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
-	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	set -e; for v in $$(cat debian/pgversions); do \
+	    pkg=postgresql-$$v-pg-mooncake; \
+	    mkdir -p debian/$$pkg; \
+	    cp -a target/release/pg_mooncake-pg$$v/usr debian/$$pkg/; \
+	    chmod 755 debian/$$pkg/usr/share/postgresql/$$v/extension/pg_mooncake/v2.0.0/*/mooncake.duckdb_extension; \
+	    install -D -m 644 moonlink/LICENSE debian/$$pkg/usr/share/doc/$$pkg/moonlink.LICENSE; \
+	    install -D -m 644 duckdb_mooncake/LICENSE debian/$$pkg/usr/share/doc/$$pkg/duckdb_mooncake.LICENSE; \
+	done
+
+override_dh_dwz:
+	dh_dwz --no-dwz-multifile
+
+override_dh_strip:
+	# Keep each PG package's shared plugin and automatic debug path distinct.
+	set -e; for v in $$(cat debian/pgversions); do \
+	    plugin=$$(find debian/postgresql-$$v-pg-mooncake -name mooncake.duckdb_extension -type f); \
+	    test -n "$$plugin"; \
+	    python3 -c 'import hashlib,pathlib,struct,sys; path,pg,out=sys.argv[1:]; digest=hashlib.sha1(pathlib.Path(path).read_bytes()+pg.encode()).digest(); pathlib.Path(out).write_bytes(struct.pack("<III",4,20,3)+b"GNU\0"+digest)' "$$plugin" "$$v" mooncake.build-id; \
+	    objcopy --update-section .note.gnu.build-id=mooncake.build-id "$$plugin"; \
+	done
+	dh_strip
+	# objcopy removes the appended 534-byte DuckDB metadata/signature section.
+	# Restore it after stripping, retaining the generated build-id and dbgsym.
+	tail -c 534 duckdb_mooncake/build/release/extension/mooncake/mooncake.duckdb_extension > mooncake.footer
+	set -e; for plugin in debian/postgresql-*-pg-mooncake/usr/share/postgresql/*/extension/pg_mooncake/v2.0.0/*/mooncake.duckdb_extension; do \
+	    if ! tail -c 534 "$$plugin" | cmp -s - mooncake.footer; then cat mooncake.footer >> "$$plugin"; fi; \
+	    tail -c 534 "$$plugin" | cmp - mooncake.footer; \
 	done
