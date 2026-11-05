@@ -4,9 +4,11 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: move
 
-TARBALL := pg_search-0.26.4.tar.gz
+TARBALL := pg_search-0.26.5.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
+CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
+export CARGO_TARGET_DIR
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
 PGRX_VERSION := 0.19.3
@@ -16,6 +18,8 @@ RUST_VERSION := 1.99.0
 LICENSE_COLLECTOR := collect-third-party-licenses.py
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_BUILD_JOBS ?= 1
+LINDERA_BUILD_DICTIONARY_CACHE_DIR ?= $(HOME)/.cache/pg_search/lindera
+export LINDERA_BUILD_DICTIONARY_CACHE_DIR
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -47,6 +51,7 @@ building: check-build-deps
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.before
 	@test -s $(BUILD_DIR)/.pgrx0193-cargo-locks.before
 	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
+	sh ./fetch-dictionaries.sh
 	set -e; \
 	cd $(BUILD_DIR)/pg_search; \
 	export RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN); \

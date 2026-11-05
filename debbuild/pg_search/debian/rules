@@ -6,6 +6,7 @@
 SRC_DIR := pg_search
 PKG_NAME := pg-search
 PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+CARGO_TARGET_DIR ?= $(CURDIR)/target
 
 %:
 	dh $@
@@ -31,8 +32,8 @@ override_dh_auto_install:
 	    dh_installdirs -p$$FULL_NAME; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
 	    mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-	    cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
-	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
+	    cp "$(CARGO_TARGET_DIR)/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/"*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
+	    cp "$(CARGO_TARGET_DIR)/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/"* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
 	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
 	done

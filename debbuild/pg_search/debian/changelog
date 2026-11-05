@@ -1,3 +1,10 @@
+pg-search (0.26.5-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.26.5 with the unchanged locked pgrx 0.19.3 dependencies.
+  * Prefetch and verify the pinned Lindera dictionary assets with proxy-aware curl.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 22:00:00 +0800
+
 pg-search (0.26.4-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.26.4 with pgrx 0.19.3 and Rust 1.99.0.
