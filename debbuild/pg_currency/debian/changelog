@@ -1,3 +1,10 @@
+pg-currency (0.0.6+git20261006.6c91875-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream control version 0.0.6 at commit 6c91875373f5.
+  * Include the upstream MRU currency addition and supplied SQL files.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 23:45:00 +0800
+
 pg-currency (0.0.4-1PGSTY) unstable; urgency=medium
 
   * Bump to PGXN stable 0.0.4.

@@ -1,6 +1,7 @@
 all: setup build move
 
-TARBALL := pg-currency-0.0.4.tar.gz
+# https://github.com/adjust/pg-currency/archive/6c91875373f5edfbf38670d12809ece88231a609.tar.gz
+TARBALL := pg-currency-0.0.6+git20261006.6c91875.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
