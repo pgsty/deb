@@ -4,13 +4,13 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-VERSION := 1.26.0
+VERSION := 1.27.0
 TARBALL := timescaledb-toolkit-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 16 17 18
-PGRX_VERSION := 0.19.2
+PG_VERSIONS := 15 16 17 18
+PGRX_VERSION := 0.19.3
 CRATE_DIR := extension
 SOURCE_PATCH := patches/timescaledb-toolkit-$(VERSION).patch
 
@@ -39,6 +39,7 @@ build: building packaging
 building: check-pgrx
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
+	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
 	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
 	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
 	    --pg18=/usr/lib/postgresql/18/bin/pg_config \

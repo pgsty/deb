@@ -1,3 +1,11 @@
+timescaledb-toolkit (1.27.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.27.0 with pgrx 0.19.3 and PG15-18 support.
+  * Apply the release version to tagged Cargo metadata before upstream SQL generation.
+  * Ship all 22 upstream direct upgrade paths.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 23:45:00 +0800
+
 timescaledb-toolkit (1.26.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.26.0 for PostgreSQL 16 through 18.
