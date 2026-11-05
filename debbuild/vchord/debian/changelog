@@ -1,3 +1,10 @@
+vchord (1.2.0-2PGSTY) unstable; urgency=medium
+
+  * Rebuild the reissued upstream 1.2.0 tag at commit 6ea6a3be3b2e.
+  * Match the RPM source archive and revision; retain Clang and full debug settings.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 16:00:00 +0800
+
 vchord (1.2.0-1PGSTY) unstable; urgency=medium
 
   * Switch to the PGSTY-maintained fork and prepare VectorChord 1.2.0.

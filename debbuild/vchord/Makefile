@@ -10,6 +10,8 @@ include /usr/share/dpkg/buildflags.mk
 all: setup build move
 
 # GitHub tag archive: https://github.com/pgsty/vchord/archive/refs/tags/1.2.0.tar.gz
+# Reissued tag commit: 6ea6a3be3b2ec5521f2575055d3c77a0b9771f95
+# Source SHA256: caf1a482b62e8eba507c881f3acda3365393fc4d1648ad5ca9d4dd51d47a96a0
 # No downstream patch is applied.
 TARBALL := vchord-1.2.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
