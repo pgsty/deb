@@ -1,0 +1,14 @@
+Source: decoderbufs
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libprotobuf-c-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/debezium/postgres-decoderbufs
+
+Package: postgresql-PGVERSION-decoderbufs
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Protocol Buffers logical decoding output plugin
+ Decoderbufs serializes PostgreSQL logical changes as Protocol Buffers for Debezium.
