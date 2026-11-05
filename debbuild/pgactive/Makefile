@@ -8,6 +8,7 @@ include /usr/share/dpkg/buildflags.mk
 TARBALL := pgactive-2.1.9.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SOURCE_PATCH := patches/pgactive-2.1.9.patch
+PG_VERSIONS ?= 18 17 16 15 14
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -25,7 +26,7 @@ setup: check-src check-patches
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
-build: build18 build17 build16 build15 build14
+build: $(addprefix build,$(PG_VERSIONS))
 build18:
 	echo "18" > build/debian/pgversions
 	cd build && pg_buildext updatecontrol

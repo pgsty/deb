@@ -1,5 +1,11 @@
 pgactive (2.1.9-1PGSTY) unstable; urgency=medium
 
+  * Honor PG_VERSIONS when selecting per-major builds.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 23:45:00 +0800
+
+pgactive (2.1.9-1PGSTY) unstable; urgency=medium
+
   * New upstream release.
   * Carry the upstream control-file default-version correction.
 
