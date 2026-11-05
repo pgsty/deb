@@ -1,0 +1,14 @@
+Source: powa
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/powa-team/powa-archivist
+
+Package: postgresql-PGVERSION-powa
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: PostgreSQL workload analyzer collector
+ PoWA Archivist collects and stores PostgreSQL performance statistics.
