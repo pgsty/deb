@@ -1,0 +1,5 @@
+pg-stat-plans (2.1.1-1PGSTY) unstable; urgency=medium
+
+  * Package upstream 2.1.1 for PostgreSQL 16 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 23:45:00 +0800

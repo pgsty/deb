@@ -1,0 +1,14 @@
+Source: pg-stat-plans
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), libzstd-dev, libssl-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pganalyze/pg_stat_plans
+
+Package: postgresql-PGVERSION-pg-stat-plans
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Query plan statistics for PostgreSQL
+ pg_stat_plans tracks execution plans and plan statistics for PostgreSQL statements.
