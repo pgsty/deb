@@ -1,0 +1,14 @@
+Source: plr
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), r-base-dev, pkg-config
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/postgres-plr/plr
+
+Package: postgresql-PGVERSION-plr
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}, r-base-core
+Description: R procedural language for PostgreSQL
+ PL/R allows PostgreSQL functions to execute R code.
