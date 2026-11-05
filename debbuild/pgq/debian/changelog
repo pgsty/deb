@@ -1,0 +1,5 @@
+pgq (3.5.2-1PGSTY) unstable; urgency=medium
+
+  * Package upstream 3.5.2 for PostgreSQL 14 through 18.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 23:45:00 +0800

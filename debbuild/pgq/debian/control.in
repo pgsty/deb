@@ -1,0 +1,14 @@
+Source: pgq
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), python3
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgq/pgq
+
+Package: postgresql-PGVERSION-pgq3
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Generic queue for PostgreSQL
+ PgQ provides transactional queueing and event processing in PostgreSQL.
