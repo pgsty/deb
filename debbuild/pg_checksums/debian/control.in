@@ -1,0 +1,14 @@
+Source: pg-checksums
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/credativ/pg_checksums
+
+Package: postgresql-PGVERSION-pg-checksums
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Check and manage PostgreSQL data checksums
+ The pg_checksums_ext utility checks, enables and disables PostgreSQL data checksums.
