@@ -1,3 +1,10 @@
+kafgres (0.3.2-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.3.2 for PostgreSQL 16.
+  * Regenerate the pgrx 0.19.3 patch and adapt Utf8Text SQL metadata.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 22:00:00 +0800
+
 kafgres (0.3.1-1PGSTY) unstable; urgency=medium
 
   * Update to 0.3.1 and migrate the locked build to pgrx 0.19.3.

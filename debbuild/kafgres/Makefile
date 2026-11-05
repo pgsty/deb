@@ -8,10 +8,10 @@ all: setup build move
 PGRX_BIN_DIR ?= $(HOME)/.cargo/bin
 export PATH := $(PGRX_BIN_DIR):$(PATH)
 
-# Upstream 0.3.1 source with a locked pgrx 0.19.3 dependency update.
-TARBALL := kafgres-0.3.1.tar.gz
+# Upstream 0.3.2 source with a locked pgrx 0.19.3 dependency update.
+TARBALL := kafgres-0.3.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/kafgres-0.3.1-pgrx-0.19.3.patch
+SOURCE_PATCH := patches/kafgres-0.3.2-pgrx-0.19.3.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 16
