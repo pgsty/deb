@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := q3c-2.0.5.tar.gz
+TARBALL := q3c-2.0.6.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
