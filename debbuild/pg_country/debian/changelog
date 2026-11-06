@@ -1,5 +1,6 @@
 pg-country (0.0.4-1PGSTY) unstable; urgency=medium
 
+  * Exclude trailing NUL bytes from country name text values.
   * Bump to PGXN stable 0.0.4.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:35:43 +0800

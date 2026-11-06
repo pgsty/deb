@@ -1,0 +1,27 @@
+Subject: Exclude the C terminator from PostgreSQL country name text
+
+CONST_STRING serves both C strings and varlena text. Report the payload length
+without the terminator; reserve a separate zero byte for country_out strings.
+
+--- a/src/country.h
++++ b/src/country.h
+@@ -11,7 +11,7 @@
+ #define PG_RETURN_UINT8(x) return UInt8GetDatum(x)
+ #define PG_GETARG_UINT8(x) DatumGetUInt8(PG_GETARG_DATUM(x))
+ 
+-#define CONST_STRING(s) s, (sizeof(s) / sizeof(s[0]))
++#define CONST_STRING(s) s, (sizeof(s) / sizeof(s[0]) - 1)
+ 
+ Datum country_in(PG_FUNCTION_ARGS);
+ Datum country_out(PG_FUNCTION_ARGS);
+--- a/src/country.c
++++ b/src/country.c
+@@ -6,7 +6,7 @@
+ static inline char *
+ create_string(const char *chars, size_t sz)
+ {
+-    char *str = palloc0((sz));
++    char *str = palloc0(sz + 1);
+     memcpy(str, chars, (sz));
+     return str;
+ }

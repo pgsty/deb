@@ -1,5 +1,6 @@
 pgactive (2.1.9-1PGSTY) unstable; urgency=medium
 
+  * Fix byte offsets in shared lock state allocation.
   * Honor PG_VERSIONS when selecting per-major builds.
 
  -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 23:45:00 +0800

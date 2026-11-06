@@ -8,12 +8,14 @@ include /usr/share/dpkg/buildflags.mk
 TARBALL := pgactive-2.1.9.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SOURCE_PATCH := patches/pgactive-2.1.9.patch
+SHMEM_PATCH := patches/pgactive-2.1.9-shmem-offset.patch
 PG_VERSIONS ?= 18 17 16 15 14
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 check-patches:
+	@test -f "$(SHMEM_PATCH)" || (echo "missing $(SHMEM_PATCH)"; exit 1)
 	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
 
 # prepare directory
@@ -21,6 +23,7 @@ setup: check-src check-patches
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	(cd build && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
+	(cd build && patch -p1 --fuzz=0 --forward -f < "../$(SHMEM_PATCH)")
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog

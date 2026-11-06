@@ -1,5 +1,6 @@
 login-hook (1.8-1PGSTY) unstable; urgency=medium
 
+  * Preserve login-hook diagnostics before PG14 transaction cleanup.
   * Bump to Version_1.8.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 09:06:25 +0800
