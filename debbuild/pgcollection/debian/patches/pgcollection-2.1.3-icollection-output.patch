@@ -1,8 +1,113 @@
-Subject: Serialize icollection using the JSON envelope its input expects
+Subject: Preserve collection text roundtrips for empty and generic values
 
-Preserve value_type, quote integer keys, and JSON-escape non-null values just
-as collection_out does. This restores text COPY and pg_dump/pg_restore.
+Emit the typed JSON envelope for both key types, retaining known value types
+when empty. Accept bare {} as an untyped empty and preserve it in storage.
+Use the PostgreSQL input API with typioparam and typmod -1 for all values,
+including SQL NULL so domain constraints are enforced. Underlying per-value
+typmods are not part of the collection representation. No SQL or ABI change.
 
+--- a/include/collection.h
++++ b/include/collection.h
+@@ -232,6 +232,7 @@
+ 	COLL_PARSE_EXPECT_ENTRIES,
+ 	COLL_PARSE_EXPECT_ENTRIES_OBJECT,
+ 	COLL_PARSE_EXPECT_EOF,
++	COLL_PARSE_EMPTY,		/* complete bare {}, with no value type yet */
+ }			CollectionParseSemanticState;
+ 
+ typedef struct CollectionParseState
+--- a/src/collection.c
++++ b/src/collection.c
+@@ -147,14 +147,16 @@
+ 			fc = (FlatCollectionType *) (DatumGetPointer(collectiondatum));
+ 
+ 		/* Validate that the type exists */
+-		lookup_type_cache(fc->value_type, 0);
++		if (fc->value_type != InvalidOid)
++			lookup_type_cache(fc->value_type, 0);
+ 
+ 		new_colhdr = construct_empty_collection(parentcontext);
+ 
+ 		oldcxt = MemoryContextSwitchTo(new_colhdr->hdr.eoh_context);
+ 
+ 		new_colhdr->value_type = fc->value_type;
+-		get_typlenbyval(fc->value_type, &new_colhdr->value_type_len, &new_colhdr->value_byval);
++		if (fc->value_type != InvalidOid)
++			get_typlenbyval(fc->value_type, &new_colhdr->value_type_len, &new_colhdr->value_byval);
+ 
+ 		while (i < fc->num_entries)
+ 		{
+@@ -412,6 +414,7 @@
+ 	EOH_init_header(&colhdr->hdr, &collection_expand_methods, objcxt);
+ 	colhdr->collection_magic = COLLECTION_MAGIC;
+ 	colhdr->value_type = InvalidOid;
++	colhdr->value_type_len = 0;
+ 	colhdr->value_byval = false;
+ 	colhdr->flat_size = 0;
+ 
+--- a/src/icollection.c
++++ b/src/icollection.c
+@@ -339,6 +339,7 @@
+ 	EOH_init_header(&hdr->hdr, &icollection_methods, objcxt);
+ 	hdr->collection_magic = COLLECTION_MAGIC;
+ 	hdr->value_type = InvalidOid;
++	hdr->value_type_len = 0;
+ 	hdr->value_byval = false;
+ 	hdr->flat_size = 0;
+ 
+--- a/src/collection_common.c
++++ b/src/collection_common.c
+@@ -153,6 +153,16 @@
+ 			parse->state = COLL_PARSE_EXPECT_TOPLEVEL_END;
+ 			break;
+ 
++		case COLL_PARSE_EXPECT_TOPLEVEL_FIELD:
++			/* Preserve the untyped empty value represented by a bare {}. */
++			if (parse->typname == NULL && parse->keys == NIL)
++			{
++				parse->state = COLL_PARSE_EMPTY;
++				break;
++			}
++			elog(ERROR, "unexpected object end");
++			break;
++
+ 		default:
+ 			elog(ERROR, "unexpected object end");
+ 			break;
+@@ -513,7 +523,7 @@
+ Datum
+ collection_value_type_common(CollectionHeaderCommon * hdr)
+ {
+-	if (hdr->head == NULL || hdr->value_type == InvalidOid)
++	if (hdr->value_type == InvalidOid)
+ 		return (Datum) 0;		/* caller returns NULL */
+ 
+ 	return ObjectIdGetDatum(hdr->value_type);
+--- a/src/collection_io.c
++++ b/src/collection_io.c
+@@ -82,7 +82,6 @@
+ 	collection *cur;
+ 	Oid			outfuncoid;
+ 	bool		typisvarlena;
+-	int			count;
+ 	char	   *key;
+ 	char	   *value;
+ 	char	   *value_type;
+@@ -93,9 +92,12 @@
+ 
+ 	colhdr = fetch_collection(fcinfo, 0);
+ 
+-	count = HASH_COUNT(colhdr->head);
+-	if (count == 0)
++	/* Typed empty values need the envelope; only an untyped empty is {}. */
++	if (colhdr->value_type == InvalidOid && colhdr->head == NULL)
++	{
++		pgstat_report_wait_end();
+ 		PG_RETURN_CSTRING("{}");
++	}
+ 
+ 	getTypeOutputInfo(colhdr->value_type, &outfuncoid, &typisvarlena);
+ 	value_type = format_type_extended(colhdr->value_type, -1, FORMAT_TYPE_FORCE_QUALIFY);
 --- a/src/icollection_io.c
 +++ b/src/icollection_io.c
 @@ -22,6 +22,7 @@
@@ -13,23 +118,28 @@ as collection_out does. This restores text COPY and pg_dump/pg_restore.
  
  #include "collection.h"
  
-@@ -58,6 +59,9 @@
+@@ -57,40 +58,45 @@
+ {
  	ICollectionHeader *hdr;
  	icollection *cur;
- 	int			count;
+-	int			count;
 +	Oid			outfuncoid;
 +	bool		typisvarlena;
 +	char	   *value_type;
  	StringInfoData buf;
  
  	hdr = fetch_icollection(fcinfo, 0);
-@@ -66,31 +70,33 @@
- 	if (count == 0)
- 		PG_RETURN_CSTRING("{}");
  
+-	count = HASH_COUNT(hdr->head);
+-	if (count == 0)
++	/* Typed empty values need the envelope; only an untyped empty is {}. */
++	if (hdr->value_type == InvalidOid && hdr->head == NULL)
++	{
+ 		PG_RETURN_CSTRING("{}");
++	}
 +	getTypeOutputInfo(hdr->value_type, &outfuncoid, &typisvarlena);
 +	value_type = format_type_extended(hdr->value_type, -1, FORMAT_TYPE_FORCE_QUALIFY);
-+
+ 
  	initStringInfo(&buf);
 -	appendStringInfoString(&buf, "{");
 +	appendStringInfoString(&buf, "{\"value_type\": ");
@@ -64,3 +174,89 @@ as collection_out does. This restores text COPY and pg_dump/pg_restore.
  
  	PG_RETURN_CSTRING(buf.data);
  }
+--- a/src/collection_parse.c
++++ b/src/collection_parse.c
+@@ -60,6 +60,13 @@
+ 	if (json_error != JSON_SUCCESS)
+ 		elog(ERROR, "Invalid format");
+ 
++	/* {} has no value type until the first add or explicit type cast. */
++	if (parse.state == COLL_PARSE_EMPTY)
++	{
++		MemoryContextSwitchTo(oldcxt);
++		return colhdr;
++	}
++
+ 	if (parse.typname)
+ 	{
+ 		Oid			typid;
+@@ -93,11 +100,10 @@
+ 
+ 		item->isnull = isnull;
+ 
+-		if (!isnull)
+-		{
+-			value = OidFunctionCall1(typInput, CStringGetDatum(vstr));
+-			item->value = datumCopy(value, colhdr->value_byval, colhdr->value_type_len);
+-		}
++		/* Even NULL input must run non-strict input functions (domains). */
++		value = OidInputFunctionCall(typInput, isnull ? NULL : vstr, typIOParam, -1);
++		item->value = isnull ? (Datum) 0 :
++			datumCopy(value, colhdr->value_byval, colhdr->value_type_len);
+ 
+ 		HASH_REPLACE(hh, colhdr->head, key[0], strlen(key), item, replaced_item);
+ 		if (replaced_item)
+@@ -179,6 +185,10 @@
+ 	switch (parse->state)
+ 	{
+ 		case COLL_PARSE_EXPECT_VALUE_TYPE:
++			if (tokentype != JSON_TOKEN_STRING)
++				ereport(ERROR,
++						(errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
++						 errmsg("value_type must be a JSON string")));
+ 			parse->typname = token;
+ 			parse->state = COLL_PARSE_EXPECT_TOPLEVEL_FIELD;
+ 			break;
+--- a/src/icollection_parse.c
++++ b/src/icollection_parse.c
+@@ -60,6 +60,13 @@
+ 	if (json_error != JSON_SUCCESS)
+ 		elog(ERROR, "Invalid format");
+ 
++	/* {} has no value type until the first add or explicit type cast. */
++	if (parse.state == COLL_PARSE_EMPTY)
++	{
++		MemoryContextSwitchTo(oldcxt);
++		return icolhdr;
++	}
++
+ 	if (parse.typname)
+ 	{
+ 		Oid			typid;
+@@ -93,11 +100,10 @@
+ 		item->key = key;
+ 		item->isnull = isnull;
+ 
+-		if (!isnull)
+-		{
+-			value = OidFunctionCall1(typInput, CStringGetDatum(vstr));
+-			item->value = datumCopy(value, icolhdr->value_byval, icolhdr->value_type_len);
+-		}
++		/* Even NULL input must run non-strict input functions (domains). */
++		value = OidInputFunctionCall(typInput, isnull ? NULL : vstr, typIOParam, -1);
++		item->value = isnull ? (Datum) 0 :
++			datumCopy(value, icolhdr->value_byval, icolhdr->value_type_len);
+ 
+ 		ICOLLECTION_HASH_REPLACE(icolhdr->head, key, item, replaced_item);
+ 		if (replaced_item)
+@@ -162,6 +168,10 @@
+ 	switch (parse->state)
+ 	{
+ 		case COLL_PARSE_EXPECT_VALUE_TYPE:
++			if (tokentype != JSON_TOKEN_STRING)
++				ereport(ERROR,
++						(errcode(ERRCODE_INVALID_TEXT_REPRESENTATION),
++						 errmsg("value_type must be a JSON string")));
+ 			parse->typname = pstrdup(token);
+ 			parse->state = COLL_PARSE_EXPECT_TOPLEVEL_FIELD;
+ 			break;

@@ -1,6 +1,7 @@
 collection (2.1.3-1PGSTY) unstable; urgency=medium
 
-  * Make icollection text output roundtrip through COPY and pg_dump.
+  * Preserve collection and icollection types through empty text I/O.
+  * Pass type I/O parameters for arrays, enums, composites and domains.
   * Bump to 2.1.3.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 09:24:27 +0800
