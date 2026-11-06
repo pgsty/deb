@@ -260,3 +260,31 @@ typmods are not part of the collection representation. No SQL or ABI change.
  			parse->typname = pstrdup(token);
  			parse->state = COLL_PARSE_EXPECT_TOPLEVEL_FIELD;
  			break;
+--- a/src/icollection_userfuncs.c
++++ b/src/icollection_userfuncs.c
+@@ -834,17 +834,17 @@
+ 
+ 	hdr = construct_empty_icollection(CurrentMemoryContext);
+ 
+-	if (nelems == 0)
+-	{
+-		pgstat_report_wait_end();
+-		PG_RETURN_DATUM(EOHPGetRWDatum(&hdr->hdr));
+-	}
+-
+-	oldcxt = MemoryContextSwitchTo(hdr->hdr.eoh_context);
+-
+ 	hdr->value_type = elemtype;
+ 	hdr->value_type_len = elemlen;
+ 	hdr->value_byval = elembyval;
++
++	if (nelems == 0)
++	{
++		pgstat_report_wait_end();
++		PG_RETURN_DATUM(EOHPGetRWDatum(&hdr->hdr));
++	}
++
++	oldcxt = MemoryContextSwitchTo(hdr->hdr.eoh_context);
+ 
+ 	for (i = 0; i < nelems; i++)
+ 	{
