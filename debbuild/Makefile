@@ -441,7 +441,10 @@ pgmq:
 pg_statecharts:
 	cd pg_statecharts && make
 
-.PHONY: pg_statecharts
+pg_warren:
+	cd pg_warren && make
+
+.PHONY: pg_statecharts pg_warren
 
 pgmb:
 	cd pgmb && make

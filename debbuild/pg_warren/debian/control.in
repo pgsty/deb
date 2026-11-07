@@ -1,0 +1,18 @@
+Source: pg-warren
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+# Rust >= 1.97 and cargo-pgrx 0.19.3 are supplied by the builder's rustup.
+# bindgen loads libclang; builder images carry versioned LLVM 15, 19 or 21.
+Build-Depends: debhelper-compat (= 13), postgresql-server-dev-all (>= 217~), clang | clang-21 | clang-19 | clang-15, libclang-dev | libclang1-21 | libclang1-19 | libclang1-15, libicu-dev, pkg-config
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/ExaDev/pg_warren
+
+Package: postgresql-PGVERSION-pg-warren
+Architecture: any
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
+Description: graph traversal and computation over PostgreSQL tables
+ Versioned adjacency snapshots, graph traversal, PageRank, community
+ detection and graph computation through SQL. PostgreSQL 15-16 require
+ preload for the optional shared cache.

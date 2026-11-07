@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+export PATH := $(HOME)/.cargo/bin:$(PATH)
+# Use the builder's stable toolchain, which must satisfy upstream Rust >= 1.97.
+export RUSTUP_TOOLCHAIN ?= stable
+export CARGO_PROFILE_RELEASE_DEBUG = 2
+export CARGO_PROFILE_RELEASE_STRIP = none
+export RUSTFLAGS := $(RUSTFLAGS) -C link-arg=-Wl,--no-gc-sections
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	test "$$(cargo pgrx --version | awk '{print $$2}')" = 0.19.3
+	sha256sum Cargo.lock > .cargo-lock.before
+	cargo fetch --locked
+
+override_dh_auto_build:
+	set -eu; for v in $$(pg_buildext supported-versions); do \
+	  cargo pgrx init --pg$$v=/usr/lib/postgresql/$$v/bin/pg_config --no-run; \
+	  CARGO_NET_OFFLINE=true cargo pgrx package -v \
+	    --manifest-path crates/pg_warren/Cargo.toml \
+	    --pg-config /usr/lib/postgresql/$$v/bin/pg_config \
+	    --no-default-features --features pg$$v --out-dir "$(CURDIR)/package-$$v"; \
+	done
+	sha256sum -c .cargo-lock.before
+
+override_dh_auto_install:
+	set -eu; for v in $$(pg_buildext supported-versions); do \
+	  mkdir -p debian/postgresql-$$v-pg-warren; \
+	  cp -a package-$$v/usr debian/postgresql-$$v-pg-warren/; \
+	done
+
+override_dh_auto_test override_dh_auto_clean:
+
+override_dh_installdocs:
+	dh_installdocs --all README.md NOTICE docs/limits.md
