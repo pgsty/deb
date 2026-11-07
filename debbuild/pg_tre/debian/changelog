@@ -1,3 +1,10 @@
+pg-tre (4.6.2-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 4.6.2 with the sparsemap cursor fix.
+  * Retain the build flags patch for the vendored TRE and Lime sources.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 07 Nov 2026 12:00:00 +0800
+
 pg-tre (4.6.1-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 4.6.1.
