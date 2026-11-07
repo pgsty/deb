@@ -14,6 +14,12 @@ override_dh_auto_clean:
 
 override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-shacrypt
+	set -eu; for v in $$(pg_buildext supported-versions); do \
+		root=debian/postgresql-$$v-shacrypt; \
+		test -s $$root/usr/lib/postgresql/$$v/lib/shacrypt.so; \
+		test -s $$root/usr/share/postgresql/$$v/extension/shacrypt.control; \
+		test -s $$root/usr/share/postgresql/$$v/extension/shacrypt--1.1.sql; \
+	done
 
 override_dh_installdocs:
 	dh_installdocs --all README.*

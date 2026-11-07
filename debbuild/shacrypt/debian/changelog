@@ -1,3 +1,11 @@
+postgres-shacrypt (1.1-2PGSTY) unstable; urgency=medium
+
+  * Rebuild the published documentation-only packages with the correct payload.
+  * Require the shared library, control, installation SQL and automatic dbgsym.
+  * Normalize the source archive name and omit bundled Git metadata.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 06 Nov 2026 18:00:00 +0800
+
 postgres-shacrypt (1.1-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
