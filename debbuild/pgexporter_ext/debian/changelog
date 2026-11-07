@@ -1,3 +1,9 @@
+pgexporter-ext (0.2.5-2PGSTY) unstable; urgency=medium
+
+  * Publish the verified matrix rebuild under a distinct package revision.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 06 Nov 2026 10:00:00 +0000
+
 pgexporter-ext (0.2.5-1PGSTY) unstable; urgency=medium
 
   * Initial package using the same pinned source and patches as the RPM recipe.
