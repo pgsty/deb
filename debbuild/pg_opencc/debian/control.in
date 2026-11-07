@@ -1,0 +1,17 @@
+Source: pg-opencc
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), cmake (>= 3.12), g++, python3
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgsty/pg_opencc
+
+Package: postgresql-PGVERSION-opencc
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: OpenCC Chinese conversion for PostgreSQL
+ The opencc extension converts between Simplified Chinese, Traditional Chinese,
+ Taiwan and Hong Kong conventions, and Japanese Shinjitai. OpenCC 1.4.2 and
+ its dictionaries are embedded in the shared library, with no system OpenCC
+ runtime dependency. Requires a UTF8 database and uses the fixed opencc schema.

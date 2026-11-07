@@ -547,6 +547,11 @@ chkpass:
 #            Category: UTIL - Utilities                      #
 ###############################################################
 
+pg_opencc:
+	$(MAKE) -C pg_opencc
+
+.PHONY: pg_opencc
+
 pg_gzip:
 	cd pg_gzip && make
 
