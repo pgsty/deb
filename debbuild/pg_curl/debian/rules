@@ -6,10 +6,9 @@ export CC = gcc
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
 override_dh_auto_build:
-	test "$$(sha256sum pg_curl--2.4.sql | awk '{print $$1}')" = "f0b509eb06efb4712611c8b13132b576ba194c41a8e94420949b1e68c57bcbe7"
-	test "$$(sha256sum pg_curl--2.4.1.sql | awk '{print $$1}')" = "c1493fb4373e5f19790407188f82990c25c5148f9fd32bf5c10780e84778def5"
-	test "$$(sha256sum pg_curl--2.4--2.4.1.sql | awk '{print $$1}')" = "30b49e825aee87090eeb6fe99578daa5d94f8385a642f7cf54017a3dff541f35"
-	grep -q "^default_version = '2.4.1'$$" pg_curl.control
+	test "$$(sha256sum pg_curl--2.4.sql | awk '{print $$1}')" = "c1493fb4373e5f19790407188f82990c25c5148f9fd32bf5c10780e84778def5"
+	test -s pg_curl--2.4--2.5.sql
+	grep -q "^default_version = '2.5'$$" pg_curl.control
 
 override_dh_auto_test:
 

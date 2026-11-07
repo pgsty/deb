@@ -1,24 +1,25 @@
 # pg_curl composite source
 
-The packaged 2.4.6 release is the deterministic composite of:
+The packaged 2.5.0 release combines the official PGXN archive with its
+pg_whitelist submodule, which is absent from the PGXN archive:
 
-- the official PGXN 2.4.6 archive, corresponding to
-  `RekGRpth/pg_curl` commit `35481dc401864f7cfaf75be7e87d002780b1906f`
-- its `pg_whitelist` gitlink commit
-  `fbca6aef6962b20126714eaaa3f55c77f65bb5c3`
+- pg_curl commit: `6abdb3dbe81c0e320eebeeb0120cff993d593b31`
+- pg_whitelist commit: `9001c0cb09483e0828c2578f8e842cf00268a44e`
 
-The official PGXN archive contains only the gitlink directory, so it
-cannot build by itself. `repack.sh` downloads the fixed PGXN release and
-pinned submodule archive,
-verifies their hashes, fills the gitlink, records `SOURCE-MANIFEST.pgsty`, and
-uses GNU tar plus `gzip -n` with fixed ownership, order and mtime. Two runs
-must produce:
+`repack.sh` verifies the fixed input hashes, fills the submodule directory,
+records `SOURCE-MANIFEST.pgsty`, and uses GNU tar plus `gzip -n` with fixed
+ownership, order and mtime. Run GitHub downloads through the local proxy:
 
-```text
-61bd578ecfe0369af783bf422e26710e861f6996e264093ea4dda7578bfd2244  pg_curl-2.4.6.tar.gz
+```sh
+HTTPS_PROXY=http://127.0.0.1:8888 ./repack.sh /path/to/archive-output
 ```
 
-Before applying the shared DEB/RPM patch, both recipes copy the new upstream
-`pg_curl--2.4.sql` to `pg_curl--2.4.1.sql`. The patch then restores every
-previously published script byte-for-byte, changes the default version to
-2.4.1, and adds the 2.4-to-2.4.1 catalog-only upgrade edge.
+Both RPM and DEB repack scripts produce:
+
+```text
+9069819503d80eef660575f06e22e2a627e519481c79b4d22307a4d4e6a87fd4  pg_curl-2.5.0.tar.gz
+```
+
+The package installs upstream SQL version 2.5, including the upstream
+2.4-to-2.5 upgrade script. The obsolete downstream 2.4.1 workaround is no
+longer applied; packaging adds no SQL migration scripts.

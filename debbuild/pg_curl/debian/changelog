@@ -1,3 +1,12 @@
+pg-curl (2.5.0-1PGSTY) unstable; urgency=medium
+
+  * Update to the official PGXN 2.5.0 release.
+  * Include the pinned pg_whitelist submodule and the upstream 2.4 to 2.5
+    upgrade script.
+  * Remove the obsolete downstream 2.4.1 SQL migration workaround.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 07 Nov 2026 12:00:00 +0800
+
 pg-curl (2.4.6-1PGSTY) unstable; urgency=medium
 
   * Update to 2.4.6.
