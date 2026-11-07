@@ -1,3 +1,9 @@
+sqlite-fdw (2.5.0-3PGSTY) unstable; urgency=medium
+
+  * Publish the PostgreSQL 14-18 matrix rebuild above the released 2PIGSTY revision.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 06 Nov 2026 10:00:00 +0000
+
 sqlite-fdw (2.5.0-1PGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 18 support
