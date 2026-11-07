@@ -1,15 +1,14 @@
 # pg_improv packaging
 
-This recipe and the RPM spec use the upstream **0.12.2** archive with an identical
-packaging patch for pgrx **0.19.3**. The patch updates the extension dependency
-lockfile and removes the obsolete pgrx embed binary; the original archive is
-unchanged.
+This recipe and the RPM spec use upstream **0.13.0**, which natively uses
+pgrx **0.19.3**. The previous pgrx compatibility patch is no longer applied;
+the extension workspace and lockfile are unchanged.
 
 - Upstream: <https://codeberg.org/gregburd/improv>
-- Release: <https://codeberg.org/gregburd/improv/src/tag/v0.12.2>
-- Source: <https://codeberg.org/gregburd/improv/archive/v0.12.2.tar.gz>
-- Archive: `improv-0.12.2.tar.gz`, root `improv-0.12.2/`
-- SHA-256: `db14fc1f3f7e7d5425c5230122baeafda6e11583fbb91107c8d09ca521265e15`
+- Release: <https://codeberg.org/gregburd/improv/src/tag/v0.13.0>
+- Source: <https://codeberg.org/gregburd/improv/archive/v0.13.0.tar.gz>
+- Archive: `improv-0.13.0.tar.gz`, root `improv-0.13.0/`
+- SHA-256: `1758815bf497d0d9913a1dab465ffc5473272d01674501c414d3d96e675983ef`
 - License: Apache-2.0 OR MIT
 - PostgreSQL feature range: 15–18
 - Required toolchain: Rust 1.97 or newer, cargo-pgrx **0.19.3**, libclang
@@ -24,7 +23,7 @@ is retained for RPM debuginfo/debugsource and Debian's automatic dbgsym split.
 Upstream does not emit PGXS bitcode for this Rust extension.
 
 Run `pig build get pg_improv` first. Until the catalogue and source mirror
-are updated, copy only `improv-0.12.2.tar.gz` into the builder's source
+are updated, copy only `improv-0.13.0.tar.gz` into the builder's source
 directory (`~/rpmbuild/SOURCES/` on RPM; `~/ext/src/` linked by
 `~/debbuild/SOURCES` on DEB). Prepare the matching toolchain:
 
@@ -70,6 +69,16 @@ in `examples/family-finance/schema.sql:203`, requiring PostgreSQL 17 or later
 applicable to PG15/16; the complete upstream transaction suite still covers
 those extension packages. Packaging does not rewrite the example or add
 product compatibility code.
+
+## Trial validation: 0.13.0, 2026-11-07
+
+Ubuntu 24.04.5 arm64 builds passed for PG15–18, including main/dbgsym payload,
+matching ELF/debug build IDs, installation and CREATE EXTENSION. The RPM pilot
+passed the same checks on Rocky Linux 9.8 aarch64, PG15/16. The unmodified
+upstream `txn.sh` passed on Ubuntu PG18 and Rocky PG15 from a postgres-readable
+`/tmp` working directory, covering transaction/savepoint rollback, commit and
+logical synchronization, and dump/restore. Full matrix evidence is collected
+under `/Users/vonng/pgsty/artifacts/extension-refresh-20261107/`.
 
 ## Historical trial validation: 0.12.1, 2026-10-28
 
