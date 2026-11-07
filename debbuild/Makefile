@@ -438,6 +438,11 @@ pg_local_cache:
 pgmq:
 	cd pgmq && make
 
+pg_statecharts:
+	cd pg_statecharts && make
+
+.PHONY: pg_statecharts
+
 pgmb:
 	cd pgmb && make
 

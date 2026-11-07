@@ -1,0 +1,23 @@
+Source: pg-statecharts
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-server-dev-all (>= 217~)
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/kronor-io/statecharts
+
+Package: postgresql-PGVERSION-pg-statecharts
+Architecture: all
+Depends: postgresql-PGVERSION, ${misc:Depends}
+Description: hierarchical state machines inside PostgreSQL transactions
+ SQL and PL/pgSQL state machines with hierarchical and parallel states,
+ transactional event handling and versioned statechart definitions.
+ Requires ltree in the public schema. No preload or restart is needed.
+
+Package: postgresql-PGVERSION-pg-statecharts-dev
+Architecture: all
+Depends: postgresql-PGVERSION-pg-statecharts (= ${binary:Version}), ${misc:Depends}
+Description: SCXML import and migration tooling for pg_statecharts
+ Optional development tooling for importing SCXML and generating Sqitch
+ migrations. Reading and writing server files requires additional privileges.
