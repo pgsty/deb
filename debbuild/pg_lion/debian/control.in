@@ -1,0 +1,19 @@
+Source: pg-lion
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/cgkanchi/pg_lion
+
+Package: postgresql-PGVERSION-pg-lion
+Architecture: any
+Provides: postgresql-pg-lion
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Suggests: postgresql-PGVERSION-pgvector (>= 0.7)
+Description: Roaring bitmap inverted indexes for PostgreSQL
+ pg_lion provides inverted indexes for filtering, counting, grouping,
+ arrays, JSONB and full-text search. The package includes pg_lion_citext
+ and pg_lion_vector, optional companions for citext and pgvector.
+ Preloading pg_lion is optional and enables its custom WAL format.

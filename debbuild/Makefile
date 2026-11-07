@@ -387,6 +387,9 @@ multicorn:
 ###############################################################
 #            Category: FEAT - Functionality                  #
 ###############################################################
+pg_lion:
+	cd pg_lion && $(MAKE)
+
 age: # PGDG Included
 	cd age && make
 

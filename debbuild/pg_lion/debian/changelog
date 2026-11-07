@@ -1,0 +1,6 @@
+pg-lion (0.3.0-1PGSTY) unstable; urgency=medium
+
+  * Initial package for PostgreSQL 16 through 18.
+  * Include the citext and pgvector companion extensions.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 06 Nov 2026 15:00:00 +0800
