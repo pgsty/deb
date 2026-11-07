@@ -1,6 +1,6 @@
 # OrioleDB DEB
 
-内核与 OrioleDB 存储引擎合包，版本 `1.10.1-1PGSTY`，安装到 `/usr/oriole-<PG_MAJOR>`。默认构建 PG18，同时支持 PG16、PG17。
+内核与 OrioleDB 存储引擎合包，版本 `1.10.2-1PGSTY`，安装到 `/usr/oriole-<PG_MAJOR>`。默认构建 PG18，同时支持 PG16、PG17。
 
 | PG | PostgreSQL | Patchset | 内核源码 |
 |---|---|---|---|
@@ -8,7 +8,7 @@
 | 17 | 17.11 | 23 | `postgres-patches17_23.tar.gz` |
 | 18 | 18.6 | 4 | `postgres-patches18_4.tar.gz` |
 
-各版本共同使用 `orioledb-1.10.1.tar.gz`。源码与 RPM 使用同一批归档，branding 补丁也与 RPM 的 `oriolepg-postgresql-branding.patch` 一致。LLVM 默认启用，保留发行版编译标志并由 `dh_strip` 自动生成 dbgsym。
+各版本共同使用 `orioledb-1.10.2.tar.gz`。源码与 RPM 使用同一批归档，branding 补丁也与 RPM 的 `oriolepg-postgresql-branding.patch` 一致。LLVM 默认启用，保留发行版编译标志并由 `dh_strip` 自动生成 dbgsym。
 
 在 builder 中先运行 `pig build get orioledb`。如果索引仍返回旧版本，仅把当前 PG 所需的两个缺失归档复制到 `~/ext/src/`；`~/debbuild/SOURCES` 应指向该目录。然后运行：
 
@@ -19,7 +19,7 @@ make orioledb-18
 
 `orioledb-16`、`orioledb-17` 和 `orioledb-all` 为现有其他目标。
 
-官方 v1.10.1 源码仍将 `orioledb_version()` 定义为 `OrioleDB beta 19`，SQL 版本仍是 `1.10`。配方忠实保留上游函数和 11 个安装 SQL 文件；归档不带 Git 元数据，`orioledb_commit_hash()` 返回 40 个零。包版本和内核 branding 使用 `1.10.1`。
+官方 v1.10.2 源码将 `orioledb_version()` 定义为 `OrioleDB 1.10.2`，SQL 版本仍是 `1.10`。配方忠实保留上游函数和 11 个安装 SQL 文件；归档不带 Git 元数据，`orioledb_commit_hash()` 返回 40 个零。包版本和内核 branding 使用 `1.10.2`。
 
 ## 2026-10-06 全平台验证
 
@@ -72,3 +72,32 @@ PG16、17、18 在 Debian 12/13、Ubuntu 22.04/24.04/26.04 × amd64/arm64 的 30
 30 个主包和 30 个 `.ddeb` 已校验 SHA-256 并收回本仓库 `apt/<codename>/`，容器内数据库已停止。证据目录为 `/Users/vonng/.cache/pgsty-build/20261103-extension-production-003724/deb/`，主要清单为 `09c-orioledb-matrix.json`、`09c-orioledb-artifacts.json`、`09c-sources.json` 和逐组合 QA/log 文件。
 
 本批没有 Git 提交、生产 stash、仓库导入、签名或 CDN 发布。元数据库未写入；SQL 版本仍为 1.10，`deb_ver=1.10.1`、四个新源码文件名和 `mtime` 待外部同步，见 `09c-metadata-pending.json`。
+
+## 2026-11-07 v1.10.2 全平台验证
+
+`1.10.2-1PGSTY` 在十个平台 × PG16/17/18 的 30 个组合全部完成原生构建、主包及 dbgsym 审计、安装和运行验收。amd64 使用 m3 Docker，ARM64 使用本机 Docker。每个平台按 PG18 → PG17 → PG16 构建，LLVM 保持启用。
+
+| 镜像 | 实际系统 | 架构 | PG | 产物 |
+|---|---|---|---|---:|
+| `pgsty/d12:build` | Debian GNU/Linux 12 (bookworm) | amd64 | 16, 17, 18 | 6 |
+| `pgsty/d12a:build` | Debian GNU/Linux 12 (bookworm) | arm64 | 16, 17, 18 | 6 |
+| `pgsty/d13:build` | Debian GNU/Linux 13 (trixie) | amd64 | 16, 17, 18 | 6 |
+| `pgsty/d13a:build` | Debian GNU/Linux 13 (trixie) | arm64 | 16, 17, 18 | 6 |
+| `pgsty/u22:build` | Ubuntu 22.04.5 LTS | amd64 | 16, 17, 18 | 6 |
+| `pgsty/u22a:build` | Ubuntu 22.04.5 LTS | arm64 | 16, 17, 18 | 6 |
+| `pgsty/u24:build` | Ubuntu 24.04.5 LTS | amd64 | 16, 17, 18 | 6 |
+| `pgsty/u24a:build` | Ubuntu 24.04.5 LTS | arm64 | 16, 17, 18 | 6 |
+| `pgsty/u26:build` | Ubuntu 26.04.1 LTS | amd64 | 16, 17, 18 | 6 |
+| `pgsty/u26a:build` | Ubuntu 26.04.1 LTS | arm64 | 16, 17, 18 | 6 |
+
+每个组合均核对完整安装树、所有原生 ELF 的架构/Build ID/DWARF、私有 libpq 与动态链接、上游 control 和 11 个 OrioleDB SQL 文件、许可证及 PATENTS。PG16/17/18 分别有 128/129/131 对 ELF/dbgsym，bitcode 路径为 1045/1056/1090 个，其中 index 为 57/55/57 个。主包包含实际 OrioleDB bitcode 与内核 JIT provider；保留核心 JIT 所需 libLLVM 运行库，无 LLVM/Clang 工具链、系统 PostgreSQL 或 libpq5 运行依赖，无独立 llvmjit 包或共享 PostgreSQL README 冲突。
+
+30 个组合均通过 initdb/preload、`CREATE EXTENSION`、pg_trgm/hstore/pgcrypto、PLPython/PLTcl、OrioleDB 插入更新与 TOAST、并发 BTree 索引构建、实际 GIN bridge 执行计划、事务/保存点回滚、VACUUM/CHECKPOINT、正常重启持久化和 immediate-stop 崩溃恢复。实际 JIT 查询均生成函数并启用 inlining/optimization。运行时为 `OrioleDB 1.10.2`，SQL 版本为 `1.10`，归档构建的 commit hash 保持上游全零行为。未覆盖 S3/外部服务场景或上游完整测试套件。
+
+OrioleDB 新源码 `orioledb-1.10.2.tar.gz` 的 SHA-256 为 `78f1ea1da694ae147d40ab11497eabd8382b6c68a0cf3e11f5310e1707f03633`，三个 PostgreSQL patchset 归档及校验值与上次一致。
+
+30 个主包和 30 个 dbgsym 包已校验 SHA-256 并取回 `apt/bookworm/`、`apt/trixie/`、`apt/jammy/`、`apt/noble/`、`apt/resolute/`；每个目录 12 个本批产物。Debian 的 dbgsym 后缀为 `.deb`，Ubuntu 为 `.ddeb`。测试数据库已停止。
+
+完整证据位于 `/Users/vonng/.cache/pgsty-build/orioledb-deb-1.10.2-20261107/`，包括 `matrix-summary.json`、`artifact-manifest.json`、`artifact-manifest.tsv`、`SHA256SUMS`、`input-manifest.json` 和逐平台/PG 的 `evidence/`。
+
+本地 `data.pgext.extension` 与 `pgext/db/extension.csv` 已同步本批事实：`rpm_ver=1.10.2`、`deb_ver=1.10.2`、新源码文件名和 `mtime=2026-11-07`；保留 SQL `version=1.10`。未进入生产 stash，未导入 APT 仓库、发布源码或同步 CDN，未提交 Git。

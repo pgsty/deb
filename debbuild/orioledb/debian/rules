@@ -11,7 +11,7 @@ PG_MAJOR ?= 18
 PGBASEINSTDIR := /usr/oriole-$(PG_MAJOR)
 DEB_PACKAGE := orioledb-$(PG_MAJOR)
 ORIOLEDB_PATCHSET_VERSION ?= 4
-ORIOLEDB_VERSION ?= 1.10.1
+ORIOLEDB_VERSION ?= 1.10.2
 
 # Filter out -ffast-math which is known to cause precision issues
 export CFLAGS=$(shell dpkg-buildflags --get CFLAGS | sed 's/-ffast-math//g')
