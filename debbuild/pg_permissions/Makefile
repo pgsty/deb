@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := pg_permissions-REL_1_4_1.tar.gz
+TARBALL := pg_permissions-1.4.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

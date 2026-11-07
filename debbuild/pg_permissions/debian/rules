@@ -11,6 +11,11 @@ override_dh_auto_clean:
 override_dh_auto_install:
 	+pg_buildext loop postgresql-%v-pg-permissions
 	rm -rf debian/postgresql-*-pg-permissions/usr/share/doc/postgresql-doc-*/
+	set -eu; for v in $$(pg_buildext supported-versions); do \
+		root=debian/postgresql-$$v-pg-permissions/usr/share/postgresql/$$v/extension; \
+		grep -qx "default_version = '1.4'" $$root/pg_permissions.control; \
+		test -s $$root/pg_permissions--1.3--1.4.sql; \
+	done
 
 override_dh_installdocs:
 	dh_installdocs --all README.*

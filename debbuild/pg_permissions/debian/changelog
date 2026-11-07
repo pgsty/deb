@@ -1,5 +1,12 @@
 pg-permissions (1.4.1-1PGSTY) unstable; urgency=medium
 
+  * Normalize the official REL_1_4_1 source as pg_permissions-1.4.1.tar.gz.
+  * Verify SQL version 1.4 and the upstream 1.3 to 1.4 upgrade script.
+
+ -- Ruohang Feng <rh@vonng.com>  Fri, 06 Nov 2026 18:00:00 +0800
+
+pg-permissions (1.4.1-1PGSTY) unstable; urgency=medium
+
   * Update to the signed upstream pg_permissions 1.4.1 release.
   * Package the 1.3 to 1.4 schema-name filtering fix and expanded tests/docs.
 
