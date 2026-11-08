@@ -11,17 +11,16 @@
 ###############################################################
 #                      1. Environment                         #
 ###############################################################
-PIG_VERSION ?= v1.8.0
 PUSH_RSYNC_ARGS := -avc --exclude=/apt/ --exclude=/tf/ --exclude=/tmp/
 
 setup:
-	@echo "curl -fsSL https://repo.pigsty.cc/pig | bash -s $(PIG_VERSION)"
-	@echo "pig build spec"
-	@echo "pig build repo"
-	@echo "pig build tool"
-	@echo "pig build rust"
-	@echo "pig build pgrx"
-	@echo "#pig build pkg <name...>"
+	@echo "# Install pgext in the Linux builder, or use ../docker build images"
+	@echo "pgext env repo"
+	@echo "pgext env tool"
+	@echo "pgext env spec"
+	@echo "pgext env rust"
+	@echo "pgext env pgrx"
+	@echo "pgext pkg <name...> --pg 18"
 
 ivorysql-contrib:
 	$(MAKE) -C debbuild/ivorysql-contrib

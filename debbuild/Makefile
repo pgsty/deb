@@ -9,7 +9,7 @@
 #==============================================================#
 
 default:
-	@echo "pig build pkg <xxx> or make <xxx> to build extensions"
+	@echo "pgext pkg <xxx> --pg 18 (full workflow), pgext mak <xxx> --pg 18 (prepared inputs)"
 
 ###############################################################
 #                     Rust Extensions                        #
