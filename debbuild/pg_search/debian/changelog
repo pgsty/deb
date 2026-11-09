@@ -1,3 +1,11 @@
+pg-search (0.26.6-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.26.6 with its locked pgrx 0.19.3 dependency graph.
+  * Simplify source inputs and package the upstream license.
+  * Match the Rust 1.99.1 toolchain provided by the current builders.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 09 Nov 2026 12:40:00 +0800
+
 pg-search (0.26.5-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.26.5 with the unchanged locked pgrx 0.19.3 dependencies.

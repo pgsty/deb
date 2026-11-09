@@ -4,7 +4,7 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: move
 
-TARBALL := pg_search-0.26.5.tar.gz
+TARBALL := pg_search-0.26.6.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
@@ -13,9 +13,8 @@ PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
 PGRX_VERSION := 0.19.3
 RUST_TOOLCHAIN := stable
-RUST_VERSION := 1.99.0
+RUST_VERSION := 1.99.1
 # Keep pgrx aligned with the 0.19.3 Docker builder toolchain.
-LICENSE_COLLECTOR := collect-third-party-licenses.py
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_BUILD_JOBS ?= 1
 LINDERA_BUILD_DICTIONARY_CACHE_DIR ?= $(HOME)/.cache/pg_search/lindera
@@ -25,10 +24,7 @@ check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 # prepare directory
-check-licenses:
-	@test -f "$(LICENSE_COLLECTOR)" || (echo "missing $(LICENSE_COLLECTOR)" >&2; exit 1)
-
-setup: check-src check-licenses
+setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
@@ -64,15 +60,6 @@ building: check-build-deps
 		done
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.after
 	cmp $(BUILD_DIR)/.pgrx0193-cargo-locks.before $(BUILD_DIR)/.pgrx0193-cargo-locks.after
-	cd $(BUILD_DIR) && \
-		export PATH="$$HOME/.cargo/bin:$$PATH"; \
-		TARGET_TRIPLE=$$(RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) rustc -vV | sed -n 's/^host: //p'); \
-		RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) CARGO_NET_OFFLINE=true cargo metadata --locked --offline \
-		  --manifest-path pg_search/Cargo.toml --no-default-features \
-		  --features pg$(firstword $(PG_VERSIONS)) --filter-platform "$$TARGET_TRIPLE" \
-		  --format-version=1 > .cargo-metadata-pg-search.json
-	cd $(BUILD_DIR) && python3 ../$(LICENSE_COLLECTOR) \
-		.cargo-metadata-pg-search.json third-party-licenses
 
 check-build-deps: setup check-pgrx
 	cd $(BUILD_DIR) && pg_buildext updatecontrol && dpkg-checkbuilddeps
@@ -97,4 +84,4 @@ move: build
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-licenses setup build building check-build-deps check-pgrx packaging move clean
+.PHONY: all check-src setup build building check-build-deps check-pgrx packaging move clean
