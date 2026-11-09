@@ -2,9 +2,9 @@ CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
-# Source: https://codeberg.org/gregburd/improv/archive/v0.13.0.tar.gz
-# SHA256: 1758815bf497d0d9913a1dab465ffc5473272d01674501c414d3d96e675983ef
-TARBALL := improv-0.13.0.tar.gz
+# Source: https://codeberg.org/gregburd/improv/archive/v0.14.0.tar.gz
+# SHA256: a54ba0d206f482122cacfe31fdf36a975634a81be39cf496ee59e27ff8e452c1
+TARBALL := improv-0.14.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

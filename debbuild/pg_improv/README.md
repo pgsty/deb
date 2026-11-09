@@ -1,14 +1,14 @@
 # pg_improv packaging
 
-This recipe and the RPM spec use upstream **0.13.0**, which natively uses
+This recipe and the RPM spec use upstream **0.14.0**, which natively uses
 pgrx **0.19.3**. The previous pgrx compatibility patch is no longer applied;
-the extension workspace and lockfile are unchanged.
+the upstream extension workspace and lockfile are used without modification.
 
 - Upstream: <https://codeberg.org/gregburd/improv>
-- Release: <https://codeberg.org/gregburd/improv/src/tag/v0.13.0>
-- Source: <https://codeberg.org/gregburd/improv/archive/v0.13.0.tar.gz>
-- Archive: `improv-0.13.0.tar.gz`, root `improv-0.13.0/`
-- SHA-256: `1758815bf497d0d9913a1dab465ffc5473272d01674501c414d3d96e675983ef`
+- Release: <https://codeberg.org/gregburd/improv/src/tag/v0.14.0>
+- Source: <https://codeberg.org/gregburd/improv/archive/v0.14.0.tar.gz>
+- Archive: `improv-0.14.0.tar.gz`, root `improv/`
+- SHA-256: `a54ba0d206f482122cacfe31fdf36a975634a81be39cf496ee59e27ff8e452c1`
 - License: Apache-2.0 OR MIT
 - PostgreSQL feature range: 15–18
 - Required toolchain: Rust 1.97 or newer, cargo-pgrx **0.19.3**, libclang
@@ -23,7 +23,7 @@ is retained for RPM debuginfo/debugsource and Debian's automatic dbgsym split.
 Upstream does not emit PGXS bitcode for this Rust extension.
 
 Run `pig build get pg_improv` first. Until the catalogue and source mirror
-are updated, copy only `improv-0.13.0.tar.gz` into the builder's source
+are updated, copy only `improv-0.14.0.tar.gz` into the builder's source
 directory (`~/rpmbuild/SOURCES/` on RPM; `~/ext/src/` linked by
 `~/debbuild/SOURCES` on DEB). Prepare the matching toolchain:
 
@@ -69,6 +69,18 @@ in `examples/family-finance/schema.sql:203`, requiring PostgreSQL 17 or later
 applicable to PG15/16; the complete upstream transaction suite still covers
 those extension packages. Packaging does not rewrite the example or add
 product compatibility code.
+
+## Boundary validation: 0.14.0, 2026-11-09
+
+PG15.19 and PG18.6 passed builds, installation and the unmodified upstream
+`tests/txn.sh` on Ubuntu 24.04.5 arm64 and Rocky Linux 9.8 aarch64. Main and
+debug package payloads, DWARF and matching build IDs were checked. Cargo.lock
+remained unchanged; all nine upstream migration SQL files matched their
+source checksums. The transaction suite covered use without preload,
+trigger/commit/logical modes, rollback, savepoints, two-phase commit and
+continued synchronization after dump/restore.
+
+Artifacts and logs: `/Users/vonng/pgsty/artifacts/extension-upgrade-20261109/`.
 
 ## Trial validation: 0.13.0, 2026-11-07
 
