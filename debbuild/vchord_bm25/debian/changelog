@@ -1,3 +1,10 @@
+vchord-bm25 (1.1.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.1.0 with the Block-WAND score-bound correction.
+  * Preserve the upstream locked pgrx 0.19.3 dependency graph.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 09 Nov 2026 12:40:00 +0800
+
 vchord-bm25 (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Switch to the PGSTY-maintained fork and prepare VectorChord-bm25 1.0.0.

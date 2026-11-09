@@ -4,9 +4,9 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-# GitHub tag archive: https://github.com/pgsty/vchord_bm25/archive/refs/tags/1.0.0.tar.gz
+# GitHub tag archive: https://github.com/pgsty/vchord_bm25/archive/refs/tags/1.1.0.tar.gz
 # No downstream patch is applied.
-TARBALL := vchord_bm25-1.0.0.tar.gz
+TARBALL := vchord_bm25-1.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SEMVER := $(shell echo $(TARBALL) | sed -E 's/^vchord_bm25-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
 BUILD_DIR := build
