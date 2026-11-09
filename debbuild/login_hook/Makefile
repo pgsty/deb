@@ -1,6 +1,6 @@
 all: setup build move
 
-TARBALL := login_hook-1.8.tar.gz
+TARBALL := login_hook-1.9.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
