@@ -1,6 +1,6 @@
 # OrioleDB DEB
 
-内核与 OrioleDB 存储引擎合包，版本 `1.10.2-1PGSTY`，安装到 `/usr/oriole-<PG_MAJOR>`。默认构建 PG18，同时支持 PG16、PG17。
+内核与 OrioleDB 存储引擎合包，版本 `1.10.3-1PGSTY`，安装到 `/usr/oriole-<PG_MAJOR>`。默认构建 PG18，同时支持 PG16、PG17。
 
 | PG | PostgreSQL | Patchset | 内核源码 |
 |---|---|---|---|
@@ -8,7 +8,7 @@
 | 17 | 17.11 | 23 | `postgres-patches17_23.tar.gz` |
 | 18 | 18.6 | 4 | `postgres-patches18_4.tar.gz` |
 
-各版本共同使用 `orioledb-1.10.2.tar.gz`。源码与 RPM 使用同一批归档，branding 补丁也与 RPM 的 `oriolepg-postgresql-branding.patch` 一致。LLVM 默认启用，保留发行版编译标志并由 `dh_strip` 自动生成 dbgsym。
+各版本共同使用 `orioledb-1.10.3.tar.gz`。源码与 RPM 使用同一批归档，branding 补丁也与 RPM 的 `oriolepg-postgresql-branding.patch` 一致。LLVM 默认启用，保留发行版编译标志并由 `dh_strip` 自动生成 dbgsym。
 
 在 builder 中先运行 `pig build get orioledb`。如果索引仍返回旧版本，仅把当前 PG 所需的两个缺失归档复制到 `~/ext/src/`；`~/debbuild/SOURCES` 应指向该目录。然后运行：
 
@@ -19,7 +19,7 @@ make orioledb-18
 
 `orioledb-16`、`orioledb-17` 和 `orioledb-all` 为现有其他目标。
 
-官方 v1.10.2 源码将 `orioledb_version()` 定义为 `OrioleDB 1.10.2`，SQL 版本仍是 `1.10`。配方忠实保留上游函数和 11 个安装 SQL 文件；归档不带 Git 元数据，`orioledb_commit_hash()` 返回 40 个零。包版本和内核 branding 使用 `1.10.2`。
+官方 v1.10.3 源码将 `orioledb_version()` 定义为 `OrioleDB 1.10.3`，SQL 版本仍是 `1.10`。配方忠实保留上游函数和 11 个安装 SQL 文件；归档不带 Git 元数据，`orioledb_commit_hash()` 返回 40 个零。包版本和内核 branding 使用 `1.10.3`。
 
 ## 2026-10-06 全平台验证
 
@@ -101,3 +101,13 @@ OrioleDB 新源码 `orioledb-1.10.2.tar.gz` 的 SHA-256 为 `78f1ea1da694ae147d4
 完整证据位于 `/Users/vonng/.cache/pgsty-build/orioledb-deb-1.10.2-20261107/`，包括 `matrix-summary.json`、`artifact-manifest.json`、`artifact-manifest.tsv`、`SHA256SUMS`、`input-manifest.json` 和逐平台/PG 的 `evidence/`。
 
 本地 `data.pgext.extension` 与 `pgext/db/extension.csv` 已同步本批事实：`rpm_ver=1.10.2`、`deb_ver=1.10.2`、新源码文件名和 `mtime=2026-11-07`；保留 SQL `version=1.10`。未进入生产 stash，未导入 APT 仓库、发布源码或同步 CDN，未提交 Git。
+
+## 2026-11-09 v1.10.3 全平台验证
+
+`1.10.3-1PGSTY` 在 Debian 12/13、Ubuntu 22.04/24.04/26.04 × amd64/arm64 × PG16/17/18 的 30 个组合全部完成原生构建、安装和运行验收。RPM 同批完成六个 EL 平台的 18 个组合。源码配对保持 patchset 50/23/4，SQL 版本为 1.10，运行版本为 OrioleDB 1.10.3；LLVM 始终启用，无新增平台补丁。
+
+全部 DEB 组合通过完整 payload、Build ID/DWARF、私有 libpq 与动态链接、83 个 OrioleDB bitcode 对象及 index、11 个 SQL 文件和许可证审计。安装测试覆盖扩展加载、contrib/PL、读写/TOAST、BTree/GIN、事务回滚、JIT、正常重启及崩溃恢复；本次修复对应的上游 `rll_lock_past_retained` isolation 测试三种执行顺序全部通过。没有运行完整上游测试套件或外部 S3 测试。
+
+30 个主包与 30 个 dbgsym 已校验摘要并收回 `apt/<codename>/`。源码 SHA-256 为 `bcc07133da30b3c2f1051ac1f7ac17c9ecbb8c37c97ed127a13f597016885b7f`。详细证据位于 `/Users/vonng/pgsty/artifacts/orioledb-1.10.3-20261109/`，包括矩阵、产物摘要及逐平台/PG 的日志和 QA 数据。
+
+未进入生产 stash，未导入或同步 APT 仓库，未发布源码，未修改 PGEXT/元数据库，未提交 Git。候选版本和 source 更新事实保存在证据目录的 `metadata-pending.json`。
