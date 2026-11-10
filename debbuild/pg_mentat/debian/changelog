@@ -1,3 +1,10 @@
+pg-mentat (1.20.0-1PGSTY) unstable; urgency=medium
+
+  * Update to 1.20.0, retaining PG14-18 and the locked pgrx 0.19.3 build.
+  * Honor CARGO_TARGET_DIR when packaging cached release artifacts.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 10 Nov 2026 01:00:00 +0800
+
 pg-mentat (1.19.1-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.19.1 and retain the PG14-18 pgrx 0.19.3 build.

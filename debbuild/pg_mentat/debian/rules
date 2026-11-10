@@ -3,6 +3,7 @@
 EXT_NAME := pg_mentat
 PKG_NAME := pg-mentat
 PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+TARGET_DIR := $(if $(CARGO_TARGET_DIR),$(CARGO_TARGET_DIR),target)
 
 %:
 	dh $@
@@ -22,13 +23,13 @@ override_dh_auto_install:
 		dh_installdirs -p$$FULL_NAME; \
 		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib; \
 		mkdir -p $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension; \
-		cp target/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/$(EXT_NAME).so \
+		cp $(TARGET_DIR)/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/$(EXT_NAME).so \
 			$(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
 		cp crates/pg/pg_mentat/sql/$(EXT_NAME)--*.sql \
 			$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
-		cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME).control \
+		cp $(TARGET_DIR)/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME).control \
 			$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
-		cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)*.sql \
+		cp $(TARGET_DIR)/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/$(EXT_NAME)*.sql \
 			$(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 		printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
 		printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
