@@ -2,6 +2,7 @@ pg-improv (0.14.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.14.0 and preserve its supplied SQL migration files.
   * Use the official Codeberg source archive without a compatibility patch.
+  * Honor CARGO_TARGET_DIR when compiling and packaging isolated PGEXT builds.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 09 Nov 2026 12:40:00 +0800
 

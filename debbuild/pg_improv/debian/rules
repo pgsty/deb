@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+CARGO_TARGET_DIR ?= $(CURDIR)/crates/pg_improv/target
 
 %:
 	dh $@ --with pgxs
@@ -21,7 +22,7 @@ override_dh_pgxs_test:
 override_dh_auto_install:
 	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 	    PKG=postgresql-$$PG_VERSION-pg-improv; \
-	    DIR=crates/pg_improv/target/release/pg_improv-pg$$PG_VERSION; \
+	    DIR=$(CARGO_TARGET_DIR)/release/pg_improv-pg$$PG_VERSION; \
 	    mkdir -p debian/$$PKG/usr/lib/postgresql/$$PG_VERSION/lib debian/$$PKG/usr/share/postgresql/$$PG_VERSION/extension; \
 	    cp $$DIR/usr/lib/postgresql/$$PG_VERSION/lib/pg_improv.so debian/$$PKG/usr/lib/postgresql/$$PG_VERSION/lib/; \
 	    cp $$DIR/usr/share/postgresql/$$PG_VERSION/extension/* debian/$$PKG/usr/share/postgresql/$$PG_VERSION/extension/; \
