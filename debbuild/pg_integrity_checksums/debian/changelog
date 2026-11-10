@@ -1,3 +1,10 @@
+pg-integrity-checksums (2.2.0-1PGSTY) unstable; urgency=medium
+
+  * Update to 2.2.0 with generic algorithms and parallel 64-bit checksums.
+  * Install the upstream 2.1.0 to 2.2.0 upgrade script.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 10 Nov 2026 01:00:00 +0800
+
 pg-integrity-checksums (2.1.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 2.1.0.
