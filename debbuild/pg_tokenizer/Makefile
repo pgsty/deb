@@ -9,6 +9,8 @@ all: setup build move
 TARBALL := pg_tokenizer-1.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
+CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
+export CARGO_TARGET_DIR
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS ?= 18
 PGRX_VERSION := 0.19.3
