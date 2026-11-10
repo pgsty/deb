@@ -9,11 +9,11 @@ include /usr/share/dpkg/buildflags.mk
 
 all: setup build move
 
-# GitHub tag archive: https://github.com/pgsty/vchord/archive/refs/tags/1.2.0.tar.gz
-# Reissued tag commit: 6ea6a3be3b2ec5521f2575055d3c77a0b9771f95
-# Source SHA256: caf1a482b62e8eba507c881f3acda3365393fc4d1648ad5ca9d4dd51d47a96a0
+# GitHub tag archive: https://github.com/pgsty/vchord/archive/refs/tags/1.3.0.tar.gz
+# Tag commit: 1b35b7a0bc9a71bc82aa4c3396c5545da062d050
+# Source SHA256: 097cf21776d6bce4c62c85193e8627d9422d3af9a25e871dc809315fc0310cf4
 # No downstream patch is applied.
-TARBALL := vchord-1.2.0.tar.gz
+TARBALL := vchord-1.3.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SEMVER := $(shell echo $(TARBALL) | sed -E 's/^vchord-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
 BUILD_DIR := build
