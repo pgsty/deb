@@ -10,6 +10,8 @@ TARBALL := vchord_bm25-1.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SEMVER := $(shell echo $(TARBALL) | sed -E 's/^vchord_bm25-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
 BUILD_DIR := build
+CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
+export CARGO_TARGET_DIR
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PGRX_VERSION := 0.19.3
 PG_VERSIONS ?= 18
@@ -48,7 +50,7 @@ building:
 	    RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections" \
 	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
 	    cargo pgrx package -v --features "pg$$PG_VERSION" --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
-	    EXT_DIR=target/release/vchord_bm25-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
+	    EXT_DIR=$(CARGO_TARGET_DIR)/release/vchord_bm25-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
 	    cp -f sql/upgrade/vchord_bm25--*.sql $$EXT_DIR/; \
 	    cp -f sql/install/vchord_bm25--$(SEMVER).sql $$EXT_DIR/vchord_bm25--$(SEMVER).sql; \
 	    grep -q "default_version = '$(SEMVER)'" $$EXT_DIR/vchord_bm25.control; \
