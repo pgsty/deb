@@ -1,0 +1,18 @@
+--- a/src/binary/connection.c
++++ b/src/binary/connection.c
+@@ -175,6 +175,7 @@
+
+ static void
+ tls_connect(ch_binary_connection_t* conn, const char* host, tls_version min_version) {
++#if OPENSSL_VERSION_NUMBER < 0x10100000L
+     static int openssl_init_done = 0;
+
+     if (!openssl_init_done) {
+@@ -183,6 +184,7 @@
+         OpenSSL_add_all_algorithms();
+         openssl_init_done = 1;
+     }
++#endif
+
+     conn->ssl_ctx = SSL_CTX_new(TLS_client_method());
+     if (!conn->ssl_ctx) {

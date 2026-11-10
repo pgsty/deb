@@ -1,8 +1,10 @@
 all: setup build move
 
-TARBALL := pg_clickhouse-0.11.0.tar.gz
+# Official PGXN bundle includes the recursive vendored C client.
+# https://api.pgxn.org/dist/pg_clickhouse/0.11.1/pg_clickhouse-0.11.1.zip
+TARBALL := pg_clickhouse-0.11.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/pg_clickhouse-0.11.0.patch
+SOURCE_PATCH := patches/pg_clickhouse-0.11.1.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
@@ -17,7 +19,7 @@ setup: check-src check-patches
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
-	patch -d $(BUILD_DIR) -p1 --forward -f < $(SOURCE_PATCH)
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 --forward -f < $(SOURCE_PATCH)
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
