@@ -1,5 +1,11 @@
 pg-bzip (1.0.0-1PGSTY) unstable; urgency=medium
 
+  * Add PostgreSQL 19 header and type compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:00:00 +0800
+
+pg-bzip (1.0.0-1PGSTY) unstable; urgency=medium
+
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
 
  -- Ruohang Feng <rh@vonng.com>  Fri, 21 Feb 2025 18:00:00 +0000

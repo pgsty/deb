@@ -1,0 +1,16 @@
+Subject: Include varatt.h where it is available
+
+PostgreSQL 19 no longer provides varlena declarations transitively. PostgreSQL 15 keeps them in its existing headers.
+
+--- a/src/pg_bzip.c
++++ b/src/pg_bzip.c
+@@ -4,6 +4,9 @@
+ 
+ /*postgres*/
+ #include <postgres.h>
++#if PG_VERSION_NUM >= 160000
++#include "varatt.h"
++#endif
+ #include <fmgr.h>
+ #include <funcapi.h>
+ #include <utils/builtins.h>
