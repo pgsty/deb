@@ -4,17 +4,18 @@ TARBALL := pg_mon-1.0.tar.gz
 
 # prepare directory
 setup:
+	cd ../SOURCES && sha256sum -c "$(CURDIR)/sources.sha256"
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PIGSTY)/PIGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
 build:
 	cd build && pg_buildext updatecontrol
-	cd build && PG_CPPFLAGS=-Wno-int-conversion dpkg-buildpackage -b -us -uc
+	cd build && dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:

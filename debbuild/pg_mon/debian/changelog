@@ -1,3 +1,10 @@
+pg-mon (1.0-1PGSTY) unstable; urgency=medium
+
+  * Restore the official source archive pinned to e49626862d19.
+  * Preserve the PG15/16 scope; PG19 instrumentation APIs need an upstream port.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 03:00:00 +0800
+
 pg-mon (1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
