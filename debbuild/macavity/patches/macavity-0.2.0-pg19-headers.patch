@@ -1,0 +1,15 @@
+Subject: Include tuple and tuplestore declarations explicitly
+
+PostgreSQL 19 no longer provides these declarations through transitive includes.
+
+--- a/src/macavity_api.c
++++ b/src/macavity_api.c
+@@ -10,6 +10,8 @@
+  *-------------------------------------------------------------------------
+  */
+ #include "postgres.h"
++#include "access/htup_details.h"
++#include "utils/tuplestore.h"
+ 
+ #include "access/xact.h"
+ #include "funcapi.h"
