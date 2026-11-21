@@ -1,0 +1,26 @@
+Subject: Use byte pointers and explicit Datum conversions in vgram
+
+Keep pointer arithmetic in bytes after Pointer becomes void* and pass real pointers to varlena accessors.
+
+--- a/vgram_gin.c
++++ b/vgram_gin.c
+@@ -293,7 +293,7 @@
+ 	Datum	   *elems;
+ 	int			i;
+ 	Size		size = sizeof(int);
+-	Pointer		p = (Pointer) ptr;
++	char	   *p = (char *) ptr;
+ 
+ 	deconstruct_array(arr, TEXTOID, -1, false, 'i', &elems, NULL, &nVgrams);
+ 
+@@ -305,8 +305,8 @@
+ 
+ 	for (i = 0; i < nVgrams; i++)
+ 	{
+-		char	   *vgram = VARDATA_ANY(elems[i]);
+-		int			vgramSize = VARSIZE_ANY_EXHDR(elems[i]);
++		char	   *vgram = VARDATA_ANY(DatumGetPointer(elems[i]));
++		int			vgramSize = VARSIZE_ANY_EXHDR(DatumGetPointer(elems[i]));
+ 
+ 		if (p)
+ 		{
