@@ -1,10 +1,25 @@
 # PGSTY Deb Package Builder
 
-Extension build scripts for PostgreSQL 13-18 on Debian 12/13 and Ubuntu 22.04/24.04/26.04.
+Extension build scripts for PostgreSQL 15–19 on Debian 12/13 and Ubuntu 22.04/24.04/26.04.
 
 - [Pigsty PGSQL Repo](https://pgext.cloud/repo/pgsql)
 - [DEB Change Log](https://pgext.cloud/release/deb)
 
+
+## Current build scope
+
+PG14 is retired from active orchestration. Each recipe selects its validated
+subset of PostgreSQL 15–19; PG19 is not an unconditional compatibility claim.
+Rust/pgrx recipes are frozen, and heavy components and custom PostgreSQL
+providers are tracked separately.
+
+The [2026-11-21 audit](docs/nonrust-pg19-20261121.md) links the shared
+upstream and PG19 support matrix. DEB validation uses Ubuntu 24.04/amd64 on m3,
+with native debug packages retained. Build, payload, runtime and publication
+states are recorded separately.
+
+The [spec and patch review](docs/nonrust-spec-review-20261121.md) records
+necessity, scope, validation limits and the per-extension commits.
 
 ## Use with pig
 

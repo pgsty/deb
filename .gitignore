@@ -49,6 +49,7 @@ docs/
 docs/*
 !docs/vchord-suite.md
 !docs/pg_mooncake.md
+!docs/nonrust-pg19-20261121.md
 apt/
 
 AGENTS.md
@@ -56,3 +57,4 @@ CLAUDE.md
 .claude/
 .codex/
 .agent/
+!docs/nonrust-spec-review-20261121.md
