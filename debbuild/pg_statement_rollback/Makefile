@@ -1,16 +1,19 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
 TARBALL := pg_statement_rollback-1.6.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PATCHES := $(sort $(wildcard patches/*.patch))
+PATCHES := patches/pg_statement_rollback-1.6.patch patches/pg_statement_rollback-1.6-pg19-compat.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 check-patches:
-	@test "$(words $(PATCHES))" = "1" || (echo "expected exactly one pg_statement_rollback patch"; exit 1)
+	@test "$(words $(PATCHES))" = "2" || (echo "expected the two pg_statement_rollback compatibility patches"; exit 1)
 
 # prepare directory
 setup: check-src check-patches

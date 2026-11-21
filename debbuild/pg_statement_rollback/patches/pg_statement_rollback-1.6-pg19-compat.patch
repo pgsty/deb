@@ -1,0 +1,37 @@
+Subject: Match the PostgreSQL 19 post-parse hook constness
+
+Use const JumbleState consistently in the callback declaration and definition, guarded for PostgreSQL 19.
+
+--- a/pg_statement_rollback.c
++++ b/pg_statement_rollback.c
+@@ -11,6 +11,12 @@
+  *-------------------------------------------------------------------------
+  */
+ #include "postgres.h"
++
++#if PG_VERSION_NUM >= 190000
++#define SLR_JUMBLE_CONST const
++#else
++#define SLR_JUMBLE_CONST
++#endif
+ 
+ #include "access/parallel.h"
+ #include "access/xact.h"
+@@ -111,7 +117,7 @@
+ static void slr_ProcessUtility(SLR_PROCESSUTILITY_PROTO);
+ #if PG_VERSION_NUM >= 140000
+ static void slr_post_parse_analyze(ParseState *pstate, Query *query,
+-                                   JumbleState *jstate);
++                                   SLR_JUMBLE_CONST JumbleState *jstate);
+ #else
+ static void slr_post_parse_analyze(ParseState *pstate, Query *query);
+ #endif
+@@ -251,7 +257,7 @@
+  */
+ #if PG_VERSION_NUM >= 140000
+ static void
+-slr_post_parse_analyze(ParseState *pstate, Query *query, JumbleState *jstate)
++slr_post_parse_analyze(ParseState *pstate, Query *query, SLR_JUMBLE_CONST JumbleState *jstate)
+ #else
+ static void
+ slr_post_parse_analyze(ParseState *pstate, Query *query)

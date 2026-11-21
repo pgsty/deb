@@ -1,5 +1,11 @@
 pg-statement-rollback (1.6-2PGSTY) unstable; urgency=medium
 
+  * Add PostgreSQL 19 compilation compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 02:00:00 +0800
+
+pg-statement-rollback (1.6-2PGSTY) unstable; urgency=medium
+
   * Backport upstream PR 8 resource-owner and memory-context fixes.
   * Release the automatic savepoint before portal creation for SET
     TRANSACTION, fixing PostgreSQL 18 read-only sessions and pg_dump.
