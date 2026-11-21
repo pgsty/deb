@@ -6,7 +6,7 @@ export DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 export DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
 export DPKG_EXPORT_BUILDFLAGS = 1
 CMAKE ?= cmake
-BUILD_JOBS ?= $(shell nproc)
+BUILD_JOBS ?= $(or $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS))),$(shell nproc))
 
 # GCC 12 on arm64 can ICE in vect_transform_reduction when compiling
 # GraphBLAS-generated kernels. Disable tree vectorization on arm64 builders.
