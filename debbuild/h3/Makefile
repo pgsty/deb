@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
 VERSION := 4.5.0
@@ -9,7 +12,7 @@ SOURCE_SHA256 := c54c119e1d9a578d5cbcce22f6c66dab2b5a45219fc2b260619807f7f061e53
 CORE_SHA256 := 0da8a392a6ff77e76b60e6a331a49497d0935b6b7b6899da7a3e2786139b0441
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 14 15 16 17 18
+PG_VERSIONS ?= 15 16 17 18 19
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first"; exit 1)
