@@ -1,0 +1,17 @@
+Subject: Include tuple and varlena declarations explicitly
+
+Guard varatt.h at PostgreSQL 16, where the separate header first becomes available.
+
+--- a/omnisketch.c
++++ b/omnisketch.c
+@@ -13,6 +13,10 @@
+ #include <xxh3.h>
+ 
+ #include "postgres.h"
++#include "access/htup_details.h"
++#if PG_VERSION_NUM >= 160000
++#include "varatt.h"
++#endif
+ #include "catalog/pg_type.h"
+ #include "common/hashfn.h"
+ #if (PG_VERSION_NUM >= 150000)
