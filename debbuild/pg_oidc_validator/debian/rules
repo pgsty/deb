@@ -1,22 +1,28 @@
 #!/usr/bin/make -f
 
-PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
+export DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+include /usr/share/postgresql-common/pgxs_debian_control.mk
+PG_VERSIONS := $(shell pg_buildext supported-versions)
 
 %:
 	dh $@
 
 override_dh_auto_test:
+	# Installed-module loading is verified in the isolated PG18/19 pilot.
 
 override_dh_auto_build:
-	# Built by the outer Makefile with the PostgreSQL 18 C++23 toolchain.
+
+# Each module must be compiled with its target PostgreSQL headers and magic.
+override_dh_auto_install:
+	set -e; for pg in $(PG_VERSIONS); do \
+		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$pg/bin/pg_config clean; \
+		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$pg/bin/pg_config \
+			with_llvm=yes CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)"; \
+		readelf -Ws pg_oidc_validator.so | grep -q _PG_oauth_validator_module_init; \
+		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$pg/bin/pg_config \
+			with_llvm=yes install DESTDIR=$(CURDIR)/debian/postgresql-$$pg-pg-oidc-validator; \
+	done
 
 override_dh_auto_clean:
-	# Keep the pre-built validator module for packaging.
-
-override_dh_auto_install:
-	for PG_VERSION in $(PG_VERSIONS); do \
-		FULL_NAME=postgresql-$$PG_VERSION-pg-oidc-validator; \
-		dh_installdirs -p$$FULL_NAME; \
-		install -D -m 0755 pg_oidc_validator.so \
-			$(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/pg_oidc_validator.so; \
-	done
+	$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$(firstword $(PG_VERSIONS))/bin/pg_config clean

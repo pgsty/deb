@@ -1,5 +1,6 @@
 pg-oidc-validator (1.1.0-1PGSTY) unstable; urgency=medium
 
+  * Compile each PostgreSQL version with its own headers, module magic and bitcode.
   * Update to upstream 1.1.0.
   * Drop the downstream compatibility patch after validating GCC 11 and 12 builds.
   * Declare the GSSAPI development headers required by PostgreSQL 18.

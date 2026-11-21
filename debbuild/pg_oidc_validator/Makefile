@@ -1,10 +1,13 @@
-all: setup build move
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
+all: move
 
 TARBALL := pg_oidc_validator-1.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 18
+PG_VERSIONS := 18 19
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -18,21 +21,14 @@ setup: check-src
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
-build: building packaging
-
-building:
-	cd $(BUILD_DIR) && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/18/bin/pg_config with_llvm=no
-	cd $(BUILD_DIR) && readelf -Ws pg_oidc_validator.so | grep -q _PG_oauth_validator_module_init
-
-packaging:
+build: setup
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
-move:
+move: build
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src setup build building packaging move clean
+.PHONY: all check-src setup build move clean

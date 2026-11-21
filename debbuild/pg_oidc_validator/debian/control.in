@@ -11,7 +11,7 @@ Package: postgresql-PGVERSION-pg-oidc-validator
 Architecture: any
 Provides: postgresql-pg-oidc-validator
 Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
-Description: OAuth and OIDC token validator for PostgreSQL 18
+Description: OAuth and OIDC token validator for PostgreSQL 18 and later
  pg_oidc_validator implements PostgreSQL 18's OAuth validator module API. It
  discovers OIDC providers, fetches and caches their JWKS data, validates JWT
  access tokens, and maps a configured token claim to the PostgreSQL identity.
