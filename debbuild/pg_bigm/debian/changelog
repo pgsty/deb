@@ -1,3 +1,10 @@
+pg-bigm (1.2-20261118PGSTY) unstable; urgency=medium
+
+  * Update to upstream v1.2-20261118 with PostgreSQL 19 support.
+  * Preserve the published date-based Debian revision ordering.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0000
+
 pg-bigm (1.2-1PGSTY) unstable; urgency=low
 
   * https://github.com/pgbigm/pg_bigm/releases/tag/v1.2-20250903

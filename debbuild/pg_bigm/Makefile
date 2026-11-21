@@ -1,6 +1,9 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
-TARBALL := pg_bigm-1.2-20250903.tar.gz
+TARBALL := pg_bigm-1.2-20261118.tar.gz
 
 # prepare directory
 setup:
