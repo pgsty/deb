@@ -1,106 +1,44 @@
 all: build move
 
-# Every PG-major target reuses the same build directory.  Keep the outer
-# recipe serial even when the builder exports a parallel MAKEFLAGS value;
-# DuckDB's inner CMake/Ninja build remains parallel.
+# PG-major builds share one directory and one content-keyed DuckDB cache.
 .NOTPARALLEL:
-
-TARBALL := pg_duckdb-1.2.0.tar.gz
+PG_VERSIONS := 19 18 17 16 15
+TARBALL := pg_duckdb-1.2.1.tar.gz
 CURL_TARBALL := curl-8.23.0.tar.gz
-SOURCE_SHA256 := $(shell sha256sum ../SOURCES/$(TARBALL) | awk '{print $$1}')
+SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
+CURL_SOURCE_TARBALL ?= ../SOURCES/$(CURL_TARBALL)
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
-
-#==============================================================#
-#                         DEB Builder                          #
-#==============================================================#
-build: build18 build17 build16 build15 build14
-
-build18:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	rm -rf build/debian; cp -r debian build/debian
-	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
-	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
-		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
-		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
+check-src:
+	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL); run pig build get pg_duckdb first"; exit 1)
+	@if ! pkg-config --atleast-version=7.85.0 libcurl; then \
+		test -f "$(CURL_SOURCE_TARBALL)" || (echo "missing $(CURL_SOURCE_TARBALL); run pig build get $(CURL_TARBALL) first"; exit 1); \
 	fi
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
-	sed -i "s/PGVERSION/18/" build/debian/control
-	export PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
-	cd build && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
 
-build17:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	rm -rf build/debian; cp -r debian build/debian
-	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
+build: $(addprefix build,$(PG_VERSIONS))
+
+$(addprefix build,$(PG_VERSIONS)): build%: check-src
+	rm -rf build
+	mkdir -p build
+	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	rm -rf build/debian
+	cp -r debian build/debian
+	sha256sum "$(SOURCE_TARBALL)" | awk '{print $$1}' > build/debian/duckdb-source-sha256
 	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
-		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
-		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
+		tar -C build -xf "$(CURL_SOURCE_TARBALL)"; \
+		sha256sum "$(CURL_SOURCE_TARBALL)" | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
 	fi
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
-	sed -i "s/PGVERSION/17/" build/debian/control
-	export PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
-	cd build && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
+	OS_CODENAME=$$(lsb_release -sc); \
+		sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
+	sed 's/PGVERSION/$*/g' debian/control.in > build/debian/control
+	cd build && PATH=/usr/lib/postgresql/$*/bin:$(PATH) dpkg-buildpackage -b -us -uc
+	$(MAKE) move
 
-build16:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	rm -rf build/debian; cp -r debian build/debian
-	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
-	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
-		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
-		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
-	fi
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
-	sed -i "s/PGVERSION/16/" build/debian/control
-	export PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
-	cd build && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
-
-build15:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	rm -rf build/debian; cp -r debian build/debian
-	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
-	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
-		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
-		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
-	fi
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
-	sed -i "s/PGVERSION/15/" build/debian/control
-	export PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
-	cd build && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
-
-build14:
-	rm -rf build; mkdir -p build
-	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
-	rm -rf build/debian; cp -r debian build/debian
-	printf '%s\n' '$(SOURCE_SHA256)' > build/debian/duckdb-source-sha256
-	if ! pkg-config --atleast-version=7.85.0 libcurl; then \
-		tar -C build -xf ../SOURCES/$(CURL_TARBALL); \
-		sha256sum ../SOURCES/$(CURL_TARBALL) | awk '{print $$1}' > build/debian/duckdb-curl-source-sha256; \
-	fi
-	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
-	sed -i "s/PGVERSION/14/" build/debian/control
-	export PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin;
-	cd build && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
-
-# collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
+	mkdir -p "$(PKG_OUTPUT_DIR)"
+	find . -maxdepth 1 -type f \( -name '*.deb' -o -name '*.ddeb' \) -exec cp {} "$(PKG_OUTPUT_DIR)/" \;
 
-# remove building craps
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all build build18 build17 build16 build15 build14 move clean
+.PHONY: all check-src build $(addprefix build,$(PG_VERSIONS)) move clean

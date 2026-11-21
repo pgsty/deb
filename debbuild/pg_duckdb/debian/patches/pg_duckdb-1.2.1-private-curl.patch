@@ -1,0 +1,37 @@
+Subject: Build private PIC libcurl only when system headers are older than 7.85
+
+The pinned httpfs source requires curl APIs missing from EL9's system library.
+Keep modern system libcurl where available. The helper installs only into the
+extension build tree, preserving distribution debug and hardening flags.
+
+--- /dev/null
++++ b/scripts/build-distribution-curl.sh
+@@ -0,0 +1,28 @@
++#!/bin/sh
++# httpfs uses libcurl APIs introduced in 7.85.  Keep the system libcurl when
++# sufficient; otherwise build a private PIC static library for httpfs only.
++set -eu
++if pkg-config --atleast-version=7.85.0 libcurl; then
++    exit 0
++fi
++curl_source=$1
++curl_prefix=$2
++curl_jobs=$3
++test -f "$curl_source/CMakeLists.txt"
++cmake -S "$curl_source" -B "$curl_prefix-build" \
++    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$curl_prefix" \
++    -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
++    -DCMAKE_C_FLAGS="${CFLAGS:-}" \
++    -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS:-}" \
++    -DCMAKE_SHARED_LINKER_FLAGS="${LDFLAGS:-}" \
++    -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON -DBUILD_CURL_EXE=OFF \
++    -DBUILD_TESTING=OFF -DBUILD_LIBCURL_DOCS=OFF -DENABLE_CURL_MANUAL=OFF \
++    -DCURL_USE_OPENSSL=ON -DCURL_USE_LIBPSL=OFF -DCURL_USE_LIBSSH2=OFF \
++    -DCURL_USE_LIBSSH=OFF -DCURL_USE_GSSAPI=OFF \
++    -DCURL_ZLIB=OFF -DCURL_BROTLI=OFF -DCURL_ZSTD=OFF \
++    -DUSE_NGHTTP2=OFF -DUSE_NGTCP2=OFF -DUSE_NGHTTP3=OFF \
++    -DCURL_DISABLE_LDAP=ON -DCURL_DISABLE_LDAPS=ON
++cmake --build "$curl_prefix-build" --parallel "$curl_jobs"
++cmake --install "$curl_prefix-build"
++test -s "$curl_prefix/lib/libcurl.a"
++PKG_CONFIG_PATH="$curl_prefix/lib/pkgconfig" pkg-config --modversion libcurl

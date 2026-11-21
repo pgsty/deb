@@ -3,12 +3,13 @@
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
 # Source archives have no Git metadata; keep the supported packaging scope.
-export PG_DUCKDB_VERSION = v1.2.0
-export PG_MAX_VER = 18
-export DUCKDB_COMMIT = d54cbbe3df17e8e5ce68312f483b4155836112aa
+export PG_DUCKDB_VERSION = v1.2.1
+export PG_MIN_VER = 15
+export PG_MAX_VER = 19
+export DUCKDB_COMMIT = 8d78114e90a53823803660bf821f6073ac87da8c
 # PGXS copies PG_CPPFLAGS before upstream's target-specific version assignment.
-# Export the definition before including PGXS so PG18 module metadata is valid.
-ifeq ($(shell pg_config --version | sed -n 's/^PostgreSQL \([0-9]*\).*/\1/p'),18)
+# Export the definition before including PGXS so PG18+ module metadata is valid.
+ifneq ($(filter 18 19,$(shell pg_config --version | sed -n 's/^PostgreSQL \([0-9]*\).*/\1/p')),)
 export PG_CPPFLAGS = -DPG_DUCKDB_VERSION=\"$(PG_DUCKDB_VERSION)\"
 endif
 
@@ -27,10 +28,9 @@ PG_CXXFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CXXFLAGS))
 # not used by PGXS's Clang bitcode compilation, which keeps -flto=thin.
 PG_LDFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(LDFLAGS)) -flto=2
 
-# The bundled DuckDB keeps function and line-table DWARF only (-g1); the PGXS
-# bridge keeps the full distribution -g so the dbgsym package stays tractable.
-DUCKDB_CFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CFLAGS)) -g1
-DUCKDB_CXXFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CXXFLAGS)) -g1
+# Preserve full distribution DWARF in the bundled core and the PGXS bridge.
+DUCKDB_CFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CFLAGS))
+DUCKDB_CXXFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(CPPFLAGS) $(CXXFLAGS))
 DUCKDB_LDFLAGS := $(filter-out -flto -flto=% -ffat-lto-objects,$(LDFLAGS))
 
 DUCKDB_CMAKE_FLAGS := \
@@ -89,8 +89,10 @@ override_dh_auto_test:
 # multifile would add a PG-specific debugaltlink to that core's global debug
 # path, producing different bytes and preventing dbgsym coinstallation.
 # Keep each ELF's DWARF self-contained while retaining normal debug splitting.
+# Full DuckDB DWARF exceeds dwz's DIE limit on Ubuntu 24.04. Keep the
+# core unchanged here; dh_strip still creates its complete dbgsym below.
 override_dh_dwz:
-	dh_dwz --no-dwz-multifile
+	dh_dwz --no-dwz-multifile -Xlibduckdb.so
 
 # The cached core is intentionally reused across PG majors, so its original
 # linker Build-ID would otherwise make every automatic dbgsym package claim

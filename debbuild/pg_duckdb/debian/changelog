@@ -1,3 +1,13 @@
+pg-duckdb (1.2.1-1PGSTY) unstable; urgency=medium
+
+  * Package upstream 1.2.1 with its pinned DuckDB 2.0.1 source.
+  * Target PostgreSQL 15-19 and preserve full DWARF in bundled libraries.
+  * Retire the upstreamed httpfs move patch; retain focused packaging patches.
+  * Share the per-major build recipe and generate control from control.in.
+  * Skip DWZ for the oversized core while retaining its complete dbgsym.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 16:00:00 +0800
+
 pg-duckdb (1.2.0-1PGSTY) unstable; urgency=medium
 
   * Package upstream experimental 1.2.0 with its pinned DuckDB 2.0.0 source.
