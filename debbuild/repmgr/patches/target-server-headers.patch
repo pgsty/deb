@@ -6,5 +6,5 @@ Forwarded: not-needed
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -49,1 +49,1 @@
--PG_CPPFLAGS = -std=gnu89 -I$(includedir_internal) -I$(libpq_srcdir) -Wall -Wmissing-prototypes -Wmissing-declarations $(EXTRA_CFLAGS)
-+PG_CPPFLAGS = -std=gnu89 -I$(includedir_server) -I$(includedir_internal) -I$(libpq_srcdir) -Wall -Wmissing-prototypes -Wmissing-declarations $(EXTRA_CFLAGS)
+-PG_CPPFLAGS = -std=gnu11 -I$(includedir_internal) -I$(libpq_srcdir) -Wall -Wmissing-prototypes -Wmissing-declarations $(EXTRA_CFLAGS)
++PG_CPPFLAGS = -std=gnu11 -I$(includedir_server) -I$(includedir_internal) -I$(libpq_srcdir) -Wall -Wmissing-prototypes -Wmissing-declarations $(EXTRA_CFLAGS)

@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
 TARBALL := repmgr-5.5.1.tar.gz
@@ -11,6 +14,7 @@ check-src:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar --strip-components=1 -xf "$(SOURCE_TARBALL)" -C $(BUILD_DIR)
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/repmgr-5.5.1-pg19-c11.patch
 	patch -d $(BUILD_DIR) -p1 < patches/target-server-headers.patch
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	sed -i "1s/PGSTY)/PGSTY~$(shell lsb_release -sc))/" $(BUILD_DIR)/debian/changelog

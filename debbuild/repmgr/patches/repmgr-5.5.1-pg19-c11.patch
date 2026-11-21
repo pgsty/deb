@@ -1,0 +1,15 @@
+Subject: Compile repmgr using the GNU C11 dialect
+
+PostgreSQL 19 headers require language features unavailable in GNU89.
+
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -46,7 +46,7 @@
+ 	repmgrd
+ 
+ # When in development add -Werror
+-PG_CPPFLAGS = -std=gnu89 -I$(includedir_internal) -I$(libpq_srcdir) -Wall -Wmissing-prototypes -Wmissing-declarations $(EXTRA_CFLAGS)
++PG_CPPFLAGS = -std=gnu11 -I$(includedir_internal) -I$(libpq_srcdir) -Wall -Wmissing-prototypes -Wmissing-declarations $(EXTRA_CFLAGS)
+ SHLIB_LINK = $(libpq)
+ 
+ 
