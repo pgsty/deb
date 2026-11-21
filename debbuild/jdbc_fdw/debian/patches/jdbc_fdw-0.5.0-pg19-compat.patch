@@ -1,0 +1,31 @@
+Subject: Use explicit tuple declarations and Datum pointer conversion
+
+--- a/jq.c
++++ b/jq.c
+@@ -10,6 +10,7 @@
+  */
+ #include <stdlib.h>
+ #include "postgres.h"
++#include "access/htup_details.h"
+ #include "jdbc_fdw.h"
+ #include "catalog/pg_foreign_server.h"
+ #include "catalog/pg_foreign_table.h"
+@@ -17,6 +18,7 @@
+ #include "catalog/pg_type.h"
+ #include "storage/ipc.h"
+ #include "utils/builtins.h"
++#include "utils/tuplestore.h"
+ #include "utils/datetime.h"
+ #include "utils/guc.h"
+ #include "utils/syscache.h"
+@@ -229,8 +231,8 @@
+ 		return 0;
+ 
+ 	valueDatum = (Datum) palloc0(size + VARHDRSZ);
+-	memcpy(VARDATA(valueDatum), buf, size);
+-	SET_VARSIZE(valueDatum, size + VARHDRSZ);
++	memcpy(VARDATA(DatumGetPointer(valueDatum)), buf, size);
++	SET_VARSIZE(DatumGetPointer(valueDatum), size + VARHDRSZ);
+ 	return valueDatum;
+ }
+ 
