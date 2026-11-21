@@ -16,7 +16,7 @@ setup: check-src
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
-	patch -d build -p1 --fuzz=0 < patches/pg_uint128-1.3.0-pg19-compat.patch
+	patch -d build -p1 --fuzz=0 < patches/pg_uint128-1.3.0-pg19-int8-datum.patch
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
