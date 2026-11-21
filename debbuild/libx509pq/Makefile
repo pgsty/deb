@@ -1,8 +1,11 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 TARBALL := libx509pq-1.3-bed05c6e87d7.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 14 15 16 17 18
+PG_VERSIONS ?= 15 16 17 18 19
 export PG_VERSIONS
 
 all: move
