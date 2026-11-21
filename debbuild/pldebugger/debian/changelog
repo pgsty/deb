@@ -1,5 +1,11 @@
 pldebugger (1.10-1PGSTY) unstable; urgency=medium
 
+  * Adapt PostgreSQL 19 APIs while preserving earlier PostgreSQL paths.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0000
+
+pldebugger (1.10-1PGSTY) unstable; urgency=medium
+
   * Package upstream 1.10 for PostgreSQL 14 through 18.
 
  -- Ruohang Feng <rh@vonng.com>  Thu, 05 Nov 2026 23:45:00 +0800

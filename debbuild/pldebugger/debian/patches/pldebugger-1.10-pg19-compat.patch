@@ -1,0 +1,50 @@
+Subject: Adapt PostgreSQL 19 named lock tranches and fixed-size shared hashes
+
+--- a/plugin_debugger.c
++++ b/plugin_debugger.c
+@@ -1409,11 +1409,17 @@
+ #if (PG_VERSION_NUM >= 90600)
+ 	if (!found)
+ 	{
+-		gbpd->tranche_id = LWLockNewTrancheId();
++		gbpd->tranche_id = LWLockNewTrancheId(
++#if PG_VERSION_NUM >= 190000
++            "pldebugger"
++#endif
++        );
+ 		LWLockInitialize(&gbpd->lock, gbpd->tranche_id);
+ 	}
+ 	{
+-#if (PG_VERSION_NUM >= 100000)
++#if (PG_VERSION_NUM >= 190000)
++        /* LWLockNewTrancheId registered the name. */
++#elif (PG_VERSION_NUM >= 100000)
+ 		LWLockRegisterTranche(gbpd->tranche_id, "pldebugger");
+ #else
+ 		static LWLockTranche tranche;
+@@ -1439,7 +1445,11 @@
+ 	breakpointCtl.entrysize = sizeof(Breakpoint);
+ 	breakpointCtl.hash 	  	= tag_hash;
+ 
+-	globalBreakpoints = ShmemInitHash("Global Breakpoints Table", tableEntries, tableEntries, &breakpointCtl, HASH_ELEM | HASH_FUNCTION);
++	globalBreakpoints = ShmemInitHash("Global Breakpoints Table", tableEntries,
++#if PG_VERSION_NUM < 190000
++                                    tableEntries,
++#endif
++                                    &breakpointCtl, HASH_ELEM | HASH_FUNCTION);
+ 
+ 	if (!globalBreakpoints)
+ 		elog(FATAL, "could not initialize global breakpoints hash table");
+@@ -1451,7 +1461,11 @@
+ 	breakcountCtl.entrysize = sizeof(BreakCount);
+ 	breakcountCtl.hash    	= tag_hash;
+ 
+-	globalBreakCounts = ShmemInitHash("Global BreakCounts Table", tableEntries, tableEntries, &breakcountCtl, HASH_ELEM | HASH_FUNCTION);
++	globalBreakCounts = ShmemInitHash("Global BreakCounts Table", tableEntries,
++#if PG_VERSION_NUM < 190000
++                                    tableEntries,
++#endif
++                                    &breakcountCtl, HASH_ELEM | HASH_FUNCTION);
+ 
+ 	if (!globalBreakCounts)
+ 		elog(FATAL, "could not initialize global breakpoints count hash table");

@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
 TARBALL := pldebugger-1.10.tar.gz
@@ -12,6 +15,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar --strip-components=1 -xf "$(SOURCE_TARBALL)" -C $(BUILD_DIR)
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 < debian/patches/pldebugger-1.10-pg19-compat.patch
 	sed -i "1s/PGSTY)/PGSTY~$(shell lsb_release -sc))/" $(BUILD_DIR)/debian/changelog
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
 
