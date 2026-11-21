@@ -1,0 +1,89 @@
+Subject: PostgreSQL 19 headers and PG18+ array_sort symbol compatibility
+
+Use explicit headers and uint8. Keep the internal sort helper local so
+array_median cannot bind to PostgreSQL core array_sort through ELF symbol
+interposition. The SQL wrapper and installed SQL remain unchanged.
+Qualify regression calls to test the extension instead of pg_catalog.
+
+--- a/arraymath.c
++++ b/arraymath.c
+@@ -32,6 +32,8 @@
+ 
+ /* PostgreSQL */
+ #include <postgres.h>
++#include "access/htup_details.h"
++#include "access/tupmacs.h"
+ #include <pg_config.h>
+ #include <fmgr.h>
+ #include <funcapi.h>
+@@ -90,7 +92,7 @@
+ 
+ #define ARRISEMPTY(x)  (ARRNELEMS(x) == 0)
+ 
+-#define BITMAP_GET(bitmap, i) (bitmap && (bitmap[(i)/sizeof(bits8)] & (1 << ((i) % sizeof(bits8)))))
++#define BITMAP_GET(bitmap, i) (bitmap && (bitmap[(i)/sizeof(uint8)] & (1 << ((i) % sizeof(uint8)))))
+ 
+ #define BITMAP_INCREMENT(bitmap, bitmask) do { \
+     if (bitmap) { \
+@@ -338,7 +340,7 @@
+     Oid rtype;
+     int nitems1, nitems2;
+     int nelems, n;
+-    bits8 *bitmap1 = NULL, *bitmap2 = NULL;
++    uint8 *bitmap1 = NULL, *bitmap2 = NULL;
+     int bitmask1 = 0, bitmask2 = 0;
+     FmgrInfo operfmgrinfo;
+     TypeCacheEntry *info1, *info2, *tinfo;
+@@ -804,9 +806,17 @@
+ }
+ 
+ 
++/* Do not let ELF interposition bind our internal call to PG18+ array_sort. */
++static Datum arraymath_sort(PG_FUNCTION_ARGS);
++
+ Datum array_sort(PG_FUNCTION_ARGS);
+ PG_FUNCTION_INFO_V1(array_sort);
+ Datum array_sort(PG_FUNCTION_ARGS)
++{
++    return arraymath_sort(fcinfo);
++}
++
++static Datum arraymath_sort(PG_FUNCTION_ARGS)
+ {
+     ArrayType *arr = PG_GETARG_ARRAYTYPE_P(0);
+     bool reverse = PG_GETARG_BOOL(1);
+@@ -868,7 +878,7 @@
+ Datum
+ array_median(PG_FUNCTION_ARGS)
+ {
+-    Datum arrSorted = DirectFunctionCall2(array_sort,
++    Datum arrSorted = DirectFunctionCall2(arraymath_sort,
+         PG_GETARG_DATUM(0), BoolGetDatum(false));
+     ArrayType *arr = DatumGetArrayTypeP(arrSorted);
+     Oid elmtype = ARR_ELEMTYPE(arr);
+--- a/sql/arraymath.sql
++++ b/sql/arraymath.sql
+@@ -54,8 +54,8 @@
+ 	array_max(b) AS array_max,
+ 	array_avg(b) AS array_avg,
+ 	array_median(b) AS array_median,
+-	array_sort(b) AS array_sort,
+-	array_sort(b, true) AS array_rsort
++	public.array_sort(b) AS array_sort,
++	public.array_sort(b, true) AS array_rsort
+ 	FROM a;
+ 
+ 
+--- a/expected/arraymath.out
++++ b/expected/arraymath.out
+@@ -101,8 +101,8 @@
+ 	array_max(b) AS array_max,
+ 	array_avg(b) AS array_avg,
+ 	array_median(b) AS array_median,
+-	array_sort(b) AS array_sort,
+-	array_sort(b, true) AS array_rsort
++	public.array_sort(b) AS array_sort,
++	public.array_sort(b, true) AS array_rsort
+ 	FROM a;
+  array_sum | array_min | array_max |     array_avg     | array_median |            array_sort            |           array_rsort            
+ -----------+-----------+-----------+-------------------+--------------+----------------------------------+----------------------------------
