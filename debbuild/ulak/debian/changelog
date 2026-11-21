@@ -1,3 +1,11 @@
+ulak (0.3.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.3.0.
+  * Adapt PostgreSQL 19 numeric error handling and retain the EL9 hiredis fix.
+  * Drop the unused compatibility branch for libcurl older than 7.66.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:30:00 +0800
+
 ulak (0.2.0-1PGSTY) unstable; urgency=medium
 
   * Update to 0.2.0.
