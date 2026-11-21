@@ -1,3 +1,9 @@
+pg-background (2.0.5-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 2.0.5.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 19 Nov 2026 12:00:00 +0800
+
 pg-background (2.0.4-2PGSTY) unstable; urgency=medium
 
   * Package upstream control and SQL files without downstream extension versions.
