@@ -1,0 +1,122 @@
+From: PGSTY packaging
+Subject: [PATCH] Backport upstream geometry input preservation to 1.3.2
+
+Upstream: https://github.com/MobilityDB/MobilityDB/commit/3f9ee86639f4e494172d843fa13ce8ffd151498d
+
+Backport the runtime fixes from "Copy a geometry before rewriting its
+coordinates in place". The serialized coordinates can reference a PostgreSQL
+shared buffer, so transform, affine, scale and reverse must work on copies.
+Also scale the translated value when a scaling origin is specified.
+
+Adapted to v1.3.2 context; unrelated development-branch bbox changes and
+upstream test harness changes are omitted. The RPM repository carries SQL
+regressions covering stored input preservation and numeric results.
+
+--- a/meos/src/geo/postgis_funcs.c
++++ b/meos/src/geo/postgis_funcs.c
+@@ -972,10 +972,15 @@
+ geo_reverse(const GSERIALIZED *gs)
+ {
+   assert(gs);
+-  LWGEOM *geom = lwgeom_from_gserialized(gs);
++  /* The geometry read from a serialization shares its coordinates, which
++   * lwgeom_reverse_in_place rewrites, so it is read from a copy, as in
++   * #geo_transform */
++  GSERIALIZED *gs1 = geo_copy(gs);
++  LWGEOM *geom = lwgeom_from_gserialized(gs1);
+   lwgeom_reverse_in_place(geom);
+   GSERIALIZED *result = geo_serialize(geom);
+   lwgeom_free(geom);
++  pfree(gs1);
+   return result;
+ }
+ 
+--- a/meos/src/geo/tgeo_spatialfuncs.c
++++ b/meos/src/geo/tgeo_spatialfuncs.c
+@@ -1325,12 +1325,16 @@
+ tgeoinst_affine_iter(const TInstant *inst, const AFFINE *a, TInstant **result)
+ {
+   assert(inst); assert(a); assert(tgeo_type_all(inst->temptype));
+-  GSERIALIZED *gs = DatumGetGserializedP(tinstant_value_p(inst));
++  /* The geometry read from a serialization shares its coordinates, which
++   * lwgeom_affine rewrites in place, so it is read from a copy, as in
++   * #geo_transform */
++  GSERIALIZED *gs = geo_copy(DatumGetGserializedP(tinstant_value_p(inst)));
+   LWGEOM *geo = lwgeom_from_gserialized(gs);
+   lwgeom_affine(geo, a);
+   GSERIALIZED *gs1 = geo_serialize(geo);
+   *result = tinstant_make_free(PointerGetDatum(gs1), inst->temptype, inst->t);
+   lwgeom_free(geo);
++  pfree(gs);
+   return;
+ }
+ 
+@@ -1422,11 +1426,15 @@
+ tgeoinst_scale_iter(const TInstant *inst, const POINT4D *factors,
+   TInstant **result)
+ {
+-  const GSERIALIZED *gs = DatumGetGserializedP(tinstant_value_p(inst));
++  /* The geometry read from a serialization shares its coordinates, which
++   * lwgeom_scale rewrites in place, so it is read from a copy, as in
++   * #geo_transform */
++  GSERIALIZED *gs = geo_copy(DatumGetGserializedP(tinstant_value_p(inst)));
+   LWGEOM *geom = lwgeom_from_gserialized(gs);
+   lwgeom_scale(geom, factors);
+   GSERIALIZED *gs1 = geo_serialize(geom);
+   lwgeom_free(geom);
++  pfree(gs);
+   *result = tinstant_make_free(PointerGetDatum(gs1), inst->temptype, inst->t);
+   return;
+ }
+@@ -1532,19 +1540,19 @@
+   else
+     temp1 = (Temporal *) temp;
+ 
+-  /* Scale the temporal point */
++  /* Scale the temporal geo, moved to the origin when there is one */
+   Temporal *temp2;
+-  assert(temptype_subtype(temp->subtype));
+-  switch (temp->subtype)
++  assert(temptype_subtype(temp1->subtype));
++  switch (temp1->subtype)
+   {
+     case TINSTANT:
+-      temp2 = (Temporal *) tgeoinst_scale((TInstant *) temp, &factors);
++      temp2 = (Temporal *) tgeoinst_scale((TInstant *) temp1, &factors);
+       break;
+     case TSEQUENCE:
+-      temp2 = (Temporal *) tgeoseq_scale((TSequence *) temp, &factors);
++      temp2 = (Temporal *) tgeoseq_scale((TSequence *) temp1, &factors);
+       break;
+     default: /* TSEQUENCESET */
+-      temp2 = (Temporal *) tgeoseqset_scale((TSequenceSet *) temp, &factors);
++      temp2 = (Temporal *) tgeoseqset_scale((TSequenceSet *) temp1, &factors);
+   }
+   
+   /* Return to original origin after scaling */
+--- a/meos/src/geo/tspatial_srid.c
++++ b/meos/src/geo/tspatial_srid.c
+@@ -452,13 +452,21 @@
+     case T_GEOMETRY:
+     case T_GEOGRAPHY:
+     {
+-      /* TODO This DOES NOT transform the geometry, it should be fixed */
+-      LWGEOM *geo = lwgeom_from_gserialized(DatumGetGserializedP(d));
++      /* The geometry read from a serialization shares its coordinates, which
++       * lwgeom_transform rewrites in place, so it is read from a copy, as in
++       * #geo_transform */
++      GSERIALIZED *gs = geo_copy(DatumGetGserializedP(d));
++      LWGEOM *geo = lwgeom_from_gserialized(gs);
+       if (! lwgeom_transform(geo, (LWPROJ *) pj))
++      {
++        lwgeom_free(geo);
++        pfree(gs);
+         return PointerGetDatum(NULL);
++      }
+       geo->srid = srid_to;
+       Datum result = PointerGetDatum(geo_serialize(geo));
+       lwgeom_free(geo);
++      pfree(gs);
+       return result;
+     }
+ #if CBUFFER

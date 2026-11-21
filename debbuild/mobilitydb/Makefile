@@ -1,12 +1,15 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
-VERSION := 1.3.1
+VERSION := 1.3.2
 TARBALL := mobilitydb-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_SHA256 := 6fad822e49c765e4c10307493d9b85d1a8a1faa1b124cce812bb3e8521bd383c
+SOURCE_SHA256 := 6be203c04fbfeabef88994ec8fa96e8fe4345c38c38b55e2b21fa1c8b0545626
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 14 15 16 17 18
+PG_VERSIONS ?= 15 16 17 18 19
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)

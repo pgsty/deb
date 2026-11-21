@@ -1,0 +1,167 @@
+Subject: Include explicit math and tuple declarations for PostgreSQL 19
+
+--- a/meos/src/geo/tgeo_boxops.c
++++ b/meos/src/geo/tgeo_boxops.c
+@@ -57,6 +57,8 @@
+ #include "geo/stbox.h"
+ #include "geo/tgeo.h"
+ #include "geo/tgeo_spatialfuncs.h"
++
++#include <math.h>
+ #if CBUFFER
+   #include "cbuffer/tcbuffer_boxops.h"
+ #endif
+--- a/meos/src/geo/tgeo_spatialrels.c
++++ b/meos/src/geo/tgeo_spatialrels.c
+@@ -59,6 +59,8 @@
+ #include "geo/tgeo.h"
+ #include "geo/tgeo_spatialfuncs.h"
+ #include "geo/tgeo_tempspatialrels.h"
++
++#include <math.h>
+ 
+ /*****************************************************************************
+  * Spatial relationship functions
+--- a/meos/src/geo/tgeo_tile.c
++++ b/meos/src/geo/tgeo_tile.c
+@@ -50,6 +50,8 @@
+ #include "temporal/temporal_tile.h"
+ #include "geo/stbox.h"
+ #include "geo/tgeo_spatialfuncs.h"
++
++#include <math.h>
+ 
+ /*****************************************************************************
+  * Bit Matrix implementation based on
+--- a/meos/src/npoint/npoint.c
++++ b/meos/src/npoint/npoint.c
+@@ -68,6 +68,8 @@
+ #include "npoint/tnpoint_parser.h"
+ #include "npoint/tnpoint.h"
+ 
++#include <math.h>
++
+ /** Buffer size for input and output of npoint and nsegment values */
+ #define NPOINT_MAXLEN     128
+ #define NSEGMENT_MAXLEN   128
+--- a/meos/src/npoint/tnpoint_spatialfuncs.c
++++ b/meos/src/npoint/tnpoint_spatialfuncs.c
+@@ -43,6 +43,8 @@
+ #include "geo/tgeo_spatialfuncs.h"
+ #include "npoint/tnpoint.h"
+ 
++#include <math.h>
++
+ /*****************************************************************************
+  * NPoints Functions
+  * Return the network points covered by a temporal network point
+--- a/meos/src/temporal/doublen.c
++++ b/meos/src/temporal/doublen.c
+@@ -52,6 +52,8 @@
+ #include "temporal/postgres_types.h"
+ #include "temporal/temporal.h"
+ 
++#include <math.h>
++
+ /*****************************************************************************
+  * Double2
+  *****************************************************************************/
+--- a/meos/src/temporal/set.c
++++ b/meos/src/temporal/set.c
+@@ -436,7 +436,7 @@
+     {
+       /* VARSIZE_ANY is used for oblivious data alignment, see postgres.h */
+       size_t size_elem = (typlen == -1) ?
+-        VARSIZE_ANY(newvalues[i]) : (uint32) typlen;
++        VARSIZE_ANY(DatumGetPointer(newvalues[i])) : (uint32) typlen;
+       memcpy(((char *) result) + pdata + pos, DatumGetPointer(newvalues[i]),
+         size_elem);
+       (SET_OFFSETS_PTR(result))[i] = pos;
+--- a/meos/src/temporal/spanset.c
++++ b/meos/src/temporal/spanset.c
+@@ -54,6 +54,8 @@
+ #include "temporal/type_inout.h"
+ #include "temporal/type_util.h"
+ 
++#include <math.h>
++
+ /*****************************************************************************
+  * Parameter tests
+  *****************************************************************************/
+--- a/meos/src/temporal/tbox.c
++++ b/meos/src/temporal/tbox.c
+@@ -55,6 +55,8 @@
+ #include "temporal/type_parser.h"
+ #include "temporal/type_util.h"
+ 
++#include <math.h>
++
+ /** Buffer size for input and output of TBox values */
+ #define TBOX_MAXLEN    128
+ 
+--- a/meos/src/temporal/temporal_boxops.c
++++ b/meos/src/temporal/temporal_boxops.c
+@@ -59,6 +59,8 @@
+ #include "temporal/type_util.h"
+ #include "geo/tspatial_boxops.h"
+ 
++#include <math.h>
++
+ /*****************************************************************************
+  * Functions on generic bounding boxes of temporal types
+  *****************************************************************************/
+--- a/mobilitydb/src/geo/tgeo_spatialfuncs.c
++++ b/mobilitydb/src/geo/tgeo_spatialfuncs.c
+@@ -55,6 +55,8 @@
+ #include "pg_temporal/type_util.h"
+ #include "pg_geo/postgis.h"
+ 
++#include "access/htup_details.h"
++
+ /*****************************************************************************
+  * Trajectory function
+  *****************************************************************************/
+--- a/mobilitydb/src/geo/tgeo_tile.c
++++ b/mobilitydb/src/geo/tgeo_tile.c
+@@ -53,6 +53,8 @@
+ /* MobilityDB */
+ #include "pg_temporal/type_util.h"
+ #include "pg_geo/postgis.h"
++
++#include "access/htup_details.h"
+ 
+ /*****************************************************************************/
+ 
+--- a/mobilitydb/src/temporal/span_selfuncs.c
++++ b/mobilitydb/src/temporal/span_selfuncs.c
+@@ -53,6 +53,8 @@
+ #include "pg_temporal/meos_catalog.h"
+ #include "pg_temporal/span_analyze.h"
+ #include "pg_temporal/temporal_selfuncs.h"
++
++#include <math.h>
+ 
+ /*****************************************************************************/
+ 
+--- a/mobilitydb/src/temporal/temporal_analyze.c
++++ b/mobilitydb/src/temporal/temporal_analyze.c
+@@ -155,7 +155,7 @@
+       continue;
+     }
+ 
+-    total_width += VARSIZE(value);
++    total_width += VARSIZE(DatumGetPointer(value));
+ 
+     /* Get temporal value */
+     Temporal *temp = DatumGetTemporalP(value);
+--- a/mobilitydb/src/temporal/temporal_tile.c
++++ b/mobilitydb/src/temporal/temporal_tile.c
+@@ -55,6 +55,8 @@
+ #include "pg_temporal/meos_catalog.h"
+ #include "pg_temporal/type_util.h"
+ 
++#include "access/htup_details.h"
++
+ /*****************************************************************************
+  * Bins functions
+  *****************************************************************************/

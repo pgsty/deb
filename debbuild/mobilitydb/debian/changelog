@@ -1,3 +1,10 @@
+mobilitydb (1.3.2-1PGSTY) unstable; urgency=medium
+
+  * Update to 1.3.2; retain packaging and input-preservation fixes.
+  * Include explicit math and heap tuple declarations for PostgreSQL 19.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:42:00 +0800
+
 mobilitydb (1.3.1-1PGSTY) unstable; urgency=medium
 
   * Update to 1.3.1.
