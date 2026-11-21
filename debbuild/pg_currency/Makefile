@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
 # https://github.com/adjust/pg-currency/archive/6c91875373f5edfbf38670d12809ece88231a609.tar.gz
