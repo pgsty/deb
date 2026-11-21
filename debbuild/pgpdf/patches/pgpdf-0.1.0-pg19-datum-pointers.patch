@@ -1,0 +1,21 @@
+Subject: Convert PDF bytea Datums to pointers explicitly
+
+Pass DatumGetPointer to varlena accessors; preserve the allocation size and copied bytes.
+
+--- a/pgpdf.c
++++ b/pgpdf.c
+@@ -62,12 +62,12 @@
+     GError* error = NULL;
+ 
+     pdf_bytes = DirectFunctionCall1(pg_read_binary_file_all, filename_t);
+-    pdf_bytes_len = VARSIZE_ANY_EXHDR(pdf_bytes);
++    pdf_bytes_len = VARSIZE_ANY_EXHDR(DatumGetPointer(pdf_bytes));
+ 
+     result = (pdftype*)palloc(VARHDRSZ + pdf_bytes_len);
+     SET_VARSIZE(result, VARHDRSZ + pdf_bytes_len);
+ 
+-    memcpy(VARDATA(result), VARDATA_ANY(pdf_bytes), pdf_bytes_len);
++    memcpy(VARDATA(result), VARDATA_ANY(DatumGetPointer(pdf_bytes)), pdf_bytes_len);
+ 
+     g_bytes = g_bytes_new(VARDATA(result), pdf_bytes_len);
+ 
