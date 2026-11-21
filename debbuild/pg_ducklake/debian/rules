@@ -17,12 +17,13 @@ export DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
 # Ubuntu's default -flto=auto may use every CPU visible to GCC during the
-# expensive DuckDB link even when Ninja itself is limited.  Keep LTO enabled,
-# serialize Ninja link jobs and give each link one LTO worker, while unrelated
-# compilation may still use the second package-local slot.  PGXS also
+# expensive DuckDB link even when Ninja itself is limited.  Bound nested LTO
+# and Ninja link jobs to one worker while compilation uses the remaining
+# package-local slots.  PGXS also
 # feeds its flags to Clang for LLVM bitcode, where GCC's numeric -flto form is
-# invalid, so keep generic -flto for the PostgreSQL bridge and pass numeric LTO
-# flags only to the bundled DuckDB CMake build.  The bundled DuckDB keeps
+# invalid, so keep generic -flto for bridge compilation and pass numeric LTO
+# flags to the bundled DuckDB build.  The final module link workaround below
+# is separate from LLVM bitcode.  The bundled DuckDB keeps
 # function and line-table DWARF only (-g1); the PGXS bridge keeps the full
 # distribution -g so the dbgsym package stays tractable.
 DUCKDB_CFLAGS := $(subst -flto=auto,-flto=1,$(CFLAGS)) -g1
@@ -31,6 +32,11 @@ DUCKDB_LDFLAGS := $(subst -flto=auto,-flto=1,$(LDFLAGS))
 CFLAGS := $(subst -flto=auto,-flto,$(CFLAGS))
 CXXFLAGS := $(subst -flto=auto,-flto,$(CXXFLAGS))
 LDFLAGS := $(subst -flto=auto,-flto,$(LDFLAGS))
+
+# GCC 13 final-link LTO crashes in DuckLake StatsCacheKey/printf at runtime.
+# The same fat objects pass smoke and regression tests without final-link LTO.
+# Keep LLVM bitcode, bundled-core compilation and debug flags unchanged.
+PGDUCKLAKE_LDFLAGS := $(DUCKDB_LDFLAGS) -fno-lto
 
 %:
 	dh $@
@@ -69,10 +75,12 @@ override_dh_auto_build:
 		> "$(CURDIR)/.croaring/lib/cmake/roaring/roaringConfig.cmake"
 	cp "$(CURDIR)/.croaring/lib/cmake/roaring/roaringConfig.cmake" "$(CURDIR)/.croaring/lib/cmake/roaring/roaring-config.cmake"
 	$(MAKE) COMPILER_LAUNCHER=ccache ROARING_LIB_DIR="$(CURDIR)/.croaring/lib" \
+		PG_CFLAGS="$(CFLAGS)" PG_CXXFLAGS="$(CXXFLAGS)" LDFLAGS="$(PGDUCKLAKE_LDFLAGS)" \
 		DUCKDB_C_FLAGS="$(DUCKDB_CFLAGS)" DUCKDB_CXX_FLAGS="$(DUCKDB_CXXFLAGS)" DUCKDB_LD_FLAGS="$(DUCKDB_LDFLAGS)" -j$(BUILD_JOBS)
 
 override_dh_auto_install:
 	$(MAKE) COMPILER_LAUNCHER=ccache ROARING_LIB_DIR="$(CURDIR)/.croaring/lib" \
+		PG_CFLAGS="$(CFLAGS)" PG_CXXFLAGS="$(CXXFLAGS)" LDFLAGS="$(PGDUCKLAKE_LDFLAGS)" \
 		DUCKDB_C_FLAGS="$(DUCKDB_CFLAGS)" DUCKDB_CXX_FLAGS="$(DUCKDB_CXXFLAGS)" DUCKDB_LD_FLAGS="$(DUCKDB_LDFLAGS)" \
 		-j$(BUILD_JOBS) install DESTDIR="$(CURDIR)/debian/postgresql-$(PG_VERSION)-pg-ducklake"
 	rm -rf "$(CURDIR)"/debian/postgresql-$(PG_VERSION)-pg-ducklake/usr/share/doc/postgresql-doc-*

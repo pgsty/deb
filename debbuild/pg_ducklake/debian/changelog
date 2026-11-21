@@ -1,3 +1,15 @@
+pg-ducklake (1.0.3-2PGSTY) unstable; urgency=medium
+
+  * Repair and document the packaged-source build patch; verify source checksums.
+  * Order LLVM objects after the bundled DuckLake patches.
+  * Preserve distribution flags and bound LTO workers through PGXS.
+  * Avoid the verified GCC final-link LTO runtime crash; keep LLVM bitcode.
+  * Isolate bundled libpq configure from PostgreSQL backend-only flags.
+  * Retain PostgreSQL 15-18 after the PG19 API audit; retire PostgreSQL 14.
+  * Declare postgresql-common-dev for version-specific control generation.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 16:20:00 +0800
+
 pg-ducklake (1.0.3-1PGSTY) unstable; urgency=medium
 
   * Upgrade to the upstream 1.0.3 bug-fix release.

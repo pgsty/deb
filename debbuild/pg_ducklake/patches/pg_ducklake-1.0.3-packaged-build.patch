@@ -1,35 +1,48 @@
+Subject: Build the pinned source bundle with distribution flags and static archives
+Upstream: packaging-specific; upstream builds from recursive Git checkouts
+
+Use already bundled submodules, configure the bundled libpq headers, link system
+OpenSSL, and retain optimization/debug flags in the nested DuckDB build. Build
+only static targets consumed by pg_ducklake. No bundled version or SQL semantics
+are changed. The PostgreSQL major-version guard remains upstream's 14-18 guard.
+
 --- a/Makefile
 +++ b/Makefile
-@@ -24,6 +24,17 @@
+@@ -24,6 +24,15 @@
  DUCKDB_VERSION = v1.5.3
-  DUCKDB_CMAKE_VARS = -DCXX_EXTRA=-fvisibility=default -DBUILD_SHELL=0 -DBUILD_PYTHON=0 -DBUILD_UNITTESTS=0 -DOVERRIDE_GIT_DESCRIBE=$(DUCKDB_VERSION)
-+# pg_config contributes a debug-prefix-map for PostgreSQL's own package build
-+# tree.  It does not describe this bundled source tree and changes for every
-+# target PG major, so omit only that unrelated map from the DuckDB cache key.
-+DUCKDB_C_FLAGS ?= $(filter-out -fdebug-prefix-map=/build/postgresql-%,$(CFLAGS))
-+DUCKDB_CXX_FLAGS ?= $(filter-out -fdebug-prefix-map=/build/postgresql-%,$(CXXFLAGS))
+ 
+ DUCKDB_CMAKE_VARS = -DCXX_EXTRA=-fvisibility=default -DBUILD_SHELL=0 -DBUILD_PYTHON=0 -DBUILD_UNITTESTS=0 -DOVERRIDE_GIT_DESCRIBE=$(DUCKDB_VERSION)
++# Preserve distribution optimization, hardening and debug flags in the nested build.
++DUCKDB_C_FLAGS ?= $(CFLAGS)
++DUCKDB_CXX_FLAGS ?= $(CXXFLAGS)
++DUCKDB_LD_FLAGS ?= $(LDFLAGS)
 +DUCKDB_CMAKE_VARS += -DCMAKE_C_FLAGS:STRING="$(DUCKDB_C_FLAGS)"
 +DUCKDB_CMAKE_VARS += -DCMAKE_CXX_FLAGS:STRING="$(DUCKDB_CXX_FLAGS)"
-+DUCKDB_LD_FLAGS ?= $(LDFLAGS)
 +DUCKDB_CMAKE_VARS += -DCMAKE_EXE_LINKER_FLAGS:STRING="$(DUCKDB_LD_FLAGS)"
 +DUCKDB_CMAKE_VARS += -DCMAKE_SHARED_LINKER_FLAGS:STRING="$(DUCKDB_LD_FLAGS)"
 +DUCKDB_CMAKE_VARS += -DCMAKE_MODULE_LINKER_FLAGS:STRING="$(DUCKDB_LD_FLAGS)"
  DUCKDB_DISABLE_ASSERTIONS ?= 0
-  # Optional compiler cache (e.g. sccache) for the DuckDB build.
-@@ -54,7 +65,7 @@
+ 
+ # Optional compiler cache (e.g. sccache) for the DuckDB build.
+@@ -54,7 +63,7 @@
  # duckdb extensions baked in.
  EXTENSION_CONFIGS ?=
- -DUCKDB_BUILD_TAG := $(if $(EXTENSION_CONFIGS),$(basename $(notdir $(EXTENSION_CONFIGS)))-$(shell shasum -a 256 '$(EXTENSION_CONFIGS)' 2>/dev/null | cut -c1-8),default)
+ 
+-DUCKDB_BUILD_TAG := $(if $(EXTENSION_CONFIGS),$(basename $(notdir $(EXTENSION_CONFIGS)))-$(shell shasum -a 256 '$(EXTENSION_CONFIGS)' 2>/dev/null | cut -c1-8),default)
 +DUCKDB_BUILD_TAG := $(if $(EXTENSION_CONFIGS),$(basename $(notdir $(EXTENSION_CONFIGS)))-$(shell sha256sum '$(EXTENSION_CONFIGS)' 2>/dev/null | cut -c1-8),default)
  DUCKDB_BUILD_DIR := $(PGDDB_DIR)/duckdb/build/$(DUCKDB_BUILD_TYPE)-$(DUCKDB_BUILD_TAG)
  FULL_DUCKDB_LIB = $(DUCKDB_BUILD_DIR)/libduckdb_bundle.a
- @@ -62,14 +73,14 @@
-  duckdb: $(FULL_DUCKDB_LIB)
- -$(PGDDB_DIR)/.git/modules/duckdb/HEAD:
+ 
+@@ -62,14 +71,14 @@
+ 
+ duckdb: $(FULL_DUCKDB_LIB)
+ 
+-$(PGDDB_DIR)/.git/modules/duckdb/HEAD:
 -	git -C $(PGDDB_DIR) submodule update --init --recursive
 +$(PGDDB_DIR)/duckdb/CMakeLists.txt:
 +	test -f $(PGDDB_DIR)/duckdb/CMakeLists.txt
-  # The bundling steps inline duckdb's bundle-setup / bundle-library-o targets
+ 
+ # The bundling steps inline duckdb's bundle-setup / bundle-library-o targets
  # (duckdb's own hard-code build/release/, so per-extension dirs can't use
  # them). EXTENSION_BUNDLE_EXCLUDE keeps force-load'd extensions (e.g.
  # pg_ducklake's ducklake) out of the bundle to avoid duplicate symbols.
@@ -38,12 +51,12 @@
  	mkdir -p $(DUCKDB_BUILD_DIR)/vcpkg_installed
  	cmake -S $(PGDDB_DIR)/duckdb -B $(DUCKDB_BUILD_DIR) \
  		$(DUCKDB_CMAKE_GENERATOR) $(DUCKDB_CMAKE_FORCE_COLOR) \
-@@ -80,7 +91,10 @@
+@@ -80,7 +89,10 @@
  		-DOVERRIDE_GIT_DESCRIBE="$(DUCKDB_VERSION)" \
  		-DDUCKDB_EXPLICIT_VERSION="" \
  		-DCMAKE_BUILD_TYPE=$(DUCKDB_CMAKE_BUILD_TYPE)
 -	cmake --build $(DUCKDB_BUILD_DIR) --config $(DUCKDB_CMAKE_BUILD_TYPE)
-+	# Only static archives are linked into the PostgreSQL module.
++	# Only these static archives are linked into the PostgreSQL module.
 +	CMAKE_BUILD_PARALLEL_LEVEL=$${CMAKE_BUILD_PARALLEL_LEVEL:-1} cmake --build $(DUCKDB_BUILD_DIR) --config $(DUCKDB_CMAKE_BUILD_TYPE) \
 +		--target duckdb_static duckdb_generated_extension_loader json_extension icu_extension \
 +		core_functions_extension parquet_extension postgres_scanner_extension ducklake_extension
@@ -52,40 +65,47 @@
  	mkdir -p $(DUCKDB_BUILD_DIR)/bundle
 --- a/pg_ducklake/Makefile
 +++ b/pg_ducklake/Makefile
-@@ -20,11 +20,12 @@
+@@ -20,7 +20,7 @@
  DUCKLAKE_DIR := $(CURDIR)/third_party/ducklake
  DUCKLAKE_PATCHES := $(sort $(wildcard $(CURDIR)/third_party/ducklake-*.patch))
  DUCKLAKE_STAMP := $(DUCKLAKE_DIR)/.patched
 -DUCKLAKE_SUBMODULE_HEAD := $(ROOT_DIR)/.git/modules/pg_ducklake/third_party/ducklake/HEAD
 +DUCKLAKE_SUBMODULE_HEAD := $(DUCKLAKE_DIR)/CMakeLists.txt
  DUCKLAKE_INCLUDE = -I$(DUCKLAKE_DIR)/src/include
-  override PG_CPPFLAGS += -Iinclude $(PGDDB_INCLUDE) $(PGDDB_DUCKDB_INCLUDE) $(DUCKLAKE_INCLUDE) -isystem $(INCLUDEDIR_SERVER)
- override PG_CXXFLAGS += -std=c++17 -Wno-register
+ 
+ override PG_CPPFLAGS += -Iinclude $(PGDDB_INCLUDE) $(PGDDB_DUCKDB_INCLUDE) $(DUCKLAKE_INCLUDE) -isystem $(INCLUDEDIR_SERVER)
+@@ -70,23 +70,24 @@
+ 
+ include $(ROOT_DIR)/Makefile.pgxs
+ 
++# Append after PGXS initializes its default LLVM optimization flags.
 +override BITCODE_CXXFLAGS += -std=c++17 -Wno-register
-  DUCKLAKE_EXT_LIB := $(DUCKDB_BUILD_DIR)/extension/ducklake/libducklake_extension.a
- @@ -70,21 +71,19 @@
-  # Non-recursive init: ducklake's inner submodules are only for its own CI.
++
+ # Non-recursive init: ducklake's inner submodules are only for its own CI.
  $(DUCKLAKE_SUBMODULE_HEAD):
 -	git -C $(ROOT_DIR) submodule update --init pg_ducklake/third_party/ducklake
 +	test -f $(DUCKLAKE_DIR)/CMakeLists.txt
- -# Apply patches onto the pristine submodule; reset first so editing a patch
+ 
+-# Apply patches onto the pristine submodule; reset first so editing a patch
 -# re-applies from a clean base. The working tree is intentionally left dirty.
-+# Package source tarballs already contain third_party/ducklake and no .git metadata.
-+# Apply patches once on the fresh package build tree and guard with a stamp.
++# Packaged sources contain the pinned submodules without .git metadata.
++# Apply upstream patches once in the freshly unpacked build tree.
  $(DUCKLAKE_STAMP): $(DUCKLAKE_PATCHES) $(DUCKLAKE_SUBMODULE_HEAD)
 -	git -C $(DUCKLAKE_DIR) checkout -q .
 -	git -C $(DUCKLAKE_DIR) clean -fdq src
  	@for p in $(DUCKLAKE_PATCHES); do \
  		echo "  ducklake patch: $$(basename $$p)"; \
 -		git -C $(DUCKLAKE_DIR) apply -p1 --whitespace=nowarn $$p || exit 1; \
-+		patch -d $(DUCKLAKE_DIR) -p1 --forward --batch < $$p || exit 1; \
++		patch -d $(DUCKLAKE_DIR) -p1 --fuzz=0 --forward --batch < $$p || exit 1; \
  	done
  	touch $@
-  # Extension .o files and the duckdb build both consume patched ducklake source.
+ 
+ # Extension .o files and the duckdb build both consume patched ducklake source.
 -$(OBJS): $(PGDDB_DIR)/.git/modules/duckdb/HEAD $(DUCKLAKE_STAMP)
-+$(OBJS): $(PGDDB_DIR)/duckdb/CMakeLists.txt $(DUCKLAKE_STAMP)
++$(OBJS) $(OBJS:.o=.bc): $(PGDDB_DIR)/duckdb/CMakeLists.txt $(DUCKLAKE_STAMP)
  $(FULL_DUCKDB_LIB): $(DUCKLAKE_STAMP)
-  # Both archives are side effects of the duckdb cmake build; declaring that lets
+ 
+ # Both archives are side effects of the duckdb cmake build; declaring that lets
 --- a/pg_ducklake/pg_ducklake_extensions.cmake
 +++ b/pg_ducklake/pg_ducklake_extensions.cmake
 @@ -2,9 +2,7 @@
@@ -102,33 +122,44 @@
 --- a/pg_ducklake/third_party/duckdb-postgres/CMakeLists.txt
 +++ b/pg_ducklake/third_party/duckdb-postgres/CMakeLists.txt
 @@ -4,7 +4,7 @@
-  add_definitions(-DFRONTEND=1 -D_GNU_SOURCE=1)
+ 
+ add_definitions(-DFRONTEND=1 -D_GNU_SOURCE=1)
  add_definitions(-DUSE_OPENSSL=1 -DHAVE_BIO_GET_DATA=1 -DHAVE_BIO_METH_NEW=1)
 -set(OPENSSL_USE_STATIC_LIBS TRUE)
 +set(OPENSSL_USE_STATIC_LIBS FALSE)
-  find_package(OpenSSL REQUIRED)
- @@ -120,7 +120,8 @@
-  prepend(LIBPG_SOURCES_FULLPATH ${CMAKE_CURRENT_SOURCE_DIR} ${LIBPG_SOURCES})
- -if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/postgres)
+ 
+ find_package(OpenSSL REQUIRED)
+ 
+@@ -120,7 +120,8 @@
+ 
+ prepend(LIBPG_SOURCES_FULLPATH ${CMAKE_CURRENT_SOURCE_DIR} ${LIBPG_SOURCES})
+ 
+-if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/postgres)
 +if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/postgres/src/include/pg_config_ext.h)
 +  if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/postgres)
-    # Download the PostgreSQL source code
+ 
+   # Download the PostgreSQL source code
    message(STATUS "Downloading PostgreSQL source code")
-@@ -152,6 +153,8 @@
+@@ -151,6 +152,8 @@
+ 
    # Remove the downloaded tarball
    file(REMOVE ${CMAKE_CURRENT_SOURCE_DIR}/pg.tar.gz)
- +  endif()
-+   # Configure the PostgreSQL source code
++
++  endif()
+ 
+   # Configure the PostgreSQL source code
    message(STATUS "Configuring PostgreSQL source code")
-   if(WIN32)
-@@ -171,6 +174,10 @@
+@@ -171,8 +174,12 @@
      # On other platforms, use the configure script to configure the source code
      set(ENV{CC} gcc)
      set(ENV{CXX} g++)
-+    set(ENV{CFLAGS} "")
-+    set(ENV{CPPFLAGS} "")
-+    set(ENV{CXXFLAGS} "")
-+    set(ENV{LDFLAGS} "")
++    # PGXS exports backend-only flags such as -Werror=vla; they invalidate
++    # Autoconf's C99 probe. Use the distribution flags supplied to CMake.
      execute_process(
-       COMMAND
+-      COMMAND
++      COMMAND ${CMAKE_COMMAND} -E env
++        "CFLAGS=${CMAKE_C_FLAGS}" "CXXFLAGS=${CMAKE_CXX_FLAGS}"
++        "CPPFLAGS=" "LDFLAGS=${CMAKE_EXE_LINKER_FLAGS}"
          ./configure --without-llvm --without-icu --without-tcl --without-perl
+         --without-python --without-gssapi --without-pam --without-bsd-auth
+         --without-ldap --without-bonjour --without-selinux --without-systemd

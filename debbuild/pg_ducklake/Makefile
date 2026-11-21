@@ -6,7 +6,7 @@ ROARING_VERSION := 4.7.1
 # Upstream v1.0.3 CI pins vcpkg 84bab45d, whose roaring port is 4.5.0.
 # Keep Pigsty's already-validated 4.7.1; CRoaring 5 is a separate major upgrade.
 ROARING_TARBALL := CRoaring-$(ROARING_VERSION)-amalgamation.tar.gz
-PATCH := patches/pg_ducklake-$(VERSION).patch
+PATCH := patches/pg_ducklake-$(VERSION)-packaged-build.patch
 
 SOURCE_TARBALL ?= $(firstword $(wildcard \
 	$(HOME)/ext/src/$(TARBALL) \
@@ -19,9 +19,9 @@ ROARING_SOURCE_TARBALL ?= $(firstword $(wildcard \
 	../SOURCES/$(ROARING_TARBALL) \
 	../../src/$(ROARING_TARBALL)))
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-SOURCE_CANDIDATE_DIR ?= $(CURDIR)/candidate
+SOURCE_CANDIDATE_DIR ?= $(HOME)/pgsty/artifacts/pg_ducklake-source/candidate
 BUILD_DIR := build
-PG_VERSIONS := 18 17 16 15 14
+PG_VERSIONS := 18 17 16 15
 TAR_BIN := $(shell command -v gtar 2>/dev/null || command -v tar)
 
 build:
@@ -37,7 +37,11 @@ check-src:
 	@test -n "$(SOURCE_TARBALL)" -a -f "$(SOURCE_TARBALL)" || (echo "missing authoritative $(TARBALL); run pig build get first, or make source and review the candidate"; exit 1)
 	@test -n "$(ROARING_SOURCE_TARBALL)" -a -f "$(ROARING_SOURCE_TARBALL)" || (echo "missing $(ROARING_TARBALL); copy only this tarball into ../SOURCES"; exit 1)
 
-build18 build17 build16 build15 build14: check-src
+check-sha: check-src
+	@echo "bfa39e08ea772ba5aa44ceea81a081578a03238c659ca3ba2ebfa6b466f1d635  $(SOURCE_TARBALL)" | sha256sum -c -
+	@echo "6338062be71b5ce50cbfcbab429d4ea45b8803dae79d012fbd3e472494c6d9fd  $(ROARING_SOURCE_TARBALL)" | sha256sum -c -
+
+build18 build17 build16 build15: check-sha
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	$(TAR_BIN) --no-same-owner -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	patch -d $(BUILD_DIR) -p1 --fuzz=0 < $(PATCH)
@@ -45,7 +49,8 @@ build18 build17 build16 build15 build14: check-src
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	sed -i "s/PGVERSION/$(@:build%=%)/g" $(BUILD_DIR)/debian/control
+	printf '%s\n' "$(@:build%=%)" > $(BUILD_DIR)/debian/pgversions
+	cd $(BUILD_DIR) && pg_buildext updatecontrol
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
@@ -55,4 +60,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all build source refresh-source check-src build18 build17 build16 build15 build14 move clean
+.PHONY: all build source refresh-source check-src check-sha build18 build17 build16 build15 move clean

@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
-
 VERSION="${VERSION:-1.0.3}"
 UPSTREAM_REPO="${UPSTREAM_REPO:-https://github.com/relytcloud/pg_ducklake.git}"
 UPSTREAM_COMMIT="${UPSTREAM_COMMIT:-9fef142965aa4af3e9da17be7ce210ed90f12ed6}"
@@ -22,10 +19,16 @@ VCPKG_COMMIT="${VCPKG_COMMIT:-84bab45d415d22042bd0b9081aea57f362da3f35}"
 VCPKG_ROARING_VERSION="${VCPKG_ROARING_VERSION:-4.5.0}"
 BUNDLED_CROARING_VERSION="${BUNDLED_CROARING_VERSION:-4.7.1}"
 
-WORK_DIR="${WORK_DIR:-${REPO_ROOT}/tmp/pg_ducklake-src}"
-OUT_DIR="${OUT_DIR:-${SCRIPT_DIR}/candidate}"
+WORK_DIR="${WORK_DIR:-${HOME}/pgsty/artifacts/pg_ducklake-source/work}"
+OUT_DIR="${OUT_DIR:-${HOME}/pgsty/artifacts/pg_ducklake-source/candidate}"
 SOURCE_DIR="${WORK_DIR}/pg_ducklake-${VERSION}"
 TARBALL="pg_ducklake-${VERSION}.tar.gz"
+GITHUB_PROXY="${GITHUB_PROXY:-http://127.0.0.1:8888}"
+
+if [[ -e "$OUT_DIR/$TARBALL" ]]; then
+    echo "refusing to overwrite existing source candidate: $OUT_DIR/$TARBALL" >&2
+    exit 1
+fi
 
 if command -v gtar >/dev/null 2>&1; then
     TAR_BIN=gtar
@@ -40,7 +43,7 @@ clone_commit() {
 
     git init -q "$dest"
     git -C "$dest" remote add origin "$repo"
-    git -C "$dest" -c http.version=HTTP/1.1 fetch --depth 1 origin "$commit"
+    git -C "$dest" -c http.proxy="$GITHUB_PROXY" -c http.version=HTTP/1.1 fetch --depth 1 origin "$commit"
     git -C "$dest" checkout -q --detach FETCH_HEAD
     test "$(git -C "$dest" rev-parse HEAD)" = "$commit"
 }
