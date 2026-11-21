@@ -1,0 +1,19 @@
+Subject: Preserve the signed 8-bit Datum conversion on PostgreSQL 19
+
+Restore the former macro for both PG_RETURN_INT8 and series/int8.c.
+CharGetDatum is unsuitable because char signedness varies by architecture.
+
+--- a/int_utils.h
++++ b/int_utils.h
+@@ -43,6 +43,11 @@
+ 
+ #ifndef PG_GETARG_INT8
+ #define PG_GETARG_INT8(n)	 DatumGetInt8(PG_GETARG_DATUM(n))
++#endif
++
++/* PostgreSQL 19 removed this signed 8-bit Datum conversion. */
++#ifndef Int8GetDatum
++#define Int8GetDatum(x) ((Datum) (int8) (x))
+ #endif
+ 
+ #ifndef PG_RETURN_INT8
