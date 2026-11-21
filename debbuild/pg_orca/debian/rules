@@ -2,13 +2,13 @@
 
 export CC = gcc
 export CXX = g++
-export DEB_BUILD_OPTIONS = parallel=1
-export CMAKE_BUILD_PARALLEL_LEVEL = 1
+export CMAKE_BUILD_PARALLEL_LEVEL ?= 2
 export DPKG_EXPORT_BUILDFLAGS = 1
 
 include /usr/share/dpkg/buildflags.mk
 
 PG_VERSIONS := $(shell cat debian/pgversions)
+export PG_SUPPORTED_VERSIONS ?= $(PG_VERSIONS)
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 
@@ -26,7 +26,7 @@ override_dh_auto_build:
 		PATH="/usr/lib/postgresql/$$v/bin:$$PATH" \
 		cmake -B build-pg$$v -S . -G Ninja \
 			-DPG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config \
-			-DCMAKE_BUILD_TYPE=Release; \
+			-DCMAKE_BUILD_TYPE=Release -DPG_ORCA_BUNDLED_XERCES=OFF -DPG_ORCA_ENABLE_CPACK=OFF; \
 		cmake --build build-pg$$v; \
 	done
 

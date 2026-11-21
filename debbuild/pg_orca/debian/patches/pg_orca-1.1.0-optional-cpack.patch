@@ -1,0 +1,11 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -363,6 +363,7 @@
+ # -------------------------------------------------------------------
+ # Packaging (DEB/RPM via CPack). Linux only.
+ # -------------------------------------------------------------------
+-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
++option(PG_ORCA_ENABLE_CPACK "Enable upstream CPack packaging" ON)
++if(CMAKE_SYSTEM_NAME STREQUAL "Linux" AND PG_ORCA_ENABLE_CPACK)
+     include(${CMAKE_SOURCE_DIR}/packaging/CPackConfig.cmake)
+ endif()

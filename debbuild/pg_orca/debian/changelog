@@ -1,3 +1,12 @@
+pg-orca (1.1.0-1PGSTY) unstable; urgency=medium
+
+  * Bump to 1.1.0 and enable upstream PostgreSQL 19 support.
+  * Avoid cross-translation-unit static initialization in invalid OID checks.
+  * Keep distribution xerces-c and allow bounded parallel builds.
+  * Make upstream CPack optional when packaging through debhelper.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 16:00:00 +0800
+
 pg-orca (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Initial release for PGSTY/PIGSTY.

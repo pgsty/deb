@@ -1,0 +1,2 @@
+pg_orca-1.1.0-optional-cpack.patch
+pg_orca-1.1.0-static-init-order.patch

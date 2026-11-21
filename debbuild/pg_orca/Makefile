@@ -1,18 +1,22 @@
 all: setup build move
 
-TARBALL := pg_orca-1.0.0.tar.gz
+TARBALL := pg_orca-1.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
+PG_VERSIONS ?= 18 19
+export PG_SUPPORTED_VERSIONS ?= $(PG_VERSIONS)
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
 setup: check-src
+	@for v in $(PG_VERSIONS); do case $$v in 18|19) ;; *) echo "unsupported PostgreSQL major: $$v"; exit 1 ;; esac; done
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
