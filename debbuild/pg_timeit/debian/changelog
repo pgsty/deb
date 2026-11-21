@@ -1,3 +1,10 @@
+pg-timeit (1.0-1PGSTY) unstable; urgency=medium
+
+  * Restore the official source archive pinned to d83ab65bc9ae.
+  * Enable PG19 after payload and available SQL regression validation.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 03:00:00 +0800
+
 pg-timeit (1.0-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
