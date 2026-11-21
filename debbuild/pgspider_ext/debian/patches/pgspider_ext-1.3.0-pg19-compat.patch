@@ -1,0 +1,52 @@
+Subject: Match the PostgreSQL 19 tuple-slot API
+
+Include hash and tuple declarations and pass the default zero flags to both ExecInitExtraTupleSlot calls.
+
+--- a/pgspider_ext.h
++++ b/pgspider_ext.h
+@@ -11,6 +11,7 @@
+ #define SPD_FDW_H
+ 
+ #include "nodes/pathnodes.h"
++#include "utils/hsearch.h"
+ #include "nodes/pg_list.h"
+ 
+ #define CODE_VERSION   10300
+
+
+--- a/pgspider_ext.c
++++ b/pgspider_ext.c
+@@ -20,6 +20,7 @@
+ #include <stddef.h>
+ #include "access/relation.h"
+ #include "access/table.h"
++#include "access/htup_details.h"
+ #include "catalog/namespace.h"
+ #include "commands/explain.h"
+ #if PG_VERSION_NUM >= 180000
+@@ -1323,7 +1324,11 @@
+ 	{
+ 		child_tupledesc = ExecTypeFromTL(child_plan->fdw_scan_tlist);
+ 		ExecInitScanTupleSlot(child_ss->ps.state, child_ss, child_tupledesc,
+-							  &TTSOpsHeapTuple);
++							  &TTSOpsHeapTuple
++#if PG_VERSION_NUM >= 190000
++                              , 0
++#endif
++                             );
+ 	}
+ 	else
+ 	{
+@@ -1332,7 +1337,11 @@
+ 		/* don't trust FDWs to return tuples fulfilling NOT NULL constraints */
+ 		child_tupledesc = CreateTupleDescCopy(RelationGetDescr(currentRelation));
+ 		ExecInitScanTupleSlot(child_ss->ps.state, child_ss, child_tupledesc,
+-							  &TTSOpsHeapTuple);
++							  &TTSOpsHeapTuple
++#if PG_VERSION_NUM >= 190000
++                              , 0
++#endif
++                             );
+ 	}
+ }
+ 
