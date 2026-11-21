@@ -1,3 +1,10 @@
+pg-tre (4.6.4-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 4.6.4 with PostgreSQL 19 support.
+  * Normalize the complete PGXN archive, including pinned TRE and Lime.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:55:00 +0800
+
 pg-tre (4.6.2-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 4.6.2 with the sparsemap cursor fix.

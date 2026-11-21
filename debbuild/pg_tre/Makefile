@@ -1,12 +1,12 @@
 all: move
 
 # Complete upstream release archive with pinned TRE and Lime sources.
-# https://github.com/gburd/pg_tre/releases/download/v4.6.2/pg_tre-4.6.2.tar.gz
-TARBALL := pg_tre-4.6.2.tar.gz
+# https://api.pgxn.org/dist/pg_tre/4.6.4/pg_tre-4.6.4.zip (normalized with GNU tar)
+TARBALL := pg_tre-4.6.4.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 17 18
+PG_VERSIONS ?= 17 18 19
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
