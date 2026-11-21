@@ -1,3 +1,9 @@
+logerrors (2.1.6-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 2.1.6.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:30:00 +0800
+
 logerrors (2.1.5-1PGSTY) unstable; urgency=low
 
   * https://github.com/munakoiso/logerrors/releases/tag/v2.1.5

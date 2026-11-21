@@ -1,6 +1,9 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
-TARBALL := logerrors-2.1.5.tar.gz
+TARBALL := logerrors-2.1.6.tar.gz
 
 # prepare directory
 setup:
