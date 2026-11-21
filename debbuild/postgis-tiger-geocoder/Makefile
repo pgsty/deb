@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: check-src setup build move
 .NOTPARALLEL:
 
@@ -5,7 +8,7 @@ TARBALL := postgis_tiger_geocoder-2025.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 BUILD_JOBS ?= 3
-PG_VERSIONS ?= 16 17 18
+PG_VERSIONS ?= 16 17 18 19
 DEB_BUILD_OPTIONS ?= parallel=$(BUILD_JOBS) nocheck
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
