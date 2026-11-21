@@ -1,0 +1,52 @@
+Subject: Adapt wal2mongo output-plugin declarations to PostgreSQL 19
+
+Map the replication-origin names, retain static callback type checking, and convert Datums before varlena access.
+
+--- a/wal2mongo.c
++++ b/wal2mongo.c
+@@ -12,6 +12,10 @@
+  *-------------------------------------------------------------------------
+  */
+ #include "postgres.h"
++#if PG_VERSION_NUM >= 190000
++#define RepOriginId ReplOriginId
++#define InvalidRepOriginId InvalidReplOriginId
++#endif
+ 
+ #include "catalog/pg_type.h"
+ 
+@@ -110,7 +114,11 @@
+ void
+ _PG_output_plugin_init(OutputPluginCallbacks *cb)
+ {
+-	AssertVariableIsOfType(&_PG_output_plugin_init, LogicalOutputPluginInit);
++	#if PG_VERSION_NUM >= 190000
++    StaticAssertVariableIsOfType(&_PG_output_plugin_init, LogicalOutputPluginInit);
++#else
++    AssertVariableIsOfType(&_PG_output_plugin_init, LogicalOutputPluginInit);
++#endif
+ 
+ 	cb->startup_cb = pg_w2m_decode_startup;
+ 	cb->begin_cb = pg_w2m_decode_begin_txn;
+@@ -705,7 +713,7 @@
+ 		/* print data */
+ 		if (isnull)
+ 			appendStringInfoString(s, "null");
+-		else if (typisvarlena && VARATT_IS_EXTERNAL_ONDISK(origval))
++		else if (typisvarlena && VARATT_IS_EXTERNAL_ONDISK(DatumGetPointer(origval)))
+ 			appendStringInfoString(s, "unchanged-toast-datum");
+ 		else if (!typisvarlena)
+ 		{
+@@ -729,10 +737,10 @@
+ 			if (typid == BYTEAOID )
+ 			{
+ 				/* Print hex format */
+-				rp = result = palloc(VARSIZE_ANY_EXHDR(val) * 2 + 2 + 1);
++				rp = result = palloc(VARSIZE_ANY_EXHDR(DatumGetPointer(val)) * 2 + 2 + 1);
+ 				*rp++ = '\\';
+ 				*rp++ = 'x';
+-				rp += hex_encode(VARDATA_ANY(val), VARSIZE_ANY_EXHDR(val), rp);
++				rp += hex_encode(VARDATA_ANY(DatumGetPointer(val)), VARSIZE_ANY_EXHDR(DatumGetPointer(val)), rp);
+ 				*rp = '\0';
+ 				print_w2m_literal(s, typid, result);
+ 			}

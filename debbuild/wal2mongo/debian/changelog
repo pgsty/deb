@@ -1,5 +1,11 @@
 wal2mongo (1.0.7-1PGSTY) unstable; urgency=medium
 
+  * Adapt PostgreSQL 19 APIs with version-conditional compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0000
+
+wal2mongo (1.0.7-1PGSTY) unstable; urgency=medium
+
   * Add PostgreSQL 17 and 18 support
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 22 Jul 2026 21:42:39 +0800
