@@ -1,0 +1,79 @@
+Subject: Adapt sqlite_fdw to PostgreSQL 19 declarations and instrumentation
+
+Extend the build version check, include used declarations, select NodeInstrumentation, and convert Datums before varlena access.
+
+--- a/Makefile
++++ b/Makefile
+@@ -37,8 +37,8 @@
+ ifndef MAJORVERSION
+ MAJORVERSION := $(basename $(VERSION))
+ endif
+-ifeq (,$(findstring $(MAJORVERSION), 13 14 15 16 17 18))
+-$(error PostgreSQL 13, 14, 15, 16, 17 or 18 is required to compile this extension)
++ifeq (,$(findstring $(MAJORVERSION), 13 14 15 16 17 18 19))
++$(error PostgreSQL 13, 14, 15, 16, 17, 18 or 19 is required to compile this extension)
+ endif
+ 
+ else
+
+--- a/sqlite_fdw.h
++++ b/sqlite_fdw.h
+@@ -13,6 +13,7 @@
+ #ifndef SQLITE_FDW_H
+ #define SQLITE_FDW_H
+ 
++#include <limits.h>
+ #include "sqlite3.h"
+ 
+ #if (PG_VERSION_NUM >= 120000)
+
+
+--- a/sqlite_fdw.c
++++ b/sqlite_fdw.c
+@@ -11,6 +11,7 @@
+  */
+ 
+ #include "postgres.h"
++#include "access/htup_details.h"
+ #include "sqlite_fdw.h"
+ 
+ #include <sqlite3.h>
+@@ -2499,7 +2500,11 @@
+ 	SqliteFdwDirectModifyState *dmstate = (SqliteFdwDirectModifyState *) node->fdw_state;
+ 	EState	   *estate = node->ss.ps.state;
+ 	TupleTableSlot *slot = node->ss.ss_ScanTupleSlot;
++#if PG_VERSION_NUM >= 190000
++	NodeInstrumentation *instr = node->ss.ps.instrument;
++#else
+ 	Instrumentation *instr = node->ss.ps.instrument;
++#endif
+ 
+ 	elog(DEBUG1, "sqlite_fdw : %s", __func__);
+ 
+
+--- a/deparse.c
++++ b/deparse.c
+@@ -12,6 +12,9 @@
+ 
+ #include "postgres.h"
+ #include "sqlite_fdw.h"
++#include "catalog/pg_type_d.h"
++#include "access/transam.h"
++#include "access/htup_details.h"
+ 
+ #include "catalog/pg_aggregate.h"
+ #include "catalog/pg_collation.h"
+
+--- a/sqlite_query.c
++++ b/sqlite_query.c
+@@ -116,8 +116,8 @@
+ 					case SQLITE3_TEXT: /* threated as UTF-8 text BLOB */
+ 					{
+ 						value_datum = (Datum) palloc0(value_byte_size_blob_or_utf8 + VARHDRSZ);
+-						memcpy(VARDATA(value_datum), sqlite3_value_blob(val), value_byte_size_blob_or_utf8);
+-						SET_VARSIZE(value_datum, value_byte_size_blob_or_utf8 + VARHDRSZ);
++						memcpy(VARDATA(DatumGetPointer(value_datum)), sqlite3_value_blob(val), value_byte_size_blob_or_utf8);
++						SET_VARSIZE(DatumGetPointer(value_datum), value_byte_size_blob_or_utf8 + VARHDRSZ);
+ 						return (struct NullableDatum) {PointerGetDatum((const void *)value_datum), false};
+ 					}
+ 				}

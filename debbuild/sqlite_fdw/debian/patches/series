@@ -1,1 +1,2 @@
 sqlite_fdw-2.5.0.patch
+sqlite_fdw-2.5.0-pg19-compat.patch
