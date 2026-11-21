@@ -2,7 +2,7 @@
 
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
-export DEB_BUILD_OPTIONS = parallel=1
+export DEB_BUILD_OPTIONS := $(filter-out parallel=%,$(DEB_BUILD_OPTIONS)) parallel=1
 export CMAKE_BUILD_PARALLEL_LEVEL = 1
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
@@ -24,6 +24,21 @@ override_dh_auto_install:
 override_dh_installdocs:
 	dh_installdocs --all
 
+
+# The compiled module uses symbols added by the November 2026 security minors.
+override_dh_gencontrol:
+	set -e; for pg in $$(pg_buildext supported-versions); do \
+		case "$$pg" in \
+			18) minimum=18.7 ;; \
+			17) minimum=17.12 ;; \
+			16) minimum=16.16 ;; \
+			*) echo "unsupported PostgreSQL major: $$pg" >&2; exit 1 ;; \
+		esac; \
+		built=$$(/usr/lib/postgresql/$$pg/bin/pg_config --version); \
+		built=$${built#PostgreSQL }; built=$${built%% *}; \
+		dpkg --compare-versions "$$built" ge "$$minimum"; \
+		dh_gencontrol -ppostgresql-$$pg-timescaledb-tsl -- -Vpostgresql:Depends="postgresql-$$pg (>= $$built)"; \
+	done
 
 %:
 	dh $@

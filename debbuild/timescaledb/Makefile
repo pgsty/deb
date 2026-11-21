@@ -1,20 +1,18 @@
-all: pre build
+all: build
 
 export DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
-VERSION := 2.31.0
+VERSION := 2.32.1
+PG_VERSIONS ?= 18 17 16
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 TARBALL := timescaledb-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-
-pre:
-	apt-get update -qq
-	apt-get install -y cmake libcurl4-openssl-dev libicu-dev libssl-dev
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL); if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-build: check-src build18 build17 build16
+build: check-src $(addprefix build,$(PG_VERSIONS))
 
 define build_one
 	rm -rf build-$(1); mkdir -p build-$(1)
@@ -29,7 +27,7 @@ define build_one
 	echo '$(1)' > build-$(1)/build/debian/pgversions
 	cd build-$(1)/build && pg_buildext updatecontrol
 	cd build-$(1)/build && CFLAGSPATH=" -fPIC -pie" CXXFLAGS=" -fPIC -pie" PATH=/usr/lib/postgresql/$(1)/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-	mkdir -p ~/ext/pkg && cp build-$(1)/*.deb ~/ext/pkg/ && find build-$(1) -maxdepth 1 -type f -name '*.ddeb' -exec cp {} ~/ext/pkg/ \;
+	mkdir -p $(PKG_OUTPUT_DIR) && cp build-$(1)/*.deb $(PKG_OUTPUT_DIR)/ && find build-$(1) -maxdepth 1 -type f -name '*.ddeb' -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 endef
 
 build18:
