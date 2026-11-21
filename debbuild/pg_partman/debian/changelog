@@ -1,3 +1,9 @@
+pg-partman (5.5.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 5.5.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:00:00 +0800
+
 pg-partman (5.5.0-1PGSTY) unstable; urgency=medium
 
   * Rename binary packages to postgresql-<major>-partman to match PGDG.
