@@ -1,3 +1,11 @@
+pg-regresql (2.2.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 2.2.0 with extended-statistics restore backports.
+  * Drop the default-goal patch now included upstream and record PostgreSQL licensing.
+  * Keep PostgreSQL 19 excluded pending a replacement for get_relation_info_hook.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 22:00:00 +0800
+
 pg-regresql (2.1.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 2.1.0.
