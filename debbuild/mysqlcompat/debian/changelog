@@ -1,3 +1,10 @@
+mysqlcompat (0.0.7-1PGSTY) unstable; urgency=medium
+
+  * Restore the official PGXN source archive and retain its SHA256.
+  * Package the pure SQL payload as Architecture: all and install upstream documentation.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 03:00:00 +0800
+
 mysqlcompat (0.0.7-1PIGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
