@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: check-src setup build move
 
 TARBALL := pg_ivm-1.17.tar.gz
