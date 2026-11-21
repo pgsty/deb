@@ -1,5 +1,12 @@
 qdgc (0.1.0-1PGSTY) unstable; urgency=medium
 
+  * Target PostgreSQL 15 through 19; retain the PGXN extension release.
+  * GitHub v1.0.0 belongs to the older grid generator, not this extension.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0800
+
+qdgc (0.1.0-1PGSTY) unstable; urgency=medium
+
   * Initial package for upstream PGXN 0.1.0.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 27 Jul 2026 18:00:00 +0800
