@@ -1,3 +1,9 @@
+Subject: Build with packaged MongoDB and JSON libraries
+
+Use pkg-config for the system libraries and omit bundled json-c objects.
+Before mongo-c-driver 1.30, map the renamed legacy JSON entry points and
+remove flag to their original names. Preserve legacy Extended JSON output.
+
 diff -urN orig/Makefile mod/Makefile
 --- a/Makefile	2025-09-30 13:28:33.000000000 +0800
 +++ b/Makefile	2026-06-19 21:25:14.881327052 +0800
@@ -20,35 +26,22 @@ diff -urN orig/Makefile mod/Makefile
  
  
  EXTENSION = mongo_fdw
-diff -urN orig/mongo_wrapper.c mod/mongo_wrapper.c
---- a/mongo_wrapper.c	2025-09-30 13:28:33.000000000 +0800
-+++ b/mongo_wrapper.c	2026-06-19 21:25:14.881477760 +0800
-@@ -227,7 +227,7 @@
+--- a/mongo_wrapper.c
++++ b/mongo_wrapper.c
+@@ -16,6 +16,16 @@
  
- 	c = mongoc_client_get_collection(conn, database, collection);
- 
--	r = mongoc_collection_remove(c, MONGOC_DELETE_SINGLE_REMOVE, b, NULL,
-+	r = mongoc_collection_remove(c, MONGOC_REMOVE_SINGLE_REMOVE, b, NULL,
- 								 &error);
- 	mongoc_collection_destroy(c);
- 	if (!r)
-@@ -747,7 +747,11 @@
- 	{
- 		char	   *json;
- 
--		if ((json = bson_array_as_legacy_extended_json(&bson, NULL)))
-+#if BSON_CHECK_VERSION(1, 25, 0)
-+		if ((json = bson_array_as_relaxed_extended_json(&bson, NULL)))
-+#else
-+		if ((json = bson_array_as_json(&bson, NULL)))
+ #include <mongoc.h>
+ #include "mongo_wrapper.h"
++
++/* libbson 1.30 renamed the legacy JSON entry points without changing format. */
++#if !BSON_CHECK_VERSION(1, 30, 0)
++#define bson_array_as_legacy_extended_json bson_array_as_json
++#define bson_as_legacy_extended_json bson_as_json
 +#endif
- 		{
- 			appendStringInfoString(output, json);
- 			bson_free(json);
-@@ -758,5 +758,5 @@
- char *
- bsonAsJson(const BSON *bsonDocument)
- {
--	return bson_as_legacy_extended_json(bsonDocument, NULL);
-+	return bson_as_relaxed_extended_json(bsonDocument, NULL);
- }
++
++#if !MONGOC_CHECK_VERSION(1, 30, 0)
++#define MONGOC_DELETE_SINGLE_REMOVE MONGOC_REMOVE_SINGLE_REMOVE
++#endif
+ 
+ #define ITER_TYPE(i) ((bson_type_t) * ((i)->raw + (i)->type))
+ 

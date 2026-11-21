@@ -1,1 +1,2 @@
-mongo_fdw-5.5.3.patch
+mongo_fdw-5.5.3-system-libraries.patch
+mongo_fdw-5.5.3-pg19-compat.patch
