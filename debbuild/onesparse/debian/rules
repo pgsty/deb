@@ -19,4 +19,4 @@ override_dh_auto_test:
 	:
 
 override_dh_auto_clean:
-	$(MAKE) PG_CONFIG=$(PG_CONFIG) clean || true
+	$(MAKE) PG_CONFIG=$(PG_CONFIG) clean
