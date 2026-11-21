@@ -1,3 +1,10 @@
+Subject: [PATCH] retain upstream Brotli invalid-block-switch fix
+
+The pinned DuckDB revision still includes Brotli 1.1.0. Backport the
+upstream pg_lake 3.5.10 decoder fix and regression test removed in 3.6.0.
+Return a format error for invalid block switches instead of retrying
+indefinitely. No additional decoder behavior is changed.
+
 diff --git a/duckdb_pglake/duckdb/test/common/test_brotli_invalid_block_switch.cpp b/duckdb_pglake/duckdb/test/common/test_brotli_invalid_block_switch.cpp
 new file mode 100644
 index 00000000000..08067b0fba3

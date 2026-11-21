@@ -1,3 +1,12 @@
+pg-lake (3.7.0-1PGSTY) unstable; urgency=medium
+
+  * Package upstream v3.7.0 with unchanged pinned Avro and DuckDB dependencies.
+  * Rebase archive/private-library packaging and retain scoped Brotli/ODR fixes.
+  * Enable PostgreSQL 19 using the upstream compatibility implementation.
+  * Preserve full DWARF in bundled libraries and clean using a selected PG major.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 16:00:00 +0800
+
 pg-lake (3.6.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 3.6.0 with pinned DuckDB 1.5.6 and httpfs.

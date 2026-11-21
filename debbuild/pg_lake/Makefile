@@ -1,9 +1,10 @@
 all: move
 
-VERSION := 3.6.0
+VERSION := 3.7.0
 TARBALL := pg_lake-$(VERSION).tar.gz
 BUILD_DIR := build
-PG_VERSIONS := 16 17 18
+PG_VERSIONS := 16 17 18 19
+export PG_SUPPORTED_VERSIONS ?= $(PG_VERSIONS)
 VCPKG_VERSION := 2025.10.17
 VCPKG_COMMIT := 74e6536215718009aae747d86d84b78376bf9e09
 VCPKG_MAX_CONCURRENCY ?= 2
@@ -14,10 +15,10 @@ VCPKG_RELEASE_ARCH := $(if $(filter arm64,$(VCPKG_DEB_ARCH)),arm64,x64)
 VCPKG_TARGET_TRIPLET ?= $(VCPKG_RELEASE_ARCH)-linux-release
 VCPKG_HOST_TRIPLET ?= $(VCPKG_RELEASE_ARCH)-linux-release
 VCPKG_INSTALL_FLAGS ?=
-# vcpkg dependencies keep function and line-table DWARF only (-g1).  Key the
-# binary cache by these flags so a flag change never reuses older archives.
-VCPKG_CFLAGS := $(shell dpkg-buildflags --get CFLAGS | sed 's/-flto=auto/-flto=$(PG_LAKE_LTO_JOBS)/g') -g1
-VCPKG_CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS | sed 's/-flto=auto/-flto=$(PG_LAKE_LTO_JOBS)/g') -g1
+# Preserve distribution debug flags and key the binary cache by these flags
+# so a flag change never reuses older dependency archives.
+VCPKG_CFLAGS := $(shell dpkg-buildflags --get CFLAGS | sed 's/-flto=auto/-flto=$(PG_LAKE_LTO_JOBS)/g')
+VCPKG_CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS | sed 's/-flto=auto/-flto=$(PG_LAKE_LTO_JOBS)/g')
 VCPKG_LDFLAGS := $(shell dpkg-buildflags --get LDFLAGS | sed 's/-flto=auto/-flto=$(PG_LAKE_LTO_JOBS)/g')
 VCPKG_DEFAULT_BINARY_CACHE ?= $(HOME)/.cache/pg_lake/vcpkg-archives-$(shell printf '%s\n' '$(VCPKG_CFLAGS)' '$(VCPKG_CXXFLAGS)' '$(VCPKG_LDFLAGS)' | sha256sum | cut -c1-12)
 
@@ -30,8 +31,8 @@ SOURCE_TARBALL ?= $(firstword $(wildcard \
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 VCPKG_ROOT ?= $(HOME)/.cache/pg_lake/vcpkg-$(VCPKG_VERSION)
 VCPKG_TOOLCHAIN_PATH := $(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
-SOURCE_CANDIDATE_DIR ?= $(CURDIR)/candidate
-SOURCE_PATCHES := patches/pg_lake-3.6.0.patch patches/pg_lake-3.6.0-brotli-1.1.1.patch patches/pg_lake-3.6.0-s3-odr.patch
+SOURCE_CANDIDATE_DIR ?= $(HOME)/pgsty/artifacts/pg_lake-source/$(VERSION)/candidate
+SOURCE_PATCHES := patches/pg_lake-3.7.0-packaging.patch patches/pg_lake-3.7.0-brotli-block-switch.patch patches/pg_lake-3.7.0-s3-odr.patch
 TAR_BIN := $(shell command -v gtar 2>/dev/null || command -v tar)
 
 check-src:

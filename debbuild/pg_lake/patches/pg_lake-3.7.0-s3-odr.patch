@@ -1,3 +1,8 @@
+Subject: [PATCH] give the region-aware S3 deletion batch a distinct type name
+
+The pinned httpfs has a different duckdb::S3DeleteBatch layout. Rename
+only pg_lake's internal type to avoid an ODR violation under LTO.
+
 --- a/duckdb_pglake/src/fs/region_aware_s3fs.cpp
 +++ b/duckdb_pglake/src/fs/region_aware_s3fs.cpp
 @@ -717,10 +717,10 @@
