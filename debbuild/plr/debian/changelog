@@ -1,3 +1,9 @@
+plr (8.4.8.11-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 8.4.8.11.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:30:00 +0800
+
 plr (8.4.8.10-1PGSTY) unstable; urgency=medium
 
   * Package upstream 8.4.8.10 for PostgreSQL 14 through 18.
