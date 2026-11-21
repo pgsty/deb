@@ -1,5 +1,11 @@
 pg-datasentinel (1.0-1PGSTY) unstable; urgency=medium
 
+  * Keep PostgreSQL 19 disabled after regression review; omit the unaccepted patch.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0000
+
+pg-datasentinel (1.0-1PGSTY) unstable; urgency=medium
+
   * https://github.com/datasentinel/pg_datasentinel/releases/tag/1.0
 
  -- Ruohang Feng <rh@vonng.com>  Sun, 12 Apr 2026 12:00:00 +0000
