@@ -1,5 +1,11 @@
 pg-plan-filter (1.0.0-1PGSTY) unstable; urgency=medium
 
+  * Adapt PostgreSQL 19 APIs while preserving earlier PostgreSQL paths.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0000
+
+pg-plan-filter (1.0.0-1PGSTY) unstable; urgency=medium
+
   * Bump to official v1.0.0 source.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 08:57:58 +0800
