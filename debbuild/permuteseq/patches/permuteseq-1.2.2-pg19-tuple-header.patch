@@ -1,0 +1,14 @@
+Subject: Include the tuple declarations used by permuteseq
+
+PostgreSQL 19 no longer provides these declarations through transitive includes.
+
+--- a/permuteseq.c
++++ b/permuteseq.c
+@@ -9,6 +9,7 @@
+ #include <inttypes.h>
+ 
+ #include "postgres.h"
++#include "access/htup_details.h"
+ #include "access/hash.h"
+ #include "c.h"
+ #include "catalog/pg_sequence.h"
