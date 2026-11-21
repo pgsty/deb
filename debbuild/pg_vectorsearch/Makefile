@@ -1,7 +1,7 @@
 # Select the recipe targets, including PG19 on older postgresql-common.
 export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
 
-TARBALL := pg_vectorsearch-0.1.0.tar.gz
+TARBALL := pg_vectorsearch-0.2.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

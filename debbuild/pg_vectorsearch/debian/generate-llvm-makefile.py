@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 root = Path.cwd()
-module = 'pg_vectorsearch-' + (root / 'VERSION').read_text().strip()
+module = 'pg_vectorsearch'
 targets = json.loads((root / 'builddir/meson-info/intro-targets.json').read_text())
 selected = [target for target in targets if target['name'] in ('vs_pg', module)]
 assert len(selected) == 2, 'expected the PostgreSQL core library and extension'

@@ -1,9 +1,5 @@
 From: PGSTY packaging
-Subject: Initialize atomic function pointers with their exact pointer type
-
-Clang 15 rejects a void-pointer NULL as a static atomic function-pointer
-initializer. An explicit function-pointer cast preserves the null initial
-value and avoids changing dispatch or memory ordering.
+Subject: Use exact atomic function-pointer types for Clang 15 initializers
 
 --- a/src/algo/vecops.c
 +++ b/src/algo/vecops.c

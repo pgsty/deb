@@ -1,13 +1,14 @@
-diff --git a/src/pg/meson.build b/src/pg/meson.build
+From: PGSTY packaging
+Subject: Avoid an unnecessary private PostgreSQL library RUNPATH
+
 --- a/src/pg/meson.build
 +++ b/src/pg/meson.build
-@@ -81,7 +81,9 @@ pgvs_ext_so = shared_module(ext_module_name,
+@@ -71,7 +71,8 @@
    include_directories: src_inc,
    name_prefix: '',
    build_rpath: pg_rpath.length() > 0 ? pg_rpath[0] : '',
 -  install_rpath: pg_libdir,
-+  # PostgreSQL symbols come from the backend; BLAS lives in the system
-+  # library path. Do not embed the server's private library directory.
++  # The backend resolves PostgreSQL symbols; BLAS uses the system path.
 +  install_rpath: '',
    install: true,
    install_dir: pg_pkglibdir,
