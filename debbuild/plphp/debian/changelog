@@ -1,5 +1,11 @@
 plphp (2.6-1PGSTY) unstable; urgency=medium
 
+  * Adapt PostgreSQL 19 APIs with version-conditional compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0000
+
+plphp (2.6-1PGSTY) unstable; urgency=medium
+
   * Initial package using the same pinned source and patches as the RPM recipe.
   * Declare the matching PHP embed runtime dependency explicitly.
 
