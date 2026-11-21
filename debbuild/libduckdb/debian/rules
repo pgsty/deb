@@ -1,18 +1,29 @@
 #!/usr/bin/make -f
 
+DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
 DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+ifeq ($(DEB_HOST_ARCH),arm64)
+ELF_MACHINE := AArch64
+else ifeq ($(DEB_HOST_ARCH),amd64)
+ELF_MACHINE := Advanced Micro Devices X86-64
+else
+$(error unsupported libduckdb architecture: $(DEB_HOST_ARCH))
+endif
 
 override_dh_auto_build:
 
 override_dh_auto_test:
+	test -s libduckdb.so
+	readelf -h libduckdb.so | grep -E 'Machine:[[:space:]]+$(ELF_MACHINE)$$'
+	readelf -d libduckdb.so | grep -F 'Library soname: [libduckdb.so]'
+	nm -D --defined-only libduckdb.so | grep -E ' T duckdb_library_version$$'
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
+# Keep normal dh_strip processing. Official assets contain symbols but no DWARF;
+# an automatic dbgsym package preserves symbols only, not full source debugging.
 
 override_dh_auto_install:
-
-	mkdir -p $(CURDIR)/debian/libduckdb/usr/lib/$(DEB_HOST_MULTIARCH); \
-	cp $(CURDIR)/libduckdb.so $(CURDIR)/debian/libduckdb/usr/lib/$(DEB_HOST_MULTIARCH)/;
+	install -Dm755 libduckdb.so $(CURDIR)/debian/libduckdb/usr/lib/$(DEB_HOST_MULTIARCH)/libduckdb.so
 
 %:
 	dh $@

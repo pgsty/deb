@@ -1,11 +1,13 @@
-all: setup build move
+all: move
 
-VERSION := 1.5.5
-ARCH := $(shell uname -m)
-ifeq ($(ARCH),aarch64)
+VERSION := 1.5.6
+ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+ifeq ($(ARCH),arm64)
 TARBALL := libduckdb-$(VERSION)-arm64.tar.gz
-else
+else ifeq ($(ARCH),amd64)
 TARBALL := libduckdb-$(VERSION)-amd64.tar.gz
+else
+$(error unsupported libduckdb architecture: $(ARCH))
 endif
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
@@ -24,12 +26,16 @@ setup: check-src
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
 # building deb
-build:
+build: setup
 	cd $(BUILD_DIR) && dpkg-buildpackage -b -us -uc
 
 # collect deb
-move:
-	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/
+move: build
+	mkdir -p "$(PKG_OUTPUT_DIR)"
+	cp *.deb "$(PKG_OUTPUT_DIR)/"
+	set -e; for pkg in *.ddeb; do \
+		if test -f "$$pkg"; then cp "$$pkg" "$(PKG_OUTPUT_DIR)/"; fi; \
+	done
 
 # remove building craps
 clean:

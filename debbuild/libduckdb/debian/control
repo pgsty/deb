@@ -2,13 +2,13 @@ Source: libduckdb
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-Build-Depends: debhelper-compat (= 13)
+Build-Depends: debhelper-compat (= 13), binutils
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/duckdb/duckdb/
 
 Package: libduckdb
-Architecture: any
+Architecture: amd64 arm64
 Provides: libduckdb
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: In-process SQL OLAP Database Management System
