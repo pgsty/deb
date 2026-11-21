@@ -1,5 +1,11 @@
 pgxicor (0.1.1-1PGSTY) unstable; urgency=medium
 
+  * Add PostgreSQL 19 header and type compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:00:00 +0800
+
+pgxicor (0.1.1-1PGSTY) unstable; urgency=medium
+
   * Update to upstream 0.1.1.
   * Keep the libcurl build dependency aligned with RPM.
 

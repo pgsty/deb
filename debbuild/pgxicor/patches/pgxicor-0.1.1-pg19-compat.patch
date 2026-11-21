@@ -1,0 +1,15 @@
+Subject: Include the limits, type and tuple declarations used by pgxicor
+
+PostgreSQL 19 no longer provides these declarations through transitive includes.
+
+--- a/src/pgxicor.c
++++ b/src/pgxicor.c
+@@ -1,5 +1,8 @@
+ #include "pgxicor.h"
+ #include "postgres.h"
++#include <limits.h>
++#include "catalog/pg_type.h"
++#include "access/htup_details.h"
+ #include "fmgr.h"
+ #include "utils/array.h"
+ #include "utils/guc.h"
