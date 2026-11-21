@@ -1,5 +1,11 @@
 pg-stl (1.0.0-1PGSTY) unstable; urgency=medium
 
+  * Add PostgreSQL 19 header and type compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:00:00 +0800
+
+pg-stl (1.0.0-1PGSTY) unstable; urgency=medium
+
   * Initial package for upstream PGXN 1.0.0.
 
  -- Ruohang Feng <rh@vonng.com>  Thu, 04 Jun 2026 00:00:00 +0800
