@@ -1,0 +1,14 @@
+Subject: Include the integer limits used by pg_textsearch
+
+Declare INT_MAX explicitly instead of relying on PostgreSQL transitive includes.
+
+--- a/src/planner/hooks.c
++++ b/src/planner/hooks.c
+@@ -9,6 +9,7 @@
+  * It also optimizes BM25 score expressions in the planner.
+  */
+ #include <postgres.h>
++#include <limits.h>
+ 
+ #include <access/genam.h>
+ #include <access/htup_details.h>
