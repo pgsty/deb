@@ -1,3 +1,11 @@
+pg-stat-ch (0.4.2-1PGSTY) unstable; urgency=medium
+
+  * Upgrade to upstream 0.4.2 with PostgreSQL 19 support.
+  * Keep package version and dependency debug patches narrowly scoped.
+  * Honor the selected PostgreSQL versions and configurable parallelism.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 16:00:00 +0800
+
 pg-stat-ch (0.4.0-1PGSTY) unstable; urgency=medium
 
   * Upgrade to upstream 0.4.0.

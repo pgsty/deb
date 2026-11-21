@@ -2,10 +2,11 @@ all: setup build move
 
 # Keep the filename normalized because the local archive is repacked from the
 # upstream PGXN zip release into a tarball for builder compatibility.
-TARBALL := pg_stat_ch-0.4.0.tar.gz
+TARBALL := pg_stat_ch-0.4.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
 VCPKG_COMMIT := cd61e1e26a038e82d6550a3ebbe0fbbfe7da78e3
 VCPKG_ROOT ?= $(HOME)/.cache/pg_stat_ch/vcpkg-$(VCPKG_COMMIT)
 VCPKG_BINARY_CACHE ?= $(HOME)/.cache/pg_stat_ch/vcpkg-archives
