@@ -1,5 +1,11 @@
 lagraph (1.2.2-1PGSTY) unstable; urgency=medium
 
+  * Rebuild against GraphBLAS 10.5.3 and its matching LAGraph dependency.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 02:00:00 +0800
+
+lagraph (1.2.2-1PGSTY) unstable; urgency=medium
+
   * Update LAGraph and LAGraphX to 1.2.2.
   * Rebuild against GraphBLAS 10.5.2 with the existing upstream version.
   * Retain revision 1PGSTY before the first binary publication.

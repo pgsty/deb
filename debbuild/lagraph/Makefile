@@ -27,7 +27,7 @@ else
 	@../kitware-cmake "$(PRIVATE_CMAKE_PREFIX)" >/dev/null
 	@test -x "$(PRIVATE_CMAKE)"
 	@test "$$("$(PRIVATE_CMAKE)" --version | awk 'NR == 1 { print $$3 }')" = "3.31.12"
-	cd $(BUILD_DIR) && dpkg-checkbuilddeps -d 'debhelper-compat (= 13), libgraphblas-dev (>= 10.5.2), pkg-config'
+	cd $(BUILD_DIR) && dpkg-checkbuilddeps -d 'debhelper-compat (= 13), libgraphblas-dev (>= 10.5.3), pkg-config'
 endif
 
 build: setup check-build-deps
