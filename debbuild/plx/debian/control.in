@@ -13,5 +13,5 @@ Provides: postgresql-plx
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: Transpile multiple procedural dialects to PL/pgSQL
  plx transpiles functions written in Ruby, PHP, JavaScript, TypeScript, Python,
- Go, COBOL, Oracle PL/SQL, or Transact-SQL syntax into PL/pgSQL at CREATE
+ Go, COBOL, Oracle PL/SQL, Transact-SQL, Lua, or C# syntax into PL/pgSQL at CREATE
  FUNCTION time and executes them with PostgreSQL's standard PL/pgSQL runtime.

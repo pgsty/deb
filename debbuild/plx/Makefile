@@ -3,7 +3,7 @@ export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
 
 all: setup build move
 
-TARBALL := plx-2.0.1.tar.gz
+TARBALL := plx-3.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

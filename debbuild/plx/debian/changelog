@@ -1,3 +1,10 @@
+plx (3.1.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 3.1.0, including the Lua and C# dialects.
+  * Install the upstream 2.0.0 to 3.0.0 to 3.1.0 SQL upgrade chain.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 22:00:00 +0800
+
 plx (2.0.1-1PGSTY) unstable; urgency=medium
 
   * Bump distribution package to 2.0.1 (extension version 2.0.0).
