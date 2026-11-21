@@ -1,3 +1,9 @@
+decoderbufs (3.7.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 3.7.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:30:00 +0800
+
 decoderbufs (3.7.0-1PGSTY) unstable; urgency=medium
 
   * Package upstream 3.7.0 for PostgreSQL 14 through 18.

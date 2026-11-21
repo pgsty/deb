@@ -1,0 +1,66 @@
+Subject: PostgreSQL 19 compatibility
+
+Retain compile-time callback checks, explicitly convert Datum to a pointer,
+and access the PG19 anonymous commit timestamp union.
+
+--- a/src/decoderbufs.c
++++ b/src/decoderbufs.c
+@@ -98,7 +98,11 @@
+ 
+ /* specify output plugin callbacks */
+ void _PG_output_plugin_init(OutputPluginCallbacks *cb) {
++#if PG_VERSION_NUM >= 190000
++  StaticAssertVariableIsOfType(&_PG_output_plugin_init, LogicalOutputPluginInit);
++#else
+   AssertVariableIsOfType(&_PG_output_plugin_init, LogicalOutputPluginInit);
++#endif
+   cb->startup_cb = pg_decode_startup;
+   cb->begin_cb = pg_decode_begin_txn;
+   cb->change_cb = pg_decode_change;
+@@ -432,7 +436,7 @@
+     /* query output function */
+     getTypeOutputInfo(attr->atttypid, &typoutput, &typisvarlena);
+     if (!isnull) {
+-      if (typisvarlena && VARATT_IS_EXTERNAL_ONDISK(origval)) {
++      if (typisvarlena && VARATT_IS_EXTERNAL_ONDISK(DatumGetPointer(origval))) {
+         datum_msg.datum_missing = true;
+         datum_msg.datum_case = DECODERBUFS__DATUM_MESSAGE__DATUM_DATUM_MISSING;
+         elog(DEBUG1, "Not handling external on disk varlena at the moment.");
+@@ -506,7 +510,7 @@
+   rmsg.has_op = true;
+   rmsg.transaction_id = txn->xid;
+   rmsg.has_transaction_id = true;
+-#if PG_VERSION_NUM >= 150000
++#if PG_VERSION_NUM >= 150000 && PG_VERSION_NUM < 190000
+   rmsg.commit_time = TIMESTAMPTZ_TO_USEC_SINCE_EPOCH(txn->xact_time.commit_time);
+ #else
+   rmsg.commit_time = TIMESTAMPTZ_TO_USEC_SINCE_EPOCH(txn->commit_time);
+@@ -548,7 +552,7 @@
+   rmsg.has_op = true;
+   rmsg.transaction_id = txn->xid;
+   rmsg.has_transaction_id = true;
+-#if PG_VERSION_NUM >= 150000
++#if PG_VERSION_NUM >= 150000 && PG_VERSION_NUM < 190000
+   rmsg.commit_time = TIMESTAMPTZ_TO_USEC_SINCE_EPOCH(txn->xact_time.commit_time);
+ #else
+   rmsg.commit_time = TIMESTAMPTZ_TO_USEC_SINCE_EPOCH(txn->commit_time);
+@@ -604,7 +608,7 @@
+   /* set common fields */
+   rmsg.transaction_id = txn->xid;
+   rmsg.has_transaction_id = true;
+-#if PG_VERSION_NUM >= 150000
++#if PG_VERSION_NUM >= 150000 && PG_VERSION_NUM < 190000
+   rmsg.commit_time = TIMESTAMPTZ_TO_USEC_SINCE_EPOCH(txn->xact_time.commit_time);
+ #else
+   rmsg.commit_time = TIMESTAMPTZ_TO_USEC_SINCE_EPOCH(txn->commit_time);
+--- a/Makefile
++++ b/Makefile
+@@ -4,7 +4,7 @@
+ PROTOBUF_C_CFLAGS = $(shell pkg-config --cflags 'libprotobuf-c >= 1.0.0')
+ PROTOBUF_C_LDFLAGS = $(shell pkg-config --libs 'libprotobuf-c >= 1.0.0')
+ 
+-PG_CPPFLAGS += -std=c11 $(PROTOBUF_C_CFLAGS) -I/usr/local/include $(C_PARAMS)
++PG_CPPFLAGS += -std=gnu11 $(PROTOBUF_C_CFLAGS) -I/usr/local/include $(C_PARAMS)
+ SHLIB_LINK  += $(PROTOBUF_C_LDFLAGS)
+ 
+ OBJS = src/decoderbufs.o src/proto/pg_logicaldec.pb-c.o
