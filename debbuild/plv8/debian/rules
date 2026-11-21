@@ -2,6 +2,11 @@
 
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+PLV8_BUILD_JOBS ?= 4
+# pg_buildext passes MAKEVARS on the make command line; an exported NUMPROC
+# alone would be overwritten by the upstream processor-count assignment.
+export MAKEVARS = NUMPROC=$(PLV8_BUILD_JOBS)
 # Resolve Debian's C++ flags so OPTFLAGS below carries hardening and DWARF
 # into the wrapper objects that upstream builds outside the normal PGXS path.
 export CXXFLAGS = $(shell dpkg-buildflags --get CXXFLAGS)

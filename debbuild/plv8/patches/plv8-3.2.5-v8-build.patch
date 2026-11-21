@@ -1,3 +1,12 @@
+Subject: Preserve distribution build flags and complete the bundled V8 link
+
+The upstream 3.2.5 tarball bundles v8-cmake 90d6634d820af06f14c642a9ef3a7bfa7ab4667a.
+Keep C/C++ compiler identities distinct, retain C/C++ DWARF, and build only
+libraries linked by plv8. Link the architecture stack-scanner helper into
+mksnapshot and the extension, include <algorithm> for GCC 14, and order
+bitcode compilation after the generated header. This changes the build
+integration only; PostgreSQL 19 API support is already present upstream.
+
 --- a/Makefile
 +++ b/Makefile
 @@ -33,6 +33,12 @@
@@ -24,19 +33,20 @@
  all: v8 $(OBJS)
  
  # For some reason, this solves parallel make dependency.
-@@ -52,8 +62,10 @@
+@@ -52,8 +62,11 @@
  	@git submodule update --init --recursive
  	cd deps/v8-cmake && $(foreach patch,$(PATCH_V8),patch -p1 <../../$(patch) &&) true
  
++V8_CFLAGS ?= $(CFLAGS)
 +V8_CXXFLAGS ?= $(filter-out -fno-rtti,$(OPTFLAGS))
 +
  deps/v8-cmake/build/libv8_libbase.a: deps/v8-cmake/README.md
 -	@cd deps/v8-cmake && mkdir -p build && cd build && cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Denable-fPIC=ON -DCMAKE_BUILD_TYPE=Release $(V8_CMAKE_ARGS) ../ && make -j $(NUMPROC)
-+	@cd deps/v8-cmake && mkdir -p build && cd build && cmake -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CXX_FLAGS="$(V8_CXXFLAGS)" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Denable-fPIC=ON -DCMAKE_BUILD_TYPE=Release $(V8_CMAKE_ARGS) ../ && make -j $(NUMPROC) v8_libbase v8_base_without_compiler v8_compiler v8_snapshot v8_inspector v8_libplatform v8_libsampler v8_torque_generated
++	@cd deps/v8-cmake && mkdir -p build && cd build && cmake -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_FLAGS="$(V8_CFLAGS)" -DCMAKE_CXX_FLAGS="$(V8_CXXFLAGS)" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Denable-fPIC=ON -DCMAKE_BUILD_TYPE=Release $(V8_CMAKE_ARGS) ../ && make -j $(NUMPROC) v8_libbase v8_base_without_compiler v8_compiler v8_snapshot v8_inspector v8_libplatform v8_libsampler v8_torque_generated
  
  v8: deps/v8-cmake/build/libv8_libbase.a
  
-@@ -88,7 +100,7 @@
+@@ -88,7 +101,7 @@
  
  SHLIB_LINK += -lv8_base_without_compiler -lv8_compiler -lv8_snapshot -lv8_inspector -lv8_libplatform -lv8_base_without_compiler -lv8_libsampler -lv8_torque_generated -lv8_libbase
  
@@ -45,7 +55,7 @@
  CCFLAGS += -Wall $(OPTFLAGS)
  
  generate_upgrades:
-@@ -106,7 +118,7 @@
+@@ -106,7 +119,7 @@
  
  COMPILE.cxx.bc = $(CLANG) -xc++ -Wno-ignored-attributes $(BITCODE_CXXFLAGS) $(CCFLAGS) $(CPPFLAGS) -emit-llvm -c
  

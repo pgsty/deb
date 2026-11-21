@@ -1,3 +1,13 @@
+plv8 (3.2.5-2PGSTY) unstable; urgency=medium
+
+  * Enable upstream PostgreSQL 19 support and target PostgreSQL 15 through 19.
+  * Name the bundled V8 build patch by purpose and declare its Python dependency.
+  * Carry distribution C flags into bundled zlib as well as C++ V8 objects.
+  * Build only V8 in the pre-build and serialize recipe phases under make -j.
+  * Remove the distribution-specific libstdc++ development package pin.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 16:12:00 +0800
+
 plv8 (3.2.5-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 3.2.5 with the pinned, verified V8 source bundle.
