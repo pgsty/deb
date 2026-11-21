@@ -1,0 +1,31 @@
+Subject: Match the PostgreSQL 19 table scan APIs
+
+Pass default zero flags to table_beginscan and table_index_fetch_begin; retain the older call signatures.
+
+--- a/src/psql_bm25s_am.c
++++ b/src/psql_bm25s_am.c
+@@ -11142,7 +11142,11 @@
+ 
+     PG_TRY();
+     {
++        #if PG_VERSION_NUM >= 190000
++        scan = table_beginscan(heap_relation, SnapshotAny, 0, NULL, 0);
++#else
+         scan = table_beginscan(heap_relation, SnapshotAny, 0, NULL);
++#endif
+ 
+         for (i = 0; i < total_docs; i++)
+         {
+@@ -14155,7 +14159,11 @@
+ )
+ {
+     memset(visibility_out, 0, sizeof(*visibility_out));
+-    visibility_out->fetch = table_index_fetch_begin(heapRelation);
++    visibility_out->fetch = table_index_fetch_begin(heapRelation
++#if PG_VERSION_NUM >= 190000
++                                                    , 0
++#endif
++                                                    );
+     visibility_out->snapshot = snapshot;
+     visibility_out->slot = MakeSingleTupleTableSlot(
+         RelationGetDescr(heapRelation),
