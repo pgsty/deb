@@ -1,6 +1,10 @@
-all: pre setup build move
+all: pre build move
 
-TARBALL := documentdb-1.0-0.tar.gz
+.NOTPARALLEL:
+PG_VERSIONS ?= $(shell cat debian/pgversions)
+export PG_SUPPORTED_VERSIONS ?= $(PG_VERSIONS)
+
+TARBALL := documentdb-1.2-0.tar.gz
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 INTEL_TARBALL := intelrdfpmath-applied-2.0u3-1.tar.gz
 INTEL_SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(INTEL_TARBALL)),$(wildcard $(HOME)/pgsty/repo/ext/src/$(INTEL_TARBALL)),$(wildcard ../SOURCES/$(INTEL_TARBALL)))
@@ -26,26 +30,16 @@ setup: check-src
 	chown -R $(shell whoami):$(shell whoami) build/
 
 # building deb
-build: build18 build17 build16
+build: $(addprefix build,$(PG_VERSIONS))
 
-build18: setup
-	echo '18' > build/debian/pgversions
+build%: setup
+	printf '%s\n' '$*' > build/debian/pgversions
 	cd build/ && set -e; \
 		cp debian/control.in debian/control.in.with-rum; \
 		trap 'mv -f debian/control.in.with-rum debian/control.in' EXIT; \
-		sed -i 's/, postgresql-PGVERSION-rum//g' debian/control.in; \
-		pg_buildext updatecontrol; \
-		PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build17: setup
-	echo '17' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build16: setup
-	echo '16' > build/debian/pgversions
-	cd build/ && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+		if [ '$*' -ge 18 ]; then sed -i 's/, postgresql-PGVERSION-rum//g' debian/control.in; fi; \
+		PG_SUPPORTED_VERSIONS='$*' pg_buildext updatecontrol; \
+		PATH=/usr/lib/postgresql/$*/bin:$(PATH) PG_SUPPORTED_VERSIONS='$*' dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:

@@ -2,13 +2,13 @@
 set -euo pipefail
 
 if [[ $# -ne 2 ]]; then
-  echo 'usage: prepare.sh documentdb-1.0-0.tar.gz intelrdfpmath-applied-2.0u3-1.tar.gz' >&2
+  echo 'usage: prepare.sh documentdb-1.2-0.tar.gz intelrdfpmath-applied-2.0u3-1.tar.gz' >&2
   exit 2
 fi
 
 TARBALL=$1
 INTEL_TARBALL=$2
-EXPECTED_TARBALL=documentdb-1.0-0.tar.gz
+EXPECTED_TARBALL=documentdb-1.2-0.tar.gz
 EXPECTED_INTEL_TARBALL=intelrdfpmath-applied-2.0u3-1.tar.gz
 EXPECTED_INTEL_SIZE=5805822
 EXPECTED_INTEL_SHA256=3212a37262ce55c9f0bf16103f6a5df0e4ce9e9eea3c2a7866c39097227e5e56
@@ -89,8 +89,21 @@ for dependency_source in "$LIBBSON_SOURCE" "$PCRE2_SOURCE" "$UNCRUSTIFY_SOURCE" 
   test -s "$dependency_source" || { echo "required offline dependency source missing: $dependency_source" >&2; exit 1; }
 done
 export LIBBSON_SOURCE PCRE2_SOURCE UNCRUSTIFY_SOURCE CITUS_TOOLS_SOURCE
-sed -i 's#curl -s -L https://github.com/mongodb/mongo-c-driver/releases/download/$DRIVER_VERSION/mongo-c-driver-$DRIVER_VERSION.tar.gz -o ./mongo-c-driver-$DRIVER_VERSION.tar.gz#cp "$LIBBSON_SOURCE" ./mongo-c-driver-$DRIVER_VERSION.tar.gz#' install_setup_libbson.sh
-sed -i 's#curl -L https://github.com/PCRE2Project/pcre2/releases/download/$PCRE_LIB_WITH_VERSION/$PCRE_LIB_WITH_VERSION.tar.gz -o ./$PCRE_LIB_WITH_VERSION.tar.gz#cp "$PCRE2_SOURCE" ./$PCRE_LIB_WITH_VERSION.tar.gz#' install_setup_pcre2.sh
+python3 - <<'PYOFFLINE'
+from pathlib import Path
+import re
+for filename, marker, replacement in [
+    ('install_setup_libbson.sh', 'https://github.com/mongodb/mongo-c-driver/', 'cp "$LIBBSON_SOURCE" ./mongo-c-driver-$DRIVER_VERSION.tar.gz'),
+    ('install_setup_pcre2.sh', 'https://github.com/PCRE2Project/pcre2/', 'cp "$PCRE2_SOURCE" ./$PCRE_LIB_WITH_VERSION.tar.gz'),
+]:
+    path = Path(filename)
+    text = path.read_text()
+    pattern = r'(?m)^curl[^\n]*\\\n[ \t]*' + re.escape(marker) + r'[^\n]*\\\n[ \t]*-o[^\n]*'
+    text, count = re.subn(pattern, lambda _: replacement, text)
+    if count != 1:
+        raise SystemExit('unexpected upstream download command: ' + filename)
+    path.write_text(text)
+PYOFFLINE
 sed -i 's#curl -L https://github.com/uncrustify/uncrustify/archive/${UNCRUSTIFY_REF}.tar.gz | tar xz#tar -xzf "$UNCRUSTIFY_SOURCE"#' install_citus_indent.sh
 sed -i 's#git clone https://github.com/citusdata/tools.git#mkdir tools \&\& tar -xf "$CITUS_TOOLS_SOURCE" -C tools --strip-components=1#' install_citus_indent.sh
 sed -i '/git checkout e36e4ea4258989bf527744334f6c633bb67e0686/d' install_citus_indent.sh

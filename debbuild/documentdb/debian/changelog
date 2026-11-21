@@ -1,3 +1,10 @@
+documentdb (1.2-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream v1.2-0 with pinned offline dependency inputs.
+  * Select PostgreSQL builds explicitly and keep bundled RUM for PG18+.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:50:00 +0800
+
 documentdb (1.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.0.
