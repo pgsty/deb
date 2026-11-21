@@ -58,3 +58,4 @@ CLAUDE.md
 .codex/
 .agent/
 !docs/nonrust-spec-review-20261121.md
+!docs/pg_tre-4.6.5-validation.md

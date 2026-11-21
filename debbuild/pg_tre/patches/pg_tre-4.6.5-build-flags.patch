@@ -1,7 +1,9 @@
-diff --git a/Makefile b/Makefile
+From: PGSTY packaging
+Subject: Honor distribution build flags for vendored TRE and Lime
+
 --- a/Makefile
 +++ b/Makefile
-@@ -266,7 +266,7 @@
+@@ -270,7 +270,7 @@
  	cd $(TRE_DIR) && ./configure \
  	    --enable-static --disable-shared --disable-nls \
  	    --without-alloca \
@@ -10,7 +12,7 @@ diff --git a/Makefile b/Makefile
  
  $(TRE_LIB): $(TRE_CONFIG_H) $(TRE_PATCH_STAMP)
  	@echo "==> build TRE"
-@@ -285,7 +285,7 @@
+@@ -289,7 +289,7 @@
              $(LIME_DIR)/src/lex/emit_c_skin_flex.c
  $(LIME_BIN): $(LIME_SRCS)
  	@echo "==> build Lime generator"

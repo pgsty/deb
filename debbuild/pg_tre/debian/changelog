@@ -1,3 +1,10 @@
+pg-tre (4.6.5-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 4.6.5 for PostgreSQL 17 through 19.
+  * Rebase the vendored build flags patch with a canonical extension filename.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 22:00:00 +0800
+
 pg-tre (4.6.4-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 4.6.4 with PostgreSQL 19 support.
