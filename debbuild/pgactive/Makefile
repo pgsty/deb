@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 .NOTPARALLEL:
 
 all: setup build move
@@ -5,72 +8,38 @@ all: setup build move
 export DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
-TARBALL := pgactive-2.1.9.tar.gz
+TARBALL := pgactive-2.1.10.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/pgactive-2.1.9.patch
-SHMEM_PATCH := patches/pgactive-2.1.9-shmem-offset.patch
-PG_VERSIONS ?= 18 17 16 15 14
+PG_VERSIONS ?= 18 17 16 15 19
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get $(TARBALL) first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 
-check-patches:
-	@test -f "$(SHMEM_PATCH)" || (echo "missing $(SHMEM_PATCH)"; exit 1)
-	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH), keep the source patch name aligned with $(TARBALL)"; exit 1)
-
 # prepare directory
-setup: check-src check-patches
+setup: check-src
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	(cd build && patch -p1 --forward -f < "../$(SOURCE_PATCH)")
-	(cd build && patch -p1 --fuzz=0 --forward -f < "../$(SHMEM_PATCH)")
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 # building deb
 build: $(addprefix build,$(PG_VERSIONS))
-build18:
-	echo "18" > build/debian/pgversions
+build%:
+	@case "$*" in 15|16|17|18|19) ;; *) echo "unsupported PostgreSQL major: $*"; exit 1;; esac
+	echo "$*" > build/debian/pgversions
 	cd build && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
-	cd build/ && make clean
-	cd build/ && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build17:
-	echo "17" > build/debian/pgversions
-	cd build && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
-	cd build/ && make clean
-	cd build/ && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build16:
-	echo "16" > build/debian/pgversions
-	cd build && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
-	cd build/ && make clean
-	cd build/ && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build15:
-	echo "15" > build/debian/pgversions
-	cd build && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
-	cd build/ && make clean
-	cd build/ && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build14:
-	echo "14" > build/debian/pgversions
-	cd build && pg_buildext updatecontrol
-	cd build/ && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
-	cd build/ && make clean
-	cd build/ && PATH=/usr/lib/postgresql/14/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	cd build && PATH=/usr/lib/postgresql/$*/bin:$$PATH ./configure
+	cd build && make clean
+	cd build && PATH=/usr/lib/postgresql/$*/bin:$$PATH dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
+	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 # remove building craps
 clean:
 	rm -rf *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all check-src check-patches setup update build move clean ls
+.PHONY: all check-src setup update build move clean ls
