@@ -10,16 +10,17 @@ PYTHON_WHEEL_SOURCE ?= ../SOURCES/$(PYTHON_WHEEL)
 PYTHON_WHEEL_SHA256 := 708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 14 15 16 17 18
+PG_VERSIONS ?= 15 16 17 18
 CMAKE ?= cmake
 CMAKE_MIN_VERSION := 3.25.1
 DPKG_BUILDPACKAGE_FLAGS ?=
-SOURCE_PATCHES := patches/omnigres-20260212.patch
+SOURCE_PATCHES := patches/omnigres-20260212-packaging.patch
 
 pre:
 	apt install -y flex bison netcat-traditional python3-dev python3-venv
 
 check-src:
+	@for v in $(PG_VERSIONS); do case $$v in 15|16|17|18) ;; *) echo "unsupported PostgreSQL major: $$v (PG19 deparser port pending)"; exit 1 ;; esac; done
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 	@test -f "$(PYTHON_WHEEL_SOURCE)" || (echo "missing isolated Python build input $(PYTHON_WHEEL_SOURCE)"; exit 1)
 	@printf '%s  %s\n' "$(PYTHON_WHEEL_SHA256)" "$(PYTHON_WHEEL_SOURCE)" | sha256sum -c -

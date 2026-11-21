@@ -1,5 +1,12 @@
 omnigres (20260212-1PGSTY) unstable; urgency=medium
 
+  * Restrict default builds to PostgreSQL 15-18; PG19 deparser port is pending.
+  * Give the existing packaging patch a descriptive name without changing it.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 17:00:00 +0800
+
+omnigres (20260212-1PGSTY) unstable; urgency=medium
+
   * Update to the 2026-02-12 upstream snapshot.
   * Preserve and migrate omni_httpc 0.1.10 installations safely.
   * Gate the unsafe HTTP/3 path with a feature-not-supported error.
