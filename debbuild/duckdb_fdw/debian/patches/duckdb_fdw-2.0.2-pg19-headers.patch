@@ -1,0 +1,16 @@
+Subject: Include the tuple layout definition used by GETSTRUCT
+
+PostgreSQL 19 no longer exposes GETSTRUCT through these indirect headers.
+Include its declaring header explicitly, as required by both native and LLVM
+compilation. The same header exists on PostgreSQL 15-18.
+
+--- a/connection.c
++++ b/connection.c
+@@ -1,6 +1,7 @@
+ #include "postgres.h"
+ #include "duckdb_fdw.h"
+ #include "miscadmin.h"
++#include "access/htup_details.h"
+ #include "access/xact.h"
+ #include "utils/hsearch.h"
+ #include "utils/memutils.h"

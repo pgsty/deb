@@ -3,6 +3,7 @@
 export CC = gcc
 export CXX = g++
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 include /usr/share/postgresql-common/pgxs_debian_control.mk
@@ -22,9 +23,9 @@ override_dh_auto_test:
 # native bridge, LLVM bitcode/index, upstream SQL and package-private docs.
 override_dh_auto_install:
 	set -eu; for v in $$(cat debian/pgversions); do \
-		$(MAKE) -j$(FDW_MAX_JOBS) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config LDFLAGS='$(FDW_LDFLAGS)'; \
-		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config LDFLAGS='$(FDW_LDFLAGS)' install DESTDIR="$$(pwd)/debian/postgresql-$$v-duckdb-fdw"; \
 		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config clean; \
+		$(MAKE) -j$(FDW_MAX_JOBS) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config LDFLAGS='$(FDW_LDFLAGS)' CLANG='$$(LLVM_BINPATH)/clang'; \
+		$(MAKE) USE_PGXS=1 PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config LDFLAGS='$(FDW_LDFLAGS)' CLANG='$$(LLVM_BINPATH)/clang' install DESTDIR="$$(pwd)/debian/postgresql-$$v-duckdb-fdw"; \
 	done
 	rm -rf debian/postgresql-*-duckdb-fdw/usr/share/doc/postgresql-doc-*/
 

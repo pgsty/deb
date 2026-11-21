@@ -13,7 +13,7 @@ Provides: postgresql-duckdb-fdw
 Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Conflicts: postgresql-PGVERSION-pg-duckdb
 Description: DuckDB foreign data wrapper with an embedded DuckDB engine
- This package embeds DuckDB 2.0.0 built from PIC static archives. It includes
+ This package embeds DuckDB 2.0.1 built from PIC static archives. It includes
  Parquet, JSON and ICU and supports dynamic DuckDB plugins without requiring
  pg_duckdb or an external libduckdb. Select one DuckDB extension package per
  PostgreSQL major. Remove the previous extension's shared preload setting

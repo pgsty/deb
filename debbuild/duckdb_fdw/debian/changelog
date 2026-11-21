@@ -1,3 +1,13 @@
+duckdb-fdw (2.0.2-2PGSTY) unstable; urgency=medium
+
+  * Rebuild with DuckDB 2.0.1 and enable PostgreSQL 19.
+  * Include the tuple collection definition required by non-unity compilation.
+  * Preserve PGXS LLVM, automatic dbgsym and the embedded-core guard.
+  * Clean each PG bridge before compilation to avoid stale objects on retries.
+  * Include the tuple header for PG19 and match the PGXS LLVM toolchain.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 16:10:00 +0800
+
 duckdb-fdw (2.0.2-1PGSTY) unstable; urgency=medium
 
   * Package official duckdb_fdw 2.0.2 with DuckDB 2.0.0 PIC static archives

@@ -3,24 +3,25 @@ all: setup
 	$(MAKE) move
 
 VERSION := 2.0.2
-DUCKDB_VERSION := 2.0.0
+DUCKDB_VERSION := 2.0.1
 TARBALL := duckdb_fdw-$(VERSION).tar.gz
 DUCKDB_TARBALL := duckdb-$(DUCKDB_VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 DUCKDB_SOURCE_TARBALL ?= ../SOURCES/$(DUCKDB_TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-# Empty means the recipe's PG15-18 list; upstream 2.0.2 does not build on PG14.
+# Empty means the recipe's PG15-19 list; upstream 2.0.2 does not build on PG14.
 PG_VERSIONS ?=
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; copy only the missing archive if needed"; exit 1)
 	@test -f "$(DUCKDB_SOURCE_TARBALL)" || (echo "missing $(DUCKDB_SOURCE_TARBALL), run pig build get first; copy only the missing archive if needed"; exit 1)
-	@for v in $(PG_VERSIONS); do case $$v in 15|16|17|18) ;; *) echo "unsupported PostgreSQL major: $$v"; exit 1 ;; esac; done
+	@for v in $(PG_VERSIONS); do case $$v in 15|16|17|18|19) ;; *) echo "unsupported PostgreSQL major: $$v"; exit 1 ;; esac; done
 
 setup: check-src
 	echo '1ed7935b009211915434fd65083b0562389e3faf1722865f81633d70a0c0fc8b  $(SOURCE_TARBALL)' | sha256sum -c -
-	echo '7e89053255046bfb26afbd7f524a2fb84df7dbef496aa911ea35e4a1182fdc00  $(DUCKDB_SOURCE_TARBALL)' | sha256sum -c -
+	echo '1deae9d4917bd069c46c25c6ddbe51a2ef06cc7c12e6a10132af4fa0fb834a14  $(DUCKDB_SOURCE_TARBALL)' | sha256sum -c -
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)/duckdb
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"

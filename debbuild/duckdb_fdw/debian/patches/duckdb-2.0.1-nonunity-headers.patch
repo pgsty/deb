@@ -1,0 +1,10 @@
+--- a/duckdb/src/common/sort/sort_strategy.cpp
++++ b/duckdb/src/common/sort/sort_strategy.cpp
+@@ -2,6 +2,7 @@
+ #include "duckdb/common/sorting/full_sort.hpp"
+ #include "duckdb/common/sorting/hashed_sort.hpp"
+ #include "duckdb/common/sorting/natural_sort.hpp"
++#include "duckdb/common/types/row/tuple_data_collection.hpp"
+ 
+ namespace duckdb {
+ 
