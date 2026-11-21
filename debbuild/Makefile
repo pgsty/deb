@@ -36,7 +36,7 @@ vchord:
 pgvectorscale:
 	cd pgvectorscale && make
 
-pg_vectorsearch:  # upstream alpha, PostgreSQL 18 only
+pg_vectorsearch:  # upstream alpha, PostgreSQL 18/19 validated
 	$(MAKE) -C pg_vectorsearch
 
 pgvector:
