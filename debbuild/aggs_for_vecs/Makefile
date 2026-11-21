@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
 TARBALL := aggs_for_vecs-1.4.1.tar.gz
@@ -6,6 +9,7 @@ TARBALL := aggs_for_vecs-1.4.1.tar.gz
 setup:
 	rm -rf build; mkdir -p build
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
+	patch -d build -p1 --fuzz=0 < patches/aggs_for_vecs-1.4.1-pg19-numeric.patch
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \

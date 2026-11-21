@@ -1,0 +1,20 @@
+diff --git a/aggs_for_vecs.c b/aggs_for_vecs.c
+--- a/aggs_for_vecs.c
++++ b/aggs_for_vecs.c
+@@ -17,6 +17,16 @@
+ #include <utils/fmgrprotos.h>
+ #endif
+ 
++/* PostgreSQL 19 replaced the optional-error numeric API with the
++ * ErrorSaveContext API. Every call below passes NULL, retaining the normal
++ * ERROR behavior on both sides of the version boundary. */
++#if PG_VERSION_NUM >= 190000
++#define numeric_add_opt_error numeric_add_safe
++#define numeric_sub_opt_error numeric_sub_safe
++#define numeric_mul_opt_error numeric_mul_safe
++#define numeric_div_opt_error numeric_div_safe
++#endif
++
+ PG_MODULE_MAGIC;
+ 
+ void

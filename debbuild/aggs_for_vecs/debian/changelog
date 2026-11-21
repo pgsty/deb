@@ -1,5 +1,12 @@
 aggs-for-vecs (1.4.1-1PGSTY) unstable; urgency=medium
 
+  * Adapt numeric arithmetic to the PostgreSQL 19 ErrorSaveContext API.
+  * Target PostgreSQL 15 through 19.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0800
+
+aggs-for-vecs (1.4.1-1PGSTY) unstable; urgency=medium
+
   * https://github.com/pjungwir/aggs_for_vecs/releases/tag/1.4.1
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 04 Mar 2026 12:00:00 +0000
