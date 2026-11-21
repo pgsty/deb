@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: check-src setup build move
 
 TARBALL := pgsentinel-1.5.2.tar.gz
