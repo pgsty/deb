@@ -5,12 +5,12 @@ Maintainer: Ruohang Feng <rh@vonng.com>
 Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~)
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Homepage: https://github.com/Nirajkashyap/fsm/tree/main/packages/database-src-extension/fsm_core
+Homepage: https://github.com/pgfsm/fsm
 
 Package: postgresql-PGVERSION-fsm-core
 Architecture: all
 Provides: postgresql-fsm-core
-Depends: postgresql-PGVERSION, ${misc:Depends}, postgresql-PGVERSION-pgmq, postgresql-PGVERSION-pg-jsonschema
+Depends: postgresql-PGVERSION, ${misc:Depends}, postgresql-PGVERSION-pgmq (>= 1.4.4), postgresql-PGVERSION-cron (>= 1.5.0)
 Description: Finite state machine toolkit for PostgreSQL
   fsm_core provides finite state machine primitives inside PostgreSQL using
-  SQL schema objects. It requires ltree, pgmq, and pg_jsonschema.
+  SQL schema objects. It requires ltree, pgmq, and pg_cron.
