@@ -1,12 +1,12 @@
 all: move
 
-# Source: https://github.com/VictorNagibator/pg_integrity_checksums/archive/refs/tags/v2.2.0.tar.gz
-# SHA256: 771d85da3dd8c99f99f6498fa38dc1452233f34973da925cccda7b4144aeaaa1
-TARBALL := pg_integrity_checksums-2.2.0.tar.gz
+# Source: https://github.com/VictorNagibator/pg_integrity_checksums/archive/refs/tags/v2.9.1.tar.gz
+# SHA256: 775e21219fe2e35b7018fa7636adcd52928cd1eb4b43268a939e3f8059fa0bff
+TARBALL := pg_integrity_checksums-2.9.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 14 15 16 17 18
+PG_VERSIONS ?= 15 16 17 18 19
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
