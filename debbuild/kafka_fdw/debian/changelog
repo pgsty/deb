@@ -1,5 +1,11 @@
 kafka-fdw (0.0.3+git20251030.8615082-1PGSTY) unstable; urgency=medium
 
+  * Add PostgreSQL 19 header and type compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:00:00 +0800
+
+kafka-fdw (0.0.3+git20251030.8615082-1PGSTY) unstable; urgency=medium
+
   * Package upstream master snapshot 8615082d986b.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 31 Aug 2026 00:00:00 +0000

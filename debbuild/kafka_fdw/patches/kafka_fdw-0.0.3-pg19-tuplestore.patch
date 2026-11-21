@@ -1,0 +1,12 @@
+Subject: Include the tuplestore declarations used by kafka_fdw
+
+PostgreSQL 19 no longer provides these declarations through transitive includes.
+
+--- a/src/utils.c
++++ b/src/utils.c
+@@ -1,4 +1,5 @@
+ #include "kafka_fdw.h"
++#include "utils/tuplestore.h"
+ #include "funcapi.h"
+ 
+ #if PG_VERSION_NUM >= 120000
