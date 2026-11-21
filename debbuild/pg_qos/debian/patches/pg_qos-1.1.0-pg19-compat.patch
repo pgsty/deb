@@ -1,0 +1,79 @@
+Subject: Preserve PostgreSQL 15-18 behavior while adapting PG19 APIs
+
+--- a/src/hooks.c
++++ b/src/hooks.c
+@@ -247,7 +247,11 @@
+  * Planner hook - delegates to hooks_resource.c for CPU limit enforcement
+  */
+ static PlannedStmt *
+-qos_planner(Query *parse, const char *query_string, int cursorOptions, ParamListInfo boundParams)
++qos_planner(Query *parse, const char *query_string, int cursorOptions, ParamListInfo boundParams
++#if PG_VERSION_NUM >= 190000
++        , ExplainState *es
++#endif
++)
+ {
+     /* Enforce work_mem limit BEFORE query planning starts */
+     if (qos_enabled)
+@@ -277,7 +281,11 @@
+     }
+     
+     /* Delegate to hooks_resource.c for parallel worker adjustment */
+-    return qos_planner_hook(parse, query_string, cursorOptions, boundParams, prev_planner_hook);
++    return qos_planner_hook(parse, query_string, cursorOptions, boundParams, prev_planner_hook
++#if PG_VERSION_NUM >= 190000
++                            , es
++#endif
++                           );
+ }
+ 
+ static char *
+--- a/src/hooks_resource.c
++++ b/src/hooks_resource.c
+@@ -55,7 +55,11 @@
+  */
+ PlannedStmt *
+ qos_planner_hook(Query *parse, const char *query_string, int cursorOptions, 
+-                 ParamListInfo boundParams, planner_hook_type prev_hook)
++                 ParamListInfo boundParams, planner_hook_type prev_hook
++#if PG_VERSION_NUM >= 190000
++                 , ExplainState *es
++#endif
++)
+ {
+     PlannedStmt *result;
+     QoSLimits limits;
+@@ -64,9 +68,17 @@
+     
+     /* Call previous planner hook or standard planner first */
+     if (prev_hook)
+-        result = prev_hook(parse, query_string, cursorOptions, boundParams);
++        result = prev_hook(parse, query_string, cursorOptions, boundParams
++#if PG_VERSION_NUM >= 190000
++                          , es
++#endif
++                         );
+     else
+-        result = standard_planner(parse, query_string, cursorOptions, boundParams);
++        result = standard_planner(parse, query_string, cursorOptions, boundParams
++#if PG_VERSION_NUM >= 190000
++                          , es
++#endif
++                         );
+     
+     /* Apply QoS CPU limits to the planned statement */
+     if (qos_enabled && result != NULL)
+--- a/src/hooks_internal.h
++++ b/src/hooks_internal.h
+@@ -53,6 +53,10 @@
+ extern void qos_enforce_work_mem_limit(VariableSetStmt *stmt);
+ extern PlannedStmt *qos_planner_hook(Query *parse, const char *query_string,
+ 									 int cursorOptions, ParamListInfo boundParams,
+-									 planner_hook_type prev_hook);
++									 planner_hook_type prev_hook
++#if PG_VERSION_NUM >= 190000
++                 , ExplainState *es
++#endif
++);
+ 
+ #endif /* QOS_HOOKS_INTERNAL_H */
