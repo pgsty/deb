@@ -4,7 +4,7 @@ TARBALL := plruby-2.5.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 14 15 16 17 18
+PG_VERSIONS := 15 16 17 18
 SOURCE_PATCH := patches/plruby-2.5.0.patch
 
 check-src:
