@@ -1,3 +1,9 @@
+pg-permissions (1.6-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.6.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:00:00 +0800
+
 pg-permissions (1.4.1-1PGSTY) unstable; urgency=medium
 
   * Normalize the official REL_1_4_1 source as pg_permissions-1.4.1.tar.gz.
