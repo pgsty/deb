@@ -20,7 +20,7 @@ setup:
 	@echo "pgext env spec"
 	@echo "pgext env rust"
 	@echo "pgext env pgrx"
-	@echo "pgext pkg <name...> --pg 18"
+	@echo "pgext pkg <name...> --pg 19"
 
 ivorysql-contrib:
 	$(MAKE) -C debbuild/ivorysql-contrib

@@ -66,7 +66,7 @@ verify_job() {
     [[ ${#expected_pgs[@]} -gt 0 ]] || die "extension PG version list is empty"
     local pg
     for pg in "${expected_pgs[@]}"; do
-      [[ "$pg" =~ ^(14|15|16|17|18)$ ]] || die "unsupported PG major: $pg"
+      [[ "$pg" =~ ^(15|16|17|18|19)$ ]] || die "unsupported PG major: $pg"
       [[ -z ${pg_seen[$pg]+x} ]] || die "duplicate PG major: $pg"
       pg_seen[$pg]=1
     done
@@ -115,7 +115,7 @@ verify_job() {
       primary_packages+=("$expected")
     done
 
-    template_regex="^${package_template//\$v/(14|15|16|17|18)}$"
+    template_regex="^${package_template//\$v/([0-9]+)}$"
     for package in "${expected_packages[@]}"; do
       if [[ "$package" =~ $template_regex ]]; then
         pg=${BASH_REMATCH[1]}

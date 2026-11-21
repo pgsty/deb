@@ -8,8 +8,11 @@
 # License   :   Apache-2.0
 #==============================================================#
 
+# Bound central invocations; per-recipe pgversions still select the supported subset.
+export PG_SUPPORTED_VERSIONS ?= 15 16 17 18 19
+
 default:
-	@echo "pgext pkg <xxx> --pg 18 (full workflow), pgext mak <xxx> --pg 18 (prepared inputs)"
+	@echo "pgext pkg <xxx> --pg 19 (full workflow), pgext mak <xxx> --pg 19 (prepared inputs)"
 
 ###############################################################
 #                     Rust Extensions                        #
@@ -1362,7 +1365,7 @@ postgis-tiger-geocoder:
 
 .PHONY: cgal geos proj sfcgal libgeotiff librttopo spatialite libarrow libgta gdal postgis address-standardizer postgis-tiger-geocoder
 
-# New extension batch: shared pinned sources, PG14-18 where supported.
+# New extension batch: shared pinned sources, PG15-19 where supported.
 
 .PHONY: hdr_histogram pg_improv pg_kv pg_try_cast pg_synonym vgram pg_money edtf_postgres libx509pq \
         pg_statvfs pg_json_diff pgtelemetry pgexporter_ext \
