@@ -1,0 +1,51 @@
+Subject: Preserve composite datum versions when copying stored records
+
+Apply the extension compatibility guidance from PostgreSQL cfdd09589
+(CVE-2026-6460): use heap_copy_tuple_as_datum instead of writing datum
+header fields by hand. This also retains the core TOAST flattening path.
+
+--- a/pg_variables_record.c
++++ b/pg_variables_record.c
+@@ -351,35 +351,13 @@
+ static Datum
+ copy_record_tuple(RecordVar *record, HeapTupleHeader tupleHeader)
+ {
+-	TupleDesc	tupdesc;
+-	HeapTupleHeader result;
+-	int			tuple_len;
+-
+-	tupdesc = record->tupdesc;
+-
+-	/*
+-	 * If the tuple contains any external TOAST pointers, we have to inline
+-	 * those fields to meet the conventions for composite-type Datums.
+-	 */
+-	if (HeapTupleHeaderHasExternal(tupleHeader))
+-		return toast_flatten_tuple_to_datum(tupleHeader,
+-											HeapTupleHeaderGetDatumLength(tupleHeader),
+-											tupdesc);
+-
+-	/*
+-	 * Fast path for easy case: just make a palloc'd copy and insert the
+-	 * correct composite-Datum header fields (since those may not be set if
+-	 * the given tuple came from disk, rather than from heap_form_tuple).
+-	 */
+-	tuple_len = HeapTupleHeaderGetDatumLength(tupleHeader);
+-	result = (HeapTupleHeader) palloc(tuple_len);
+-	memcpy((char *) result, (char *) tupleHeader, tuple_len);
+-
+-	HeapTupleHeaderSetDatumLength(result, tuple_len);
+-	HeapTupleHeaderSetTypeId(result, tupdesc->tdtypeid);
+-	HeapTupleHeaderSetTypMod(result, tupdesc->tdtypmod);
+-
+-	return PointerGetDatum(result);
++	HeapTupleData tuple = {0};
++
++	tuple.t_len = HeapTupleHeaderGetDatumLength(tupleHeader);
++	tuple.t_data = tupleHeader;
++
++	/* Let PostgreSQL preserve or validate composite datum version information. */
++	return heap_copy_tuple_as_datum(&tuple, record->tupdesc);
+ }
+ 
+ static Datum

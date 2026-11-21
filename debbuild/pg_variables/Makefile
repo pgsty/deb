@@ -4,7 +4,7 @@ TARBALL := pg_variables-1.2.5.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PATCHES := patches/pg_variables-1.2.5.patch
+PATCHES := patches/pg_variables-1.2.5.patch patches/pg_variables-1.2.5-composite-datum.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)

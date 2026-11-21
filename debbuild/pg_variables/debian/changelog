@@ -1,3 +1,12 @@
+pg-variables (1.2.5-2PGSTY) unstable; urgency=medium
+
+  * Keep PostgreSQL 19 disabled after regression review; omit the unaccepted patch.
+
+  * Preserve composite datum versions when copying stored records.
+  * Require the PostgreSQL minor used to build the composite datum API.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0000
+
 pg-variables (1.2.5-1PGSTY) unstable; urgency=medium
 
   * Package pg_variables 1.2.5 for PostgreSQL 14 through 18
