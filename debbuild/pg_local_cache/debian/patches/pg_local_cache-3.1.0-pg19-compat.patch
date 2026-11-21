@@ -1,0 +1,18 @@
+Subject: Match the PostgreSQL 19 shared hash signature
+
+PostgreSQL 19 ShmemInitHash takes one fixed-capacity argument. Keep both
+initial and maximum sizes on older majors, where this table already uses
+equal sizes.
+
+--- a/src/pg_local_cache.c
++++ b/src/pg_local_cache.c
+@@ -1598,7 +1598,9 @@
+ 	control.keysize = sizeof(PgLocalCacheRelationKey);
+ 	control.entrysize = sizeof(PgLocalCacheRelationState);
+ 	pglc_relation_hash = ShmemInitHash("pg_local_cache relation state",
++#if PG_VERSION_NUM < 190000
+ 									  pglc_relation_states,
++#endif
+ 									  pglc_relation_states,
+ 									  &control,
+ 									  HASH_ELEM | HASH_BLOBS);
