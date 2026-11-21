@@ -1,3 +1,11 @@
+pg-fact-loader (2.0.1-3PGSTY) unstable; urgency=medium
+
+  * Build the supported PG15-19 range from the archived upstream release.
+  * Package the pure SQL payload as Architecture: all.
+  * Advance to revision 3 after the published 2PIGSTY packages.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 03:00:00 +0800
+
 pg-fact-loader (2.0.1-1PGSTY) unstable; urgency=medium
 
   * Fill PGDG's missing PostgreSQL 18 packages on Debian and Ubuntu.

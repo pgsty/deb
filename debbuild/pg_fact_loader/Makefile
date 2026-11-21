@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
 TARBALL := pg_fact_loader-2.0.1.tar.gz
@@ -7,8 +10,7 @@ setup:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	rm -rf build/debian; cp -r debian build/debian
 	OS_CODENAME=$(shell lsb_release -sc); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog; \
-	if [ "$${OS_CODENAME}" != "resolute" ]; then printf '18\n' > build/debian/pgversions; fi
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
 build:
 	cd build && pg_buildext updatecontrol
