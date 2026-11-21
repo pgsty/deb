@@ -1,7 +1,10 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: move
 
-TARBALL := pg_dbms_metadata-1.0.0.tar.gz
-TARBALL_SHA256 := d2ffa8e0bd723fccbb0cc6746e1cb871ab38166ff7e3dfc14e5c3809dc477631
+TARBALL := pg_dbms_metadata-1.1.0.tar.gz
+TARBALL_SHA256 := 0c5caa4c5d9ec05efdda934a29f999f7dbcd8d76143d263c64c0c78a685978ff
 SOURCE_TARBALL ?= $(or $(wildcard $(HOME)/ext/src/$(TARBALL)),$(wildcard ../SOURCES/$(TARBALL)))
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

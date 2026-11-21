@@ -1,3 +1,9 @@
+pg-dbms-metadata (1.1.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.1.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 19 Nov 2026 12:00:00 +0800
+
 pg-dbms-metadata (1.0.0-1PGSTY) unstable; urgency=medium
 
   * Initial package for pg_dbms_metadata 1.0.0.
