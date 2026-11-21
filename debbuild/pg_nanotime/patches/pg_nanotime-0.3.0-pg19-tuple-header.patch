@@ -1,0 +1,14 @@
+Subject: Include the tuple declarations used by pg_nanotime
+
+PostgreSQL 19 no longer provides these declarations through transitive includes.
+
+--- a/src/pg_nanotime.c
++++ b/src/pg_nanotime.c
+@@ -16,6 +16,7 @@
+  * Copyright (c) 2026, pg_nanotime contributors. PostgreSQL License.
+  */
+ #include "postgres.h"
++#include "access/htup_details.h"
+ 
+ #include <time.h>
+ #include <ctype.h>
