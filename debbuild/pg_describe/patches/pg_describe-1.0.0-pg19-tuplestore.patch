@@ -1,0 +1,14 @@
+Subject: Include the tuplestore declarations used by pg_describe
+
+PostgreSQL 19 no longer provides these declarations through transitive includes.
+
+--- a/src/pg_describe.c
++++ b/src/pg_describe.c
+@@ -20,6 +20,7 @@
+  *                        inner query.
+  */
+ #include "postgres.h"
++#include "utils/tuplestore.h"
+ #include "fmgr.h"
+ 
+ #include "funcapi.h"
