@@ -1,0 +1,40 @@
+Subject: Match the PostgreSQL 19 hash allocator callback
+
+Include hsearch.h and add the allocator context parameter to both declaration and definition; the existing allocator does not need the context.
+
+--- a/versioning.c
++++ b/versioning.c
+@@ -7,6 +7,7 @@
+  * -------------------------------------------------------------------------
+  */
+ #include "postgres.h"
++#include "utils/hsearch.h"
+ 
+ #include <math.h>
+ #include <float.h>
+@@ -165,7 +166,11 @@
+ 							   const char *adjust_argument);
+ 
+ static void init_versioning_hash_table();
+-static void *hash_entry_alloc(Size size);
++static void *hash_entry_alloc(Size size
++#if PG_VERSION_NUM >= 190000
++                 , void *alloc_arg
++#endif
++);
+ 
+ static VersioningHashEntry *lookup_versioning_hash_entry(Oid relid,
+ 														 bool *found);
+@@ -1071,7 +1076,11 @@
+ }
+ 
+ static void *
+-hash_entry_alloc(Size size)
++hash_entry_alloc(Size size
++#if PG_VERSION_NUM >= 190000
++                 , void *alloc_arg
++#endif
++)
+ {
+ 	return MemoryContextAllocZero(TopMemoryContext, size);
+ }
