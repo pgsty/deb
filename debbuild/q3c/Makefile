@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
 TARBALL := q3c-2.0.6.tar.gz
