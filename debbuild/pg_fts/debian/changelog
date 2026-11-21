@@ -1,3 +1,15 @@
+pg-fts (1.18.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.18.0 with PostgreSQL 19 support.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0000
+
+pg-fts (1.17.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.17.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Thu, 19 Nov 2026 12:00:00 +0800
+
 pg-fts (1.16.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.16.0 and preserve the complete SQL upgrade chain.
