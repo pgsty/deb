@@ -1,3 +1,9 @@
+provsql (1.14.0-1PGSTY) unstable; urgency=medium
+
+  * Update to 1.14.0; retain packaging and input-preservation fixes.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:42:00 +0800
+
 provsql (1.13.1-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.13.1.
