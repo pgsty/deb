@@ -1,0 +1,14 @@
+Subject: Include the tuplestore declarations used by pgnodemx
+
+PostgreSQL 19 no longer provides these declarations through transitive includes.
+
+--- a/genutils.c
++++ b/genutils.c
+@@ -30,6 +30,7 @@
+  */
+ 
+ #include "postgres.h"
++#include "utils/tuplestore.h"
+ 
+ #include <grp.h>
+ #include <inttypes.h>

@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: check-src setup build move
 
 TARBALL := pgnodemx-2.0.1.tar.gz
@@ -18,6 +21,7 @@ setup: check-src
 	patch -d $(BUILD_DIR) -p1 --forward -f < "$(SOURCE_PATCH)"
 	pg_buildext updatecontrol
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/pgnodemx-2.0.1-pg19-tuplestore.patch
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 

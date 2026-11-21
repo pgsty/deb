@@ -1,5 +1,11 @@
 pgnodemx (2.0.1-1PGSTY) unstable; urgency=medium
 
+  * Add PostgreSQL 19 header and type compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 01:00:00 +0800
+
+pgnodemx (2.0.1-1PGSTY) unstable; urgency=medium
+
   * Update to pgnodemx 2.0.1.
   * Prevent connection failures when cgroup support is disabled or unavailable.
   * https://github.com/pgnodemx/pgnodemx/releases/tag/v2.0.1
