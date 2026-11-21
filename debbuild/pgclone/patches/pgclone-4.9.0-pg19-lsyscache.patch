@@ -1,0 +1,35 @@
+Subject: Include the PostgreSQL 19 database lookup declaration
+
+get_database_name moved from commands/dbcommands.h to utils/lsyscache.h.
+The latter header also exists on the earlier supported PostgreSQL versions.
+
+--- a/src/pgclone.c
++++ b/src/pgclone.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include "postgres.h"
++#include "utils/lsyscache.h"
+ #include "fmgr.h"
+ #include "funcapi.h"
+ #include "utils/builtins.h"
+--- a/src/pgclone_diff.c
++++ b/src/pgclone_diff.c
+@@ -21,6 +21,7 @@
+  */
+ 
+ #include "postgres.h"
++#include "utils/lsyscache.h"
+ #include "fmgr.h"
+ #include "funcapi.h"
+ #include "utils/builtins.h"
+--- a/src/pgclone_preflight.c
++++ b/src/pgclone_preflight.c
+@@ -18,6 +18,7 @@
+  */
+ 
+ #include "postgres.h"
++#include "utils/lsyscache.h"
+ #include "fmgr.h"
+ #include "funcapi.h"
+ #include "utils/builtins.h"
