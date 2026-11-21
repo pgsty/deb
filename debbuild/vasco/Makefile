@@ -1,3 +1,6 @@
+# Select the recipe targets, including PG19 on older postgresql-common.
+export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
+
 all: setup build move
 
 TARBALL := vasco-0.1.0.tar.gz
@@ -8,6 +11,7 @@ setup:
 	tar -C build --strip-components=1 -xf ../SOURCES/$(TARBALL)
 	pg_buildext updatecontrol
 	rm -rf build/debian; cp -r debian build/debian
+	patch -d build -p1 --fuzz=0 < patches/vasco-0.1.0-pg19-tuple-header.patch
 	OS_CODENAME=$(shell lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
