@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 export CC = gcc
+export USE_PGXS = 1
 export CXX = g++
 export JDK_INCLUDE = /usr/lib/jvm/default-java/include
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
@@ -18,7 +19,7 @@ override_dh_auto_build:
 override_dh_auto_test:
 
 override_dh_auto_clean:
-	$(MAKE) -C libhive clean || true
+	$(MAKE) -C libhive clean USE_PGXS=1
 	rm -f libhive/jdbc/*.class libhive/jdbc/HiveJdbcClient-1.0.jar
 
 override_dh_auto_install:

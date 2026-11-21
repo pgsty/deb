@@ -1,1 +1,2 @@
 hdfs_fdw-2.3.3.patch
+hdfs_fdw-2.3.3-pg19-version-check.patch

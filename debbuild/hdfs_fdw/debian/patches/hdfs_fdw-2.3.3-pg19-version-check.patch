@@ -1,0 +1,17 @@
+Subject: Allow PostgreSQL 19 in the upstream build version check
+
+The verified PG19 build needs no further HDFS FDW source changes.
+
+--- a/Makefile
++++ b/Makefile
+@@ -29,8 +29,8 @@
+ 	MAJORVERSION := $(basename $(VERSION))
+ endif
+ 
+-ifeq (,$(findstring $(MAJORVERSION), 13 14 15 16 17 18))
+-$(error PostgreSQL 13, 14, 15, 16, 17, or 18 is required to compile this extension)
++ifeq (,$(findstring $(MAJORVERSION), 13 14 15 16 17 18 19))
++$(error PostgreSQL 13, 14, 15, 16, 17, 18, or 19 is required to compile this extension)
+ endif
+ 
+ else
