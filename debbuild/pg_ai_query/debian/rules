@@ -9,7 +9,7 @@ include /usr/share/dpkg/buildflags.mk
 %:
 	dh $@
 
-PG_VERSIONS = 14 15 16 17 18
+PG_VERSIONS ?= $(shell cat debian/pgversions)
 PG_AI_QUERY_BUILD_JOBS ?= 2
 
 override_dh_auto_test:
@@ -19,7 +19,7 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 
 override_dh_auto_build:
-	for ver in $(PG_VERSIONS); do \
+	set -e; for ver in $(PG_VERSIONS); do \
 		echo "=== Building for PostgreSQL $$ver ==="; \
 		mkdir -p $(CURDIR)/build-pg$$ver; \
 		PATH="/usr/lib/postgresql/$$ver/bin:$$PATH" \
@@ -30,6 +30,6 @@ override_dh_auto_build:
 	done
 
 override_dh_auto_install:
-	for ver in $(PG_VERSIONS); do \
+	set -e; for ver in $(PG_VERSIONS); do \
 		DESTDIR=$(CURDIR)/debian/tmp cmake --install $(CURDIR)/build-pg$$ver; \
 	done
