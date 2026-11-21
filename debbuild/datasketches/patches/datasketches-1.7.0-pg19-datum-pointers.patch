@@ -1,0 +1,48 @@
+Subject: Convert varlena Datums to pointers for PostgreSQL 19
+
+Use DatumGetPointer at the four sketch update sites; leave serialized data and sketch behavior unchanged.
+
+--- a/src/theta_sketch_pg_functions.c
++++ b/src/theta_sketch_pg_functions.c
+@@ -105,7 +105,7 @@
+   get_typlenbyvalalign(element_type, &typlen, &typbyval, &typalign);
+   if (typlen == -1) {
+     // varlena
+-    theta_sketch_update(stateptr->ptr, VARDATA_ANY(element), VARSIZE_ANY_EXHDR(element));
++    theta_sketch_update(stateptr->ptr, VARDATA_ANY(DatumGetPointer(element)), VARSIZE_ANY_EXHDR(DatumGetPointer(element)));
+   } else if (typbyval) {
+     // fixed-length passed by value
+     theta_sketch_update(stateptr->ptr, &element, typlen);
+--- a/src/aod_sketch_pg_functions.c
++++ b/src/aod_sketch_pg_functions.c
+@@ -144,7 +144,7 @@
+   get_typlenbyvalalign(element_type, &typlen, &typbyval, &typalign);
+   if (typlen == -1) {
+     // varlena
+-    aod_sketch_update(stateptr->ptr, VARDATA_ANY(element), VARSIZE_ANY_EXHDR(element), values);
++    aod_sketch_update(stateptr->ptr, VARDATA_ANY(DatumGetPointer(element)), VARSIZE_ANY_EXHDR(DatumGetPointer(element)), values);
+   } else if (typbyval) {
+     // fixed-length passed by value
+     aod_sketch_update(stateptr->ptr, &element, typlen, values);
+--- a/src/hll_sketch_pg_functions.c
++++ b/src/hll_sketch_pg_functions.c
+@@ -109,7 +109,7 @@
+   get_typlenbyvalalign(element_type, &typlen, &typbyval, &typalign);
+   if (typlen == -1) {
+     // varlena
+-    hll_sketch_update(stateptr->ptr, VARDATA_ANY(element), VARSIZE_ANY_EXHDR(element));
++    hll_sketch_update(stateptr->ptr, VARDATA_ANY(DatumGetPointer(element)), VARSIZE_ANY_EXHDR(DatumGetPointer(element)));
+   } else if (typbyval) {
+     // fixed-length passed by value
+     hll_sketch_update(stateptr->ptr, &element, typlen);
+--- a/src/cpc_sketch_pg_functions.c
++++ b/src/cpc_sketch_pg_functions.c
+@@ -93,7 +93,7 @@
+   get_typlenbyvalalign(element_type, &typlen, &typbyval, &typalign);
+   if (typlen == -1) {
+     // varlena
+-    cpc_sketch_update(stateptr->ptr, VARDATA_ANY(element), VARSIZE_ANY_EXHDR(element));
++    cpc_sketch_update(stateptr->ptr, VARDATA_ANY(DatumGetPointer(element)), VARSIZE_ANY_EXHDR(DatumGetPointer(element)));
+   } else if (typbyval) {
+     // fixed-length passed by value
+     cpc_sketch_update(stateptr->ptr, &element, typlen);

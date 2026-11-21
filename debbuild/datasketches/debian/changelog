@@ -1,5 +1,11 @@
 datasketches (1.7.0-2PGSTY) unstable; urgency=medium
 
+  * Add PostgreSQL 19 compilation compatibility.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 02:00:00 +0800
+
+datasketches (1.7.0-2PGSTY) unstable; urgency=medium
+
   * Rebuild Apache DataSketches PostgreSQL 1.7.0 with C++ core 5.2.0.
   * Keep the PostgreSQL extension and SQL version at upstream 1.7.0.
   * Include cstdint explicitly for PGXS C++ LLVM bitcode builds.
