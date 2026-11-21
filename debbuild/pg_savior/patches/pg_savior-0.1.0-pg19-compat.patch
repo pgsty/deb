@@ -1,0 +1,27 @@
+Subject: Match the PostgreSQL 19 post-parse hook signature
+
+Include limits.h explicitly and use const JumbleState on PostgreSQL 19; retain the older callback signature.
+
+--- a/pg_savior.c
++++ b/pg_savior.c
+@@ -1,5 +1,6 @@
+ // clang-format off
+ #include <postgres.h>
++#include <limits.h>
+ #include <fmgr.h>
+ // clang-format on
+ #include "access/relation.h"
+@@ -26,7 +27,12 @@
+ static int  pg_savior_large_table_threshold_rows = 1000000;
+ 
+ static void
+-pg_savior_post_parse_analyze(ParseState *pstate, Query *query, JumbleState *jstate)
++pg_savior_post_parse_analyze(ParseState *pstate, Query *query,
++#if PG_VERSION_NUM >= 190000
++                            const JumbleState *jstate)
++#else
++                            JumbleState *jstate)
++#endif
+ {
+ 	if (prev_post_parse_analyze_hook)
+ 		prev_post_parse_analyze_hook(pstate, query, jstate);
