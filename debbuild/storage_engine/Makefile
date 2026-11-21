@@ -14,27 +14,17 @@ setup: check-src
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" build/debian/changelog
 
-build: build18 build17 build16 build15
+# Build one selected major at a time because upstream uses a shared build tree.
+PG_VERSIONS ?= $(shell cat debian/pgversions)
+export PG_SUPPORTED_VERSIONS ?= $(PG_VERSIONS)
 
-build18:
-	echo '18' > build/debian/pgversions
-	cd build && pg_buildext updatecontrol
-	cd build && PATH=/usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build17:
-	echo '17' > build/debian/pgversions
-	cd build && pg_buildext updatecontrol
-	cd build && PATH=/usr/lib/postgresql/17/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build16:
-	echo '16' > build/debian/pgversions
-	cd build && pg_buildext updatecontrol
-	cd build && PATH=/usr/lib/postgresql/16/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
-
-build15:
-	echo '15' > build/debian/pgversions
-	cd build && pg_buildext updatecontrol
-	cd build && PATH=/usr/lib/postgresql/15/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+build:
+	set -e; for v in $(PG_VERSIONS); do \
+		printf '%s\n' "$$v" > build/debian/pgversions; \
+		cd build; pg_buildext updatecontrol; \
+		PATH=/usr/lib/postgresql/$$v/bin:$$PATH dpkg-buildpackage -b -us -uc; \
+		cd ..; \
+	done
 
 # collect deb
 move:
