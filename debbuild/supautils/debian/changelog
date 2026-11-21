@@ -1,3 +1,9 @@
+supautils (4.0.1-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 4.0.1 and target PostgreSQL 15 through 19.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0800
+
 supautils (4.0.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream supautils 4.0.0.
