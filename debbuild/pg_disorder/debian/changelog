@@ -1,5 +1,11 @@
 pg-disorder (0.1.0-1PGSTY) unstable; urgency=medium
 
+  * Adapt PostgreSQL 19 APIs with conditional compatibility paths.
+
+ -- Ruohang Feng <rh@vonng.com>  Sat, 21 Nov 2026 00:00:00 +0000
+
+pg-disorder (0.1.0-1PGSTY) unstable; urgency=medium
+
   * Initial package for upstream PGXN 0.1.0.
 
  -- Ruohang Feng <rh@vonng.com>  Fri, 07 Aug 2026 09:30:00 +0800
