@@ -8,9 +8,10 @@ TARBALL := pg_graphql-1.6.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.3
-RUST_VERSION := 1.99.0
+PG_VERSIONS := 15 16 17 18 19
+PGRX_VERSION := 0.20.0
+RUST_VERSION := 1.100.0
+export RUSTUP_TOOLCHAIN ?= $(RUST_VERSION)
 CARGO_BUILD_JOBS ?= 2
 export CARGO_BUILD_JOBS
 SOURCE_PATCH := patches/pg-graphql-1.6.3.patch
@@ -30,6 +31,7 @@ setup: check-src check-patches
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-graphql-1.6.3-pgrx-0.20.0.patch
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
@@ -39,17 +41,13 @@ build: packaging
 
 building: check-build-deps
 	cd $(BUILD_DIR) && \
-	RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
-	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
-	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
-	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
-	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
-	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
+	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
+	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.before
-	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	cd $(BUILD_DIR) && \
-	set -eu; export RUSTUP_TOOLCHAIN=stable; export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
+	set -eu; export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 		    CARGO_NET_OFFLINE=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
@@ -63,8 +61,8 @@ check-build-deps: setup check-pgrx
 	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol && dpkg-checkbuilddeps
 
 check-pgrx:
-	@test "$$(RUSTUP_TOOLCHAIN=stable rustc --version | awk '{print $$2}')" = "$(RUST_VERSION)" || (echo "Rust $(RUST_VERSION) is required in the builder Rustup stable toolchain" >&2; exit 1)
-	@CURRENT=$$(RUSTUP_TOOLCHAIN=stable cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
+	@test "$$(rustc --version | awk '{print $$2}')" = "$(RUST_VERSION)" || (echo "Rust $(RUST_VERSION) is required in the selected Rustup toolchain" >&2; exit 1)
+	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
 	    echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
 	    exit 1; \

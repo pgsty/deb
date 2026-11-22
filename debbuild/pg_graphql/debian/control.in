@@ -14,4 +14,4 @@ Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: GraphQL support for PostgreSQL
  pg_graphql reflects a GraphQL schema from the existing PostgreSQL schema and
  resolves queries inside the database server. This package supports
- PostgreSQL 14 through 18.
+ PostgreSQL 15 through 19.
