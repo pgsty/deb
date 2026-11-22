@@ -28,3 +28,7 @@ override_dh_auto_install:
 	    printf 'postgresql:Depends=postgresql-%s\n' "$$PG_VERSION" >> debian/$$FULL_NAME.substvars; \
 	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
 	done
+
+ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+override_dh_dwz:
+endif
