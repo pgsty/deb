@@ -34,3 +34,7 @@ override_dh_auto_install:
 	    cp $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR).control $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	    cp $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR)--0.0.1.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	done
+
+ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+override_dh_dwz:
+endif

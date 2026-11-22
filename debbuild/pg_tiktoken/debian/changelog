@@ -1,3 +1,9 @@
+pg-tiktoken (0.0.1+git20260825.99cb61d-4PGSTY) unstable; urgency=medium
+
+  * Rebuild for PostgreSQL 15 through 19 with pgrx 0.20.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+
 pg-tiktoken (0.0.1+git20260825.99cb61d-1PGSTY) unstable; urgency=medium
 
   * Package upstream main snapshot 99cb61d with native PostgreSQL 14-18 support.
