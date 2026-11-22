@@ -4,17 +4,17 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: move
 
-TARBALL := pg_search-0.26.6.tar.gz
+TARBALL := pg_search-0.27.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
 export CARGO_TARGET_DIR
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18
-PGRX_VERSION := 0.19.3
-RUST_TOOLCHAIN := stable
-RUST_VERSION := 1.99.1
-# Keep pgrx aligned with the 0.19.3 Docker builder toolchain.
+PGRX_VERSION := 0.20.0
+RUST_TOOLCHAIN := 1.100.0
+RUST_VERSION := 1.100.0
+# Keep pgrx aligned with the 0.20.0 Docker builder toolchain.
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 CARGO_BUILD_JOBS ?= 1
 LINDERA_BUILD_DICTIONARY_CACHE_DIR ?= $(HOME)/.cache/pg_search/lindera
@@ -39,13 +39,10 @@ build: packaging
 building: check-build-deps
 	cd $(BUILD_DIR) && \
 	RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
-	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
-	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
-	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
-	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
+	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0193-cargo-locks.before
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.before
+	@test -s $(BUILD_DIR)/.pgrx0200-cargo-locks.before
 	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
 	sh ./fetch-dictionaries.sh
 	set -e; \
@@ -58,8 +55,8 @@ building: check-build-deps
 			    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config \
 			    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 		done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0193-cargo-locks.before $(BUILD_DIR)/.pgrx0193-cargo-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.after
+	cmp $(BUILD_DIR)/.pgrx0200-cargo-locks.before $(BUILD_DIR)/.pgrx0200-cargo-locks.after
 
 check-build-deps: setup check-pgrx
 	cd $(BUILD_DIR) && pg_buildext updatecontrol && dpkg-checkbuilddeps
