@@ -8,8 +8,8 @@ TARBALL := pg_kv-0.1.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 15 16 17 18
-PGRX_VERSION := 0.19.3
+PG_VERSIONS ?= 15 16 17 18 19
+PGRX_VERSION := 0.20.0
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -21,6 +21,7 @@ setup: check-src
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-kv-0.1.0-pgrx-0.20.0.patch
 
 build: building packaging
 

@@ -101,7 +101,7 @@ oai_fdw:
 
 .PHONY: pg_agent_gate pg_integrity_checksums oai_fdw
 
-pg_kv:			# rust pgrx 0.19.3, shared-memory cache
+pg_kv:			# rust pgrx 0.20.0, shared-memory cache
 	cd pg_kv && make
 
 pg_kazsearch:
