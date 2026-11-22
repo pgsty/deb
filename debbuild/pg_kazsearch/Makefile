@@ -4,14 +4,16 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
+.NOTPARALLEL:
+
 TARBALL := pg_kazsearch-2.3.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PACKAGE_VERSION := 2.3.0
-PG_VERSIONS := 16 17 18
-PGRX_VERSION := 0.19.2
-SOURCE_PATCH := patches/pg-kazsearch-2.3.0.patch
+PG_VERSIONS := 16 17 18 19
+PGRX_VERSION := 0.20.0
+SOURCE_PATCH := patches/pg-kazsearch-2.3.0-pgrx-0.20.0.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -22,21 +24,19 @@ setup: check-src
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	# The source archive includes the pgrx 0.19.2 dependency update.
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(SOURCE_PATCH)
 
 build: building packaging
 
 building: check-pgrx
 	cd $(BUILD_DIR) && \
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
-	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
-	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
-	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
+	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0192-cargo-locks.before
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.before
+	@test -s $(BUILD_DIR)/.pgrx0200-cargo-locks.before
 	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	cd $(BUILD_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
@@ -44,8 +44,8 @@ building: check-pgrx
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    CARGO_NET_OFFLINE=true cargo pgrx package -v -p pg_kazsearch --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0192-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0192-cargo-locks.before $(BUILD_DIR)/.pgrx0192-cargo-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.after
+	cmp $(BUILD_DIR)/.pgrx0200-cargo-locks.before $(BUILD_DIR)/.pgrx0200-cargo-locks.after
 
 check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \

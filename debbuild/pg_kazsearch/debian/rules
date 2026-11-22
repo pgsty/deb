@@ -27,3 +27,7 @@ override_dh_auto_install:
 	    cp target/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	    cp data/tsearch_data/kaz_* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/tsearch_data/; \
 	done
+
+ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+override_dh_dwz:
+endif
