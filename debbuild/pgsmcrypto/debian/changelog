@@ -1,3 +1,9 @@
+pgsmcrypto (0.1.1-4PGSTY) unstable; urgency=medium
+
+  * Rebuild for PostgreSQL 15 through 19 with pgrx 0.20.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+
 pgsmcrypto (0.1.1-1PGSTY) unstable; urgency=medium
 
   * Build with pgrx 0.19.2 from the updated source archive and locked dependencies.
