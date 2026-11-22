@@ -8,8 +8,8 @@ TARBALL := postgresql_anonymizer-3.3.2.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 14 15 16 17 18
-PGRX_VERSION := 0.19.3
+PG_VERSIONS ?= 15 16 17 18 19
+PGRX_VERSION := 0.20.0
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -21,9 +21,9 @@ setup: check-src
 	cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < ../patches/pg-anon-3.3.2-lock-version.patch
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	# Upstream already uses pgrx 0.19.3; correct only the stale root lock version.
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-anon-3.3.2-pgrx-0.20.0.patch
 
 build: packaging
 

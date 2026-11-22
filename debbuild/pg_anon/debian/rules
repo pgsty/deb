@@ -33,3 +33,7 @@ override_dh_auto_install:
 	    cp -a data/en_US $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/anon/; \
 	    cp -a data/fr_FR $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/anon/; \
 	done
+
+ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+override_dh_dwz:
+endif
