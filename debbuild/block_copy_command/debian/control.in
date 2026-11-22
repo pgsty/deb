@@ -15,4 +15,4 @@ Description: COPY command firewall for PostgreSQL
  block_copy_command blocks COPY TO, COPY FROM, and COPY PROGRAM through a
  ProcessUtility hook that is loaded from shared_preload_libraries.
  It provides runtime GUCs for selective blocking and audit logging across
- PostgreSQL 14 through 18.
+ PostgreSQL 15 through 19.
