@@ -10,8 +10,10 @@ Extension build scripts for PostgreSQL 15–19 on Debian 12/13 and Ubuntu 22.04/
 
 PG14 is retired from active orchestration. Each recipe selects its validated
 subset of PostgreSQL 15–19; PG19 is not an unconditional compatibility claim.
-Rust/pgrx recipes are frozen, and heavy components and custom PostgreSQL
-providers are tracked separately.
+The [Rust/pgrx 0.20.0 pilot](https://github.com/pgsty/rpm/blob/main/doc/rust-pgrx-0.20.0-pilot.md)
+records upstream versions, Ubuntu 24.04/amd64 package checks, and extensions
+awaiting upstream changes. Heavy components and custom PostgreSQL providers
+have separate build records.
 
 The [2026-11-21 audit](docs/nonrust-pg19-20261121.md) links the shared
 upstream and PG19 support matrix. DEB validation uses Ubuntu 24.04/amd64 on m3,
@@ -31,7 +33,10 @@ pig build repo
 pig build tool
 pig build spec # <--- get this repo, setup building environment
 pig build rust
-pig build pgrx
+export PATH="$HOME/.cargo/bin:$PATH"
+rustup toolchain install 1.100.0
+export RUSTUP_TOOLCHAIN=1.100.0
+pig build pgrx -v 0.20.0
 
 # then build packages
 pig build pkg timescaledb
