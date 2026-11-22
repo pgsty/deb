@@ -1,3 +1,9 @@
+pg-bestmatch (0.0.2-5PGSTY) unstable; urgency=medium
+
+  * Rebuild for PostgreSQL 15 through 19 with pgrx 0.20.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+
 pg-bestmatch (0.0.2-1PGSTY) unstable; urgency=medium
 
   * Build repacked source and locked dependencies with pgrx 0.19.2.
