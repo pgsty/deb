@@ -2,16 +2,16 @@ CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
-all: setup build move
+all: move
 
 VERSION := 0.108.3
 TARBALL := pg_trickle-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 18
-PGRX_VERSION := 0.19.3
-RUST_TOOLCHAIN := stable
+PG_VERSIONS := 18 19
+PGRX_VERSION := 0.20.0
+RUST_TOOLCHAIN := 1.100.0
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 SOURCE_PATCH := patches/pg-trickle-$(VERSION).patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
@@ -32,32 +32,29 @@ setup: check-src check-patches
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-trickle-0.108.3-pgrx-0.20.0.patch
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
 	@(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
 
-build: building packaging
+build: packaging
 
-building: check-pgrx
+building: setup check-pgrx
 	cd $(BUILD_DIR) && \
 	RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init $(PGRX_INIT_ARGS) --no-run
 	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT)
 	@test -s $(LOCK_SNAPSHOT)
 	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
-	cd $(BUILD_DIR) && \
-	set -eu; export RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN); \
+	cd $(BUILD_DIR) && set -eu; \
+	export RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI); \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
-		    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-		    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
-		    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
-		done
-	cd $(BUILD_DIR) && \
-	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
-	RUSTUP_TOOLCHAIN=$(RUST_TOOLCHAIN) PATH=/usr/lib/postgresql/18/bin:$$HOME/.cargo/bin:$$PATH \
-	CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
-	cargo build --release --locked --no-default-features --features pg18 --bin pg_trickle_dump
+	    export PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin; \
+	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+	    cargo build --release --locked --no-default-features --features pg$$PG_VERSION --bin pg_trickle_dump; \
+	    install -Dm755 target/release/pg_trickle_dump target/release/pg_trickle-pg$$PG_VERSION/usr/lib/postgresql/$$PG_VERSION/bin/pg_trickle_dump; \
+	done
 	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT).after
 	cmp $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
 	rm -f $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
@@ -69,12 +66,12 @@ check-pgrx:
 	    exit 1; \
 	fi
 
-packaging:
+packaging: building
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
 	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
 	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
-move:
+move: build
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:

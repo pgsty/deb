@@ -1,0 +1,1244 @@
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -171,20 +171,19 @@
+ 
+ [[package]]
+ name = "bindgen"
+-version = "0.72.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "993776b509cfb49c750f11b8f07a46fa23e0a1386ffc01fb1e7d343efc387895"
++version = "0.73.2"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "787ef8ef523575546b106a58213d6e6b06198a05c2f757258c68a74273670cfa"
+ dependencies = [
+  "bitflags 2.13.2",
+  "cexpr",
+  "clang-sys",
+- "itertools 0.13.0",
+  "proc-macro2",
+  "quote",
+  "regex",
+  "rustc-hash",
+- "shlex 1.3.0",
+- "syn 2.0.119",
++ "shlex",
++ "syn 3.0.6",
+ ]
+ 
+ [[package]]
+@@ -215,18 +214,6 @@
+ checksum = "3ded4057c258ba199e2d26386d3af3780957ecaee6c4ef4041c6b4b8b97c0b06"
+ dependencies = [
+  "serde_core",
+-]
+-
+-[[package]]
+-name = "bitvec"
+-version = "1.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ddcec3d12c579d40898fe0a9a358a803c23e9c52ca3c425707f81c9436211837"
+-dependencies = [
+- "funty",
+- "radium",
+- "tap",
+- "wyz",
+ ]
+ 
+ [[package]]
+@@ -367,49 +354,6 @@
+ checksum = "fc652a48c352aef3ea3aed32080501cf3ef6ed5da78602a020c991775b0aff04"
+ 
+ [[package]]
+-name = "camino"
+-version = "1.2.6"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bbbad30e4b4c14a39e3cc8aed085a12a327257c316619c93581e017bc52be591"
+-dependencies = [
+- "serde_core",
+-]
+-
+-[[package]]
+-name = "cargo-platform"
+-version = "0.3.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dd0061da739915fae12ea00e16397555ed4371a6bb285431aab930f61b0aa4ba"
+-dependencies = [
+- "serde",
+- "serde_core",
+-]
+-
+-[[package]]
+-name = "cargo_metadata"
+-version = "0.23.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ef987d17b0a113becdd19d3d0022d04d7ef41f9efe4f3fb63ac44ba61df3ade9"
+-dependencies = [
+- "camino",
+- "cargo-platform",
+- "semver",
+- "serde",
+- "serde_json",
+- "thiserror",
+-]
+-
+-[[package]]
+-name = "cargo_toml"
+-version = "0.22.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "374b7c592d9c00c1f4972ea58390ac6b18cbb6ab79011f3bdc90a0b82ca06b77"
+-dependencies = [
+- "serde",
+- "toml 0.9.12+spec-1.1.0",
+-]
+-
+-[[package]]
+ name = "cast"
+ version = "0.3.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -422,7 +366,7 @@
+ checksum = "54413ede23c2daf518f35156dfde027feb2374004d63bd497f983c8db9c0e313"
+ dependencies = [
+  "find-msvc-tools",
+- "shlex 2.0.1",
++ "shlex",
+ ]
+ 
+ [[package]]
+@@ -503,6 +447,16 @@
+ ]
+ 
+ [[package]]
++name = "clang"
++version = "2.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "b2ed30b30e1e17966b55ddd0b9dd2758fd824f0a6da6875c8abb17e6aba47c28"
++dependencies = [
++ "clang-sys",
++ "libc",
++]
++
++[[package]]
+ name = "clang-sys"
+ version = "1.9.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -520,20 +474,6 @@
+ checksum = "aa8876b300ab35ba921adea3dfd70157a46249b33f95c9084ae5709785478946"
+ dependencies = [
+  "clap_builder",
+- "clap_derive",
+-]
+-
+-[[package]]
+-name = "clap-cargo"
+-version = "0.18.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "936551935c8258754bb8216aec040957d261f977303754b9bf1a213518388006"
+-dependencies = [
+- "anstyle",
+- "cargo_metadata",
+- "clap",
+- "serde",
+- "serde_json",
+ ]
+ 
+ [[package]]
+@@ -547,18 +487,6 @@
+ ]
+ 
+ [[package]]
+-name = "clap_derive"
+-version = "4.6.7"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f9c751b79415d4e559e3d1fcf128e09e720eb673a06d26cf6f392d37d75b66e0"
+-dependencies = [
+- "heck",
+- "proc-macro2",
+- "quote",
+- "syn 3.0.6",
+-]
+-
+-[[package]]
+ name = "clap_lex"
+ version = "1.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -584,15 +512,6 @@
+ version = "0.10.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "a6ef517f0926dd24a1582492c791b6a4818a4d94e789a334894aa15b0d12f55c"
+-
+-[[package]]
+-name = "convert_case"
+-version = "0.11.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "affbf0190ed2caf063e3def54ff444b449371d55c58e513a95ab98eca50adb49"
+-dependencies = [
+- "unicode-segmentation",
+-]
+ 
+ [[package]]
+ name = "core-foundation"
+@@ -927,16 +846,6 @@
+ ]
+ 
+ [[package]]
+-name = "dispatch2"
+-version = "0.3.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1e0e367e4e7da84520dedcac1901e4da967309406d1e51017ae1abfb97adbd38"
+-dependencies = [
+- "bitflags 2.13.2",
+- "objc2",
+-]
+-
+-[[package]]
+ name = "displaydoc"
+ version = "0.2.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -981,13 +890,12 @@
+ 
+ [[package]]
+ name = "encoding_rs"
+-version = "0.8.41"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7b5ef0006ac9ab233c38522f5ae99cae3625151de8f706cacee1cba4b8e2832a"
++version = "0.8.44"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "89253175e704ab869b04f9db224d38630e0211a53841a79181deae0889e169f5"
+ dependencies = [
+  "cfg-if",
+  "core_detect",
+- "multiversion",
+  "multiversion_no_op",
+  "rustversion",
+  "scopeguard",
+@@ -995,26 +903,6 @@
+ ]
+ 
+ [[package]]
+-name = "enum-map"
+-version = "2.7.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6866f3bfdf8207509a033af1a75a7b08abda06bbaaeae6669323fd5a097df2e9"
+-dependencies = [
+- "enum-map-derive",
+-]
+-
+-[[package]]
+-name = "enum-map-derive"
+-version = "0.17.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f282cfdfe92516eb26c2af8589c274c7c17681f5ecc03c18255fe741c6aa64eb"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn 2.0.119",
+-]
+-
+-[[package]]
+ name = "equivalent"
+ version = "1.0.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -1091,12 +979,6 @@
+ checksum = "ef25905e51abafe4dcea6c15fec58c57b601cdbd0ee53d22ea1d3016c587d39b"
+ 
+ [[package]]
+-name = "fixedbitset"
+-version = "0.5.7"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1d674e81391d1e1ab681a28d99df07927c6d4aa5b027d7da16ba32d1d21ecd99"
+-
+-[[package]]
+ name = "flume"
+ version = "0.12.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -1115,12 +997,6 @@
+ 
+ [[package]]
+ name = "foldhash"
+-version = "0.1.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d9c4f5dac5e15c24eb999c26181a6ca40b39fe946cbe4c263c7209467bc83af2"
+-
+-[[package]]
+-name = "foldhash"
+ version = "0.2.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "77ce24cb58228fbb8aa041425bb1050850ac19177686ea6e0f41a70416f56fdb"
+@@ -1133,12 +1009,6 @@
+ dependencies = [
+  "percent-encoding",
+ ]
+-
+-[[package]]
+-name = "funty"
+-version = "2.0.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e6d5a32815ae3f33302d95fdcb2ce17862f8c65363dcfd29360480ba1001fc9c"
+ 
+ [[package]]
+ name = "futures"
+@@ -1334,22 +1204,13 @@
+ 
+ [[package]]
+ name = "hashbrown"
+-version = "0.15.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9229cfe53dfd69f0609a49f65461bd93001ea1ef889cd5529dd176593f5338a1"
+-dependencies = [
+- "foldhash 0.1.5",
+-]
+-
+-[[package]]
+-name = "hashbrown"
+ version = "0.16.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100"
+ dependencies = [
+  "allocator-api2",
+  "equivalent",
+- "foldhash 0.2.0",
++ "foldhash",
+ ]
+ 
+ [[package]]
+@@ -1360,7 +1221,7 @@
+ dependencies = [
+  "allocator-api2",
+  "equivalent",
+- "foldhash 0.2.0",
++ "foldhash",
+ ]
+ 
+ [[package]]
+@@ -1745,25 +1606,10 @@
+ ]
+ 
+ [[package]]
+-name = "is_ci"
+-version = "1.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7655c9839580ee829dfacba1d1278c2b7883e50a277ff7541299489d6bdfdc45"
+-
+-[[package]]
+ name = "itertools"
+ version = "0.10.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
+-dependencies = [
+- "either",
+-]
+-
+-[[package]]
+-name = "itertools"
+-version = "0.13.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
+ dependencies = [
+  "either",
+ ]
+@@ -1850,9 +1696,9 @@
+ 
+ [[package]]
+ name = "libc"
+-version = "0.2.189"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "3eaf3ede3fee6db1a4c2ee091bf8a8b4dccdc6d17f656fb07896ee72867612f2"
++version = "0.2.191"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "65cd87c9a6d60536580b316ad985726104730a5151c99845f2490428ef91240a"
+ 
+ [[package]]
+ name = "libloading"
+@@ -1962,27 +1808,6 @@
+  "libc",
+  "wasi 0.11.1+wasi-snapshot-preview1",
+  "windows-sys 0.61.2",
+-]
+-
+-[[package]]
+-name = "multiversion"
+-version = "0.9.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b4ca4bea16ffc3f443cf7d866912118196bfef4c6a1556ca00f9f9b00bb43f7c"
+-dependencies = [
+- "multiversion-macros",
+-]
+-
+-[[package]]
+-name = "multiversion-macros"
+-version = "0.9.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0d416831a7317ef4b08bee00b69cbbb9c8763da7959a7026244d6266869f9c83"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "rustversion",
+- "syn 3.0.6",
+ ]
+ 
+ [[package]]
+@@ -2089,39 +1914,12 @@
+ ]
+ 
+ [[package]]
+-name = "objc2"
+-version = "0.6.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "3a12a8ed07aefc768292f076dc3ac8c48f3781c8f2d5851dd3d98950e8c5a89f"
+-dependencies = [
+- "objc2-encode",
+-]
+-
+-[[package]]
+ name = "objc2-core-foundation"
+ version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "2a180dd8642fa45cdb7dd721cd4c11b1cadd4929ce112ebd8b9f5803cc79d536"
+ dependencies = [
+  "bitflags 2.13.2",
+- "dispatch2",
+- "objc2",
+-]
+-
+-[[package]]
+-name = "objc2-encode"
+-version = "4.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ef25abbcd74fb2609453eb695bd2f860d389e457f67dc17cafc8b8cbc89d0c33"
+-
+-[[package]]
+-name = "objc2-foundation"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e3e0adef53c21f888deb4fa59fc59f7eb17404926ee8a6f59f5df0fd7f9f3272"
+-dependencies = [
+- "bitflags 2.13.2",
+- "objc2",
+ ]
+ 
+ [[package]]
+@@ -2135,17 +1933,6 @@
+ ]
+ 
+ [[package]]
+-name = "objc2-open-directory"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bb82bed227edf5201dfedf072bba4015a33d3d4a98519837295a90f0a23f676d"
+-dependencies = [
+- "objc2",
+- "objc2-core-foundation",
+- "objc2-foundation",
+-]
+-
+-[[package]]
+ name = "objc2-system-configuration"
+ version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -2177,9 +1964,6 @@
+ version = "4.4.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "13c45bb4a6ae1280ec0803b1ef9d3455eb50f01efbbe1447ab020f1d54fba9d8"
+-dependencies = [
+- "supports-color",
+-]
+ 
+ [[package]]
+ name = "parking"
+@@ -2236,32 +2020,10 @@
+ ]
+ 
+ [[package]]
+-name = "pathsearch"
+-version = "0.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "da983bc5e582ab17179c190b4b66c7d76c5943a69c6d34df2a2b6bf8a2977b05"
+-dependencies = [
+- "anyhow",
+- "libc",
+-]
+-
+-[[package]]
+ name = "percent-encoding"
+ version = "2.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220"
+-
+-[[package]]
+-name = "petgraph"
+-version = "0.8.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8701b58ea97060d5e5b155d383a69952a60943f0e6dfe30b04c287beb0b27455"
+-dependencies = [
+- "fixedbitset",
+- "hashbrown 0.15.5",
+- "indexmap 2.14.2",
+- "serde",
+-]
+ 
+ [[package]]
+ name = "pg_trickle"
+@@ -2292,13 +2054,11 @@
+ 
+ [[package]]
+ name = "pgrx"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fa01ba6f6cb025576dc2bd70efae13c002d3b9cce5848b647e3158f33dbf32bb"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "37147008ecfda0aedd64a924afed86ce6bca805bc2c103c8097583b530ab9505"
+ dependencies = [
+  "bitflags 2.13.2",
+- "bitvec",
+- "enum-map",
+  "libc",
+  "pgrx-macros",
+  "pgrx-pg-sys",
+@@ -2308,65 +2068,83 @@
+  "serde_cbor",
+  "serde_json",
+  "thiserror",
+- "uuid",
+ ]
+ 
+ [[package]]
+ name = "pgrx-bindgen"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6cb0a17d1f7bf2b7a2b092406f8da4e17387dd00bd46b97a968812fafe87d559"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "f451dab19ad85a36a6f7a1da385846aca2262c84c36d4e705b2aebd52cd6f0f0"
+ dependencies = [
+  "bindgen",
+- "cc",
++ "eyre",
++ "pgrx-c-macros",
++ "pgrx-pg-config",
++ "proc-macro2",
++ "quote",
++ "regex",
++ "serde",
++ "serde_json",
++ "shlex",
++ "syn 2.0.119",
++ "toml",
++ "walkdir",
++]
++
++[[package]]
++name = "pgrx-c-macros"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "202a94c98efda3d8a7c920a3a7dfbd8bc1ac8d416b7b79646c2710e3a682f553"
++dependencies = [
++ "clang",
+  "clang-sys",
+  "eyre",
+  "pgrx-pg-config",
+  "proc-macro2",
+- "quote",
+- "regex",
+- "shlex 2.0.1",
++ "ring",
++ "serde",
++ "serde_json",
++ "sha2 0.11.0",
++ "shlex",
++ "tempfile",
++ "thiserror",
++]
++
++[[package]]
++name = "pgrx-macros"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "2349537da01f5e58ed79975cb2a38b20d6d82967243dcf7bc0ef5c12035c7b83"
++dependencies = [
++ "pgrx-sql-entity-graph",
++ "proc-macro2",
++ "quote",
+  "syn 2.0.119",
+- "walkdir",
+-]
+-
+-[[package]]
+-name = "pgrx-macros"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "24553d1425c86ec32e92a20fbbe1a6801a7fec576d7b4ef5d195eac9e9f56185"
+-dependencies = [
+- "pgrx-sql-entity-graph",
+- "proc-macro2",
+- "quote",
+- "syn 2.0.119",
+ ]
+ 
+ [[package]]
+ name = "pgrx-pg-config"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b395987287a18ffed9fbae0962fb46638a5ec1354c0708e33d4d838e835ef4b0"
+-dependencies = [
+- "cargo_toml",
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ea50fe9e10100f83192e0a4d268daf13bf3bceece31b3afca3bcf844f72d51c5"
++dependencies = [
+  "codepage",
+  "encoding_rs",
+  "eyre",
+  "owo-colors",
+- "pathsearch",
+  "serde",
+  "serde_json",
+  "thiserror",
+- "toml 1.1.6+spec-1.1.0",
+- "url",
++ "toml",
+  "winapi",
+ ]
+ 
+ [[package]]
+ name = "pgrx-pg-sys"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "817591f28d35756646a446b16117e0f150bfe7e747362798c5b48c0010175651"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "0d3dbceaedddb417f56d79d3261d73dc402f443b28889e73bba3917a83f8ec60"
+ dependencies = [
+  "cee-scape",
+  "libc",
+@@ -2378,39 +2156,32 @@
+ 
+ [[package]]
+ name = "pgrx-sql-entity-graph"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "669e675ea6945d5d43709fce83813aa04c4e345bb405ac1a4f69bb94d4bb08a5"
+-dependencies = [
+- "convert_case",
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "b6260a2e9163c79cdcf9d002da74fa0dbff6e43e187e0a2385d3effe040db0bf"
++dependencies = [
+  "eyre",
+- "petgraph",
+  "proc-macro2",
+  "quote",
+  "syn 2.0.119",
+  "thiserror",
+- "unescape",
+ ]
+ 
+ [[package]]
+ name = "pgrx-tests"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cdc85344f8a014cd33c952ebf1629fd04380844afc151812ee8a45214b2bb910"
+-dependencies = [
+- "clap-cargo",
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "84b427923bb10d0cd655bf866afb47f77a70bc3cef8c925be593b7f370875eae"
++dependencies = [
+  "eyre",
+  "libc",
+  "owo-colors",
+  "pgrx",
+  "pgrx-macros",
+  "pgrx-pg-config",
+- "postgres",
+- "rand 0.10.2",
+  "regex",
+- "shlex 2.0.1",
++ "shlex",
+  "sysinfo",
+- "tempfile",
+  "thiserror",
+  "winapi",
+ ]
+@@ -2673,12 +2444,6 @@
+ checksum = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
+ 
+ [[package]]
+-name = "radium"
+-version = "0.7.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dc33ff2d4973d518d823d61aa239014831e521c75da58e3df4840d3f47749d09"
+-
+-[[package]]
+ name = "rand"
+ version = "0.9.5"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -2996,16 +2761,6 @@
+ dependencies = [
+  "core-foundation-sys",
+  "libc",
+-]
+-
+-[[package]]
+-name = "semver"
+-version = "1.0.28"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8a7852d02fc848982e0c167ef163aaff9cd91dc640ba85e263cb1ce46fae51cd"
+-dependencies = [
+- "serde",
+- "serde_core",
+ ]
+ 
+ [[package]]
+@@ -3158,12 +2913,6 @@
+  "cpufeatures 0.3.1",
+  "digest 0.11.3",
+ ]
+-
+-[[package]]
+-name = "shlex"
+-version = "1.3.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
+ 
+ [[package]]
+ name = "shlex"
+@@ -3483,15 +3232,6 @@
+ checksum = "13c2bddecc57b384dee18652358fb23172facb8a2c51ccc10d74c157bdea3292"
+ 
+ [[package]]
+-name = "supports-color"
+-version = "3.0.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c64fc7232dd8d2e4ac5ce4ef302b1d81e0b80d055b9d77c7c4f51f6aa4c867d6"
+-dependencies = [
+- "is_ci",
+-]
+-
+-[[package]]
+ name = "syn"
+ version = "2.0.119"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -3553,24 +3293,17 @@
+ 
+ [[package]]
+ name = "sysinfo"
+-version = "0.39.6"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d2071df9448915b71c4fe6d25deaf1c22f12bd234f01540b77312bb8e41361e6"
++version = "0.40.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3e80749408e2d8bec0ffa303012cf4e1b3b355f4a09087b4fdf7473680f6a2de"
+ dependencies = [
+  "libc",
+  "memchr",
+  "ntapi",
+  "objc2-core-foundation",
+  "objc2-io-kit",
+- "objc2-open-directory",
+  "windows",
+ ]
+-
+-[[package]]
+-name = "tap"
+-version = "1.0.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "55937e1799185b12863d447f42597ed69d9928686b8d88a1df17376a097d8369"
+ 
+ [[package]]
+ name = "tempfile"
+@@ -3791,41 +3524,17 @@
+ 
+ [[package]]
+ name = "toml"
+-version = "0.9.12+spec-1.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cf92845e79fc2e2def6a5d828f0801e29a2f8acc037becc5ab08595c7d5e9863"
++version = "1.1.6+spec-1.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "920602543f0911ab71da12c50d59701da54c196d1a2bf5cb4b75667f137a406a"
+ dependencies = [
+  "indexmap 2.14.2",
+  "serde_core",
+  "serde_spanned",
+- "toml_datetime 0.7.5+spec-1.1.0",
++ "toml_datetime",
+  "toml_parser",
+  "toml_writer",
+- "winnow 0.7.15",
+-]
+-
+-[[package]]
+-name = "toml"
+-version = "1.1.6+spec-1.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "920602543f0911ab71da12c50d59701da54c196d1a2bf5cb4b75667f137a406a"
+-dependencies = [
+- "indexmap 2.14.2",
+- "serde_core",
+- "serde_spanned",
+- "toml_datetime 1.1.1+spec-1.1.0",
+- "toml_parser",
+- "toml_writer",
+- "winnow 1.0.4",
+-]
+-
+-[[package]]
+-name = "toml_datetime"
+-version = "0.7.5+spec-1.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "92e1cfed4a3038bc5a127e35a2d360f145e1f4b971b551a2ba5fd7aedf7e1347"
+-dependencies = [
+- "serde_core",
++ "winnow",
+ ]
+ 
+ [[package]]
+@@ -3843,7 +3552,7 @@
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "1d38ac1cf9b95face32296c0a3ede1fdc270627c9d9c02a7274dd6d960dc4d56"
+ dependencies = [
+- "winnow 1.0.4",
++ "winnow",
+ ]
+ 
+ [[package]]
+@@ -3974,12 +3683,6 @@
+ checksum = "eaea85b334db583fe3274d12b4cd1880032beab409c0d774be044d4480ab9a94"
+ 
+ [[package]]
+-name = "unescape"
+-version = "0.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ccb97dac3243214f8d8507998906ca3e2e0b900bf9bf4870477f125b82e68f6e"
+-
+-[[package]]
+ name = "unicode-bidi"
+ version = "0.3.18"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -4005,12 +3708,6 @@
+ version = "0.1.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "7df058c713841ad818f1dc5d3fd88063241cc61f49f5fbea4b951e8cf5a8d71d"
+-
+-[[package]]
+-name = "unicode-segmentation"
+-version = "1.13.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c6f5d3c3b1bf09027a88a6bc961fc00497d651009560b5463668dc81b0fa87a8"
+ 
+ [[package]]
+ name = "unicode-xid"
+@@ -4075,17 +3772,6 @@
+ version = "1.0.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "b6c140620e7ffbb22c2dee59cafe6084a59b5ffc27a8859a5f0d494b5d52b6be"
+-
+-[[package]]
+-name = "uuid"
+-version = "1.26.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2ef6dac1e96601b4fb3acccccff2139741fcb757cb9a36089bf5be91cfb285ce"
+-dependencies = [
+- "getrandom 0.4.3",
+- "js-sys",
+- "wasm-bindgen",
+-]
+ 
+ [[package]]
+ name = "vcpkg"
+@@ -4473,12 +4159,6 @@
+ 
+ [[package]]
+ name = "winnow"
+-version = "0.7.15"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "df79d97927682d2fd8adb29682d1140b343be4ac0f08fd68b7765d9c059d3945"
+-
+-[[package]]
+-name = "winnow"
+ version = "1.0.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "23b97319f7b8343df12cc98938e5c3eb436064524c8d2b4e30a1d3a36eecdf81"
+@@ -4494,15 +4174,6 @@
+ version = "0.6.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "3ad82d2a33cdc9674dc7465672f271e096168fcdbe0f799d9e6db8c5892679dc"
+-
+-[[package]]
+-name = "wyz"
+-version = "0.5.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "05f360fc0b24296329c78fda852a1e9ae82de9cf7b27dae4b7f62f118f77b9ed"
+-dependencies = [
+- "tap",
+-]
+ 
+ [[package]]
+ name = "xattr"
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -28,13 +28,14 @@
+ [features]
+ default = ["pg18"]
+ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
++pg19 = ["pgrx/pg19", "pgrx-tests/pg19"]
+ pg_test = []
+ light-e2e = []
+ # SQL probes used only by the dedicated assertion/ASan E2E image.
+ e2e-unsafe-test-hooks = []
+ 
+ [dependencies]
+-pgrx = "=0.19.3"
++pgrx = "=0.20.0"
+ vstd = { git = "https://github.com/verus-lang/verus", rev = "2e59154" }
+ serde = { version = "1", features = ["derive"] }
+ serde_json = "1"
+@@ -52,7 +53,7 @@
+ 
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.19.3"
++pgrx-tests = "=0.20.0"
+ testcontainers = "0.27"
+ testcontainers-modules = { version = "0.15", features = ["postgres"] }
+ tokio = { version = "1", features = ["rt-multi-thread", "macros", "process"] }
+--- a/src/api/helpers.rs
++++ b/src/api/helpers.rs
+@@ -1348,7 +1348,7 @@
+             // SAFETY: args comes from a valid analyzed FuncExpr or WindowFunc
+             // and its nodes remain valid for the collector's duration.
+             unsafe {
+-                if pgrx::is_a(arg, pg_sys::NodeTag::T_NamedArgExpr) {
++                if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(arg, pg_sys::NodeTag::T_NamedArgExpr) {
+                     (*(arg as *const pg_sys::NamedArgExpr)).argnumber
+                 } else {
+                     index as i32
+@@ -1379,16 +1379,16 @@
+         // QTW_EXAMINE_RTES_BEFORE passes RangeTblEntry nodes to the callback
+         // before the query walker handles their subqueries. They are not
+         // expression nodes and must not reach expression_tree_walker.
+-        if pgrx::is_a(node, pg_sys::NodeTag::T_RangeTblEntry) {
++        if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_RangeTblEntry) {
+             return false;
+         }
+ 
+         let collector = &mut *(context as *mut VolatilityCollector);
+-        if pgrx::is_a(node, pg_sys::NodeTag::T_FuncExpr) {
++        if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_FuncExpr) {
+             let function = &*(node as *const pg_sys::FuncExpr);
+             let args = pgrx::PgList::<pg_sys::Node>::from_pg(function.args);
+             record_function_call(function.funcid, &args, collector);
+-        } else if pgrx::is_a(node, pg_sys::NodeTag::T_WindowFunc) {
++        } else if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_WindowFunc) {
+             let window = &*(node as *const pg_sys::WindowFunc);
+             if !window.winagg {
+                 let args = pgrx::PgList::<pg_sys::Node>::from_pg(window.args);
+@@ -1396,7 +1396,7 @@
+             }
+         }
+ 
+-        if pgrx::is_a(node, pg_sys::NodeTag::T_CoerceViaIO) {
++        if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_CoerceViaIO) {
+             let cast = &*(node as *const pg_sys::CoerceViaIO);
+             if !cast.arg.is_null() {
+                 let source_type = pg_sys::exprType(cast.arg as *const pg_sys::Node);
+@@ -1413,7 +1413,7 @@
+                 pg_sys::getTypeInputInfo(cast.resulttype, &mut input, &mut io_param);
+                 collector.enum_io_function_oids.push(input);
+             }
+-        } else if pgrx::is_a(node, pg_sys::NodeTag::T_JsonConstructorExpr) {
++        } else if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_JsonConstructorExpr) {
+             let constructor = &*(node as *const pg_sys::JsonConstructorExpr);
+             if constructor.returning.is_null() || (*constructor.returning).format.is_null() {
+                 collector.worst = 'v';
+@@ -1433,9 +1433,9 @@
+                     }
+                 }
+             }
+-        } else if pgrx::is_a(node, pg_sys::NodeTag::T_JsonExpr) {
++        } else if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_JsonExpr) {
+             let json = &*(node as *const pg_sys::JsonExpr);
+-            if !pgrx::is_a(json.path_spec, pg_sys::NodeTag::T_Const) {
++            if !<pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(json.path_spec, pg_sys::NodeTag::T_Const) {
+                 collector.worst = max_analyzed_volatility(collector.worst, 's');
+             } else {
+                 let path = &*(json.path_spec as *const pg_sys::Const);
+@@ -1456,21 +1456,21 @@
+                     }
+                 }
+             }
+-        } else if pgrx::is_a(node, pg_sys::NodeTag::T_SQLValueFunction) {
++        } else if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_SQLValueFunction) {
+             collector.worst = max_analyzed_volatility(collector.worst, 's');
+-        } else if pgrx::is_a(node, pg_sys::NodeTag::T_NextValueExpr) {
++        } else if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_NextValueExpr) {
+             collector.worst = 'v';
+         }
+ 
+         // Aggregate implementation volatility is intentionally excluded.
+         // PostgreSQL handles every other function-containing node, including
+         // both sides of CoerceViaIO and every RowCompareExpr operator.
+-        if !pgrx::is_a(node, pg_sys::NodeTag::T_Aggref) {
++        if !<pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_Aggref) {
+             pg_sys::check_functions_in_node(node, Some(collect_function_oid), context);
+         }
+ 
+         // expression_tree_walker does not recurse into nested Query nodes.
+-        if pgrx::is_a(node, pg_sys::NodeTag::T_Query) {
++        if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_Query) {
+             pg_sys::query_tree_walker_impl(
+                 node as *mut pg_sys::Query,
+                 Some(collect_volatility_nodes),
+@@ -1991,7 +1991,7 @@
+     }
+ 
+     // RTE_RELATION → record the OID
+-    if unsafe { pgrx::is_a(node, pg_sys::NodeTag::T_RangeTblEntry) } {
++    if unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_RangeTblEntry) } {
+         // SAFETY: node tag verified as T_RangeTblEntry.
+         let rte = unsafe { &*(node as *const pg_sys::RangeTblEntry) };
+         if rte.rtekind == pg_sys::RTEKind::RTE_RELATION {
+@@ -2009,7 +2009,7 @@
+ 
+     // T_Query → use query_tree_walker to handle rtable + expressions
+     // (expression_tree_walker does NOT recurse into Query nodes)
+-    if unsafe { pgrx::is_a(node, pg_sys::NodeTag::T_Query) } {
++    if unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_Query) } {
+         // SAFETY: node tag verified as T_Query.
+         return unsafe {
+             pg_sys::query_tree_walker_impl(
+--- a/src/api/mod.rs
++++ b/src/api/mod.rs
+@@ -2942,7 +2942,7 @@
+         if std::time::Instant::now() >= deadline {
+             return false;
+         }
+-        pgrx::check_for_interrupts!();
++        pgrx::check_for_interrupts();
+         unsafe {
+             // SAFETY: pg_usleep is PostgreSQL's bounded backend sleep helper.
+             pgrx::pg_sys::pg_usleep(100_000);
+--- a/src/api/recovery.rs
++++ b/src/api/recovery.rs
+@@ -831,7 +831,7 @@
+         if std::time::Instant::now() >= deadline {
+             return false;
+         }
+-        pgrx::check_for_interrupts!();
++        pgrx::check_for_interrupts();
+         // SAFETY: pg_usleep is PostgreSQL's bounded backend sleep helper.
+         unsafe { pg_sys::pg_usleep(100_000) };
+     }
+--- a/src/api/scheduler_control.rs
++++ b/src/api/scheduler_control.rs
+@@ -154,7 +154,7 @@
+                 pending
+             );
+         }
+-        pgrx::check_for_interrupts!();
++        pgrx::check_for_interrupts();
+         unsafe {
+             // SAFETY: pg_usleep is PostgreSQL's bounded backend sleep helper.
+             pgrx::pg_sys::pg_usleep(poll_interval.as_micros() as std::os::raw::c_long);
+--- a/src/dag.rs
++++ b/src/dag.rs
+@@ -176,7 +176,7 @@
+     }
+ }
+ 
+-#[cfg(feature = "pg18")]
++#[cfg(any(feature = "pg18", feature = "pg19"))]
+ use pgrx::prelude::*;
+ 
+ // ── Strongly Connected Components ──────────────────────────────────────────
+@@ -345,7 +345,7 @@
+     ///
+     /// Loads all stream tables and their dependencies, constructs the graph,
+     /// and resolves CALCULATED schedules.
+-    #[cfg(feature = "pg18")]
++    #[cfg(any(feature = "pg18", feature = "pg19"))]
+     pub fn build_from_catalog(fallback_schedule_secs: i32) -> Result<Self, PgTrickleError> {
+         let mut dag = StDag::new();
+ 
+@@ -1395,7 +1395,7 @@
+     ///
+     /// Returns `Ok(())` on success. The caller should fall back to a full
+     /// `build_from_catalog` if this returns `Err`.
+-    #[cfg(feature = "pg18")]
++    #[cfg(any(feature = "pg18", feature = "pg19"))]
+     pub fn rebuild_incremental(
+         &mut self,
+         affected_ids: &[i64],
+--- a/src/dvm/mod.rs
++++ b/src/dvm/mod.rs
+@@ -1188,7 +1188,7 @@
+ /// Returns a map `oid → set_of_column_names` for columns that are vector-typed.
+ /// Called from `generate_delta_query` when `enable_vector_agg` is on.
+ /// Non-fatal: if SPI is unavailable (e.g. unit-test context), returns empty map.
+-#[cfg(feature = "pg18")]
++#[cfg(any(feature = "pg18", feature = "pg19"))]
+ pub(crate) fn resolve_vector_columns_for_sources(
+     source_oids: &[u32],
+ ) -> HashMap<u32, std::collections::HashSet<String>> {
+@@ -1231,7 +1231,7 @@
+     map
+ }
+ 
+-#[cfg(not(feature = "pg18"))]
++#[cfg(not(any(feature = "pg18", feature = "pg19")))]
+ pub(crate) fn resolve_vector_columns_for_sources(
+     _source_oids: &[u32],
+ ) -> HashMap<u32, std::collections::HashSet<String>> {
+@@ -1368,7 +1368,7 @@
+ ///
+ /// VH-1 (v0.48.0): returns typename so halfvec/sparsevec output columns are
+ /// correctly typed (previously always used `vector(N)`).
+-#[cfg(feature = "pg18")]
++#[cfg(any(feature = "pg18", feature = "pg19"))]
+ pub(crate) fn extract_vector_agg_output_dims(tree: &parser::OpTree) -> Vec<(String, i32, String)> {
+     use parser::{AggFunc, Expr, OpTree};
+     use pgrx::prelude::*;
+@@ -1475,7 +1475,7 @@
+     result
+ }
+ 
+-#[cfg(not(feature = "pg18"))]
++#[cfg(not(any(feature = "pg18", feature = "pg19")))]
+ pub(crate) fn extract_vector_agg_output_dims(_tree: &parser::OpTree) -> Vec<(String, i32, String)> {
+     Vec::new()
+ }
+--- a/src/dvm/parser/mod.rs
++++ b/src/dvm/parser/mod.rs
+@@ -86,7 +86,7 @@
+         // The pointer cast is sound because `is_a` verified the concrete
+         // type matches `$tag`.
+         // SAFETY: is_a reads the node tag field, valid for any non-null Node* from the parser.
+-        if !__n.is_null() && unsafe { pgrx::is_a(__n, pg_sys::NodeTag::$tag) } {
++        if !__n.is_null() && unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(__n, pg_sys::NodeTag::$tag) } {
+             // SAFETY: Pointer verified non-null; parse-tree node allocated by raw_parser in a valid memory context.
+             Some(unsafe { &*(__n as *const $ty) })
+         } else {
+@@ -160,7 +160,7 @@
+         let __n = $node;
+         // SAFETY: `pgrx::is_a` reads the node tag field, which is valid
+         // for any non-null `Node*` allocated by the PostgreSQL parser.
+-        !__n.is_null() && unsafe { pgrx::is_a(__n, pg_sys::NodeTag::$tag) }
++        !__n.is_null() && unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(__n, pg_sys::NodeTag::$tag) }
+     }};
+ }
+ 
+--- a/src/dvm/parser/sublinks/mod.rs
++++ b/src/dvm/parser/sublinks/mod.rs
+@@ -1453,7 +1453,7 @@
+     // and analyzed nodes supplied to query_tree_walker_impl below.
+     unsafe {
+         let context = &mut *(context as *mut AnalyzedLateralContext);
+-        if pgrx::is_a(node, pg_sys::NodeTag::T_RangeTblEntry) {
++        if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_RangeTblEntry) {
+             let rte = &*(node as *const pg_sys::RangeTblEntry);
+             if rte.rtekind == pg_sys::RTEKind::RTE_FUNCTION {
+                 for table_function in
+@@ -1463,7 +1463,7 @@
+                         continue;
+                     }
+                     let expression = (*table_function).funcexpr;
+-                    if !pgrx::is_a(expression, pg_sys::NodeTag::T_FuncExpr) {
++                    if !<pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(expression, pg_sys::NodeTag::T_FuncExpr) {
+                         context.error = Some(PgTrickleError::UnsupportedOperator(
+                             "LATERAL table expression is not a resolved function call".into(),
+                         ));
+@@ -1505,7 +1505,7 @@
+             }
+             return false;
+         }
+-        if pgrx::is_a(node, pg_sys::NodeTag::T_Query) {
++        if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_Query) {
+             pg_sys::query_tree_walker_impl(
+                 node as *mut pg_sys::Query,
+                 Some(analyzed_lateral_walker),
+@@ -1610,7 +1610,7 @@
+     // remains live for the whole PostgreSQL tree walk.
+     let ctx = unsafe { &mut *(context as *mut AnalyzedWindowCollectorCtx) };
+     // SAFETY: node is non-null and PostgreSQL owns it for the duration of the walk.
+-    if unsafe { pgrx::is_a(node, pg_sys::NodeTag::T_Query) } {
++    if unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_Query) } {
+         let previous = ctx.current_query;
+         ctx.current_query = node as *mut pg_sys::Query;
+         // SAFETY: node tag is T_Query and the callback/context stay live.
+@@ -1626,7 +1626,7 @@
+         return stopped;
+     }
+     // SAFETY: node is non-null and PostgreSQL owns it for the duration of the walk.
+-    if unsafe { pgrx::is_a(node, pg_sys::NodeTag::T_WindowFunc) } {
++    if unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_WindowFunc) } {
+         if !ctx.current_query.is_null() {
+             // SAFETY: node and current_query tags were established above.
+             let function = unsafe { &*(node as *const pg_sys::WindowFunc) };
+@@ -1641,7 +1641,7 @@
+         return false;
+     }
+     // SAFETY: node is non-null and PostgreSQL owns it for the duration of the walk.
+-    if unsafe { pgrx::is_a(node, pg_sys::NodeTag::T_Aggref) } {
++    if unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_Aggref) } {
+         // SAFETY: node tag is T_Aggref and aggregates points to the caller's map.
+         let aggregate = unsafe { &*(node as *const pg_sys::Aggref) };
+         if aggregate.location >= 0 {
+@@ -1894,7 +1894,7 @@
+         return false;
+     }
+ 
+-    if unsafe { pgrx::is_a(node, pg_sys::NodeTag::T_Aggref) } {
++    if unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_Aggref) } {
+         // SAFETY: node tag verified as T_Aggref.
+         let aggref = unsafe { &*(node as *const pg_sys::Aggref) };
+         if aggref.location >= 0 {
+@@ -1908,7 +1908,7 @@
+         return false;
+     }
+ 
+-    if unsafe { pgrx::is_a(node, pg_sys::NodeTag::T_Query) } {
++    if unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_Query) } {
+         // SAFETY: node tag verified as T_Query.
+         return unsafe {
+             pg_sys::query_tree_walker_impl(
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -49,7 +49,7 @@
+ pub mod dvm;
+ pub mod dvm_trace;
+ pub mod error;
+-#[cfg(feature = "pg18")]
++#[cfg(any(feature = "pg18", feature = "pg19"))]
+ #[allow(dead_code)]
+ mod explain_hook;
+ pub mod fuzz_pub;
+@@ -104,7 +104,7 @@
+     let in_shared_preload = unsafe { pg_sys::process_shared_preload_libraries_in_progress };
+     // PGC_POSTMASTER variables can only be created during shared preload.
+     config::register_gucs(in_shared_preload);
+-    #[cfg(feature = "pg18")]
++    #[cfg(any(feature = "pg18", feature = "pg19"))]
+     explain_hook::register();
+ 
+     if in_shared_preload {
+--- a/src/wal_decoder.rs
++++ b/src/wal_decoder.rs
+@@ -348,6 +348,8 @@
+             true, // db_specific
+             pg_sys::ReplicationSlotPersistency::RS_EPHEMERAL,
+             false, // two_phase
++            #[cfg(feature = "pg19")]
++            false, // repack
+             false, // failover
+             false, // synced
+         );
+@@ -389,6 +391,8 @@
+             c_plugin.as_ptr(),
+             std::ptr::null_mut(), // output_plugin_options (NIL)
+             false,                // need_full_snapshot
++            #[cfg(feature = "pg19")]
++            false, // for_repack
+             pg_sys::InvalidXLogRecPtr as u64,
+             &mut xl_routine,
+             None, // prepare_write

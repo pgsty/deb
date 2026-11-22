@@ -11,11 +11,11 @@ Package: postgresql-PGVERSION-pg-trickle
 Architecture: any
 Provides: postgresql-pg-trickle
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Description: Streaming tables with differential view maintenance for PostgreSQL 18
-  pg_trickle turns PostgreSQL 18 into a real-time data platform with
+Description: Streaming tables with differential view maintenance for PostgreSQL PGVERSION
+  pg_trickle turns PostgreSQL PGVERSION into a real-time data platform with
   streaming tables and differential view maintenance, implemented as a
   Rust and pgrx extension.
   Full background scheduler and shared-memory functionality require loading
   pg_trickle through shared_preload_libraries.
-  This package also installs pg_trickle_dump in the PostgreSQL 18 binary
+  This package also installs pg_trickle_dump in the PostgreSQL PGVERSION binary
   directory for definition export and migration backups.
