@@ -4,14 +4,16 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
+.NOTPARALLEL:
+
 TARBALL := etcd_fdw-0.0.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 WRAPPERS_TARBALL := wrappers-0.6.2.tar.gz
 WRAPPERS_SOURCE_TARBALL ?= ../SOURCES/$(WRAPPERS_TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 14 15 16 17 18
-PGRX_VERSION := 0.19.2
+PG_VERSIONS ?= 15 16 17 18 19
+PGRX_VERSION := 0.20.0
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 SOURCE_PATCH := patches/etcd-fdw-0.0.1.patch
 LOCK_SNAPSHOT := $(CURDIR)/$(BUILD_DIR)/.pgrx-locks.before
@@ -34,6 +36,7 @@ setup: check-src check-patches
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/etcd-fdw-0.0.1-pgrx-0.20.0.patch
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
