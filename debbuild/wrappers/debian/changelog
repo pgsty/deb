@@ -1,3 +1,9 @@
+wrappers (0.6.4-2PGSTY) unstable; urgency=medium
+
+  * Rebuild for PostgreSQL 15 through 19 with pgrx 0.20.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+
 wrappers (0.6.4-1PGSTY) unstable; urgency=medium
 
   * Update to wrappers 0.6.4 and migrate the locked build to pgrx 0.19.3.
