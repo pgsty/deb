@@ -14,4 +14,4 @@ Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Description: DDL and utility command firewall for PostgreSQL
   pg_command_fw intercepts and selectively blocks DDL, utility commands,
   and dangerous built-in functions through configurable PostgreSQL hooks.
-  This package builds the pgrx extension for PostgreSQL 15 through 18.
+  This package builds the pgrx extension for PostgreSQL 15 through 19.
