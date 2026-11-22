@@ -1,10 +1,11 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 all: setup build move
 
 TARBALL := pg_warren-0.8.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 15 16 17 18
+PG_VERSIONS := 15 16 17 18 19
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first"; exit 1)
@@ -16,6 +17,7 @@ setup: check-src
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-warren-0.8.0-pgrx-0.20.0.patch
 
 build:
 	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol

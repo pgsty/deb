@@ -1,0 +1,2421 @@
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -24,12 +24,6 @@
+ checksum = "940b3a0ca603d1eade50a4846a2afffd5ef57a9feac2c0e2ec2e14f9ead76000"
+ 
+ [[package]]
+-name = "anyhow"
+-version = "1.0.104"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "330a5ed07fa54e4702c9d6c4174f74427fc0ef6e214bbd677ae50a5099946470"
+-
+-[[package]]
+ name = "approx"
+ version = "0.5.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -39,44 +33,26 @@
+ ]
+ 
+ [[package]]
+-name = "async-trait"
+-version = "0.1.92"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "82f6aeea286b8eb4dd3431a1be1b59d290ace00f5bfd8e2a159bc2a05e2c1667"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn 3.0.9",
+-]
+-
+-[[package]]
+ name = "autocfg"
+ version = "1.5.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "f2032f911046de80f0a198e0901378627c33f59ea0ac00e363d481118bd70a53"
+ 
+ [[package]]
+-name = "base64"
+-version = "0.22.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "72b3254f16251a8381aa12e40e3c4d2f0199f8c6508fbecb9d91f575e0fbb8c6"
+-
+-[[package]]
+ name = "bindgen"
+-version = "0.72.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "993776b509cfb49c750f11b8f07a46fa23e0a1386ffc01fb1e7d343efc387895"
++version = "0.73.2"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "787ef8ef523575546b106a58213d6e6b06198a05c2f757258c68a74273670cfa"
+ dependencies = [
+  "bitflags",
+  "cexpr",
+  "clang-sys",
+- "itertools 0.13.0",
+  "proc-macro2",
+  "quote",
+  "regex",
+  "rustc-hash",
+- "shlex 1.3.0",
+- "syn 2.0.119",
++ "shlex",
++ "syn 3.0.9",
+ ]
+ 
+ [[package]]
+@@ -103,18 +79,6 @@
+ version = "2.13.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "3ded4057c258ba199e2d26386d3af3780957ecaee6c4ef4041c6b4b8b97c0b06"
+-
+-[[package]]
+-name = "bitvec"
+-version = "1.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ddcec3d12c579d40898fe0a9a358a803c23e9c52ca3c425707f81c9436211837"
+-dependencies = [
+- "funty",
+- "radium",
+- "tap",
+- "wyz",
+-]
+ 
+ [[package]]
+ name = "block-buffer"
+@@ -150,73 +114,18 @@
+ ]
+ 
+ [[package]]
+-name = "bumpalo"
+-version = "3.20.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "72f5acc6cb2ba439de613abc23857ec3d78374d8ed5ac84e9d11336e87da8649"
+-
+-[[package]]
+ name = "bytemuck"
+ version = "1.25.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "95832e849adfb21180ccb6826a99da14e5d266ae5c2e668e1602cf234f153797"
+ 
+ [[package]]
+-name = "byteorder"
+-version = "1.5.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1fd0f2584146f6f2ef48085050886acf353beff7305ebd1ae69500e27c67f64b"
+-
+-[[package]]
+ name = "bytes"
+ version = "1.12.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "fc652a48c352aef3ea3aed32080501cf3ef6ed5da78602a020c991775b0aff04"
+ 
+ [[package]]
+-name = "camino"
+-version = "1.2.6"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bbbad30e4b4c14a39e3cc8aed085a12a327257c316619c93581e017bc52be591"
+-dependencies = [
+- "serde_core",
+-]
+-
+-[[package]]
+-name = "cargo-platform"
+-version = "0.3.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dd0061da739915fae12ea00e16397555ed4371a6bb285431aab930f61b0aa4ba"
+-dependencies = [
+- "serde",
+- "serde_core",
+-]
+-
+-[[package]]
+-name = "cargo_metadata"
+-version = "0.23.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ef987d17b0a113becdd19d3d0022d04d7ef41f9efe4f3fb63ac44ba61df3ade9"
+-dependencies = [
+- "camino",
+- "cargo-platform",
+- "semver",
+- "serde",
+- "serde_json",
+- "thiserror",
+-]
+-
+-[[package]]
+-name = "cargo_toml"
+-version = "0.22.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "374b7c592d9c00c1f4972ea58390ac6b18cbb6ab79011f3bdc90a0b82ca06b77"
+-dependencies = [
+- "serde",
+- "toml 0.9.12+spec-1.1.0",
+-]
+-
+-[[package]]
+ name = "cast"
+ version = "0.3.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -229,7 +138,7 @@
+ checksum = "877bf67ac8e52449eb2f9e98a344ea163beb70dd1f9eebe3cc5357dcfeaee4df"
+ dependencies = [
+  "find-msvc-tools",
+- "shlex 2.0.1",
++ "shlex",
+ ]
+ 
+ [[package]]
+@@ -302,6 +211,16 @@
+ ]
+ 
+ [[package]]
++name = "clang"
++version = "2.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "b2ed30b30e1e17966b55ddd0b9dd2758fd824f0a6da6875c8abb17e6aba47c28"
++dependencies = [
++ "clang-sys",
++ "libc",
++]
++
++[[package]]
+ name = "clang-sys"
+ version = "1.9.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -319,20 +238,6 @@
+ checksum = "aa8876b300ab35ba921adea3dfd70157a46249b33f95c9084ae5709785478946"
+ dependencies = [
+  "clap_builder",
+- "clap_derive",
+-]
+-
+-[[package]]
+-name = "clap-cargo"
+-version = "0.18.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "936551935c8258754bb8216aec040957d261f977303754b9bf1a213518388006"
+-dependencies = [
+- "anstyle",
+- "cargo_metadata",
+- "clap",
+- "serde",
+- "serde_json",
+ ]
+ 
+ [[package]]
+@@ -346,30 +251,12 @@
+ ]
+ 
+ [[package]]
+-name = "clap_derive"
+-version = "4.6.7"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f9c751b79415d4e559e3d1fcf128e09e720eb673a06d26cf6f392d37d75b66e0"
+-dependencies = [
+- "heck",
+- "proc-macro2",
+- "quote",
+- "syn 3.0.9",
+-]
+-
+-[[package]]
+ name = "clap_lex"
+ version = "1.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "1c133bc6a41be0d194c306b5506d15e6feeea7b1d6604bd3f8310dfb2ca96486"
+ 
+ [[package]]
+-name = "cmov"
+-version = "0.5.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0c9ea0ac24bc397ab3c98583a3c9ba74fa56b09a4449bbe172b9b1ddb016027a"
+-
+-[[package]]
+ name = "codepage"
+ version = "0.1.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -383,15 +270,6 @@
+ version = "0.10.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "a6ef517f0926dd24a1582492c791b6a4818a4d94e789a334894aa15b0d12f55c"
+-
+-[[package]]
+-name = "convert_case"
+-version = "0.11.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "affbf0190ed2caf063e3def54ff444b449371d55c58e513a95ab98eca50adb49"
+-dependencies = [
+- "unicode-segmentation",
+-]
+ 
+ [[package]]
+ name = "core_detect"
+@@ -420,7 +298,7 @@
+  "clap",
+  "criterion-plot",
+  "is-terminal",
+- "itertools 0.10.5",
++ "itertools",
+  "num-traits",
+  "once_cell",
+  "oorandom",
+@@ -439,7 +317,7 @@
+ checksum = "6b50826342786a51a89e2da3a28f1c32b06e387201bc2d19791f622c673706b1"
+ dependencies = [
+  "cast",
+- "itertools 0.10.5",
++ "itertools",
+ ]
+ 
+ [[package]]
+@@ -480,15 +358,6 @@
+ checksum = "ce6e4c961d6cd6c9a86db418387425e8bdeaf05b3c8bc1411e6dca4c252f1453"
+ dependencies = [
+  "hybrid-array",
+-]
+-
+-[[package]]
+-name = "ctutils"
+-version = "0.4.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "03bb0e1cc970d482d121d9a1744999169b69a07470b3d644a7894e53fcaf4574"
+-dependencies = [
+- "cmov",
+ ]
+ 
+ [[package]]
+@@ -500,28 +369,6 @@
+  "block-buffer",
+  "const-oid",
+  "crypto-common",
+- "ctutils",
+-]
+-
+-[[package]]
+-name = "dispatch2"
+-version = "0.3.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1e0e367e4e7da84520dedcac1901e4da967309406d1e51017ae1abfb97adbd38"
+-dependencies = [
+- "bitflags",
+- "objc2",
+-]
+-
+-[[package]]
+-name = "displaydoc"
+-version = "0.2.7"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c6232dd377dcc64799954cbd3a9bb882e9cdc1308ccd87b1c098f1fb2eaf82a8"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn 3.0.9",
+ ]
+ 
+ [[package]]
+@@ -532,9 +379,9 @@
+ 
+ [[package]]
+ name = "encoding_rs"
+-version = "0.8.42"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8e985e0451871ad22fb8d2b6b076e2028a502a0d3950998c2c5c0a4f9b5d9679"
++version = "0.8.44"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "89253175e704ab869b04f9db224d38630e0211a53841a79181deae0889e169f5"
+ dependencies = [
+  "cfg-if",
+  "core_detect",
+@@ -545,26 +392,6 @@
+ ]
+ 
+ [[package]]
+-name = "enum-map"
+-version = "2.7.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6866f3bfdf8207509a033af1a75a7b08abda06bbaaeae6669323fd5a097df2e9"
+-dependencies = [
+- "enum-map-derive",
+-]
+-
+-[[package]]
+-name = "enum-map-derive"
+-version = "0.17.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f282cfdfe92516eb26c2af8589c274c7c17681f5ecc03c18255fe741c6aa64eb"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn 2.0.119",
+-]
+-
+-[[package]]
+ name = "equivalent"
+ version = "1.0.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -577,7 +404,7 @@
+ checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
+ dependencies = [
+  "libc",
+- "windows-sys",
++ "windows-sys 0.61.2",
+ ]
+ 
+ [[package]]
+@@ -592,12 +419,6 @@
+ ]
+ 
+ [[package]]
+-name = "fallible-iterator"
+-version = "0.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4443176a9f2c162692bd3d352d745ef9413eec5782a80d8fd6f8a1ac692a07f7"
+-
+-[[package]]
+ name = "fastrand"
+ version = "2.5.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -610,77 +431,20 @@
+ checksum = "1c66915cc5391097de7a2b0b972e8505aa33c0df401fd3a6811dbdb32881ba48"
+ 
+ [[package]]
+-name = "fixedbitset"
+-version = "0.5.7"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1d674e81391d1e1ab681a28d99df07927c6d4aa5b027d7da16ba32d1d21ecd99"
+-
+-[[package]]
+ name = "fnv"
+ version = "1.0.7"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
+ 
+ [[package]]
+-name = "foldhash"
+-version = "0.1.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d9c4f5dac5e15c24eb999c26181a6ca40b39fe946cbe4c263c7209467bc83af2"
+-
+-[[package]]
+-name = "form_urlencoded"
+-version = "1.2.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cb4cb245038516f5f85277875cdaa4f7d2c9a0fa0468de06ed190163b1581fcf"
+-dependencies = [
+- "percent-encoding",
+-]
+-
+-[[package]]
+-name = "funty"
+-version = "2.0.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e6d5a32815ae3f33302d95fdcb2ce17862f8c65363dcfd29360480ba1001fc9c"
+-
+-[[package]]
+-name = "futures-channel"
+-version = "0.3.34"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b1f9e3d69d39e4862ffed03ed071a76f9a13ba1d9109d355b0f0aa6b15e393c4"
+-dependencies = [
+- "futures-core",
+- "futures-sink",
+-]
+-
+-[[package]]
+-name = "futures-core"
+-version = "0.3.34"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "92d699e522242e69e3003b94ecc1f960f3a5e015aa7c5d7486e65ad01dd94f5e"
+-
+-[[package]]
+-name = "futures-sink"
+-version = "0.3.34"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1944426bf7d03f1d14f708785e4b33efd750b36d48a157b836b3efc15ede8e1d"
+-
+-[[package]]
+-name = "futures-task"
+-version = "0.3.34"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cd417de3d1d015fc3bfd2b1ea46dfc7bab72ef86f1cc7cc9c78e728b34a6d1fd"
+-
+-[[package]]
+-name = "futures-util"
+-version = "0.3.34"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0d50a92467f8ba5dd6e3ee5d4bd04d73ab2e4e1c44474a0674821dfce14b79bc"
+-dependencies = [
+- "futures-core",
+- "futures-sink",
+- "futures-task",
+- "pin-project-lite",
+- "slab",
++name = "getrandom"
++version = "0.2.17"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ff2abc00be7fca6ebc474524697ae276ad847ad0a6b3faa4bcb027e9a4614ad0"
++dependencies = [
++ "cfg-if",
++ "libc",
++ "wasi",
+ ]
+ 
+ [[package]]
+@@ -744,24 +508,9 @@
+ 
+ [[package]]
+ name = "hashbrown"
+-version = "0.15.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9229cfe53dfd69f0609a49f65461bd93001ea1ef889cd5529dd176593f5338a1"
+-dependencies = [
+- "foldhash",
+-]
+-
+-[[package]]
+-name = "hashbrown"
+ version = "0.17.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "ed5909b6e89a2db4456e54cd5f673791d7eca6732202bbf2a9cc504fe2f9b84a"
+-
+-[[package]]
+-name = "heck"
+-version = "0.5.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
+ 
+ [[package]]
+ name = "hermit-abi"
+@@ -770,15 +519,6 @@
+ checksum = "e17592d60ebacc7d5e169f4663c5f84f9161cc90328abcfe8456f41e4dfcb284"
+ 
+ [[package]]
+-name = "hmac"
+-version = "0.13.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6303bc9732ae41b04cb554b844a762b4115a61bfaa81e3e83050991eeb56863f"
+-dependencies = [
+- "digest",
+-]
+-
+-[[package]]
+ name = "hybrid-array"
+ version = "0.4.15"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -788,110 +528,6 @@
+ ]
+ 
+ [[package]]
+-name = "icu_collections"
+-version = "2.3.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fa68d21081c4a05d5a901a1c62add574c77048b6a1c67be3b50ce0b60d4ca513"
+-dependencies = [
+- "displaydoc",
+- "potential_utf",
+- "utf8_iter",
+- "yoke",
+- "zerofrom",
+- "zerovec",
+-]
+-
+-[[package]]
+-name = "icu_locale_core"
+-version = "2.3.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d56e28588da92eee5c3201a6eff33fabdd49b62269c8938d4ff050ce4d900deb"
+-dependencies = [
+- "displaydoc",
+- "litemap",
+- "tinystr",
+- "writeable",
+- "zerovec",
+-]
+-
+-[[package]]
+-name = "icu_normalizer"
+-version = "2.3.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "12f9cf5f235641ed274641dd81c3f28d870e276763d0797aeeab72317b1c646f"
+-dependencies = [
+- "icu_collections",
+- "icu_normalizer_data",
+- "icu_properties",
+- "icu_provider",
+- "smallvec",
+- "zerovec",
+-]
+-
+-[[package]]
+-name = "icu_normalizer_data"
+-version = "2.3.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1563da1ed3e0b3bf3d74c9b85917ac9c56464d2f57242270c09c9e752f8021a0"
+-
+-[[package]]
+-name = "icu_properties"
+-version = "2.3.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7e7ca276ad3145661a65914e6daf131ca5120cd3dcee8f8f3214b8875184a148"
+-dependencies = [
+- "displaydoc",
+- "icu_collections",
+- "icu_locale_core",
+- "icu_properties_data",
+- "icu_provider",
+- "zerotrie",
+- "zerovec",
+-]
+-
+-[[package]]
+-name = "icu_properties_data"
+-version = "2.3.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e590f038c1464a96894fd6d10127e90a8be4509f56ff7ecef851b15cee0b7caa"
+-
+-[[package]]
+-name = "icu_provider"
+-version = "2.3.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d27bbb9d3abbefac45d55f647c9de1d44aafcd1186eb91879afef17c396c3e73"
+-dependencies = [
+- "displaydoc",
+- "icu_locale_core",
+- "writeable",
+- "yoke",
+- "zerofrom",
+- "zerotrie",
+- "zerovec",
+-]
+-
+-[[package]]
+-name = "idna"
+-version = "1.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "3b0875f23caa03898994f6ddc501886a45c7d3d62d04d2d90788d47be1b1e4de"
+-dependencies = [
+- "idna_adapter",
+- "smallvec",
+- "utf8_iter",
+-]
+-
+-[[package]]
+-name = "idna_adapter"
+-version = "1.2.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cb68373c0d6620ef8105e855e7745e18b0d00d3bdb07fb532e434244cdb9a714"
+-dependencies = [
+- "icu_normalizer",
+- "icu_properties",
+-]
+-
+-[[package]]
+ name = "indenter"
+ version = "0.3.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -904,7 +540,7 @@
+ checksum = "cc4e190f5d26ca7051642629da2c52fc03bde85a03197c99408dcd291734c855"
+ dependencies = [
+  "equivalent",
+- "hashbrown 0.17.1",
++ "hashbrown",
+ ]
+ 
+ [[package]]
+@@ -915,14 +551,8 @@
+ dependencies = [
+  "hermit-abi",
+  "libc",
+- "windows-sys",
+-]
+-
+-[[package]]
+-name = "is_ci"
+-version = "1.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7655c9839580ee829dfacba1d1278c2b7883e50a277ff7541299489d6bdfdc45"
++ "windows-sys 0.61.2",
++]
+ 
+ [[package]]
+ name = "itertools"
+@@ -934,32 +564,12 @@
+ ]
+ 
+ [[package]]
+-name = "itertools"
+-version = "0.13.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
+-dependencies = [
+- "either",
+-]
+-
+-[[package]]
+ name = "itoa"
+ version = "1.0.18"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682"
+ 
+ [[package]]
+-name = "js-sys"
+-version = "0.3.106"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7883d941dae510fb2d978fc3fe018c71c9e2892fd38854de3e8b92c2e5ad9cc5"
+-dependencies = [
+- "cfg-if",
+- "futures-util",
+- "wasm-bindgen",
+-]
+-
+-[[package]]
+ name = "libc"
+ version = "0.2.191"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -976,42 +586,12 @@
+ ]
+ 
+ [[package]]
+-name = "libredox"
+-version = "0.1.25"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "61ff90caf6077a803a240f62fdbe88645a890bbca49ef8174c3cb0404362171d"
+-dependencies = [
+- "libc",
+-]
+-
+-[[package]]
+ name = "linux-raw-sys"
+ version = "0.12.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "32a66949e030da00e8c7d4434b251670a91556f4144941d37452769c25d58a53"
+ 
+ [[package]]
+-name = "litemap"
+-version = "0.8.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "47d9d19d1d6efa0109d2f65ff4c85cddd50bd572e5a00127ab10987290bcefae"
+-
+-[[package]]
+-name = "lock_api"
+-version = "0.4.14"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "224399e74b87b5f3557511d98dff8b14089b3dadafcab6bb93eab67d3aace965"
+-dependencies = [
+- "scopeguard",
+-]
+-
+-[[package]]
+-name = "log"
+-version = "0.4.34"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f9f8bd3e56ce4dfc153cf470fffbfa98c7620958b312ca5c3a4b8d5181fd13c6"
+-
+-[[package]]
+ name = "matrixmultiply"
+ version = "0.3.11"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -1022,16 +602,6 @@
+ ]
+ 
+ [[package]]
+-name = "md-5"
+-version = "0.11.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "69b6441f590336821bb897fb28fc622898ccceb1d6cea3fde5ea86b090c4de98"
+-dependencies = [
+- "cfg-if",
+- "digest",
+-]
+-
+-[[package]]
+ name = "memchr"
+ version = "2.8.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -1042,17 +612,6 @@
+ version = "0.2.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
+-
+-[[package]]
+-name = "mio"
+-version = "1.2.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1788edb87fdc09c7e26304471e2f5be8cdefb1b6930d6e3985fc02ff53bf86ee"
+-dependencies = [
+- "libc",
+- "wasi 0.11.1+wasi-snapshot-preview1",
+- "windows-sys",
+-]
+ 
+ [[package]]
+ name = "multiversion_no_op"
+@@ -1147,39 +706,12 @@
+ ]
+ 
+ [[package]]
+-name = "objc2"
+-version = "0.6.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "08849bbd4767dfae9457696856ae1c84fe4e0281bbe4a7abff2d0e06fb7981f8"
+-dependencies = [
+- "objc2-encode",
+-]
+-
+-[[package]]
+ name = "objc2-core-foundation"
+ version = "0.3.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "2a180dd8642fa45cdb7dd721cd4c11b1cadd4929ce112ebd8b9f5803cc79d536"
+ dependencies = [
+  "bitflags",
+- "dispatch2",
+- "objc2",
+-]
+-
+-[[package]]
+-name = "objc2-encode"
+-version = "4.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ef25abbcd74fb2609453eb695bd2f860d389e457f67dc17cafc8b8cbc89d0c33"
+-
+-[[package]]
+-name = "objc2-foundation"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e3e0adef53c21f888deb4fa59fc59f7eb17404926ee8a6f59f5df0fd7f9f3272"
+-dependencies = [
+- "bitflags",
+- "objc2",
+ ]
+ 
+ [[package]]
+@@ -1193,26 +725,6 @@
+ ]
+ 
+ [[package]]
+-name = "objc2-open-directory"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bb82bed227edf5201dfedf072bba4015a33d3d4a98519837295a90f0a23f676d"
+-dependencies = [
+- "objc2",
+- "objc2-core-foundation",
+- "objc2-foundation",
+-]
+-
+-[[package]]
+-name = "objc2-system-configuration"
+-version = "0.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7216bd11cbda54ccabcab84d523dc93b858ec75ecfb3a7d89513fa22464da396"
+-dependencies = [
+- "objc2-core-foundation",
+-]
+-
+-[[package]]
+ name = "once_cell"
+ version = "1.21.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -1229,60 +741,6 @@
+ version = "4.4.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "13c45bb4a6ae1280ec0803b1ef9d3455eb50f01efbbe1447ab020f1d54fba9d8"
+-dependencies = [
+- "supports-color",
+-]
+-
+-[[package]]
+-name = "parking_lot"
+-version = "0.12.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "93857453250e3077bd71ff98b6a65ea6621a19bb0f559a85248955ac12c45a1a"
+-dependencies = [
+- "lock_api",
+- "parking_lot_core",
+-]
+-
+-[[package]]
+-name = "parking_lot_core"
+-version = "0.9.12"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2621685985a2ebf1c516881c026032ac7deafcda1a2c9b7850dc81e3dfcb64c1"
+-dependencies = [
+- "cfg-if",
+- "libc",
+- "redox_syscall",
+- "smallvec",
+- "windows-link",
+-]
+-
+-[[package]]
+-name = "pathsearch"
+-version = "0.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "da983bc5e582ab17179c190b4b66c7d76c5943a69c6d34df2a2b6bf8a2977b05"
+-dependencies = [
+- "anyhow",
+- "libc",
+-]
+-
+-[[package]]
+-name = "percent-encoding"
+-version = "2.3.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220"
+-
+-[[package]]
+-name = "petgraph"
+-version = "0.8.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8701b58ea97060d5e5b155d383a69952a60943f0e6dfe30b04c287beb0b27455"
+-dependencies = [
+- "fixedbitset",
+- "hashbrown 0.15.5",
+- "indexmap",
+- "serde",
+-]
+ 
+ [[package]]
+ name = "pg_warren"
+@@ -1299,13 +757,11 @@
+ 
+ [[package]]
+ name = "pgrx"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fa01ba6f6cb025576dc2bd70efae13c002d3b9cce5848b647e3158f33dbf32bb"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "37147008ecfda0aedd64a924afed86ce6bca805bc2c103c8097583b530ab9505"
+ dependencies = [
+  "bitflags",
+- "bitvec",
+- "enum-map",
+  "libc",
+  "pgrx-macros",
+  "pgrx-pg-sys",
+@@ -1315,33 +771,54 @@
+  "serde_cbor",
+  "serde_json",
+  "thiserror",
+- "uuid",
+ ]
+ 
+ [[package]]
+ name = "pgrx-bindgen"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6cb0a17d1f7bf2b7a2b092406f8da4e17387dd00bd46b97a968812fafe87d559"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "f451dab19ad85a36a6f7a1da385846aca2262c84c36d4e705b2aebd52cd6f0f0"
+ dependencies = [
+  "bindgen",
+- "cc",
++ "eyre",
++ "pgrx-c-macros",
++ "pgrx-pg-config",
++ "proc-macro2",
++ "quote",
++ "regex",
++ "serde",
++ "serde_json",
++ "shlex",
++ "syn 2.0.119",
++ "toml",
++ "walkdir",
++]
++
++[[package]]
++name = "pgrx-c-macros"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "202a94c98efda3d8a7c920a3a7dfbd8bc1ac8d416b7b79646c2710e3a682f553"
++dependencies = [
++ "clang",
+  "clang-sys",
+  "eyre",
+  "pgrx-pg-config",
+  "proc-macro2",
+- "quote",
+- "regex",
+- "shlex 2.0.1",
+- "syn 2.0.119",
+- "walkdir",
++ "ring",
++ "serde",
++ "serde_json",
++ "sha2",
++ "shlex",
++ "tempfile",
++ "thiserror",
+ ]
+ 
+ [[package]]
+ name = "pgrx-macros"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "24553d1425c86ec32e92a20fbbe1a6801a7fec576d7b4ef5d195eac9e9f56185"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "2349537da01f5e58ed79975cb2a38b20d6d82967243dcf7bc0ef5c12035c7b83"
+ dependencies = [
+  "pgrx-sql-entity-graph",
+  "proc-macro2",
+@@ -1351,29 +828,26 @@
+ 
+ [[package]]
+ name = "pgrx-pg-config"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b395987287a18ffed9fbae0962fb46638a5ec1354c0708e33d4d838e835ef4b0"
+-dependencies = [
+- "cargo_toml",
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "ea50fe9e10100f83192e0a4d268daf13bf3bceece31b3afca3bcf844f72d51c5"
++dependencies = [
+  "codepage",
+  "encoding_rs",
+  "eyre",
+  "owo-colors",
+- "pathsearch",
+  "serde",
+  "serde_json",
+  "thiserror",
+- "toml 1.1.8+spec-1.1.0",
+- "url",
++ "toml",
+  "winapi",
+ ]
+ 
+ [[package]]
+ name = "pgrx-pg-sys"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "817591f28d35756646a446b16117e0f150bfe7e747362798c5b48c0010175651"
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "0d3dbceaedddb417f56d79d3261d73dc402f443b28889e73bba3917a83f8ec60"
+ dependencies = [
+  "cee-scape",
+  "libc",
+@@ -1385,118 +859,34 @@
+ 
+ [[package]]
+ name = "pgrx-sql-entity-graph"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "669e675ea6945d5d43709fce83813aa04c4e345bb405ac1a4f69bb94d4bb08a5"
+-dependencies = [
+- "convert_case",
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "b6260a2e9163c79cdcf9d002da74fa0dbff6e43e187e0a2385d3effe040db0bf"
++dependencies = [
+  "eyre",
+- "petgraph",
+  "proc-macro2",
+  "quote",
+  "syn 2.0.119",
+  "thiserror",
+- "unescape",
+ ]
+ 
+ [[package]]
+ name = "pgrx-tests"
+-version = "0.19.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cdc85344f8a014cd33c952ebf1629fd04380844afc151812ee8a45214b2bb910"
+-dependencies = [
+- "clap-cargo",
++version = "0.20.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "84b427923bb10d0cd655bf866afb47f77a70bc3cef8c925be593b7f370875eae"
++dependencies = [
+  "eyre",
+  "libc",
+  "owo-colors",
+  "pgrx",
+  "pgrx-macros",
+  "pgrx-pg-config",
+- "postgres",
+- "rand",
+  "regex",
+- "shlex 2.0.1",
++ "shlex",
+  "sysinfo",
+- "tempfile",
+  "thiserror",
+  "winapi",
+-]
+-
+-[[package]]
+-name = "phf"
+-version = "0.13.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c1562dc717473dbaa4c1f85a36410e03c047b2e7df7f45ee938fbef64ae7fadf"
+-dependencies = [
+- "phf_shared",
+- "serde",
+-]
+-
+-[[package]]
+-name = "phf_shared"
+-version = "0.13.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e57fef6bc5981e38c2ce2d63bfa546861309f875b8a75f092d1d54ae2d64f266"
+-dependencies = [
+- "siphasher",
+-]
+-
+-[[package]]
+-name = "pin-project-lite"
+-version = "0.2.17"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a89322df9ebe1c1578d689c92318e070967d1042b512afbe49518723f4e6d5cd"
+-
+-[[package]]
+-name = "postgres"
+-version = "0.19.14"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "33ad20e0aa0b24f5a394eab4f78c781d248982b22b25cecc7e3aa46a681605bd"
+-dependencies = [
+- "bytes",
+- "fallible-iterator",
+- "futures-util",
+- "log",
+- "tokio",
+- "tokio-postgres",
+-]
+-
+-[[package]]
+-name = "postgres-protocol"
+-version = "0.6.12"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "08808e3c483c46e999108051c78334f473d5adb59d78bb80a1268c7e6aa6c514"
+-dependencies = [
+- "base64",
+- "byteorder",
+- "bytes",
+- "fallible-iterator",
+- "hmac",
+- "md-5",
+- "memchr",
+- "rand",
+- "sha2",
+- "stringprep",
+-]
+-
+-[[package]]
+-name = "postgres-types"
+-version = "0.2.14"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "851ca9db4932932d69f3ea811b1abe63087a0f740a47692619dd40d4899b68be"
+-dependencies = [
+- "bytes",
+- "fallible-iterator",
+- "postgres-protocol",
+-]
+-
+-[[package]]
+-name = "potential_utf"
+-version = "0.1.6"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d83eb9bc6d8e5cf568e7a1101d60ee05e81ed50ea106026f3d18deeb046d7661"
+-dependencies = [
+- "zerovec",
+ ]
+ 
+ [[package]]
+@@ -1559,19 +949,12 @@
+ checksum = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
+ 
+ [[package]]
+-name = "radium"
+-version = "0.7.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "dc33ff2d4973d518d823d61aa239014831e521c75da58e3df4840d3f47749d09"
+-
+-[[package]]
+ name = "rand"
+ version = "0.10.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "65c9fb96cbc91e3478eaae79a69fcd3f1ae4ad052e471fe6732fff548984b4af"
+ dependencies = [
+- "chacha20",
+- "getrandom",
++ "getrandom 0.4.3",
+  "rand_core",
+ ]
+ 
+@@ -1614,15 +997,6 @@
+ dependencies = [
+  "crossbeam-deque",
+  "crossbeam-utils",
+-]
+-
+-[[package]]
+-name = "redox_syscall"
+-version = "0.5.18"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ed2bf2547551a7053d6fdfafda3f938979645c44812fbfcda098faae3f1a362d"
+-dependencies = [
+- "bitflags",
+ ]
+ 
+ [[package]]
+@@ -1655,6 +1029,20 @@
+ checksum = "d6f6ff9a378485b298a5286656da665ba74413d36db0979633275d2e708145d4"
+ 
+ [[package]]
++name = "ring"
++version = "0.17.14"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "a4689e6c2294d81e88dc6261c768b63bc4fcdb852be6d1352498b114f61383b7"
++dependencies = [
++ "cc",
++ "cfg-if",
++ "getrandom 0.2.17",
++ "libc",
++ "untrusted",
++ "windows-sys 0.52.0",
++]
++
++[[package]]
+ name = "rustc-hash"
+ version = "2.1.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -1670,7 +1058,7 @@
+  "errno",
+  "libc",
+  "linux-raw-sys",
+- "windows-sys",
++ "windows-sys 0.61.2",
+ ]
+ 
+ [[package]]
+@@ -1720,16 +1108,6 @@
+ version = "4.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "1c107b6f4780854c8b126e228ea8869f4d7b71260f962fefb57b996b8959ba6b"
+-
+-[[package]]
+-name = "semver"
+-version = "1.0.28"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8a7852d02fc848982e0c167ef163aaff9cd91dc640ba85e263cb1ce46fae51cd"
+-dependencies = [
+- "serde",
+- "serde_core",
+-]
+ 
+ [[package]]
+ name = "serde"
+@@ -1806,12 +1184,6 @@
+ 
+ [[package]]
+ name = "shlex"
+-version = "1.3.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
+-
+-[[package]]
+-name = "shlex"
+ version = "2.0.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "f8fadd59c855ef2080decdef8ff161eb6661b86933c9d82e5ba29dc602a55aba"
+@@ -1835,60 +1207,6 @@
+ checksum = "e3a9fe34e3e7a50316060351f37187a3f546bce95496156754b601a5fa71b76e"
+ 
+ [[package]]
+-name = "siphasher"
+-version = "1.0.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "33f4fe9184a62d842c9ef383018f3306d8ba224fd9d836f56d7288308847c256"
+-
+-[[package]]
+-name = "slab"
+-version = "0.4.12"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0c790de23124f9ab44544d7ac05d60440adc586479ce501c1d6d7da3cd8c9cf5"
+-
+-[[package]]
+-name = "smallvec"
+-version = "1.16.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5b3dc8af474f516a851ff4bd12db780f948b9250ad37211e4eec0bccea54e01b"
+-
+-[[package]]
+-name = "socket2"
+-version = "0.6.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c3d1e2c7f27f8d4cb10542a02c49005dbd6e93095799d6f3be745fae9f8fedd4"
+-dependencies = [
+- "libc",
+- "windows-sys",
+-]
+-
+-[[package]]
+-name = "stable_deref_trait"
+-version = "1.2.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6ce2be8dc25455e1f91df71bfa12ad37d7af1092ae736f3a6cd0e37bc7810596"
+-
+-[[package]]
+-name = "stringprep"
+-version = "0.1.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7b4df3d392d81bd458a8a621b8bffbd2302a12ffe288a9d931670948749463b1"
+-dependencies = [
+- "unicode-bidi",
+- "unicode-normalization",
+- "unicode-properties",
+-]
+-
+-[[package]]
+-name = "supports-color"
+-version = "3.0.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c64fc7232dd8d2e4ac5ce4ef302b1d81e0b80d055b9d77c7c4f51f6aa4c867d6"
+-dependencies = [
+- "is_ci",
+-]
+-
+-[[package]]
+ name = "syn"
+ version = "2.0.119"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -1911,36 +1229,18 @@
+ ]
+ 
+ [[package]]
+-name = "synstructure"
+-version = "0.14.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "901704edd0dfe137f1987838ee4f259e4e063c31371bdb423f7ae38ec6f77f02"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn 3.0.9",
+-]
+-
+-[[package]]
+ name = "sysinfo"
+-version = "0.39.6"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "d2071df9448915b71c4fe6d25deaf1c22f12bd234f01540b77312bb8e41361e6"
++version = "0.40.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3e80749408e2d8bec0ffa303012cf4e1b3b355f4a09087b4fdf7473680f6a2de"
+ dependencies = [
+  "libc",
+  "memchr",
+  "ntapi",
+  "objc2-core-foundation",
+  "objc2-io-kit",
+- "objc2-open-directory",
+  "windows",
+ ]
+-
+-[[package]]
+-name = "tap"
+-version = "1.0.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "55937e1799185b12863d447f42597ed69d9928686b8d88a1df17376a097d8369"
+ 
+ [[package]]
+ name = "tempfile"
+@@ -1949,10 +1249,10 @@
+ checksum = "32497e9a4c7b38532efcdebeef879707aa9f794296a4f0244f6f69e9bc8574bd"
+ dependencies = [
+  "fastrand",
+- "getrandom",
++ "getrandom 0.4.3",
+  "once_cell",
+  "rustix",
+- "windows-sys",
++ "windows-sys 0.61.2",
+ ]
+ 
+ [[package]]
+@@ -1976,16 +1276,6 @@
+ ]
+ 
+ [[package]]
+-name = "tinystr"
+-version = "0.8.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b1e27c91459209c2986af3dcf603a5a74a4368754ce37414f59acc971167f643"
+-dependencies = [
+- "displaydoc",
+- "zerovec",
+-]
+-
+-[[package]]
+ name = "tinytemplate"
+ version = "1.2.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -1996,102 +1286,18 @@
+ ]
+ 
+ [[package]]
+-name = "tinyvec"
+-version = "1.13.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "fd3ca314f692efd6c868f8408f53fe444634a845f96c028b97d35f6a1f79f0ee"
+-
+-[[package]]
+-name = "tokio"
+-version = "1.53.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ce3335fa71841cda333a58d7615b03901380ecf09d59b3296d21f8bbac0dde4e"
+-dependencies = [
+- "bytes",
+- "libc",
+- "mio",
+- "pin-project-lite",
+- "socket2",
+- "windows-sys",
+-]
+-
+-[[package]]
+-name = "tokio-postgres"
+-version = "0.7.18"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a528f7d280f6d5b9cd149635c8705b0dd049754bc67d81d31fa25169a93809d3"
+-dependencies = [
+- "async-trait",
+- "byteorder",
+- "bytes",
+- "fallible-iterator",
+- "futures-channel",
+- "futures-util",
+- "log",
+- "parking_lot",
+- "percent-encoding",
+- "phf",
+- "pin-project-lite",
+- "postgres-protocol",
+- "postgres-types",
+- "rand",
+- "socket2",
+- "tokio",
+- "tokio-util",
+- "whoami",
+-]
+-
+-[[package]]
+-name = "tokio-util"
+-version = "0.7.20"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e464cf451ba96ebfc6f9b6542f17ee8b8956e33f1e40d9690624e59d7a7f8a4b"
+-dependencies = [
+- "bytes",
+- "futures-core",
+- "futures-sink",
+- "libc",
+- "pin-project-lite",
+- "tokio",
+-]
+-
+-[[package]]
+ name = "toml"
+-version = "0.9.12+spec-1.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cf92845e79fc2e2def6a5d828f0801e29a2f8acc037becc5ab08595c7d5e9863"
++version = "1.1.8+spec-1.1.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "20489e00e4d8741d6be680764cc12e270655e375a20d1011e844a9c3379e678d"
+ dependencies = [
+  "indexmap",
+  "serde_core",
+  "serde_spanned",
+- "toml_datetime 0.7.5+spec-1.1.0",
++ "toml_datetime",
+  "toml_parser",
+  "toml_writer",
+- "winnow 0.7.15",
+-]
+-
+-[[package]]
+-name = "toml"
+-version = "1.1.8+spec-1.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "20489e00e4d8741d6be680764cc12e270655e375a20d1011e844a9c3379e678d"
+-dependencies = [
+- "indexmap",
+- "serde_core",
+- "serde_spanned",
+- "toml_datetime 1.1.2+spec-1.1.0",
+- "toml_parser",
+- "toml_writer",
+- "winnow 1.0.4",
+-]
+-
+-[[package]]
+-name = "toml_datetime"
+-version = "0.7.5+spec-1.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "92e1cfed4a3038bc5a127e35a2d360f145e1f4b971b551a2ba5fd7aedf7e1347"
+-dependencies = [
+- "serde_core",
++ "winnow",
+ ]
+ 
+ [[package]]
+@@ -2110,9 +1316,9 @@
+ checksum = "e3641d5bbb5349a79e1020a242d251efbc546ad8048d133958323ce9c40a9c9c"
+ dependencies = [
+  "indexmap",
+- "toml_datetime 1.1.2+spec-1.1.0",
++ "toml_datetime",
+  "toml_parser",
+- "winnow 1.0.4",
++ "winnow",
+ ]
+ 
+ [[package]]
+@@ -2121,7 +1327,7 @@
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "baa693a8032d7e1cada7d0041e96126df243179ff061456783ac7f12bda4744c"
+ dependencies = [
+- "winnow 1.0.4",
++ "winnow",
+ ]
+ 
+ [[package]]
+@@ -2143,72 +1349,16 @@
+ checksum = "eaea85b334db583fe3274d12b4cd1880032beab409c0d774be044d4480ab9a94"
+ 
+ [[package]]
+-name = "unescape"
+-version = "0.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ccb97dac3243214f8d8507998906ca3e2e0b900bf9bf4870477f125b82e68f6e"
+-
+-[[package]]
+-name = "unicode-bidi"
+-version = "0.3.18"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5c1cb5db39152898a79168971543b1cb5020dff7fe43c8dc468b0885f5e29df5"
+-
+-[[package]]
+ name = "unicode-ident"
+ version = "1.0.27"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "a2c754d6c33795a1c324727428e5a7dedb5b06195f9890bdbcba760d3e246563"
+ 
+ [[package]]
+-name = "unicode-normalization"
+-version = "0.1.26"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "75cd3fb03d5288b3ba9a1ee103ac7e9cbb59f0b03d64f8ddfcc04dd42758a85d"
+-dependencies = [
+- "tinyvec",
+-]
+-
+-[[package]]
+-name = "unicode-properties"
+-version = "0.1.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7df058c713841ad818f1dc5d3fd88063241cc61f49f5fbea4b951e8cf5a8d71d"
+-
+-[[package]]
+-name = "unicode-segmentation"
+-version = "1.13.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c6f5d3c3b1bf09027a88a6bc961fc00497d651009560b5463668dc81b0fa87a8"
+-
+-[[package]]
+-name = "url"
+-version = "2.5.8"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ff67a8a4397373c3ef660812acab3268222035010ab8680ec4215f38ba3d0eed"
+-dependencies = [
+- "form_urlencoded",
+- "idna",
+- "percent-encoding",
+- "serde",
+-]
+-
+-[[package]]
+-name = "utf8_iter"
+-version = "1.0.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b6c140620e7ffbb22c2dee59cafe6084a59b5ffc27a8859a5f0d494b5d52b6be"
+-
+-[[package]]
+-name = "uuid"
+-version = "1.28.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7cc1186384beb7dd8eedea376413fd654937285ea6c9cfbb928dc3043ea4b606"
+-dependencies = [
+- "getrandom",
+- "js-sys",
+- "wasm-bindgen",
+-]
++name = "untrusted"
++version = "0.9.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "8ecb6da28b8a351d773b68d5825ac39017e680750f980f3a1a85cd8dd28a47c1"
+ 
+ [[package]]
+ name = "wait-timeout"
+@@ -2247,101 +1397,6 @@
+ checksum = "ccf3ec651a847eb01de73ccad15eb7d99f80485de043efb2f370cd654f4ea44b"
+ 
+ [[package]]
+-name = "wasi"
+-version = "0.14.7+wasi-0.2.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "883478de20367e224c0090af9cf5f9fa85bed63a95c1abf3afc5c083ebc06e8c"
+-dependencies = [
+- "wasip2",
+-]
+-
+-[[package]]
+-name = "wasip2"
+-version = "1.0.4+wasi-0.2.12"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b67efb37e106e55ce722a510d6b5f9c17f083e5fc79afc2badeb12cc313d9487"
+-dependencies = [
+- "wit-bindgen",
+-]
+-
+-[[package]]
+-name = "wasite"
+-version = "1.0.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "66fe902b4a6b8028a753d5424909b764ccf79b7a209eac9bf97e59cda9f71a42"
+-dependencies = [
+- "wasi 0.14.7+wasi-0.2.4",
+-]
+-
+-[[package]]
+-name = "wasm-bindgen"
+-version = "0.2.129"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "9bb54f33acc68fd454578d9820b0bde1a1a3d17aa17bb7b6595806d02886d409"
+-dependencies = [
+- "cfg-if",
+- "once_cell",
+- "rustversion",
+- "wasm-bindgen-macro",
+- "wasm-bindgen-shared",
+-]
+-
+-[[package]]
+-name = "wasm-bindgen-macro"
+-version = "0.2.129"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2e29d0c35b16e224a7eeb5cd2d25e3e1968fbd65604117b44d3b789d00ee8535"
+-dependencies = [
+- "quote",
+- "wasm-bindgen-macro-support",
+-]
+-
+-[[package]]
+-name = "wasm-bindgen-macro-support"
+-version = "0.2.129"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "6f501a8bc3719dba86ef8ae4728879c08001bea749eb1333ac5b91e040e2a6b7"
+-dependencies = [
+- "bumpalo",
+- "proc-macro2",
+- "quote",
+- "syn 3.0.9",
+- "wasm-bindgen-shared",
+-]
+-
+-[[package]]
+-name = "wasm-bindgen-shared"
+-version = "0.2.129"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "23f0c9c52aa7cd7d77769a4cfe2a9adb1b331f489a41d912ce14513d5ab995c6"
+-dependencies = [
+- "unicode-ident",
+-]
+-
+-[[package]]
+-name = "web-sys"
+-version = "0.3.106"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "88261b9deccee56594c11a3460c462c41f58d148598fe70ad77070126a68aba4"
+-dependencies = [
+- "js-sys",
+- "wasm-bindgen",
+-]
+-
+-[[package]]
+-name = "whoami"
+-version = "2.1.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "626c4bac6755d76ffc12cb01b2eac751db1996b9e0041de9aa02c8c211ddc82c"
+-dependencies = [
+- "libc",
+- "libredox",
+- "objc2-system-configuration",
+- "wasite",
+- "web-sys",
+-]
+-
+-[[package]]
+ name = "wide"
+ version = "1.7.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -2373,7 +1428,7 @@
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
+ dependencies = [
+- "windows-sys",
++ "windows-sys 0.61.2",
+ ]
+ 
+ [[package]]
+@@ -2485,11 +1540,36 @@
+ 
+ [[package]]
+ name = "windows-sys"
++version = "0.52.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "282be5f36a8ce781fad8c8ae18fa3f9beff57ec1b52cb3de0789201425d9a33d"
++dependencies = [
++ "windows-targets",
++]
++
++[[package]]
++name = "windows-sys"
+ version = "0.61.2"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "ae137229bcbd6cdf0f7b80a31df61766145077ddf49416a728b02cb3921ff3fc"
+ dependencies = [
+  "windows-link",
++]
++
++[[package]]
++name = "windows-targets"
++version = "0.52.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "9b724f72796e036ab90c1021d4780d4d3d648aca59e491e6b98e725b84e99973"
++dependencies = [
++ "windows_aarch64_gnullvm",
++ "windows_aarch64_msvc",
++ "windows_i686_gnu",
++ "windows_i686_gnullvm",
++ "windows_i686_msvc",
++ "windows_x86_64_gnu",
++ "windows_x86_64_gnullvm",
++ "windows_x86_64_msvc",
+ ]
+ 
+ [[package]]
+@@ -2502,10 +1582,52 @@
+ ]
+ 
+ [[package]]
+-name = "winnow"
+-version = "0.7.15"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "df79d97927682d2fd8adb29682d1140b343be4ac0f08fd68b7765d9c059d3945"
++name = "windows_aarch64_gnullvm"
++version = "0.52.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "32a4622180e7a0ec044bb555404c800bc9fd9ec262ec147edd5989ccd0c02cd3"
++
++[[package]]
++name = "windows_aarch64_msvc"
++version = "0.52.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "09ec2a7bb152e2252b53fa7803150007879548bc709c039df7627cabbd05d469"
++
++[[package]]
++name = "windows_i686_gnu"
++version = "0.52.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "8e9b5ad5ab802e97eb8e295ac6720e509ee4c243f69d781394014ebfe8bbfa0b"
++
++[[package]]
++name = "windows_i686_gnullvm"
++version = "0.52.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "0eee52d38c090b3caa76c563b86c3a4bd71ef1a819287c19d586d7334ae8ed66"
++
++[[package]]
++name = "windows_i686_msvc"
++version = "0.52.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "240948bc05c5e7c6dabba28bf89d89ffce3e303022809e73deaefe4f6ec56c66"
++
++[[package]]
++name = "windows_x86_64_gnu"
++version = "0.52.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "147a5c80aabfbf0c7d901cb5895d1de30ef2907eb21fbbab29ca94c5b08b1a78"
++
++[[package]]
++name = "windows_x86_64_gnullvm"
++version = "0.52.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "24d5b23dc417412679681396f2b49f3de8c1473deb516bd34410872eff51ed0d"
++
++[[package]]
++name = "windows_x86_64_msvc"
++version = "0.52.6"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
+ 
+ [[package]]
+ name = "winnow"
+@@ -2514,50 +1636,6 @@
+ checksum = "23b97319f7b8343df12cc98938e5c3eb436064524c8d2b4e30a1d3a36eecdf81"
+ dependencies = [
+  "memchr",
+-]
+-
+-[[package]]
+-name = "wit-bindgen"
+-version = "0.57.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "1ebf944e87a7c253233ad6766e082e3cd714b5d03812acc24c318f549614536e"
+-
+-[[package]]
+-name = "writeable"
+-version = "0.6.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "3ad82d2a33cdc9674dc7465672f271e096168fcdbe0f799d9e6db8c5892679dc"
+-
+-[[package]]
+-name = "wyz"
+-version = "0.5.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "05f360fc0b24296329c78fda852a1e9ae82de9cf7b27dae4b7f62f118f77b9ed"
+-dependencies = [
+- "tap",
+-]
+-
+-[[package]]
+-name = "yoke"
+-version = "0.8.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "709fe23a0424b6a435d82152b1bd3fdfb0833487d5fa90d05d42762a9891fef5"
+-dependencies = [
+- "stable_deref_trait",
+- "yoke-derive",
+- "zerofrom",
+-]
+-
+-[[package]]
+-name = "yoke-derive"
+-version = "0.8.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ec8ebde2db3681e8c9980cc27822030e68752690ddfa9473e739aeb4dbde6d71"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn 3.0.9",
+- "synstructure",
+ ]
+ 
+ [[package]]
+@@ -2581,60 +1659,6 @@
+ ]
+ 
+ [[package]]
+-name = "zerofrom"
+-version = "0.1.8"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0ec05a11813ea801ff6d75110ad09cd0824ddba17dfe17128ea0d5f68e6c5272"
+-dependencies = [
+- "zerofrom-derive",
+-]
+-
+-[[package]]
+-name = "zerofrom-derive"
+-version = "0.1.8"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f75b4683f6c7f45248d4d64056a24298c6281e0993356d7d1b4a1a962ef10d4a"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn 3.0.9",
+- "synstructure",
+-]
+-
+-[[package]]
+-name = "zerotrie"
+-version = "0.2.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4ea269c3bd32f0a32c321907a2ae912ba6f4649bb0fc764a15627e99a7095a3f"
+-dependencies = [
+- "displaydoc",
+- "yoke",
+- "zerofrom",
+-]
+-
+-[[package]]
+-name = "zerovec"
+-version = "0.11.8"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bb0464e17806c1d976d5cba29399c7f08e516e279e2ba493f63123b5fca67dd8"
+-dependencies = [
+- "yoke",
+- "zerofrom",
+- "zerovec-derive",
+-]
+-
+-[[package]]
+-name = "zerovec-derive"
+-version = "0.11.6"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "34df6fc39dbd26ddc9c10e6a2984476e13acce22e64e4487636ef494369225da"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn 3.0.9",
+-]
+-
+-[[package]]
+ name = "zmij"
+ version = "1.0.23"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+--- a/crates/pg_warren/Cargo.toml
++++ b/crates/pg_warren/Cargo.toml
+@@ -16,17 +16,18 @@
+ pg16 = ["pgrx/pg16", "pgrx-tests/pg16"]
+ pg17 = ["pgrx/pg17", "pgrx-tests/pg17"]
+ pg18 = ["pgrx/pg18", "pgrx-tests/pg18"]
++pg19 = ["pgrx/pg19", "pgrx-tests/pg19"]
+ pg_test = []
+ 
+ [dependencies]
+ libc = "0.2"
+-pgrx = "=0.19.3"
++pgrx = "=0.20.0"
+ serde_json = "1"
+ thiserror = "2"
+ warren-core = { path = "../warren-core" }
+ 
+ [dev-dependencies]
+-pgrx-tests = "=0.19.3"
++pgrx-tests = "=0.20.0"
+ proptest = "1"
+ 
+ [lints]
+--- a/crates/pg_warren/src/activity/backend.rs
++++ b/crates/pg_warren/src/activity/backend.rs
+@@ -132,7 +132,7 @@
+     move || {
+         tries = tries.wrapping_add(1);
+         if tries.is_multiple_of(TRIES_PER_PAUSE) {
+-            pgrx::check_for_interrupts!();
++            pgrx::check_for_interrupts();
+             // SAFETY: sleeps this process; interruptible by signals.
+             unsafe { pg_sys::pg_usleep(1000) };
+         } else {
+@@ -165,7 +165,7 @@
+ /// 18, `MyBackendId` − 1 on PG 15 and 16.
+ fn proc_number() -> Option<usize> {
+     // SAFETY: set as the process starts, read on the main thread.
+-    #[cfg(any(feature = "pg17", feature = "pg18"))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+     let index = unsafe { pg_sys::MyProcNumber };
+     // SAFETY: as above.
+     #[cfg(any(feature = "pg15", feature = "pg16"))]
+--- a/crates/pg_warren/src/activity/placement.rs
++++ b/crates/pg_warren/src/activity/placement.rs
+@@ -35,12 +35,12 @@
+ #[repr(C)]
+ struct Header {
+     format: u32,
+-    #[cfg(any(feature = "pg17", feature = "pg18"))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+     tranche: i32,
+     slots: u64,
+     /// When the table was created, as a `timestamptz`.
+     created: i64,
+-    #[cfg(any(feature = "pg17", feature = "pg18"))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+     lock: pg_sys::LWLock,
+     exited: Counted<COUNTER_WORDS>,
+ }
+@@ -139,11 +139,11 @@
+     /// PG 17 or 18, where the store had too little room to create it in
+     /// the statement that started at `statement`; it is looked for again
+     /// in the next statement that uses pg_warren.
+-    #[cfg(any(feature = "pg17", feature = "pg18"))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+     NoRoom { statement: i64 },
+     /// A table of another format: a build that a restart has not yet
+     /// replaced created it.
+-    #[cfg(any(feature = "pg17", feature = "pg18"))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+     OtherFormat,
+     /// This process has no index among `MaxBackends` (Postgres gives every
+     /// backend and worker one, so this is a belt).
+@@ -157,7 +157,7 @@
+     /// for the table again: only where it had no room, which may have been
+     /// made since, and at most once a statement, since looking reads the
+     /// store's free space and takes the DSM registry's lock.
+-    #[cfg(any(feature = "pg17", feature = "pg18"))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+     pub(super) fn looked_for_again(self, statement: i64) -> bool {
+         matches!(self, Self::NoRoom { statement: looked } if looked != statement)
+     }
+@@ -177,7 +177,7 @@
+ 
+ /// The table, found or created on first use (PG 17 and 18), unless the
+ /// store has no room to create it or it has another format.
+-#[cfg(any(feature = "pg17", feature = "pg18"))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+ pub(super) fn locate() -> Result<Located, Missing> {
+     let bytes = table_bytes(max_backends());
+     let room = crate::shared_memory::named_segment_room(bytes);
+@@ -210,7 +210,7 @@
+ }
+ 
+ /// Sets up a new table segment (`GetNamedDSMSegment`'s init callback).
+-#[cfg(any(feature = "pg17", feature = "pg18"))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+ #[pgrx::pg_guard]
+ unsafe extern "C-unwind" fn create(segment: *mut std::ffi::c_void) {
+     // SAFETY: a new tranche id, from the main thread.
+@@ -228,7 +228,7 @@
+ }
+ 
+ /// Nothing to request: on PG 17 and 18 the table is a named DSM segment.
+-#[cfg(any(feature = "pg17", feature = "pg18"))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+ pub(crate) fn request_preload() {}
+ 
+ #[cfg(any(feature = "pg15", feature = "pg16"))]
+@@ -334,7 +334,7 @@
+ mod tests {
+     use super::*;
+ 
+-    #[cfg(any(feature = "pg17", feature = "pg18"))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+     #[test]
+     fn a_table_without_room_is_looked_for_again_once_per_statement() {
+         let missing = Missing::NoRoom { statement: 100 };
+--- a/crates/pg_warren/src/cache/shared/dsm/mod.rs
++++ b/crates/pg_warren/src/cache/shared/dsm/mod.rs
+@@ -39,7 +39,7 @@
+ use segment::{Segment, SegmentRegion};
+ 
+ pub(crate) use placement::request_preload;
+-#[cfg(any(feature = "pg17", feature = "pg18", test))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+ pub(in crate::cache::shared) use placement::FORMAT;
+ pub(in crate::cache::shared) use segment::PREFIX;
+ 
+@@ -473,7 +473,7 @@
+ /// `Extension`, on PG 17 and 18, registered once per backend
+ /// (`WaitEventExtensionNew` needs no preload); `Extension` on PG 15 and 16.
+ fn wait_event() -> u32 {
+-    #[cfg(any(feature = "pg17", feature = "pg18"))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+     {
+         thread_local! {
+             static SHARED_LOAD: std::cell::Cell<Option<u32>> = const { std::cell::Cell::new(None) };
+--- a/crates/pg_warren/src/cache/shared/dsm/placement.rs
++++ b/crates/pg_warren/src/cache/shared/dsm/placement.rs
+@@ -81,7 +81,7 @@
+ 
+ /// Whether a registry of format `found` is this build's; one of another
+ /// format (a build that a restart has not yet replaced) cannot be read.
+-#[cfg(any(feature = "pg17", feature = "pg18", test))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+ fn checked(found: u32) -> Result<(), Unavailable> {
+     if found == FORMAT {
+         Ok(())
+@@ -91,7 +91,7 @@
+ }
+ 
+ /// The room `GetNamedDSMSegment` may take to create the registry.
+-#[cfg(any(feature = "pg17", feature = "pg18", test))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+ const REGISTRY_ROOM: u64 = crate::shared_memory::named_segment_room(std::mem::size_of::<Shared>());
+ 
+ /// Whether the registry may be created where the store (`store`) has
+@@ -101,7 +101,7 @@
+ /// room counts the reserve that versions leave free: a cache filled to it
+ /// must still let new backends find the registry and attach to what it
+ /// holds, and the registry is created once per cluster.
+-#[cfg(any(feature = "pg17", feature = "pg18", test))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+ fn room_for_registry(space: Option<(u64, u64)>, store: &'static str) -> Result<(), Unavailable> {
+     let available = space.map_or(0, |(available, _)| available);
+     if available >= REGISTRY_ROOM {
+@@ -113,7 +113,7 @@
+ 
+ /// The registry, found or created on first use (PG 17 and 18), unless it
+ /// has another format or the store has no room to create it.
+-#[cfg(any(feature = "pg17", feature = "pg18"))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+ pub(super) fn locate() -> Result<Located, Unavailable> {
+     room_for_registry(crate::shared_memory::store_space(), crate::shared_memory::store_name())?;
+     let mut found = false;
+@@ -144,7 +144,7 @@
+ }
+ 
+ /// Sets up a new registry segment (`GetNamedDSMSegment`'s init callback).
+-#[cfg(any(feature = "pg17", feature = "pg18"))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+ #[pgrx::pg_guard]
+ unsafe extern "C-unwind" fn create(segment: *mut std::ffi::c_void) {
+     // SAFETY: a new tranche id, from the main thread.
+@@ -155,7 +155,7 @@
+ }
+ 
+ /// Nothing to request: on PG 17 and 18 the registry is a named DSM segment.
+-#[cfg(any(feature = "pg17", feature = "pg18"))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+ pub(crate) fn request_preload() {}
+ 
+ #[cfg(any(feature = "pg15", feature = "pg16"))]
+--- a/crates/pg_warren/src/cache/shared/unavailable.rs
++++ b/crates/pg_warren/src/cache/shared/unavailable.rs
+@@ -14,7 +14,7 @@
+ use super::setting;
+ use crate::parallel_worker::cache_notice_raised;
+ 
+-#[cfg(any(feature = "pg17", feature = "pg18", test))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+ use super::dsm::FORMAT;
+ 
+ /// Why the shared cache is unavailable to this backend.
+@@ -30,12 +30,12 @@
+     /// PG 17 or 18, where the registry was created by a build of pg_warren
+     /// with another format (`found`), which this build cannot read: until
+     /// a restart drops it, backends of this build load privately.
+-    #[cfg(any(feature = "pg17", feature = "pg18", test))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+     OtherFormat { found: u32 },
+     /// PG 17 or 18, where `store` (`/dev/shm`, or `pg_dynshmem`) has too
+     /// little room beside its reserve for `GetNamedDSMSegment` to create
+     /// the registry; it is checked again at the next read.
+-    #[cfg(any(feature = "pg17", feature = "pg18", test))]
++    #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+     NoRegistryRoom { store: &'static str },
+ }
+ 
+@@ -58,7 +58,7 @@
+     /// which a restart after an upgrade resolves.
+     fn noticed(self, at_default: bool) -> bool {
+         match self {
+-            #[cfg(any(feature = "pg17", feature = "pg18", test))]
++            #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+             Self::OtherFormat { .. } => true,
+             _ => !at_default,
+         }
+@@ -77,13 +77,13 @@
+                 "warren.shared_cache_memory is set, but the shared cache works only on \
+                  little-endian targets: {private}"
+             ),
+-            #[cfg(any(feature = "pg17", feature = "pg18", test))]
++            #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+             Self::OtherFormat { found } => format!(
+                 "warren.shared_cache_memory is set, but the shared cache was created by a \
+                  build of pg_warren with registry format {found}, not {FORMAT}; restart \
+                  PostgreSQL to share graph versions again: {private}"
+             ),
+-            #[cfg(any(feature = "pg17", feature = "pg18", test))]
++            #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+             Self::NoRegistryRoom { store } => format!(
+                 "warren.shared_cache_memory is set, but {store} has no room for the shared \
+                  cache's registry; free it, or raise the container's --shm-size: {private}"
+--- a/crates/pg_warren/src/catalog/dropped_roles/event_trigger.rs
++++ b/crates/pg_warren/src/catalog/dropped_roles/event_trigger.rs
+@@ -39,14 +39,14 @@
+     let context = unsafe { fcinfo.as_ref() }.map_or(ptr::null_mut(), |info| info.context);
+     // SAFETY: `context` is NULL or a node, whose tag `is_a` reads; Postgres
+     // does not stop a direct call, which has no event trigger data.
+-    if context.is_null() || !unsafe { pgrx::is_a(context, pg_sys::NodeTag::T_EventTriggerData) } {
++    if context.is_null() || !unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(context, pg_sys::NodeTag::T_EventTriggerData) } {
+         return Err(CatalogError::NotEventTrigger);
+     }
+     // SAFETY: an `EventTriggerData` (checked above), whose parse tree is the
+     // running command's node.
+     let tree = unsafe { (*context.cast::<pg_sys::EventTriggerData>()).parsetree };
+     // SAFETY: as above, for the parse tree.
+-    if tree.is_null() || !unsafe { pgrx::is_a(tree, pg_sys::NodeTag::T_DropOwnedStmt) } {
++    if tree.is_null() || !unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(tree, pg_sys::NodeTag::T_DropOwnedStmt) } {
+         return Ok(Vec::new());
+     }
+     // SAFETY: a `DropOwnedStmt` (checked above): its roles are a `List` of
+--- a/crates/pg_warren/src/compute_sql/constructors.rs
++++ b/crates/pg_warren/src/compute_sql/constructors.rs
+@@ -132,7 +132,7 @@
+             let mut degrees = Vector::filled(&vectors.memory, id_space, 1, 0i64)?;
+             for (node, degree) in (0..).zip(degrees.values_mut()?) {
+                 if node % POLL_NODES == 0 {
+-                    check_for_interrupts!();
++                    check_for_interrupts();
+                 }
+                 let counted = if per_relation {
+                     adjacency.degree_per_relation(node)
+--- a/crates/pg_warren/src/compute_sql/gather/emit.rs
++++ b/crates/pg_warren/src/compute_sql/gather/emit.rs
+@@ -138,7 +138,7 @@
+ /// 4-byte varlena header and the bytes, int-aligned (`text`, `varchar`,
+ /// `char` and `bytea` all align so).
+ fn element_size(len: usize) -> Option<usize> {
+-    Some(len.checked_add(pg_sys::VARHDRSZ + 3)? & !3)
++    Some(len.checked_add(pg_sys::VARHDRSZ as usize + 3)? & !3)
+ }
+ 
+ /// The bytes of the array of `count` payloads of `lengths`, or `None` past
+@@ -193,7 +193,7 @@
+     // varlena's length fits an i32, as the array's does.
+     unsafe {
+         let array = pg_sys::palloc0(size).cast::<u8>();
+-        pgrx::varlena::set_varsize_4b(array.cast(), varsize);
++        pg_sys::SET_VARSIZE_4B!(array.cast::<pg_sys::varlena>(), varsize).get();
+         let header = array.cast::<pg_sys::ArrayType>();
+         (*header).ndim = 1;
+         (*header).dataoffset = 0;
+@@ -203,9 +203,10 @@
+         bounds.add(1).write(1);
+         let mut at = array.add(ARRAY_HEADER);
+         for bytes in messages.iter() {
+-            let len = pg_sys::VARHDRSZ + bytes.len();
+-            pgrx::varlena::set_varsize_4b(at.cast(), i32::try_from(len).ok()?);
+-            ptr::copy_nonoverlapping(bytes.as_ptr(), at.add(pg_sys::VARHDRSZ), bytes.len());
++            let len = pg_sys::VARHDRSZ as usize + bytes.len();
++            let element_len = i32::try_from(len).ok()?;
++            pg_sys::SET_VARSIZE_4B!(at.cast::<pg_sys::varlena>(), element_len).get();
++            ptr::copy_nonoverlapping(bytes.as_ptr(), at.add(pg_sys::VARHDRSZ as usize), bytes.len());
+             at = at.add(element_size(bytes.len())?);
+         }
+         Some(pg_sys::Datum::from(array))
+--- a/crates/pg_warren/src/compute_sql/gather/read.rs
++++ b/crates/pg_warren/src/compute_sql/gather/read.rs
+@@ -32,7 +32,7 @@
+     let tombstones = vectors.tombstones();
+     for (node, &value) in (0..).zip(values) {
+         if node % (1 << 16) == 0 {
+-            check_for_interrupts!();
++            check_for_interrupts();
+         }
+         if !tombstones.contains(node) {
+             messages.push(node, value)?;
+--- a/crates/pg_warren/src/compute_sql/map/executor.rs
++++ b/crates/pg_warren/src/compute_sql/map/executor.rs
+@@ -198,7 +198,7 @@
+         };
+         let outcome = (|| {
+             for start in (0..len).step_by(BATCH) {
+-                check_for_interrupts!();
++                check_for_interrupts();
+                 // SAFETY: the per-tuple context holds only the previous batch's
+                 // results, which have been copied out.
+                 unsafe { pg_sys::MemoryContextReset((*econtext).ecxt_per_tuple_memory) };
+--- a/crates/pg_warren/src/compute_sql/map/parse.rs
++++ b/crates/pg_warren/src/compute_sql/map/parse.rs
+@@ -109,7 +109,7 @@
+     // SAFETY: a RawStmt from raw_parser; its stmt is a parse node.
+     let node = unsafe { (*statement).stmt };
+     // SAFETY: `node` is a valid parse node.
+-    if !unsafe { pgrx::is_a(node, pg_sys::NodeTag::T_SelectStmt) } {
++    if !unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_SelectStmt) } {
+         return Err(not_one());
+     }
+     let select = node.cast::<pg_sys::SelectStmt>();
+@@ -164,12 +164,12 @@
+     // SAFETY: the walker is given valid raw parse nodes, and `context` is
+     // the set `check_lone_expression` passed.
+     unsafe {
+-        if pgrx::is_a(node, pg_sys::NodeTag::T_ColumnRef) {
++        if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(node, pg_sys::NodeTag::T_ColumnRef) {
+             let names = &mut *context.cast::<HashSet<String>>();
+             let fields =
+                 PgList::<pg_sys::Node>::from_pg((*node.cast::<pg_sys::ColumnRef>()).fields);
+             for field in fields.iter_ptr() {
+-                if pgrx::is_a(field, pg_sys::NodeTag::T_String) {
++                if <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(field, pg_sys::NodeTag::T_String) {
+                     let name = CStr::from_ptr((*field.cast::<pg_sys::String>()).sval);
+                     names.insert(name.to_string_lossy().into_owned());
+                 }
+--- a/crates/pg_warren/src/compute_sql/map/translate.rs
++++ b/crates/pg_warren/src/compute_sql/map/translate.rs
+@@ -357,7 +357,7 @@
+         return Ok(None);
+     };
+     // SAFETY: `arg` is a valid node.
+-    if !unsafe { pgrx::is_a(*arg, pg_sys::NodeTag::T_Const) } {
++    if !unsafe { <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(*arg, pg_sys::NodeTag::T_Const) } {
+         return Ok(None);
+     }
+     // SAFETY: checked to be a Const above.
+--- a/crates/pg_warren/src/discard.rs
++++ b/crates/pg_warren/src/discard.rs
+@@ -50,7 +50,7 @@
+     // nothing with a destructor is live while the previous hook runs.
+     unsafe {
+         let utility = (*statement).utilityStmt;
+-        let discards_all = pgrx::is_a(utility, pg_sys::NodeTag::T_DiscardStmt)
++        let discards_all = <pgrx::pg_sys::Node as pgrx::pg_sys::PgNode>::is_a_ptr(utility, pg_sys::NodeTag::T_DiscardStmt)
+             && (*utility.cast::<pg_sys::DiscardStmt>()).target == pg_sys::DiscardMode::DISCARD_ALL;
+         match PREVIOUS {
+             // A hook's ERROR (pg_stat_statements re-throws the statement's)
+--- a/crates/pg_warren/src/interrupts/mod.rs
++++ b/crates/pg_warren/src/interrupts/mod.rs
+@@ -23,7 +23,7 @@
+ 
+ impl Interrupts for PostgresInterrupts {
+     fn check(&mut self) -> Result<(), Cancelled> {
+-        pgrx::check_for_interrupts!();
++        pgrx::check_for_interrupts();
+         Ok(())
+     }
+ 
+--- a/crates/pg_warren/src/shared_memory.rs
++++ b/crates/pg_warren/src/shared_memory.rs
+@@ -15,13 +15,13 @@
+ /// The size of the first segment of a DSA area: Postgres's DSM registry
+ /// keeps its index of named segments in one (`dsa_create`), created with
+ /// the cluster's first named segment.
+-#[cfg(any(feature = "pg17", feature = "pg18", test))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+ const DSA_INITIAL_SEGMENT: u64 = 1024 * 1024;
+ 
+ /// The room `GetNamedDSMSegment` may take to create a named segment of
+ /// `size` bytes: the segment, the DSM registry's area if no one created it
+ /// first, and as much again to spare.
+-#[cfg(any(feature = "pg17", feature = "pg18", test))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19", test))]
+ pub(crate) const fn named_segment_room(size: usize) -> u64 {
+     size as u64 + 2 * DSA_INITIAL_SEGMENT
+ }
+--- a/crates/pg_warren/src/source/cursor.rs
++++ b/crates/pg_warren/src/source/cursor.rs
+@@ -250,7 +250,7 @@
+     let mut rows = PgMemoryContexts::new("warren rows");
+     let context = rows.value();
+     loop {
+-        check_for_interrupts!();
++        check_for_interrupts();
+         let mut batch = cursor.fetch(BATCH_ROWS)?;
+         if batch.is_empty() {
+             return Ok(());
+--- a/crates/pg_warren/src/source/id_type.rs
++++ b/crates/pg_warren/src/source/id_type.rs
+@@ -256,7 +256,7 @@
+ 
+ /// The most bytes a `text` holds: Postgres's `MaxAllocSize` (1 GB less one
+ /// byte), less the varlena header.
+-const MAX_TEXT_BYTES: usize = 0x3fff_ffff - pg_sys::VARHDRSZ;
++const MAX_TEXT_BYTES: usize = 0x3fff_ffff - pg_sys::VARHDRSZ as usize;
+ 
+ impl IdDatum for TextKeys {
+     const ID_TYPE: IdType = IdType::Text;
+--- a/crates/pg_warren/src/activity/placement.rs
++++ b/crates/pg_warren/src/activity/placement.rs
+@@ -191,18 +191,30 @@
+     // before any backend can find it (`GetNamedDSMSegment` holds its lock
+     // while it runs). The room was checked above.
+     let header =
+-        unsafe { pg_sys::GetNamedDSMSegment(NAME.as_ptr(), bytes, Some(create), &mut found) };
++        unsafe { pg_sys::GetNamedDSMSegment(
++            NAME.as_ptr(), bytes,
++            #[cfg(not(feature = "pg19"))]
++            Some(create),
++            #[cfg(feature = "pg19")]
++            Some(create_with_arg),
++            &mut found,
++            #[cfg(feature = "pg19")]
++            std::ptr::null_mut(),
++        ) };
+     let Some(header) = NonNull::new(header.cast::<Header>()) else {
+         return Err(Missing::NoRoom { statement: statement_start() });
+     };
+     // SAFETY: the segment holds an initialized table, mapped for the rest
+     // of the session; its format and tranche are written once.
+-    let (format, tranche) = unsafe { ((*header.as_ptr()).format, (*header.as_ptr()).tranche) };
++    let format = unsafe { (*header.as_ptr()).format };
++    #[cfg(not(feature = "pg19"))]
++    let tranche = unsafe { (*header.as_ptr()).tranche };
+     if format != FORMAT {
+         return Err(Missing::OtherFormat);
+     }
+     // SAFETY: registers the table's tranche under a static name in this
+     // backend, as each backend must before it takes the lock.
++    #[cfg(not(feature = "pg19"))]
+     unsafe { pg_sys::LWLockRegisterTranche(tranche, TRANCHE.as_ptr()) };
+     // SAFETY: `header` is valid; the lock is its field.
+     let lock = unsafe { NonNull::new_unchecked(addr_of_mut!((*header.as_ptr()).lock)) };
+@@ -214,6 +226,9 @@
+ #[pgrx::pg_guard]
+ unsafe extern "C-unwind" fn create(segment: *mut std::ffi::c_void) {
+     // SAFETY: a new tranche id, from the main thread.
++    #[cfg(feature = "pg19")]
++    let tranche = unsafe { pg_sys::LWLockNewTrancheId(TRANCHE.as_ptr()) };
++    #[cfg(not(feature = "pg19"))]
+     let tranche = unsafe { pg_sys::LWLockNewTrancheId() };
+     let header = segment.cast::<Header>();
+     // SAFETY: `GetNamedDSMSegment` passes a new, page-aligned segment of
+@@ -356,3 +371,8 @@
+         assert_eq!(table_bytes(2) - table_bytes(1), size_of::<Slot>());
+     }
+ }
++
++#[cfg(feature = "pg19")]
++unsafe extern "C-unwind" fn create_with_arg(segment: *mut std::ffi::c_void, _: *mut std::ffi::c_void) {
++    unsafe { create(segment) };
++}
+--- a/crates/pg_warren/src/cache/shared/dsm/placement.rs
++++ b/crates/pg_warren/src/cache/shared/dsm/placement.rs
+@@ -125,7 +125,16 @@
+     // usual (DESIGN.md §5.6, Fallback).
+     let shared = unsafe {
+         let size = std::mem::size_of::<Shared>();
+-        pg_sys::GetNamedDSMSegment(NAME.as_ptr(), size, Some(create), &mut found)
++        pg_sys::GetNamedDSMSegment(
++            NAME.as_ptr(), size,
++            #[cfg(not(feature = "pg19"))]
++            Some(create),
++            #[cfg(feature = "pg19")]
++            Some(create_with_arg),
++            &mut found,
++            #[cfg(feature = "pg19")]
++            std::ptr::null_mut(),
++        )
+     };
+     // `GetNamedDSMSegment` raises an ERROR rather than return NULL.
+     let shared = NonNull::new(shared.cast::<Shared>())
+@@ -133,10 +142,13 @@
+     // SAFETY: the segment holds an initialized registry (`create`), mapped
+     // for the rest of the session; its format and tranche are written once
+     // (and the format first, at the same offset in every format).
+-    let (format, tranche) = unsafe { ((*shared.as_ptr()).format, (*shared.as_ptr()).tranche) };
++    let format = unsafe { (*shared.as_ptr()).format };
++    #[cfg(not(feature = "pg19"))]
++    let tranche = unsafe { (*shared.as_ptr()).tranche };
+     checked(format)?;
+     // SAFETY: registers this registry's tranche under a static name in this
+     // backend, as each backend must before it takes the lock.
++    #[cfg(not(feature = "pg19"))]
+     unsafe { pg_sys::LWLockRegisterTranche(tranche, TRANCHE.as_ptr()) };
+     // SAFETY: `shared` is valid; the lock is its field.
+     let lock = unsafe { NonNull::new_unchecked(addr_of_mut!((*shared.as_ptr()).lock)) };
+@@ -148,6 +160,9 @@
+ #[pgrx::pg_guard]
+ unsafe extern "C-unwind" fn create(segment: *mut std::ffi::c_void) {
+     // SAFETY: a new tranche id, from the main thread.
++    #[cfg(feature = "pg19")]
++    let tranche = unsafe { pg_sys::LWLockNewTrancheId(TRANCHE.as_ptr()) };
++    #[cfg(not(feature = "pg19"))]
+     let tranche = unsafe { pg_sys::LWLockNewTrancheId() };
+     // SAFETY: `GetNamedDSMSegment` passes a new segment of
+     // `size_of::<Shared>()` bytes and holds its own lock while this runs.
+@@ -307,3 +322,8 @@
+         assert!(size < 64 * 1024, "{size}");
+     }
+ }
++
++#[cfg(feature = "pg19")]
++unsafe extern "C-unwind" fn create_with_arg(segment: *mut std::ffi::c_void, _: *mut std::ffi::c_void) {
++    unsafe { create(segment) };
++}

@@ -2,8 +2,7 @@
 
 include /usr/share/postgresql-common/pgxs_debian_control.mk
 export PATH := $(HOME)/.cargo/bin:$(PATH)
-# Use the builder's stable toolchain, which must satisfy upstream Rust >= 1.97.
-export RUSTUP_TOOLCHAIN ?= stable
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 export CARGO_PROFILE_RELEASE_DEBUG = 2
 export CARGO_PROFILE_RELEASE_STRIP = none
 export RUSTFLAGS := $(RUSTFLAGS) -C link-arg=-Wl,--no-gc-sections
@@ -12,7 +11,7 @@ export RUSTFLAGS := $(RUSTFLAGS) -C link-arg=-Wl,--no-gc-sections
 	dh $@
 
 override_dh_auto_configure:
-	test "$$(cargo pgrx --version | awk '{print $$2}')" = 0.19.3
+	test "$$(cargo pgrx --version | awk '{print $$2}')" = 0.20.0
 	sha256sum Cargo.lock > .cargo-lock.before
 	cargo fetch --locked
 
@@ -36,3 +35,7 @@ override_dh_auto_test override_dh_auto_clean:
 
 override_dh_installdocs:
 	dh_installdocs --all README.md NOTICE docs/limits.md
+
+ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+override_dh_dwz:
+endif
