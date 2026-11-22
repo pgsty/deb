@@ -35,3 +35,7 @@ override_dh_auto_install:
 
 override_dh_installdocs:
 	dh_installdocs --all README.md docs/guc.md docs/known-limitations.md docs/operations.md
+
+ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+override_dh_dwz:
+endif
