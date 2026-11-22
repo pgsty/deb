@@ -14,5 +14,5 @@ Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: analytical hyperfunctions for PostgreSQL and TimescaleDB PGVERSION
  TimescaleDB Toolkit provides approximate aggregates, counter and gauge
  analysis, time-weighted averages, state tracking, downsampling, and SQL
- pipeline utilities. This package supports PostgreSQL 16 through 18 and can be
+ pipeline utilities. This package supports PostgreSQL 16 through 19 and can be
  used with plain PostgreSQL or TimescaleDB.

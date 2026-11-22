@@ -1,18 +1,21 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-VERSION := 1.27.0
+.NOTPARALLEL:
+
+VERSION := 1.28.0
 TARBALL := timescaledb-toolkit-$(VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 15 16 17 18
-PGRX_VERSION := 0.19.3
+PG_VERSIONS := 16 17 18 19
+PGRX_VERSION := 0.20.0
 CRATE_DIR := extension
-SOURCE_PATCH := patches/timescaledb-toolkit-$(VERSION).patch
+SOURCE_PATCH := patches/timescaledb-toolkit-1.28.0-pgrx-0.20.0.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -38,16 +41,13 @@ build: building packaging
 
 building: check-pgrx
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
-	RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
-	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
-	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
-	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
-	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
+	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
+	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
 	cd $(BUILD_DIR) && sha256sum Cargo.lock > .pgrx-cargo-lock.before
-	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
+	cd $(BUILD_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	cd $(BUILD_DIR) && \
-	set -eu; export RUSTUP_TOOLCHAIN=stable; export CARGO_INCREMENTAL=0; \
+	set -eu; export CARGO_INCREMENTAL=0; \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
