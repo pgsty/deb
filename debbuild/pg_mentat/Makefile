@@ -4,15 +4,16 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-# Source: https://api.pgxn.org/dist/pg_mentat/1.20.0/pg_mentat-1.20.0.zip
-# Official PGXN bundle normalized to tar.gz without changing source contents.
-TARBALL := pg_mentat-1.20.0.tar.gz
+.NOTPARALLEL:
+
+# Source: https://codeberg.org/gregburd/mentat/archive/v1.22.0.tar.gz
+TARBALL := pg_mentat-1.22.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.3
-SOURCE_PATCH := patches/pg-mentat-1.20.0.patch
+PG_VERSIONS := 15 16 17 18 19
+PGRX_VERSION := 0.20.0
+SOURCE_PATCH := patches/pg-mentat-1.22.0-pgrx-0.20.0.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 
 check-src:
@@ -39,17 +40,13 @@ build: building packaging
 
 building: check-pgrx
 	cd $(BUILD_DIR) && \
-	RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
-	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
-	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
-	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
-	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
-	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
+	RUSTUP_TOOLCHAIN="$${RUSTUP_TOOLCHAIN:-1.100.0}" PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
+	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
 	cd $(BUILD_DIR) && sha256sum Cargo.lock > .pgrx-cargo-lock.before
-	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN=stable PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
+	cd $(BUILD_DIR) && RUSTUP_TOOLCHAIN="$${RUSTUP_TOOLCHAIN:-1.100.0}" PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
 	cd $(BUILD_DIR) && \
-	set -eu; export RUSTUP_TOOLCHAIN=stable; export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
+	set -eu; export RUSTUP_TOOLCHAIN="$${RUSTUP_TOOLCHAIN:-1.100.0}"; export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 		    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \

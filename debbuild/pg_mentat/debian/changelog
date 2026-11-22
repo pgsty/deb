@@ -1,3 +1,9 @@
+pg-mentat (1.22.0-1PGSTY) unstable; urgency=medium
+
+  * Update to 1.22.0 and build for PostgreSQL 15 through 19 with pgrx 0.20.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+
 pg-mentat (1.20.0-1PGSTY) unstable; urgency=medium
 
   * Update to 1.20.0, retaining PG14-18 and the locked pgrx 0.19.3 build.
