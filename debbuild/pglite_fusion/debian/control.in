@@ -13,4 +13,4 @@ Provides: postgresql-pglite-fusion
 Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
 Description: embed SQLite databases in PostgreSQL values
  pglite_fusion provides an SQLite value type and functions for querying and
- modifying embedded SQLite databases. This package builds PostgreSQL 14-18.
+ modifying embedded SQLite databases. This package builds PostgreSQL 15 through 19.
