@@ -10,6 +10,10 @@ PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
 %:
 	dh $@
 
+ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+override_dh_dwz:
+endif
+
 override_dh_auto_test:
 
 override_dh_auto_build:

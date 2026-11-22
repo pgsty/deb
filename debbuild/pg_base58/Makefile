@@ -4,15 +4,17 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
+.NOTPARALLEL:
+
 TARBALL := pg_base58-0.0.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.2
+PG_VERSIONS := 15 16 17 18 19
+PGRX_VERSION := 0.20.0
 CRATE_DIR := .
-SOURCE_PATCH := patches/pg-base58-0.0.1.patch
-PGRX_HOME := $(CURDIR)/$(BUILD_DIR)/.pgrx-0192
+SOURCE_PATCH := patches/pg-base58-0.0.1-pgrx-0.20.0.patch
+PGRX_HOME := $(CURDIR)/$(BUILD_DIR)/.pgrx-0200
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -23,7 +25,7 @@ setup: check-src
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	# The source archive includes the pgrx 0.19.2 dependency update.
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(SOURCE_PATCH)
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
@@ -32,11 +34,7 @@ build: building packaging
 building: check-pgrx
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	PGRX_HOME="$(PGRX_HOME)" cargo pgrx init \
-	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
-	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
-	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
-	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
-	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
+	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.before
 	cd $(BUILD_DIR)/$(CRATE_DIR) && CARGO_NET_GIT_FETCH_WITH_CLI=true cargo fetch --locked
@@ -57,12 +55,12 @@ check-pgrx:
 	    exit 1; \
 	fi; \
 	RUST_VERSION=$$(rustc --version 2>/dev/null | awk '{print $$2}'); \
-	if [ "$$(printf '%s\n' 1.96.0 "$$RUST_VERSION" | sort -V | head -1)" != "1.96.0" ]; then echo "Rust 1.96 or newer is required, found $$RUST_VERSION" >&2; exit 1; fi
+	if [ "$$(printf '%s\n' 1.99.1 "$$RUST_VERSION" | sort -V | head -1)" != "1.99.1" ]; then echo "Rust 1.99.1 or newer is required, found $$RUST_VERSION" >&2; exit 1; fi
 
 packaging:
-	cd $(BUILD_DIR) && pg_buildext updatecontrol
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
 	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
 move:
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
