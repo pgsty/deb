@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -8,14 +9,14 @@ all: setup build move
 PGRX_BIN_DIR ?= $(HOME)/.cargo/bin
 export PATH := $(PGRX_BIN_DIR):$(PATH)
 
-# Upstream 0.3.2 source with a locked pgrx 0.19.3 dependency update.
-TARBALL := kafgres-0.3.2.tar.gz
+# Upstream 0.3.3 source with a locked pgrx 0.20.0 dependency update.
+TARBALL := kafgres-0.3.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/kafgres-0.3.2-pgrx-0.19.3.patch
+SOURCE_PATCH := patches/kafgres-0.3.3-pgrx-0.20.0.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 16
-PGRX_VERSION := 0.19.3
+PG_VERSIONS := 15 16 17 18
+PGRX_VERSION := 0.20.0
 CRATE_DIR := extension
 
 check-src:
@@ -38,18 +39,18 @@ building: check-pgrx
 	cd $(BUILD_DIR)/$(CRATE_DIR) && set -eu; for PG_VERSION in $(PG_VERSIONS); do \
 	    cargo pgrx init --pg$$PG_VERSION=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config --no-run; \
 	done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0193-cargo-locks.before
-	cd $(BUILD_DIR)/$(CRATE_DIR) && RUSTUP_TOOLCHAIN=stable PATH="$(PGRX_BIN_DIR):$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.before
+	@test -s $(BUILD_DIR)/.pgrx0200-cargo-locks.before
+	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$(PGRX_BIN_DIR):$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
-	set -eu; export RUSTUP_TOOLCHAIN=stable; \
+	set -eu; \
 	for PG_VERSION in $(PG_VERSIONS); do \
 		    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$(PGRX_BIN_DIR):$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 		    CARGO_NET_OFFLINE=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 		done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0193-cargo-locks.before $(BUILD_DIR)/.pgrx0193-cargo-locks.after
-	rm -f $(BUILD_DIR)/.pgrx0193-cargo-locks.before $(BUILD_DIR)/.pgrx0193-cargo-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.after
+	cmp $(BUILD_DIR)/.pgrx0200-cargo-locks.before $(BUILD_DIR)/.pgrx0200-cargo-locks.after
+	rm -f $(BUILD_DIR)/.pgrx0200-cargo-locks.before $(BUILD_DIR)/.pgrx0200-cargo-locks.after
 
 check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
