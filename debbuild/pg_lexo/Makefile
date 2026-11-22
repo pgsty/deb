@@ -2,7 +2,7 @@ TARBALL := pg_lexo-0.6.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 16 17 18
+PG_VERSIONS ?= 16 17 18 19
 export PG_VERSIONS
 
 all: move
@@ -22,6 +22,7 @@ setup: check-src
 	cp ../SOURCES/pg_lexo-0.6.1-Cargo.lock $(BUILD_DIR)/Cargo.lock
 	patch -d $(BUILD_DIR) -p1 < patches/pg_lexo-0.6.1-ordering.patch
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-lexo-0.6.1-pgrx-0.20.0.patch
 
 build: setup
 	cd $(BUILD_DIR) && pg_buildext updatecontrol

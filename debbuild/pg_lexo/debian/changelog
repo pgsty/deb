@@ -1,3 +1,9 @@
+pg-lexo (0.6.1-2PGSTY) unstable; urgency=medium
+
+  * Rebuild for PostgreSQL 16 through 19 with pgrx 0.20.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+
 pg-lexo (0.6.1-1PGSTY) unstable; urgency=medium
 
   * Fix lexo_next and preserve native ordering in lexo_rebalance.
