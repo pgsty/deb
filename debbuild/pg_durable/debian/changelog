@@ -1,3 +1,9 @@
+pg-durable (0.2.9-2PGSTY) unstable; urgency=medium
+
+  * Rebuild for PostgreSQL 15 through 19 with pgrx 0.20.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+
 pg-durable (0.2.9-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 0.2.9.

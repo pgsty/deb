@@ -16,5 +16,5 @@ Description: Durable SQL functions for PostgreSQL
  fault-tolerant functions to be defined in SQL and checkpointed inside the
  database. It is implemented as a Rust/pgrx extension with a background
  worker and requires loading pg_durable through shared_preload_libraries.
- This downstream package builds PostgreSQL 14 through 18; upstream officially
+ This downstream package builds PostgreSQL 15 through 19; upstream officially
  publishes binaries only for PostgreSQL 17 and 18.
