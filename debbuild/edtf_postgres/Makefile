@@ -1,16 +1,16 @@
-TARBALL := edtf_postgres-1.3.2.tar.gz
+TARBALL := edtf_postgres-1.3.5.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/edtf-postgres-1.3.2-pgrx-0.19.3.patch
+SOURCE_PATCH := patches/edtf-postgres-1.3.5-pgrx-0.20.0.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 14 15 16 17 18
+PG_VERSIONS ?= 15 16 17 18 19
 export PG_VERSIONS
 
 all: move
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL); run pig build get edtf_postgres first" >&2; exit 1)
-	@echo "139ffd3675a8cbcca780f9c511dcf8b8f3f2e8a3aa46f6c9aade35e7b8ac0cc2  $(SOURCE_TARBALL)" | sha256sum -c -
+	@echo "2fb81d8ef1b20c1ab33697c492054c4b071aea04dd1bd42a6ed1da7ca9e7f8d0  $(SOURCE_TARBALL)" | sha256sum -c -
 	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH)"; exit 1)
 
 setup: check-src
