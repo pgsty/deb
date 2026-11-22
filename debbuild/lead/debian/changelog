@@ -1,3 +1,9 @@
+lead (1.0.6-2PGSTY) unstable; urgency=medium
+
+  * Rebuild for PostgreSQL 17 through 18 with pgrx 0.20.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+
 lead (1.0.6-1PGSTY) unstable; urgency=medium
 
   * Package upstream snapshot e3ed2f4ce1388167b0254a0c0c706a61d0a37d83
