@@ -4,15 +4,17 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
+.NOTPARALLEL:
+
 TARBALL := pg_idkit-0.4.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.2
-export RUSTUP_TOOLCHAIN := stable
+PG_VERSIONS := 15 16 17 18 19
+PGRX_VERSION := 0.20.0
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CRATE_DIR := .
-SOURCE_PATCH := patches/pg-idkit-0.4.0.patch
+SOURCE_PATCH := patches/pg-idkit-0.4.0-pgrx-0.20.0.patch
 FIX_PATCH := patches/pg-idkit-0.4.0-nanoid-fix.patch
 
 check-src:
@@ -26,20 +28,16 @@ setup: check-src
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	# The source archive includes the pgrx 0.19.2 dependency update.
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(SOURCE_PATCH)
 
 build: building packaging
 
 building: check-pgrx
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
-	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
-	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
-	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
-	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
-	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
+	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
 	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -type f -name Cargo.lock -print0 | sort -z | xargs -0 sha256sum > .pgrx-locks.before
 	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=true cargo fetch --locked
