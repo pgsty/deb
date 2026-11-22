@@ -1,15 +1,18 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
 
-TARBALL := pg_eviltransform-0.0.7.tar.gz
+.NOTPARALLEL:
+
+TARBALL := pg_eviltransform-0.0.8.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 14 15 16 17 18
-PGRX_VERSION := 0.19.3
+PG_VERSIONS := 15 16 17 18 19
+PGRX_VERSION := 0.20.0
 CRATE_DIR := .
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 
@@ -30,14 +33,10 @@ build: building packaging
 building: check-pgrx
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
-	    --pg14=/usr/lib/postgresql/14/bin/pg_config \
-	    --pg15=/usr/lib/postgresql/15/bin/pg_config \
-	    --pg16=/usr/lib/postgresql/16/bin/pg_config \
-	    --pg17=/usr/lib/postgresql/17/bin/pg_config \
-	    --pg18=/usr/lib/postgresql/18/bin/pg_config \
+	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0193-cargo-locks.before
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .cargo-locks.before
+	@test -s $(BUILD_DIR)/.cargo-locks.before
 	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
 	set -e; cd $(BUILD_DIR)/$(CRATE_DIR); \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
@@ -47,8 +46,8 @@ building: check-pgrx
 		    EXT_DIR=target/release/pg_eviltransform-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
 		    cp -f pg_eviltransform--*.sql "$$EXT_DIR/"; \
 		done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0193-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0193-cargo-locks.before $(BUILD_DIR)/.pgrx0193-cargo-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .cargo-locks.after
+	cmp $(BUILD_DIR)/.cargo-locks.before $(BUILD_DIR)/.cargo-locks.after
 
 check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
