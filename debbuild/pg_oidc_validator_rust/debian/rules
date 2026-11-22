@@ -17,6 +17,10 @@ override_dh_auto_install:
 	set -e; for PG_VERSION in $(PG_VERSIONS); do \
 		FULL_NAME=postgresql-$$PG_VERSION-pg-oidc-validator-rust; \
 		dh_installdirs -p$$FULL_NAME; \
-		install -D -m 0755 target/release/liboidc_validator.so \
+		install -D -m 0755 target/pg$$PG_VERSION/release/liboidc_validator.so \
 			$(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/oidc_validator.so; \
 	done
+
+ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+override_dh_dwz:
+endif
