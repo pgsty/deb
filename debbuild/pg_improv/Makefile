@@ -10,8 +10,8 @@ BUILD_DIR := build
 CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/crates/pg_improv/target)
 export CARGO_TARGET_DIR
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 15 16 17 18
-PGRX_VERSION := 0.19.3
+PG_VERSIONS ?= 15 16 17 18 19
+PGRX_VERSION := 0.20.0
 
 all: move
 
@@ -25,6 +25,7 @@ setup: check-src
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-improv-0.14.0-pgrx-0.20.0.patch
 
 check-pgrx:
 	@CURRENT=$$(PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
