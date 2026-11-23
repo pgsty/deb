@@ -12,7 +12,7 @@ check-src:
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
-	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	tar -C $(BUILD_DIR) --exclude='*/packaging/debian' --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	(cd $(BUILD_DIR) && patch --fuzz=0 --batch --forward -p1 < ../$(SOURCE_PATCH))
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
