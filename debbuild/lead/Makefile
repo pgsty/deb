@@ -10,7 +10,7 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS ?= 17 18
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 
 all: setup build move
@@ -27,7 +27,7 @@ setup: check-src
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release && echo $${VERSION_CODENAME})); \
 	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/lead-1.0.6-pgrx-0.20.0.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/lead-1.0.6-pgrx-0.20.1.patch
 
 build: building packaging
 
@@ -52,7 +52,7 @@ building: check-pgrx
 
 packaging:
 	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
-	# Rust 1.100.0 and cargo-pgrx 0.20.0 are installed by rustup/cargo outside dpkg.
+	# Rust 1.100.0 and cargo-pgrx 0.20.1 are installed by rustup/cargo outside dpkg.
 	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
 move:
