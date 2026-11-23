@@ -56,6 +56,18 @@ split and validate an equivalent `-dbgsym` `.ddeb` explicitly; `polardb` uses
 Autoconf, or compilers outside the normal debhelper steps must export
 `dpkg-buildflags` so the automatic split has real DWARF to package.
 
+On Debian 12, Debian 13, Ubuntu 22.04 and Ubuntu 26.04, `dh_dwz` failed on
+DWARF 5 sections during pgrx 0.20.0 builds. The first error named
+`.debug_str_offsets` on amd64 and `.debug_addr` on arm64. Pass DWARF 4 flags
+to both Rust and the Clang invocation used by pgrx. With the
+source and build dependencies installed, this produces the main package and
+its automatic `-dbgsym` package on amd64 and arm64.
+
+```bash
+RUSTFLAGS="${RUSTFLAGS:+$RUSTFLAGS }-C dwarf-version=4" \
+BINDGEN_EXTRA_CLANG_ARGS="${BINDGEN_EXTRA_CLANG_ARGS:+$BINDGEN_EXTRA_CLANG_ARGS }-gdwarf-4" \
+pgext mak pg_base58 --pg 15
+```
 
 ## Signature
 
