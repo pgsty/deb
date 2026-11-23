@@ -87,7 +87,7 @@ pg_graphql:
 pg_jsonschema:
 	cd pg_jsonschema && make
 
-pg_improv:		# rust pgrx 0.20.0
+pg_improv:		# rust pgrx 0.20.1
 	cd pg_improv && make
 
 pg_agent_gate:           # rust pgrx 0.20.1, PostgreSQL 18 and 19
