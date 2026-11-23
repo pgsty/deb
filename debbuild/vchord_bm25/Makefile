@@ -1,23 +1,26 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
+.NOTPARALLEL:
 
-# GitHub tag archive: https://github.com/pgsty/vchord_bm25/archive/refs/tags/1.1.0.tar.gz
+# GitHub tag archive: https://github.com/pgsty/vchord_bm25/archive/refs/tags/1.2.0.tar.gz
 # No downstream patch is applied.
-TARBALL := vchord_bm25-1.1.0.tar.gz
+TARBALL := vchord_bm25-1.2.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SEMVER := $(shell echo $(TARBALL) | sed -E 's/^vchord_bm25-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
 BUILD_DIR := build
 CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
 export CARGO_TARGET_DIR
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PGRX_VERSION := 0.19.3
-PG_VERSIONS ?= 18
+PGRX_VERSION := 0.20.1
+PG_VERSIONS ?= $(shell cat debian/pgversions)
+export PGRX_HOME ?= $(abspath $(BUILD_DIR)/.pgrx)
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SNAPSHOT := /tmp/pgrx0193-vchord-bm25-cargo-locks.before
+LOCK_SHA256 := 55bff64dbfffe27d8321de90c8709ed27b1b65adcbf3c071e773745b53227205
 LIBCLANG_PATH ?= $(lastword $(sort $(wildcard /usr/lib/llvm-*/lib)))
 export LIBCLANG_PATH
 
@@ -42,8 +45,7 @@ check-pgrx:
 build: check-pgrx building packaging
 building:
 	cd $(BUILD_DIR) && cargo pgrx init $(PGRX_INIT_ARGS) --no-run
-	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT)
-	@test -s $(LOCK_SNAPSHOT)
+	cd $(BUILD_DIR) && echo '$(LOCK_SHA256)  Cargo.lock' | sha256sum -c -
 	cd $(BUILD_DIR) && CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
 	set -e; cd $(BUILD_DIR) && for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
@@ -56,9 +58,7 @@ building:
 	    grep -q "default_version = '$(SEMVER)'" $$EXT_DIR/vchord_bm25.control; \
 	    test -f $$EXT_DIR/vchord_bm25--$(SEMVER).sql; \
 	done
-	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT).after
-	cmp $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
-	rm -f $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
+	cd $(BUILD_DIR) && echo '$(LOCK_SHA256)  Cargo.lock' | sha256sum -c -
 
 packaging:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
