@@ -20,7 +20,7 @@ check-src:
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
-	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	tar -C $(BUILD_DIR) --exclude='pgdd-*/standalone/*.deb' --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
