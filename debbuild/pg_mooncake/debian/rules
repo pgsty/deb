@@ -20,7 +20,6 @@ override_dh_auto_install:
 	done
 
 override_dh_dwz:
-	dh_dwz --no-dwz-multifile
 
 override_dh_strip:
 	# Keep each PG package's shared plugin and automatic debug path distinct.
