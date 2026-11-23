@@ -11,10 +11,10 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 export RUSTUP_TOOLCHAIN ?= 1.100.0
 CRATE_DIR := .
-SOURCE_PATCH := patches/pg-idkit-0.4.0-pgrx-0.20.0.patch
+SOURCE_PATCH := patches/pg-idkit-0.4.0-pgrx-0.20.1.patch
 FIX_PATCH := patches/pg-idkit-0.4.0-nanoid-fix.patch
 
 check-src:
