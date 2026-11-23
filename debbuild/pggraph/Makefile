@@ -14,7 +14,7 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 CRATE_DIR := graph
 SOURCE_PATCH := patches/pggraph-1.2.1.patch
 
@@ -33,7 +33,7 @@ setup: check-src check-patches
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pggraph-1.2.1-pgrx-0.20.0.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pggraph-1.2.1-pgrx-0.20.1.patch
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
@@ -46,8 +46,8 @@ building: check-pgrx
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0200-cargo-locks.before
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0201-cargo-locks.before
+	@test -s $(BUILD_DIR)/.pgrx0201-cargo-locks.before
 	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	set -eu; export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
@@ -57,8 +57,8 @@ building: check-pgrx
 		    EXT_DIR=target/release/graph-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
 		    cp -f sql/graph--*--*.sql "$$EXT_DIR/"; \
 		done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0200-cargo-locks.before $(BUILD_DIR)/.pgrx0200-cargo-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0201-cargo-locks.after
+	cmp $(BUILD_DIR)/.pgrx0201-cargo-locks.before $(BUILD_DIR)/.pgrx0201-cargo-locks.after
 
 check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
