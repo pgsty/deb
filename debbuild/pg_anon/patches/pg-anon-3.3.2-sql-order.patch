@@ -1,0 +1,63 @@
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -17,9 +17,19 @@
+ mod utils;
+ mod walker;
+ 
+-// Load the SQL functions AFTER the rust functions
++// Install the SQL views and comments after the Rust functions they reference.
+ // GCOVR_EXCL_START
+-extension_sql_file!("../sql/anon.sql", name = "anon", finalize);
++extension_sql_file!(
++    "../sql/anon.sql",
++    name = "anon",
++    requires = [
++        masking::list_masking_policies,
++        masking::static_masking::masking_value_for_column,
++        masking_functions::partial::partial,
++        masking_functions::partial::partial_email,
++        utils::get_function_schema,
++    ]
++);
+ 
+ // All external functions are defined in the anon schema
+ extension_sql!(
+@@ -44,17 +54,20 @@
+ extension_sql_file!("../sql/bindings.sql", requires = ["anon"]);
+ extension_sql_file!("../sql/fake.sql", requires = ["init"]);
+ extension_sql_file!("../sql/hash.sql", requires = ["init"]);
+-extension_sql_file!("../sql/random.sql", requires = ["anon"]);
++extension_sql_file!(
++    "../sql/random.sql",
++    requires = ["anon", masking_functions::random::random_number_with_format, masking_functions::random::random_string]
++);
+ extension_sql_file!("../sql/custom_values.sql", requires = ["anon"]);
+ extension_sql_file!(
+     "../sql/array.sql",
+     name = "anon_array",
+-    requires = ["anon", "catalog"]
++    requires = ["anon"]
+ );
+-extension_sql_file!("../sql/catalog.sql", requires = ["anon"]);
++extension_sql_file!("../sql/catalog.sql", requires = ["anon_array"]);
+ 
+ #[cfg(not(any(feature = "pg14", feature = "pg15", feature = "pg16")))]
+-extension_sql_file!("../sql/catalog_PG17_plus.sql", requires = ["anon"]);
++extension_sql_file!("../sql/catalog_PG17_plus.sql", requires = ["catalog"]);
+ 
+ // GCOVR_EXCL_STOP
+ 
+--- a/src/masking/replica_masking.rs
++++ b/src/masking/replica_masking.rs
+@@ -12,7 +12,10 @@
+ // User facing functions
+ //------------------------------------------------------------------------
+ 
+-extension_sql_file!("../../sql/replica_masking.sql", requires = ["anon"]);
++extension_sql_file!(
++    "../../sql/replica_masking.sql",
++    requires = ["anon", refresh_replica_trigger_for_table]
++);
+ 
+ #[pg_extern(schema = "anon")]
+ /// Remove the masking trigger from a table

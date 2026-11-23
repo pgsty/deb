@@ -25,6 +25,7 @@ setup: check-src
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-anon-3.3.2-pgrx-0.20.1.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-anon-3.3.2-sql-order.patch
 
 build: packaging
 
