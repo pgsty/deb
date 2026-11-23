@@ -1,12 +1,15 @@
-Description: Include fixed-width integer declarations in C++ LLVM builds
- DataSketches headers use uint*_t types through transitive includes in normal
- g++ builds. PGXS invokes clang directly for C++ bitcode, where those types
- are not declared. Pre-include <cstdint> only in the C++ bitcode rule.
+Description: Compile DataSketches C++ code with Boost.Math and fixed-width types
+ Boost.Math requires C++14 on Resolute. DataSketches core headers use
+ uint*_t types. Set the language standard and include <cstdint> for both
+ native compilation and LLVM bitcode.
 Author: Ruohang Feng <rh@vonng.com>
 Forwarded: not-yet
 
 --- a/Makefile
 +++ b/Makefile
+@@ -70 +70 @@
+-PG_CXXFLAGS = -std=c++11
++PG_CXXFLAGS = -std=c++14 -include cstdint
 @@ -79 +79 @@
 -	COMPILE.cxx.bc = $(CLANG) -xc++ -Wno-ignored-attributes $(BITCODE_CXXFLAGS) $(CPPFLAGS) -emit-llvm -c
-+	COMPILE.cxx.bc = $(CLANG) -xc++ -Wno-ignored-attributes $(BITCODE_CXXFLAGS) $(CPPFLAGS) -include cstdint -emit-llvm -c
++	COMPILE.cxx.bc = $(CLANG) -xc++ -Wno-ignored-attributes $(BITCODE_CXXFLAGS) $(CPPFLAGS) $(PG_CXXFLAGS) -emit-llvm -c
