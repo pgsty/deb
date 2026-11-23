@@ -10,7 +10,7 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 RUST_TOOLCHAIN := 1.100.0
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 SOURCE_PATCH := patches/pg-trickle-$(VERSION).patch
@@ -32,7 +32,7 @@ setup: check-src check-patches
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-trickle-0.108.3-pgrx-0.20.0.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-trickle-0.108.3-pgrx-0.20.1.patch
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
