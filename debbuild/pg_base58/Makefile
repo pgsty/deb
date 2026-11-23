@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -11,10 +12,10 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 CRATE_DIR := .
-SOURCE_PATCH := patches/pg-base58-0.0.1-pgrx-0.20.0.patch
-PGRX_HOME := $(CURDIR)/$(BUILD_DIR)/.pgrx-0200
+SOURCE_PATCH := patches/pg-base58-0.0.1-pgrx-0.20.1.patch
+PGRX_HOME := $(CURDIR)/$(BUILD_DIR)/.pgrx-0201
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
