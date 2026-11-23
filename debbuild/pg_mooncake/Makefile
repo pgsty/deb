@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG := 2
 CARGO_PROFILE_RELEASE_STRIP := none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -7,16 +8,16 @@ include /usr/share/dpkg/buildflags.mk
 .NOTPARALLEL:
 all: setup build move
 
-TARBALL := pg_mooncake-0.3.0.tar.gz
+TARBALL := pg_mooncake-0.3.3-source.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PGRX_VERSION := 0.19.3
-PG_VERSIONS ?= 18
+PGRX_VERSION := 0.20.1
+PG_VERSIONS ?= $(shell cat debian/pgversions)
+export PGRX_HOME ?= $(abspath $(BUILD_DIR)/.pgrx)
 JOBS ?= 4
 export CARGO_BUILD_JOBS = $(JOBS)
 export CARGO_NET_GIT_FETCH_WITH_CLI = true
-export DUCKDB_COMMIT = d54cbbe3df17e8e5ce68312f483b4155836112aa
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CMAKE_MIN_VERSION := 3.24
 PRIVATE_CMAKE_PREFIX ?= $(HOME)/.cache/pgsty/cmake-3.31.12
@@ -31,14 +32,14 @@ endif
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first"; exit 1)
-	@for v in $(PG_VERSIONS); do case "$$v" in 14|15|16|17|18) ;; *) echo "unsupported PostgreSQL $$v"; exit 1;; esac; done
+	@for v in $(PG_VERSIONS); do case "$$v" in 15|16|17|18|19) ;; *) echo "unsupported PostgreSQL $$v"; exit 1;; esac; done
 
 setup: check-src
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	cd $(BUILD_DIR) && ./fetch-deps.sh
-	cd $(BUILD_DIR) && printf '54488fa56bffb86a9d9ee47794ba433c10114ea34ba8e995a3a38709943f9784  Cargo.lock\n' | sha256sum -c -
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg_mooncake-0.3.3-pgrx-0.20.1.patch
+	cd $(BUILD_DIR) && echo '09509abae5f4ad2b9ce21cf89a17b407a2013ebf3820e0f9a258b04005d2866d  Cargo.lock' | sha256sum -c -
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); \

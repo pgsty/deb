@@ -1,3 +1,12 @@
+pg-mooncake (0.3.3-1PGSTY) unstable; urgency=medium
+
+  * Build the upstream source release with pinned submodules for PostgreSQL
+    15 through 19 and apply the RPM pgrx 0.20.1 patch.
+  * Install the upstream upgrade SQL and the v0.0.5 scanner for pg_duckdb
+    1.2.1 and DuckDB 2.0.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 23 Nov 2026 21:37:00 +0800
+
 pg-mooncake (0.3.0-1PGSTY) unstable; urgency=medium
 
   * Switch to the PGSTY fork with pgrx 0.19.3 and pinned dependencies.
