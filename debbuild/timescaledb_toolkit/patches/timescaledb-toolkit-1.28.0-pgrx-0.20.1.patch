@@ -834,9 +834,9 @@
 -version = "0.18.1"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "06eb76205437c489284e76c3910c81378d525e3e7e8364c31875ec105cc63cd1"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "37147008ecfda0aedd64a924afed86ce6bca805bc2c103c8097583b530ab9505"
++checksum = "7a5eeb31982060535c8db4728ae2ee22cad62c07431a5cb5659be36b465ee488"
  dependencies = [
   "bitflags",
 - "bitvec",
@@ -856,9 +856,9 @@
 -version = "0.18.1"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "92b64cb3d6abab7fa588a83cb154938ba403e5bd41349cf5cbe82eca971ab0a2"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "f451dab19ad85a36a6f7a1da385846aca2262c84c36d4e705b2aebd52cd6f0f0"
++checksum = "f478cd6ba4eb717b861db04d8eb135f41ed6b4772c987c0c8784df0aadaf6961"
  dependencies = [
   "bindgen",
 - "cc",
@@ -878,9 +878,9 @@
 +
 +[[package]]
 +name = "pgrx-c-macros"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "202a94c98efda3d8a7c920a3a7dfbd8bc1ac8d416b7b79646c2710e3a682f553"
++checksum = "c38ac789f798b2f770dffbcbb530057adc4f28e1edd639dcaf22e1e72da1a27a"
 +dependencies = [
 + "clang",
   "clang-sys",
@@ -905,9 +905,9 @@
 -version = "0.18.1"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "cd9d49f184d3a9d5f66c55ec489c2288b31313843007570636b007c7a6fddde4"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "2349537da01f5e58ed79975cb2a38b20d6d82967243dcf7bc0ef5c12035c7b83"
++checksum = "ed96a72dae6d00413757dec35ad97d91732e851d45f9bb88186aac95c48292d5"
  dependencies = [
   "pgrx-sql-entity-graph",
   "proc-macro2",
@@ -920,9 +920,9 @@
 -checksum = "2b061c1ee4e22341c6efffb578e081fc87904e000e056adc9c87e53d073954e3"
 -dependencies = [
 - "cargo_toml",
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "ea50fe9e10100f83192e0a4d268daf13bf3bceece31b3afca3bcf844f72d51c5"
++checksum = "7b203569e020020019631f260e6087a226fca84e11eed852a55e0842e12bdc59"
 +dependencies = [
   "codepage",
   "encoding_rs",
@@ -943,9 +943,9 @@
 -version = "0.18.1"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "32d5d61594a030a34bd68dfa1cc3b51cdfd58f96d77548c12def496a0d800ca7"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "0d3dbceaedddb417f56d79d3261d73dc402f443b28889e73bba3917a83f8ec60"
++checksum = "13c20b908caf1794a32306756e7a5a38a5a9c586efdec6d0a6bcbe6eb0782ad9"
  dependencies = [
   "cee-scape",
   "libc",
@@ -958,9 +958,9 @@
 -checksum = "82169b961269f7436bfba3b9464f4d6be6b500f0ace1de694be77398b58c09a7"
 -dependencies = [
 - "convert_case",
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "b6260a2e9163c79cdcf9d002da74fa0dbff6e43e187e0a2385d3effe040db0bf"
++checksum = "72c5a236d90b23b2c37cbdfd4a11eef10d43e740470e350e8d324207f9f6c93e"
 +dependencies = [
   "eyre",
 - "petgraph",
@@ -978,9 +978,9 @@
 -checksum = "455747374115c38c70635861fa2f35c6ce01f1b7d34743b9c97291c9a5acd7ca"
 -dependencies = [
 - "clap-cargo",
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "84b427923bb10d0cd655bf866afb47f77a70bc3cef8c925be593b7f370875eae"
++checksum = "874dcd6a0c87bc41cf9756b4137b62618a4f1756077c5c362cf2159fed559887"
 +dependencies = [
   "eyre",
   "libc",
@@ -1559,9 +1559,9 @@
 -pgrx = "=0.18.1"
 -pgrx-macros = "=0.18.1"
 -pgrx-sql-entity-graph = "=0.18.1"
-+pgrx = "=0.20.0"
-+pgrx-macros = "=0.20.0"
-+pgrx-sql-entity-graph = "=0.20.0"
++pgrx = "=0.20.1"
++pgrx-macros = "=0.20.1"
++pgrx-sql-entity-graph = "=0.20.1"
  encodings = {path="../crates/encodings"}
  flat_serialize = {path="../crates/flat_serialize/flat_serialize"}
  flat_serialize_macro = {path="../crates/flat_serialize/flat_serialize_macro"}
@@ -1570,7 +1570,7 @@
  
  [dev-dependencies]
 -pgrx-tests = "=0.18.1"
-+pgrx-tests = "=0.20.0"
++pgrx-tests = "=0.20.1"
  approx = "0.5.1"
 --- a/extension/src/datum_utils.rs
 +++ b/extension/src/datum_utils.rs
