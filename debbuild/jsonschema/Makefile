@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -7,13 +8,13 @@ all: setup build move
 .NOTPARALLEL:
 
 # Source: https://github.com/theory/pg-jsonschema-boon/archive/refs/tags/v0.1.11.tar.gz
-# Normalize only the archive root; apply the pgrx 0.20.0 patch during setup.
+# Normalize only the archive root; apply the pgrx 0.20.1 patch during setup.
 TARBALL := jsonschema-0.1.11.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 SOURCE_PATCH := patches/jsonschema-0.1.11.patch
 
 check-src:
@@ -28,7 +29,7 @@ setup: check-src
 	(cd $(BUILD_DIR) && patch -p1 --fuzz=0 < "../$(SOURCE_PATCH)")
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/jsonschema-0.1.11-pgrx-0.20.0.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/jsonschema-0.1.11-pgrx-0.20.1.patch
 
 build: building packaging
 
