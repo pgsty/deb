@@ -12,9 +12,9 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 CRATE_DIR := .
-SOURCE_PATCH := patches/pglite-fusion-0.0.8-pgrx-0.20.0.patch
+SOURCE_PATCH := patches/pglite-fusion-0.0.8-pgrx-0.20.1.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
