@@ -2,17 +2,17 @@
 
 源码归档为 `postgresql_anonymizer-3.3.2.tar.gz`，SHA-256：
 `cfeb2d3dd4db981d58a7f5062665a8e52b7225cf45dabbccd435110f8f6f43da`。
-本配方支持 PostgreSQL 14–18，使用上游 pgrx 0.19.3。
+本配方支持 PostgreSQL 15–19，使用 Rust 1.100.0 和 cargo-pgrx 0.20.1。
 
 归档中的 Cargo.toml 已为 3.3.2，但根 Cargo.lock 条目仍为 3.3.1。
-`patches/pg-anon-3.3.2-lock-version.patch` 仅修正该根版本，未调整依赖版本；
-应用后的锁文件 SHA-256 为
-`2a30c53c32de09d29aed744677dab082396ff6c91c27664fbe32d3b1117b0e42`。
+`patches/pg-anon-3.3.2-lock-version.patch` 修正根版本。随后应用
+`patches/pg-anon-3.3.2-pgrx-0.20.1.patch`，最终锁文件的 SHA-256 为
+`5053e08ff38c8ae3d29e0e79503c8fd71a178cb663f8284f2acfb7234ab88c15`。
 构建先执行 `cargo fetch --locked`，再离线打包，前后核对锁文件校验值。
 
 在 builder 中先执行 `pig build get pg_anon`；缺少本版本归档时，仅复制上述
 具体文件到 `~/ext/src/`。安装 `debian/control.in` 声明的构建依赖，以及
-cargo-pgrx 0.19.3 后执行 `make`。配方在 Rust 编译之前检查 dpkg 构建依赖，
+cargo-pgrx 0.20.1 后执行 `make`。配方在 Rust 编译之前检查 dpkg 构建依赖，
 保留 release DWARF，由 debhelper 自动拆分 `-dbgsym`。
 
 `anon.init()` 从 `extension/anon/` 直接读取默认 CSV。打包时保留全部 24 个
