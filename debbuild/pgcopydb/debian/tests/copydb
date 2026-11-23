@@ -2,15 +2,17 @@
 
 set -eux
 
-WORKDIR=$PWD/debian/home
+PGCOPYDB_TEST_DIR=$(mktemp -d)
+export PGCOPYDB_TEST_DIR
+trap 'rm -rf -- "$PGCOPYDB_TEST_DIR"' EXIT
 
-pg_virtualenv << EOF
+pg_virtualenv <<'EOF'
   set -eux
+  export PATH="${PG_CONFIG%/*}:$PATH"
   createdb src
   createdb dst
   psql -c 'create table foo as select 123+456' src
-  rm -rf $WORKDIR
-  HOME=$WORKDIR pgcopydb clone --source "dbname=src" --target "dbname=dst" --dir $WORKDIR
+  HOME="$PGCOPYDB_TEST_DIR" pgcopydb clone --source "dbname=src" --target "dbname=dst" --dir "$PGCOPYDB_TEST_DIR/clone"
   pg_dump -t foo dst
   pg_dump -t foo dst | grep 579
 EOF
