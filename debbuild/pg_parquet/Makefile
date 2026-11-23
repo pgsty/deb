@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -8,12 +9,12 @@ TARBALL := pg_parquet-v0.6.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 PG_VERSIONS ?= 15 16 17 18 19
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 LOCK_SNAPSHOT := $(CURDIR)/$(BUILD_DIR)/.Cargo.lock.before
-LOCK_EXPECTED := 33b62bcdad0671314a2572773cf6738c6e6236f49601bb7bbc5b283036e5eec2
+LOCK_EXPECTED := a1944e771f092479f581fea23d1377a174d83f1e941abcecfc48ce5f4b75ec2f
 LIBCLANG_PATH ?= $(lastword $(sort $(wildcard /usr/lib/llvm-*/lib)))
 export LIBCLANG_PATH
 
@@ -25,7 +26,7 @@ setup:
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
-	patch -d $(BUILD_DIR) -p1 < patches/pg-parquet-0.6.1-pgrx-0.20.0.patch
+	patch --batch --fuzz=0 -d $(BUILD_DIR) -p1 < patches/pg-parquet-0.6.1-pgrx-0.20.1.patch
 	cd $(BUILD_DIR) && echo "$(LOCK_EXPECTED)  Cargo.lock" | sha256sum -c -
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
