@@ -1,0 +1,70 @@
+--- a/extension/src/decoding.rs
++++ b/extension/src/decoding.rs
+@@ -214,7 +214,7 @@
+     out
+ }
+ 
+-/// The commit timestamp. From PG 15 it is in the `xact_time` union with the prepare time.
++/// The commit timestamp. PG 15–18 name the union and PG 19 uses an anonymous union.
+ #[cfg(any(feature = "pg13", feature = "pg14"))]
+ unsafe fn commit_time(txn: *mut pg_sys::ReorderBufferTXN) -> pg_sys::TimestampTz {
+     (*txn).commit_time
+@@ -222,7 +222,14 @@
+ 
+ #[cfg(not(any(feature = "pg13", feature = "pg14")))]
+ unsafe fn commit_time(txn: *mut pg_sys::ReorderBufferTXN) -> pg_sys::TimestampTz {
+-    (*txn).xact_time.commit_time
++    #[cfg(not(feature = "pg19"))]
++    {
++        (*txn).xact_time.commit_time
++    }
++    #[cfg(feature = "pg19")]
++    {
++        (*txn).__bindgen_anon_1.commit_time
++    }
+ }
+ 
+ /// A decoded change's tuple. Through PG 16 it is wrapped in a `ReorderBufferTupleBuf`; from
+@@ -236,7 +243,7 @@
+     }
+ }
+ 
+-#[cfg(any(feature = "pg17", feature = "pg18"))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+ unsafe fn heap_tuple(tuple: pg_sys::HeapTuple) -> pg_sys::HeapTuple {
+     tuple
+ }
+--- a/extension/src/server/readiness.rs
++++ b/extension/src/server/readiness.rs
+@@ -87,9 +87,9 @@
+             let n = (FIRST_SOCKET + want.len()) as i32;
+             // From PG 17 the first argument is a ResourceOwner; NULL means session lifetime.
+             // The set is still allocated in TopMemoryContext, as before.
+-            #[cfg(not(any(feature = "pg17", feature = "pg18")))]
++            #[cfg(not(any(feature = "pg17", feature = "pg18", feature = "pg19")))]
+             let owner = pg_sys::TopMemoryContext;
+-            #[cfg(any(feature = "pg17", feature = "pg18"))]
++            #[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+             let owner = std::ptr::null_mut();
+             self.set = pg_sys::CreateWaitEventSet(owner, n);
+             pg_sys::AddWaitEventToSet(
+--- a/extension/src/storage/segment.rs
++++ b/extension/src/storage/segment.rs
+@@ -490,7 +490,7 @@
+     ) as isize
+ }
+ 
+-#[cfg(any(feature = "pg17", feature = "pg18"))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+ unsafe fn file_write(file: pgrx::pg_sys::File, buf: &[u8], offset: u64, wait: u32) -> isize {
+     let iov = pgrx::pg_sys::iovec {
+         iov_base: buf.as_ptr() as *mut core::ffi::c_void,
+@@ -523,7 +523,7 @@
+     ) as isize
+ }
+ 
+-#[cfg(any(feature = "pg17", feature = "pg18"))]
++#[cfg(any(feature = "pg17", feature = "pg18", feature = "pg19"))]
+ unsafe fn file_read(file: pgrx::pg_sys::File, buf: &mut [u8], offset: u64, wait: u32) -> isize {
+     let iov = pgrx::pg_sys::iovec {
+         iov_base: buf.as_mut_ptr() as *mut core::ffi::c_void,

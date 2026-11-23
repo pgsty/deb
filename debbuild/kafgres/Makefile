@@ -13,20 +13,23 @@ export PATH := $(PGRX_BIN_DIR):$(PATH)
 TARBALL := kafgres-0.3.3.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SOURCE_PATCH := patches/kafgres-0.3.3-pgrx-0.20.1.patch
+PG19_PATCH := patches/kafgres-0.3.3-pg19.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS := 15 16 17 18
+PG_VERSIONS := 15 16 17 18 19
 PGRX_VERSION := 0.20.1
 CRATE_DIR := extension
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
 	@test -f "$(SOURCE_PATCH)" || (echo "missing $(SOURCE_PATCH)"; exit 1)
+	@test -f "$(PG19_PATCH)" || (echo "missing $(PG19_PATCH)"; exit 1)
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(SOURCE_PATCH)
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < $(PG19_PATCH)
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
