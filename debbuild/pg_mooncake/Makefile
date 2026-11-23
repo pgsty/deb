@@ -68,7 +68,8 @@ building: check-build-deps
 	cd $(BUILD_DIR) && sha256sum Cargo.lock moonlink/Cargo.lock duckdb_mooncake/moonlink_ffi/Cargo.lock > .cargo-locks.before
 	cd $(BUILD_DIR) && cargo fetch --locked
 	cd $(BUILD_DIR) && cargo fetch --locked --manifest-path duckdb_mooncake/moonlink_ffi/Cargo.toml
-	set -e; cd $(BUILD_DIR); export PATH="$(dir $(CMAKE)):$$PATH"; export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
+	set -e; cd $(BUILD_DIR); rustc=$$(rustup which rustc); export PATH="$${rustc%/*}:$(dir $(CMAKE)):$$PATH"; \
+	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
 	for v in $(PG_VERSIONS); do \
 	    $(MAKE) package PG_VERSION=pg$$v PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config JOBS=$(JOBS); \
 	done

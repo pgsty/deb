@@ -4,6 +4,8 @@ pg-mooncake (0.3.3-1PGSTY) unstable; urgency=medium
     15 through 19 and apply the RPM pgrx 0.20.1 patch.
   * Install the upstream upgrade SQL and the v0.0.5 scanner for pg_duckdb
     1.2.1 and DuckDB 2.0.1.
+  * Keep the selected rustup toolchain ahead of the system Cargo when
+    configuring and building the DuckDB scanner.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 23 Nov 2026 21:37:00 +0800
 
