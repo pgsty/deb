@@ -14,8 +14,8 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18 19
-PGRX_VERSION := 0.20.0
-SOURCE_PATCH := patches/pg-turbovec-2.16.3-pgrx-0.20.0.patch
+PGRX_VERSION := 0.20.1
+SOURCE_PATCH := patches/pg-turbovec-2.16.3-pgrx-0.20.1.patch
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
 
 check-src:
