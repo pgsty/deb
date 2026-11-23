@@ -1,3 +1,10 @@
+pg-tokenizer (1.2.0-1PGSTY) unstable; urgency=medium
+
+  * Build upstream 1.2.0 for PostgreSQL 15 through 19.
+  * Apply the RPM pgrx 0.20.1 patch and install the upstream upgrade SQL.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 23 Nov 2026 21:37:00 +0800
+
 pg-tokenizer (1.1.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 1.1.0 with tokenizer permission and cache fixes.

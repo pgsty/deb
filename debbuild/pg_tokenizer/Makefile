@@ -1,23 +1,25 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: setup build move
+.NOTPARALLEL:
 
-# GitHub tag archive: https://github.com/pgsty/pg_tokenizer/archive/refs/tags/v1.1.0.tar.gz
-# No downstream patch is applied.
-TARBALL := pg_tokenizer-1.1.0.tar.gz
+# GitHub tag archive: https://github.com/pgsty/pg_tokenizer/archive/refs/tags/v1.2.0.tar.gz
+TARBALL := pg_tokenizer-1.2.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
 export CARGO_TARGET_DIR
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 18
-PGRX_VERSION := 0.19.3
+PG_VERSIONS ?= $(shell cat debian/pgversions)
+PGRX_VERSION := 0.20.1
+export PGRX_HOME ?= $(abspath $(BUILD_DIR)/.pgrx)
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CRATE_DIR := .
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SNAPSHOT := /tmp/pgrx0193-pg-tokenizer-cargo-locks.before
+LOCK_SHA256 := 9e9104a0e4b00d8bbef22dc020cdca16bf0f18e733384db5787322c716c03f4b
 LIBCLANG_PATH ?= $(lastword $(sort $(wildcard /usr/lib/llvm-*/lib)))
 export LIBCLANG_PATH
 
@@ -27,6 +29,7 @@ check-src:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg_tokenizer-1.2.0-pgrx-0.20.1.patch
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
@@ -38,8 +41,7 @@ build: building packaging
 building: check-pgrx
 	cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init $(PGRX_INIT_ARGS) --no-run
-	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT)
-	@test -s $(LOCK_SNAPSHOT)
+	cd $(BUILD_DIR) && echo '$(LOCK_SHA256)  Cargo.lock' | sha256sum -c -
 	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
 	set -e; cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
@@ -48,9 +50,7 @@ building: check-pgrx
 	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
 	    cargo pgrx package -v --no-default-features --features pg$$PG_VERSION --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
-	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT).after
-	cmp $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
-	rm -f $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
+	cd $(BUILD_DIR) && echo '$(LOCK_SHA256)  Cargo.lock' | sha256sum -c -
 
 check-pgrx:
 	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
