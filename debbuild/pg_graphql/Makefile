@@ -9,12 +9,12 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 RUST_VERSION := 1.100.0
 export RUSTUP_TOOLCHAIN ?= $(RUST_VERSION)
 CARGO_BUILD_JOBS ?= 2
 export CARGO_BUILD_JOBS
-SOURCE_PATCH := patches/pg-graphql-1.6.3.patch
+SOURCE_PATCH := patches/pg-graphql-1.6.3-pgrx-0.19.3.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
@@ -31,7 +31,7 @@ setup: check-src check-patches
 	@$(MAKE) apply-patches
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-graphql-1.6.3-pgrx-0.20.0.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-graphql-1.6.3-pgrx-0.20.1.patch
 
 apply-patches:
 	@echo "apply $(SOURCE_PATCH)"
