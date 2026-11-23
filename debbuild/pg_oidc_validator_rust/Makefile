@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -9,8 +10,8 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 18 19
-PGRX_VERSION := 0.20.0
-SOURCE_PATCH := patches/pg-oidc-validator-rust-0.1.0-pgrx-0.20.0.patch
+PGRX_VERSION := 0.20.1
+SOURCE_PATCH := patches/pg-oidc-validator-rust-0.1.0-pgrx-0.20.1.patch
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL); fetch upstream snapshot b65bbbe288f84fab91d58b8304e8a526d1326af5 and save it as $(TARBALL)"; exit 1)

@@ -503,9 +503,9 @@
 -version = "0.19.2"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "8d7e6f85d841cd9c01092ad3b9d60fc778bf54dc6174bbd24126250659af7d91"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "37147008ecfda0aedd64a924afed86ce6bca805bc2c103c8097583b530ab9505"
++checksum = "7a5eeb31982060535c8db4728ae2ee22cad62c07431a5cb5659be36b465ee488"
  dependencies = [
   "bitflags",
 - "bitvec",
@@ -528,9 +528,9 @@
 -dependencies = [
 - "bindgen",
 - "cc",
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "f451dab19ad85a36a6f7a1da385846aca2262c84c36d4e705b2aebd52cd6f0f0"
++checksum = "f478cd6ba4eb717b861db04d8eb135f41ed6b4772c987c0c8784df0aadaf6961"
 +dependencies = [
 + "bindgen 0.73.2",
 + "eyre",
@@ -549,9 +549,9 @@
 +
 +[[package]]
 +name = "pgrx-c-macros"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "202a94c98efda3d8a7c920a3a7dfbd8bc1ac8d416b7b79646c2710e3a682f553"
++checksum = "c38ac789f798b2f770dffbcbb530057adc4f28e1edd639dcaf22e1e72da1a27a"
 +dependencies = [
 + "clang",
   "clang-sys",
@@ -576,9 +576,9 @@
 -version = "0.19.2"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "aefe3297831869ac1e3fc62045a0181cd9f3ba3e3ad3ed56b9d89ae899170581"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "2349537da01f5e58ed79975cb2a38b20d6d82967243dcf7bc0ef5c12035c7b83"
++checksum = "ed96a72dae6d00413757dec35ad97d91732e851d45f9bb88186aac95c48292d5"
  dependencies = [
   "pgrx-sql-entity-graph",
   "proc-macro2",
@@ -591,9 +591,9 @@
 -checksum = "41dd7c6196fcd41f76240f721b6373dc9c080489c87194e3ffb8f924a8fef4e0"
 -dependencies = [
 - "cargo_toml",
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "ea50fe9e10100f83192e0a4d268daf13bf3bceece31b3afca3bcf844f72d51c5"
++checksum = "7b203569e020020019631f260e6087a226fca84e11eed852a55e0842e12bdc59"
 +dependencies = [
   "codepage",
   "encoding_rs",
@@ -614,9 +614,9 @@
 -version = "0.19.2"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "e8f2ee0cc6c14ebd3b91aa7d4576b45dc87945e905a53343ef50e2509e928c94"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "0d3dbceaedddb417f56d79d3261d73dc402f443b28889e73bba3917a83f8ec60"
++checksum = "13c20b908caf1794a32306756e7a5a38a5a9c586efdec6d0a6bcbe6eb0782ad9"
  dependencies = [
   "cee-scape",
   "libc",
@@ -629,9 +629,9 @@
 -checksum = "48447cd6f7e60929d14ca24d3507c357d16a531dff896f9be921b59c03022759"
 -dependencies = [
 - "convert_case",
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "b6260a2e9163c79cdcf9d002da74fa0dbff6e43e187e0a2385d3effe040db0bf"
++checksum = "72c5a236d90b23b2c37cbdfd4a11eef10d43e740470e350e8d324207f9f6c93e"
 +dependencies = [
   "eyre",
 - "petgraph",
@@ -876,29 +876,11 @@
  name = "yoke"
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -14,12 +14,13 @@
- [features]
- default = ["pg18"]
- pg18 = []
-+pg19 = []
- 
- [dependencies]
- jsonwebtoken = { version = "10.0.0", features = ["rust_crypto"] }
- reqwest = { version = "0.12.23", features = ["blocking", "json"] }
- serde = "1.0.228"
--pgrx = { version = "=0.19.2", features = ["pg18"]}
-+pgrx = { version = "=0.20.0", features = ["pg18"]}
- 
- [build-dependencies]
- bindgen = "0.72.1"
---- a/Cargo.toml
-+++ b/Cargo.toml
-@@ -13,14 +13,14 @@
+@@ -13,13 +13,14 @@
  
  [features]
  default = ["pg18"]
 -pg18 = []
--pg19 = []
 +pg18 = ["pgrx/pg18"]
 +pg19 = ["pgrx/pg19"]
  
@@ -906,8 +888,8 @@
  jsonwebtoken = { version = "10.0.0", features = ["rust_crypto"] }
  reqwest = { version = "0.12.23", features = ["blocking", "json"] }
  serde = "1.0.228"
--pgrx = { version = "=0.20.0", features = ["pg18"]}
-+pgrx = "=0.20.0"
+-pgrx = { version = "=0.19.2", features = ["pg18"]}
++pgrx = "=0.20.1"
  
  [build-dependencies]
  bindgen = "0.72.1"
