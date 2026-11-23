@@ -19,7 +19,8 @@ setup:
 	@echo "pgext env tool"
 	@echo "pgext env spec"
 	@echo "pgext env rust"
-	@echo "pgext env pgrx"
+	@echo "rustup toolchain install 1.100.0"
+	@echo "RUSTUP_TOOLCHAIN=1.100.0 pgext env pgrx -v 0.20.1"
 	@echo "pgext pkg <name...> --pg 19"
 
 ivorysql-contrib:

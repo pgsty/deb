@@ -36,7 +36,7 @@ pig build rust
 export PATH="$HOME/.cargo/bin:$PATH"
 rustup toolchain install 1.100.0
 export RUSTUP_TOOLCHAIN=1.100.0
-pig build pgrx -v 0.20.0
+pig build pgrx -v 0.20.1
 
 # then build packages
 pig build pkg timescaledb
