@@ -1,6 +1,7 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 TARBALL := edtf_postgres-1.3.5.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/edtf-postgres-1.3.5-pgrx-0.20.0.patch
+SOURCE_PATCH := patches/edtf-postgres-1.3.5-pgrx-0.20.1.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS ?= 15 16 17 18 19
