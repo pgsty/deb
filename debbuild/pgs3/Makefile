@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -48,7 +49,10 @@ building: setup check-pgrx
 	cd $(BUILD_DIR) && sha256sum --check $(LOCK_SNAPSHOT)
 
 check-pgrx:
-	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
+	@export PATH="$$HOME/.cargo/bin:$$PATH"; \
+	RUST_VERSION=$$(rustc --version | awk '{print $$2}'); \
+	dpkg --compare-versions "$$RUST_VERSION" ge 1.99.1 || { echo "pgrx $(PGRX_VERSION) requires rustc >= 1.99.1 (found $$RUST_VERSION)" >&2; exit 1; }; \
+	CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
 	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
 		echo "cargo-pgrx $(PGRX_VERSION) is required; run pig build pgrx -v $(PGRX_VERSION) before building" >&2; \
 		exit 1; \
@@ -56,8 +60,7 @@ check-pgrx:
 
 packaging: building
 	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" pg_buildext updatecontrol
-	# Builder images provide Rust/Clang toolchains outside dpkg, so skip strict Build-Depends checks here.
-	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
+	cd $(BUILD_DIR) && PG_SUPPORTED_VERSIONS="$(PG_VERSIONS)" PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc
 
 move: build
 	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
