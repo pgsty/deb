@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -8,21 +9,24 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all optimize=-lto
 include /usr/share/dpkg/buildflags.mk
 
 all: setup build move
+.NOTPARALLEL:
 
-# GitHub tag archive: https://github.com/pgsty/vchord/archive/refs/tags/1.3.0.tar.gz
-# Tag commit: 1b35b7a0bc9a71bc82aa4c3396c5545da062d050
-# Source SHA256: 097cf21776d6bce4c62c85193e8627d9422d3af9a25e871dc809315fc0310cf4
+# GitHub tag archive: https://github.com/pgsty/vchord/archive/refs/tags/1.4.0.tar.gz
+# Tag commit: 59386918f5aa0f1cbd6edb66a4d59e7dcc4b028b
+# Source SHA256: 8018e0c17e856e03db9a15543123bf045da53a6fb04c6e56484c084f2273f9c9
 # No downstream patch is applied.
-TARBALL := vchord-1.3.0.tar.gz
+TARBALL := vchord-1.4.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SEMVER := $(shell echo $(TARBALL) | sed -E 's/^vchord-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PGRX_VERSION := 0.19.3
-PG_VERSIONS ?= 18
+PGRX_VERSION := 0.20.1
+PG_VERSIONS ?= $(shell cat debian/pgversions)
+export PGRX_HOME ?= $(abspath $(BUILD_DIR)/.pgrx)
+export CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SNAPSHOT := /tmp/pgrx0193-vchord-cargo-locks.before
+LOCK_SHA256 := f4451474b3e10c1a608a3d41bda21a68056700f3703ca21fa0fb9e7039bcc314
 LIBCLANG_PATH ?= $(lastword $(sort $(wildcard /usr/lib/llvm-*/lib)))
 export LIBCLANG_PATH
 
@@ -47,8 +51,7 @@ check-pgrx:
 build: check-pgrx building packaging
 building:
 	cd $(BUILD_DIR) && cargo pgrx init $(PGRX_INIT_ARGS) --no-run
-	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT)
-	@test -s $(LOCK_SNAPSHOT)
+	cd $(BUILD_DIR) && echo '$(LOCK_SHA256)  Cargo.lock' | sha256sum -c -
 	cd $(BUILD_DIR) && CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
 	set -e; cd $(BUILD_DIR) && \
 	CC_BIN=$$(for candidate in clang-21 clang-20 clang-19 clang-18 clang-17 clang-16 clang; do if command -v "$$candidate" >/dev/null 2>&1; then command -v "$$candidate"; break; fi; done) && \
@@ -65,16 +68,14 @@ building:
 	    CC=$$CC_BIN CXX=$$CXX_BIN RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections" \
 	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
 	    cargo pgrx package -v --no-default-features --features "pg$$PG_VERSION,simd/init" --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
-	    EXT_DIR=target/release/vchord-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
+	    EXT_DIR=$(CARGO_TARGET_DIR)/release/vchord-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
 	    cp -f sql/upgrade/vchord--*.sql $$EXT_DIR/; \
 	    cp -f sql/install/vchord--$(SEMVER).sql $$EXT_DIR/vchord--$(SEMVER).sql; \
 	    grep -q "default_version = '$(SEMVER)'" $$EXT_DIR/vchord.control; \
 	    test $$(ls -1 $$EXT_DIR/vchord--*.sql | wc -l) -gt 1; \
 	    test -f $$EXT_DIR/vchord--$(SEMVER).sql; \
 	done
-	cd $(BUILD_DIR) && find . -type d -name target -prune -o -type f -name Cargo.lock -print | LC_ALL=C sort | while IFS= read -r lock; do sha256sum "$$lock"; done > $(LOCK_SNAPSHOT).after
-	cmp $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
-	rm -f $(LOCK_SNAPSHOT) $(LOCK_SNAPSHOT).after
+	cd $(BUILD_DIR) && echo '$(LOCK_SHA256)  Cargo.lock' | sha256sum -c -
 
 packaging:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol

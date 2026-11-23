@@ -12,7 +12,7 @@ Homepage: https://vchord.pgsty.com/
 Package: postgresql-PGVERSION-vchord
 Architecture: any
 Provides: postgresql-vchord
-Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgvector
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}, postgresql-PGVERSION-pgvector (>= 0.8.0)
 Description: Scalable vector search in PostgreSQL
  VectorChord provides scalable, disk-efficient vector similarity search
  and is the successor to pgvecto.rs. This package uses the PGSTY fork.
