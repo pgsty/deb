@@ -1,8 +1,8 @@
 kafgres (0.3.3-1PGSTY) unstable; urgency=medium
 
-  * Update to 0.3.3 and build for PostgreSQL 15 through 18 with pgrx 0.20.0.
+  * Update to 0.3.3 and build for PostgreSQL 15 through 18 with pgrx 0.20.1.
 
- -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+ -- Ruohang Feng <rh@vonng.com>  Mon, 23 Nov 2026 00:00:00 +0800
 
 kafgres (0.3.2-1PGSTY) unstable; urgency=medium
 
