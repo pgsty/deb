@@ -11,6 +11,8 @@ PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
 %:
 	dh $@
 
+override_dh_dwz:
+
 override_dh_auto_build:
 	# Disable the build step since binaries are pre-built
 
