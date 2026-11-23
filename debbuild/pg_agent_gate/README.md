@@ -1,20 +1,18 @@
-# pg_agent_gate 0.4.1
+# pg_agent_gate 0.4.3
 
-- 上游：<https://github.com/Manuelreyesbravo/pg_agent_gate>，tag `v0.4.1`。
-- 源码归档：`pg_agent_gate-0.4.1.tar.gz`。
-- SHA-256：`fae0bff41e71f5f6462745477800c334a7cbf043953aaf862de81dd42076ec36`。
-- 本配方仅支持 PG18，RPM 与 DEB 使用相同源码和补丁。
+上游标签为 `v0.4.3`，源码归档为 `pg_agent_gate-0.4.3.tar.gz`，
+SHA-256 为 `b5133bbf7094c3887791b43fa6e916f2a335c70f585c05b709f7a85b0dd4aef6`。
+RPM 与 DEB 使用相同源码和补丁。[上游项目](https://github.com/Manuelreyesbravo/pg_agent_gate)
 
-上游固定 pgrx 0.19.2，且没有 Cargo.lock。打包补丁将其对齐 builder 的
-0.19.3，并提供固定 Cargo.lock；先 locked fetch，再离线打包并核对
-lockfile 没有变化。构建显式指定 `--no-default-features --features pg18`，
-不启用上游默认的 pg19。保留 Rust release DWARF 与自动 dbgsym。
+配方使用 Rust 1.100.0 和 cargo-pgrx 0.20.1，支持 PG18 和 PG19。
+构建按主版本选择 Cargo feature，使用锁定依赖离线打包，校验
+Cargo.lock，保留 release DWARF 并生成 dbgsym。
 
 在 Linux builder 中先 `pig build get pg_agent_gate`。目录尚未更新时，
 只将缺失的上述归档放入 builder 的 `~/ext/src/`，再执行：
 
 ```sh
-pig build pgrx -v 0.19.3 --pg 18
+pig build pgrx -v 0.20.1 --pg 18
 cd ~/debbuild/pg_agent_gate
 make PG_VERSIONS=18
 ```
