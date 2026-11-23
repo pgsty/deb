@@ -10,6 +10,8 @@ CARGO_TARGET_DIR ?= $(CURDIR)/target
 %:
 	dh $@
 
+override_dh_dwz:
+
 override_dh_auto_build:
 	# Disable the build step since binaries are pre-built
 
