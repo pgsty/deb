@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 # Keep all FDWs and full DWARF without the memory cost of monolithic fat LTO.
@@ -15,14 +16,14 @@ all: setup build move
 
 .NOTPARALLEL:
 
-# Official upstream source is patched to use pgrx 0.20.0.
+# Official upstream source is patched to use pgrx 0.20.1.
 TARBALL := wrappers-0.6.4.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-SOURCE_PATCH := patches/wrappers-0.6.4-pgrx-0.20.0.patch
+SOURCE_PATCH := patches/wrappers-0.6.4-pgrx-0.20.1.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 CRATE_DIR := wrappers
 
 check-src:
@@ -48,8 +49,8 @@ building: check-pgrx
 	PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx init \
 	    $(foreach major,$(PG_VERSIONS),--pg$(major)=/usr/lib/postgresql/$(major)/bin/pg_config) \
 	    --no-run
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.before
-	@test -s $(BUILD_DIR)/.pgrx0200-cargo-locks.before
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0201-cargo-locks.before
+	@test -s $(BUILD_DIR)/.pgrx0201-cargo-locks.before
 	cd $(BUILD_DIR)/$(CRATE_DIR) && PATH="$$HOME/.cargo/bin:$$PATH" cargo fetch --locked
 	set -e; cd $(BUILD_DIR)/$(CRATE_DIR) && \
 	export RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections"; \
@@ -57,8 +58,8 @@ building: check-pgrx
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
 	    CARGO_NET_OFFLINE=true cargo pgrx package -v --no-default-features --features pg$$PG_VERSION,all_fdws --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
 	done
-	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0200-cargo-locks.after
-	cmp $(BUILD_DIR)/.pgrx0200-cargo-locks.before $(BUILD_DIR)/.pgrx0200-cargo-locks.after
+	cd $(BUILD_DIR) && find . -path '*/target' -prune -o -name Cargo.lock -type f -print0 | sort -z | xargs -0 -r sha256sum > .pgrx0201-cargo-locks.after
+	cmp $(BUILD_DIR)/.pgrx0201-cargo-locks.before $(BUILD_DIR)/.pgrx0201-cargo-locks.after
 
 check-pgrx:
 	@CURRENT=$$(PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
