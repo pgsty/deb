@@ -2,7 +2,7 @@ Source: pg-warren
 Section: database
 Priority: optional
 Maintainer: Ruohang Feng <rh@vonng.com>
-# Rust 1.100.0 and cargo-pgrx 0.20.0 are supplied by the builder's rustup.
+# Rust 1.100.0 and cargo-pgrx 0.20.1 are supplied by the builder's rustup.
 # bindgen loads libclang; builder images carry versioned LLVM 15, 19 or 21.
 Build-Depends: debhelper-compat (= 13), postgresql-server-dev-all (>= 217~), clang | clang-21 | clang-19 | clang-15, libclang-dev | libclang1-21 | libclang1-19 | libclang1-15, libicu-dev, pkg-config
 Standards-Version: 4.7.0

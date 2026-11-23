@@ -11,7 +11,7 @@ export RUSTFLAGS := $(RUSTFLAGS) -C link-arg=-Wl,--no-gc-sections
 	dh $@
 
 override_dh_auto_configure:
-	test "$$(cargo pgrx --version | awk '{print $$2}')" = 0.20.0
+	test "$$(cargo pgrx --version | awk '{print $$2}')" = 0.20.1
 	sha256sum Cargo.lock > .cargo-lock.before
 	cargo fetch --locked
 
