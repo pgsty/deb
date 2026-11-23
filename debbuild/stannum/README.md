@@ -1,15 +1,15 @@
 # stannum 打包说明
 
 本 recipe 打包上游尚未正式发布的 0.1.0 开发源码，固定提交记录在 changelog 正文。
-RPM 版本为 `0.1.0-1PGSTY`，DEB 版本为 `0.1.0-1PGSTY~<codename>`，
+RPM 版本为 `0.1.0-2PGSTY`，DEB 版本为 `0.1.0-2PGSTY~<codename>`，
 PostgreSQL 扩展版本为 `0.1.0`。包版本不附加提交日期或 hash。
 
 - 上游：[TeamSpringbird/stannum](https://github.com/TeamSpringbird/stannum)。
-- 源码：`stannum-0.1.0.tar.gz`，直接使用固定提交的官方 tar.gz，无 repack、无源码补丁。
+- 源码使用固定提交的官方 `stannum-0.1.0.tar.gz`，解包后应用两仓共用的 pgrx 0.20.1 补丁。
 - SHA-256：`9e113b4b6028f2ad748cbd8b97ee2592275a102c1ed79c9e0219061fa0772f9d`。
 - License：AGPL-3.0-or-later。
 - PostgreSQL：17、18；默认构建两个版本，可用 `make PG_VERSIONS=17` 选择一个版本。
-- 工具链：上游 `rust-toolchain.toml` 固定 Rust 1.96.0，cargo-pgrx/pgrx 固定 0.19.1。
+- 构建使用 Rust 1.100.0 和 cargo-pgrx 0.20.1。PG19 需要进一步适配规划器 hook、PathKey 和 WAL 页头。
 
 源码归档保存在 `~/pgsty/repo/ext/src/`；builder 通过
 `~/debbuild/SOURCES -> ~/ext/src` 使用该文件。先在 builder 运行
@@ -18,8 +18,8 @@ builder 的 `~/ext/src/`，不批量同步源码目录。
 
 ```bash
 # In the Ubuntu/Debian builder, after installing control.in Build-Depends:
-rustup toolchain install 1.96.0 --profile minimal
-cargo +1.96.0 install cargo-pgrx --version 0.19.1 --locked
+rustup toolchain install 1.100.0 --profile minimal --component rustfmt
+cargo +1.100.0 install cargo-pgrx --version 0.20.1 --locked
 cd ~/debbuild/stannum
 make
 ```
