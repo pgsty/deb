@@ -677,9 +677,9 @@
 -version = "0.19.1"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "da2d9afc1c8dc8885d777a173755dedd6c0345bfa84fae307a735511bd96b9cc"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "37147008ecfda0aedd64a924afed86ce6bca805bc2c103c8097583b530ab9505"
++checksum = "7a5eeb31982060535c8db4728ae2ee22cad62c07431a5cb5659be36b465ee488"
  dependencies = [
   "bitflags",
 - "bitvec",
@@ -699,9 +699,9 @@
 -version = "0.19.1"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "b42d171ae578765094d8597ef04f593f4de7b8694c78a64e23bd69d304251504"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "f451dab19ad85a36a6f7a1da385846aca2262c84c36d4e705b2aebd52cd6f0f0"
++checksum = "f478cd6ba4eb717b861db04d8eb135f41ed6b4772c987c0c8784df0aadaf6961"
  dependencies = [
   "bindgen",
 - "cc",
@@ -721,9 +721,9 @@
 +
 +[[package]]
 +name = "pgrx-c-macros"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "202a94c98efda3d8a7c920a3a7dfbd8bc1ac8d416b7b79646c2710e3a682f553"
++checksum = "c38ac789f798b2f770dffbcbb530057adc4f28e1edd639dcaf22e1e72da1a27a"
 +dependencies = [
 + "clang",
   "clang-sys",
@@ -749,9 +749,9 @@
 -version = "0.19.1"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "7039b2a78ed764daced91b20907841ffe4a9b3d0f795ea7e9d37973d1e1509ec"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "2349537da01f5e58ed79975cb2a38b20d6d82967243dcf7bc0ef5c12035c7b83"
++checksum = "ed96a72dae6d00413757dec35ad97d91732e851d45f9bb88186aac95c48292d5"
  dependencies = [
   "pgrx-sql-entity-graph",
   "proc-macro2",
@@ -764,9 +764,9 @@
 -checksum = "7ed293ffce438bacdff7e00b76c6a891083a8bbf3670bcfdb6f8125498284816"
 -dependencies = [
 - "cargo_toml",
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "ea50fe9e10100f83192e0a4d268daf13bf3bceece31b3afca3bcf844f72d51c5"
++checksum = "7b203569e020020019631f260e6087a226fca84e11eed852a55e0842e12bdc59"
 +dependencies = [
   "codepage",
   "encoding_rs",
@@ -787,9 +787,9 @@
 -version = "0.19.1"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "8b0e16aa08b282f278414081a1c082755def583b4ecfba53114f62e42f8bd06a"
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "0d3dbceaedddb417f56d79d3261d73dc402f443b28889e73bba3917a83f8ec60"
++checksum = "13c20b908caf1794a32306756e7a5a38a5a9c586efdec6d0a6bcbe6eb0782ad9"
  dependencies = [
   "cee-scape",
   "libc",
@@ -802,9 +802,9 @@
 -checksum = "c92b0093b2077b9854f35d5d54d4e281dcb9b4e6a10a5a1fed310e58ab84b1e7"
 -dependencies = [
 - "convert_case",
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "b6260a2e9163c79cdcf9d002da74fa0dbff6e43e187e0a2385d3effe040db0bf"
++checksum = "72c5a236d90b23b2c37cbdfd4a11eef10d43e740470e350e8d324207f9f6c93e"
 +dependencies = [
   "eyre",
 - "petgraph",
@@ -822,9 +822,9 @@
 -checksum = "6d39ff1aef126fe3e10c193aa358009476beaf35b9ae80c8ed86334e9a6c40c6"
 -dependencies = [
 - "clap-cargo",
-+version = "0.20.0"
++version = "0.20.1"
 +source = "registry+https://github.com/rust-lang/crates.io-index"
-+checksum = "84b427923bb10d0cd655bf866afb47f77a70bc3cef8c925be593b7f370875eae"
++checksum = "874dcd6a0c87bc41cf9756b4137b62618a4f1756077c5c362cf2159fed559887"
 +dependencies = [
   "eyre",
   "libc",
@@ -1381,7 +1381,7 @@
  
  [dependencies]
 -pgrx = "=0.19.1"
-+pgrx = "=0.20.0"
++pgrx = "=0.20.1"
  serde = { version = "1", features = ["derive"] }
  serde_json = { version = "1", optional = true }
  rustc-hash.workspace = true
@@ -1390,7 +1390,7 @@
  
  [dev-dependencies]
 -pgrx-tests = "=0.19.1"
-+pgrx-tests = "=0.20.0"
++pgrx-tests = "=0.20.1"
  postgres = "0.19"
 --- a/postgres/src/am.rs
 +++ b/postgres/src/am.rs

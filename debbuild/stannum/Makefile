@@ -22,7 +22,7 @@ setup: check-src
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/stannum-0.1.0-pgrx-0.20.0.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/stannum-0.1.0-pgrx-0.20.1.patch
 
 build: setup
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
