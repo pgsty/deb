@@ -1,21 +1,17 @@
 # pg_graphql 1.6.3
 
-Build PostgreSQL 14 through 18 from the official `pg_graphql-1.6.3.tar.gz`
+Build PostgreSQL 15 through 19 from the official `pg_graphql-1.6.3.tar.gz`
 archive (SHA-256
 `0d35a8d14630d29914c1338ae6fb1e2eb9300d0409fec399e55c69860c7f7cf4`).
 This release fixes quoting of primary-key column names in generated nodeId SQL.
 
-The shared RPM/DEB patch pins the seven pgrx crates to 0.19.3 and declares
-Rust 1.96 as the minimum supported compiler. The builders use Rust 1.99.0
-and cargo-pgrx 0.19.3; the recipe checks their versions explicitly.
-Build dependencies include libicu-dev because PostgreSQL server headers
-used by bindgen include ICU headers. The
-patched Cargo.lock SHA-256 is
-`75cd535ec2785e673fc2f2ff2cb40b452356ca541397ceba489287498f12e0d5`.
-Other package versions remain unchanged; Cargo also resolves the existing
-rustix and tempfile Windows dependency edges to windows-sys 0.61.2.
-Builds fetch with `--locked`, compile offline, and verify the lock remains
-unchanged. No PG19 feature or extension SQL is added by the patch.
+The builders use Rust 1.100.0 and cargo-pgrx 0.20.1. Both recipes apply the
+0.19.3 compatibility patch first, followed by the pgrx 0.20.1 patch.
+PostgreSQL server headers used by bindgen require `libicu-dev`. The final
+Cargo.lock has SHA-256
+`ffc1d8ffac0daa0ae82097c439cdc735705aa201148593ee37bf7028c0c0f0ac`.
+The recipe fetches with `--locked`, compiles offline and verifies the lock
+after packaging.
 
 Upstream 1.6.3 ships no extension upgrade SQL scripts. Packages contain the
 pgrx-generated `pg_graphql--1.6.3.sql` base script and the upstream control
