@@ -1,8 +1,8 @@
 Subject: Build with packaged MongoDB and JSON libraries
 
 Use pkg-config for the system libraries and omit bundled json-c objects.
-Before mongo-c-driver 1.30, map the renamed legacy JSON entry points and
-remove flag to their original names. Preserve legacy Extended JSON output.
+Preserve legacy Extended JSON output with libbson versions before 1.30.
+Use the single-document remove flag supplied by the installed libmongoc.
 
 diff -urN orig/Makefile mod/Makefile
 --- a/Makefile	2025-09-30 13:28:33.000000000 +0800
@@ -39,7 +39,7 @@ diff -urN orig/Makefile mod/Makefile
 +#define bson_as_legacy_extended_json bson_as_json
 +#endif
 +
-+#if !MONGOC_CHECK_VERSION(1, 30, 0)
++#if !MONGOC_CHECK_VERSION(1, 30, 0) || MONGOC_CHECK_VERSION(2, 0, 0)
 +#define MONGOC_DELETE_SINGLE_REMOVE MONGOC_REMOVE_SINGLE_REMOVE
 +#endif
  
