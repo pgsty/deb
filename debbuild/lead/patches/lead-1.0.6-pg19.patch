@@ -1,0 +1,58 @@
+--- a/postgres/src/array_analysis.rs
++++ b/postgres/src/array_analysis.rs
+@@ -31,7 +31,12 @@
+ use std::collections::HashSet;
+ use std::ffi::{CStr, c_void};
+ 
+-static mut PREVIOUS_HOOK: pg_sys::get_relation_info_hook_type = None;
++#[cfg(not(feature = "pg19"))]
++use pg_sys::{get_relation_info_hook as relation_hook, get_relation_info_hook_type as RelationHook};
++#[cfg(feature = "pg19")]
++use pg_sys::{build_simple_rel_hook as relation_hook, build_simple_rel_hook_type as RelationHook};
++
++static mut PREVIOUS_HOOK: RelationHook = None;
+ 
+ thread_local! {
+     static PROCESSED: RefCell<HashSet<usize>> = RefCell::new(HashSet::new());
+@@ -49,11 +54,12 @@
+ 
+ pub(crate) fn init() {
+     unsafe {
+-        PREVIOUS_HOOK = pg_sys::get_relation_info_hook;
+-        pg_sys::get_relation_info_hook = Some(relation_info_hook);
+-    }
+-}
+-
++        PREVIOUS_HOOK = relation_hook;
++        relation_hook = Some(relation_info_hook);
++    }
++}
++
++#[cfg(not(feature = "pg19"))]
+ #[pg_guard]
+ unsafe extern "C-unwind" fn relation_info_hook(
+     root: *mut pg_sys::PlannerInfo,
+@@ -66,6 +72,23 @@
+             previous(root, relation_oid, inhparent, rel);
+         }
+         bind_arrays(root);
++    }
++}
++
++#[cfg(feature = "pg19")]
++#[pg_guard]
++unsafe extern "C-unwind" fn relation_info_hook(
++    root: *mut pg_sys::PlannerInfo,
++    rel: *mut pg_sys::RelOptInfo,
++    rte: *mut pg_sys::RangeTblEntry,
++) {
++    unsafe {
++        if let Some(previous) = PREVIOUS_HOOK {
++            previous(root, rel, rte);
++        }
++        if (*rte).rtekind == pg_sys::RTEKind::RTE_RELATION {
++            bind_arrays(root);
++        }
+     }
+ }
+ 

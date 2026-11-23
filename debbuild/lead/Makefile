@@ -9,7 +9,7 @@ TARBALL := lead-1.0.6.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PG_VERSIONS ?= 17 18
+PG_VERSIONS ?= 17 18 19
 PGRX_VERSION := 0.20.1
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 
@@ -17,7 +17,7 @@ all: setup build move
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
-	@for v in $(PG_VERSIONS); do case "$$v" in 17|18) ;; *) echo "lead supports PostgreSQL 17 and 18"; exit 1;; esac; done
+	@for v in $(PG_VERSIONS); do case "$$v" in 17|18|19) ;; *) echo "lead supports PostgreSQL 17 through 19"; exit 1;; esac; done
 
 setup: check-src
 	rm -rf $(BUILD_DIR)
@@ -28,6 +28,7 @@ setup: check-src
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release && echo $${VERSION_CODENAME})); \
 	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/lead-1.0.6-pgrx-0.20.1.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/lead-1.0.6-pg19.patch
 
 build: building packaging
 
