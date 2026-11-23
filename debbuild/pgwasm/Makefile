@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -13,7 +14,7 @@ FIX_PATCH := patches/pgwasm-0.1.0-runtime-defaults-fix.patch
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS := 15 16 17 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 CRATE_DIR := .
 
 check-src:
@@ -30,7 +31,7 @@ setup: check-src
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (. /etc/os-release && echo $${VERSION_CODENAME:-unknown})); \
 	perl -0pi -e "s/PGSTY\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pgwasm-0.1.0-pgrx-0.20.0.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pgwasm-0.1.0-pgrx-0.20.1.patch
 
 build: building packaging
 

@@ -1,8 +1,8 @@
 pgwasm (0.1.0-2PGSTY) unstable; urgency=medium
 
-  * Rebuild for PostgreSQL 15 through 19 with pgrx 0.20.0.
+  * Rebuild for PostgreSQL 15 through 19 with pgrx 0.20.1.
 
- -- Ruohang Feng <rh@vonng.com>  Sun, 22 Nov 2026 00:00:00 +0800
+ -- Ruohang Feng <rh@vonng.com>  Mon, 23 Nov 2026 00:00:00 +0800
 
 pgwasm (0.1.0-1PGSTY) unstable; urgency=medium
 
