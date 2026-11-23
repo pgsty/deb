@@ -1,7 +1,8 @@
 # pg_kv packaging
 
-This recipe packages the upstream 0.1.0 release for PostgreSQL 15–18 with
-cargo-pgrx 0.19.3. It uses the same unmodified source archive as the RPM spec.
+This recipe packages the upstream 0.1.0 release for PostgreSQL 15–19 with
+Rust 1.100.0 and cargo-pgrx 0.20.1. The DEB recipe and RPM spec use the
+same official archive and pgrx compatibility patch.
 
 - Upstream: <https://github.com/Murat7Ay/pg_kv/releases/tag/v0.1.0>
 - Tag commit: `bf45bbfd6f29782701a4e6c9bf9c672a0c02bc8f`
