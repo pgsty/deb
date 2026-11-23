@@ -19,7 +19,10 @@ setup: check-src
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$( (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) ); \
-	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
+	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog && \
+	if [ "$${OS_CODENAME}" = jammy ]; then \
+		patch --fuzz=0 -d $(BUILD_DIR) -p1 < patches/pg-oidc-validator-1.1.0-jammy.patch; \
+	fi
 
 build: setup
 	cd $(BUILD_DIR) && pg_buildext updatecontrol

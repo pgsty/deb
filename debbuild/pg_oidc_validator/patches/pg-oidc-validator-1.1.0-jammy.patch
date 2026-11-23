@@ -1,0 +1,42 @@
+--- a/Makefile
++++ b/Makefile
+@@ -6,7 +6,7 @@
+ 	src/http_client.o \
+ 	src/jwk.o
+ 
+-PG_CPPFLAGS = -Ijwt-cpp/include -std=c++23
++PG_CPPFLAGS = -Ijwt-cpp/include -std=c++2b
+ 
+ USE_PGXS ?= 0
+ 
+@@ -36,4 +36,4 @@
+ 	$(CXX) -o $@ $< -L$(libdir) -lpq
+ 
+ src/oauth_conn_test.o: src/oauth_conn_test.cpp
+-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -I$(includedir) -std=c++23 -c -o $@ $<
++	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -I$(includedir) -std=c++2b -c -o $@ $<
+--- a/src/jwk.cpp
++++ b/src/jwk.cpp
+@@ -1,7 +1,6 @@
+ #include "jwk.hpp"
+ 
+ #include <iterator>
+-#include <ranges>
+ #include <regex>
+ #include <sstream>
+ 
+@@ -198,9 +197,11 @@
+ 
+ scopes_t parse_jwt_scopes(const picojson::value& jsonScopes) {
+   if (jsonScopes.is<picojson::array>()) {
+-    const auto scope_range =
+-        jsonScopes.get<picojson::array>() | std::ranges::views::transform(&picojson::value::to_str);
+-    return {scope_range.begin(), scope_range.end()};
++    scopes_t scopes;
++    for (const auto& scope : jsonScopes.get<picojson::array>()) {
++      scopes.insert(scope.to_str());
++    }
++    return scopes;
+   }
+   if (jsonScopes.is<std::string>()) {
+     std::istringstream iss(jsonScopes.get<std::string>());
