@@ -1,3 +1,4 @@
+export RUSTUP_TOOLCHAIN ?= 1.100.0
 CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
@@ -9,7 +10,7 @@ SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 PG_VERSIONS ?= 18 19
-PGRX_VERSION := 0.20.0
+PGRX_VERSION := 0.20.1
 
 all: move
 
@@ -20,7 +21,7 @@ setup: check-src
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < ../patches/pg-agent-gate-0.4.3-pgrx-0.20.0.patch
+	cd $(BUILD_DIR) && patch --batch --fuzz=0 -p1 < ../patches/pg-agent-gate-0.4.3-pgrx-0.20.1.patch
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog

@@ -90,7 +90,7 @@ pg_jsonschema:
 pg_improv:		# rust pgrx 0.20.0
 	cd pg_improv && make
 
-pg_agent_gate:           # rust pgrx 0.20.0, PostgreSQL 18 and 19
+pg_agent_gate:           # rust pgrx 0.20.1, PostgreSQL 18 and 19
 	$(MAKE) -C pg_agent_gate
 
 pg_integrity_checksums:  # SQL extension, unrelated to the pg_checksums utility
