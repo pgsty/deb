@@ -1,8 +1,8 @@
 # pg_improv packaging
 
-This recipe and the RPM spec use upstream **0.14.0**, which natively uses
-pgrx **0.19.3**. The previous pgrx compatibility patch is no longer applied;
-the upstream extension workspace and lockfile are used without modification.
+This recipe and the RPM spec use upstream **0.14.0** with the shared
+`pg-improv-0.14.0-pgrx-0.20.1.patch`. The patch updates the extension
+workspace and lockfile for pgrx 0.20.1 and adds support for PG19.
 
 - Upstream: <https://codeberg.org/gregburd/improv>
 - Release: <https://codeberg.org/gregburd/improv/src/tag/v0.14.0>
@@ -10,8 +10,8 @@ the upstream extension workspace and lockfile are used without modification.
 - Archive: `improv-0.14.0.tar.gz`, root `improv/`
 - SHA-256: `a54ba0d206f482122cacfe31fdf36a975634a81be39cf496ee59e27ff8e452c1`
 - License: Apache-2.0 OR MIT
-- PostgreSQL feature range: 15–18
-- Required toolchain: Rust 1.97 or newer, cargo-pgrx **0.19.3**, libclang
+- The PostgreSQL build range is 15–19.
+- The builders use Rust 1.100.0, cargo-pgrx 0.20.1 and libclang.
 
 The extension is a standalone Cargo workspace in `crates/pg_improv/`, with
 its own lockfile and sibling path dependencies. Building the root workspace
@@ -28,7 +28,7 @@ directory (`~/rpmbuild/SOURCES/` on RPM; `~/ext/src/` linked by
 `~/debbuild/SOURCES` on DEB). Prepare the matching toolchain:
 
 ```sh
-pig build pgrx -v 0.19.3 --pg 18
+pig build pgrx -v 0.20.1 --pg 18
 # RPM
 cd ~/rpmbuild
 ./dep pg_improv 18
@@ -38,7 +38,7 @@ cd ~/debbuild/pg_improv
 make PG_VERSIONS=18
 ```
 
-`make` defaults to PG15–18 on DEB; the RPM shortcut selects the same range.
+`make` on DEB and the RPM shortcut both default to PG15–19.
 The package installs the generated base SQL and every migration script
 shipped by upstream. No migration or product behavior is added by packaging.
 
