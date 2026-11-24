@@ -2,7 +2,7 @@ pgedge-@PG_MAJOR@ (@PG_VERSION@-@PKG_REV@) unstable; urgency=medium
 
   * Update the PostgreSQL cores and bundle Spock 5.0.14 and Snowflake 2.6.1.
   * Rebase the PG15 attribute options patch and enable LLVM JIT.
-  * Keep Noble debug information independent of a shared DWZ file.
+  * Keep Noble and Resolute debug information independent of a shared DWZ file.
 
  -- Ruohang Feng <rh@vonng.com>  Mon, 23 Nov 2026 22:00:00 +0800
 
