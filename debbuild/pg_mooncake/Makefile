@@ -8,7 +8,7 @@ include /usr/share/dpkg/buildflags.mk
 .NOTPARALLEL:
 all: setup build move
 
-TARBALL := pg_mooncake-0.3.3-source.tar.gz
+TARBALL := pg_mooncake-0.3.4-source.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -38,8 +38,8 @@ setup: check-src
 	rm -rf $(BUILD_DIR)
 	mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg_mooncake-0.3.3-pgrx-0.20.1.patch
-	cd $(BUILD_DIR) && echo '09509abae5f4ad2b9ce21cf89a17b407a2013ebf3820e0f9a258b04005d2866d  Cargo.lock' | sha256sum -c -
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg_mooncake-0.3.4-pgrx-0.20.1.patch
+	cd $(BUILD_DIR) && echo 'fdf880384b0133105be85cf14527809cb1a1b8a4ab4f7cb9d22464046a22cf23  Cargo.lock' | sha256sum -c -
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); \
