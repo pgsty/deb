@@ -1,11 +1,19 @@
 pgedge-@PG_MAJOR@ (@PG_VERSION@-@PKG_REV@) unstable; urgency=medium
 
+  * Update the PostgreSQL cores and bundle Spock 5.0.14 and Snowflake 2.6.1.
+  * Rebase the PG15 attribute options patch and enable LLVM JIT.
+  * Keep Noble debug information independent of a shared DWZ file.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 23 Nov 2026 22:00:00 +0800
+
+pgedge-@PG_MAJOR@ (@PREVIOUS_PG_VERSION@-3PGSTY) unstable; urgency=medium
+
   * Bundle Spock 5.0.13 and LOLOR 1.2.3 with the existing PostgreSQL cores.
   * Replace legacy standalone LOLOR files with the bundled extension.
 
  -- Ruohang Feng <rh@vonng.com>  Thu, 15 Oct 2026 12:00:00 +0800
 
-pgedge-@PG_MAJOR@ (@PG_VERSION@-2PGSTY) unstable; urgency=medium
+pgedge-@PG_MAJOR@ (@PREVIOUS_PG_VERSION@-2PGSTY) unstable; urgency=medium
 
   * Bundle Spock 5.0.12 and rebase its PostgreSQL 17/18 patchset.
   * Bump the revision to deliver Spock updates with unchanged core versions.

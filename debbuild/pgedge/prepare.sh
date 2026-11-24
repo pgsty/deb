@@ -11,10 +11,10 @@ read_default() {
 PG_MAJOR="${PG_MAJOR:-$(read_default PG_MAJOR)}"
 if [ -z "${PG_VERSION:-}" ]; then
   case "${PG_MAJOR}" in
-    18) PG_VERSION="18.6" ;;
-    17) PG_VERSION="17.11" ;;
-    16) PG_VERSION="16.15" ;;
-    15) PG_VERSION="15.19" ;;
+    18) PG_VERSION="18.7" ;;
+    17) PG_VERSION="17.12" ;;
+    16) PG_VERSION="16.16" ;;
+    15) PG_VERSION="15.20" ;;
     *) echo "unsupported PG_MAJOR=${PG_MAJOR}; expected 15, 16, 17, or 18" >&2; exit 1 ;;
   esac
 fi
