@@ -2,8 +2,11 @@ include versions.mk
 
 all: setup build move
 
+BUILD_DIR := build-$(PG_MAJOR)
+ifeq ($(PG_MAJOR),18)
 BUILD_DIR := build
-SOURCE_MANIFEST := sources.sha256
+endif
+SOURCE_MANIFEST := pgtde-$(PG_VERSION).sources.sha256
 
 check-src:
 	@test -f "$(CORE_SOURCE)" || (echo "missing $(CORE_SOURCE), run: pig build get $(CORE_TARBALL); if needed, copy only $(CORE_TARBALL) into $(SOURCE_DIR)"; exit 1)
@@ -38,14 +41,23 @@ setup: check-src
 	tar -C $(BUILD_DIR) -xf "$(SET_USER_SOURCE)"
 	mv $(BUILD_DIR)/percona-pgaudit$(PG_MAJOR)_set_user-$(SET_USER_VERSION) $(BUILD_DIR)/.set_user-src
 	tar -C $(BUILD_DIR) -xf "$(PG_STAT_MONITOR_SOURCE)"
-	mv $(BUILD_DIR)/pg_stat_monitor-$(PG_STAT_MONITOR_VERSION) $(BUILD_DIR)/.pg_stat_monitor-src
+	mv $(BUILD_DIR)/percona-pg_stat_monitor-$(PG_STAT_MONITOR_VERSION) $(BUILD_DIR)/.pg_stat_monitor-src
 	tar -C $(BUILD_DIR) -xf "$(PG_GATHER_SOURCE)"
 	mv $(BUILD_DIR)/percona-pg_gather-$(PG_GATHER_VERSION) $(BUILD_DIR)/.pg_gather-src
-	cp "$(PG_CONFIG_SOURCE)" $(BUILD_DIR)/.pgtde-pg-config
+ifeq ($(PG_MAJOR),19)
+	tar -C $(BUILD_DIR) -xf "$(SOURCE_DIR)/percona-address-standardizer19-$(POSTGIS_VERSION).tar.gz"
+	mv $(BUILD_DIR)/percona-address-standardizer19-$(POSTGIS_VERSION) $(BUILD_DIR)/.address-standardizer-src
+	tar -C $(BUILD_DIR) -xf "$(SOURCE_DIR)/percona-postgis-tiger-geocoder19-$(TIGER_VERSION).tar.gz"
+	mv $(BUILD_DIR)/percona-postgis-tiger-geocoder19-$(TIGER_VERSION) $(BUILD_DIR)/.tiger-geocoder-src
+endif
+	sed 's|^prefix=/usr/pgtde-18$$|prefix=/usr/pgtde-$(PG_MAJOR)|' "$(PG_CONFIG_SOURCE)" > $(BUILD_DIR)/.pgtde-pg-config
 	chmod 0755 $(BUILD_DIR)/.pgtde-pg-config
 	cp "$(SFCGAL_CONFIG_SOURCE)" $(BUILD_DIR)/.pgtde-sfcgal-config
 	chmod 0755 $(BUILD_DIR)/.pgtde-sfcgal-config
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
+	for suffix in .lintian-overrides -contrib.lintian-overrides; do \
+		mv "$(BUILD_DIR)/debian/pgtde-@PG_MAJOR@$$suffix" "$(BUILD_DIR)/debian/$(PACKAGE)$$suffix"; \
+	done
 	find $(BUILD_DIR)/debian -type f -exec perl -pi -e \
 		's/\@PG_MAJOR\@/$(PG_MAJOR)/g; s/\@PG_VERSION\@/$(PG_VERSION)/g; s/\@PERCONA_RELEASE\@/$(PERCONA_RELEASE)/g; s/\@PGTDE_VERSION\@/$(PGTDE_VERSION)/g; s/\@PKG_REV\@/$(PKG_REV)/g' {} +
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || true); \
@@ -65,9 +77,11 @@ move:
 	find . -maxdepth 1 -type f \( -name '$(PACKAGE)*-dbgsym_*.deb' -o -name '$(PACKAGE)*-dbgsym_*.ddeb' \) -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 clean:
-	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
+	rm -rf $(BUILD_DIR) $(PACKAGE)_*.buildinfo $(PACKAGE)_*.changes $(PACKAGE)_*.deb \
+		$(PACKAGE)-contrib_*.deb $(PACKAGE)-dbgsym_*.*deb $(PACKAGE)-contrib-dbgsym_*.*deb
 
-pgtde-18:
-	$(MAKE) PG_MAJOR=18 all
+pgtde-18 pgtde-19:
+	$(MAKE) PG_MAJOR=$(@:pgtde-%=%) all
 
-.PHONY: all check-src setup build move clean pgtde-18
+.PHONY: all check-src setup build move clean pgtde-18 pgtde-19
+.NOTPARALLEL:

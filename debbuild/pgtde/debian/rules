@@ -70,20 +70,25 @@ override_dh_auto_build:
 		ext_ldflags="-L$(PGTDE_STAGE)$(PGBASEINSTDIR)/lib -Wl,-rpath,$(PGBASEINSTDIR)/lib $(LDFLAGS)"; \
 		build_pgxs() { \
 			srcdir="$$1"; \
+			shift; \
 			MAKELEVEL=0 $(MAKE) -C "$$srcdir" -j$(NUMJOBS) \
-				USE_PGXS=1 PG_CONFIG="$$build_pg_config" \
+				USE_PGXS=1 PG_CONFIG="$$build_pg_config" "$$@" \
 				CPPFLAGS="$$ext_cppflags" LDFLAGS="$$ext_ldflags"; \
 			MAKELEVEL=0 $(MAKE) -C "$$srcdir" \
-				USE_PGXS=1 PG_CONFIG="$$build_pg_config" \
+				USE_PGXS=1 PG_CONFIG="$$build_pg_config" "$$@" \
 				CPPFLAGS="$$ext_cppflags" LDFLAGS="$$ext_ldflags" \
 				DESTDIR=$(PGTDE_CONTRIB_STAGE) install; \
 		}; \
-		build_pgxs .pgvector-src; \
+		build_pgxs .pgvector-src OPTFLAGS=; \
 		build_pgxs .wal2json-src; \
 		build_pgxs .pg_repack-src; \
 		build_pgxs .pgaudit-src; \
 		build_pgxs .set_user-src; \
-		build_pgxs .pg_stat_monitor-src
+		build_pgxs .pg_stat_monitor-src; \
+		if [ '@PG_MAJOR@' = 19 ]; then \
+			build_pgxs .address-standardizer-src; \
+			build_pgxs .tiger-geocoder-src; \
+		fi
 	cd .postgis-src && ./autogen.sh
 	cd .postgis-src && \
 		CPPFLAGS="-I$(PGTDE_STAGE)$(PGBASEINSTDIR)/include/server -I$(PGTDE_STAGE)$(PGBASEINSTDIR)/include" \
@@ -119,6 +124,7 @@ override_dh_auto_install:
 	mkdir -p debian/pgtde-@PG_MAJOR@ debian/pgtde-@PG_MAJOR@-contrib
 	cp -a $(PGTDE_STAGE)/usr debian/pgtde-@PG_MAJOR@/
 	cp -a $(PGTDE_CONTRIB_STAGE)/usr debian/pgtde-@PG_MAJOR@-contrib/
+	mv debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)/bin/pg_upgrade debian/pgtde-@PG_MAJOR@$(PGBASEINSTDIR)/bin/pg_upgrade-core
 	set -e; for mapping in \
 		pg_tde_basebackup:pg_basebackup \
 		pg_tde_checksums:pg_checksums \

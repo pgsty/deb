@@ -1,0 +1,6 @@
+# A versioned private PostgreSQL tree intentionally uses its own FHS root and
+# RUNPATH. These modules are loaded by postgres and need not link libc directly.
+pgtde-@PG_MAJOR@: custom-library-search-path * [usr/pgtde-@PG_MAJOR@/*]
+pgtde-@PG_MAJOR@: file-in-unusual-dir [usr/pgtde-@PG_MAJOR@/*]
+pgtde-@PG_MAJOR@: non-standard-dir-in-usr [usr/pgtde-@PG_MAJOR@/]
+pgtde-@PG_MAJOR@: shared-library-lacks-prerequisites [usr/pgtde-@PG_MAJOR@/lib/postgresql/*.so]

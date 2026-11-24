@@ -1,5 +1,14 @@
 pgtde-@PG_MAJOR@ (@PG_VERSION@-@PKG_REV@) unstable; urgency=medium
 
+  * Update Percona Server to @PG_VERSION@.@PERCONA_RELEASE@ with pg_tde @PGTDE_VERSION@.
+  * Update pgvector, wal2json and set_user. Bundle the separate PG19
+    address standardizer and TIGER geocoder with PostGIS 3.7.
+  * Preserve the core executable needed by the TDE upgrade frontend.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 23 Nov 2026 22:00:00 +0800
+
+pgtde-18 (18.6-1PGSTY) unstable; urgency=medium
+
   * Update bundled pg_stat_monitor to 2.4.0 with matching RPM source inputs.
   * Enable LLVM, link its shared library and fix pg_repack version parsing.
   * Preserve C++ debug flags and allow bounded build parallelism.

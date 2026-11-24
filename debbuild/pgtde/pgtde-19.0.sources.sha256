@@ -1,0 +1,14 @@
+0fed3fb69d17b27c16e8f967a1f1b66fd1de3890f7a16020e7e51058424747ee  percona-postgresql-19.0.1.tar.gz
+7b14219fa1b03c05a65de216bad7fb69c629198918c8dd3fe4946e7b7134b5ef  percona-pg_tde19-2.3.0.tar.gz
+961312c60c2266d4eb282f507a84aca3e0b4afd2f2e8dea9dad48602a57e73ed  percona-postgis-3.7.0.tar.gz
+498c1132a91c644cb2f210708843f1ae19fa5a881d3f5b2aa27b3547bd0b52a7  percona-pgvector_19-0.8.7.tar.gz
+fa32aadff4ba67534adda93b0df5b2394879bf28b57f8d501b4ec668bfa4958d  percona-wal2json-2.7.tar.gz
+891782f7dbac6496ac5f1cd523583215e0652371795a46fe85d20f438b849a01  percona-pg_repack-1.5.3.tar.gz
+980a77c2de45b16a6d2cc0e11eebf228307fbf6d9a90fcd5d1c96bf580131c08  percona-pgaudit-19.0.tar.gz
+7426338a2136d9334fd30272b36bcd5d52c7ef2535fc2123f8e6229ed0605621  percona-pgaudit19_set_user-4.3.0.tar.gz
+c0c793756d8ad05d6606f1aef2938ad78798f5ab22f24be0dd423cfc72a87cb7  percona-pg_stat_monitor-2.4.1.tar.gz
+f7b2a14512ae93b0fa8f86a26d66b80e738491ad4c9f60a75bb5bac8819e4e98  percona-pg_gather-33.tar.gz
+e865233f1053a9f9c01ad467207cb79463454d52aab44f05a353944c9dcf525c  pgtde-pg-config
+1de5381046b59c564bb997b63097d1e31493cc075529cb73d7a5dc4a225f0a54  pgtde-sfcgal-config
+68bd8bdb9f2f3bef9b53c67b46e665d095ab6682b43a4a1ff0fb3b53b65419c1  percona-address-standardizer19-3.7.0.tar.gz
+b592477b7e11d356b857939f6796537059f9f1c5e3e6f3ee040c99fca42ea924  percona-postgis-tiger-geocoder19-2025.2.tar.gz

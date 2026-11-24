@@ -1,13 +1,13 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Percona Distribution for PostgreSQL 18 with pg_tde
-Source: https://repo.percona.com/ppg-18.6/yum/release/9/SRPMS/
+Upstream-Name: Percona Distribution for PostgreSQL @PG_MAJOR@ with pg_tde
+Source: https://repo.percona.com/ppg-@PG_VERSION@/yum/release/9/SRPMS/
 
 Files: .pg_tde-src/subprojects/libkmip/*
 Copyright: 2019 The Johns Hopkins University/Applied Physics Laboratory
            2025 Percona LLC and/or its affiliates
 License: Apache-2.0 or BSD-3-Clause
 
-Files: .postgis-src/*
+Files: .postgis-src/* .address-standardizer-src/* .tiger-geocoder-src/*
 Copyright: 2001-2026 PostGIS contributors
 License: GPL-2.0-or-later
 

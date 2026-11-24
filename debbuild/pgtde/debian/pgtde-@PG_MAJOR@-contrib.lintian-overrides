@@ -1,0 +1,7 @@
+# This package shares the private kernel's FHS root and RUNPATH. PostgreSQL
+# modules are loaded by postgres and need not link libc directly.
+pgtde-@PG_MAJOR@-contrib: custom-library-search-path * [usr/pgtde-@PG_MAJOR@/*]
+pgtde-@PG_MAJOR@-contrib: file-in-unusual-dir [usr/pgtde-@PG_MAJOR@/*]
+pgtde-@PG_MAJOR@-contrib: non-standard-dir-in-usr [usr/pgtde-@PG_MAJOR@/]
+pgtde-@PG_MAJOR@-contrib: library-not-linked-against-libc [usr/pgtde-@PG_MAJOR@/lib/postgresql/*.so]
+pgtde-@PG_MAJOR@-contrib: shared-library-lacks-prerequisites [usr/pgtde-@PG_MAJOR@/lib/postgresql/*.so]

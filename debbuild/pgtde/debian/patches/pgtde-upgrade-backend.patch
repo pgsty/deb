@@ -1,0 +1,21 @@
+Description: let the TDE upgrade frontend invoke the private core executable
+--- a/.pg_tde-src/src/bin/pg_tde_upgrade.c
++++ b/.pg_tde-src/src/bin/pg_tde_upgrade.c
+@@ -57,7 +57,7 @@ get_exec_path(const char *argv0, const char *progname)
+ 	char	   *exec_path;
+ 	int			ret;
+ 
+-	versionstr = psprintf("%s (PostgreSQL) %s\n", progname, PG_VERSION);
++	versionstr = psprintf("pg_upgrade (PostgreSQL) %s\n", PG_VERSION);
+ 	exec_path = pg_malloc(MAXPGPATH);
+ 	ret = find_other_exec(argv0, progname, versionstr, exec_path);
+ 	pg_free(versionstr);
+@@ -265,7 +265,7 @@ main(int argc, char **argv)
+ 		new_bindir = pg_strdup(exec_path);
+ 	}
+ 
+-	pg_upgrade_path = get_exec_path(argv[0], "pg_upgrade");
++	pg_upgrade_path = get_exec_path(argv[0], "pg_upgrade-core");
+ 
+ 	if (mkdtemp(tmpdir) == NULL)
+ 		pg_fatal("could not create temporary directory \"%s\": %m", tmpdir);
