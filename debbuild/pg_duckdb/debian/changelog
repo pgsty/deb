@@ -1,3 +1,11 @@
+pg-duckdb (1.2.2-1PGSTY) unstable; urgency=medium
+
+  * Package upstream 1.2.2 with DuckDB 2.0.1.
+  * Install the upstream 1.2.1 to 1.2.2 SQL update.
+  * Cache the bundled shared library across PostgreSQL majors.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Nov 2026 10:30:00 +0800
+
 pg-duckdb (1.2.1-1PGSTY) unstable; urgency=medium
 
   * Package upstream 1.2.1 with its pinned DuckDB 2.0.1 source.

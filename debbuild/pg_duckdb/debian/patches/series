@@ -1,2 +1,2 @@
-pg_duckdb-1.2.1-source-archive.patch
-pg_duckdb-1.2.1-private-curl.patch
+pg_duckdb-1.2.2-source-archive.patch
+pg_duckdb-1.2.2-private-curl.patch

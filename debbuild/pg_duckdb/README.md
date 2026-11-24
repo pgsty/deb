@@ -1,3 +1,14 @@
+# pg_duckdb 1.2.2
+
+当前配方为 PostgreSQL 15–19 构建 pg_duckdb 1.2.2，使用上游固定的 DuckDB 2.0.1。
+源码归档为 `pg_duckdb-1.2.2.tar.gz`，SHA-256 为
+`87ca6f9e2b2775731319f2ba95c7f4748b9a08cc2fd2c123020b445985d13abb`。
+同一平台的五个 PG 主版本可以复用编译好的 DuckDB 共享库。PGXS 模块和 LLVM bitcode 按 PG 主版本构建。
+
+1.2.2 修复了普通数据库角色通过 httpfs 读取 HTTPS 文件时加载系统 CA 证书的问题。
+在 Ubuntu 24.04 amd64 的 PG18 上，实测普通角色通过签名的 httpfs 读取了启用证书校验的 HTTPS CSV。
+已安装 pg_mooncake 0.3.4 的实例只升级 pg_duckdb 1.2.1 至 1.2.2 后，原有镜像在重启后继续复制新写入。
+
 # pg_duckdb 1.2.1 升级与 PG19 核验
 
 本轮将 pg_duckdb 1.2.0 升至上游正式发布的 **1.2.1**（2026-11-20），

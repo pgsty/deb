@@ -3,7 +3,7 @@ all: build move
 # PG-major builds share one directory and one content-keyed DuckDB cache.
 .NOTPARALLEL:
 PG_VERSIONS := 19 18 17 16 15
-TARBALL := pg_duckdb-1.2.1.tar.gz
+TARBALL := pg_duckdb-1.2.2.tar.gz
 CURL_TARBALL := curl-8.23.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 CURL_SOURCE_TARBALL ?= ../SOURCES/$(CURL_TARBALL)

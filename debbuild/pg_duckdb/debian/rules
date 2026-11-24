@@ -3,7 +3,7 @@
 # Makefile only uses -Wno-maybe-uninitialized (needed on Ubuntu ppc64el) if CC=gcc
 export CC = gcc
 # Source archives have no Git metadata; keep the supported packaging scope.
-export PG_DUCKDB_VERSION = v1.2.1
+export PG_DUCKDB_VERSION = v1.2.2
 export PG_MIN_VER = 15
 export PG_MAX_VER = 19
 export DUCKDB_COMMIT = 8d78114e90a53823803660bf821f6073ac87da8c
@@ -43,11 +43,8 @@ ifeq ($(shell pkg-config --atleast-version=7.85.0 libcurl && echo system),)
 DUCKDB_CMAKE_FLAGS += -DCURL_ROOT=$(CURDIR)/.pgsty-curl -DCURL_USE_STATIC_LIBS=ON
 endif
 
-# DuckDB has no PostgreSQL-major input.  Its build tree is safe to reuse in
-# this platform-local recipe directory when source, compiler, flags, and build
-# controls match.  Copy it into the real source tree because DuckDB resolves
-# its CMake source as ../.. from that build directory.  The PGXS bridge stays
-# outside the cached tree and is rebuilt for every PostgreSQL major.
+# Only the shared core is needed by later PGXS builds with identical inputs.
+DUCKDB_CORE := third_party/duckdb/build/$(if $(filter Debug,$(DUCKDB_BUILD)),debug,release)/src/libduckdb.so
 DUCKDB_CACHE_KEY := $(shell { \
 	cat debian/duckdb-source-sha256; \
 	sha256sum debian/patches/series debian/patches/*.patch; \
@@ -68,20 +65,19 @@ export CMAKE_BUILD_PARALLEL_LEVEL := $(DUCKDB_MAX_JOBS)
 override_dh_auto_build:
 	CFLAGS='$(DUCKDB_CFLAGS)' LDFLAGS='$(DUCKDB_LDFLAGS)' \
 		sh scripts/build-distribution-curl.sh '$(CURDIR)/curl-8.23.0' '$(CURDIR)/.pgsty-curl' '$(DUCKDB_MAX_JOBS)'
-	if test -f '$(DUCKDB_CACHE_DIR)/.complete' && test -f '$(DUCKDB_CACHE_DIR)/release/src/libduckdb.so'; then \
-		mkdir -p third_party/duckdb/build; \
-		cp -a '$(DUCKDB_CACHE_DIR)/.' third_party/duckdb/build/; \
-		touch third_party/duckdb/build/release/src/libduckdb.so; \
+	if test -s '$(DUCKDB_CACHE_DIR)/libduckdb.so'; then \
+		mkdir -p '$(dir $(DUCKDB_CORE))'; \
+		cp --reflink=auto '$(DUCKDB_CACHE_DIR)/libduckdb.so' '$(DUCKDB_CORE)'; \
+		touch '$(DUCKDB_CORE)'; \
 	fi
 	+$(MAKE) -j$(DUCKDB_MAX_JOBS) \
 		PG_CFLAGS='$(PG_CFLAGS)' PG_CXXFLAGS='$(PG_CXXFLAGS)' LDFLAGS='$(PG_LDFLAGS)' \
 		EXTRA_CMAKE_VARIABLES='$(DUCKDB_CMAKE_FLAGS)'
-	rm -rf '$(DUCKDB_CACHE_DIR).tmp'
-	mkdir -p '$(DUCKDB_CACHE_DIR).tmp'
-	cp -a third_party/duckdb/build/. '$(DUCKDB_CACHE_DIR).tmp/'
-	touch '$(DUCKDB_CACHE_DIR).tmp/.complete'
-	rm -rf '$(DUCKDB_CACHE_DIR)'
-	mv '$(DUCKDB_CACHE_DIR).tmp' '$(DUCKDB_CACHE_DIR)'
+	if ! test -s '$(DUCKDB_CACHE_DIR)/libduckdb.so'; then \
+		mkdir -p '$(DUCKDB_CACHE_DIR)'; \
+		tmp='$(DUCKDB_CACHE_DIR)/libduckdb.so.'$$$$; \
+		cp --reflink=auto '$(DUCKDB_CORE)' "$$tmp" && mv -f "$$tmp" '$(DUCKDB_CACHE_DIR)/libduckdb.so'; \
+	fi
 
 override_dh_auto_test:
 
