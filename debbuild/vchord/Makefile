@@ -11,22 +11,19 @@ include /usr/share/dpkg/buildflags.mk
 all: setup build move
 .NOTPARALLEL:
 
-# GitHub tag archive: https://github.com/pgsty/vchord/archive/refs/tags/1.4.0.tar.gz
-# Tag commit: 59386918f5aa0f1cbd6edb66a4d59e7dcc4b028b
-# Source SHA256: 8018e0c17e856e03db9a15543123bf045da53a6fb04c6e56484c084f2273f9c9
+# GitHub tag archive: https://github.com/pgsty/vchord/archive/refs/tags/1.5.0.tar.gz
+# Tag commit: 68886c5590de12f756dc8161f71e20552b05900e
+# Source SHA256: 38c3beb9b7577c9846b025ef715534ca5b6956b7ff87f6caee05724422bf700d
 # No downstream patch is applied.
-TARBALL := vchord-1.4.0.tar.gz
+TARBALL := vchord-1.5.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SEMVER := $(shell echo $(TARBALL) | sed -E 's/^vchord-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
-PGRX_VERSION := 0.20.1
 PG_VERSIONS ?= $(shell cat debian/pgversions)
-export PGRX_HOME ?= $(abspath $(BUILD_DIR)/.pgrx)
 export CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
-PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SHA256 := f4451474b3e10c1a608a3d41bda21a68056700f3703ca21fa0fb9e7039bcc314
+LOCK_SHA256 := faf0b707aba2572d5f9569fcfe955901f332a9d812742ea17f8c13b4ad15172d
 LIBCLANG_PATH ?= $(lastword $(sort $(wildcard /usr/lib/llvm-*/lib)))
 export LIBCLANG_PATH
 
@@ -41,45 +38,35 @@ setup:
 	OS_CODENAME=$$(lsb_release -sc); \
 	sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
-check-pgrx:
-	@CURRENT=$$(cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \
-	if [ "$$CURRENT" != "$(PGRX_VERSION)" ]; then \
-		echo "found cargo-pgrx $${CURRENT:-<missing>}; expected $(PGRX_VERSION)" >&2; \
-		exit 1; \
-	fi
-
-build: check-pgrx building packaging
+build: building packaging
 building:
-	cd $(BUILD_DIR) && cargo pgrx init $(PGRX_INIT_ARGS) --no-run
 	cd $(BUILD_DIR) && echo '$(LOCK_SHA256)  Cargo.lock' | sha256sum -c -
 	cd $(BUILD_DIR) && CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) cargo fetch --locked
 	set -e; cd $(BUILD_DIR) && \
-	CC_BIN=$$(for candidate in clang-21 clang-20 clang-19 clang-18 clang-17 clang-16 clang; do if command -v "$$candidate" >/dev/null 2>&1; then command -v "$$candidate"; break; fi; done) && \
-	CXX_BIN=$$(for candidate in clang++-21 clang++-20 clang++-19 clang++-18 clang++-17 clang++-16 clang++; do if command -v "$$candidate" >/dev/null 2>&1; then command -v "$$candidate"; break; fi; done) && \
+	CC_BIN=$$(for candidate in clang-23 clang-22 clang-21 clang-20 clang-19 clang-18 clang-17 clang-16 clang; do if command -v "$$candidate" >/dev/null 2>&1; then command -v "$$candidate"; break; fi; done) && \
+	CXX_BIN=$$(for candidate in clang++-23 clang++-22 clang++-21 clang++-20 clang++-19 clang++-18 clang++-17 clang++-16 clang++; do if command -v "$$candidate" >/dev/null 2>&1; then command -v "$$candidate"; break; fi; done) && \
 	if [ -z "$$CC_BIN" ]; then echo "No clang compiler found (need clang >= 16)." >&2; exit 1; fi && \
 	CLANG_MAJOR=$$($$CC_BIN --version | sed -n 's/.*clang version \([0-9][0-9]*\).*/\1/p' | head -1) && \
 	case "$$CLANG_MAJOR" in ''|*[!0-9]*) echo "Unable to determine clang version from $$CC_BIN." >&2; exit 1;; esac && \
 	if [ "$$CLANG_MAJOR" -lt 16 ]; then echo "vchord requires clang >= 16, found $$CLANG_MAJOR." >&2; exit 1; fi && \
 	if [ -z "$$CXX_BIN" ]; then CXX_BIN=$$CC_BIN; fi && \
 	CLANG_LIB=$$($$CC_BIN -print-file-name=libclang.so) && \
-	if [ -f "$$CLANG_LIB" ]; then export LIBCLANG_PATH=$$(cd "$$(dirname "$$CLANG_LIB")" && pwd -P); fi && \
+	if [ -f "$$CLANG_LIB" ]; then export LIBCLANG_PATH=$$(cd "$$(dirname "$$CLANG_LIB")" && pwd -P); elif [ -d /usr/lib/llvm-$$CLANG_MAJOR/lib ]; then export LIBCLANG_PATH=/usr/lib/llvm-$$CLANG_MAJOR/lib; fi && \
 	for PG_VERSION in $(PG_VERSIONS); do \
 	    PATH=/usr/lib/postgresql/$$PG_VERSION/bin:$$HOME/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-	    CC=$$CC_BIN CXX=$$CXX_BIN RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections" \
+	    CLANG_PATH=$$CC_BIN CLANG_NO_DEFAULT_CONFIG=1 CC=$$CC_BIN CXX=$$CXX_BIN RUSTFLAGS="$${RUSTFLAGS:-} -C link-arg=-Wl,--no-gc-sections" \
 	    CARGO_NET_OFFLINE=true CARGO_NET_GIT_FETCH_WITH_CLI=$(CARGO_NET_GIT_FETCH_WITH_CLI) \
-	    cargo pgrx package -v --no-default-features --features "pg$$PG_VERSION,simd/init" --pg-config /usr/lib/postgresql/$$PG_VERSION/bin/pg_config; \
+	    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config $(MAKE) build; \
+	    PG_CONFIG=/usr/lib/postgresql/$$PG_VERSION/bin/pg_config $(MAKE) DESTDIR=$(CARGO_TARGET_DIR)/release/vchord-pg$$PG_VERSION install; \
 	    EXT_DIR=$(CARGO_TARGET_DIR)/release/vchord-pg$$PG_VERSION/usr/share/postgresql/$$PG_VERSION/extension; \
-	    cp -f sql/upgrade/vchord--*.sql $$EXT_DIR/; \
-	    cp -f sql/install/vchord--$(SEMVER).sql $$EXT_DIR/vchord--$(SEMVER).sql; \
 	    grep -q "default_version = '$(SEMVER)'" $$EXT_DIR/vchord.control; \
-	    test $$(ls -1 $$EXT_DIR/vchord--*.sql | wc -l) -gt 1; \
-	    test -f $$EXT_DIR/vchord--$(SEMVER).sql; \
+	    test -f $$EXT_DIR/vchord--1.4.0--$(SEMVER).sql; \
 	done
 	cd $(BUILD_DIR) && echo '$(LOCK_SHA256)  Cargo.lock' | sha256sum -c -
 
 packaging:
 	cd $(BUILD_DIR) && pg_buildext updatecontrol
-	# The builder provides rustup and cargo-pgrx outside dpkg; their versions are checked above.
+	# The builder supplies the pinned Rust toolchain outside dpkg.
 	cd $(BUILD_DIR) && PG_VERSIONS="$(PG_VERSIONS)" dpkg-buildpackage -b -us -uc -d
 
 # collect deb
@@ -90,4 +77,4 @@ move:
 clean:
 	rm -rf $(BUILD_DIR) *.buildinfo *.changes *.ddeb *.deb
 
-.PHONY: all setup update check-pgrx build building packaging move clean ls
+.PHONY: all setup build building packaging move clean
