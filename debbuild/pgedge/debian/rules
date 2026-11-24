@@ -114,7 +114,9 @@ override_dh_shlibdeps:
 	dh_shlibdeps -l/usr/pgedge-@PG_MAJOR@/lib
 
 override_dh_dwz:
+	# Jammy's GNU addr2line cannot resolve DWZ variable references even in a single file.
 	. /etc/os-release; case "$$VERSION_CODENAME" in \
+		jammy) : ;; \
 		noble|resolute) dh_dwz --no-dwz-multifile ;; \
 		*) dh_dwz ;; \
 	esac
