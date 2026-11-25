@@ -1,3 +1,9 @@
+pg-sqlog (1.7.0-1PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot b016539.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 pg-sqlog (1.7+git20241118.b016539-1PGSTY) unstable; urgency=medium
 
   * Pin upstream master snapshot b016539 (pg_sqlog 1.7).
