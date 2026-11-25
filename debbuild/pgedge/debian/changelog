@@ -1,5 +1,11 @@
 pgedge-@PG_MAJOR@ (@PG_VERSION@-@PKG_REV@) unstable; urgency=medium
 
+  * Rebuild PostgreSQL 15 through 18 with Spock 5.0.15.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:00:00 +0800
+
+pgedge-@PG_MAJOR@ (@PG_VERSION@-1PGSTY) unstable; urgency=medium
+
   * Update the PostgreSQL cores and bundle Spock 5.0.14 and Snowflake 2.6.1.
   * Rebase the PG15 attribute options patch and enable LLVM JIT.
   * Keep Noble and Resolute debug information independent of a shared DWZ file.
