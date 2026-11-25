@@ -1,7 +1,7 @@
 all: check-src setup build move
 .NOTPARALLEL:
 
-TARBALL := geos-3.14.1.tar.bz2
+TARBALL := geos-3.15.1.tar.bz2
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 BUILD_JOBS ?= 3

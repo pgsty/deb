@@ -1,3 +1,9 @@
+geos (3.15.1-1PGSTY) stable; urgency=medium
+
+  * Package upstream 3.15.1.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 16:00:00 +0800
+
 geos (3.14.1-1PGSTY) unstable; urgency=medium
 
   * Generate shared-library dependencies without maintained symbol templates.

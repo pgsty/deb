@@ -28,7 +28,7 @@ Description: Geometry engine for GIS - Development files
 Package: libgeos++-dev
 Architecture: any
 Section: libdevel
-Depends: libgeos3.14.1 (= ${binary:Version}),
+Depends: libgeos3.15.1 (= ${binary:Version}),
          libgeos-dev,
          ${misc:Depends}
 Suggests: libgdal-doc
@@ -69,7 +69,7 @@ Description: Geometry engine for Geographic Information Systems - C Library
  .
  This package contains the C library.
 
-Package: libgeos3.14.1
+Package: libgeos3.15.1
 Architecture: any
 Multi-Arch: same
 Section: libs
