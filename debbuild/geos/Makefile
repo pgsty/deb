@@ -16,9 +16,13 @@ setup: check-src
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	rm -rf $(BUILD_DIR)/debian
 	cp -a debian $(BUILD_DIR)/debian
-	@if [ "$$(lsb_release -sc)" = jammy ] || [ "$$(lsb_release -sc)" = bookworm ]; then \
+	@if [ "$$(lsb_release -sc)" = jammy ]; then \
 		sed -i -e 's/libgeos-c1t64/libgeos-c1v5/g' -e '/dpkg-dev (>= 1.22.5),/d' -e '/^Provides: $${t64:Provides}/d' -e '/^Breaks: libgeos-c1v5/d' -e '/^Replaces: libgeos-c1v5/d' -e '/^X-Time64-Compat:/d' $(BUILD_DIR)/debian/control; \
 		for f in $(BUILD_DIR)/debian/libgeos-c1t64.*; do sed -i 's/libgeos-c1t64/libgeos-c1v5/g' "$$f"; mv "$$f" "$$(printf '%s' "$$f" | sed 's/libgeos-c1t64/libgeos-c1v5/g')"; done; \
+	elif [ "$$(lsb_release -sc)" = bookworm ]; then \
+		sed -i -e '/dpkg-dev (>= 1.22.5),/d' \
+			-e 's/^Provides: [$$]{t64:Provides}$$/Provides: libgeos-c1v5 (= $${binary:Version})/' \
+			$(BUILD_DIR)/debian/control; \
 	fi
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/1PGSTY)/1PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 

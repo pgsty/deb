@@ -1,6 +1,7 @@
 geos (3.15.1-1PGSTY) stable; urgency=medium
 
   * Package upstream 3.15.1.
+  * Match the PGDG Bookworm libgeos-c1t64 package and versioned Provides.
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 16:00:00 +0800
 
