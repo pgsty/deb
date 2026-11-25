@@ -6,8 +6,8 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 all: setup build move
 .NOTPARALLEL:
 
-# GitHub tag archive: https://github.com/pgsty/pg_tokenizer/archive/refs/tags/v1.2.0.tar.gz
-TARBALL := pg_tokenizer-1.2.0.tar.gz
+# GitHub tag archive: https://github.com/pgsty/pg_tokenizer/archive/refs/tags/v1.3.0.tar.gz
+TARBALL := pg_tokenizer-1.3.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
@@ -19,7 +19,7 @@ export PGRX_HOME ?= $(abspath $(BUILD_DIR)/.pgrx)
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CRATE_DIR := .
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SHA256 := 9e9104a0e4b00d8bbef22dc020cdca16bf0f18e733384db5787322c716c03f4b
+LOCK_SHA256 := 3bceddee1d0ba553cb11100b2b761d9de5c95b1dfe3b58606ef47bfe38386c4a
 LIBCLANG_PATH ?= $(lastword $(sort $(wildcard /usr/lib/llvm-*/lib)))
 export LIBCLANG_PATH
 
@@ -29,7 +29,7 @@ check-src:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg_tokenizer-1.2.0-pgrx-0.20.1.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg_tokenizer-1.3.0-pgrx-0.20.1.patch
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
