@@ -1,3 +1,9 @@
+pghydro (6.6-2PGSTY) unstable; urgency=medium
+
+  * Package tag v.7.1 with its declared 6.6 SQL bundle.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 16:20:00 +0800
+
 pghydro (6.6-1PGSTY) unstable; urgency=medium
 
   * Package upstream release v.6.6x carrying PgHydro 6.6

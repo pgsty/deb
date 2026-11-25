@@ -3,13 +3,15 @@ export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
 
 all: setup build move
 
-TARBALL := pghydro-6.6.tar.gz
+# Upstream tag v.7.1 contains the 6.6 SQL bundle.
+TARBALL := pghydro-v.7.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed, copy $(TARBALL) into ../SOURCES"; exit 1)
+	@echo "8136fb45fb0f1c92c3ee930e6e8d408aa1c8643d39fe320bbb0a10003df41991  $(SOURCE_TARBALL)" | sha256sum -c -
 
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
