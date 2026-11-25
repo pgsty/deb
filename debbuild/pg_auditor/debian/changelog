@@ -1,3 +1,9 @@
+pg-auditor (0.3.0-1PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot 7c2edff.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 pg-auditor (0.3+git20250228.7c2edff-1PGSTY) unstable; urgency=medium
 
   * Pin upstream master snapshot 7c2edff (pg_auditor 0.3).
