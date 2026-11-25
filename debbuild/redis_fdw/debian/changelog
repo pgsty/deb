@@ -1,3 +1,9 @@
+redis-fdw (2.0.0-1PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot ff37a7c8.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 redis-fdw (2.0+git20260808.ff37a7c8-1PGSTY) unstable; urgency=medium
 
   * Package upstream master snapshot ff37a7c82f3f.
