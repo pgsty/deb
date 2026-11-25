@@ -12,7 +12,7 @@ Homepage: https://vchord.pgsty.com/
 Package: postgresql-PGVERSION-vchord-bm25
 Architecture: any
 Provides: postgresql-vchord-bm25
-Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Depends: postgresql-PGVERSION, ${shlibs:Depends}, ${misc:Depends}
 Description: BM25 ranking and indexing for PostgreSQL
  VectorChord-BM25 implements BM25 ranking and Block-WeakAnd (WAND) indexing
  over PostgreSQL tsvector values. It works with standard PostgreSQL text search
