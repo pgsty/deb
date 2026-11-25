@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+override_dh_installdocs:
+	dh_installdocs --all README.*
+
+override_dh_lintian:
+	for v in $(shell pg_buildext supported-versions); do \
+	  echo '# plugin does not call into any functions' > debian/postgresql-$$v-first-last-agg.lintian-overrides; \
+	  echo 'shared-lib-without-dependency-information' >> debian/postgresql-$$v-first-last-agg.lintian-overrides; \
+	done
+	dh_lintian
+
+%:
+	dh $@ --with pgxs_loop

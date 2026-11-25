@@ -1,0 +1,31 @@
+Source: first-last-agg
+Section: database
+Priority: optional
+Maintainer: Debian PostgreSQL Maintainers <team+postgresql@tracker.debian.org>
+Uploaders:
+ Christoph Berg <myon@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ postgresql-all <!nocheck>,
+ postgresql-server-dev-all (>= 217~),
+Standards-Version: 4.7.2
+Vcs-Browser: https://salsa.debian.org/postgresql/first-last-agg
+Vcs-Git: https://salsa.debian.org/postgresql/first-last-agg.git
+Homepage: https://github.com/wulczer/first_last_agg
+
+Package: postgresql-PGVERSION-first-last-agg
+Architecture: amd64 arm64
+Depends:
+ ${misc:Depends},
+ ${postgresql:Depends},
+ ${shlibs:Depends},
+Breaks:
+ ${postgresql:Breaks},
+Description: PostgreSQL extension providing first and last aggregate functions
+ first-last-agg is a simple extension providing two aggregate functions, last
+ and first, operating on any element type and returning the last or the first
+ value of the group.
+ .
+ Since by default the ordering inside groups created by a GROUP BY expression
+ is not defined, it is advisable to use an ORDER BY clause inside the aggregate
+ expression (see the aggregate function syntax).

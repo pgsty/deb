@@ -1,0 +1,81 @@
+first-last-agg (0.1.4-2PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot d63ea3b.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
+first-last-agg (0.1.4-4-gd63ea3b-1PGSTY) unstable; urgency=medium
+
+  * Build PostgreSQL 19 packages for missing PGDG coordinates.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Nov 2026 14:00:00 +0800
+
+first-last-agg (0.1.4-4-gd63ea3b-9.pgdg12+1) bookworm-pgdg; urgency=medium
+
+  * Rebuild for bookworm-pgdg.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Wed, 08 Oct 2025 14:34:20 +0200
+
+first-last-agg (0.1.4-4-gd63ea3b-9) unstable; urgency=medium
+
+  * Upload for PostgreSQL 18. (Closes: #1117261)
+  * Add ${postgresql:Breaks}.
+  * debian/tests: Depend on postgresql-common-dev instead of 'make'.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 08 Oct 2025 14:34:20 +0200
+
+first-last-agg (0.1.4-4-gd63ea3b-8) unstable; urgency=medium
+
+  * Upload for PostgreSQL 17.
+  * Restrict to 64-bit architectures.
+  * Mark postgresql-all as <!nocheck>.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 11 Sep 2024 17:36:04 +0200
+
+first-last-agg (0.1.4-4-gd63ea3b-7) unstable; urgency=medium
+
+  * Upload for PostgreSQL 16.
+  * Use ${postgresql:Depends}.
+
+ -- Christoph Berg <myon@debian.org>  Sat, 16 Sep 2023 15:07:32 +0200
+
+first-last-agg (0.1.4-4-gd63ea3b-6) unstable; urgency=medium
+
+  * Upload for PostgreSQL 15.
+
+ -- Christoph Berg <myon@debian.org>  Thu, 20 Oct 2022 15:31:59 +0200
+
+first-last-agg (0.1.4-4-gd63ea3b-5) unstable; urgency=medium
+
+  * Fix GitHub watch file.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 04 Jan 2022 16:32:31 +0100
+
+first-last-agg (0.1.4-4-gd63ea3b-4) unstable; urgency=medium
+
+  * Upload for PostgreSQL 14.
+
+ -- Christoph Berg <myon@debian.org>  Fri, 15 Oct 2021 13:52:19 +0200
+
+first-last-agg (0.1.4-4-gd63ea3b-3) unstable; urgency=medium
+
+  * Upload for PostgreSQL 13.
+  * Use dh --with pgxs_loop.
+  * DH 13.
+  * R³: no.
+  * debian/tests: Use 'make' instead of postgresql-server-dev-all.
+
+ -- Christoph Berg <myon@debian.org>  Sun, 18 Oct 2020 22:14:03 +0200
+
+first-last-agg (0.1.4-4-gd63ea3b-2) unstable; urgency=medium
+
+  * Upload for PostgreSQL 12.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 29 Oct 2019 10:09:55 +0100
+
+first-last-agg (0.1.4-4-gd63ea3b-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 25 Mar 2019 13:09:11 +0100
