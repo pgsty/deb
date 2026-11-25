@@ -1,9 +1,7 @@
-# pg_search 0.27.0
+# pg_search 0.27.1
 
-Build PostgreSQL 15–18 from the official `pg_search-0.27.0.tar.gz`.
-The shared `pg-search-0.27.0-pgrx-0.20.1.patch` updates the pgrx dependencies.
-The resulting Cargo.lock has SHA-256
-`364afaf942a5d14e29ade1d514622a0d0623ceb275fcd3d4877e3ab15dc9d2d0`.
+Build PostgreSQL 15–18 from the official `pg_search-0.27.1.tar.gz`.
+The upstream Cargo.lock pins pgrx 0.20.1. Its SHA-256 is `da9858216005c7c04e6d129de209ea08c386f407f537ade6b735de37256f9937`.
 PG19 requires upstream changes to page items, buffer access and WAL handling.
 
 Lindera 6.2.0 dictionary archives are fetched with curl and checked against

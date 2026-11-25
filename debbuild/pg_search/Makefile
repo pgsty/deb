@@ -4,7 +4,7 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
 all: move
 
-TARBALL := pg_search-0.27.0.tar.gz
+TARBALL := pg_search-0.27.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/target)
@@ -27,7 +27,6 @@ check-src:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-search-0.27.0-pgrx-0.20.1.patch
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions

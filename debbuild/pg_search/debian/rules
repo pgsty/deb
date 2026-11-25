@@ -30,6 +30,5 @@ override_dh_auto_install:
 	    printf 'postgresql:Breaks=\n' >> debian/$$FULL_NAME.substvars; \
 	done
 
-ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+# dwz cannot rewrite all Rust DWARF sections. dh_strip still splits full symbols.
 override_dh_dwz:
-endif
