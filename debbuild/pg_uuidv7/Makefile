@@ -3,7 +3,8 @@ export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
 
 all: setup build move
 
-TARBALL := pg_uuidv7-1.7.0.tar.gz
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
+TARBALL := pg_uuidv7-1.8.0.tar.gz
 
 # prepare directory
 setup:
@@ -21,7 +22,7 @@ build:
 
 # collect deb
 move:
-	mkdir -p ~/ext/pkg && cp *.deb ~/ext/pkg/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} ~/ext/pkg/ \;
+	mkdir -p $(PKG_OUTPUT_DIR) && cp *.deb $(PKG_OUTPUT_DIR)/ && find . -maxdepth 1 -type f -name "*.ddeb" -exec cp {} $(PKG_OUTPUT_DIR)/ \;
 
 # remove building craps
 clean:

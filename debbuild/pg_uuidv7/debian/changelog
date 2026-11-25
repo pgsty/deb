@@ -1,3 +1,9 @@
+pg-uuidv7 (1.8.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 1.8.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:00:00 +0800
+
 pg-uuidv7 (1.7.0-1PGSTY) unstable; urgency=medium
 
   * https://github.com/fboulnois/pg_uuidv7/releases/tag/v1.7.0
