@@ -1,11 +1,12 @@
 all: setup build move
 
-VERSION := 9.1.4
+VERSION := 9.2.0
 TARBALL := valkey-$(VERSION).tar.gz
 SOURCEDIR ?= ../SOURCES
 SOURCE := $(SOURCEDIR)/$(TARBALL)
+PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 SOURCE_URL := https://github.com/valkey-io/valkey/archive/refs/tags/$(VERSION).tar.gz
-SOURCE_SHA256 := fe3d623600a1c046b4668feec097c507b4ae52f20c1fc7f1ebd384c07a165e77
+SOURCE_SHA256 := a02cb44db1269b699629e419d4949e6e51e984b1f0e9a984e8ee1e1b3b7cc36f
 OS_CODENAME ?= $(shell command -v lsb_release >/dev/null 2>&1 && lsb_release -sc || (. /etc/os-release 2>/dev/null && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown)
 DEB_BUILD_OPTIONS ?= parallel=$(shell nproc)
 
@@ -42,9 +43,9 @@ build:
 	cd build && DEB_BUILD_OPTIONS="$(DEB_BUILD_OPTIONS)" dpkg-buildpackage -b -us -uc
 
 move:
-	mkdir -p ~/ext/pkg
+	mkdir -p $(PKG_OUTPUT_DIR)
 	@set -e; found=0; for pkg in ./*.deb ./*.ddeb; do \
-		[ -e "$$pkg" ] || continue; cp "$$pkg" ~/ext/pkg/; found=1; \
+		[ -e "$$pkg" ] || continue; cp "$$pkg" "$(PKG_OUTPUT_DIR)/"; found=1; \
 	done; test "$$found" -eq 1
 
 clean:

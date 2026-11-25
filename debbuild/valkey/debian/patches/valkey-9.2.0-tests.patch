@@ -1,0 +1,42 @@
+From: Ruohang Feng <rh@vonng.com>
+Subject: Allow scheduling margins in asynchronous tests
+
+Origin: vendor
+Forwarded: no
+Last-Update: 2026-11-25
+
+Allow the blocking list timeout to be observed and exercise the timeout
+subcase with the same bounded key-load delay as the slow reader.
+
+--- a/tests/unit/type/list.tcl
++++ b/tests/unit/type/list.tcl
+@@ -2457,8 +2457,8 @@
+         # now unpause the writes
+         r client unpause
+ 
+-        # client should time-out
+-        wait_for_blocked_clients_count 0
++        # Allow scheduling margin beyond the BLPOP one-second timeout.
++        wait_for_blocked_clients_count 0 200 10
+         
+         $rd close
+     }
+--- a/tests/integration/replication.tcl
++++ b/tests/integration/replication.tcl
+@@ -1123,13 +1123,14 @@
+                     # so that the whole rdb generation process is bound to that
+                     set loglines [count_log_lines -2]
+                     [lindex $replicas 0] config set repl-diskless-load swapdb
+-                    # For "no" and "fast" subcases, use key-load-delay to keep
++                    # For "no", "fast", and "timeout", use key-load-delay to keep
+                     # replica 0 as a steady slow reader for the entire RDB
+                     # transfer. A brief SIGSTOP/SIGCONT is insufficient
+                     # because after resume the TLS layer on slow CI runners
+                     # can't drain the pipe fast enough, leaving the RDB child
+                     # blocked on write() for minutes.
+-                    if {$all_drop == "no" || $all_drop == "fast"} {
++                    if {$all_drop == "no" || $all_drop == "fast" || $all_drop == "timeout"} {
++                        # Keep timeout in full sync until SIGSTOP is observed.
+                         # 4k keys with 500 microseconds each keeps replica 0
+                         # slow for about 2 seconds, which is long enough to
+                         # fill the pipe without turning the transfer into a

@@ -1,3 +1,9 @@
+valkey (9.2.0-1PGSTY~@RELEASE@) unstable; urgency=medium
+
+  * Update to upstream 9.2.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:00:00 +0800
+
 valkey (9.1.4-1PGSTY~@RELEASE@) unstable; urgency=medium
 
   * Update to upstream maintenance release 9.1.4.
