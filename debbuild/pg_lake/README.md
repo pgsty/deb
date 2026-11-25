@@ -1,15 +1,15 @@
-# pg_lake 3.7.0
+# pg_lake 3.7.1
 
-This recipe builds the upstream `pg_lake` 3.7.0 bundle for PostgreSQL 16,
+This recipe builds the upstream `pg_lake` 3.7.1 bundle for PostgreSQL 16,
 17, 18 and 19. The single DEB source produces the eight extensions
 `pg_extension_updater`, `pg_lake`, `pg_extension_base`, `pg_lake_iceberg`,
 `pg_lake_engine`, `pg_map`, `pg_lake_table` and `pg_lake_copy`.
 
 - Upstream: <https://github.com/Snowflake-Labs/pg_lake>
-- Release: <https://github.com/Snowflake-Labs/pg_lake/releases/tag/v3.7.0>
-- Source: `pg_lake-3.7.0.tar.gz`
-- Source SHA-256: `0e1c4beb2e9f126bdfc449b3f254394534e4070000489cc182ce1c955fb96b4c`
-- Upstream commit: `37bcb0f8963f4a3115347e020e8f291e42b14827`
+- Release: <https://github.com/Snowflake-Labs/pg_lake/releases/tag/v3.7.1>
+- Source: `pg_lake-3.7.1.tar.gz`
+- Source SHA-256: `96c63bbc36fdf0101f5e2ad94dd230914239b69963d39acd9eb30a5d0a878254`
+- Upstream commit: `46c3eeef8ef9c59bf0dd8d01ffb0c7a10d266972`
 - Packaging patch: `patches/pg_lake-3.7.0-packaging.patch`
 - Patch SHA-256: `73ee6bf08f316a075e926992bc74152da8a4cf258caacf5ceeb30d804b5f1df9`
 
@@ -17,7 +17,7 @@ The archive includes the pinned Avro, DuckDB, DuckDB PostgreSQL and database
 connector sources. `SOURCE_MANIFEST` and `extension_config.cmake` record the
 httpfs, AWS and Azure commits fetched during the build. The build uses vcpkg 2025.10.17 at
 commit `74e6536215718009aae747d86d84b78376bf9e09`, DuckDB v1.5.6 and the
-Brotli 1.1.1 compatibility patch described below. The build does not fetch Polaris and does not add
+upstream Brotli block-switch fix. The build does not fetch Polaris and does not add
 SQL upgrade scripts or product migrations that are absent from upstream.
 
 The package preserves the eight extension control files, SQL payloads,
@@ -43,14 +43,8 @@ select those directories when present; otherwise CMake uses the upstream
 pinned repositories. Verify each checkout's commit before building. License
 installation covers both FetchContent's build directories and these overrides.
 
-Upstream 3.7.0 still omits the Brotli block-switch fix present in 3.5.10 while
-its pinned DuckDB still embeds Brotli 1.1.0. Both recipes retain that exact
-upstream fix and regression test in `pg_lake-3.7.0-brotli-block-switch.patch`, applied
-after the packaging patch. `SOURCE_MANIFEST` describes the unmodified source;
-the effective packaged decoder includes the fix and reports 1.1.1. The new
-packaging patch also tolerates an absent upstream `patches/duckdb` directory
-and regenerates context in the embedded scanner patch so it applies exactly.
-The packaging patch preserves upstream 3.7.0's fail-fast extension-patch staging.
+Upstream 3.7.1 includes the Brotli block-switch fix and its regression test.
+The packaging patch preserves upstream 3.7.1's fail-fast extension-patch staging.
 A checksum stamp prevents overlapping patches from being reapplied on install;
 changed patch inputs require a fresh source extraction.
 
@@ -59,7 +53,7 @@ distinct type name. The pinned httpfs defines a different `S3DeleteBatch`
 layout in the same namespace, which otherwise produces an LTO ODR warning.
 The patch changes no deletion behavior or external API.
 
-Upstream 3.7.0 supports PostgreSQL 16–19 and rejects PG15 in
+Upstream 3.7.1 supports PostgreSQL 16–19 and rejects PG15 in
 `pg_extension_base`. Its CI explicitly covers 16, 17, 18 and 19; the PG19
 `<limits.h>` compatibility fix is already upstream. No local PostgreSQL API
 patch is needed. The recipe defaults to that same 16–19 subset.

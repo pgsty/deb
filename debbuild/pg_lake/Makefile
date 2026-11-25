@@ -1,6 +1,6 @@
 all: move
 
-VERSION := 3.7.0
+VERSION := 3.7.1
 TARBALL := pg_lake-$(VERSION).tar.gz
 BUILD_DIR := build
 PG_VERSIONS := 16 17 18 19
@@ -32,7 +32,7 @@ PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 VCPKG_ROOT ?= $(HOME)/.cache/pg_lake/vcpkg-$(VCPKG_VERSION)
 VCPKG_TOOLCHAIN_PATH := $(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
 SOURCE_CANDIDATE_DIR ?= $(HOME)/pgsty/artifacts/pg_lake-source/$(VERSION)/candidate
-SOURCE_PATCHES := patches/pg_lake-3.7.0-packaging.patch patches/pg_lake-3.7.0-brotli-block-switch.patch patches/pg_lake-3.7.0-s3-odr.patch
+SOURCE_PATCHES := patches/pg_lake-3.7.0-packaging.patch patches/pg_lake-3.7.0-s3-odr.patch
 TAR_BIN := $(shell command -v gtar 2>/dev/null || command -v tar)
 
 check-src:
