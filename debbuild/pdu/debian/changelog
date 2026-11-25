@@ -1,3 +1,9 @@
+pdu (3.0.25.12-2PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot 345422f.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 pdu (3.0.25.12+git20260822.345422f-1PGSTY) unstable; urgency=medium
 
   * Update to upstream main snapshot 345422f without changing PDUVERSION.
