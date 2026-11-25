@@ -1427,3 +1427,9 @@ colnames:
 	$(MAKE) -C colnames
 
 .PHONY: pg_nanotime pg_tre
+
+# PostgreSQL 19 gaps in PGDG APT repositories.
+PGDG_GAP_RECIPES := first_last_agg
+.PHONY: $(PGDG_GAP_RECIPES)
+$(PGDG_GAP_RECIPES):
+	$(MAKE) -C $@
