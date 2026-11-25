@@ -1,3 +1,9 @@
+edtf-postgres (2.0.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 2.0.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:00:00 +0800
+
 edtf-postgres (1.3.5-1PGSTY) unstable; urgency=medium
 
   * Update to 1.3.5 and build for PostgreSQL 15 through 19 with pgrx 0.20.1.
