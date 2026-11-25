@@ -1,11 +1,10 @@
-# macavity 0.2.0
+# macavity 0.2.1
 
-Source: [official v0.2.0 tag archive](https://codeload.github.com/CrystallineCore/Macavity/tar.gz/refs/tags/v0.2.0).
-The archive root is normalized with GNU tar, sorted entries, epoch timestamps,
-numeric root ownership and `gzip -n9`; source contents are unchanged.
-SHA256: `d1c9e13d7b445b1a923325d9d9bafca789153cf5e4ac164600a4ab12fcd3d82d`.
+Source: [official v0.2.1 tag archive](https://codeload.github.com/CrystallineCore/Macavity/tar.gz/refs/tags/v0.2.1).
+The official archive extracts to `Macavity-0.2.1`.
+SHA256: `71f571596d74ba7d30f0b3ca6cf29f95dac0a8ad92b048b6e561bee3dee324bd`.
 
-PostgreSQL targets: 16, 17, 18.
+PostgreSQL targets: 16, 17, 18, 19.
 
 macavity injects session-local errors, delays and backend crashes at named
 PostgreSQL execution points. This destructive testing extension is intended

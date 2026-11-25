@@ -1,7 +1,7 @@
 all: setup build move
 .NOTPARALLEL:
 
-TARBALL := macavity-0.2.0.tar.gz
+TARBALL := macavity-0.2.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -16,7 +16,6 @@ setup: check-src
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
-	patch -d $(BUILD_DIR) -p1 --fuzz=0 < patches/macavity-0.2.0-pg19-headers.patch
 	OS_CODENAME=$$(lsb_release -sc); test -n "$$OS_CODENAME"; \
 	    sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
 
