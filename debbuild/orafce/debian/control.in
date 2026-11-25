@@ -1,0 +1,14 @@
+Source: orafce
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Build-Depends: debhelper-compat (= 13), postgresql-all (>= 217~), bison, flex
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/orafce/orafce
+
+Package: postgresql-PGVERSION-orafce
+Architecture: any
+Depends: ${postgresql:Depends}, ${shlibs:Depends}, ${misc:Depends}
+Description: Oracle-compatible functions and packages for PostgreSQL
+ Orafce implements Oracle-compatible SQL functions, operators and packages in PostgreSQL.

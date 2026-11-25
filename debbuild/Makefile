@@ -911,6 +911,10 @@ pgmeminfo:
 pg_stat_backtrace:
 	cd pg_stat_backtrace && make
 
+.PHONY: orafce
+orafce:
+	cd orafce && $(MAKE)
+
 plpgsql_check:
 	cd plpgsql_check && make
 
