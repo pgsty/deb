@@ -1,3 +1,9 @@
+sfcgal (2.3.0-1PGSTY) stable; urgency=medium
+
+  * Package upstream 2.3.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 16:00:00 +0800
+
 sfcgal (2.2.0-1PGSTY) unstable; urgency=medium
 
   * Activate pkgkde_symbolshelper explicitly on Ubuntu 22.04.

@@ -1,7 +1,7 @@
 all: check-src setup build move
 .NOTPARALLEL:
 
-TARBALL := SFCGAL-v2.2.0.tar.gz
+TARBALL := SFCGAL-v2.3.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 BUILD_JOBS ?= 3
