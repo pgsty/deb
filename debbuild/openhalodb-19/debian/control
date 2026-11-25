@@ -1,0 +1,23 @@
+Source: openhalodb-19
+Section: database
+Priority: optional
+Maintainer: Ruohang Feng <rh@vonng.com>
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/pgsty/openhalo
+Build-Depends:
+ debhelper-compat (= 13), bison, flex, gettext, pkg-config,
+ clang, llvm-dev (>= 1:14), libicu-dev, libssl-dev,
+ libkrb5-dev, libldap2-dev | libldap-dev, libpam0g-dev,
+ libselinux1-dev | libselinux-dev, libsystemd-dev, systemtap-sdt-dev,
+ liblz4-dev, libzstd-dev, zlib1g-dev, libreadline-dev, uuid-dev,
+ libxml2-dev, libxslt1-dev, libperl-dev, python3-dev, tcl-dev, tzdata
+
+Package: openhalodb-19
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, adduser, tzdata
+Description: PostgreSQL 19 kernel with the OpenHalo MySQL protocol and SQL dialect
+ OpenHalo combines PostgreSQL 19.0 with the preloaded aux_mysql 2.0
+ extension. PostgreSQL and MySQL clients can read and write the same data.
+ The server, clients, development files, contrib modules and LLVM JIT
+ provider are installed together under /usr/halo-19.

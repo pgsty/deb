@@ -1,0 +1,4 @@
+libpq 5 openhalodb-19
+libecpg 6 openhalodb-19
+libecpg_compat 3 openhalodb-19
+libpgtypes 3 openhalodb-19

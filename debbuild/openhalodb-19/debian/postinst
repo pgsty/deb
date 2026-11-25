@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = configure ]; then
+    getent group postgres >/dev/null || addgroup --system postgres
+    getent passwd postgres >/dev/null || adduser --system --ingroup postgres \
+        --home /var/lib/pgsql --no-create-home --shell /bin/bash postgres
+fi
+
+#DEBHELPER#

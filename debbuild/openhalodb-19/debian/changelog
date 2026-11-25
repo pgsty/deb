@@ -1,0 +1,5 @@
+openhalodb-19 (19.0.0-1PGSTY) unstable; urgency=medium
+
+  * Package OpenHalo 19.0.0 with PostgreSQL 19.0, aux_mysql 2.0 and LLVM JIT.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Nov 2026 22:00:00 +0800

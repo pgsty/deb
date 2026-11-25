@@ -1,0 +1,19 @@
+Description: Put pg_noreturn before the storage-class specifier
+ PostgreSQL 19 expands pg_noreturn to [[noreturn]] in C23 mode.
+ GCC 15 rejects the attribute between static and the return type.
+ Use the declaration order used by the PostgreSQL core.
+Author: PGSTY <rh@vonng.com>
+Forwarded: no
+
+--- a/contrib/aux_mysql/src/mysql_proto.c
++++ b/contrib/aux_mysql/src/mysql_proto.c
+@@ -1081,2 +1081,2 @@
+-static pg_noreturn void
++pg_noreturn static void
+ mys_auth_failed(Port *port, bool with_password, const char *logdetail)
+--- a/contrib/aux_mysql/src/mys_stmt.c
++++ b/contrib/aux_mysql/src/mys_stmt.c
+@@ -521,2 +521,2 @@
+-static pg_noreturn void
++pg_noreturn static void
+ malformed(void)

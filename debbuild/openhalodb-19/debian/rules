@@ -1,0 +1,55 @@
+#!/usr/bin/make -f
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+prefix := /usr/halo-19
+package := openhalodb-19
+stage := $(CURDIR)/debian/$(package)
+jobs := $(or $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS))),1)
+
+%:
+	dh $@ --without autoreconf
+
+override_dh_auto_clean:
+	if test -f GNUmakefile; then $(MAKE) distclean; fi
+
+override_dh_auto_configure:
+	./configure --prefix=$(prefix) --libdir=$(prefix)/lib \
+		--docdir=$(prefix)/doc --htmldir=$(prefix)/doc/html \
+		--with-system-tzdata=/usr/share/zoneinfo --enable-rpath \
+		--with-icu --with-llvm --with-ssl=openssl --with-uuid=e2fs \
+		--with-lz4 --with-zstd --with-libxml --with-libxslt \
+		--with-python --with-perl --with-tcl --with-pam --with-gssapi \
+		--with-ldap --with-selinux --with-systemd --enable-nls --enable-dtrace
+
+override_dh_auto_build:
+	MAKELEVEL=0 $(MAKE) -C src/backend -j$(jobs) submake-generated-headers
+	$(MAKE) -j$(jobs) rpathdir=$(prefix)/lib world-bin
+
+override_dh_auto_test:
+	src/backend/postgres --version | grep -Fx 'postgres (PostgreSQL) 19.0'
+
+override_dh_auto_install:
+	$(MAKE) -j$(jobs) rpathdir=$(prefix)/lib DESTDIR=$(stage) install-world-bin
+	test -s $(stage)$(prefix)/lib/postgresql/llvmjit.so
+	test -s $(stage)$(prefix)/lib/postgresql/aux_mysql.so
+	test -s $(stage)$(prefix)/lib/postgresql/bitcode/aux_mysql.index.bc
+	test -s $(stage)$(prefix)/share/postgresql/extension/aux_mysql--2.0.sql
+	grep -Fx "default_version = '2.0'" $(stage)$(prefix)/share/postgresql/extension/aux_mysql.control
+	grep -q "^shared_preload_libraries = 'aux_mysql'" $(stage)$(prefix)/share/postgresql/postgresql.conf.sample
+
+override_dh_installdocs:
+	dh_installdocs README.md README.postgresql.md COPYRIGHT LICENSE 3party-legal-notices
+	install -d $(stage)/usr/share/doc/$(package)/aux_mysql
+	install -m644 contrib/aux_mysql/COPYRIGHT contrib/aux_mysql/README.md contrib/aux_mysql/MIGRATION.md \
+		$(stage)/usr/share/doc/$(package)/aux_mysql/
+
+# Keep the fork's private libraries out of the system shlibs database.
+override_dh_makeshlibs:
+
+override_dh_shlibdeps:
+	dh_shlibdeps -l$(stage)$(prefix)/lib -- -x$(package)
+
+# Keep original DWARF line tables in the kernel dbgsym package.
+override_dh_dwz:

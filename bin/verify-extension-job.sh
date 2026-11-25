@@ -102,7 +102,7 @@ verify_job() {
   case "$recipe_name" in
     babelfish*) custom_root_prefix=babelfish ;;
     ivorysql*) custom_root_prefix=ivory ;;
-    openhalodb*) custom_root_prefix=halo ;;
+    openhalodb-19) custom_root_prefix=halo ;;
     orioledb*) custom_root_prefix=oriole ;;
     pgedge*) custom_root_prefix=pgedge ;;
     pgtde*) custom_root_prefix=pgtde ;;
