@@ -7,7 +7,7 @@ all: setup build move
 
 .NOTPARALLEL:
 
-TARBALL := pgrdf-0.6.40.tar.gz
+TARBALL := pgrdf-0.6.41.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -28,7 +28,7 @@ setup: check-src
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc 2>/dev/null || (test -f /etc/os-release && . /etc/os-release && echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-unknown}}) || echo unknown); \
 	perl -0pi -e "s/PGSTY\\)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pgrdf-0.6.40-pgrx-0.20.1.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pgrdf-0.6.41-pgrx-0.20.1.patch
 
 build: building packaging
 
