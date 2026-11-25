@@ -1,3 +1,9 @@
+decoder-raw (1.0.0-1PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot 2271b0d.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 decoder-raw (1.0+git20260728.2271b0d-1PGSTY) unstable; urgency=medium
 
   * Package upstream main snapshot 2271b0d with TRUNCATE support.
