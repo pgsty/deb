@@ -48,10 +48,12 @@ debug_count=0
 build_ids=()
 
 while IFS= read -r -d '' elf; do
-  file -b "${elf}" | grep -Eq '^ELF .* (executable|shared object)' || continue
-  readelf --sections --wide "${elf}" | grep -Eq '\.(z?debug_info|z?debug_line)' || continue
+  file_type=$(file -b "${elf}")
+  [[ ${file_type} == "ELF "*executable* || ${file_type} == "ELF "*"shared object"* ]] || continue
+  sections=$(readelf --sections --wide "${elf}")
+  [[ ${sections} =~ [[:space:]]\.z?debug_(info|line)[[:space:]] ]] || continue
 
-  build_id=$(readelf -n "${elf}" 2>/dev/null | sed -n 's/.*Build ID:[[:space:]]*//p' | head -n 1)
+  build_id=$(readelf -n "${elf}" | awk '/Build ID:/ && !found { print $NF; found = 1 }')
   relative_path=${elf#"${package_root}"/}
   if [[ -n ${build_id} ]]; then
     debug_file=${dbgsym_root}/usr/lib/debug/.build-id/${build_id:0:2}/${build_id:2}.debug
