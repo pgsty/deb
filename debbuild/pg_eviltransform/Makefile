@@ -7,7 +7,7 @@ all: setup build move
 
 .NOTPARALLEL:
 
-TARBALL := pg_eviltransform-0.0.8.tar.gz
+TARBALL := pg_eviltransform-0.0.9.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
@@ -22,7 +22,6 @@ check-src:
 setup: check-src
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-eviltransform-0.0.8-pgrx-0.20.1.patch
 	find $(BUILD_DIR) \( -name '._*' -o -name '.DS_Store' \) -delete
 	rm -rf $(BUILD_DIR)/debian; cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
