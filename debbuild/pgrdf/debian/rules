@@ -38,6 +38,5 @@ override_dh_auto_install:
 override_dh_installdocs:
 	dh_installdocs --all README.pgxn.md
 
-ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+# dwz cannot rewrite all Rust DWARF sections. dh_strip still splits full symbols.
 override_dh_dwz:
-endif
