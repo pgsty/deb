@@ -7,9 +7,8 @@ PG_VERSIONS := $(shell tr '\n' ' ' < debian/pgversions)
 %:
 	dh $@
 
-ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+# dwz cannot rewrite all Rust DWARF sections. dh_strip still splits full symbols.
 override_dh_dwz:
-endif
 
 override_dh_auto_clean:
 
