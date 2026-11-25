@@ -1,3 +1,9 @@
+spat (0.1.0-a5PGSTY) unstable; urgency=medium
+
+  * Carry the upstream alpha 5 marker in the Debian revision for snapshot fccb581.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 spat (0.1.0a5+git20250512.fccb581-1PGSTY) unstable; urgency=medium
 
   * Update to upstream commit fccb581 (0.1.0a5).
