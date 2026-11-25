@@ -1,9 +1,9 @@
 all: check-src setup build move
 .NOTPARALLEL:
 
-TARBALL := proj-9.8.1.tar.gz
+TARBALL := proj-9.9.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
-DATUMGRIDS_TARBALL := proj_9.8.1-1.pgdg24.04+1.debian.tar.xz
+DATUMGRIDS_TARBALL := proj_9.9.0-1.pgdg24.04+1.debian.tar.xz
 SOURCE_DATUMGRIDS ?= ../SOURCES/$(DATUMGRIDS_TARBALL)
 BUILD_DIR := build
 BUILD_JOBS ?= 3
@@ -12,7 +12,7 @@ PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
 check-src:
 	@test -f "$(SOURCE_TARBALL)" || (echo "missing $(SOURCE_TARBALL), run pig build get first; if needed copy $(TARBALL) into ../SOURCES"; exit 1)
 	@test -f "$(SOURCE_DATUMGRIDS)" || (echo "missing $(SOURCE_DATUMGRIDS), run pig build get $(DATUMGRIDS_TARBALL) first; if unavailable copy only $(DATUMGRIDS_TARBALL) into ../SOURCES"; exit 1)
-	@echo "4a0b97c3d6c8b4aaa451593813ffda4456648868fe4bb40c3f9b4b96a7edba2c  $(SOURCE_DATUMGRIDS)" | sha256sum -c -
+	@echo "ad6a03f5c04643a649dc6e0b485d3c0cbb04071bf8404ec6beb85fe41b5b60c4  $(SOURCE_DATUMGRIDS)" | sha256sum -c -
 
 setup: check-src
 	rm -rf $(BUILD_DIR)

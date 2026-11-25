@@ -1,3 +1,9 @@
+proj (9.9.0-1PGSTY) stable; urgency=medium
+
+  * Package upstream 9.9.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 16:00:00 +0800
+
 proj (9.8.1-1PGSTY) unstable; urgency=medium
 
   * Generate shared-library dependencies without maintained symbol templates.
