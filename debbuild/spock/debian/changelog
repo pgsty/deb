@@ -1,3 +1,9 @@
+spock (5.0.15-1PGSTY) unstable; urgency=medium
+
+  * Require the pgEdge 18.7 rebuild with bundled Spock 5.0.15.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 16:30:00 +0800
+
 spock (5.0.14-1PGSTY) unstable; urgency=medium
 
   * Require pgEdge 18.7 with bundled Spock 5.0.14.
