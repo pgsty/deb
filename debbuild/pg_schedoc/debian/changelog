@@ -1,3 +1,9 @@
+pg-schedoc (0.0.2-2PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot 9f135c3.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 pg-schedoc (0.0.2+git20260430.9f135c3-1PGSTY) unstable; urgency=medium
 
   * Generate installation SQL with a deterministic exclusion-template order.
