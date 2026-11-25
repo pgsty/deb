@@ -1,3 +1,9 @@
+pgclone (4.10.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 4.10.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:00:00 +0800
+
 pgclone (4.9.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 4.9.0.
