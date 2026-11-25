@@ -29,6 +29,5 @@ override_dh_auto_install:
 	    cp crates/pg_improv/sql/pg_improv--*.sql debian/$$PKG/usr/share/postgresql/$$PG_VERSION/extension/; \
 	done
 
-ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+# dwz cannot rewrite all Rust DWARF sections. dh_strip still splits full symbols.
 override_dh_dwz:
-endif

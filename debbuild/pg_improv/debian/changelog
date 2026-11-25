@@ -1,3 +1,9 @@
+pg-improv (0.15.0-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 0.15.0.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:00:00 +0800
+
 pg-improv (0.14.0-2PGSTY) unstable; urgency=medium
 
   * Rebuild for PostgreSQL 15 through 19 with pgrx 0.20.1.

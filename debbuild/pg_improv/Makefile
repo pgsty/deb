@@ -3,9 +3,9 @@ CARGO_PROFILE_RELEASE_DEBUG ?= 2
 CARGO_PROFILE_RELEASE_STRIP ?= none
 export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 
-# Source: https://codeberg.org/gregburd/improv/archive/v0.14.0.tar.gz
-# SHA256: a54ba0d206f482122cacfe31fdf36a975634a81be39cf496ee59e27ff8e452c1
-TARBALL := improv-0.14.0.tar.gz
+# Source: https://codeberg.org/gregburd/improv/archive/v0.15.0.tar.gz
+# SHA256: b2ce411e68cf3b3c726e5f61168911569ccaf2399acb80ab77c39ef25f710d96
+TARBALL := improv-0.15.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 CARGO_TARGET_DIR ?= $(abspath $(BUILD_DIR)/crates/pg_improv/target)
@@ -26,7 +26,7 @@ setup: check-src
 	cp -r debian $(BUILD_DIR)/debian
 	printf '%s\n' $(PG_VERSIONS) > $(BUILD_DIR)/debian/pgversions
 	OS_CODENAME=$$(lsb_release -sc); sed -i "1s/PGSTY)/PGSTY~$${OS_CODENAME})/" $(BUILD_DIR)/debian/changelog
-	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-improv-0.14.0-pgrx-0.20.1.patch
+	patch --batch --fuzz=0 -p1 -d $(BUILD_DIR) < patches/pg-improv-0.15.0-pgrx-0.20.1.patch
 
 check-pgrx:
 	@CURRENT=$$(PATH="$$HOME/.cargo/bin:$$PATH" cargo pgrx --version 2>/dev/null | awk '{print $$2}'); \

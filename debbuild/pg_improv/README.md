@@ -1,13 +1,13 @@
 # pg_improv packaging
 
-This recipe and the RPM spec use upstream **0.14.0** with the shared
-`pg-improv-0.14.0-pgrx-0.20.1.patch`. The patch updates the extension
+This recipe and the RPM spec use upstream **0.15.0** with the shared
+`pg-improv-0.15.0-pgrx-0.20.1.patch`. The patch updates the extension
 workspace and lockfile for pgrx 0.20.1 and adds support for PG19.
 
 - Upstream: <https://codeberg.org/gregburd/improv>
-- Release: <https://codeberg.org/gregburd/improv/src/tag/v0.14.0>
-- Source: <https://codeberg.org/gregburd/improv/archive/v0.14.0.tar.gz>
-- Archive: `improv-0.14.0.tar.gz`, root `improv/`
+- Release: <https://codeberg.org/gregburd/improv/src/tag/v0.15.0>
+- Source: <https://codeberg.org/gregburd/improv/archive/v0.15.0.tar.gz>
+- Archive: `improv-0.15.0.tar.gz`, root `improv/`
 - SHA-256: `a54ba0d206f482122cacfe31fdf36a975634a81be39cf496ee59e27ff8e452c1`
 - License: Apache-2.0 OR MIT
 - The PostgreSQL build range is 15–19.
@@ -23,7 +23,7 @@ is retained for RPM debuginfo/debugsource and Debian's automatic dbgsym split.
 Upstream does not emit PGXS bitcode for this Rust extension.
 
 Run `pig build get pg_improv` first. Until the catalogue and source mirror
-are updated, copy only `improv-0.14.0.tar.gz` into the builder's source
+are updated, copy only `improv-0.15.0.tar.gz` into the builder's source
 directory (`~/rpmbuild/SOURCES/` on RPM; `~/ext/src/` linked by
 `~/debbuild/SOURCES` on DEB). Prepare the matching toolchain:
 
