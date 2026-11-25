@@ -3,7 +3,7 @@ export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
 
 all: setup build move
 
-TARBALL := pg_fts-1.18.0.tar.gz
+TARBALL := pg_fts-1.18.1.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
