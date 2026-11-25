@@ -31,3 +31,20 @@ override_dh_auto_install:
 	    cp $(CARGO_TARGET_DIR)/release/$$DIR_NAME/usr/lib/postgresql/$$PG_VERSION/lib/*.so $(CURDIR)/debian/$$FULL_NAME/usr/lib/postgresql/$$PG_VERSION/lib/; \
 	    cp $(CARGO_TARGET_DIR)/release/$$DIR_NAME/usr/share/postgresql/$$PG_VERSION/extension/* $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	done
+
+# The compiled module uses symbols added by the November 2026 security minors.
+override_dh_gencontrol:
+	set -e; for pg in $$(cat debian/pgversions); do \
+		case "$$pg" in \
+			19) minimum=19.0 ;; \
+			18) minimum=18.7 ;; \
+			17) minimum=17.12 ;; \
+			16) minimum=16.16 ;; \
+			15) minimum=15.20 ;; \
+			*) echo "unsupported PostgreSQL major: $$pg" >&2; exit 1 ;; \
+		esac; \
+		built=$$(/usr/lib/postgresql/$$pg/bin/pg_config --version); \
+		built=$${built#PostgreSQL }; built=$${built%% *}; \
+		dpkg --compare-versions "$$built" ge "$$minimum"; \
+		dh_gencontrol -ppostgresql-$$pg-vchord-bm25 -- -Vpostgresql:Depends="postgresql-$$pg (>= $$minimum)"; \
+	done
