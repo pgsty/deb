@@ -1,3 +1,9 @@
+imgsmlr (1.0.0-1PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot c484a15.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 imgsmlr (1.0+git20180223.c484a15-1PGSTY) unstable; urgency=medium
 
   * Pin the clean upstream master snapshot c484a15.
