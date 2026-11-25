@@ -1,0 +1,142 @@
+--- a/.cargo/config.toml
++++ b/.cargo/config.toml
+@@ -1,18 +1,4 @@
+-[target.'cfg(all())']
+-rustflags = ["--cfg", "tokio_unstable"]
+-
+-[target.x86_64-unknown-linux-gnu]
+-linker = "/usr/bin/clang"
+-rustflags = ["-C", "link-arg=--ld-path=/usr/bin/mold"]
+-
+-[target.aarch64-unknown-linux-gnu]
+-linker = "/usr/bin/clang"
+-rustflags = [
+-    "-C",
+-    "link-arg=--ld-path=/usr/bin/mold",
+-    "-C",
+-    "target-feature=+lse",
+-]
++# Linux packages supply tokio_unstable and ARM64 LSE through RUSTFLAGS.
+ 
+ # Bump reserved stack size size to 2 MB (from default 1 MB) on
+ # Windows to buid pg_query. This setting applies to all binaries,
+@@ -41,3 +27,43 @@
+ # default; release frames are a fraction of this.
+ [env]
+ RUST_MIN_STACK = "4194304"
++
++[source."pgsty-pgraw-prod"]
++git = "https://github.com/pgdogdev/pg_raw_parse.git"
++rev = "89937b1"
++replace-with = "pgsty-pgraw-prod-vendor"
++
++[source."pgsty-pgraw-prod-vendor"]
++directory = "vendor/pgraw-prod"
++
++[source."pgsty-pgraw-regress"]
++git = "https://github.com/pgdogdev/pg_raw_parse.git"
++rev = "a4784fc603563d3db8e9f381347f039f39b1dd85"
++replace-with = "pgsty-pgraw-regress-vendor"
++
++[source."pgsty-pgraw-regress-vendor"]
++directory = "vendor/pgraw-regress"
++
++[source."pgsty-scram"]
++git = "https://github.com/pgdogdev/scram.git"
++rev = "ee15a47f1051dc79589e8db666be7014c1e23fba"
++replace-with = "pgsty-scram-vendor"
++
++[source."pgsty-scram-vendor"]
++directory = "vendor/scram"
++
++[source."pgsty-pg-internals"]
++git = "https://github.com/pgdogdev/pg-internals"
++rev = "ce5c26f2501d787cdb84f610176a92880944dbcd"
++replace-with = "pgsty-pg-internals-vendor"
++
++[source."pgsty-pg-internals-vendor"]
++directory = "vendor/pg-internals"
++
++[source."pgsty-regress"]
++git = "https://github.com/pgdogdev/regress.git"
++rev = "22032787eeaef9bf97aaa3216735a7369f1f9125"
++replace-with = "pgsty-regress-vendor"
++
++[source."pgsty-regress-vendor"]
++directory = "vendor/regress"
+--- a/pgdog/src/cli.rs
++++ b/pgdog/src/cli.rs
+@@ -17,7 +17,7 @@
+ 
+ /// PgDog is a PostgreSQL pooler, proxy, load balancer and query router.
+ #[derive(Parser, Debug)]
+-#[command(name = "", version = concat!("PgDog v", env!("GIT_HASH")))]
++#[command(name = "", version = concat!("PgDog v", env!("CARGO_PKG_VERSION"), " (", env!("GIT_HASH"), ")"))]
+ pub(crate) struct Cli {
+     /// Path to the configuration file. Default: "pgdog.toml"
+     #[arg(short, long, default_value = "pgdog.toml")]
+--- a/packaging/rpm/pgdog.service
++++ b/packaging/rpm/pgdog.service
+@@ -0,0 +1,22 @@
++[Unit]
++Description=PgDog PostgreSQL proxy and pooler
++After=network-online.target
++Wants=network-online.target
++
++[Service]
++Type=simple
++User=postgres
++Group=postgres
++WorkingDirectory=/var/lib/pgsql/pgdog
++Environment=LD_LIBRARY_PATH=/usr/lib64/pgdog/plugins
++ExecStartPre=/usr/bin/pgdog -c /etc/pgdog/pgdog.toml -u /etc/pgdog/users.toml configcheck
++ExecStart=/usr/bin/pgdog -c /etc/pgdog/pgdog.toml -u /etc/pgdog/users.toml run
++ExecReload=/bin/kill -HUP $MAINPID
++KillSignal=SIGINT
++Restart=on-failure
++RestartSec=3s
++LimitNOFILE=1048576
++TimeoutStopSec=75s
++
++[Install]
++WantedBy=multi-user.target
+--- a/packaging/rpm/pgdog.toml
++++ b/packaging/rpm/pgdog.toml
+@@ -0,0 +1,27 @@
++# Default PgDog configuration installed by the PGSTY RPM.
++# Edit this file before starting the service in production.
++
++[general]
++host = "0.0.0.0"
++port = 6432
++workers = 2
++default_pool_size = 10
++min_pool_size = 1
++pooler_mode = "transaction"
++shutdown_timeout = 60_000
++log_format = "text"
++log_level = "info"
++
++[admin]
++name = "admin"
++user = "admin"
++password = "change-me"
++
++[replication]
++pg_dump_path = "/usr/pgsql-18/bin/pg_dump"
++
++[[databases]]
++name = "pgdog"
++host = "127.0.0.1"
++port = 5432
++role = "primary"
+--- a/packaging/rpm/users.toml
++++ b/packaging/rpm/users.toml
+@@ -0,0 +1,7 @@
++# Default PgDog user configuration installed by the PGSTY RPM.
++# Edit this file before starting the service in production.
++
++[[users]]
++name = "pgdog"
++database = "pgdog"
++password = "change-me"
