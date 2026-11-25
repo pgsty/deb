@@ -1,3 +1,9 @@
+pg-arraymath (1.1.0-1PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot 4822319.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 pg-arraymath (1.1+git20260702.4822319-1PGSTY) unstable; urgency=medium
 
   * Add PostgreSQL 19 header and type compatibility.
