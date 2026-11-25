@@ -1,3 +1,9 @@
+ddl-historization (1.0.0-2PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot 18eb9a4.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 ddl-historization (1.0.0+git20241205.18eb9a4-1PGSTY) unstable; urgency=medium
 
   * Update to upstream main snapshot 18eb9a4 (extension version 1.0.0).
