@@ -6,9 +6,9 @@ export CARGO_PROFILE_RELEASE_DEBUG CARGO_PROFILE_RELEASE_STRIP
 all: setup build move
 .NOTPARALLEL:
 
-# GitHub tag archive: https://github.com/pgsty/vchord_bm25/archive/refs/tags/1.2.0.tar.gz
+# GitHub tag archive: https://github.com/pgsty/vchord_bm25/archive/refs/tags/1.3.0.tar.gz
 # No downstream patch is applied.
-TARBALL := vchord_bm25-1.2.0.tar.gz
+TARBALL := vchord_bm25-1.3.0.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 SEMVER := $(shell echo $(TARBALL) | sed -E 's/^vchord_bm25-([0-9A-Za-z.+~-]+)\.tar\.gz/\1/')
 BUILD_DIR := build
@@ -20,7 +20,7 @@ PG_VERSIONS ?= $(shell cat debian/pgversions)
 export PGRX_HOME ?= $(abspath $(BUILD_DIR)/.pgrx)
 PGRX_INIT_ARGS := $(foreach v,$(PG_VERSIONS),--pg$(v)=/usr/lib/postgresql/$(v)/bin/pg_config)
 CARGO_NET_GIT_FETCH_WITH_CLI ?= true
-LOCK_SHA256 := 55bff64dbfffe27d8321de90c8709ed27b1b65adcbf3c071e773745b53227205
+LOCK_SHA256 := aa4be3c63ecda85bea394c0eab38c603fae24a4d8c41e838a433fa7b9ebff31d
 LIBCLANG_PATH ?= $(lastword $(sort $(wildcard /usr/lib/llvm-*/lib)))
 export LIBCLANG_PATH
 
