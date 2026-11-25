@@ -1,8 +1,8 @@
 all: move
 
 # Complete upstream release archive with pinned TRE and Lime sources.
-# https://api.pgxn.org/dist/pg_tre/4.6.5/pg_tre-4.6.5.zip (normalized with GNU tar)
-TARBALL := pg_tre-4.6.5.tar.gz
+# https://api.pgxn.org/dist/pg_tre/4.6.6/pg_tre-4.6.6.zip (normalized with GNU tar)
+TARBALL := pg_tre-4.6.6.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg

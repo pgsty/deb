@@ -1,3 +1,9 @@
+pg-tre (4.6.6-1PGSTY) unstable; urgency=medium
+
+  * Update to upstream 4.6.6.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:00:00 +0800
+
 pg-tre (4.6.5-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 4.6.5 for PostgreSQL 17 through 19.
