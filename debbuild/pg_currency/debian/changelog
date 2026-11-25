@@ -1,3 +1,9 @@
+pg-currency (0.0.6-2PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot 6c91875.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 pg-currency (0.0.6+git20261006.6c91875-1PGSTY) unstable; urgency=medium
 
   * Update to upstream control version 0.0.6 at commit 6c91875373f5.
