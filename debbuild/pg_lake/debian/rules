@@ -67,6 +67,8 @@ override_dh_auto_install:
 	@test -f "$(VCPKG_TOOLCHAIN_PATH)" || (echo "missing vcpkg toolchain: $(VCPKG_TOOLCHAIN_PATH)"; exit 1)
 	# Debian's PGXS does not add --pkglibdir to executable link searches. Keep
 	# the staged directory first, then expose libpgcommon/libpgport per major.
+	# pg_lake uses GNU C11. PG headers configured with C23 typeof_unqual need
+	# GCC's equivalent spelling in that dialect.
 	set -eu; \
 	for v in $(VERSIONS); do \
 		pg_config=/usr/lib/postgresql/$$v/bin/pg_config; \
@@ -74,6 +76,11 @@ override_dh_auto_install:
 		stage=$(CURDIR)/debian/$$pkg; \
 		pg_libdir=$$($$pg_config --pkglibdir); \
 		pg_includedir=$$($$pg_config --includedir); \
+		pg_cflags="$${PG_CFLAGS:-}"; \
+		pg_header="$$($$pg_config --includedir-server)/pg_config.h"; \
+		if grep -qx '#define HAVE_TYPEOF_UNQUAL 1' "$$pg_header" && ! grep -q '^#define typeof_unqual ' "$$pg_header"; then \
+			pg_cflags="$$pg_cflags -Dtypeof_unqual=__typeof_unqual__"; \
+		fi; \
 		rm -rf "$$stage"; \
 		mkdir -p "$$stage$$pg_libdir" "$$stage$$pg_includedir"; \
 		if [ "$(PG_LAKE_CLEAN)" = "1" ]; then $(MAKE) clean PG_CONFIG="$$pg_config" PG_LIBDIR="$$pg_libdir"; fi; \
@@ -84,6 +91,7 @@ override_dh_auto_install:
 		VCPKG_TARGET_TRIPLET="$(VCPKG_TARGET_TRIPLET)" \
 		VCPKG_HOST_TRIPLET="$(VCPKG_HOST_TRIPLET)" \
 		PG_LAKE_GIT_VERSION="$(PG_LAKE_GIT_VERSION)" \
+		PG_CFLAGS="$$pg_cflags" \
 		DUCKDB_BUILD_USE_CACHE=0 \
 		CMAKE_BUILD_PARALLEL_LEVEL="$(PG_LAKE_BUILD_JOBS)" \
 		$(MAKE) -j$(PG_LAKE_BUILD_JOBS) NCORES="$(PG_LAKE_BUILD_JOBS)" \
