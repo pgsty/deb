@@ -1,3 +1,9 @@
+pg-tiktoken (0.0.1-5PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot 99cb61d.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 pg-tiktoken (0.0.1+git20260825.99cb61d-4PGSTY) unstable; urgency=medium
 
   * Rebuild for PostgreSQL 15 through 19 with pgrx 0.20.1.

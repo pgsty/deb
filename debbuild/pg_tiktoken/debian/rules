@@ -35,6 +35,5 @@ override_dh_auto_install:
 	    cp $$SRC_ROOT/share/postgresql/$$PG_VERSION/extension/$(SRC_DIR)--0.0.1.sql $(CURDIR)/debian/$$FULL_NAME/usr/share/postgresql/$$PG_VERSION/extension/; \
 	done
 
-ifeq ($(shell . /etc/os-release && echo $$VERSION_CODENAME),noble)
+# dwz cannot rewrite all Rust DWARF sections. dh_strip still splits full symbols.
 override_dh_dwz:
-endif
