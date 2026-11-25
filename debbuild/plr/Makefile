@@ -3,7 +3,7 @@ export PG_SUPPORTED_VERSIONS ?= $(shell cat debian/pgversions)
 
 all: setup build move
 
-TARBALL := plr-8.4.8.11.tar.gz
+TARBALL := plr-8.4.8.12.tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build
 PKG_OUTPUT_DIR ?= $(HOME)/ext/pkg
