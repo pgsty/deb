@@ -1,6 +1,7 @@
 spat (0.1.0-a5PGSTY) unstable; urgency=medium
 
   * Carry the upstream alpha 5 marker in the Debian revision for snapshot fccb581.
+  * Use boolean defaults for null NX and XX arguments on newer compilers.
 
  -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
 
