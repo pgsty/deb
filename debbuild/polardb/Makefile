@@ -5,7 +5,7 @@ all: setup build verify move
 export DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
-POLAR_VERSION := 17.11.1.0
+POLAR_VERSION := 17.12.1.0
 TARBALL := polardb-for-postgresql-$(POLAR_VERSION).tar.gz
 SOURCE_TARBALL ?= ../SOURCES/$(TARBALL)
 BUILD_DIR := build-postgres
@@ -14,11 +14,11 @@ PG_MAJOR := 17
 DEB_PACKAGE := polardb-$(PG_MAJOR)
 INSTALL_PREFIX := /usr/polar-$(PG_MAJOR)
 PG_PORT := 5432
-POLAR_COMMIT := ff510dfc
+POLAR_COMMIT := 479fdbb0
 POLAR_BRANCH := POLARDB_17_STABLE
 POLARSTORE_VERSION := 1.2.42
 POLARSTORE_DEB_RELEASE ?= 3PGSTY
-DEB_RELEASE ?= 2PGSTY
+DEB_RELEASE ?= 1PGSTY
 NUMJOBS ?= $(shell nproc)
 DETECTED_CODENAME := $(shell (lsb_release -sc 2>/dev/null) || (. /etc/os-release 2>/dev/null; echo $${VERSION_CODENAME:-$${UBUNTU_CODENAME:-}}))
 DETECTED_ARCH := $(shell dpkg --print-architecture 2>/dev/null)
@@ -71,7 +71,7 @@ check-build-deps:
 setup: check-src check-release check-platform
 	rm -rf $(BUILD_DIR); mkdir -p $(BUILD_DIR)
 	tar -C $(BUILD_DIR) --strip-components=1 -xf "$(SOURCE_TARBALL)"
-	patch -d $(BUILD_DIR) -p1 --fuzz=0 < polardb-17.11.1.0.patch
+	patch -d $(BUILD_DIR) -p1 --fuzz=0 < polardb-17.12.1.0.patch
 	sed -i.bak -e "s|^code_commit=.*|code_commit=\$${POLAR_COMMIT:-$(POLAR_COMMIT)}|" $(BUILD_DIR)/package/debian/build-deb.sh
 	sed -i.bak -e "s|^code_branch=.*|code_branch=\$${POLAR_BRANCH:-$(POLAR_BRANCH)}|" $(BUILD_DIR)/package/debian/build-deb.sh
 	sed -i.bak -e "s|^polar_commit=.*|polar_commit=\$${POLAR_COMMIT:-$(POLAR_COMMIT)}|" $(BUILD_DIR)/package/debian/build-deb.sh

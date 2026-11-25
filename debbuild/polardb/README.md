@@ -1,6 +1,6 @@
 # polardb debbuild
 
-This recipe rebuilds PolarDB for PostgreSQL from the `v17.11.1.0` source
+This recipe rebuilds PolarDB for PostgreSQL from the `v17.12.1.0` source
 tarball using the official Debian package workflow, with Pigsty-specific
 package naming and filesystem layout.
 
@@ -14,7 +14,7 @@ cd package/debian
 
 The local recipe keeps that build flow intact. Because Pigsty recipes use
 source tarballs instead of git checkouts, the Makefile injects the upstream tag
-commit `ff510dfc` so the PolarDB version string does not fall back to
+commit `479fdbb0` so the PolarDB version string does not fall back to
 `build unknown`.
 
 Pigsty packages this kernel as a versioned PostgreSQL-compatible kernel:
@@ -25,12 +25,12 @@ Prefix:  /usr/polar-17
 ```
 
 The output `.deb` file follows the Pigsty Debian repository naming style. The
-release defaults to `2PGSTY`, and the build script appends the detected distro
+release defaults to `1PGSTY`, and the build script appends the detected distro
 codename:
 
 ```text
-polardb-17_17.11.1.0-2PGSTY~bookworm_<arch>.deb
-polardb-17-dbgsym_17.11.1.0-2PGSTY~bookworm_<arch>.ddeb
+polardb-17_17.12.1.0-1PGSTY~bookworm_<arch>.deb
+polardb-17-dbgsym_17.12.1.0-1PGSTY~bookworm_<arch>.ddeb
 ```
 
 The upstream workflow calls `dpkg-deb` directly and therefore does not run
@@ -91,7 +91,7 @@ Upstream builds with `--with-pfsd`. The PFSD SDK is provided by the Pigsty
 /usr/local/polarstore/pfsd
 ```
 
-Revision `2PGSTY` rebuilds the unchanged PolarDB source against zlog 1.2.20
+Revision `1PGSTY` rebuilds the unchanged PolarDB source against zlog 1.2.20
 and PolarStore SDK `1.2.42-3PGSTY`. The default SDK gate requires that exact
 PolarStore revision for the builder's suite. Production orchestration must also
 verify the package, header and static archive hashes for its architecture.
@@ -133,13 +133,13 @@ Some Pigsty builders provide only versioned LLVM packages and commands, such as
 Debian build dependencies accept those versioned packages, and the Makefile
 detects the matching commands before falling back to unversioned names.
 
-The upstream `v17.11.1.0` Debian control already covers ICU 66 through ICU 78,
+The upstream `v17.12.1.0` Debian control already covers ICU 66 through ICU 78,
 so no suite-specific ICU dependency rewrite is required.
 
 Required local tarball:
 
 ```text
-~/pgsty/repo/ext/src/polardb-for-postgresql-17.11.1.0.tar.gz
+~/pgsty/repo/ext/src/polardb-for-postgresql-17.12.1.0.tar.gz
 ```
 
 ## 2026-11-03 production rebuild
