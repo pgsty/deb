@@ -1,3 +1,9 @@
+pg-orphaned (1.0.0-1PGSTY) unstable; urgency=medium
+
+  * Use a short package version for upstream snapshot 4e23c9c.
+
+ -- Ruohang Feng <rh@vonng.com>  Wed, 25 Nov 2026 15:24:36 +0800
+
 pg-orphaned (1.0+git20260427-1PGSTY) unstable; urgency=medium
 
   * Update to upstream snapshot 4e23c9c (2026-04-27).
