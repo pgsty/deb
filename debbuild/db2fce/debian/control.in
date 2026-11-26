@@ -1,0 +1,28 @@
+Source: db2fce
+Section: database
+Priority: optional
+Maintainer: Debian PostgreSQL Maintainers <team+postgresql@tracker.debian.org>
+Uploaders:
+ Michael Banck <mbanck@debian.org>,
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ postgresql-all <!nocheck>,
+ postgresql-server-dev-all,
+Homepage: https://github.com/credativ/db2fce
+Vcs-Browser: https://salsa.debian.org/postgresql/db2fce
+Vcs-Git: https://salsa.debian.org/postgresql/db2fce.git
+
+Package: postgresql-PGVERSION-db2fce
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${postgresql:Depends},
+ ${shlibs:Depends},
+Description: DB2 compatibility environment for PostgreSQL
+ db2fce is a PostgreSQL extension that provides a variety of DB2 functions,
+ types and operators for PostgreSQL. It facilitates the unmodified (or less
+ modified) use of (some) DB2 SQL statements in PostgreSQL. It also provides the
+ SYSIBM.SYSDUMMY1 view which is usually used by DB2 code if no data is returned
+ by a query.

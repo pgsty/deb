@@ -1,0 +1,19 @@
+db2fce (0.0.17-1PGSTY) unstable; urgency=medium
+
+  * Build PostgreSQL 19 packages for missing PGDG coordinates.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Nov 2026 14:00:00 +0800
+
+db2fce (0.0.17-1.pgdg12+2) bookworm-pgdg; urgency=medium
+
+  * Rebuild for bookworm-pgdg.
+  * Rebuild against PostgreSQL 18.7, 17.12, 16.16, 15.20, 14.25.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Mon, 13 Apr 2026 20:40:32 +0200
+
+db2fce (0.0.17-1) unstable; urgency=medium
+
+  * Initial upload.
+
+ -- Michael Banck <mbanck@debian.org>  Mon, 13 Apr 2026 20:40:32 +0200

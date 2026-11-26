@@ -1,0 +1,14 @@
+Subject: Expect PostgreSQL 19 type lookup details in the HEX negative test.
+
+--- a/expected/string_text.out
++++ b/expected/string_text.out
+@@ -48,7 +48,8 @@
+ ERROR:  function hex(integer) does not exist
+ LINE 1: SELECT HEX(000020) FROM SYSIBM.SYSDUMMY1;
+                ^
+-HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
++DETAIL:  No function of that name accepts the given argument types.
++HINT:  You might need to add explicit type casts.
+ --  UPPER(text, text)
+ SELECT UPPER('Müller', 'de_DE') FROM SYSIBM.SYSDUMMY1;
+  upper  
