@@ -18,22 +18,22 @@ build: build16 build15 build14
 
 # building deb
 build16:
-	cd build/columnar/ && PATH=/usr/lib/postgresql/16/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
+	cd build/columnar/ && PATH=/usr/lib/postgresql/16/bin:$(PATH) ./configure
 	echo '16' > build/columnar/debian/pgversions
 	cd build/columnar/ && pg_buildext updatecontrol
-	cd build/columnar/ && PATH=/usr/lib/postgresql/16/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	cd build/columnar/ && PATH=/usr/lib/postgresql/16/bin:$(PATH) dpkg-buildpackage -b -us -uc
 
 build15:
-	cd build/columnar/ && PATH=/usr/lib/postgresql/15/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
+	cd build/columnar/ && PATH=/usr/lib/postgresql/15/bin:$(PATH) ./configure
 	echo '15' > build/columnar/debian/pgversions
 	cd build/columnar/ && pg_buildext updatecontrol
-	cd build/columnar/ && PATH=/usr/lib/postgresql/15/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	cd build/columnar/ && PATH=/usr/lib/postgresql/15/bin:$(PATH) dpkg-buildpackage -b -us -uc
 
 build14:
-	cd build/columnar/ && PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin ./configure
+	cd build/columnar/ && PATH=/usr/lib/postgresql/14/bin:$(PATH) ./configure
 	echo '14' > build/columnar/debian/pgversions
 	cd build/columnar/ && pg_buildext updatecontrol
-	cd build/columnar/ && PATH=/usr/lib/postgresql/14/bin:~/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin dpkg-buildpackage -b -us -uc
+	cd build/columnar/ && PATH=/usr/lib/postgresql/14/bin:$(PATH) dpkg-buildpackage -b -us -uc
 
 # collect deb
 move:

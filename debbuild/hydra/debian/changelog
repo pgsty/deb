@@ -1,3 +1,9 @@
+hydra (1.1.2-2PGSTY) unstable; urgency=medium
+
+  * Rebuild the columnar extension for PostgreSQL 15 and 16.
+
+ -- Ruohang Feng <rh@vonng.com>  Mon, 23 Nov 2026 14:45:00 +0800
+
 hydra (1.1.2-1PGSTY) unstable; urgency=medium
 
   * Initial release, used by PGSTY/PIGSTY <https://pgsty.com>
