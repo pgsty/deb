@@ -1,3 +1,9 @@
+pg-regresql (2.2.1-1PGSTY) unstable; urgency=medium
+
+  * Use the upstream PostgreSQL 19 planner hook.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Nov 2026 14:00:00 +0800
+
 pg-regresql (2.2.0-1PGSTY) unstable; urgency=medium
 
   * Update to upstream 2.2.0 with extended-statistics restore backports.
