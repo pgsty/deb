@@ -1,0 +1,125 @@
+postgresql-prioritize (1.0.4-1PGSTY) unstable; urgency=medium
+
+  * Build PostgreSQL 19 packages for missing PGDG coordinates.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Nov 2026 14:00:00 +0800
+
+postgresql-prioritize (1.0.4-13.pgdg12+1) bookworm-pgdg; urgency=medium
+
+  * Rebuild for bookworm-pgdg.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Wed, 08 Oct 2025 19:54:53 +0200
+
+postgresql-prioritize (1.0.4-13) unstable; urgency=medium
+
+  * Upload for PostgreSQL 18. (Closes: #1117329)
+  * Add ${postgresql:Breaks}.
+  * debian/tests: Depend on postgresql-common-dev instead of 'make'.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 08 Oct 2025 19:54:53 +0200
+
+postgresql-prioritize (1.0.4-12) unstable; urgency=medium
+
+  * Upload for PostgreSQL 17.
+  * Restrict to 64-bit architectures.
+  * Mark postgresql-all as <!nocheck>.
+
+ -- Christoph Berg <myon@debian.org>  Sat, 14 Sep 2024 23:43:15 +0200
+
+postgresql-prioritize (1.0.4-11) unstable; urgency=medium
+
+  * Upload for PostgreSQL 16.
+  * Use ${postgresql:Depends}.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 18 Sep 2023 21:58:46 +0200
+
+postgresql-prioritize (1.0.4-10) unstable; urgency=medium
+
+  * Upload for PostgreSQL 15.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 24 Oct 2022 16:19:12 +0200
+
+postgresql-prioritize (1.0.4-9) unstable; urgency=medium
+
+  * Upload for PostgreSQL 14.
+
+ -- Christoph Berg <myon@debian.org>  Thu, 21 Oct 2021 10:30:30 +0200
+
+postgresql-prioritize (1.0.4-8) unstable; urgency=medium
+
+  * Allow regression tests to start with priority 0..10.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 04 Nov 2020 09:31:48 +0100
+
+postgresql-prioritize (1.0.4-7) unstable; urgency=medium
+
+  * Upload for PostgreSQL 13.
+  * Use dh --with pgxs_loop.
+  * DH 13.
+  * R³: no.
+  * debian/tests: Use 'make' instead of postgresql-server-dev-all.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 19 Oct 2020 21:24:13 +0200
+
+postgresql-prioritize (1.0.4-6) unstable; urgency=medium
+
+  * Upload for PostgreSQL 12.
+  * Add debian/gitlab-ci.yml.
+
+ -- Christoph Berg <myon@debian.org>  Thu, 31 Oct 2019 10:50:34 +0100
+
+postgresql-prioritize (1.0.4-5) unstable; urgency=medium
+
+  * Fix detection of extension support, otherwise it thinks "9.0" is a
+    substring of "19.04" in the PG version number.
+
+ -- Christoph Berg <christoph.berg@credativ.de>  Wed, 06 Feb 2019 15:26:43 +0100
+
+postgresql-prioritize (1.0.4-4) unstable; urgency=medium
+
+  * Upload for PostgreSQL 11.
+  * Move maintainer address to team+postgresql@tracker.debian.org.
+
+ -- Christoph Berg <myon@debian.org>  Sat, 13 Oct 2018 22:31:27 +0200
+
+postgresql-prioritize (1.0.4-3) unstable; urgency=medium
+
+  * Move packaging repository to salsa.debian.org
+
+ -- Christoph Berg <myon@debian.org>  Sat, 27 Jan 2018 11:12:54 +0100
+
+postgresql-prioritize (1.0.4-2) unstable; urgency=medium
+
+  * Team upload taking over for the PostgreSQL team.
+  * Rebuild for PostgreSQL 10 support.
+
+ -- Christoph Berg <christoph.berg@credativ.de>  Wed, 27 Sep 2017 13:55:02 +0200
+
+postgresql-prioritize (1.0.4-1.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Update package for PostgreSQL 9.6.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 26 Sep 2016 22:57:36 +0200
+
+postgresql-prioritize (1.0.4-1.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Update package for PostgreSQL 9.5. (Closes: #812409)
+  * Update packaging to 3.0 (quilt) and pg_buildext.
+
+ -- Christoph Berg <christoph.berg@credativ.de>  Tue, 02 Feb 2016 11:37:54 +0100
+
+postgresql-prioritize (1.0.4-1.1) unstable; urgency=medium
+
+  * Rebuild for postgresql-9.4.
+  * Set explicit dependency on postgresql version supported.
+
+ -- Christoph Berg <christoph.berg@credativ.de>  Mon, 11 Aug 2014 12:16:49 +0200
+
+postgresql-prioritize (1.0.4-1) unstable; urgency=low
+
+  * New upstream release (Closes: #706560).
+
+ -- Cyril Bouthors <cyril@bouthors.org>  Wed, 01 May 2013 17:19:06 +0200

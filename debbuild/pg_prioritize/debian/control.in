@@ -1,0 +1,28 @@
+Source: postgresql-prioritize
+Section: database
+Priority: optional
+Maintainer: Debian PostgreSQL Maintainers <team+postgresql@tracker.debian.org>
+Uploaders:
+ Christoph Berg <myon@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ postgresql-all <!nocheck>,
+ postgresql-server-dev-all,
+Standards-Version: 4.7.2
+Homepage: http://pgxn.org/dist/prioritize/
+XS-Testsuite: autopkgtest
+Vcs-Browser: https://salsa.debian.org/postgresql/postgresql-prioritize
+Vcs-Git: https://salsa.debian.org/postgresql/postgresql-prioritize.git
+
+Package: postgresql-PGVERSION-prioritize
+Architecture: amd64 arm64
+Depends:
+ ${misc:Depends},
+ ${postgresql:Depends},
+ ${shlibs:Depends},
+Breaks:
+ ${postgresql:Breaks},
+Description: Get and set the nice priorities of PostgreSQL backends
+ This module implements an interface to getpriority() and setpriority() for
+ PostgreSQL backends, callable from SQL functions. Essentially, this module
+ allows users to `renice' their backends.

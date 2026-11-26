@@ -1,0 +1,71 @@
+--- /dev/null
++++ b/expected/prioritize.out
+@@ -0,0 +1,43 @@
++CREATE EXTENSION prioritize;
++-- Default priority is of course 0, but some Debian buildds run at 10
++SELECT get_backend_priority(pg_backend_pid()) BETWEEN 0 AND 10 AS get_backend_priority;
++ get_backend_priority 
++----------------------
++ t
++(1 row)
++
++SELECT set_backend_priority(pg_backend_pid(), -5);
++WARNING:  setpriority(): permission denied
++ set_backend_priority 
++----------------------
++ f
++(1 row)
++
++SET client_min_messages = warning;
++SELECT set_backend_priority(pg_backend_pid(), 15);
++ set_backend_priority 
++----------------------
++ t
++(1 row)
++
++RESET client_min_messages;
++SELECT get_backend_priority(pg_backend_pid());
++ get_backend_priority 
++----------------------
++                   15
++(1 row)
++
++SELECT get_backend_priority(1);
++WARNING:  PID 1 is not a PostgreSQL server process
++ get_backend_priority 
++----------------------
++                     
++(1 row)
++
++SELECT set_backend_priority(1, 5);
++WARNING:  PID 1 is not a PostgreSQL server process
++ set_backend_priority 
++----------------------
++ f
++(1 row)
++
+--- /dev/null
++++ b/sql/prioritize.sql
+@@ -0,0 +1,12 @@
++CREATE EXTENSION prioritize;
++
++-- Default priority is of course 0, but some Debian buildds run at 10
++SELECT get_backend_priority(pg_backend_pid()) BETWEEN 0 AND 10 AS get_backend_priority;
++SELECT set_backend_priority(pg_backend_pid(), -5);
++SET client_min_messages = warning;
++SELECT set_backend_priority(pg_backend_pid(), 15);
++RESET client_min_messages;
++SELECT get_backend_priority(pg_backend_pid());
++
++SELECT get_backend_priority(1);
++SELECT set_backend_priority(1, 5);
+--- a/Makefile
++++ b/Makefile
+@@ -9,7 +9,6 @@ DOCS = README.md
+ REGRESS = $(MODULES)
+ 
+ SQL_IN = $(MODULES).sql.in
+-EXTRA_CLEAN = sql/$(MODULES).sql expected/$(MODULES).out
+ 
+ USE_EXTENSION = $(shell pg_config --version | grep -qE " 8\.|9\.0" && echo no || echo yes)
+ 

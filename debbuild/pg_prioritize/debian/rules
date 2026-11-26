@@ -1,0 +1,8 @@
+#!/usr/bin/make -f
+
+override_dh_installdocs:
+	dh_installdocs --all README.md
+	rm -rf debian/postgresql-*-prioritize/usr/share/doc/postgresql-doc-*/
+
+%:
+	dh $@ --with pgxs_loop
