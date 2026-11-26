@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+# Fix C++ linking on 9.5/9.6
+export PG_CXXFLAGS = -fPIC
+
+override_dh_auto_build:
+	$(MAKE) -C doc html
+
+override_dh_auto_clean:
+	dh_auto_clean --buildsystem=pgxs_loop
+	rm -rf results/
+	$(MAKE) -C doc clean
+
+override_dh_installdocs:
+	dh_installdocs --all doc/html/
+	# remove duplicate files from unwanted location
+	rm -rv debian/postgresql-*-pgsphere/usr/share/doc/postgresql-doc-*
+
+%:
+	dh $@ --with pgxs_loop
