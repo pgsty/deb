@@ -1,0 +1,48 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/architecture.mk
+
+VERSIONS=$(shell pg_buildext supported-versions)
+
+override_dh_auto_configure:
+	# nothing to do here, see override_dh_auto_install instead
+
+override_dh_auto_build:
+	# nothing to do here, see override_dh_auto_install instead
+
+override_dh_auto_test:
+	# nothing to do here, see debian/tests/* instead
+
+override_dh_auto_install:
+	+set -eux; for v in $(VERSIONS); do \
+	  [ -f pgsql/Makefile ] && $(MAKE) -C pgsql distclean; \
+	  dh_auto_configure -- --with-pgconfig=/usr/lib/postgresql/$$v/bin/pg_config GITCMD=false; \
+	  $(MAKE); \
+	  $(MAKE) install DESTDIR=$(CURDIR)/debian/postgresql-$$v-pointcloud; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs --all README.*
+
+override_dh_pgxs_test:
+	set -ex; \
+	for v in $(shell pg_buildext supported-versions); do \
+	  PG_CONFIG=/usr/lib/postgresql/$$v/bin/pg_config; \
+	  if ! pg_virtualenv -p postgresql-$$v-pointcloud -v $$v \
+		 make -C pgsql installcheck \
+		   PG_CONFIG=$$PG_CONFIG \
+		   PGXS=$$($$PG_CONFIG --pgxs) \
+		   PGSQL_MAJOR_VERSION=$${v%.*} \
+		   LAZPERF_STATUS=disabled; then \
+		 echo "*** pgsql/regression.diffs ***"; \
+		 cat pgsql/regression.diffs; \
+		 if [ $(DEB_HOST_ARCH_ENDIAN) != big ] && [ $(DEB_HOST_ARCH) != armhf ]; then exit 1; fi; \
+	  fi; \
+	done
+
+override_dh_auto_clean:
+	touch config.mk
+	dh_auto_clean
+
+%:
+	dh $@ --with autoreconf,pgxs

@@ -1,0 +1,118 @@
+pgpointcloud (1.2.5-1PGSTY) unstable; urgency=medium
+
+  * Build PostgreSQL 19 packages for missing PGDG coordinates.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Nov 2026 14:00:00 +0800
+
+pgpointcloud (1.2.5-4.pgdg12+2) bookworm-pgdg; urgency=medium
+
+  * Rebuild for bookworm-pgdg.
+  * Rebuild against PostgreSQL 18.7, 17.12, 16.16, 15.20, 14.25.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Mon, 15 Jun 2026 17:19:53 +0200
+
+pgpointcloud (1.2.5-4) unstable; urgency=medium
+
+  * Fix path to extension at test time. (Closes: #1139519)
+
+ -- Christoph Berg <myon@debian.org>  Mon, 15 Jun 2026 17:19:53 +0200
+
+pgpointcloud (1.2.5-3) unstable; urgency=medium
+
+  * Upload for PostgreSQL 18.
+  * Add ${postgresql:Breaks}.
+  * debian/tests: Depend on postgresql-common-dev instead of 'make'.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 30 Sep 2025 16:14:28 +0200
+
+pgpointcloud (1.2.5-2) unstable; urgency=medium
+
+  * Upload for PostgreSQL 17.
+  * Restrict to 64-bit architectures.
+  * Mark postgresql-all as <!nocheck>.
+  * Revert usage of ${postgresql:Depends}.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 24 Sep 2024 17:54:40 +0200
+
+pgpointcloud (1.2.5-1) unstable; urgency=medium
+
+  * New upstream version.
+  * Upload for PostgreSQL 16.
+  * Use ${postgresql:Depends}.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 20 Sep 2023 09:56:17 +0200
+
+pgpointcloud (1.2.4-2) unstable; urgency=medium
+
+  * Upload for PostgreSQL 15.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 24 Oct 2022 13:59:14 +0200
+
+pgpointcloud (1.2.4-1) unstable; urgency=medium
+
+  * New upstream version.
+  * Update watch file to look at github tags.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 26 Sep 2022 14:48:58 +0200
+
+pgpointcloud (1.2.3-1) unstable; urgency=medium
+
+  * New upstream version.
+  * Fix use-after-free in SPI_connect code.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 12 Sep 2022 12:58:39 +0200
+
+pgpointcloud (1.2.1-8) unstable; urgency=medium
+
+  * Upload for PostgreSQL 14.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 20 Oct 2021 13:15:15 +0200
+
+pgpointcloud (1.2.1-7) unstable; urgency=medium
+
+  [ Christian Ehrhardt ]
+  * Ignore build time regression test results on armhf
+
+ -- Christoph Berg <myon@debian.org>  Wed, 02 Dec 2020 16:42:22 +0100
+
+pgpointcloud (1.2.1-6) unstable; urgency=medium
+
+  * Ignore regression test results on armhf. (Closes: #974869)
+
+ -- Christoph Berg <myon@debian.org>  Mon, 23 Nov 2020 12:10:16 +0100
+
+pgpointcloud (1.2.1-5) unstable; urgency=medium
+
+  * Ignore regression test results on big-endian.
+    https://github.com/pgpointcloud/pointcloud/issues/278
+
+ -- Christoph Berg <myon@debian.org>  Sat, 31 Oct 2020 23:06:59 +0100
+
+pgpointcloud (1.2.1-4) unstable; urgency=medium
+
+  * Run test also at build-time.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 28 Oct 2020 22:06:38 +0100
+
+pgpointcloud (1.2.1-3) unstable; urgency=medium
+
+  * Upload for PostgreSQL 13.
+  * Catch test output variation on 32bit platforms.
+  * R³: no.
+  * DH 13.
+  * debian/tests: Use 'make' instead of postgresql-server-dev-all.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 19 Oct 2020 13:00:13 +0200
+
+pgpointcloud (1.2.1-2) unstable; urgency=medium
+
+  * Mention all copyright holders in debian/copyright.
+
+ -- Christoph Berg <myon@debian.org>  Sun, 12 Apr 2020 13:16:09 +0200
+
+pgpointcloud (1.2.1-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 08 Jan 2020 16:41:48 +0100

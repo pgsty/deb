@@ -1,0 +1,25 @@
+#!/bin/sh
+
+set -eux
+
+# we don't want to run configure, fake enough of it so PGXS works
+test -f config.mk || ln -s config.mk.in config.mk
+test -f pgsql/Makefile || ln -s Makefile.in pgsql/Makefile
+
+DEB_HOST_ARCH_ENDIAN=$(dpkg-architecture -q"DEB_HOST_ARCH_ENDIAN")
+DEB_HOST_ARCH=$(dpkg-architecture -q"DEB_HOST_ARCH")
+
+for v in $(pg_buildext installed-versions); do
+  PG_CONFIG=/usr/lib/postgresql/$v/bin/pg_config
+  if ! pg_virtualenv -v $v \
+     make installcheck \
+       PG_CONFIG=$PG_CONFIG \
+       PGXS=$($PG_CONFIG --pgxs) \
+       PGSQL_MAJOR_VERSION=${v%.*} \
+       LAZPERF_STATUS=disabled; then
+     echo "*** pgsql/regression.diffs ***"
+     cat pgsql/regression.diffs
+     # ignore problems on big endian and armhf
+     if [ $DEB_HOST_ARCH_ENDIAN != big ] && [ $DEB_HOST_ARCH != armhf ]; then exit 1; fi
+  fi
+done

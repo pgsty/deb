@@ -1,0 +1,47 @@
+Source: pgpointcloud
+Section: database
+Priority: optional
+Maintainer: Debian PostgreSQL Maintainers <team+postgresql@tracker.debian.org>
+Uploaders:
+ Christoph Berg <myon@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-autoreconf | debhelper-compat (= 13),
+ libxml2-dev,
+ postgresql-all <!nocheck>,
+ postgresql-server-dev-all,
+ zlib1g-dev,
+Standards-Version: 4.7.4
+Vcs-Browser: https://salsa.debian.org/postgresql/pgpointcloud
+Vcs-Git: https://salsa.debian.org/postgresql/pgpointcloud.git
+Homepage: https://github.com/pgpointcloud/pointcloud
+
+Package: postgresql-PGVERSION-pointcloud
+Architecture: amd64 arm64
+Depends:
+ postgresql-PGVERSION,
+ ${misc:Depends},
+ ${shlibs:Depends},
+Breaks:
+ ${postgresql:Breaks},
+Description: PostgreSQL extension for storing point cloud (LIDAR) data
+ LIDAR sensors quickly produce millions of points with large numbers of
+ variables measured on each point. The challenge for a point cloud database
+ extension is efficiently storing this data while allowing high fidelity access
+ to the many variables stored.
+ .
+ Much of the complexity in handling LIDAR comes from the need to deal with
+ multiple variables per point. The variables captured by LIDAR sensors varies
+ by sensor and capture process. Some data sets might contain only X/Y/Z values.
+ Others will contain dozens of variables: X, Y, Z; intensity and return number;
+ red, green, and blue values; return times; and many more. There is no
+ consistency in how variables are stored: intensity might be stored in a 4-byte
+ integer, or in a single byte; X/Y/Z might be doubles, or they might be scaled
+ 4-byte integers.
+ .
+ PostgreSQL Pointcloud deals with all this variability by using a "schema
+ document" to describe the contents of any particular LIDAR point. Each point
+ contains a number of dimensions, and each dimension can be of any data type,
+ with scaling and/or offsets applied to move between the actual value and the
+ value stored in the database. The schema document format used by PostgreSQL
+ Pointcloud is the same one used by the PDAL library.
