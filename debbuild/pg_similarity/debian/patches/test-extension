@@ -1,0 +1,96 @@
+--- a/expected/test1.out
++++ b/expected/test1.out
+@@ -2,12 +2,7 @@
+ -- pg_similarity
+ -- testing similarity functions and operators
+ --
+---
+--- Turn off echoing so that expected file does not depend on contents of
+--- this file
+---
+-SET client_min_messages to warning;
+-\set ECHO none
++CREATE EXTENSION pg_similarity;
+ \set a '\'Euler Taveira de Oliveira\''
+ \set b '\'Euler T Oliveira\''
+ \set c '\'Oiler Taviera do Oliviera\''
+--- a/sql/test1.sql
++++ b/sql/test1.sql
+@@ -3,15 +3,7 @@
+ -- testing similarity functions and operators
+ --
+ 
+---
+--- Turn off echoing so that expected file does not depend on contents of
+--- this file
+---
+-SET client_min_messages to warning;
+-\set ECHO none
+-\i pg_similarity.sql
+-RESET client_min_messages;
+-\set ECHO all
++CREATE EXTENSION pg_similarity;
+ 
+ \set a '\'Euler Taveira de Oliveira\''
+ \set b '\'Euler T Oliveira\''
+--- a/expected/test2.out
++++ b/expected/test2.out
+@@ -7,6 +7,7 @@
+ --
+ RESET client_min_messages;
+ \set ECHO all
++LOAD 'pg_similarity';
+ --
+ -- errors
+ --
+--- a/sql/test2.sql
++++ b/sql/test2.sql
+@@ -9,6 +9,8 @@
+ RESET client_min_messages;
+ \set ECHO all
+ 
++LOAD 'pg_similarity';
++
+ --
+ -- errors
+ --
+--- a/expected/test3.out
++++ b/expected/test3.out
+@@ -21,12 +21,6 @@ INSERT INTO simtst (a) VALUES
+ ('Oliveira, E. T.'),
+ ('ETO');
+ -- Levenshtein
+-SHOW pg_similarity.levenshtein_threshold;
+- pg_similarity.levenshtein_threshold 
+--------------------------------------
+- 0.7
+-(1 row)
+-
+ SELECT a FROM simtst WHERE a ~== :a;
+              a             
+ ---------------------------
+@@ -36,6 +30,12 @@ SELECT a FROM simtst WHERE a ~== :a;
+  EULER TAVEIRA OLIVEIRA
+ (4 rows)
+ 
++SHOW pg_similarity.levenshtein_threshold;
++ pg_similarity.levenshtein_threshold 
++-------------------------------------
++ 0.7
++(1 row)
++
+ SET pg_similarity.levenshtein_threshold to 0.4;
+ SHOW pg_similarity.levenshtein_threshold;
+  pg_similarity.levenshtein_threshold 
+--- a/sql/test3.sql
++++ b/sql/test3.sql
+@@ -26,8 +26,8 @@ INSERT INTO simtst (a) VALUES
+ ('ETO');
+ 
+ -- Levenshtein
+-SHOW pg_similarity.levenshtein_threshold;
+ SELECT a FROM simtst WHERE a ~== :a;
++SHOW pg_similarity.levenshtein_threshold;
+ SET pg_similarity.levenshtein_threshold to 0.4;
+ SHOW pg_similarity.levenshtein_threshold;
+ SELECT a FROM simtst WHERE a ~== :a;

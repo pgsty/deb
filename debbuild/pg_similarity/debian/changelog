@@ -1,0 +1,96 @@
+pg-similarity (1.0-1PGSTY) unstable; urgency=medium
+
+  * Build PostgreSQL 19 packages for missing PGDG coordinates.
+
+ -- Ruohang Feng <rh@vonng.com>  Tue, 24 Nov 2026 14:00:00 +0800
+
+pg-similarity (1.0-9.pgdg12+2) bookworm-pgdg; urgency=medium
+
+  * Rebuild for bookworm-pgdg.
+  * Rebuild against PostgreSQL 18.7, 17.12, 16.16, 15.20, 14.25.
+  * No source changes.
+
+ -- PostgreSQL on Debian and Ubuntu <pgsql-pkg-debian@lists.postgresql.org>  Wed, 08 Oct 2025 16:47:35 +0200
+
+pg-similarity (1.0-9) unstable; urgency=medium
+
+  * Upload for PostgreSQL 18. (Closes: #1117289)
+  * Add ${postgresql:Breaks}.
+  * debian/tests: Depend on postgresql-common-dev instead of 'make'.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 08 Oct 2025 16:47:35 +0200
+
+pg-similarity (1.0-8) unstable; urgency=medium
+
+  * Upload for PostgreSQL 17.
+  * Restrict to 64-bit architectures.
+  * Mark postgresql-all as <!nocheck>.
+  * Strip packaging repo down to debian/.
+
+ -- Christoph Berg <myon@debian.org>  Sat, 14 Sep 2024 10:41:46 +0200
+
+pg-similarity (1.0-7) unstable; urgency=medium
+
+  * Upload for PostgreSQL 16.
+  * Fix datum-vs-pointer issue; fix GUC boot values.
+  * Use ${postgresql:Depends}.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 20 Sep 2023 10:19:20 +0200
+
+pg-similarity (1.0-6) unstable; urgency=medium
+
+  * Upload for PostgreSQL 15.
+  * debian/watch: Look at GitHub tags instead of releases.
+
+ -- Christoph Berg <myon@debian.org>  Fri, 21 Oct 2022 10:59:50 +0200
+
+pg-similarity (1.0-5) unstable; urgency=medium
+
+  * Upload for PostgreSQL 14.
+
+ -- Christoph Berg <myon@debian.org>  Fri, 15 Oct 2021 15:23:58 +0200
+
+pg-similarity (1.0-4) unstable; urgency=low
+
+  [ Debian Janitor ]
+  * Bump debhelper from deprecated 9 to 10.
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+    Repository-Browse.
+
+  [ Christoph Berg ]
+  * Upload for PostgreSQL 13.
+  * Use dh --with pgxs.
+  * R³: no.
+  * DH 13.
+  * debian/tests: Use 'make' instead of postgresql-server-dev-all.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 19 Oct 2020 11:42:07 +0200
+
+pg-similarity (1.0-3) unstable; urgency=medium
+
+  * Upload for PostgreSQL 12.
+  * Add debian/gitlab-ci.yml.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 29 Oct 2019 13:35:11 +0100
+
+pg-similarity (1.0-2) unstable; urgency=medium
+
+  * Upload for PostgreSQL 11.
+  * Move maintainer address to team+postgresql@tracker.debian.org.
+
+ -- Christoph Berg <myon@debian.org>  Fri, 12 Oct 2018 13:14:58 +0200
+
+pg-similarity (1.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Mark license as BSD rather than MIT, pointed out by Thorsten Alteholz,
+    thanks!
+  * Move packaging repository to salsa.debian.org
+
+ -- Christoph Berg <christoph.berg@credativ.de>  Tue, 27 Mar 2018 10:48:59 +0200
+
+pg-similarity (1.0~20160916-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Christoph Berg <myon@debian.org>  Fri, 10 Nov 2017 21:20:16 +0100

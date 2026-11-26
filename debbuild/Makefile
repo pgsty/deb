@@ -1429,7 +1429,7 @@ colnames:
 .PHONY: pg_nanotime pg_tre
 
 # PostgreSQL 19 gaps in PGDG APT repositories.
-PGDG_GAP_RECIPES := db2fce first_last_agg
+PGDG_GAP_RECIPES := db2fce first_last_agg pg_similarity
 .PHONY: $(PGDG_GAP_RECIPES)
 $(PGDG_GAP_RECIPES):
 	$(MAKE) -C $@

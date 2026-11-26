@@ -1,0 +1,15 @@
+Subject: Use uint8 for the similarity bitmap pointers
+
+PostgreSQL 19 removes the bits8 alias. uint8 is available on every supported major and has the same width.
+
+--- a/hamming.c
++++ b/hamming.c
+@@ -44,7 +44,7 @@
+ {
+ 	VarBit		*a, *b;
+ 	int		alen, blen;
+-	bits8		*pa, *pb;
++	uint8		*pa, *pb;
+ 	int		maxlen;
+ 	float8		res = 0.0;
+ 	int		i;

@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+override_dh_installdocs:
+	dh_installdocs --all README.*
+
+override_dh_pgxs_test:
+	pg_buildext -o extra_float_digits=0 installcheck . . postgresql-%v-similarity
+
+%:
+	dh $@ --with pgxs
