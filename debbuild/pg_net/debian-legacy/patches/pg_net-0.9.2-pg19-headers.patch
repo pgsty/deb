@@ -1,0 +1,178 @@
+Subject: Build response headers with the PostgreSQL 19 JSONB input state
+
+--- a/src/util.h
++++ b/src/util.h
+@@ -5,6 +5,12 @@
+ 
+ extern struct curl_slist *pg_text_array_to_slist(ArrayType *array,
+                                                  struct curl_slist *headers);
+-extern void parseHeaders(char *contents, JsonbParseState *headers);
++#if PG_VERSION_NUM >= 190000
++typedef JsonbInState HeaderState;
++#else
++typedef JsonbParseState *HeaderState;
++#endif
++extern void parseHeaders(const char *line, size_t len, HeaderState *state);
++extern Jsonb *finishHeaders(HeaderState *state);
+ 
+ #endif
+--- a/src/util.c
++++ b/src/util.c
+@@ -88,35 +88,37 @@
+     return headers;
+ }
+ 
+-/*TODO: make the parsing more robust, test with invalid headers*/
+-void parseHeaders(char *contents, JsonbParseState *headers) {
+-    /* per curl docs, the status code is included in the header data
+-     * (it starts with: HTTP/1.1 200 OK or HTTP/2 200 OK)*/
+-    bool firstLine = strncmp(contents, "HTTP/", 5) == 0;
+-    /* the final(end of headers) last line is empty - just a CRLF */
+-    bool lastLine = strncmp(contents, "\r\n", 2) == 0;
+-    char *token;
+-    char *tmp = pstrdup(contents);
++/* libcurl supplies a length-delimited field line. Keep its text until the
++ * response object has been finalized. The status and separator lines have
++ * no field name. */
++void parseHeaders(const char *line, size_t len, HeaderState *state) {
++    const char *colon = memchr(line, ':', len);
++    const char *end = line + len;
++    const char *value;
+     JsonbValue key, val;
+ 
+-    if (!firstLine && !lastLine) {
+-        /*The header comes as "Header-Key: val", split by whitespace and
+-        ditch
+-         * the colon later*/
+-        token = strtok(tmp, " ");
++    if (!colon || colon == line || (len >= 5 && memcmp(line, "HTTP/", 5) == 0))
++        return;
++    value = colon + 1;
++    while (value < end && (*value == ' ' || *value == '\t'))
++        value++;
++    while (end > value && (end[-1] == '\r' || end[-1] == '\n' ||
++                           end[-1] == ' ' || end[-1] == '\t'))
++        end--;
++    key.type = val.type = jbvString;
++    key.val.string.len = colon - line;
++    key.val.string.val = pnstrdup(line, key.val.string.len);
++    val.val.string.len = end - value;
++    val.val.string.val = pnstrdup(value, val.val.string.len);
++    pushJsonbValue(state, WJB_KEY, &key);
++    pushJsonbValue(state, WJB_VALUE, &val);
++}
+ 
+-        key.type = jbvString;
+-        key.val.string.val = token;
+-        /*strlen - 1 because we ditch the last char - the colon*/
+-        key.val.string.len = strlen(token) - 1;
+-        (void)pushJsonbValue(&headers, WJB_KEY, &key);
+-
+-        /*Every header line ends with CRLF, split and remove it*/
+-        token = strtok(NULL, "\r\n");
+-
+-        val.type = jbvString;
+-        val.val.string.val = token;
+-        val.val.string.len = strlen(token);
+-        (void)pushJsonbValue(&headers, WJB_VALUE, &val);
+-    }
++Jsonb *finishHeaders(HeaderState *state) {
++#if PG_VERSION_NUM >= 190000
++    pushJsonbValue(state, WJB_END_OBJECT, NULL);
++    return JsonbValueToJsonb(state->result);
++#else
++    return JsonbValueToJsonb(pushJsonbValue(state, WJB_END_OBJECT, NULL));
++#endif
+ }
+--- a/src/worker.c
++++ b/src/worker.c
+@@ -71,7 +71,7 @@
+ {
+ 	int64 id;
+ 	StringInfo body;
+-	JsonbParseState* response_headers;
++	HeaderState response_headers;
+ 	struct curl_slist* request_headers;
+ } CurlData;
+ 
+@@ -111,19 +111,7 @@
+ header_cb(void *contents, size_t size, size_t nmemb, void *userp)
+ {
+ 	size_t realsize = size * nmemb;
+-	JsonbParseState *headers = (JsonbParseState *)userp;
+-
+-	/* per curl docs, the status code is included in the header data
+-	 * (it starts with: HTTP/1.1 200 OK or HTTP/2 200 OK)*/
+-	bool firstLine = strncmp(contents, "HTTP/", 5) == 0;
+-	/* the final(end of headers) last line is empty - just a CRLF */
+-	bool lastLine = strncmp(contents, "\r\n", 2) == 0;
+-
+-	/*Ignore non-header data in the first header line and last header line*/
+-	if (!firstLine && !lastLine) {
+-			parseHeaders(contents, headers);
+-	}
+-
++	parseHeaders(contents, realsize, (HeaderState *)userp);
+ 	return realsize;
+ }
+ 
+@@ -132,11 +120,9 @@
+ 	CURL *eh = curl_easy_init();
+ 
+ 	StringInfo body = makeStringInfo();
+-	JsonbParseState *response_headers = NULL;
+ 
+ 	cdata->body = body;
+-	(void)pushJsonbValue(&response_headers, WJB_BEGIN_OBJECT, NULL);
+-	cdata->response_headers = response_headers;
++	pushJsonbValue(&cdata->response_headers, WJB_BEGIN_OBJECT, NULL);
+ 	cdata->id = id;
+ 
+ 	struct curl_slist *new_headers = curl_slist_append(request_headers, "User-Agent: pg_net/" EXTVERSION);
+@@ -169,14 +155,18 @@
+ 	CURL_EZ_SETOPT(eh, CURLOPT_WRITEFUNCTION, body_cb);
+ 	CURL_EZ_SETOPT(eh, CURLOPT_WRITEDATA, cdata->body);
+ 	CURL_EZ_SETOPT(eh, CURLOPT_HEADERFUNCTION, header_cb);
+-	CURL_EZ_SETOPT(eh, CURLOPT_HEADERDATA, cdata->response_headers);
++	CURL_EZ_SETOPT(eh, CURLOPT_HEADERDATA, &cdata->response_headers);
+ 	CURL_EZ_SETOPT(eh, CURLOPT_HEADER, 0L);
+ 	CURL_EZ_SETOPT(eh, CURLOPT_URL, url);
+ 	CURL_EZ_SETOPT(eh, CURLOPT_HTTPHEADER, cdata->request_headers);
+ 	CURL_EZ_SETOPT(eh, CURLOPT_TIMEOUT_MS, timeout_milliseconds);
+ 	CURL_EZ_SETOPT(eh, CURLOPT_PRIVATE, cdata);
+ 	CURL_EZ_SETOPT(eh, CURLOPT_FOLLOWLOCATION, true);
++	#if PG_VERSION_NUM >= 190000
++	if (message_level_is_interesting(DEBUG1))
++#else
+ 	if (log_min_messages <= DEBUG1)
++#endif
+ 		CURL_EZ_SETOPT(eh, CURLOPT_VERBOSE, 1L);
+ #if LIBCURL_VERSION_NUM >= 0x075500 /* libcurl 7.85.0 */
+ 	CURL_EZ_SETOPT(eh, CURLOPT_PROTOCOLS_STR, "http,https");
+@@ -189,7 +179,7 @@
+ 		ereport(ERROR, errmsg("curl_multi_add_handle returned %s", curl_multi_strerror(code)));
+ }
+ 
+-bool is_extension_loaded(){
++bool is_extension_loaded(void){
+ 	Oid extensionOid;
+ 
+ 	StartTransactionCommand();
+@@ -335,7 +325,7 @@
+ 						bodyBin = SPI_getbinval(SPI_tuptable->vals[j], SPI_tuptable->tupdesc, 6, &tupIsNull);
+ 						if (!tupIsNull) body = TextDatumGetCString(bodyBin);
+ 
+-						cdata = palloc(sizeof(CurlData));
++						cdata = palloc0(sizeof(CurlData));
+ 
+ 						init(curl_mhandle, method, url, timeout_milliseconds, request_headers, body, id, cdata);
+ 				}
+@@ -402,7 +392,7 @@
+ 										Int64GetDatum(cdata->id)
+ 									, Int32GetDatum(http_status_code)
+ 									, CStringGetDatum(cdata->body->data)
+-									, JsonbPGetDatum(JsonbValueToJsonb(pushJsonbValue(&cdata->response_headers, WJB_END_OBJECT, NULL)))
++									, JsonbPGetDatum(finishHeaders(&cdata->response_headers))
+ 									, CStringGetDatum(contentType)
+ 									// TODO Why is this hardcoded?
+ 									, BoolGetDatum(false)

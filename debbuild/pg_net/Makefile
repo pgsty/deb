@@ -35,6 +35,7 @@ setup: check-suite check-src
 	if [ -n "$(PACKAGING_OVERLAY)" ]; then \
 		cp $(PACKAGING_OVERLAY)/changelog $(BUILD_DIR)/debian/changelog; \
 		cp $(PACKAGING_OVERLAY)/control.in $(BUILD_DIR)/debian/control.in; \
+		cp -r $(PACKAGING_OVERLAY)/patches $(BUILD_DIR)/debian/; \
 	fi
 	sed -i "1s/PGSTY)/PGSTY~$(SUITE))/" $(BUILD_DIR)/debian/changelog
 
