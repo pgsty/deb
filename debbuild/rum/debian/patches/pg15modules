@@ -1,0 +1,10 @@
+--- a/t/001_wal.pl
++++ b/t/001_wal.pl
+@@ -11,6 +11,7 @@ BEGIN
+ 	{
+ 		require PostgreSQL::Test::Cluster;
+ 		require PostgreSQL::Test::Utils;
++		require PostgreSQL::Version; # this module was not backported from PG15
+ 		return 1;
+ 	};
+ 

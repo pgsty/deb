@@ -1,0 +1,15 @@
+Skip rum_validate test broken with PG 18.7
+
+The test does weird things with the catalog and PG's response in 18.7 is different now.
+
+--- a/Makefile
++++ b/Makefile
+@@ -21,7 +21,7 @@ RELATIVE_INCLUDES = $(addprefix src/, $(
+ 
+ LDFLAGS_SL += $(filter -lm, $(LIBS))
+ 
+-REGRESS = security rum rum_validate rum_hash ruminv timestamp \
++REGRESS = security rum rum_hash ruminv timestamp \
+ 	orderby orderby_hash altorder altorder_hash limits \
+ 	int2 int4 int8 float4 float8 money oid \
+ 	time timetz date interval \

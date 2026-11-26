@@ -1,0 +1,27 @@
+Source: postgresql-rum
+Section: database
+Priority: optional
+Maintainer: Debian PostgreSQL Maintainers <team+postgresql@tracker.debian.org>
+Uploaders:
+ Christoph Berg <myon@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ postgresql-all <!nocheck>,
+ postgresql-server-dev-all,
+ systemtap-sdt-dev,
+Standards-Version: 4.7.4
+Homepage: https://github.com/postgrespro/rum
+Vcs-Browser: https://salsa.debian.org/postgresql/postgresql-rum
+Vcs-Git: https://salsa.debian.org/postgresql/postgresql-rum.git
+
+Package: postgresql-PGVERSION-rum
+Architecture: amd64 arm64
+Depends:
+ ${misc:Depends},
+ ${postgresql:Depends},
+ ${shlibs:Depends},
+Breaks:
+ ${postgresql:Breaks},
+Description: PostgreSQL RUM access method
+ This PostgreSQL extension provides the RUM access method, an inverted index
+ with additional information in posting lists.

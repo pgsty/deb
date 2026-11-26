@@ -1,0 +1,409 @@
+Subject: Adapt RUM byte cursors and PostgreSQL 19 APIs
+
+Use char pointers for encoded data arithmetic now that Pointer is void*. Update varlena access and the affected item/int8 APIs without changing the encoded format.
+
+--- a/src/rumsort.c
++++ b/src/rumsort.c
+@@ -16,6 +16,7 @@
+  */
+ 
+ #include "postgres.h"
++#include "access/htup_details.h"
+ #include "miscadmin.h"
+ #include "rumsort.h"
+ 
+
+
+--- a/src/rumdatapage.c
++++ b/src/rumdatapage.c
+@@ -60,12 +60,12 @@
+  * alignment, if needed). Setting padding bytes to zero if needed. Return the
+  * pointer incremented by space used.
+  */
+-static Pointer
+-rumDatumWrite(Pointer ptr, Datum datum, bool typbyval, char typalign,
++static RumBytePointer
++rumDatumWrite(RumBytePointer ptr, Datum datum, bool typbyval, char typalign,
+ 			  int16 typlen, char typstorage)
+ {
+ 	Size		data_length;
+-	Pointer		prev_ptr = ptr;
++	RumBytePointer		prev_ptr = ptr;
+ 
+ 	if (typbyval)
+ 	{
+@@ -104,7 +104,7 @@
+ 	else if (typlen == -1)
+ 	{
+ 		/* varlena */
+-		Pointer		val = DatumGetPointer(datum);
++		RumBytePointer		val = DatumGetPointer(datum);
+ 
+ 		if (VARATT_IS_EXTERNAL(val))
+ 		{
+@@ -224,8 +224,8 @@
+ /**
+  * Place item pointer with additional information into leaf data page.
+  */
+-Pointer
+-rumPlaceToDataPageLeaf(Pointer ptr, OffsetNumber attnum,
++RumBytePointer
++rumPlaceToDataPageLeaf(RumBytePointer ptr, OffsetNumber attnum,
+ 					   RumItem * item, ItemPointer prev, RumState * rumstate)
+ {
+ 	Form_pg_attribute attr;
+@@ -527,9 +527,9 @@
+  */
+ static bool
+ findInLeafPage(RumBtree btree, Page page, OffsetNumber *offset,
+-			   ItemPointerData *iptrOut, Pointer *ptrOut)
+-{
+-	Pointer		ptr = RumDataPageGetData(page);
++			   ItemPointerData *iptrOut, RumBytePointer *ptrOut)
++{
++	RumBytePointer		ptr = RumDataPageGetData(page);
+ 	OffsetNumber i,
+ 				maxoff,
+ 				first = FirstOffsetNumber;
+@@ -623,7 +623,7 @@
+ {
+ 	Page		page = BufferGetPage(stack->buffer);
+ 	ItemPointerData iptr;
+-	Pointer		ptr;
++	RumBytePointer		ptr;
+ 
+ 	Assert(RumPageIsLeaf(page));
+ 	Assert(RumPageIsData(page));
+@@ -848,7 +848,7 @@
+ 
+ 	if (RumPageIsLeaf(page))
+ 	{
+-		Pointer		ptr = RumDataPageGetData(page),
++		RumBytePointer		ptr = RumDataPageGetData(page),
+ 					copyPtr = NULL;
+ 		ItemPointerData iptr = {{0, 0}, 0};
+ 		RumItem		copyItem;
+@@ -1050,7 +1050,7 @@
+ 				maxoff;
+ 	Size		totalsize = 0,
+ 				prevTotalsize;
+-	Pointer		ptr,
++	RumBytePointer		ptr,
+ 				copyPtr;
+ 	Page		page;
+ 	Page		newlPage = PageGetTempPageCopy(lPage);
+@@ -1336,7 +1336,7 @@
+ void
+ updateItemIndexes(Page page, OffsetNumber attnum, RumState * rumstate)
+ {
+-	Pointer		ptr;
++	RumBytePointer		ptr;
+ 	RumItem		item;
+ 	int			j = 0,
+ 				maxoff,
+
+--- a/src/rumvacuum.c
++++ b/src/rumvacuum.c
+@@ -41,15 +41,15 @@
+  */
+ 
+ static OffsetNumber
+-rumVacuumPostingList(RumVacuumState * gvs, OffsetNumber attnum, Pointer src,
+-					 OffsetNumber nitem, Pointer *cleaned,
++rumVacuumPostingList(RumVacuumState * gvs, OffsetNumber attnum, RumBytePointer src,
++					 OffsetNumber nitem, RumBytePointer *cleaned,
+ 					 Size size, Size *newSize)
+ {
+ 	OffsetNumber i,
+ 				j = 0;
+ 	RumItem		item;
+ 	ItemPointerData prevIptr;
+-	Pointer		dst = NULL,
++	RumBytePointer		dst = NULL,
+ 				prev,
+ 				ptr = src;
+ 
+@@ -70,7 +70,7 @@
+ 			gvs->result->tuples_removed += 1;
+ 			if (!dst)
+ 			{
+-				dst = (Pointer) palloc(size);
++				dst = (RumBytePointer) palloc(size);
+ 				*cleaned = dst;
+ 				if (i != 0)
+ 				{
+@@ -102,7 +102,7 @@
+ static IndexTuple
+ RumFormTuple(RumState * rumstate,
+ 			 OffsetNumber attnum, Datum key, RumNullCategory category,
+-			 Pointer data,
++			 RumBytePointer data,
+ 			 Size dataSize,
+ 			 uint32 nipd,
+ 			 bool errorTooBig)
+@@ -241,7 +241,7 @@
+ 	{
+ 		OffsetNumber newMaxOff,
+ 					oldMaxOff = RumPageGetOpaque(page)->maxoff;
+-		Pointer		cleaned = NULL;
++		RumBytePointer		cleaned = NULL;
+ 		Size		newSize;
+ 
+ 		newMaxOff = rumVacuumPostingList(gvs, attnum,
+@@ -594,7 +594,7 @@
+ 			 * place
+ 			 */
+ 			Size		cleanedSize;
+-			Pointer		cleaned = NULL;
++			RumBytePointer		cleaned = NULL;
+ 			uint32		newN =
+ 			rumVacuumPostingList(gvs, rumtuple_get_attrnum(&gvs->rumstate, itup),
+ 						 RumGetPosting(itup), RumGetNPosting(itup), &cleaned,
+@@ -632,7 +632,7 @@
+ 				pfree(cleaned);
+ 				PageIndexTupleDelete(tmppage, i);
+ 
+-				if (PageAddItem(tmppage, (Item) itup, IndexTupleSize(itup), i, false, false) != i)
++				if (PageAddItem(tmppage, (char *) itup, IndexTupleSize(itup), i, false, false) != i)
+ 					elog(ERROR, "failed to add item to index page in \"%s\"",
+ 						 RelationGetRelationName(gvs->index));
+ 
+
+--- a/src/rumentrypage.c
++++ b/src/rumentrypage.c
+@@ -23,7 +23,7 @@
+ rumReadTuple(RumState * rumstate, OffsetNumber attnum,
+ 			 IndexTuple itup, RumItem * items, bool copyAddInfo)
+ {
+-	Pointer		ptr = RumGetPosting(itup);
++	RumBytePointer		ptr = RumGetPosting(itup);
+ 	RumItem		item;
+ 	int			nipd = RumGetNPosting(itup),
+ 				i;
+@@ -44,7 +44,7 @@
+ rumReadTuplePointers(RumState * rumstate, OffsetNumber attnum,
+ 					 IndexTuple itup, ItemPointerData *ipd)
+ {
+-	Pointer		ptr = RumGetPosting(itup);
++	RumBytePointer		ptr = RumGetPosting(itup);
+ 	int			nipd = RumGetNPosting(itup),
+ 				i;
+ 	RumItem		item;
+@@ -398,7 +398,7 @@
+ 
+ 	entryPreparePage(btree, page, off);
+ 
+-	placed = PageAddItem(page, (Item) btree->entry, IndexTupleSize(btree->entry), off, false, false);
++	placed = PageAddItem(page, (char *) btree->entry, IndexTupleSize(btree->entry), off, false, false);
+ 	if (placed != off)
+ 		elog(ERROR, "failed to add item to index page in \"%s\"",
+ 			 RelationGetRelationName(btree->index));
+@@ -490,7 +490,7 @@
+ 			lsize += MAXALIGN(IndexTupleSize(itup)) + sizeof(ItemIdData);
+ 		}
+ 
+-		if (PageAddItem(page, (Item) itup, IndexTupleSize(itup), InvalidOffsetNumber, false, false) == InvalidOffsetNumber)
++		if (PageAddItem(page, (char *) itup, IndexTupleSize(itup), InvalidOffsetNumber, false, false) == InvalidOffsetNumber)
+ 			elog(ERROR, "failed to add item to index page in \"%s\"",
+ 				 RelationGetRelationName(btree->index));
+ 		ptr += MAXALIGN(IndexTupleSize(itup));
+@@ -530,12 +530,12 @@
+ 	IndexTuple	itup;
+ 
+ 	itup = rumPageGetLinkItup(btree, lbuf, lpage);
+-	if (PageAddItem(page, (Item) itup, IndexTupleSize(itup), InvalidOffsetNumber, false, false) == InvalidOffsetNumber)
++	if (PageAddItem(page, (char *) itup, IndexTupleSize(itup), InvalidOffsetNumber, false, false) == InvalidOffsetNumber)
+ 		elog(ERROR, "failed to add item to index root page");
+ 	pfree(itup);
+ 
+ 	itup = rumPageGetLinkItup(btree, rbuf, rpage);
+-	if (PageAddItem(page, (Item) itup, IndexTupleSize(itup), InvalidOffsetNumber, false, false) == InvalidOffsetNumber)
++	if (PageAddItem(page, (char *) itup, IndexTupleSize(itup), InvalidOffsetNumber, false, false) == InvalidOffsetNumber)
+ 		elog(ERROR, "failed to add item to index root page");
+ 	pfree(itup);
+ }
+
+--- a/src/ruminsert.c
++++ b/src/ruminsert.c
+@@ -57,7 +57,7 @@
+ 	Buffer		buffer = RumNewBuffer(index);
+ 	Page		page;
+ 	int			i;
+-	Pointer		ptr;
++	RumBytePointer		ptr;
+ 	ItemPointerData prev_iptr = {{0, 0}, 0};
+ 	GenericXLogState *state = NULL;
+ 
+
+--- a/src/rumget.c
++++ b/src/rumget.c
+@@ -252,7 +252,7 @@
+ 			maxoff >= FirstOffsetNumber)
+ 		{
+ 			RumScanItem	item;
+-			Pointer		ptr;
++			RumBytePointer		ptr;
+ 
+ 			MemSet(&item, 0, sizeof(item));
+ 			RumItemPointerSetMin(&item.item.iptr);
+@@ -634,7 +634,7 @@
+ 			RumPostingTreeScan *gdi;
+ 			OffsetNumber maxoff,
+ 						i;
+-			Pointer		ptr;
++			RumBytePointer		ptr;
+ 			RumItem		item;
+ 
+ 			RumItemPointerSetMin(&item.iptr);
+@@ -909,7 +909,7 @@
+ 		{
+ 			OffsetNumber maxoff,
+ 						i;
+-			Pointer		ptr;
++			RumBytePointer		ptr;
+ 			RumItem		item;
+ 			bool		searchBorder =
+ 				(ScanDirectionIsForward(entry->scanDirection) &&
+@@ -1059,7 +1059,7 @@
+ 		RumPostingTreeScan *gdi;
+ 		OffsetNumber maxoff,
+ 					i;
+-		Pointer		ptr;
++		RumBytePointer		ptr;
+ 		RumItem		item;
+ 
+ 		RumItemPointerSetMin(&item.iptr);
+@@ -1607,7 +1607,7 @@
+ {
+ 	int			j;
+ 	RumItem		iter_item;
+-	Pointer		ptr;
++	RumBytePointer		ptr;
+ 	OffsetNumber first = FirstOffsetNumber,
+ 				i,
+ 				maxoff;
+
+
+--- a/src/rum.h
++++ b/src/rum.h
+@@ -23,6 +23,9 @@
+ #include "utils/memutils.h"
+ 
+ #include "rumsort.h"
++
++/* Encoded posting-list cursors require byte-wise arithmetic on every PG. */
++typedef char *RumBytePointer;
+ 
+ /* RUM distance strategies */
+ #define RUM_DISTANCE			20
+@@ -238,7 +241,7 @@
+ 
+ #define RumGetPostingOffset(itup)	RumItemPointerGetBlockNumber(&(itup)->t_tid)
+ #define RumSetPostingOffset(itup,n) ItemPointerSetBlockNumber(&(itup)->t_tid,n)
+-#define RumGetPosting(itup)			((Pointer) ((char*)(itup) + RumGetPostingOffset(itup)))
++#define RumGetPosting(itup)			((RumBytePointer) ((char*)(itup) + RumGetPostingOffset(itup)))
+ 
+ /*
+  * Maximum size of an item on entry tree page. Make sure that we fit at least
+@@ -545,7 +548,7 @@
+ extern int	compareRumItem(RumState * state, const AttrNumber attno,
+ 						  const RumItem * a, const RumItem * b);
+ extern void convertIndexToKey(RumDataLeafItemIndex *src, RumItem *dst);
+-extern Pointer rumPlaceToDataPageLeaf(Pointer ptr, OffsetNumber attnum,
++extern RumBytePointer rumPlaceToDataPageLeaf(RumBytePointer ptr, OffsetNumber attnum,
+ 					   RumItem * item, ItemPointer prev, RumState * rumstate);
+ extern Size rumCheckPlaceToDataPageLeaf(OffsetNumber attnum,
+ 			RumItem * item, ItemPointer prev, RumState * rumstate, Size size);
+@@ -951,8 +954,8 @@
+  * when the data page is unlocked. If the additional information is used without
+  * locking one can get unexpected behaviour.
+  */
+-static inline Pointer
+-rumDataPageLeafRead(Pointer ptr, OffsetNumber attnum, RumItem * item,
++static inline RumBytePointer
++rumDataPageLeafRead(RumBytePointer ptr, OffsetNumber attnum, RumItem * item,
+ 					bool copyAddInfo, RumState * rumstate)
+ {
+ 	Form_pg_attribute attr;
+@@ -996,7 +999,7 @@
+ 			switch (attr->attlen)
+ 			{
+ 				case sizeof(char):
+-					item->addInfo = Int8GetDatum(*ptr);
++					item->addInfo = (Datum) (int8) *ptr;
+ 					break;
+ 				case sizeof(int16):
+ 					memcpy(&u.i16, ptr, sizeof(int16));
+@@ -1020,14 +1023,14 @@
+ 		{
+ 			Datum		addInfo;
+ 
+-			ptr = (Pointer) att_align_pointer(ptr, attr->attalign, attr->attlen,
++			ptr = (RumBytePointer) att_align_pointer(ptr, attr->attalign, attr->attlen,
+ 											  ptr);
+ 			addInfo = fetch_att(ptr, attr->attbyval, attr->attlen);
+ 			item->addInfo = copyAddInfo ?
+ 				datumCopy(addInfo, attr->attbyval, attr->attlen) : addInfo;
+ 		}
+ 
+-		ptr = (Pointer) att_addlength_pointer(ptr, attr->attlen, ptr);
++		ptr = (RumBytePointer) att_addlength_pointer(ptr, attr->attlen, ptr);
+ 	}
+ 	return ptr;
+ }
+@@ -1037,8 +1040,8 @@
+  * Replaces current item pointer with the next one. Zero item pointer should be
+  * passed in order to read the first item pointer.
+  */
+-static inline Pointer
+-rumDataPageLeafReadPointer(Pointer ptr, OffsetNumber attnum, RumItem * item,
++static inline RumBytePointer
++rumDataPageLeafReadPointer(RumBytePointer ptr, OffsetNumber attnum, RumItem * item,
+ 						   RumState * rumstate)
+ {
+ 	Form_pg_attribute attr;
+@@ -1071,10 +1074,10 @@
+ 		Assert(attr);
+ 
+ 		if (!attr->attbyval)
+-			ptr = (Pointer) att_align_pointer(ptr, attr->attalign, attr->attlen,
++			ptr = (RumBytePointer) att_align_pointer(ptr, attr->attalign, attr->attlen,
+ 											  ptr);
+ 
+-		ptr = (Pointer) att_addlength_pointer(ptr, attr->attlen, ptr);
++		ptr = (RumBytePointer) att_addlength_pointer(ptr, attr->attlen, ptr);
+ 	}
+ 	return ptr;
+ }
+
+--- a/src/rum_ts_utils.c
++++ b/src/rum_ts_utils.c
+@@ -1640,9 +1640,9 @@
+ 
+ 		if (!addInfoIsNull[keyN])
+ 		{
+-			dimt = count_pos(VARDATA_ANY(addInfo[keyN]),
+-							 VARSIZE_ANY_EXHDR(addInfo[keyN]));
+-			ptrt = (char *) VARDATA_ANY(addInfo[keyN]);
++			dimt = count_pos(VARDATA_ANY(DatumGetPointer(addInfo[keyN])),
++							 VARSIZE_ANY_EXHDR(DatumGetPointer(addInfo[keyN])));
++			ptrt = (char *) VARDATA_ANY(DatumGetPointer(addInfo[keyN]));
+ 		}
+ 		else
+ 			continue;
+@@ -2271,11 +2271,11 @@
+ {
+ 	Datum		addInfo1 = PG_GETARG_DATUM(0);
+ 	Datum		addInfo2 = PG_GETARG_DATUM(1);
+-	char	   *in1 = VARDATA_ANY(addInfo1),
+-			   *in2 = VARDATA_ANY(addInfo2);
++	char	   *in1 = VARDATA_ANY(DatumGetPointer(addInfo1)),
++			   *in2 = VARDATA_ANY(DatumGetPointer(addInfo2));
+ 	bytea	   *result;
+-	int			count1 = count_pos(in1, VARSIZE_ANY_EXHDR(addInfo1)),
+-				count2 = count_pos(in2, VARSIZE_ANY_EXHDR(addInfo2)),
++	int			count1 = count_pos(in1, VARSIZE_ANY_EXHDR(DatumGetPointer(addInfo1))),
++				count2 = count_pos(in2, VARSIZE_ANY_EXHDR(DatumGetPointer(addInfo2))),
+ 				countRes = 0;
+ 	int			i1 = 0, i2 = 0;
+ 	Size		size,

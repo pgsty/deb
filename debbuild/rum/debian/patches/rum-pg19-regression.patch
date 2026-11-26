@@ -1,0 +1,17 @@
+Subject: Expect PG19 to reject the deliberately inconsistent operator class.
+
+--- a/expected/rum_validate.out
++++ b/expected/rum_validate.out
+@@ -115,11 +115,7 @@
+ 	FROM test_rum
+ 	WHERE a @@ to_tsquery('pg_catalog.english', 'bar')
+ 	ORDER BY a <=> (to_tsquery('pg_catalog.english', 'bar'),0);
+-              a               
+-------------------------------
+- 'bar':2,8 'foo':1,3,6 'qq':7
+-(1 row)
+-
++ERROR:  unrecognized operator: 66
+ -- PGPRO-9026: column and attached column cannot be the same
+ CREATE TABLE test_array (i int2[]);
+ CREATE INDEX idx_array ON test_array USING rum (i rum_anyarray_addon_ops) WITH (attach = 'i', to = 'i');
